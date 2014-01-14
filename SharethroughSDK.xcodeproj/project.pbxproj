@@ -1,0 +1,270 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
+		AE8ED3EC1885ADF00004AB32 /* SharethroughSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */; };
+		AE8ED3EE1885ADF00004AB32 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AE8ED3E11885ADF00004AB32 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				AE8ED3EC1885ADF00004AB32 /* SharethroughSDK.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharethroughSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
+		AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharethroughSDK.h; sourceTree = "<group>"; };
+		AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharethroughSDK.m; sourceTree = "<group>"; };
+		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AE8ED3E01885ADF00004AB32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AE8ED3DA1885ADF00004AB32 = {
+			isa = PBXGroup;
+			children = (
+				AE8ED3E81885ADF00004AB32 /* SharethroughSDK */,
+				AE8ED3E51885ADF00004AB32 /* Frameworks */,
+				AE8ED3E41885ADF00004AB32 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AE8ED3E41885ADF00004AB32 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AE8ED3E51885ADF00004AB32 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AE8ED3E61885ADF00004AB32 /* Foundation.framework */,
+				AE8ED3F41885ADF00004AB32 /* XCTest.framework */,
+				AE8ED3F71885ADF00004AB32 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AE8ED3E81885ADF00004AB32 /* SharethroughSDK */ = {
+			isa = PBXGroup;
+			children = (
+				AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */,
+				AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */,
+				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
+			);
+			path = SharethroughSDK;
+			sourceTree = "<group>";
+		};
+		AE8ED3E91885ADF00004AB32 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AE8ED3E21885ADF00004AB32 /* SharethroughSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE8ED4061885ADF00004AB32 /* Build configuration list for PBXNativeTarget "SharethroughSDK" */;
+			buildPhases = (
+				AE8ED3DF1885ADF00004AB32 /* Sources */,
+				AE8ED3E01885ADF00004AB32 /* Frameworks */,
+				AE8ED3E11885ADF00004AB32 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SharethroughSDK;
+			productName = SharethroughSDK;
+			productReference = AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AE8ED3DB1885ADF00004AB32 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = Sharethrough;
+			};
+			buildConfigurationList = AE8ED3DE1885ADF00004AB32 /* Build configuration list for PBXProject "SharethroughSDK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AE8ED3DA1885ADF00004AB32;
+			productRefGroup = AE8ED3E41885ADF00004AB32 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AE8ED3E21885ADF00004AB32 /* SharethroughSDK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AE8ED3DF1885ADF00004AB32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE8ED3EE1885ADF00004AB32 /* SharethroughSDK.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AE8ED4041885ADF00004AB32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AE8ED4051885ADF00004AB32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AE8ED4071885ADF00004AB32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/SharethroughSDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AE8ED4081885ADF00004AB32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/SharethroughSDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AE8ED3DE1885ADF00004AB32 /* Build configuration list for PBXProject "SharethroughSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE8ED4041885ADF00004AB32 /* Debug */,
+				AE8ED4051885ADF00004AB32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE8ED4061885ADF00004AB32 /* Build configuration list for PBXNativeTarget "SharethroughSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE8ED4071885ADF00004AB32 /* Debug */,
+				AE8ED4081885ADF00004AB32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AE8ED3DB1885ADF00004AB32 /* Project object */;
+}
