@@ -25,6 +25,13 @@
 
 /* Begin PBXBuildFile section */
 		AE2246731885FF1D00626A29 /* SharethroughSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */; };
+		AE2246831886138F00626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
+		AE2246841886138F00626A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
+		AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246851886138F00626A29 /* CoreGraphics.framework */; };
+		AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE22468A1886138F00626A29 /* InfoPlist.strings */; };
+		AE22468E1886138F00626A29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE22468D1886138F00626A29 /* main.m */; };
+		AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246911886138F00626A29 /* Cedar-iOS.framework */; };
+		AE2246941886138F00626A29 /* ExampleSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246931886138F00626A29 /* ExampleSpec.mm */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE8ED3EC1885ADF00004AB32 /* SharethroughSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */; };
 		AE8ED3EE1885ADF00004AB32 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */; };
@@ -54,6 +61,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AE2246821886138F00626A29 /* specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE2246851886138F00626A29 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AE2246891886138F00626A29 /* specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "specs-Info.plist"; sourceTree = "<group>"; };
+		AE22468B1886138F00626A29 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AE22468D1886138F00626A29 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AE22468F1886138F00626A29 /* specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "specs-Prefix.pch"; sourceTree = "<group>"; };
+		AE2246901886138F00626A29 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
+		AE2246911886138F00626A29 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
+		AE2246931886138F00626A29 /* ExampleSpec.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ExampleSpec.mm; sourceTree = "<group>"; };
 		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharethroughSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -64,6 +80,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AE22467F1886138F00626A29 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
+				AE2246831886138F00626A29 /* UIKit.framework in Frameworks */,
+				AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */,
+				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AE8ED3E01885ADF00004AB32 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,10 +102,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE2246871886138F00626A29 /* specs */ = {
+			isa = PBXGroup;
+			children = (
+				AE2246901886138F00626A29 /* Rakefile */,
+				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
+				AE2246931886138F00626A29 /* ExampleSpec.mm */,
+				AE2246881886138F00626A29 /* Supporting Files */,
+			);
+			path = specs;
+			sourceTree = "<group>";
+		};
+		AE2246881886138F00626A29 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AE2246891886138F00626A29 /* specs-Info.plist */,
+				AE22468A1886138F00626A29 /* InfoPlist.strings */,
+				AE22468D1886138F00626A29 /* main.m */,
+				AE22468F1886138F00626A29 /* specs-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		AE8ED3DA1885ADF00004AB32 = {
 			isa = PBXGroup;
 			children = (
 				AE8ED3E81885ADF00004AB32 /* SharethroughSDK */,
+				AE2246871886138F00626A29 /* specs */,
 				AE8ED3E51885ADF00004AB32 /* Frameworks */,
 				AE8ED3E41885ADF00004AB32 /* Products */,
 			);
@@ -88,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */,
+				AE2246821886138F00626A29 /* specs.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,6 +149,7 @@
 				AE8ED3E61885ADF00004AB32 /* Foundation.framework */,
 				AE8ED3F41885ADF00004AB32 /* XCTest.framework */,
 				AE8ED3F71885ADF00004AB32 /* UIKit.framework */,
+				AE2246851886138F00626A29 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,6 +175,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AE2246811886138F00626A29 /* specs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE2246951886138F00626A29 /* Build configuration list for PBXNativeTarget "specs" */;
+			buildPhases = (
+				AE22467E1886138F00626A29 /* Sources */,
+				AE22467F1886138F00626A29 /* Frameworks */,
+				AE2246801886138F00626A29 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = specs;
+			productName = specs;
+			productReference = AE2246821886138F00626A29 /* specs.app */;
+			productType = "com.apple.product-type.application";
+		};
 		AE8ED3E21885ADF00004AB32 /* SharethroughSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AE8ED4061885ADF00004AB32 /* Build configuration list for PBXNativeTarget "SharethroughSDK" */;
@@ -163,9 +232,21 @@
 			targets = (
 				AE8ED3E21885ADF00004AB32 /* SharethroughSDK */,
 				AE22466C1885FD8100626A29 /* Sharethrough-SDK */,
+				AE2246811886138F00626A29 /* specs */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AE2246801886138F00626A29 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		AE2246701885FDC400626A29 /* Build Static Libraries */ = {
@@ -213,6 +294,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AE22467E1886138F00626A29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE22468E1886138F00626A29 /* main.m in Sources */,
+				AE2246941886138F00626A29 /* ExampleSpec.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AE8ED3DF1885ADF00004AB32 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -222,6 +312,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AE22468A1886138F00626A29 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AE22468B1886138F00626A29 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		AE22466D1885FD8100626A29 /* Debug */ = {
@@ -235,6 +336,57 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AE2246961886138F00626A29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(SRCROOT)/specs/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "specs/specs-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "specs/specs-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		AE2246971886138F00626A29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(SRCROOT)/specs/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "specs/specs-Prefix.pch";
+				INFOPLIST_FILE = "specs/specs-Info.plist";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
@@ -340,6 +492,14 @@
 			buildConfigurations = (
 				AE22466D1885FD8100626A29 /* Debug */,
 				AE22466E1885FD8100626A29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AE2246951886138F00626A29 /* Build configuration list for PBXNativeTarget "specs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE2246961886138F00626A29 /* Debug */,
+				AE2246971886138F00626A29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
