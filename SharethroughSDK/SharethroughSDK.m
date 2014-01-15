@@ -10,4 +10,8 @@
 
 @implementation SharethroughSDK
 
+- (void)greetHello {
+  NSLog(@"Hello from the Sharethrough SDK!");
+}
+
 @end

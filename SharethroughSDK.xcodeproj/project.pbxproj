@@ -6,13 +6,41 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		AE22466C1885FD8100626A29 /* Sharethrough-SDK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "Sharethrough-SDK" */;
+			buildPhases = (
+				AE2246701885FDC400626A29 /* Build Static Libraries */,
+				AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */,
+				AE2246721885FEED00626A29 /* CopyFiles */,
+				AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */,
+			);
+			dependencies = (
+			);
+			name = "Sharethrough-SDK";
+			productName = "Build Framework";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
+		AE2246731885FF1D00626A29 /* SharethroughSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE8ED3EC1885ADF00004AB32 /* SharethroughSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */; };
 		AE8ED3EE1885ADF00004AB32 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AE2246721885FEED00626A29 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
+			dstSubfolderSpec = 0;
+			files = (
+				AE2246731885FF1D00626A29 /* SharethroughSDK.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AE8ED3E11885ADF00004AB32 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -134,9 +162,55 @@
 			projectRoot = "";
 			targets = (
 				AE8ED3E21885ADF00004AB32 /* SharethroughSDK */,
+				AE22466C1885FD8100626A29 /* Sharethrough-SDK */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AE2246701885FDC400626A29 /* Build Static Libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Static Libraries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos";
+		};
+		AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Framework Structure with Fat Binary";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
+		};
+		AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy built framework to /built-framework directory within project";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncp -r \"${SRC_FRAMEWORK}\" \"${BUILT_FRAMEWORK_DIR}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AE8ED3DF1885ADF00004AB32 /* Sources */ = {
@@ -150,6 +224,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		AE22466D1885FD8100626A29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AE22466E1885FD8100626A29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		AE8ED4041885ADF00004AB32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -247,6 +335,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "Sharethrough-SDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE22466D1885FD8100626A29 /* Debug */,
+				AE22466E1885FD8100626A29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		AE8ED3DE1885ADF00004AB32 /* Build configuration list for PBXProject "SharethroughSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -263,6 +359,7 @@
 				AE8ED4081885ADF00004AB32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

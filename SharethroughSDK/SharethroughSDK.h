@@ -10,4 +10,6 @@
 
 @interface SharethroughSDK : NSObject
 
+- (void)greetHello;
+
 @end
