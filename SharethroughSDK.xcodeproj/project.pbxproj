@@ -31,7 +31,9 @@
 		AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE22468A1886138F00626A29 /* InfoPlist.strings */; };
 		AE22468E1886138F00626A29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE22468D1886138F00626A29 /* main.m */; };
 		AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246911886138F00626A29 /* Cedar-iOS.framework */; };
-		AE2246941886138F00626A29 /* ExampleSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246931886138F00626A29 /* ExampleSpec.mm */; };
+		AE2246E518874D7800626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
+		AE2246E718874EED00626A29 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */; };
+		AE2246E918874F3F00626A29 /* SharethroughSDKSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246E818874F3F00626A29 /* SharethroughSDKSpec.mm */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE8ED3EC1885ADF00004AB32 /* SharethroughSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */; };
 		AE8ED3EE1885ADF00004AB32 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */; };
@@ -69,12 +71,12 @@
 		AE22468F1886138F00626A29 /* specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "specs-Prefix.pch"; sourceTree = "<group>"; };
 		AE2246901886138F00626A29 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
 		AE2246911886138F00626A29 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
-		AE2246931886138F00626A29 /* ExampleSpec.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ExampleSpec.mm; sourceTree = "<group>"; };
+		AE2246E818874F3F00626A29 /* SharethroughSDKSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKSpec.mm; sourceTree = "<group>"; };
 		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharethroughSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
 		AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharethroughSDK.h; sourceTree = "<group>"; };
-		AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharethroughSDK.m; sourceTree = "<group>"; };
+		AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SharethroughSDK.m; sourceTree = "<group>"; };
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -96,6 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */,
+				AE2246E518874D7800626A29 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,9 +108,9 @@
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
+				AE2246E818874F3F00626A29 /* SharethroughSDKSpec.mm */,
 				AE2246901886138F00626A29 /* Rakefile */,
 				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
-				AE2246931886138F00626A29 /* ExampleSpec.mm */,
 				AE2246881886138F00626A29 /* Supporting Files */,
 			);
 			path = specs;
@@ -298,8 +301,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE2246E718874EED00626A29 /* SharethroughSDK.m in Sources */,
+				AE2246E918874F3F00626A29 /* SharethroughSDKSpec.mm in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
-				AE2246941886138F00626A29 /* ExampleSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +332,7 @@
 		AE22466D1885FD8100626A29 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -335,6 +340,7 @@
 		AE22466E1885FD8100626A29 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -464,6 +470,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/SharethroughSDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -476,6 +486,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/SharethroughSDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -494,6 +508,7 @@
 				AE22466E1885FD8100626A29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AE2246951886138F00626A29 /* Build configuration list for PBXNativeTarget "specs" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +517,7 @@
 				AE2246971886138F00626A29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AE8ED3DE1885ADF00004AB32 /* Build configuration list for PBXProject "SharethroughSDK" */ = {
 			isa = XCConfigurationList;

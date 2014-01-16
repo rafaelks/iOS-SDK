@@ -10,8 +10,10 @@
 
 @implementation SharethroughSDK
 
-- (void)greetHello {
-  NSLog(@"Hello from the Sharethrough SDK!");
+- (UIView *)greetHello {
+  UILabel *greetingLabel = [UILabel new];
+  greetingLabel.text = @"Hello from SDK!";
+  return greetingLabel;
 }
 
 @end
