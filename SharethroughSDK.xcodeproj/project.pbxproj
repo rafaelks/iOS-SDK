@@ -332,6 +332,7 @@
 		AE22466D1885FD8100626A29 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -340,6 +341,7 @@
 		AE22466E1885FD8100626A29 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
