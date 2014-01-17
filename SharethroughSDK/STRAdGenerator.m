@@ -14,6 +14,19 @@
 - (void)placeAdInView:(id <STRAdView>)view {
     view.adTitle.text = @"Ad title, from SDK";
     view.adDescription.text = @"Ad description, from SDK";
-    view.adThumbnail.image = [UIImage imageNamed:@"STRResources.bundle/images/fixture_image.png"];
+
+    NSString *path;
+    if ([self runningInFramework]) {
+        path = [[NSBundle mainBundle] pathForResource:@"Sharethrough-SDK.framework/Resources/STRResources.bundle/images/fixture_image.png" ofType:nil];
+    } else {
+        path = [[NSBundle mainBundle] pathForResource:@"STRResources.bundle/images/fixture_image.png" ofType:nil];
+    }
+
+    view.adThumbnail.contentMode = UIViewContentModeScaleAspectFill;
+    view.adThumbnail.image = [UIImage imageWithContentsOfFile:path];
+}
+
+- (BOOL)runningInFramework {
+    return [[NSBundle mainBundle] pathForResource:@"Sharethrough-SDK.framework" ofType:nil] != nil;
 }
 @end

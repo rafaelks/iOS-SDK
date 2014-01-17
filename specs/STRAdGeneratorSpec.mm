@@ -19,7 +19,11 @@ describe(@"STRAdGenerator", ^{
 
         view.adTitle.text should equal(@"Ad title, from SDK");
         view.adDescription.text should equal(@"Ad description, from SDK");
-        view.adThumbnail.image should equal([UIImage imageNamed:@"STRResources.bundle/images/fixture_image.png"]);
+
+        UIImage *expectedImage = [UIImage imageNamed:@"STRResources.bundle/images/fixture_image.png"];
+        NSData *expectedImageData = UIImagePNGRepresentation(expectedImage);
+        UIImagePNGRepresentation(view.adThumbnail.image) should equal(expectedImageData);
+        view.adThumbnail.contentMode should equal(UIViewContentModeScaleAspectFill);
     });
 });
 
