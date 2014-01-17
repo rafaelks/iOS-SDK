@@ -12,7 +12,10 @@ Choose 'Create groups for any added folders' and select 'Copy items into destina
 ![Add framework Screenshot][copy-screenshot]
 
 ## Display some ads! Make some money! ##
+The docset can be downloaded from [here][docset].
+
 
 [sdk]: http://s3.amazonaws.com/iOS-SDK/Sharethrough-SDK.framework.tar
 [nav-screenshot]: documentation/getting_started/nav_screenshot.png
 [copy-screenshot]: documentation/getting_started/copy_screenshot.png
+[docset]: http://s3.amazonaws.com/iOS-SDK/com.sharethrough.Sharethrough-SDK.docset.tar
