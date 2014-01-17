@@ -13,7 +13,8 @@
 			buildPhases = (
 				AE2246701885FDC400626A29 /* Build Static Libraries */,
 				AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */,
-				AE2246721885FEED00626A29 /* CopyFiles */,
+				AE2246721885FEED00626A29 /* Copy Header Files */,
+				AE3093D51888AC1B006D1E79 /* Copy Resource Bundle */,
 				AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */,
 			);
 			dependencies = (
@@ -24,7 +25,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		AE2246731885FF1D00626A29 /* SharethroughSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */; };
 		AE2246831886138F00626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
 		AE2246841886138F00626A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246851886138F00626A29 /* CoreGraphics.framework */; };
@@ -32,22 +32,39 @@
 		AE22468E1886138F00626A29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE22468D1886138F00626A29 /* main.m */; };
 		AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246911886138F00626A29 /* Cedar-iOS.framework */; };
 		AE2246E518874D7800626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
-		AE2246E718874EED00626A29 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */; };
-		AE2246E918874F3F00626A29 /* SharethroughSDKSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246E818874F3F00626A29 /* SharethroughSDKSpec.mm */; };
+		AE2246F5188874D100626A29 /* STRAdGenerator.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE2246F3188874D100626A29 /* STRAdGenerator.h */; };
+		AE2246F6188874D100626A29 /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F4188874D100626A29 /* STRAdGenerator.m */; };
+		AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F4188874D100626A29 /* STRAdGenerator.m */; };
+		AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */; };
+		AE2246FE1888782A00626A29 /* STRAdViewFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246FD1888782A00626A29 /* STRAdViewFixture.m */; };
+		AE2247001888786900626A29 /* STRAdView.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE2246FF1888786900626A29 /* STRAdView.h */; };
+		AE3CBCB11888BCE60067DF29 /* STRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE3CBCB01888BCE60067DF29 /* STRResources.bundle */; };
+		AE3CBCB21888BCF90067DF29 /* STRResources.bundle in Copy Resource Bundle */ = {isa = PBXBuildFile; fileRef = AE3CBCB01888BCE60067DF29 /* STRResources.bundle */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
-		AE8ED3EC1885ADF00004AB32 /* SharethroughSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */; };
-		AE8ED3EE1885ADF00004AB32 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AE2246721885FEED00626A29 /* CopyFiles */ = {
+		AE2246721885FEED00626A29 /* Copy Header Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
-				AE2246731885FF1D00626A29 /* SharethroughSDK.h in CopyFiles */,
+				AE2247001888786900626A29 /* STRAdView.h in Copy Header Files */,
+				AE2246F5188874D100626A29 /* STRAdGenerator.h in Copy Header Files */,
 			);
+			name = "Copy Header Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE3093D51888AC1B006D1E79 /* Copy Resource Bundle */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Resources";
+			dstSubfolderSpec = 0;
+			files = (
+				AE3CBCB21888BCF90067DF29 /* STRResources.bundle in Copy Resource Bundle */,
+			);
+			name = "Copy Resource Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AE8ED3E11885ADF00004AB32 /* CopyFiles */ = {
@@ -56,7 +73,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				AE8ED3EC1885ADF00004AB32 /* SharethroughSDK.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,12 +87,16 @@
 		AE22468F1886138F00626A29 /* specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "specs-Prefix.pch"; sourceTree = "<group>"; };
 		AE2246901886138F00626A29 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
 		AE2246911886138F00626A29 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
-		AE2246E818874F3F00626A29 /* SharethroughSDKSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKSpec.mm; sourceTree = "<group>"; };
+		AE2246F3188874D100626A29 /* STRAdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdGenerator.h; sourceTree = "<group>"; };
+		AE2246F4188874D100626A29 /* STRAdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdGenerator.m; sourceTree = "<group>"; };
+		AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdGeneratorSpec.mm; sourceTree = "<group>"; };
+		AE2246FC1888782A00626A29 /* STRAdViewFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdViewFixture.h; sourceTree = "<group>"; };
+		AE2246FD1888782A00626A29 /* STRAdViewFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdViewFixture.m; sourceTree = "<group>"; };
+		AE2246FF1888786900626A29 /* STRAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdView.h; sourceTree = "<group>"; };
+		AE3CBCB01888BCE60067DF29 /* STRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = STRResources.bundle; sourceTree = "<group>"; };
 		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharethroughSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
-		AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharethroughSDK.h; sourceTree = "<group>"; };
-		AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SharethroughSDK.m; sourceTree = "<group>"; };
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -108,7 +128,8 @@
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
-				AE2246E818874F3F00626A29 /* SharethroughSDKSpec.mm */,
+				AE2246FB188877E900626A29 /* Fixtures */,
+				AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */,
 				AE2246901886138F00626A29 /* Rakefile */,
 				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
 				AE2246881886138F00626A29 /* Supporting Files */,
@@ -125,6 +146,15 @@
 				AE22468F1886138F00626A29 /* specs-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AE2246FB188877E900626A29 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				AE2246FC1888782A00626A29 /* STRAdViewFixture.h */,
+				AE2246FD1888782A00626A29 /* STRAdViewFixture.m */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 		AE8ED3DA1885ADF00004AB32 = {
@@ -160,9 +190,11 @@
 		AE8ED3E81885ADF00004AB32 /* SharethroughSDK */ = {
 			isa = PBXGroup;
 			children = (
-				AE8ED3EB1885ADF00004AB32 /* SharethroughSDK.h */,
-				AE8ED3ED1885ADF00004AB32 /* SharethroughSDK.m */,
+				AE3CBCB01888BCE60067DF29 /* STRResources.bundle */,
 				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
+				AE2246F3188874D100626A29 /* STRAdGenerator.h */,
+				AE2246F4188874D100626A29 /* STRAdGenerator.m */,
+				AE2246FF1888786900626A29 /* STRAdView.h */,
 			);
 			path = SharethroughSDK;
 			sourceTree = "<group>";
@@ -246,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
+				AE3CBCB11888BCE60067DF29 /* STRResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +325,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncp -r \"${SRC_FRAMEWORK}\" \"${BUILT_FRAMEWORK_DIR}\"";
+			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -301,8 +334,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE2246E718874EED00626A29 /* SharethroughSDK.m in Sources */,
-				AE2246E918874F3F00626A29 /* SharethroughSDKSpec.mm in Sources */,
+				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
+				AE2246FE1888782A00626A29 /* STRAdViewFixture.m in Sources */,
+				AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,7 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE8ED3EE1885ADF00004AB32 /* SharethroughSDK.m in Sources */,
+				AE2246F6188874D100626A29 /* STRAdGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
