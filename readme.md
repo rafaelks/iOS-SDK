@@ -13,7 +13,11 @@ Choose 'Create groups for any added folders' and select 'Copy items into destina
 
 ## Display some ads! Make some money! ##
 The docset can be downloaded from [here][docset].
+After downloading the docset and untaring, you can install these docs to XCode by copying them over to the Shared Documentation folder:
 
+```
+cp ~/Downloads/com.sharethrough.Sharethrough-SDK.docset ~/Library/Developer/Shared/Documentation/DocSets/
+```
 
 [sdk]: http://s3.amazonaws.com/iOS-SDK/Sharethrough-SDK.framework.tar
 [nav-screenshot]: documentation/getting_started/nav_screenshot.png
