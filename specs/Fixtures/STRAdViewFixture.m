@@ -21,6 +21,10 @@
         self.adDescription = adDescription;
         [self addSubview:adDescription];
 
+        UILabel *adSponsoredBy = [UILabel new];
+        self.adSponsoredBy = adSponsoredBy;
+        [self addSubview:adSponsoredBy];
+
         UIImageView *adThumbnail = [UIImageView new];
         self.adThumbnail = adThumbnail;
         [self addSubview:adThumbnail];

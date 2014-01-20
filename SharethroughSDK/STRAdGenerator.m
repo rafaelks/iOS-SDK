@@ -8,13 +8,53 @@
 
 #import "STRAdGenerator.h"
 #import "STRAdView.h"
+#import "STRRestClient.h"
+#import "STRPromise.h"
+
+@interface STRAdGenerator ()
+
+@property (nonatomic, weak) STRRestClient *restClient;
+
+@end
 
 @implementation STRAdGenerator
 
-- (void)placeAdInView:(id <STRAdView>)view {
-    view.adTitle.text = @"Ad title, from SDK";
-    view.adDescription.text = @"Ad description, from SDK";
+- (id)initWithPriceKey:(NSString *)priceKey restClient:(STRRestClient *)restClient {
+    self = [super init];
+    if (self) {
+        self.restClient = restClient;
+    }
+    return self;
+}
 
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey {
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [view addSubview:spinner];
+    [spinner startAnimating];
+    spinner.center = view.center;
+
+    STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
+    [adPromise then:^id(NSDictionary *adJSON) {
+        [spinner removeFromSuperview];
+
+        view.adTitle.text = adJSON[@"title"];
+        view.adDescription.text = adJSON[@"description"];
+        view.adSponsoredBy.text = [NSString stringWithFormat:@"Promoted by %@", adJSON[@"advertiser"]];
+        view.adThumbnail.contentMode = UIViewContentModeScaleAspectFill;
+        view.adThumbnail.image = [self fixtureImage];
+
+        return adJSON;
+    } error:^id(NSError *error) {
+        [spinner removeFromSuperview];
+        return error;
+    }];
+}
+
+- (BOOL)runningInFramework {
+    return [[NSBundle mainBundle] pathForResource:@"Sharethrough-SDK.framework" ofType:nil] != nil;
+}
+
+- (UIImage *)fixtureImage {
     NSString *path;
     if ([self runningInFramework]) {
         path = [[NSBundle mainBundle] pathForResource:@"Sharethrough-SDK.framework/Resources/STRResources.bundle/images/fixture_image.png" ofType:nil];
@@ -22,11 +62,8 @@
         path = [[NSBundle mainBundle] pathForResource:@"STRResources.bundle/images/fixture_image.png" ofType:nil];
     }
 
-    view.adThumbnail.contentMode = UIViewContentModeScaleAspectFill;
-    view.adThumbnail.image = [UIImage imageWithContentsOfFile:path];
-}
+    return [UIImage imageWithContentsOfFile:path];
 
-- (BOOL)runningInFramework {
-    return [[NSBundle mainBundle] pathForResource:@"Sharethrough-SDK.framework" ofType:nil] != nil;
 }
 @end
+

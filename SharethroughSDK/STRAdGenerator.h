@@ -6,20 +6,14 @@
 //  Copyright (c) 2014 Sharethrough. All rights reserved.
 //
 
-/**
- This class is the main interface for configuring an ad.
- */
-
 #import <Foundation/Foundation.h>
 
 @protocol STRAdView;
+@class STRRestClient;
 
 @interface STRAdGenerator : NSObject
 
-/**
- After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
- @param view The view to place ad data onto
- */
-- (void)placeAdInView:(id<STRAdView>)view;
+- (id)initWithPriceKey:(NSString *)priceKey restClient:(STRRestClient *)restClient;
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey;
 
 @end

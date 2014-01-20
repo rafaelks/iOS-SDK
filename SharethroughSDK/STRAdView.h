@@ -30,4 +30,9 @@
  */
 - (UIImageView *)adThumbnail;
 
+/**
+ This method should return a UILabel (or subclass) that is appropriate for setting the string "Promoted by <brand name>".
+ */
+- (UILabel *)adSponsoredBy;
+
 @end

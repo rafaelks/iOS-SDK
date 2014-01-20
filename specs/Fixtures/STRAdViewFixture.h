@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) UILabel *adTitle;
 @property (weak, nonatomic) UILabel *adDescription;
+@property (weak, nonatomic) UILabel *adSponsoredBy;
 @property (weak, nonatomic) UIImageView *adThumbnail;
 
 @end
