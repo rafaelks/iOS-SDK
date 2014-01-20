@@ -42,7 +42,7 @@ describe(@"STRAdGenerator", ^{
             beforeEach(^{
                 [deferred resolveWithValue:@{
                                                 @"description": @"Dogs this smart deserve a home.",
-                                                @"thumbnail_url": @"http:\/\/i1.ytimg.com\/vi\/BWAK0J8Uhzk\/hqdefault.jpg",
+                                                @"thumbnail_url": @"http:\\/\\/i1.ytimg.com\\/vi\\/BWAK0J8Uhzk\\/hqdefault.jpg",
                                                 @"title": @"Meet Porter. He's a Dog.",
                                                 @"advertiser": @"Brand X",
                                              }];

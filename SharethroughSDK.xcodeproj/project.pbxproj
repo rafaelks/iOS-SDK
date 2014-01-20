@@ -27,6 +27,7 @@
 /* Begin PBXBuildFile section */
 		AE022DA41889F02B00D02568 /* STRRestClientSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DA31889F02B00D02568 /* STRRestClientSpec.mm */; };
 		AE022DA5188A044E00D02568 /* SharethroughSDK.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE3120CE1889DD3D00297F01 /* SharethroughSDK.h */; };
+		AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE022DAB188DBB1400D02568 /* Default-568h@2x.png */; };
 		AE2246831886138F00626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
 		AE2246841886138F00626A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246851886138F00626A29 /* CoreGraphics.framework */; };
@@ -90,6 +91,7 @@
 
 /* Begin PBXFileReference section */
 		AE022DA31889F02B00D02568 /* STRRestClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRRestClientSpec.mm; sourceTree = "<group>"; };
+		AE022DAB188DBB1400D02568 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AE2246821886138F00626A29 /* specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2246851886138F00626A29 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AE2246891886138F00626A29 /* specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "specs-Info.plist"; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 		AE8ED3DA1885ADF00004AB32 = {
 			isa = PBXGroup;
 			children = (
+				AE022DAB188DBB1400D02568 /* Default-568h@2x.png */,
 				AE8ED3E81885ADF00004AB32 /* SharethroughSDK */,
 				AE2246871886138F00626A29 /* specs */,
 				AE8ED3E51885ADF00004AB32 /* Frameworks */,
@@ -325,6 +328,7 @@
 			files = (
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
 				AE3CBCB11888BCE60067DF29 /* STRResources.bundle in Resources */,
+				AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
