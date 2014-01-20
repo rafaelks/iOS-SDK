@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @protocol STRAdView;
-@class STRRestClient;
+@class STRAdService;
 
 @interface STRAdGenerator : NSObject
 
-- (id)initWithPriceKey:(NSString *)priceKey restClient:(STRRestClient *)restClient;
+- (id)initWithPriceKey:(NSString *)priceKey adService:(STRAdService *)adService;
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey;
 
 @end

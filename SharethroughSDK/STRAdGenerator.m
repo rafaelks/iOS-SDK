@@ -8,21 +8,22 @@
 
 #import "STRAdGenerator.h"
 #import "STRAdView.h"
-#import "STRRestClient.h"
+#import "STRAdService.h"
 #import "STRPromise.h"
+#import "STRAdvertisement.h"
 
 @interface STRAdGenerator ()
 
-@property (nonatomic, weak) STRRestClient *restClient;
+@property (nonatomic, weak) STRAdService *adService;
 
 @end
 
 @implementation STRAdGenerator
 
-- (id)initWithPriceKey:(NSString *)priceKey restClient:(STRRestClient *)restClient {
+- (id)initWithPriceKey:(NSString *)priceKey adService:(STRAdService *)adService {
     self = [super init];
     if (self) {
-        self.restClient = restClient;
+        self.adService = adService;
     }
     return self;
 }
@@ -33,17 +34,17 @@
     [spinner startAnimating];
     spinner.center = view.center;
 
-    STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
-    [adPromise then:^id(NSDictionary *adJSON) {
+    STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
+    [adPromise then:^id(STRAdvertisement *ad) {
         [spinner removeFromSuperview];
 
-        view.adTitle.text = adJSON[@"title"];
-        view.adDescription.text = adJSON[@"description"];
-        view.adSponsoredBy.text = [NSString stringWithFormat:@"Promoted by %@", adJSON[@"advertiser"]];
+        view.adTitle.text = ad.title;
+        view.adDescription.text = ad.adDescription;
+        view.adSponsoredBy.text = [ad sponsoredBy];
         view.adThumbnail.contentMode = UIViewContentModeScaleAspectFill;
-        view.adThumbnail.image = [self fixtureImage];
+        view.adThumbnail.image = ad.thumbnailImage;
 
-        return adJSON;
+        return ad;
     } error:^id(NSError *error) {
         [spinner removeFromSuperview];
         return error;

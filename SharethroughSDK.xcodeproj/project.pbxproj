@@ -25,9 +25,25 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		AE022DA41889F02B00D02568 /* STRRestClientSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DA31889F02B00D02568 /* STRRestClientSpec.mm */; };
-		AE022DA5188A044E00D02568 /* SharethroughSDK.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE3120CE1889DD3D00297F01 /* SharethroughSDK.h */; };
 		AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE022DAB188DBB1400D02568 /* Default-568h@2x.png */; };
+		AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */ = {isa = PBXBuildFile; fileRef = AE022DD0188DF3C400D02568 /* fixture_image.png */; };
+		AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDD188E004900D02568 /* STRNetworkClient.m */; };
+		AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDD188E004900D02568 /* STRNetworkClient.m */; };
+		AE022DE2188E004900D02568 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDF188E004900D02568 /* STRRestClient.m */; };
+		AE022DE3188E004900D02568 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDF188E004900D02568 /* STRRestClient.m */; };
+		AE022DE7188E008000D02568 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
+		AE022DE8188E008000D02568 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
+		AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DEB188E00C100D02568 /* STRAdvertisement.m */; };
+		AE022DED188E00C100D02568 /* STRAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DEB188E00C100D02568 /* STRAdvertisement.m */; };
+		AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF0188E011100D02568 /* SharethroughSDK.m */; };
+		AE022DF3188E011100D02568 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF0188E011100D02568 /* SharethroughSDK.m */; };
+		AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF5188E019100D02568 /* STRAdvertismentSpec.mm */; };
+		AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF8188E01D200D02568 /* SharethroughSDKSpec.mm */; };
+		AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DFB188E021C00D02568 /* STRNetworkClientSpec.mm */; };
+		AE022DFE188E021C00D02568 /* STRRestClientSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DFC188E021C00D02568 /* STRRestClientSpec.mm */; };
+		AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022E00188E024700D02568 /* STRAdServiceSpec.mm */; };
+		AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
+		AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
 		AE2246831886138F00626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
 		AE2246841886138F00626A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246851886138F00626A29 /* CoreGraphics.framework */; };
@@ -39,12 +55,6 @@
 		AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F4188874D100626A29 /* STRAdGenerator.m */; };
 		AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */; };
 		AE2246FE1888782A00626A29 /* STRAdViewFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246FD1888782A00626A29 /* STRAdViewFixture.m */; };
-		AE2247001888786900626A29 /* STRAdView.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE2246FF1888786900626A29 /* STRAdView.h */; };
-		AE3120D01889DD3D00297F01 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120CF1889DD3D00297F01 /* SharethroughSDK.m */; };
-		AE3120D11889DD3D00297F01 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120CF1889DD3D00297F01 /* SharethroughSDK.m */; };
-		AE3120D51889DDD100297F01 /* SharethroughSDKSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE3120D41889DDD100297F01 /* SharethroughSDKSpec.mm */; };
-		AE3120D81889E14E00297F01 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120D71889E14E00297F01 /* STRRestClient.m */; };
-		AE3120D91889E14E00297F01 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120D71889E14E00297F01 /* STRRestClient.m */; };
 		AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
 		AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
 		AE3120E21889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
@@ -61,8 +71,8 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
-				AE022DA5188A044E00D02568 /* SharethroughSDK.h in Copy Header Files */,
-				AE2247001888786900626A29 /* STRAdView.h in Copy Header Files */,
+				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
+				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 			);
 			name = "Copy Header Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,8 +100,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AE022DA31889F02B00D02568 /* STRRestClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRRestClientSpec.mm; sourceTree = "<group>"; };
 		AE022DAB188DBB1400D02568 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		AE022DD0188DF3C400D02568 /* fixture_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fixture_image.png; sourceTree = "<group>"; };
+		AE022DDC188E004900D02568 /* STRNetworkClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRNetworkClient.h; sourceTree = "<group>"; };
+		AE022DDD188E004900D02568 /* STRNetworkClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRNetworkClient.m; sourceTree = "<group>"; };
+		AE022DDE188E004900D02568 /* STRRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRRestClient.h; sourceTree = "<group>"; };
+		AE022DDF188E004900D02568 /* STRRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRRestClient.m; sourceTree = "<group>"; };
+		AE022DE5188E008000D02568 /* STRAdService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdService.h; sourceTree = "<group>"; };
+		AE022DE6188E008000D02568 /* STRAdService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdService.m; sourceTree = "<group>"; };
+		AE022DEA188E00C100D02568 /* STRAdvertisement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdvertisement.h; sourceTree = "<group>"; };
+		AE022DEB188E00C100D02568 /* STRAdvertisement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdvertisement.m; sourceTree = "<group>"; };
+		AE022DEF188E011100D02568 /* SharethroughSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharethroughSDK.h; sourceTree = "<group>"; };
+		AE022DF0188E011100D02568 /* SharethroughSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharethroughSDK.m; sourceTree = "<group>"; };
+		AE022DF1188E011100D02568 /* STRAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdView.h; sourceTree = "<group>"; };
+		AE022DF5188E019100D02568 /* STRAdvertismentSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdvertismentSpec.mm; sourceTree = "<group>"; };
+		AE022DF8188E01D200D02568 /* SharethroughSDKSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKSpec.mm; sourceTree = "<group>"; };
+		AE022DFB188E021C00D02568 /* STRNetworkClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRNetworkClientSpec.mm; sourceTree = "<group>"; };
+		AE022DFC188E021C00D02568 /* STRRestClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRRestClientSpec.mm; sourceTree = "<group>"; };
+		AE022E00188E024700D02568 /* STRAdServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdServiceSpec.mm; sourceTree = "<group>"; };
 		AE2246821886138F00626A29 /* specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2246851886138F00626A29 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AE2246891886138F00626A29 /* specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "specs-Info.plist"; sourceTree = "<group>"; };
@@ -105,12 +131,6 @@
 		AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdGeneratorSpec.mm; sourceTree = "<group>"; };
 		AE2246FC1888782A00626A29 /* STRAdViewFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdViewFixture.h; sourceTree = "<group>"; };
 		AE2246FD1888782A00626A29 /* STRAdViewFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdViewFixture.m; sourceTree = "<group>"; };
-		AE2246FF1888786900626A29 /* STRAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdView.h; sourceTree = "<group>"; };
-		AE3120CE1889DD3D00297F01 /* SharethroughSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharethroughSDK.h; sourceTree = "<group>"; };
-		AE3120CF1889DD3D00297F01 /* SharethroughSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharethroughSDK.m; sourceTree = "<group>"; };
-		AE3120D41889DDD100297F01 /* SharethroughSDKSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = SharethroughSDKSpec.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AE3120D61889E14E00297F01 /* STRRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRRestClient.h; sourceTree = "<group>"; };
-		AE3120D71889E14E00297F01 /* STRRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRRestClient.m; sourceTree = "<group>"; };
 		AE3120DB1889E71900297F01 /* STRDeferred.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = STRDeferred.h; path = ../STRDeferred.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AE3120DC1889E71900297F01 /* STRDeferred.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = STRDeferred.m; path = ../STRDeferred.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE3120E01889E76F00297F01 /* STRPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = STRPromise.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -147,16 +167,90 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE022DDB188DFFE700D02568 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				AE022DDC188E004900D02568 /* STRNetworkClient.h */,
+				AE022DDD188E004900D02568 /* STRNetworkClient.m */,
+				AE022DDE188E004900D02568 /* STRRestClient.h */,
+				AE022DDF188E004900D02568 /* STRRestClient.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		AE022DE4188E005300D02568 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AE022DE5188E008000D02568 /* STRAdService.h */,
+				AE022DE6188E008000D02568 /* STRAdService.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AE022DE9188E008800D02568 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
+				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AE022DEE188E00DD00D02568 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				AE022DEF188E011100D02568 /* SharethroughSDK.h */,
+				AE022DF0188E011100D02568 /* SharethroughSDK.m */,
+				AE022DF1188E011100D02568 /* STRAdView.h */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		AE022DF4188E015700D02568 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AE022DF5188E019100D02568 /* STRAdvertismentSpec.mm */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AE022DF7188E019600D02568 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				AE022DF8188E01D200D02568 /* SharethroughSDKSpec.mm */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		AE022DFA188E01DD00D02568 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				AE022DFB188E021C00D02568 /* STRNetworkClientSpec.mm */,
+				AE022DFC188E021C00D02568 /* STRRestClientSpec.mm */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		AE022DFF188E022000D02568 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AE022E00188E024700D02568 /* STRAdServiceSpec.mm */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
+				AE022DFF188E022000D02568 /* Services */,
+				AE022DFA188E01DD00D02568 /* Network */,
+				AE022DF7188E019600D02568 /* Public */,
+				AE022DF4188E015700D02568 /* Models */,
 				AE2246FB188877E900626A29 /* Fixtures */,
 				AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */,
 				AE2246901886138F00626A29 /* Rakefile */,
 				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
 				AE2246881886138F00626A29 /* Supporting Files */,
-				AE3120D41889DDD100297F01 /* SharethroughSDKSpec.mm */,
-				AE022DA31889F02B00D02568 /* STRRestClientSpec.mm */,
 			);
 			path = specs;
 			sourceTree = "<group>";
@@ -175,6 +269,7 @@
 		AE2246FB188877E900626A29 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				AE022DD0188DF3C400D02568 /* fixture_image.png */,
 				AE2246FC1888782A00626A29 /* STRAdViewFixture.h */,
 				AE2246FD1888782A00626A29 /* STRAdViewFixture.m */,
 			);
@@ -234,16 +329,15 @@
 		AE8ED3E81885ADF00004AB32 /* SharethroughSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AE022DEE188E00DD00D02568 /* Public */,
+				AE022DE9188E008800D02568 /* Models */,
+				AE022DE4188E005300D02568 /* Services */,
+				AE022DDB188DFFE700D02568 /* Network */,
 				AE3120DA1889E6EF00297F01 /* External Libs */,
 				AE3CBCB01888BCE60067DF29 /* STRResources.bundle */,
 				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
 				AE2246F3188874D100626A29 /* STRAdGenerator.h */,
 				AE2246F4188874D100626A29 /* STRAdGenerator.m */,
-				AE2246FF1888786900626A29 /* STRAdView.h */,
-				AE3120CE1889DD3D00297F01 /* SharethroughSDK.h */,
-				AE3120CF1889DD3D00297F01 /* SharethroughSDK.m */,
-				AE3120D61889E14E00297F01 /* STRRestClient.h */,
-				AE3120D71889E14E00297F01 /* STRRestClient.m */,
 			);
 			path = SharethroughSDK;
 			sourceTree = "<group>";
@@ -327,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
+				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
 				AE3CBCB11888BCE60067DF29 /* STRResources.bundle in Resources */,
 				AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */,
 			);
@@ -384,16 +479,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE022DE3188E004900D02568 /* STRRestClient.m in Sources */,
+				AE022DED188E00C100D02568 /* STRAdvertisement.m in Sources */,
+				AE022DF3188E011100D02568 /* SharethroughSDK.m in Sources */,
+				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
-				AE3120D51889DDD100297F01 /* SharethroughSDKSpec.mm in Sources */,
+				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
+				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
+				AE022DE8188E008000D02568 /* STRAdService.m in Sources */,
 				AE2246FE1888782A00626A29 /* STRAdViewFixture.m in Sources */,
+				AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */,
-				AE022DA41889F02B00D02568 /* STRRestClientSpec.mm in Sources */,
-				AE3120D11889DD3D00297F01 /* SharethroughSDK.m in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
-				AE3120D91889E14E00297F01 /* STRRestClient.m in Sources */,
+				AE022DFE188E021C00D02568 /* STRRestClientSpec.mm in Sources */,
 				AE3120E31889E76F00297F01 /* STRPromise.m in Sources */,
+				AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,9 +502,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE3120D01889DD3D00297F01 /* SharethroughSDK.m in Sources */,
+				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
+				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
+				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,
+				AE022DE2188E004900D02568 /* STRRestClient.m in Sources */,
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
-				AE3120D81889E14E00297F01 /* STRRestClient.m in Sources */,
+				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE2246F6188874D100626A29 /* STRAdGenerator.m in Sources */,
 			);

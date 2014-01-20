@@ -7,21 +7,24 @@
 //
 
 #import "STRRestClient.h"
+#import "STRNetworkClient.h"
 #import "STRDeferred.h"
+
 
 @interface STRRestClient ()
 
-@property (nonatomic, assign) NSString *hostName;
-
+@property (nonatomic, copy) NSString *hostName;
+@property (nonatomic, strong) STRNetworkClient *networkClient;
 
 @end
 
 @implementation STRRestClient
 
-- (id)initWithStaging:(BOOL)isStaging {
+- (id)initWithStaging:(BOOL)isStaging networkClient:(STRNetworkClient *)networkClient {
     self = [super init];
     if (self) {
         self.hostName = isStaging ? @"http://btlr-staging.sharethrough.com" : @"http://btlr.sharethrough.com";
+        self.networkClient = networkClient;
     }
     return self;
 }
@@ -31,13 +34,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [request setValue:@"iPhone" forHTTPHeaderField:@"User-Agent"];
     STRDeferred *deferred = [STRDeferred defer];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:NSOperationQueue.mainQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError) {
-            [deferred rejectWithError:connectionError];
-            return;
-        }
-
+    [[self.networkClient get:request] then:^id(NSData *data) {
         NSError *jsonParseError;
         id parsedObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
         if (jsonParseError) {
@@ -45,6 +42,10 @@
         } else {
             [deferred resolveWithValue:parsedObj];
         }
+        return data;
+    } error:^id(NSError *error) {
+        [deferred rejectWithError:error];
+        return error;
     }];
 
     return deferred.promise;

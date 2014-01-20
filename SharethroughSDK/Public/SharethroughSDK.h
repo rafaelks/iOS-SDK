@@ -22,7 +22,7 @@
 /**
  A read-only property to retrieve the priceKey set by the class constructor generatorWithPriceKey:isStaging:.
  */
-@property (nonatomic, assign, readonly) NSString *priceKey;
+@property (nonatomic, copy, readonly) NSString *priceKey;
 
 /**
  The accessor for the SDK's shared instance.

@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "STRPromise.h"
 
-@class STRPromise;
+@class STRNetworkClient;
 
 @interface STRRestClient : NSObject
 
-- (id)initWithStaging:(BOOL)isStaging;
+- (id)initWithStaging:(BOOL)isStaging networkClient:(STRNetworkClient *)networkClient;
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters;
 
 @end

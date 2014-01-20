@@ -1,7 +1,8 @@
 #import "STRAdGenerator.h"
 #import "STRAdViewFixture.h"
-#import "STRRestClient.h"
+#import "STRAdService.h"
 #import "STRDeferred.h"
+#import "STRAdvertisement.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -10,11 +11,11 @@ SPEC_BEGIN(STRAdGeneratorSpec)
 
 describe(@"STRAdGenerator", ^{
     __block STRAdGenerator *generator;
-    __block STRRestClient *restClient;
+    __block STRAdService *adService;
 
     beforeEach(^{
-        restClient = nice_fake_for([STRRestClient class]);
-        generator = [[STRAdGenerator alloc] initWithPriceKey:@"priceKey" restClient:restClient];
+        adService = nice_fake_for([STRAdService class]);
+        generator = [[STRAdGenerator alloc] initWithPriceKey:@"priceKey" adService:adService];
     });
 
     describe(@"placing an ad in the view", ^{
@@ -25,7 +26,7 @@ describe(@"STRAdGenerator", ^{
         beforeEach(^{
             view = [STRAdViewFixture new];
             deferred = [STRDeferred defer];
-            restClient stub_method(@selector(getWithParameters:)).and_return(deferred.promise);
+            adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);
             [generator placeAdInView:view placementKey:@"placementKey"];
             spinner = (UIActivityIndicatorView *) [view.subviews lastObject];
         });
@@ -35,17 +36,18 @@ describe(@"STRAdGenerator", ^{
         });
 
         it(@"makes a network request", ^{
-            restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey"});
+            adService should have_received(@selector(fetchAdForPlacementKey:)).with(@"placementKey");
         });
 
         describe(@"when the ad has fetched successfully", ^{
             beforeEach(^{
-                [deferred resolveWithValue:@{
-                                                @"description": @"Dogs this smart deserve a home.",
-                                                @"thumbnail_url": @"http:\\/\\/i1.ytimg.com\\/vi\\/BWAK0J8Uhzk\\/hqdefault.jpg",
-                                                @"title": @"Meet Porter. He's a Dog.",
-                                                @"advertiser": @"Brand X",
-                                             }];
+                STRAdvertisement *ad = [STRAdvertisement new];
+                ad.adDescription = @"Dogs this smart deserve a home.";
+                ad.title = @"Meet Porter. He's a Dog.";
+                ad.advertiser = @"Brand X";
+                ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
+
+                [deferred resolveWithValue:ad];
             });
 
             it(@"removes the spinner", ^{

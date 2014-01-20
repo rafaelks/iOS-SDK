@@ -8,12 +8,15 @@
 
 #import "SharethroughSDK.h"
 #import "STRAdGenerator.h"
+#import "STRAdService.h"
 #import "STRRestClient.h"
+#import "STRNetworkClient.h"
 
 @interface SharethroughSDK ()
 
 @property (nonatomic, assign, readwrite, getter=isStaging) BOOL staging;
-@property (nonatomic, assign, readwrite) NSString *priceKey;
+@property (nonatomic, copy, readwrite) NSString *priceKey;
+@property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, strong) STRRestClient *restClient;
 
 @end
@@ -36,11 +39,13 @@
 - (void)configureWithPriceKey:(NSString *)priceKey isStaging:(BOOL)staging {
     self.staging = staging;
     self.priceKey = priceKey;
-    self.restClient = [[STRRestClient alloc] initWithStaging:self.isStaging];
+    self.networkClient = [STRNetworkClient new];
+    self.restClient = [[STRRestClient alloc] initWithStaging:self.isStaging networkClient:self.networkClient];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey {
-    STRAdGenerator *generator = [[STRAdGenerator alloc] initWithPriceKey:self.priceKey restClient:self.restClient];
+    STRAdService *adService = [[STRAdService alloc] initWithRestClient:self.restClient networkClient:self.networkClient];
+    STRAdGenerator *generator = [[STRAdGenerator alloc] initWithPriceKey:self.priceKey adService:adService];
     [generator placeAdInView:view placementKey:placementKey];
 }
 
