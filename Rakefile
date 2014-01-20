@@ -1,7 +1,7 @@
 load "specs/Rakefile"
 
 desc "Run specs and generate documentation"
-task :default => [ :specs ]
+task :default => [ :specs, :docs ]
 
 desc "Generate documentation"
 task :docs do
