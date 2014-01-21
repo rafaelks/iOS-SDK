@@ -30,9 +30,10 @@
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.translatesAutoresizingMaskIntoConstraints = NO;
     [view addSubview:spinner];
     [spinner startAnimating];
-    spinner.center = view.center;
+    [self centerView:spinner insideOfView:view];
 
     STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
     [adPromise then:^id(STRAdvertisement *ad) {
@@ -49,6 +50,23 @@
         [spinner removeFromSuperview];
         return error;
     }];
+}
+
+- (void)centerView:(UIView *)viewToCenter insideOfView:(UIView *)containerView {
+    [containerView addConstraint:[NSLayoutConstraint constraintWithItem:containerView
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:viewToCenter
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.0
+                                                      constant:0]];
+    [containerView addConstraint:[NSLayoutConstraint constraintWithItem:containerView
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:viewToCenter
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1.0
+                                                      constant:0]];
 }
 
 @end
