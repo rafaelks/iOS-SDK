@@ -30,10 +30,12 @@
 }
 
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters {
+    STRDeferred *deferred = [STRDeferred defer];
+
     NSString *urlString = [self.hostName stringByAppendingString:[self encodedQueryParams:parameters]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [request setValue:@"iPhone" forHTTPHeaderField:@"User-Agent"];
-    STRDeferred *deferred = [STRDeferred defer];
+
     [[self.networkClient get:request] then:^id(NSData *data) {
         NSError *jsonParseError;
         id parsedObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];

@@ -33,6 +33,7 @@
 
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey {
     STRDeferred *deferred = [STRDeferred defer];
+
     STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
     [adPromise then:^id(NSDictionary *adJSON) {
         NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:adJSON[@"thumbnail_url"]]];
@@ -43,6 +44,7 @@
             ad.title = adJSON[@"title"];
             ad.adDescription = adJSON[@"description"];
             ad.thumbnailImage = [UIImage imageWithData:data];
+
             [deferred resolveWithValue:ad];
             return data;
         } error:^id(NSError *error) {

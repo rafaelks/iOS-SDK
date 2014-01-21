@@ -59,8 +59,6 @@
 		AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
 		AE3120E21889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
 		AE3120E31889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
-		AE3CBCB11888BCE60067DF29 /* STRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE3CBCB01888BCE60067DF29 /* STRResources.bundle */; };
-		AE3CBCB21888BCF90067DF29 /* STRResources.bundle in Copy Resource Bundle */ = {isa = PBXBuildFile; fileRef = AE3CBCB01888BCE60067DF29 /* STRResources.bundle */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -83,7 +81,6 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Resources";
 			dstSubfolderSpec = 0;
 			files = (
-				AE3CBCB21888BCF90067DF29 /* STRResources.bundle in Copy Resource Bundle */,
 			);
 			name = "Copy Resource Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,7 +132,6 @@
 		AE3120DC1889E71900297F01 /* STRDeferred.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = STRDeferred.m; path = ../STRDeferred.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE3120E01889E76F00297F01 /* STRPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = STRPromise.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AE3120E11889E76F00297F01 /* STRPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = STRPromise.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AE3CBCB01888BCE60067DF29 /* STRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = STRResources.bundle; sourceTree = "<group>"; };
 		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharethroughSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -334,7 +330,6 @@
 				AE022DE4188E005300D02568 /* Services */,
 				AE022DDB188DFFE700D02568 /* Network */,
 				AE3120DA1889E6EF00297F01 /* External Libs */,
-				AE3CBCB01888BCE60067DF29 /* STRResources.bundle */,
 				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
 				AE2246F3188874D100626A29 /* STRAdGenerator.h */,
 				AE2246F4188874D100626A29 /* STRAdGenerator.m */,
@@ -422,7 +417,6 @@
 			files = (
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
 				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
-				AE3CBCB11888BCE60067DF29 /* STRResources.bundle in Resources */,
 				AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

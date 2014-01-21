@@ -61,7 +61,7 @@ describe(@"STRAdGenerator", ^{
             });
 
             it(@"adds a placeholder image", ^{
-                UIImage *expectedImage = [UIImage imageNamed:@"STRResources.bundle/images/fixture_image.png"];
+                UIImage *expectedImage = [UIImage imageNamed:@"fixture_image.png"];
                 NSData *expectedImageData = UIImagePNGRepresentation(expectedImage);
                 UIImagePNGRepresentation(view.adThumbnail.image) should equal(expectedImageData);
                 view.adThumbnail.contentMode should equal(UIViewContentModeScaleAspectFill);

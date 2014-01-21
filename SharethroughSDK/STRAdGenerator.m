@@ -51,20 +51,5 @@
     }];
 }
 
-- (BOOL)runningInFramework {
-    return [[NSBundle mainBundle] pathForResource:@"Sharethrough-SDK.framework" ofType:nil] != nil;
-}
-
-- (UIImage *)fixtureImage {
-    NSString *path;
-    if ([self runningInFramework]) {
-        path = [[NSBundle mainBundle] pathForResource:@"Sharethrough-SDK.framework/Resources/STRResources.bundle/images/fixture_image.png" ofType:nil];
-    } else {
-        path = [[NSBundle mainBundle] pathForResource:@"STRResources.bundle/images/fixture_image.png" ofType:nil];
-    }
-
-    return [UIImage imageWithContentsOfFile:path];
-
-}
 @end
 
