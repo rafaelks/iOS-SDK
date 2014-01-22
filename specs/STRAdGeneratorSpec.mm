@@ -3,6 +3,8 @@
 #import "STRAdService.h"
 #import "STRDeferred.h"
 #import "STRAdvertisement.h"
+#import "STRInteractiveAdViewController.h"
+#include "UIGestureRecognizer+Spec.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -14,6 +16,7 @@ describe(@"STRAdGenerator", ^{
     __block STRAdService *adService;
 
     beforeEach(^{
+        [UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdGenerator class]];
         adService = nice_fake_for([STRAdService class]);
         generator = [[STRAdGenerator alloc] initWithPriceKey:@"priceKey" adService:adService];
     });
@@ -22,12 +25,19 @@ describe(@"STRAdGenerator", ^{
         __block STRAdViewFixture *view;
         __block STRDeferred *deferred;
         __block UIActivityIndicatorView *spinner;
+        __block UIViewController *presentingViewController;
 
         beforeEach(^{
             view = [STRAdViewFixture new];
             deferred = [STRDeferred defer];
+
+            presentingViewController = [UIViewController new];
+            UIWindow *window = [UIWindow new];
+            window.rootViewController = presentingViewController;
+            [window makeKeyAndVisible];
+
             adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);
-            [generator placeAdInView:view placementKey:@"placementKey"];
+            [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:presentingViewController];
             spinner = (UIActivityIndicatorView *) [view.subviews lastObject];
         });
 
@@ -65,6 +75,16 @@ describe(@"STRAdGenerator", ^{
                 NSData *expectedImageData = UIImagePNGRepresentation(expectedImage);
                 UIImagePNGRepresentation(view.adThumbnail.image) should equal(expectedImageData);
                 view.adThumbnail.contentMode should equal(UIViewContentModeScaleAspectFill);
+            });
+
+            it(@"adds a gesture recognizer for taps", ^{
+                [view.gestureRecognizers count] should equal(1);
+                [view.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
+            });
+
+            it(@"presents the STRInteractiveAdViewController when the ad is tapped on", ^{
+                [[view.gestureRecognizers lastObject] recognize];
+                presentingViewController.presentedViewController should be_instance_of([STRInteractiveAdViewController class]);
             });
         });
 

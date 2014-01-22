@@ -11,10 +11,10 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "Sharethrough-SDK" */;
 			buildPhases = (
-				AE2246701885FDC400626A29 /* Build Static Libraries */,
+				AE2246701885FDC400626A29 /* Build Static Libraries and Resource Bundle */,
 				AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */,
 				AE2246721885FEED00626A29 /* Copy Header Files */,
-				AE3093D51888AC1B006D1E79 /* Copy Resource Bundle */,
+				AE52B89F188F40D100C4DEF8 /* Copy created .bundle to resources */,
 				AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */,
 			);
 			dependencies = (
@@ -59,8 +59,55 @@
 		AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
 		AE3120E21889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
 		AE3120E31889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
+		AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
+		AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
+		AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B838188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
+		AE52B85F188F296400C4DEF8 /* STRBundleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */; };
+		AE52B860188F296400C4DEF8 /* STRBundleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */; };
+		AE52B88D188F3CA100C4DEF8 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B87B188F398A00C4DEF8 /* CoreFoundation.framework */; };
+		AE52B899188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */; };
+		AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
+		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AE52B835188EF89F00C4DEF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEBCCC24168B999F0056EE83;
+			remoteInfo = "UIKit+PivotalCore-StaticLib";
+		};
+		AE52B837188EF89F00C4DEF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEBCCC64168B9AF10056EE83;
+			remoteInfo = "UIKit+PivotalSpecHelper-StaticLib";
+		};
+		AE52B839188EF89F00C4DEF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEC40C89174C203700474D2D;
+			remoteInfo = "UIKit+PivotalSpecHelperStubs-StaticLib";
+		};
+		AE52B83B188EF89F00C4DEF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEBCCC34168B99ED0056EE83;
+			remoteInfo = "UIKit-StaticLibSpec";
+		};
+		AE52B84D188EFDFA00C4DEF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AEBCCC63168B9AF10056EE83;
+			remoteInfo = "UIKit+PivotalSpecHelper-StaticLib";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AE2246721885FEED00626A29 /* Copy Header Files */ = {
@@ -73,16 +120,6 @@
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 			);
 			name = "Copy Header Files";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AE3093D51888AC1B006D1E79 /* Copy Resource Bundle */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Resources";
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			name = "Copy Resource Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AE8ED3E11885ADF00004AB32 /* CopyFiles */ = {
@@ -132,11 +169,23 @@
 		AE3120DC1889E71900297F01 /* STRDeferred.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = STRDeferred.m; path = ../STRDeferred.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE3120E01889E76F00297F01 /* STRPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = STRPromise.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AE3120E11889E76F00297F01 /* STRPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = STRPromise.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIKit.xcodeproj; path = Vendor/PivotalCoreKit/UIKit/UIKit.xcodeproj; sourceTree = "<group>"; };
+		AE52B847188EFC9B00C4DEF8 /* STRInteractiveAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRInteractiveAdViewController.h; sourceTree = "<group>"; };
+		AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRInteractiveAdViewController.m; sourceTree = "<group>"; };
+		AE52B85D188F296400C4DEF8 /* STRBundleSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRBundleSettings.h; sourceTree = "<group>"; };
+		AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRBundleSettings.m; sourceTree = "<group>"; };
+		AE52B87B188F398A00C4DEF8 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		AE52B87F188F398A00C4DEF8 /* STRResources-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "STRResources-Info.plist"; sourceTree = "<group>"; };
+		AE52B881188F398A00C4DEF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AE52B883188F398A00C4DEF8 /* STRResources-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "STRResources-Prefix.pch"; sourceTree = "<group>"; };
+		AE52B88C188F3CA100C4DEF8 /* STRResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = STRResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STRInteractiveAdViewController.xib; sourceTree = "<group>"; };
 		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharethroughSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,10 +193,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
 				AE2246831886138F00626A29 /* UIKit.framework in Frameworks */,
 				AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */,
 				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE52B889188F3CA100C4DEF8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE52B88D188F3CA100C4DEF8 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +296,8 @@
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
+				AEFBF15D188F46D900ADD742 /* Controllers */,
+				AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */,
 				AE022DFF188E022000D02568 /* Services */,
 				AE022DFA188E01DD00D02568 /* Network */,
 				AE022DF7188E019600D02568 /* Public */,
@@ -291,12 +351,61 @@
 			path = KSPromise;
 			sourceTree = "<group>";
 		};
+		AE52B82C188EF89F00C4DEF8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AE52B836188EF89F00C4DEF8 /* libUIKit+PivotalCore-StaticLib.a */,
+				AE52B838188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a */,
+				AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */,
+				AE52B83C188EF89F00C4DEF8 /* UIKit-StaticLibSpec.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AE52B840188EFB3600C4DEF8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */,
+				AE52B847188EFC9B00C4DEF8 /* STRInteractiveAdViewController.h */,
+				AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AE52B85C188F290600C4DEF8 /* Extension Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AE52B85D188F296400C4DEF8 /* STRBundleSettings.h */,
+				AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */,
+			);
+			path = "Extension Helpers";
+			sourceTree = "<group>";
+		};
+		AE52B87D188F398A00C4DEF8 /* STRResources */ = {
+			isa = PBXGroup;
+			children = (
+				AE52B87E188F398A00C4DEF8 /* Supporting Files */,
+			);
+			path = STRResources;
+			sourceTree = "<group>";
+		};
+		AE52B87E188F398A00C4DEF8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AE52B87F188F398A00C4DEF8 /* STRResources-Info.plist */,
+				AE52B880188F398A00C4DEF8 /* InfoPlist.strings */,
+				AE52B883188F398A00C4DEF8 /* STRResources-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		AE8ED3DA1885ADF00004AB32 = {
 			isa = PBXGroup;
 			children = (
 				AE022DAB188DBB1400D02568 /* Default-568h@2x.png */,
 				AE8ED3E81885ADF00004AB32 /* SharethroughSDK */,
 				AE2246871886138F00626A29 /* specs */,
+				AE52B87D188F398A00C4DEF8 /* STRResources */,
 				AE8ED3E51885ADF00004AB32 /* Frameworks */,
 				AE8ED3E41885ADF00004AB32 /* Products */,
 			);
@@ -307,6 +416,7 @@
 			children = (
 				AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */,
 				AE2246821886138F00626A29 /* specs.app */,
+				AE52B88C188F3CA100C4DEF8 /* STRResources.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -318,6 +428,7 @@
 				AE8ED3F41885ADF00004AB32 /* XCTest.framework */,
 				AE8ED3F71885ADF00004AB32 /* UIKit.framework */,
 				AE2246851886138F00626A29 /* CoreGraphics.framework */,
+				AE52B87B188F398A00C4DEF8 /* CoreFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -325,11 +436,13 @@
 		AE8ED3E81885ADF00004AB32 /* SharethroughSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AE3120DA1889E6EF00297F01 /* External Libs */,
+				AE52B85C188F290600C4DEF8 /* Extension Helpers */,
+				AE52B840188EFB3600C4DEF8 /* Controllers */,
 				AE022DEE188E00DD00D02568 /* Public */,
 				AE022DE9188E008800D02568 /* Models */,
 				AE022DE4188E005300D02568 /* Services */,
 				AE022DDB188DFFE700D02568 /* Network */,
-				AE3120DA1889E6EF00297F01 /* External Libs */,
 				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
 				AE2246F3188874D100626A29 /* STRAdGenerator.h */,
 				AE2246F4188874D100626A29 /* STRAdGenerator.m */,
@@ -343,6 +456,14 @@
 				AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AEFBF15D188F46D900ADD742 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,11 +480,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				AE52B84E188EFDFA00C4DEF8 /* PBXTargetDependency */,
 			);
 			name = specs;
 			productName = specs;
 			productReference = AE2246821886138F00626A29 /* specs.app */;
 			productType = "com.apple.product-type.application";
+		};
+		AE52B88B188F3CA100C4DEF8 /* STRResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE52B895188F3CA100C4DEF8 /* Build configuration list for PBXNativeTarget "STRResources" */;
+			buildPhases = (
+				AE52B888188F3CA100C4DEF8 /* Sources */,
+				AE52B889188F3CA100C4DEF8 /* Frameworks */,
+				AE52B88A188F3CA100C4DEF8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = STRResources;
+			productName = STRResources;
+			productReference = AE52B88C188F3CA100C4DEF8 /* STRResources.bundle */;
+			productType = "com.apple.product-type.bundle";
 		};
 		AE8ED3E21885ADF00004AB32 /* SharethroughSDK */ = {
 			isa = PBXNativeTarget;
@@ -401,14 +540,52 @@
 			mainGroup = AE8ED3DA1885ADF00004AB32;
 			productRefGroup = AE8ED3E41885ADF00004AB32 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AE52B82C188EF89F00C4DEF8 /* Products */;
+					ProjectRef = AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				AE8ED3E21885ADF00004AB32 /* SharethroughSDK */,
 				AE22466C1885FD8100626A29 /* Sharethrough-SDK */,
 				AE2246811886138F00626A29 /* specs */,
+				AE52B88B188F3CA100C4DEF8 /* STRResources */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AE52B836188EF89F00C4DEF8 /* libUIKit+PivotalCore-StaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libUIKit+PivotalCore-StaticLib.a";
+			remoteRef = AE52B835188EF89F00C4DEF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE52B838188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libUIKit+PivotalSpecHelper-StaticLib.a";
+			remoteRef = AE52B837188EF89F00C4DEF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libUIKit+PivotalSpecHelperStubs-StaticLib.a";
+			remoteRef = AE52B839188EF89F00C4DEF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE52B83C188EF89F00C4DEF8 /* UIKit-StaticLibSpec.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "UIKit-StaticLibSpec.app";
+			remoteRef = AE52B83B188EF89F00C4DEF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AE2246801886138F00626A29 /* Resources */ = {
@@ -417,26 +594,35 @@
 			files = (
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
 				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
+				AE52B899188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 				AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE52B88A188F3CA100C4DEF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AE2246701885FDC400626A29 /* Build Static Libraries */ = {
+		AE2246701885FDC400626A29 /* Build Static Libraries and Resource Bundle */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Build Static Libraries";
+			name = "Build Static Libraries and Resource Bundle";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos";
+			shellScript = "xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target STRResources -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal";
 		};
 		AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -466,6 +652,20 @@
 			shellPath = /bin/sh;
 			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
 		};
+		AE52B89F188F40D100C4DEF8 /* Copy created .bundle to resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy created .bundle to resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\ncp -r \"${UNIVERSAL_LIBRARY_DIR}/STRResources.bundle\" \"${FRAMEWORK}/Resources/STRResources.bundle\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -478,11 +678,14 @@
 				AE022DF3188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
+				AE52B860188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
 				AE022DE8188E008000D02568 /* STRAdService.m in Sources */,
 				AE2246FE1888782A00626A29 /* STRAdViewFixture.m in Sources */,
+				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
+				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
@@ -492,15 +695,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AE52B888188F3CA100C4DEF8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AE8ED3DF1885ADF00004AB32 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
+				AE52B85F188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AE022DE2188E004900D02568 /* STRRestClient.m in Sources */,
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
+				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE2246F6188874D100626A29 /* STRAdGenerator.m in Sources */,
@@ -509,11 +721,27 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AE52B84E188EFDFA00C4DEF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "UIKit+PivotalSpecHelper-StaticLib";
+			targetProxy = AE52B84D188EFDFA00C4DEF8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		AE22468A1886138F00626A29 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AE22468B1886138F00626A29 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AE52B880188F398A00C4DEF8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AE52B881188F398A00C4DEF8 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -555,6 +783,11 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/specs/Vendor/PivotalCoreKit/**",
+				);
 				INFOPLIST_FILE = "specs/specs-Info.plist";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -578,6 +811,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "specs/specs-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/specs/Vendor/PivotalCoreKit/**",
+				);
 				INFOPLIST_FILE = "specs/specs-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
@@ -587,6 +825,43 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		AE52B896188F3CA100C4DEF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "STRResources/STRResources-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "STRResources/STRResources-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		AE52B897188F3CA100C4DEF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "STRResources/STRResources-Prefix.pch";
+				INFOPLIST_FILE = "STRResources/STRResources-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -709,6 +984,15 @@
 			buildConfigurations = (
 				AE2246961886138F00626A29 /* Debug */,
 				AE2246971886138F00626A29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE52B895188F3CA100C4DEF8 /* Build configuration list for PBXNativeTarget "STRResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE52B896188F3CA100C4DEF8 /* Debug */,
+				AE52B897188F3CA100C4DEF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

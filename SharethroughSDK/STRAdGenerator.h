@@ -14,6 +14,6 @@
 @interface STRAdGenerator : NSObject
 
 - (id)initWithPriceKey:(NSString *)priceKey adService:(STRAdService *)adService;
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey;
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController;
 
 @end

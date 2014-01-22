@@ -11,10 +11,13 @@
 #import "STRAdService.h"
 #import "STRPromise.h"
 #import "STRAdvertisement.h"
+#import "STRInteractiveAdViewController.h"
 
 @interface STRAdGenerator ()
 
 @property (nonatomic, weak) STRAdService *adService;
+@property (nonatomic, weak) UIViewController *presentingViewController;
+@property (nonatomic, strong) STRInteractiveAdViewController *interactiveAdController;
 
 @end
 
@@ -28,7 +31,9 @@
     return self;
 }
 
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey {
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
+    self.presentingViewController = presentingViewController;
+
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     spinner.translatesAutoresizingMaskIntoConstraints = NO;
     [view addSubview:spinner];
@@ -44,6 +49,9 @@
         view.adSponsoredBy.text = [ad sponsoredBy];
         view.adThumbnail.contentMode = UIViewContentModeScaleAspectFill;
         view.adThumbnail.image = ad.thumbnailImage;
+
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
+        [view addGestureRecognizer:tapRecognizer];
 
         return ad;
     } error:^id(NSError *error) {
@@ -67,6 +75,11 @@
                                                      attribute:NSLayoutAttributeCenterY
                                                     multiplier:1.0
                                                       constant:0]];
+}
+
+- (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
+    self.interactiveAdController = [STRInteractiveAdViewController new];
+    [self.presentingViewController presentViewController:self.interactiveAdController animated:YES completion:nil];
 }
 
 @end

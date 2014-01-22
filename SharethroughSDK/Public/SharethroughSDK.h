@@ -40,8 +40,9 @@
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
+ @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
  */
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey;
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController;
 
 
 @end

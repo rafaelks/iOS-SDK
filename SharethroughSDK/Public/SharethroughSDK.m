@@ -18,6 +18,7 @@
 @property (nonatomic, copy, readwrite) NSString *priceKey;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, strong) STRRestClient *restClient;
+@property (nonatomic, strong) STRAdGenerator *generator;
 
 @end
 
@@ -43,10 +44,10 @@
     self.restClient = [[STRRestClient alloc] initWithStaging:self.isStaging networkClient:self.networkClient];
 }
 
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey {
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
     STRAdService *adService = [[STRAdService alloc] initWithRestClient:self.restClient networkClient:self.networkClient];
-    STRAdGenerator *generator = [[STRAdGenerator alloc] initWithPriceKey:self.priceKey adService:adService];
-    [generator placeAdInView:view placementKey:placementKey];
+    self.generator = [[STRAdGenerator alloc] initWithPriceKey:self.priceKey adService:adService];
+    [self.generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
 }
 
 
