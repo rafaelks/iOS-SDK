@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="STRInteractiveAdViewController">
             <connections>
+                <outlet property="largePreview" destination="4Hc-rk-aup" id="feJ-h8-Wkw"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>

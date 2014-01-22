@@ -18,6 +18,7 @@
 @property (nonatomic, weak) STRAdService *adService;
 @property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, strong) STRInteractiveAdViewController *interactiveAdController;
+@property (nonatomic, strong) STRAdvertisement *ad;
 
 @end
 
@@ -44,6 +45,7 @@
     [adPromise then:^id(STRAdvertisement *ad) {
         [spinner removeFromSuperview];
 
+        self.ad = ad;
         view.adTitle.text = ad.title;
         view.adDescription.text = ad.adDescription;
         view.adSponsoredBy.text = [ad sponsoredBy];
@@ -78,7 +80,7 @@
 }
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
-    self.interactiveAdController = [STRInteractiveAdViewController new];
+    self.interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad];
     [self.presentingViewController presentViewController:self.interactiveAdController animated:YES completion:nil];
 }
 

@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class STRAdvertisement;
+
 @interface STRInteractiveAdViewController : UIViewController
 
+@property (strong, nonatomic, readonly) STRAdvertisement *ad;
+@property (weak, nonatomic) IBOutlet UIImageView *largePreview;
+
+- (id)initWithAd:(STRAdvertisement *)ad;
 - (IBAction)doneButtonPressed:(id)sender;
 
 @end

@@ -1,4 +1,6 @@
 #import "STRInteractiveAdViewController.h"
+#import "STRAdvertisement.h"
+#include "UIImage+Spec.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -9,7 +11,14 @@ describe(@"STRInteractiveAdViewController", ^{
     __block STRInteractiveAdViewController *controller;
 
     beforeEach(^{
-        controller = [STRInteractiveAdViewController new];
+        STRAdvertisement *ad = [STRAdvertisement new];
+        ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
+        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad];
+        controller.view should_not be_nil;
+    });
+
+    it(@"fills in the image preview with the ad thumbnail", ^{
+        [controller.largePreview.image isEqualToByBytes:[UIImage imageNamed:@"fixture_image.png"]] should be_truthy;
     });
 
     describe(@"when the user taps the done button", ^{

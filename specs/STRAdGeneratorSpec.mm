@@ -5,6 +5,7 @@
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 #include "UIGestureRecognizer+Spec.h"
+#include "UIImage+Spec.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -50,8 +51,10 @@ describe(@"STRAdGenerator", ^{
         });
 
         describe(@"when the ad has fetched successfully", ^{
+            __block STRAdvertisement *ad;
+
             beforeEach(^{
-                STRAdvertisement *ad = [STRAdvertisement new];
+                ad = [STRAdvertisement new];
                 ad.adDescription = @"Dogs this smart deserve a home.";
                 ad.title = @"Meet Porter. He's a Dog.";
                 ad.advertiser = @"Brand X";
@@ -71,9 +74,7 @@ describe(@"STRAdGenerator", ^{
             });
 
             it(@"adds a placeholder image", ^{
-                UIImage *expectedImage = [UIImage imageNamed:@"fixture_image.png"];
-                NSData *expectedImageData = UIImagePNGRepresentation(expectedImage);
-                UIImagePNGRepresentation(view.adThumbnail.image) should equal(expectedImageData);
+                [view.adThumbnail.image isEqualToByBytes:[UIImage imageNamed:@"fixture_image.png"]] should be_truthy;
                 view.adThumbnail.contentMode should equal(UIViewContentModeScaleAspectFill);
             });
 
@@ -84,7 +85,9 @@ describe(@"STRAdGenerator", ^{
 
             it(@"presents the STRInteractiveAdViewController when the ad is tapped on", ^{
                 [[view.gestureRecognizers lastObject] recognize];
-                presentingViewController.presentedViewController should be_instance_of([STRInteractiveAdViewController class]);
+                STRInteractiveAdViewController *interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
+                interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
+                interactiveAdController.ad should be_same_instance_as(ad);
             });
         });
 

@@ -8,16 +8,29 @@
 
 #import "STRInteractiveAdViewController.h"
 #import "STRBundleSettings.h"
+#import "STRAdvertisement.h"
 
 @interface STRInteractiveAdViewController ()
+
+@property (strong, nonatomic, readwrite) STRAdvertisement *ad;
 
 @end
 
 @implementation STRInteractiveAdViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (id)initWithAd:(STRAdvertisement *)ad {
     self = [super initWithNibName:nil bundle:[STRBundleSettings bundleForResources]];
+    if (self) {
+        self.ad = ad;
+    }
+
     return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.largePreview.image = self.ad.thumbnailImage;
 }
 
 - (IBAction)doneButtonPressed:(id)sender {
