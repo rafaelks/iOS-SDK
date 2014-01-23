@@ -17,7 +17,6 @@
 
 @property (nonatomic, weak) STRAdService *adService;
 @property (nonatomic, weak) UIViewController *presentingViewController;
-@property (nonatomic, strong) STRInteractiveAdViewController *interactiveAdController;
 @property (nonatomic, strong) STRAdvertisement *ad;
 
 @end
@@ -80,13 +79,12 @@
 }
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
-    self.interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad];
-    self.interactiveAdController.delegate = self;
-    [self.presentingViewController presentViewController:self.interactiveAdController animated:NO completion:nil];
+    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad];
+    interactiveAdController.delegate = self;
+    [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
 }
 
 - (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
-    self.interactiveAdController = nil;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
