@@ -13,8 +13,10 @@
 @property (nonatomic, copy) NSString *advertiser;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *adDescription;
+@property (nonatomic, copy) NSURL *mediaUrl;
 @property (nonatomic, strong) UIImage *thumbnailImage;
 
 - (NSString *)sponsoredBy;
+- (NSString *)youtubeVideoId;
 
 @end

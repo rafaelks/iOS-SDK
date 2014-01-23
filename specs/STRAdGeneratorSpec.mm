@@ -83,11 +83,26 @@ describe(@"STRAdGenerator", ^{
                 [view.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
             });
 
-            it(@"presents the STRInteractiveAdViewController when the ad is tapped on", ^{
-                [[view.gestureRecognizers lastObject] recognize];
-                STRInteractiveAdViewController *interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
-                interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
-                interactiveAdController.ad should be_same_instance_as(ad);
+            describe(@"when the ad is tapped on", ^{
+                __block STRInteractiveAdViewController *interactiveAdController;
+
+                beforeEach(^{
+                    [[view.gestureRecognizers lastObject] recognize];
+                    interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
+
+                });
+
+                it(@"presents the STRInteractiveAdViewController", ^{
+                    interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
+                    interactiveAdController.ad should be_same_instance_as(ad);
+                    interactiveAdController.delegate should be_same_instance_as(generator);
+                });
+
+                it(@"dismisses the interactive ad controller when told", ^{
+                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
+
+                    presentingViewController.presentedViewController should be_nil;
+                });
             });
         });
 

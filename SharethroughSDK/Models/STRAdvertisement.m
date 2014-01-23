@@ -14,4 +14,15 @@
     return [NSString stringWithFormat:@"Promoted by %@", self.advertiser];
 }
 
+- (NSString *)youtubeVideoId {
+    NSArray *parameters = [[self.mediaUrl query] componentsSeparatedByString:@"&"];
+    for (NSString *paramSet in parameters) {
+        NSArray *tuple = [paramSet componentsSeparatedByString:@"="];
+        if ([[tuple firstObject]  isEqual: @"v"]) {
+            return [tuple lastObject];
+        }
+    }
+    return nil;
+}
+
 @end

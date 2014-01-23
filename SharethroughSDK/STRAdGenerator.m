@@ -13,7 +13,7 @@
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 
-@interface STRAdGenerator ()
+@interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
 
 @property (nonatomic, weak) STRAdService *adService;
 @property (nonatomic, weak) UIViewController *presentingViewController;
@@ -81,7 +81,13 @@
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     self.interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad];
-    [self.presentingViewController presentViewController:self.interactiveAdController animated:YES completion:nil];
+    self.interactiveAdController.delegate = self;
+    [self.presentingViewController presentViewController:self.interactiveAdController animated:NO completion:nil];
+}
+
+- (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
+    self.interactiveAdController = nil;
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

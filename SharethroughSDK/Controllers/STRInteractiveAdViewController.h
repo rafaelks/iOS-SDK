@@ -9,13 +9,23 @@
 #import <UIKit/UIKit.h>
 
 @class STRAdvertisement;
+@protocol STRInteractiveAdViewControllerDelegate;
 
 @interface STRInteractiveAdViewController : UIViewController
 
 @property (strong, nonatomic, readonly) STRAdvertisement *ad;
-@property (weak, nonatomic) IBOutlet UIImageView *largePreview;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) id<STRInteractiveAdViewControllerDelegate> delegate;
 
 - (id)initWithAd:(STRAdvertisement *)ad;
 - (IBAction)doneButtonPressed:(id)sender;
+
+@end
+
+@protocol STRInteractiveAdViewControllerDelegate <NSObject>
+
+- (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController;
 
 @end

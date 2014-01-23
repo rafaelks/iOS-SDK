@@ -51,6 +51,7 @@ describe(@"STRAdService", ^{
                                                        @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
                                                        @"title": @"Meet Porter. He's a Dog.",
                                                        @"advertiser": @"Brand X",
+                                                       @"media_url": @"http://www.youtube.com/watch?v=BWAK0J8Uhzk"
                                                        }];
             });
 
@@ -77,6 +78,7 @@ describe(@"STRAdService", ^{
                     ad.advertiser should equal(@"Brand X");
                     ad.title should equal(@"Meet Porter. He's a Dog.");
                     ad.adDescription should equal(@"Dogs this smart deserve a home.");
+                    [ad.mediaUrl absoluteString] should equal(@"http://www.youtube.com/watch?v=BWAK0J8Uhzk");
                     UIImagePNGRepresentation(ad.thumbnailImage) should equal(UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]));
                 });
             });

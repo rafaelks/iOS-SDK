@@ -6,8 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="STRInteractiveAdViewController">
             <connections>
-                <outlet property="largePreview" destination="4Hc-rk-aup" id="feJ-h8-Wkw"/>
+                <outlet property="contentView" destination="zuh-ST-ZOh" id="r6u-Yl-m60"/>
+                <outlet property="spinner" destination="oAQ-Fy-q9H" id="0Bf-5w-8Mt"/>
                 <outlet property="view" destination="1" id="3"/>
+                <outlet property="webView" destination="knK-K9-I8c" id="6SB-Sp-zTz"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -37,20 +39,41 @@
                         <constraint firstAttribute="height" constant="40" id="VcG-Qr-m42"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Hc-rk-aup">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuh-ST-ZOh" userLabel="Content View">
                     <rect key="frame" x="0.0" y="52" width="320" height="516"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
+                    <subviews>
+                        <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knK-K9-I8c">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="516"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <dataDetectorType key="dataDetectorTypes"/>
+                        </webView>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="oAQ-Fy-q9H">
+                            <rect key="frame" x="150" y="248" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="knK-K9-I8c" firstAttribute="leading" secondItem="zuh-ST-ZOh" secondAttribute="leading" id="AHs-DZ-DGf"/>
+                        <constraint firstAttribute="trailing" secondItem="knK-K9-I8c" secondAttribute="trailing" id="fK4-ie-YeJ"/>
+                        <constraint firstItem="knK-K9-I8c" firstAttribute="top" secondItem="zuh-ST-ZOh" secondAttribute="top" id="hGh-t1-rjZ"/>
+                        <constraint firstAttribute="centerX" secondItem="oAQ-Fy-q9H" secondAttribute="centerX" id="teh-kI-QE2"/>
+                        <constraint firstAttribute="centerY" secondItem="oAQ-Fy-q9H" secondAttribute="centerY" id="u94-YO-iPL"/>
+                        <constraint firstAttribute="bottom" secondItem="knK-K9-I8c" secondAttribute="bottom" id="ygi-DY-EKX"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="oYy-6v-XvJ" firstAttribute="top" secondItem="1" secondAttribute="top" constant="12" id="5UI-zK-TyD"/>
-                <constraint firstAttribute="trailing" secondItem="4Hc-rk-aup" secondAttribute="trailing" id="9zN-Vd-jCF"/>
+                <constraint firstAttribute="bottom" secondItem="zuh-ST-ZOh" secondAttribute="bottom" id="IwO-Pk-8ro"/>
+                <constraint firstItem="zuh-ST-ZOh" firstAttribute="top" secondItem="oYy-6v-XvJ" secondAttribute="bottom" id="Oxw-Gz-hrf"/>
+                <constraint firstAttribute="trailing" secondItem="zuh-ST-ZOh" secondAttribute="trailing" id="Qtp-5N-WHE"/>
+                <constraint firstItem="zuh-ST-ZOh" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="axf-Fj-bhu"/>
                 <constraint firstAttribute="trailing" secondItem="oYy-6v-XvJ" secondAttribute="trailing" id="cfF-zH-hae"/>
                 <constraint firstItem="oYy-6v-XvJ" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="feo-Se-KfZ"/>
-                <constraint firstItem="4Hc-rk-aup" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="wgb-wU-mC5"/>
-                <constraint firstItem="4Hc-rk-aup" firstAttribute="top" secondItem="oYy-6v-XvJ" secondAttribute="bottom" id="xo7-9j-Keb"/>
-                <constraint firstAttribute="bottom" secondItem="4Hc-rk-aup" secondAttribute="bottom" id="yzb-3T-zKA"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

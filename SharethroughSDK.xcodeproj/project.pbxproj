@@ -68,7 +68,10 @@
 		AE52B899188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */; };
 		AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
+		AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
+		AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
+		AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +109,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = AEBCCC63168B9AF10056EE83;
 			remoteInfo = "UIKit+PivotalSpecHelper-StaticLib";
+		};
+		AED32F941890740700693EFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AEC40C88174C203700474D2D;
+			remoteInfo = "UIKit+PivotalSpecHelperStubs-StaticLib";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -186,6 +196,7 @@
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		AEFBF1681890480700ADD742 /* youtube_embed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = youtube_embed.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */,
 				AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
 				AE2246831886138F00626A29 /* UIKit.framework in Frameworks */,
@@ -436,6 +448,7 @@
 		AE8ED3E81885ADF00004AB32 /* SharethroughSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AEFBF162189047DC00ADD742 /* Static Resources */,
 				AE3120DA1889E6EF00297F01 /* External Libs */,
 				AE52B85C188F290600C4DEF8 /* Extension Helpers */,
 				AE52B840188EFB3600C4DEF8 /* Controllers */,
@@ -466,6 +479,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		AEFBF162189047DC00ADD742 /* Static Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AEFBF1681890480700ADD742 /* youtube_embed.html */,
+			);
+			path = "Static Resources";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -480,6 +501,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AED32F951890740700693EFF /* PBXTargetDependency */,
 				AE52B84E188EFDFA00C4DEF8 /* PBXTargetDependency */,
 			);
 			name = specs;
@@ -592,6 +614,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */,
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
 				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
 				AE52B899188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
@@ -603,6 +626,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */,
 				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -726,6 +750,11 @@
 			isa = PBXTargetDependency;
 			name = "UIKit+PivotalSpecHelper-StaticLib";
 			targetProxy = AE52B84D188EFDFA00C4DEF8 /* PBXContainerItemProxy */;
+		};
+		AED32F951890740700693EFF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "UIKit+PivotalSpecHelperStubs-StaticLib";
+			targetProxy = AED32F941890740700693EFF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

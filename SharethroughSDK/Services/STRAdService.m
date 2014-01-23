@@ -43,6 +43,7 @@
             ad.advertiser = adJSON[@"advertiser"];
             ad.title = adJSON[@"title"];
             ad.adDescription = adJSON[@"description"];
+            ad.mediaUrl = [NSURL URLWithString:adJSON[@"media_url"]];
             ad.thumbnailImage = [UIImage imageWithData:data];
 
             [deferred resolveWithValue:ad];
