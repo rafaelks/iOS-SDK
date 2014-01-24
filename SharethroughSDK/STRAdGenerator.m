@@ -79,7 +79,7 @@
 }
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad];
+    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice]];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
 }

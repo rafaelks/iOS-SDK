@@ -1,5 +1,7 @@
 #import "STRInteractiveAdViewController.h"
 #import "STRAdvertisement.h"
+#import "UIActivityViewController+Spec.h"
+#include "UIBarButtonItem+Spec.h"
 #include "UIImage+Spec.h"
 #include "UIWebView+Spec.h"
 
@@ -11,13 +13,18 @@ SPEC_BEGIN(STRInteractiveAdViewControllerSpec)
 describe(@"STRInteractiveAdViewController", ^{
     __block STRInteractiveAdViewController *controller;
     __block STRAdvertisement *ad;
+    __block UIDevice *device;
 
     beforeEach(^{
         ad = [STRAdvertisement new];
-        ad.mediaUrl = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
+        device = [UIDevice currentDevice];
+        ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
+        ad.title = @"Superad";
+        ad.shareURL = [NSURL URLWithString:@"http://bit.ly/23kljr"];
 
-        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad];
-        controller.view should_not be_nil;
+        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad device:device];
+        UIWindow *window = [UIWindow new];
+        [window addSubview:controller.view];
         [controller.view layoutIfNeeded];
     });
 
@@ -41,7 +48,7 @@ describe(@"STRInteractiveAdViewController", ^{
 
         it(@"sizes the YouTube embed to be as large as possible", ^{
             ((NSString *)[controller.webView.executedJavaScripts firstObject]) should contain(@"width = 320");
-            ((NSString *)[controller.webView.executedJavaScripts firstObject]) should contain(@"height = 516");
+            ((NSString *)[controller.webView.executedJavaScripts firstObject]) should contain(@"height = 504");
         });
     });
 
@@ -51,7 +58,7 @@ describe(@"STRInteractiveAdViewController", ^{
             controller.contentView stub_method(@selector(transform)).and_return(CGAffineTransformMakeRotation(M_PI_2));
             [controller viewDidLayoutSubviews];
 
-            ((NSString *)[controller.webView.executedJavaScripts lastObject]) should contain(@"width = 516");
+            ((NSString *)[controller.webView.executedJavaScripts lastObject]) should contain(@"width = 504");
             ((NSString *)[controller.webView.executedJavaScripts lastObject]) should contain(@"height = 320");
         });
     });
@@ -62,11 +69,54 @@ describe(@"STRInteractiveAdViewController", ^{
         beforeEach(^{
             delegate = nice_fake_for(@protocol(STRInteractiveAdViewControllerDelegate));
             controller.delegate = delegate;
-            [controller doneButtonPressed:nil];
+            [controller.doneButton tap];
         });
 
         it(@"notifies its delegate", ^{
             delegate should have_received(@selector(closedInteractiveAdView:)).with(controller);
+        });
+    });
+
+    describe(@"when the user taps the share button", ^{
+        beforeEach(^{
+            spy_on(device);
+            device stub_method(@selector(userInterfaceIdiom)).and_return(UIUserInterfaceIdiomPhone);
+            [controller.shareButton tap];
+        });
+
+        it(@"presents the UIActivityViewController", ^{
+            UIActivityViewController *activityController = (UIActivityViewController *) controller.presentedViewController;
+            activityController should be_instance_of([UIActivityViewController class]);
+            activityController.activityItems should equal(@[ad.title, @"http://bit.ly/23kljr"]);
+        });
+    });
+
+    describe(@"when the user taps the share button on an iPad", ^{
+        beforeEach(^{
+            spy_on(device);
+            device stub_method(@selector(userInterfaceIdiom)).and_return(UIUserInterfaceIdiomPad);
+            [controller.shareButton tap];
+        });
+
+        it(@"shows the UIActivityViewController in a popover", ^{
+            UIActivityViewController *activityController = (UIActivityViewController *) controller.sharePopoverController.contentViewController;
+            activityController should be_instance_of([UIActivityViewController class]);
+            activityController.activityItems should equal(@[ad.title, @"http://bit.ly/23kljr"]);
+
+            controller.sharePopoverController.isPopoverVisible should be_truthy;
+        });
+
+        it(@"closes the popover when user taps done", ^{
+            [controller.doneButton tap];
+            controller.sharePopoverController.isPopoverVisible should be_falsy;
+        });
+
+        it(@"keeps the same popover if the user taps the share button again", ^{
+            UIPopoverController *existingPopoverController = controller.sharePopoverController;
+            [controller.sharePopoverController dismissPopoverAnimated:NO];
+            [controller.shareButton tap];
+            controller.sharePopoverController should be_same_instance_as(existingPopoverController);
+            controller.sharePopoverController.isPopoverVisible should be_truthy;
         });
     });
 });

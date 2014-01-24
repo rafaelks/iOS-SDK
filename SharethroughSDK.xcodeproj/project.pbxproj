@@ -69,6 +69,7 @@
 		AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
+		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 		AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
 		AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
@@ -195,6 +196,8 @@
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		AED32FAE1891F12600693EFF /* UIActivityViewController+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+Spec.h"; sourceTree = "<group>"; };
+		AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+Spec.m"; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
 		AEFBF1681890480700ADD742 /* youtube_embed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = youtube_embed.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -308,6 +311,7 @@
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
+				AED32FA91891F0BB00693EFF /* Stubs */,
 				AEFBF15D188F46D900ADD742 /* Controllers */,
 				AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */,
 				AE022DFF188E022000D02568 /* Services */,
@@ -469,6 +473,15 @@
 				AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AED32FA91891F0BB00693EFF /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				AED32FAE1891F12600693EFF /* UIActivityViewController+Spec.h */,
+				AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */,
+			);
+			path = Stubs;
 			sourceTree = "<group>";
 		};
 		AEFBF15D188F46D900ADD742 /* Controllers */ = {
@@ -707,6 +720,7 @@
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
 				AE022DE8188E008000D02568 /* STRAdService.m in Sources */,
+				AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */,
 				AE2246FE1888782A00626A29 /* STRAdViewFixture.m in Sources */,
 				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
@@ -974,6 +988,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -990,6 +1005,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

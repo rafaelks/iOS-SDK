@@ -36,14 +36,20 @@
 
     STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
     [adPromise then:^id(NSDictionary *adJSON) {
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:adJSON[@"thumbnail_url"]]];
+        NSURL *sanitizedThumbnailURL = [NSURL URLWithString:adJSON[@"thumbnail_url"]];
+        if (![sanitizedThumbnailURL scheme]) {
+            sanitizedThumbnailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", adJSON[@"thumbnail_url"]]];
+        }
+
+        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:sanitizedThumbnailURL];
 
         [[self.networkClient get:imageRequest] then:^id(NSData *data) {
             STRAdvertisement *ad = [STRAdvertisement new];
             ad.advertiser = adJSON[@"advertiser"];
             ad.title = adJSON[@"title"];
             ad.adDescription = adJSON[@"description"];
-            ad.mediaUrl = [NSURL URLWithString:adJSON[@"media_url"]];
+            ad.mediaURL = [NSURL URLWithString:adJSON[@"media_url"]];
+            ad.shareURL = [NSURL URLWithString:adJSON[@"share_url"]];
             ad.thumbnailImage = [UIImage imageWithData:data];
 
             [deferred resolveWithValue:ad];

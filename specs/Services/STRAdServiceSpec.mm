@@ -51,7 +51,8 @@ describe(@"STRAdService", ^{
                                                        @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
                                                        @"title": @"Meet Porter. He's a Dog.",
                                                        @"advertiser": @"Brand X",
-                                                       @"media_url": @"http://www.youtube.com/watch?v=BWAK0J8Uhzk"
+                                                       @"media_url": @"http://www.youtube.com/watch?v=BWAK0J8Uhzk",
+                                                       @"share_url": @"http://bit.ly/14hfvXG"
                                                        }];
             });
 
@@ -78,7 +79,8 @@ describe(@"STRAdService", ^{
                     ad.advertiser should equal(@"Brand X");
                     ad.title should equal(@"Meet Porter. He's a Dog.");
                     ad.adDescription should equal(@"Dogs this smart deserve a home.");
-                    [ad.mediaUrl absoluteString] should equal(@"http://www.youtube.com/watch?v=BWAK0J8Uhzk");
+                    [ad.mediaURL absoluteString] should equal(@"http://www.youtube.com/watch?v=BWAK0J8Uhzk");
+                    [ad.shareURL absoluteString] should equal(@"http://bit.ly/14hfvXG");
                     UIImagePNGRepresentation(ad.thumbnailImage) should equal(UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]));
                 });
             });
@@ -89,6 +91,19 @@ describe(@"STRAdService", ^{
 
                     returnedPromise.error should_not be_nil;
                 });
+            });
+        });
+
+        describe(@"when the ad server responds without a protocol", ^{
+            beforeEach(^{
+                [restClientDeferred resolveWithValue:@{
+                                                       @"thumbnail_url": @"//i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
+                                                       }];
+            });
+
+            it(@"makes a request for the thumbnail image and inserts the protocol", ^{
+                NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"]];
+                networkClient should have_received(@selector(get:)).with(request);
             });
         });
 

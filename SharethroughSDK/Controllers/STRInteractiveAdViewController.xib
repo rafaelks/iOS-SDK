@@ -7,7 +7,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="STRInteractiveAdViewController">
             <connections>
                 <outlet property="contentView" destination="zuh-ST-ZOh" id="r6u-Yl-m60"/>
-                <outlet property="spinner" destination="oAQ-Fy-q9H" id="0Bf-5w-8Mt"/>
+                <outlet property="doneButton" destination="1y3-4v-se1" id="aOb-UG-HWh"/>
+                <outlet property="shareButton" destination="Hol-nj-jHZ" id="zQh-NB-cfT"/>
+                <outlet property="spinner" destination="oAQ-Fy-q9H" id="Adw-eU-33T"/>
+                <outlet property="toolbar" destination="19T-JD-hAx" id="ta4-B0-nCs"/>
                 <outlet property="view" destination="1" id="3"/>
                 <outlet property="webView" destination="knK-K9-I8c" id="6SB-Sp-zTz"/>
             </connections>
@@ -17,40 +20,35 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oYy-6v-XvJ" userLabel="Header View">
-                    <rect key="frame" x="0.0" y="12" width="320" height="40"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F7X-19-wnb">
-                            <rect key="frame" x="7" y="5" width="43" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="DONE">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="19T-JD-hAx">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem title="DONE" style="done" id="1y3-4v-se1">
                             <connections>
-                                <action selector="doneButtonPressed:" destination="-1" eventType="touchUpInside" id="SEm-cc-pdd"/>
+                                <action selector="doneButtonPressed:" destination="-1" id="he3-Rp-A2s"/>
                             </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="centerY" secondItem="F7X-19-wnb" secondAttribute="centerY" id="58P-fR-9BS"/>
-                        <constraint firstItem="F7X-19-wnb" firstAttribute="leading" secondItem="oYy-6v-XvJ" secondAttribute="leading" constant="7" id="6pw-PT-kuX"/>
-                        <constraint firstAttribute="height" constant="40" id="VcG-Qr-m42"/>
-                    </constraints>
-                </view>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="SMi-KC-AqD"/>
+                        <barButtonItem systemItem="action" id="Hol-nj-jHZ">
+                            <connections>
+                                <action selector="shareButtonPressed:" destination="-1" id="lAx-84-6mf"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuh-ST-ZOh" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="52" width="320" height="516"/>
+                    <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knK-K9-I8c">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="516"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <dataDetectorType key="dataDetectorTypes"/>
                         </webView>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="oAQ-Fy-q9H">
-                            <rect key="frame" x="150" y="248" width="20" height="20"/>
+                            <rect key="frame" x="150" y="252" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                     </subviews>
@@ -67,13 +65,13 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="oYy-6v-XvJ" firstAttribute="top" secondItem="1" secondAttribute="top" constant="12" id="5UI-zK-TyD"/>
+                <constraint firstAttribute="trailing" secondItem="19T-JD-hAx" secondAttribute="trailing" id="AT1-iY-UCd"/>
                 <constraint firstAttribute="bottom" secondItem="zuh-ST-ZOh" secondAttribute="bottom" id="IwO-Pk-8ro"/>
-                <constraint firstItem="zuh-ST-ZOh" firstAttribute="top" secondItem="oYy-6v-XvJ" secondAttribute="bottom" id="Oxw-Gz-hrf"/>
                 <constraint firstAttribute="trailing" secondItem="zuh-ST-ZOh" secondAttribute="trailing" id="Qtp-5N-WHE"/>
+                <constraint firstItem="19T-JD-hAx" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="R0q-Zb-wbi"/>
+                <constraint firstItem="19T-JD-hAx" firstAttribute="top" secondItem="1" secondAttribute="top" placeholder="YES" id="YFU-yy-URV"/>
+                <constraint firstItem="zuh-ST-ZOh" firstAttribute="top" secondItem="19T-JD-hAx" secondAttribute="bottom" id="Z0n-Ob-VRT"/>
                 <constraint firstItem="zuh-ST-ZOh" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="axf-Fj-bhu"/>
-                <constraint firstAttribute="trailing" secondItem="oYy-6v-XvJ" secondAttribute="trailing" id="cfF-zH-hae"/>
-                <constraint firstItem="oYy-6v-XvJ" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="feo-Se-KfZ"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

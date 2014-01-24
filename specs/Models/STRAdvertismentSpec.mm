@@ -11,7 +11,7 @@ describe(@"STRAdvertisement", ^{
     beforeEach(^{
         ad = [STRAdvertisement new];
         ad.advertiser = @"ginny minis";
-        ad.mediaUrl = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
+        ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
     });
 
     it(@"has a sponsored by method that prefixes the 'Promoted by' string", ^{

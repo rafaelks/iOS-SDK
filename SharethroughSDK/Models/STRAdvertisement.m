@@ -15,7 +15,7 @@
 }
 
 - (NSString *)youtubeVideoId {
-    NSArray *parameters = [[self.mediaUrl query] componentsSeparatedByString:@"&"];
+    NSArray *parameters = [[self.mediaURL query] componentsSeparatedByString:@"&"];
     for (NSString *paramSet in parameters) {
         NSArray *tuple = [paramSet componentsSeparatedByString:@"="];
         if ([[tuple firstObject]  isEqual: @"v"]) {

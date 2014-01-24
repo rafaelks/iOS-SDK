@@ -13,15 +13,18 @@
 @interface STRInteractiveAdViewController ()<UIWebViewDelegate>
 
 @property (strong, nonatomic, readwrite) STRAdvertisement *ad;
+@property (weak, nonatomic) UIDevice *device;
+@property (strong, nonatomic, readwrite) UIPopoverController *sharePopoverController;
 
 @end
 
 @implementation STRInteractiveAdViewController
 
-- (id)initWithAd:(STRAdvertisement *)ad {
+- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device {
     self = [super initWithNibName:nil bundle:[STRBundleSettings bundleForResources]];
     if (self) {
         self.ad = ad;
+        self.device = device;
     }
 
     return self;
@@ -31,6 +34,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    NSDictionary *views = @{@"topGuide": self.topLayoutGuide, @"toolbar": self.toolbar};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topGuide]-[toolbar]"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:views]];
 
     self.webView.scrollView.alwaysBounceHorizontal = NO;
     self.webView.allowsInlineMediaPlayback = YES;
@@ -53,13 +62,44 @@
     [self resizeEmbed];
 }
 
-- (IBAction)doneButtonPressed:(id)sender {
-    [self.delegate closedInteractiveAdView:self];
-}
+#pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self.spinner removeFromSuperview];
     [self resizeEmbed];
+}
+
+#pragma mark - Actions
+
+- (IBAction)doneButtonPressed:(id)sender {
+    [self.sharePopoverController dismissPopoverAnimated:NO];
+    [self.delegate closedInteractiveAdView:self];
+}
+
+- (IBAction)shareButtonPressed:(id)sender {
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[self.ad.title, [self.ad.shareURL absoluteString]] applicationActivities:nil];
+    activityController.excludedActivityTypes = @[
+                                                 UIActivityTypePostToWeibo,
+                                                 UIActivityTypePrint,
+                                                 UIActivityTypeAssignToContact,
+                                                 UIActivityTypeSaveToCameraRoll,
+                                                 UIActivityTypeAddToReadingList,
+                                                 UIActivityTypePostToFlickr,
+                                                 UIActivityTypePostToVimeo,
+                                                 UIActivityTypePostToTencentWeibo,
+                                                 UIActivityTypeAirDrop,
+                                                 ];
+
+    if ([self.device userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        if (!self.sharePopoverController) {
+            self.sharePopoverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+        }
+
+        [self.sharePopoverController presentPopoverFromBarButtonItem:self.shareButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
+
 }
 
 #pragma mark - private 
