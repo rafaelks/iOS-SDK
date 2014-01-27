@@ -54,6 +54,8 @@ describe(@"STRAdGenerator", ^{
             __block STRAdvertisement *ad;
 
             beforeEach(^{
+                spy_on(view);
+
                 ad = [STRAdvertisement new];
                 ad.adDescription = @"Dogs this smart deserve a home.";
                 ad.title = @"Meet Porter. He's a Dog.";
@@ -76,6 +78,10 @@ describe(@"STRAdGenerator", ^{
             it(@"adds a placeholder image", ^{
                 [view.adThumbnail.image isEqualToByBytes:[UIImage imageNamed:@"fixture_image.png"]] should be_truthy;
                 view.adThumbnail.contentMode should equal(UIViewContentModeScaleAspectFill);
+            });
+
+            it(@"relayouts view because tableviewcells need to have content in subviews to determine dimensions", ^{
+                view should have_received(@selector(setNeedsLayout));
             });
 
             it(@"adds a gesture recognizer for taps", ^{

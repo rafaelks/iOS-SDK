@@ -51,6 +51,8 @@
         view.adThumbnail.contentMode = UIViewContentModeScaleAspectFill;
         view.adThumbnail.image = ad.thumbnailImage;
 
+        [view setNeedsLayout];
+
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
         [view addGestureRecognizer:tapRecognizer];
 
