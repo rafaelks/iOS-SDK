@@ -48,7 +48,6 @@
         view.adTitle.text = ad.title;
         view.adDescription.text = ad.adDescription;
         view.adSponsoredBy.text = [ad sponsoredBy];
-        view.adThumbnail.contentMode = UIViewContentModeScaleAspectFill;
         view.adThumbnail.image = [ad thumbnailWithPlayImage];
 
         [view setNeedsLayout];
