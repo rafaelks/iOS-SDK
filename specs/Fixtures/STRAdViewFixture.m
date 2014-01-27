@@ -13,21 +13,9 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        UILabel *adTitle = [UILabel new];
-        self.adTitle = adTitle;
-        [self addSubview:adTitle];
-
         UILabel *adDescription = [UILabel new];
         self.adDescription = adDescription;
         [self addSubview:adDescription];
-
-        UILabel *adSponsoredBy = [UILabel new];
-        self.adSponsoredBy = adSponsoredBy;
-        [self addSubview:adSponsoredBy];
-
-        UIImageView *adThumbnail = [UIImageView new];
-        self.adThumbnail = adThumbnail;
-        [self addSubview:adThumbnail];
     }
 
     return self;

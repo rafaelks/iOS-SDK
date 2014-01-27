@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "STRAdView.h"
+#import "STRMinimalAdViewFixture.h"
 
-@interface STRAdViewFixture : UIView<STRAdView>
+@interface STRAdViewFixture : STRMinimalAdViewFixture<STRAdView>
 
-@property (weak, nonatomic) UILabel *adTitle;
 @property (weak, nonatomic) UILabel *adDescription;
-@property (weak, nonatomic) UILabel *adSponsoredBy;
-@property (weak, nonatomic) UIImageView *adThumbnail;
 
 @end

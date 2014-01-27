@@ -14,11 +14,18 @@ SPEC_BEGIN(STRAdGeneratorSpec)
 describe(@"STRAdGenerator", ^{
     __block STRAdGenerator *generator;
     __block STRAdService *adService;
+    __block STRAdvertisement *ad;
 
     beforeEach(^{
         [UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdGenerator class]];
         adService = nice_fake_for([STRAdService class]);
         generator = [[STRAdGenerator alloc] initWithAdService:adService];
+
+        ad = [STRAdvertisement new];
+        ad.adDescription = @"Dogs this smart deserve a home.";
+        ad.title = @"Meet Porter. He's a Dog.";
+        ad.advertiser = @"Brand X";
+        ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
     });
 
     describe(@"placing an ad in the view", ^{
@@ -50,16 +57,8 @@ describe(@"STRAdGenerator", ^{
         });
 
         describe(@"when the ad has fetched successfully", ^{
-            __block STRAdvertisement *ad;
-
             beforeEach(^{
                 spy_on(view);
-
-                ad = [STRAdvertisement new];
-                ad.adDescription = @"Dogs this smart deserve a home.";
-                ad.title = @"Meet Porter. He's a Dog.";
-                ad.advertiser = @"Brand X";
-                ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
 
                 [deferred resolveWithValue:ad];
             });
@@ -81,8 +80,6 @@ describe(@"STRAdGenerator", ^{
                 char expectedData[100];
                 [UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]) getBytes:&expectedData length:100];
                 imageData should equal(expectedData);
-
-                view.adThumbnail.contentMode should equal(UIViewContentModeScaleAspectFill);
             });
 
             it(@"relayouts view because tableviewcells need to have content in subviews to determine dimensions", ^{
@@ -125,6 +122,25 @@ describe(@"STRAdGenerator", ^{
             it(@"removes the spinner", ^{
                 spinner.superview should be_nil;
             });
+        });
+    });
+
+    describe(@"place an ad in a view without an ad description", ^{
+        __block STRMinimalAdViewFixture *view;
+        __block STRDeferred *deferred;
+
+        beforeEach(^{
+            view = [STRMinimalAdViewFixture new];
+            deferred = [STRDeferred defer];
+
+            adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);
+            [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:nil];
+        });
+
+        it(@"does not try to include an ad description", ^{
+            expect(^{
+                [deferred resolveWithValue:ad];
+            }).to_not(raise_exception);
         });
     });
 });

@@ -21,11 +21,6 @@
 - (UILabel *)adTitle;
 
 /**
- This method should return a UILabel (or subclass) that is appropriate for setting the ad description on.
- */
-- (UILabel *)adDescription;
-
-/**
  This method should return a UIImage (or subclass) that is appropriate for setting the ad thumbnail.
  */
 - (UIImageView *)adThumbnail;
@@ -34,5 +29,13 @@
  This method should return a UILabel (or subclass) that is appropriate for setting the string "Promoted by <brand name>".
  */
 - (UILabel *)adSponsoredBy;
+
+@optional
+
+/**
+ This optional method should return a UILabel (or subclass) that is appropriate for setting the ad description on. You may choose not to display the ad description.
+ */
+- (UILabel *)adDescription;
+
 
 @end

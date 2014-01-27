@@ -46,10 +46,12 @@
 
         self.ad = ad;
         view.adTitle.text = ad.title;
-        view.adDescription.text = ad.adDescription;
         view.adSponsoredBy.text = [ad sponsoredBy];
         view.adThumbnail.image = [ad thumbnailWithPlayImage];
 
+        if ([view respondsToSelector:@selector(adDescription)]) {
+            view.adDescription.text = ad.adDescription;
+        }
         [view setNeedsLayout];
 
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
