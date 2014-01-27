@@ -18,7 +18,7 @@ describe(@"STRAdGenerator", ^{
     beforeEach(^{
         [UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdGenerator class]];
         adService = nice_fake_for([STRAdService class]);
-        generator = [[STRAdGenerator alloc] initWithPriceKey:@"priceKey" adService:adService];
+        generator = [[STRAdGenerator alloc] initWithAdService:adService];
     });
 
     describe(@"placing an ad in the view", ^{

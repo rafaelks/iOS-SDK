@@ -23,7 +23,7 @@
 
 @implementation STRAdGenerator
 
-- (id)initWithPriceKey:(NSString *)priceKey adService:(STRAdService *)adService {
+- (id)initWithAdService:(STRAdService *)adService {
     self = [super init];
     if (self) {
         self.adService = adService;

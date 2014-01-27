@@ -15,9 +15,8 @@ describe(@"SharethroughSDK", ^{
     describe(@"configuring settings", ^{
         it(@"maintains settings", ^{
             SharethroughSDK *sdk = [SharethroughSDK sharedInstance];
-            [sdk configureWithPriceKey:@"priceKey...money" isStaging:YES];
+            [sdk configureWithStaging:YES];
             sdk.isStaging should equal(YES);
-            sdk.priceKey should equal(@"priceKey...money");
         });
     });
 });

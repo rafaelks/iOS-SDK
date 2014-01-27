@@ -15,7 +15,6 @@
 @interface SharethroughSDK ()
 
 @property (nonatomic, assign, readwrite, getter=isStaging) BOOL staging;
-@property (nonatomic, copy, readwrite) NSString *priceKey;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, strong) STRRestClient *restClient;
 @property (nonatomic, strong) STRAdGenerator *generator;
@@ -37,16 +36,15 @@
     return sharedObject;
 }
 
-- (void)configureWithPriceKey:(NSString *)priceKey isStaging:(BOOL)staging {
+- (void)configureWithStaging:(BOOL)staging {
     self.staging = staging;
-    self.priceKey = priceKey;
     self.networkClient = [STRNetworkClient new];
     self.restClient = [[STRRestClient alloc] initWithStaging:self.isStaging networkClient:self.networkClient];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
     STRAdService *adService = [[STRAdService alloc] initWithRestClient:self.restClient networkClient:self.networkClient];
-    self.generator = [[STRAdGenerator alloc] initWithPriceKey:self.priceKey adService:adService];
+    self.generator = [[STRAdGenerator alloc] initWithAdService:adService];
     [self.generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
 }
 

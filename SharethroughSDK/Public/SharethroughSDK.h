@@ -20,21 +20,15 @@
 @property (nonatomic, assign, readonly, getter = isStaging) BOOL staging;
 
 /**
- A read-only property to retrieve the priceKey set by the class constructor generatorWithPriceKey:isStaging:.
- */
-@property (nonatomic, copy, readonly) NSString *priceKey;
-
-/**
  The accessor for the SDK's shared instance.
  */
 + (instancetype)sharedInstance;
 
 /**
- Configure the shared instance with a price key and whether to use the staging or production ad server. Configuration should be done at the beggining of your application's lifecycle, before using the shared instance for displaying ads.
- @param priceKey The price key provided when signing up. If you don't have one, please contact support.
+ Configure the shared instance to use the staging or production ad server. Configuration must be done at the beggining of your application's lifecycle, before using the shared instance for displaying ads.
  @param staging Whether to point to the staging ad service or production. YES indicates the staging servers.
  */
-- (void)configureWithPriceKey:(NSString *)priceKey isStaging:(BOOL)staging;
+- (void)configureWithStaging:(BOOL)staging;
 
 /**
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
