@@ -5,7 +5,6 @@
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 #include "UIGestureRecognizer+Spec.h"
-#include "UIImage+Spec.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -75,8 +74,14 @@ describe(@"STRAdGenerator", ^{
                 view.adSponsoredBy.text should equal(@"Promoted by Brand X");
             });
 
-            it(@"adds a placeholder image", ^{
-                [view.adThumbnail.image isEqualToByBytes:[UIImage imageNamed:@"fixture_image.png"]] should be_truthy;
+            it(@"adds the ad's image", ^{
+                char imageData[100];
+                [UIImagePNGRepresentation(view.adThumbnail.image) getBytes:&imageData length:100];
+
+                char expectedData[100];
+                [UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]) getBytes:&expectedData length:100];
+                imageData should equal(expectedData);
+
                 view.adThumbnail.contentMode should equal(UIViewContentModeScaleAspectFill);
             });
 
