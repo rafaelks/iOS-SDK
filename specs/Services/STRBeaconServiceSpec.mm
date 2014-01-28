@@ -3,6 +3,7 @@
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
 #import "STRDateProvider.h"
+#import "STRSession.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -17,6 +18,10 @@ describe(@"STRBeaconService", ^{
         restClient = nice_fake_for([STRRestClient class]);
         STRDateProvider *dateProvider = nice_fake_for([STRDateProvider class]);
         dateProvider stub_method(@selector(millisecondsSince1970)).and_return(10LL);
+
+        spy_on([STRSession class]);
+        [STRSession class] stub_method(@selector(sessionToken)).and_return(@"AAAA");
+
         service = [[STRBeaconService alloc] initWithRestClient:restClient dateProvider:dateProvider];
     });
 
@@ -35,7 +40,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"type": @"impressionRequest",
                                                                                          @"bwidth": @"200",
                                                                                          @"bheight": @"400",
-                                                                                         @"umtime": @"10"});
+                                                                                         @"umtime": @"10",
+                                                                                         @"session": @"AAAA"});
         });
     });
 });

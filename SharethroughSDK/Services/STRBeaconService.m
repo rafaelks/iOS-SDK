@@ -9,6 +9,7 @@
 #import "STRBeaconService.h"
 #import "STRRestClient.h"
 #import "STRDateProvider.h"
+#import "STRSession.h"
 
 @interface STRBeaconService ()
 
@@ -35,7 +36,8 @@
                                  @"type": @"impressionRequest",
                                  @"bwidth": [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
                                  @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
-                                 @"umtime": [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970]};
+                                 @"umtime": [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
+                                 @"session": [STRSession sessionToken]};
 
     [self.restClient sendBeaconWithParameters:parameters];
 }
