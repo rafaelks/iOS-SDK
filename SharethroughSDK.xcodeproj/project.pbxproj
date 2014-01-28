@@ -196,6 +196,7 @@
 		AE3120E11889E76F00297F01 /* STRPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = STRPromise.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE46CE6A189844AB0096BDE9 /* STRSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSession.h; sourceTree = "<group>"; };
 		AE46CE6B189844AB0096BDE9 /* STRSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSession.m; sourceTree = "<group>"; };
+		AE46CE6E189849B00096BDE9 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIKit.xcodeproj; path = Vendor/PivotalCoreKit/UIKit/UIKit.xcodeproj; sourceTree = "<group>"; };
 		AE52B847188EFC9B00C4DEF8 /* STRInteractiveAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRInteractiveAdViewController.h; sourceTree = "<group>"; };
 		AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRInteractiveAdViewController.m; sourceTree = "<group>"; };
@@ -471,6 +472,7 @@
 		AE8ED3E51885ADF00004AB32 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE46CE6E189849B00096BDE9 /* AdSupport.framework */,
 				AE8ED3E61885ADF00004AB32 /* Foundation.framework */,
 				AE8ED3F41885ADF00004AB32 /* XCTest.framework */,
 				AE8ED3F71885ADF00004AB32 /* UIKit.framework */,
