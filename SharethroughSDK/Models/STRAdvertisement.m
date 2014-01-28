@@ -23,8 +23,10 @@
     UIGraphicsBeginImageContext(size);
     [self.thumbnailImage drawAtPoint:CGPointMake(0.0, 0.0)];
 
-    CGPoint upperLeftCorner = CGPointMake(ceilf(0.5 * (size.width - playButton.size.width)), ceilf(0.5 * (size.height - playButton.size.height)));
-    [playButton drawAtPoint:upperLeftCorner];
+    CGFloat diameter = ceilf(fminf(size.width, size.height) * 0.3);
+    CGFloat leftInset = fmaxf(ceilf((size.width - diameter) * 0.5), 0);
+    CGFloat topInset = fmaxf(ceilf((size.height - diameter) * 0.5), 0);
+    [playButton drawInRect:CGRectMake(leftInset, topInset, diameter, diameter)];
 
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
