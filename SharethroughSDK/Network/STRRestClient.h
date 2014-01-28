@@ -15,5 +15,6 @@
 
 - (id)initWithStaging:(BOOL)isStaging networkClient:(STRNetworkClient *)networkClient;
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters;
+- (void)sendBeaconWithParameters:(NSDictionary *)parameters;
 
 @end

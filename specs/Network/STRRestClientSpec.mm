@@ -42,7 +42,7 @@ describe(@"STRRestClient", ^{
         });
     });
 
-    describe(@"getWithParameters", ^{
+    describe(@"-getWithParameters:", ^{
         __block STRDeferred *deferred;
 
         beforeEach(^{
@@ -97,6 +97,22 @@ describe(@"STRRestClient", ^{
             });
         });
     });
+
+    describe(@"-sendBeaconWithParameters:", ^{
+        beforeEach(^{
+            networkClient stub_method(@selector(get:));
+            [client sendBeaconWithParameters:@{@"foo": @"bar", @"key": @"fakeKey123"}];
+        });
+
+        it(@"encodes the query parameters", ^{
+            mostRecentRequest().URL.query should equal(@"foo=bar&key=fakeKey123");
+        });
+
+        it(@"uses the beacons endpoint", ^{
+            mostRecentRequest().URL.host should equal(@"b.sharethrough.com");
+        });
+    });
+
 });
 
 SPEC_END

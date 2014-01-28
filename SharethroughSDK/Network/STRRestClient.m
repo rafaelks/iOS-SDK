@@ -13,7 +13,8 @@
 
 @interface STRRestClient ()
 
-@property (nonatomic, copy) NSString *hostName;
+@property (nonatomic, copy) NSString *adServerHostName;
+@property (nonatomic, copy) NSString *beaconServerHostName;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 
 @end
@@ -23,16 +24,18 @@
 - (id)initWithStaging:(BOOL)isStaging networkClient:(STRNetworkClient *)networkClient {
     self = [super init];
     if (self) {
-        self.hostName = isStaging ? @"http://btlr-staging.sharethrough.com" : @"http://btlr.sharethrough.com";
+        self.adServerHostName = isStaging ? @"http://btlr-staging.sharethrough.com" : @"http://btlr.sharethrough.com";
+        self.beaconServerHostName = isStaging ? @"http://b-staging.sharethrough.com" : @"http://b.sharethrough.com";
         self.networkClient = networkClient;
     }
     return self;
 }
 
+
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters {
     STRDeferred *deferred = [STRDeferred defer];
 
-    NSString *urlString = [self.hostName stringByAppendingString:[self encodedQueryParams:parameters]];
+    NSString *urlString = [self.adServerHostName stringByAppendingString:[self encodedQueryParams:parameters]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [request setValue:@"iPhone" forHTTPHeaderField:@"User-Agent"];
 
@@ -51,6 +54,13 @@
     }];
 
     return deferred.promise;
+}
+
+- (void)sendBeaconWithParameters:(NSDictionary *)parameters {
+    NSString *urlString = [self.beaconServerHostName stringByAppendingString:[self encodedQueryParams:parameters]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+
+    [self.networkClient get:request];
 }
 
 - (NSString*)encodedQueryParams:(NSDictionary *)params {
