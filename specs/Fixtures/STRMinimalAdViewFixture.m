@@ -14,10 +14,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         UILabel *adTitle = [UILabel new];
+        adTitle.text = @"title text";
         self.adTitle = adTitle;
         [self addSubview:adTitle];
 
         UILabel *adSponsoredBy = [UILabel new];
+        adSponsoredBy.text = @"Sponsored by fixtures";
         self.adSponsoredBy = adSponsoredBy;
         [self addSubview:adSponsoredBy];
 

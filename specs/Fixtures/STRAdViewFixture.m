@@ -14,6 +14,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         UILabel *adDescription = [UILabel new];
+        adDescription.text = @"description text";
         self.adDescription = adDescription;
         [self addSubview:adDescription];
     }

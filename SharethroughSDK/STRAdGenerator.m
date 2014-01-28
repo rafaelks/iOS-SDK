@@ -20,6 +20,7 @@
 @property (nonatomic, weak) STRAdService *adService;
 @property (nonatomic, weak) STRBeaconService *beaconService;
 @property (nonatomic, weak) UIViewController *presentingViewController;
+@property (nonatomic, weak) UIView *spinner;
 @property (nonatomic, strong) STRAdvertisement *ad;
 
 @end
@@ -38,25 +39,21 @@
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
     self.presentingViewController = presentingViewController;
 
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.translatesAutoresizingMaskIntoConstraints = NO;
-    [view addSubview:spinner];
-    [spinner startAnimating];
-    [self centerView:spinner toView:view];
+    [self addSpinnerToView:view];
+    [self clearTextFromView:view];
+
 
     STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
     [adPromise then:^id(STRAdvertisement *ad) {
-        [spinner removeFromSuperview];
+        [self.spinner removeFromSuperview];
 
         self.ad = ad;
         view.adTitle.text = ad.title;
         view.adSponsoredBy.text = [ad sponsoredBy];
+        [self setDescriptionText:ad.adDescription onView:view];
         view.adThumbnail.image = ad.thumbnailImage;
         [self addPlayButtonToView:view];
 
-        if ([view respondsToSelector:@selector(adDescription)]) {
-            view.adDescription.text = ad.adDescription;
-        }
         [view setNeedsLayout];
 
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
@@ -64,11 +61,47 @@
 
         return ad;
     } error:^id(NSError *error) {
-        [spinner removeFromSuperview];
+        [self.spinner removeFromSuperview];
         return error;
     }];
 
     [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
+}
+
+
+- (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
+    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice]];
+    interactiveAdController.delegate = self;
+    [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
+}
+
+#pragma mark - <STRInteractiveAdViewControllerDelegate>
+
+- (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Private
+
+- (void)setDescriptionText:(NSString *)text onView:(UIView<STRAdView> *)view {
+    if ([view respondsToSelector:@selector(adDescription)]) {
+        view.adDescription.text = text;
+    }
+}
+
+- (void)addSpinnerToView:(UIView *)view {
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.translatesAutoresizingMaskIntoConstraints = NO;
+    [view addSubview:spinner];
+    [spinner startAnimating];
+    [self centerView:spinner toView:view];
+    self.spinner = spinner;
+}
+
+- (void)clearTextFromView:(UIView<STRAdView> *)view {
+    view.adTitle.text = @"";
+    view.adSponsoredBy.text = @"";
+    [self setDescriptionText:@"" onView:view];
 }
 
 - (void)addPlayButtonToView:(UIView<STRAdView> *)view {
@@ -82,29 +115,19 @@
 
 - (void)centerView:(UIView *)viewToCenter toView:(UIView *)referenceView {
     [referenceView addConstraint:[NSLayoutConstraint constraintWithItem:viewToCenter
-                                                     attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:referenceView
-                                                     attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1.0
-                                                      constant:0]];
+                                                              attribute:NSLayoutAttributeCenterX
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:referenceView
+                                                              attribute:NSLayoutAttributeCenterX
+                                                             multiplier:1.0
+                                                               constant:0]];
     [referenceView addConstraint:[NSLayoutConstraint constraintWithItem:viewToCenter
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:referenceView
-                                                     attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1.0
-                                                      constant:0]];
-}
-
-- (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice]];
-    interactiveAdController.delegate = self;
-    [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
-}
-
-- (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+                                                              attribute:NSLayoutAttributeCenterY
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:referenceView
+                                                              attribute:NSLayoutAttributeCenterY
+                                                             multiplier:1.0
+                                                               constant:0]];
 }
 
 @end

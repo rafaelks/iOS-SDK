@@ -63,6 +63,12 @@ describe(@"STRAdGenerator", ^{
             spinner should be_instance_of([UIActivityIndicatorView class]);
         });
 
+        it(@"clears out the title, description, and promoted by slug, in case anything has been left there", ^{
+            view.adTitle.text should equal(@"");
+            view.adDescription.text should equal(@"");
+            view.adSponsoredBy.text should equal(@"");
+        });
+
         it(@"makes a network request", ^{
             adService should have_received(@selector(fetchAdForPlacementKey:)).with(@"placementKey");
         });
