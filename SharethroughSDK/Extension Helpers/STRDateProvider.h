@@ -11,6 +11,6 @@
 @interface STRDateProvider : NSObject
 
 - (NSDate *)now;
-- (long)millisecondsSince1970;
+- (long long)millisecondsSince1970;
 
 @end

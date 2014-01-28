@@ -11,6 +11,8 @@
 #import "STRAdService.h"
 #import "STRRestClient.h"
 #import "STRNetworkClient.h"
+#import "STRBeaconService.h"
+#import "STRDateProvider.h"
 
 @interface SharethroughSDK ()
 
@@ -44,7 +46,8 @@
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
     STRAdService *adService = [[STRAdService alloc] initWithRestClient:self.restClient networkClient:self.networkClient];
-    self.generator = [[STRAdGenerator alloc] initWithAdService:adService];
+    STRBeaconService *beaconService = [[STRBeaconService alloc] initWithRestClient:self.restClient dateProvider:[STRDateProvider new]];
+    self.generator = [[STRAdGenerator alloc] initWithAdService:adService beaconService:beaconService];
     [self.generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
 }
 

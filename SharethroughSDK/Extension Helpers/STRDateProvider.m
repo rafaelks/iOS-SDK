@@ -14,7 +14,7 @@
     return [NSDate date];
 }
 
-- (long)millisecondsSince1970 {
+- (long long)millisecondsSince1970 {
     return [[NSDate date] timeIntervalSince1970] * 1000;
 }
 

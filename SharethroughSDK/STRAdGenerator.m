@@ -13,10 +13,12 @@
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 #import "STRBundleSettings.h"
+#import "STRBeaconService.h"
 
 @interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
 
 @property (nonatomic, weak) STRAdService *adService;
+@property (nonatomic, weak) STRBeaconService *beaconService;
 @property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, strong) STRAdvertisement *ad;
 
@@ -24,10 +26,11 @@
 
 @implementation STRAdGenerator
 
-- (id)initWithAdService:(STRAdService *)adService {
+- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService {
     self = [super init];
     if (self) {
         self.adService = adService;
+        self.beaconService = beaconService;
     }
     return self;
 }
@@ -64,6 +67,8 @@
         [spinner removeFromSuperview];
         return error;
     }];
+
+    [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
 }
 
 - (void)addPlayButtonToView:(UIView<STRAdView> *)view {

@@ -7,6 +7,7 @@
 #import "STRInteractiveAdViewController.h"
 #include "UIGestureRecognizer+Spec.h"
 #include "UIImage+Spec.h"
+#import "STRBeaconService.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -16,12 +17,14 @@ SPEC_BEGIN(STRAdGeneratorSpec)
 describe(@"STRAdGenerator", ^{
     __block STRAdGenerator *generator;
     __block STRAdService *adService;
+    __block STRBeaconService *beaconService;
     __block STRAdvertisement *ad;
 
     beforeEach(^{
         [UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdGenerator class]];
         adService = nice_fake_for([STRAdService class]);
-        generator = [[STRAdGenerator alloc] initWithAdService:adService];
+        beaconService = nice_fake_for([STRBeaconService class]);
+        generator = [[STRAdGenerator alloc] initWithAdService:adService beaconService:beaconService];
 
         ad = [STRAdvertisement new];
         ad.adDescription = @"Dogs this smart deserve a home.";
@@ -46,8 +49,14 @@ describe(@"STRAdGenerator", ^{
             [window makeKeyAndVisible];
 
             adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);
+            beaconService stub_method(@selector(fireImpressionRequestForPlacementKey:));
+
             [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:presentingViewController];
             spinner = (UIActivityIndicatorView *) [view.subviews lastObject];
+        });
+
+        it(@"fires an impressionRequest to the beacon", ^{
+            beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:)).with(@"placementKey");
         });
 
         it(@"shows a spinner while the ad is being fetched", ^{

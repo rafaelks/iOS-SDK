@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @protocol STRAdView;
-@class STRAdService;
+@class STRAdService, STRBeaconService;
 
 @interface STRAdGenerator : NSObject
 
-- (id)initWithAdService:(STRAdService *)adService;
+- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService;
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController;
 
 @end

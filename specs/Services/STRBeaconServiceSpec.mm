@@ -16,7 +16,7 @@ describe(@"STRBeaconService", ^{
     beforeEach(^{
         restClient = nice_fake_for([STRRestClient class]);
         STRDateProvider *dateProvider = nice_fake_for([STRDateProvider class]);
-        dateProvider stub_method(@selector(millisecondsSince1970)).and_return(10L);
+        dateProvider stub_method(@selector(millisecondsSince1970)).and_return(10LL);
         service = [[STRBeaconService alloc] initWithRestClient:restClient dateProvider:dateProvider];
     });
 

@@ -35,7 +35,7 @@
                                  @"type": @"impressionRequest",
                                  @"bwidth": [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
                                  @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
-                                 @"umtime": [NSString stringWithFormat:@"%li", self.dateProvider.millisecondsSince1970]};
+                                 @"umtime": [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970]};
 
     [self.restClient sendBeaconWithParameters:parameters];
 }
