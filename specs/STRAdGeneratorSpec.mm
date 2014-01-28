@@ -3,10 +3,8 @@
 #import "STRAdService.h"
 #import "STRDeferred.h"
 #import "STRAdvertisement.h"
-#import "STRBundleSettings.h"
 #import "STRInteractiveAdViewController.h"
 #include "UIGestureRecognizer+Spec.h"
-#include "UIImage+Spec.h"
 #import "STRBeaconService.h"
 
 using namespace Cedar::Matchers;
@@ -91,12 +89,12 @@ describe(@"STRAdGenerator", ^{
             });
 
             it(@"adds the ad's image", ^{
-                [view.adThumbnail.image isEqualToByBytes:[UIImage imageNamed:@"fixture_image.png"]] should be_truthy;
-            });
+                char imageData[100];
+                [UIImagePNGRepresentation(view.adThumbnail.image) getBytes:&imageData length:100];
 
-            it(@"renders a play button on top of the ad's image", ^{
-                UIImageView *playButton = [view.adThumbnail.subviews firstObject];
-                [playButton.image isEqualToByBytes:[UIImage imageNamed:@"play-btn"]] should be_truthy;
+                char expectedData[100];
+                [UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]) getBytes:&expectedData length:100];
+                imageData should equal(expectedData);
             });
 
             it(@"relayouts view because tableviewcells need to have content in subviews to determine dimensions", ^{

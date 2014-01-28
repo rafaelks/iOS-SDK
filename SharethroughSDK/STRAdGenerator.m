@@ -42,7 +42,6 @@
     [self addSpinnerToView:view];
     [self clearTextFromView:view];
 
-
     STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
     [adPromise then:^id(STRAdvertisement *ad) {
         [self.spinner removeFromSuperview];
@@ -51,8 +50,7 @@
         view.adTitle.text = ad.title;
         view.adSponsoredBy.text = [ad sponsoredBy];
         [self setDescriptionText:ad.adDescription onView:view];
-        view.adThumbnail.image = ad.thumbnailImage;
-        [self addPlayButtonToView:view];
+        view.adThumbnail.image = [ad thumbnailWithPlayImage];
 
         [view setNeedsLayout];
 
@@ -102,15 +100,6 @@
     view.adTitle.text = @"";
     view.adSponsoredBy.text = @"";
     [self setDescriptionText:@"" onView:view];
-}
-
-- (void)addPlayButtonToView:(UIView<STRAdView> *)view {
-    NSString *imagePath = [[STRBundleSettings bundleForResources] pathForResource:@"play-btn@2x.png" ofType:nil];
-
-    UIImageView *playButtonView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath]];
-    playButtonView.translatesAutoresizingMaskIntoConstraints = NO;
-    [view.adThumbnail addSubview:playButtonView];
-    [self centerView:playButtonView toView:view.adThumbnail];
 }
 
 - (void)centerView:(UIView *)viewToCenter toView:(UIView *)referenceView {

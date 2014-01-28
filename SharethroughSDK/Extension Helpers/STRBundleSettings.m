@@ -12,7 +12,7 @@
 
 + (NSBundle *)bundleForResources {
     NSBundle *mainBundle = [NSBundle mainBundle];
-    if ([self isRunningInFramework]) {
+    if ([mainBundle pathForResource:@"Sharethrough-SDK.framework" ofType:nil]) {
         NSString *fullResourcePath = [mainBundle pathForResource:@"Sharethrough-SDK.framework/Resources/STRResources.bundle" ofType:nil];
         NSBundle *bundle = [NSBundle bundleWithPath:fullResourcePath];
 
@@ -20,10 +20,6 @@
     }
 
     return mainBundle;
-}
-
-+ (BOOL)isRunningInFramework {
-    return !![[NSBundle mainBundle] pathForResource:@"Sharethrough-SDK.framework" ofType:nil];
 }
 
 @end
