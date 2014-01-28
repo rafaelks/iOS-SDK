@@ -10,6 +10,7 @@
 #import "STRRestClient.h"
 #import "STRDateProvider.h"
 #import "STRSession.h"
+#import <AdSupport/AdSupport.h>
 
 @interface STRBeaconService ()
 
@@ -37,7 +38,8 @@
                                  @"bwidth": [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
                                  @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
                                  @"umtime": [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
-                                 @"session": [STRSession sessionToken]};
+                                 @"session": [STRSession sessionToken],
+                                 @"uid": [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]};
 
     [self.restClient sendBeaconWithParameters:parameters];
 }

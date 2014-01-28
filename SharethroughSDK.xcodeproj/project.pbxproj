@@ -45,6 +45,8 @@
 		AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
 		AE1258C218971B2B0017F970 /* STRMinimalAdViewFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1258C118971B2B0017F970 /* STRMinimalAdViewFixture.m */; };
+		AE131E081898622800891A93 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
+		AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
 		AE2246831886138F00626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
 		AE2246841886138F00626A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246851886138F00626A29 /* CoreGraphics.framework */; };
@@ -230,6 +232,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE131E081898622800891A93 /* AdSupport.framework in Frameworks */,
 				AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */,
 				AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
@@ -251,6 +254,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */,
 				AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */,
 				AE2246E518874D7800626A29 /* UIKit.framework in Frameworks */,
 			);

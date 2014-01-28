@@ -14,8 +14,8 @@ Choose 'Create groups for any added folders' and select 'Copy items into destina
 In your application target, select Build Phases and add a new library to link against.
 ![Link to new library screenshot][project_settings-screenshot]
 
-Select and add AdSupport.framework
-![Select AdSupport Framework][add-framework-screenshot]
+Select and add AdSupport.framework.
+[Select AdSupport Framework][add-framework-screenshot]
 
 ## Display some ads! Make some money! ##
 The docset can be downloaded from [here][docset].
