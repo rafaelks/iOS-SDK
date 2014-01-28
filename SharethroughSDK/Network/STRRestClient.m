@@ -25,7 +25,7 @@
     self = [super init];
     if (self) {
         self.adServerHostName = isStaging ? @"http://btlr-staging.sharethrough.com" : @"http://btlr.sharethrough.com";
-        self.beaconServerHostName = isStaging ? @"http://b-staging.sharethrough.com" : @"http://b.sharethrough.com";
+        self.beaconServerHostName = isStaging ? @"http://b-staging.sharethrough.com/butler" : @"http://b.sharethrough.com/butler";
         self.networkClient = networkClient;
     }
     return self;

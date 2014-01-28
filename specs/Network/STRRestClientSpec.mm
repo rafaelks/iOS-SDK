@@ -109,7 +109,10 @@ describe(@"STRRestClient", ^{
         });
 
         it(@"uses the beacons endpoint", ^{
-            mostRecentRequest().URL.host should equal(@"b.sharethrough.com");
+            NSURL *requestURL = mostRecentRequest().URL;
+            requestURL.host should equal(@"b.sharethrough.com");
+            requestURL.lastPathComponent should equal(@"butler");
+
         });
     });
 
