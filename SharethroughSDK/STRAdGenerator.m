@@ -12,6 +12,7 @@
 #import "STRPromise.h"
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
+#import "STRBundleSettings.h"
 
 @interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
 
@@ -38,7 +39,7 @@
     spinner.translatesAutoresizingMaskIntoConstraints = NO;
     [view addSubview:spinner];
     [spinner startAnimating];
-    [self centerView:spinner insideOfView:view];
+    [self centerView:spinner toView:view];
 
     STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
     [adPromise then:^id(STRAdvertisement *ad) {
@@ -47,7 +48,8 @@
         self.ad = ad;
         view.adTitle.text = ad.title;
         view.adSponsoredBy.text = [ad sponsoredBy];
-        view.adThumbnail.image = [ad thumbnailWithPlayImage];
+        view.adThumbnail.image = ad.thumbnailImage;
+        [self addPlayButtonToView:view];
 
         if ([view respondsToSelector:@selector(adDescription)]) {
             view.adDescription.text = ad.adDescription;
@@ -64,18 +66,27 @@
     }];
 }
 
-- (void)centerView:(UIView *)viewToCenter insideOfView:(UIView *)containerView {
-    [containerView addConstraint:[NSLayoutConstraint constraintWithItem:containerView
+- (void)addPlayButtonToView:(UIView<STRAdView> *)view {
+    NSString *imagePath = [[STRBundleSettings bundleForResources] pathForResource:@"play-btn@2x.png" ofType:nil];
+
+    UIImageView *playButtonView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath]];
+    playButtonView.translatesAutoresizingMaskIntoConstraints = NO;
+    [view.adThumbnail addSubview:playButtonView];
+    [self centerView:playButtonView toView:view.adThumbnail];
+}
+
+- (void)centerView:(UIView *)viewToCenter toView:(UIView *)referenceView {
+    [referenceView addConstraint:[NSLayoutConstraint constraintWithItem:viewToCenter
                                                      attribute:NSLayoutAttributeCenterX
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:viewToCenter
+                                                        toItem:referenceView
                                                      attribute:NSLayoutAttributeCenterX
                                                     multiplier:1.0
                                                       constant:0]];
-    [containerView addConstraint:[NSLayoutConstraint constraintWithItem:containerView
+    [referenceView addConstraint:[NSLayoutConstraint constraintWithItem:viewToCenter
                                                      attribute:NSLayoutAttributeCenterY
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:viewToCenter
+                                                        toItem:referenceView
                                                      attribute:NSLayoutAttributeCenterY
                                                     multiplier:1.0
                                                       constant:0]];

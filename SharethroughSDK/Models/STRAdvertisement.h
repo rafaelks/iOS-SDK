@@ -18,7 +18,6 @@
 @property (nonatomic, strong) UIImage *thumbnailImage;
 
 - (NSString *)sponsoredBy;
-- (UIImage *)thumbnailWithPlayImage;
 - (NSString *)youtubeVideoId;
 
 @end
