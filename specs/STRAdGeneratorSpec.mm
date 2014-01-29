@@ -59,7 +59,7 @@ describe(@"STRAdGenerator", ^{
             deferred = [STRDeferred defer];
 
             presentingViewController = [UIViewController new];
-            window = [UIWindow new];
+            window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
             window.rootViewController = presentingViewController;
             [window makeKeyAndVisible];
 
@@ -139,17 +139,21 @@ describe(@"STRAdGenerator", ^{
                     timer stub_method(@selector(userInfo)).and_return([NSTimer userInfo]);
                 });
 
+                subjectAction(^{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                    [[NSTimer target] performSelector:[NSTimer action] withObject:timer];
+#pragma clang diagnostic pop
+                });
+
                 it(@"begins a timer", ^{
                     [NSTimer target] should equal(generator);
                 });
 
-                context(@"when ad is visible", ^{
+
+                context(@"when ad is >= 50% visible", ^{
                     beforeEach(^{
                         view.frame = CGRectMake(0, 0, 100, 100);
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                        [[NSTimer target] performSelector:[NSTimer action] withObject:timer];
-#pragma clang diagnostic pop
                     });
 
                     it(@"should send a beacon", ^{
@@ -161,14 +165,24 @@ describe(@"STRAdGenerator", ^{
                     });
                 });
 
-                context(@"when ad is not visible", ^{
+                context(@"when the ad is 25% visible", ^{
+                    beforeEach(^{
+                        view.frame = CGRectMake(0, 360, 320, 480);
+                    });
+
+                    it(@"should not send a beacon", ^{
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                    });
+
+                    it(@"doesn't invalidate the timer", ^{
+                        [NSTimer isRepeating] should be_truthy;
+                        timer should_not have_received(@selector(invalidate));
+                    });
+                });
+
+                context(@"when ad is 0% visible", ^{
                     beforeEach(^{
                         view.frame = CGRectMake(0, 481, 320, 500);
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                        [[NSTimer target] performSelector:[NSTimer action] withObject:timer];
-#pragma clang diagnostic pop
-
                     });
 
                     it(@"does not send a beacon", ^{
@@ -185,10 +199,6 @@ describe(@"STRAdGenerator", ^{
                     beforeEach(^{
                         view.frame = CGRectMake(0, 481, 320, 500);
                         [view removeFromSuperview];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                        [[NSTimer target] performSelector:[NSTimer action] withObject:timer];
-#pragma clang diagnostic pop
                     });
 
                     it(@"invalidates its timer", ^{
@@ -224,7 +234,7 @@ describe(@"STRAdGenerator", ^{
             });
         });
 
-        describe(@"when the ad has fetched successfully", ^{
+        describe(@"when the ad fetch fail", ^{
             beforeEach(^{
                 [deferred rejectWithError:[NSError errorWithDomain:@"Error!" code:101 userInfo:nil]];
             });

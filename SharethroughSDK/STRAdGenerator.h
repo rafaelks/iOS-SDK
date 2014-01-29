@@ -12,6 +12,7 @@
 @class STRAdService, STRBeaconService;
 
 extern char const * const kAdGeneratorKey;
+extern char const * const kAdTimerKey;
 
 @interface STRAdGenerator : NSObject
 

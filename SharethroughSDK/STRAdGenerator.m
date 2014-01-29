@@ -17,6 +17,8 @@
 #import <objc/runtime.h>
 
 char const * const kAdGeneratorKey = "kAdGeneratorKey";
+char const * const kAdTimerKey = "kAdTimerKey";
+
 
 @interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
 
@@ -96,7 +98,11 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
         return;
     }
 
-    if (CGRectIntersectsRect(viewFrame, view.window.frame)) {
+    CGRect intersection = CGRectIntersection(viewFrame, view.window.frame);
+
+    CGFloat intersectionArea = intersection.size.width * intersection.size.height;
+    CGFloat viewArea = view.frame.size.width * view.frame.size.height;
+    if (intersectionArea/viewArea >= 0.5) {
         [self.beaconService fireVisibleImpressionForPlacementKey:timer.userInfo[@"placementKey"]];
         [timer invalidate];
     }
