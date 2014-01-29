@@ -8,6 +8,8 @@
 #import "STRBeaconService.h"
 #import <objc/runtime.h>
 #import "NSTimer+Spec.h"
+#import "STRInjector.h"
+#import "STRAppModule.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -19,12 +21,20 @@ describe(@"STRAdGenerator", ^{
     __block STRAdService *adService;
     __block STRBeaconService *beaconService;
     __block STRAdvertisement *ad;
+    __block STRInjector *injector;
 
     beforeEach(^{
+        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+
         [UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdGenerator class]];
+
         adService = nice_fake_for([STRAdService class]);
+        [injector bind:[STRAdService class] toInstance:adService];
+
         beaconService = nice_fake_for([STRBeaconService class]);
-        generator = [[STRAdGenerator alloc] initWithAdService:adService beaconService:beaconService];
+        [injector bind:[STRBeaconService class] toInstance:beaconService];
+
+        generator = [injector getInstance:[STRAdGenerator class]];
 
         ad = [STRAdvertisement new];
         ad.adDescription = @"Dogs this smart deserve a home.";

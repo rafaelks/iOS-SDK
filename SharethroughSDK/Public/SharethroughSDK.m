@@ -7,18 +7,14 @@
 //
 
 #import "SharethroughSDK.h"
+#import "STRInjector.h"
+#import "STRAppModule.h"
 #import "STRAdGenerator.h"
-#import "STRAdService.h"
-#import "STRRestClient.h"
-#import "STRNetworkClient.h"
-#import "STRBeaconService.h"
-#import "STRDateProvider.h"
 
 @interface SharethroughSDK ()
 
 @property (nonatomic, assign, readwrite, getter=isStaging) BOOL staging;
-@property (nonatomic, strong) STRNetworkClient *networkClient;
-@property (nonatomic, strong) STRRestClient *restClient;
+@property (nonatomic, strong) STRInjector *injector;
 
 @end
 
@@ -39,14 +35,11 @@
 
 - (void)configureWithStaging:(BOOL)staging {
     self.staging = staging;
-    self.networkClient = [STRNetworkClient new];
-    self.restClient = [[STRRestClient alloc] initWithStaging:self.isStaging networkClient:self.networkClient];
+    self.injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:self.isStaging]];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
-    STRAdService *adService = [[STRAdService alloc] initWithRestClient:self.restClient networkClient:self.networkClient];
-    STRBeaconService *beaconService = [[STRBeaconService alloc] initWithRestClient:self.restClient dateProvider:[STRDateProvider new]];
-    STRAdGenerator *generator = [[STRAdGenerator alloc] initWithAdService:adService beaconService:beaconService];
+    STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     [generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
 }
 

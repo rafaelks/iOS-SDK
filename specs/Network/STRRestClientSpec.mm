@@ -1,6 +1,8 @@
 #import "STRRestClient.h"
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
+#import "STRInjector.h"
+#import "STRAppModule.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -10,10 +12,15 @@ SPEC_BEGIN(STRRestClientSpec)
 describe(@"STRRestClient", ^{
     __block STRRestClient *client;
     __block STRNetworkClient<CedarDouble> *networkClient;
+    __block STRInjector *injector;
 
     beforeEach(^{
+        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+
         networkClient = nice_fake_for([STRNetworkClient class]);
-        client = [[STRRestClient alloc] initWithStaging:NO networkClient:networkClient];
+        [injector bind:[STRNetworkClient class] toInstance:networkClient];
+
+        client = [injector getInstance:[STRRestClient class]];
     });
 
     NSURLRequest *(^mostRecentRequest)(void) = ^NSURLRequest * {
@@ -26,7 +33,9 @@ describe(@"STRRestClient", ^{
 
     describe(@"when pointed to the staging server", ^{
         it(@"uses the staging endpoint", ^{
-            client = [[STRRestClient alloc] initWithStaging:YES networkClient:networkClient];
+            injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:YES]];
+            [injector bind:[STRNetworkClient class] toInstance:networkClient];
+            client = [injector getInstance:[STRRestClient class]];
             [client getWithParameters:@{}];
 
             mostRecentRequest().URL.host should equal(@"btlr-staging.sharethrough.com");
@@ -35,7 +44,10 @@ describe(@"STRRestClient", ^{
 
     describe(@"when pointed to the production server", ^{
         it(@"uses the production endpoint", ^{
-            client = [[STRRestClient alloc] initWithStaging:NO networkClient:networkClient];
+            injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+            [injector bind:[STRNetworkClient class] toInstance:networkClient];
+            client = [injector getInstance:[STRRestClient class]];
+
             [client getWithParameters:@{}];
 
             mostRecentRequest().URL.host should equal(@"btlr.sharethrough.com");

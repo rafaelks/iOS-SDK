@@ -3,6 +3,8 @@
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
 #import "STRAdvertisement.h"
+#import "STRInjector.h"
+#import "STRAppModule.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -13,11 +15,18 @@ describe(@"STRAdService", ^{
     __block STRAdService *service;
     __block STRRestClient *restClient;
     __block STRNetworkClient *networkClient;
+    __block STRInjector *injector;
 
     beforeEach(^{
+        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+
         restClient = nice_fake_for([STRRestClient class]);
+        [injector bind:[STRRestClient class] toInstance:restClient];
+
         networkClient = nice_fake_for([STRNetworkClient class]);
-        service = [[STRAdService alloc] initWithRestClient:restClient networkClient:networkClient];
+        [injector bind:[STRNetworkClient class] toInstance:networkClient];
+
+        service = [injector getInstance:[STRAdService class]];
     });
 
     describe(@"fetching an ad", ^{

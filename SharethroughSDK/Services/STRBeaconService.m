@@ -16,16 +16,18 @@
 
 @property (strong, nonatomic) STRRestClient *restClient;
 @property (strong, nonatomic) STRDateProvider *dateProvider;
+@property (weak, nonatomic) ASIdentifierManager *identifierManager;
 
 @end
 
 @implementation STRBeaconService
 
-- (id)initWithRestClient:(STRRestClient *)restClient dateProvider:(STRDateProvider *)dateProvider{
+- (id)initWithRestClient:(STRRestClient *)restClient dateProvider:(STRDateProvider *)dateProvider asIdentifierManager:(ASIdentifierManager *)identifierManager {
     self = [super init];
     if (self) {
         self.restClient = restClient;
         self.dateProvider = dateProvider;
+        self.identifierManager = identifierManager;
     }
     return self;
 }
@@ -35,7 +37,6 @@
                                  @"type": @"impressionRequest"};
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
-
 
     [self.restClient sendBeaconWithParameters:parameters];
 }
@@ -59,7 +60,7 @@
               @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
               @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
               @"session": [STRSession sessionToken],
-              @"uid"    : [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]} mutableCopy];
+              @"uid"    : [[self.identifierManager advertisingIdentifier] UUIDString]} mutableCopy];
 }
 
 @end
