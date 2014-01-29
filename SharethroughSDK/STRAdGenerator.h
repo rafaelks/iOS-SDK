@@ -11,6 +11,8 @@
 @protocol STRAdView;
 @class STRAdService, STRBeaconService;
 
+extern char const * const kAdGeneratorKey;
+
 @interface STRAdGenerator : NSObject
 
 - (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService;

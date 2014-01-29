@@ -19,7 +19,6 @@
 @property (nonatomic, assign, readwrite, getter=isStaging) BOOL staging;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, strong) STRRestClient *restClient;
-@property (nonatomic, strong) STRAdGenerator *generator;
 
 @end
 
@@ -47,8 +46,8 @@
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
     STRAdService *adService = [[STRAdService alloc] initWithRestClient:self.restClient networkClient:self.networkClient];
     STRBeaconService *beaconService = [[STRBeaconService alloc] initWithRestClient:self.restClient dateProvider:[STRDateProvider new]];
-    self.generator = [[STRAdGenerator alloc] initWithAdService:adService beaconService:beaconService];
-    [self.generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
+    STRAdGenerator *generator = [[STRAdGenerator alloc] initWithAdService:adService beaconService:beaconService];
+    [generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
 }
 
 

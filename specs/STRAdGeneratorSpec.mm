@@ -6,6 +6,7 @@
 #import "STRInteractiveAdViewController.h"
 #include "UIGestureRecognizer+Spec.h"
 #import "STRBeaconService.h"
+#import <objc/runtime.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -51,6 +52,10 @@ describe(@"STRAdGenerator", ^{
 
             [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:presentingViewController];
             spinner = (UIActivityIndicatorView *) [view.subviews lastObject];
+        });
+
+        it(@"stores the itself (the generator) as an associated object of the view", ^{
+            objc_getAssociatedObject(view, kAdGeneratorKey) should be_same_instance_as(generator);
         });
 
         it(@"fires an impressionRequest to the beacon", ^{

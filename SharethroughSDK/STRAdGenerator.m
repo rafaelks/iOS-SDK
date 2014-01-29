@@ -14,6 +14,9 @@
 #import "STRInteractiveAdViewController.h"
 #import "STRBundleSettings.h"
 #import "STRBeaconService.h"
+#import <objc/runtime.h>
+
+char const * const kAdGeneratorKey = "kAdGeneratorKey";
 
 @interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
 
@@ -37,6 +40,8 @@
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
+
+    objc_setAssociatedObject(view, kAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.presentingViewController = presentingViewController;
 
     [self addSpinnerToView:view];
