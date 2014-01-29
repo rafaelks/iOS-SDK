@@ -223,6 +223,21 @@ describe(@"STRAdGenerator", ^{
                 spinner.superview should be_nil;
             });
         });
+
+        describe(@"when the view has already had an ad placed within it", ^{
+            __block STRAdGenerator *secondGenerator;
+
+            beforeEach(^{
+                [deferred resolveWithValue:ad];
+
+                secondGenerator = [[STRAdGenerator alloc] initWithAdService:adService beaconService:beaconService];
+                [secondGenerator placeAdInView:view placementKey:@"key" presentingViewController:presentingViewController];
+            });
+
+            it(@"should have cleaned up old tap gesture recognizers", ^{
+                [view.gestureRecognizers count] should equal(1);
+            });
+        });
     });
 
     describe(@"place an ad in a view without an ad description", ^{

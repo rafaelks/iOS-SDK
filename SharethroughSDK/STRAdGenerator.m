@@ -25,6 +25,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 @property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, weak) UIView *spinner;
 @property (nonatomic, strong) STRAdvertisement *ad;
+@property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
 
 @end
 
@@ -40,6 +41,8 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
+    STRAdGenerator *oldGenerator = objc_getAssociatedObject(view, kAdGeneratorKey);
+    [view removeGestureRecognizer:oldGenerator.tapRecognizer];
 
     objc_setAssociatedObject(view, kAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.presentingViewController = presentingViewController;
@@ -61,6 +64,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
         [view addGestureRecognizer:tapRecognizer];
+        self.tapRecognizer = tapRecognizer;
 
         NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
                                                  target:self

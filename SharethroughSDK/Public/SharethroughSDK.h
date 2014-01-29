@@ -35,7 +35,8 @@
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
- */
+ @warning If you are placing the ad in a view returned by UITableView/UICollectionView's dequeue method (or any similar reuse mechanism), it is important that you register separate reuse identifier than your normal content cells. Using the same reuse identifier will result in artifacts left behind on content cells (such as ad interactivity behavior).
+  */
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController;
 
 
