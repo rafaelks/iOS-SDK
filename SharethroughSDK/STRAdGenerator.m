@@ -20,8 +20,8 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 
 @interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
 
-@property (nonatomic, weak) STRAdService *adService;
-@property (nonatomic, weak) STRBeaconService *beaconService;
+@property (nonatomic, strong) STRAdService *adService;
+@property (nonatomic, strong) STRBeaconService *beaconService;
 @property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, weak) UIView *spinner;
 @property (nonatomic, strong) STRAdvertisement *ad;

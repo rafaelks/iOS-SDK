@@ -31,21 +31,35 @@
 }
 
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey {
-    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    NSDictionary *uniqueParameters = @{@"pkey": placementKey,
+                                 @"type": @"impressionRequest"};
+    NSMutableDictionary *parameters = [self commonParameters];
+    [parameters addEntriesFromDictionary:uniqueParameters];
 
-    NSDictionary *parameters = @{@"pkey": placementKey,
-                                 @"type": @"impressionRequest",
-                                 @"bwidth": [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
-                                 @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
-                                 @"umtime": [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
-                                 @"session": [STRSession sessionToken],
-                                 @"uid": [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]};
 
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
 
 - (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey {
-    
+    NSDictionary *uniqueParameters = @{@"pkey": placementKey,
+                                       @"type": @"visible"};
+    NSMutableDictionary *parameters = [self commonParameters];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+
+    [self.restClient sendBeaconWithParameters:parameters];
 }
+
+#pragma mark - Private
+
+- (NSMutableDictionary *)commonParameters {
+    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+
+    return [@{ @"bwidth" : [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
+              @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
+              @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
+              @"session": [STRSession sessionToken],
+              @"uid"    : [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]} mutableCopy];
+}
+
 @end
