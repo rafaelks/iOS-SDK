@@ -1,6 +1,6 @@
-#import "STRSpecModule.h"
+#import "STRSpecModuleFixture.h"
 
-@implementation SpecModule
+@implementation SpecModuleFixture
 
 - (void)configureWithInjector:(STRInjector *)injector {
     [injector bind:@"specKey" toInstance:@"specKeyInstance"];

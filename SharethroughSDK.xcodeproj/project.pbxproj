@@ -78,7 +78,7 @@
 		AE6C80811899861E008FD848 /* STRInjector.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807E1899861E008FD848 /* STRInjector.m */; };
 		AE6C80821899861E008FD848 /* STRInjector.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807E1899861E008FD848 /* STRInjector.m */; };
 		AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808418998633008FD848 /* STRInjectorSpec.mm */; };
-		AE6C80881899863C008FD848 /* STRSpecModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C80871899863C008FD848 /* STRSpecModule.m */; };
+		AE6C80881899863C008FD848 /* STRSpecModuleFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C80871899863C008FD848 /* STRSpecModuleFixture.m */; };
 		AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
 		AE6C808C1899873B008FD848 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
 		AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
@@ -228,8 +228,8 @@
 		AE6C807D1899861E008FD848 /* STRInjector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRInjector.h; sourceTree = "<group>"; };
 		AE6C807E1899861E008FD848 /* STRInjector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRInjector.m; sourceTree = "<group>"; };
 		AE6C808418998633008FD848 /* STRInjectorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInjectorSpec.mm; sourceTree = "<group>"; };
-		AE6C80861899863C008FD848 /* STRSpecModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSpecModule.h; sourceTree = "<group>"; };
-		AE6C80871899863C008FD848 /* STRSpecModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSpecModule.m; sourceTree = "<group>"; };
+		AE6C80861899863C008FD848 /* STRSpecModuleFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSpecModuleFixture.h; sourceTree = "<group>"; };
+		AE6C80871899863C008FD848 /* STRSpecModuleFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSpecModuleFixture.m; sourceTree = "<group>"; };
 		AE6C80891899873B008FD848 /* STRAppModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAppModule.h; sourceTree = "<group>"; };
 		AE6C808A1899873B008FD848 /* STRAppModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAppModule.m; sourceTree = "<group>"; };
 		AE6C808D1899923E008FD848 /* STRSingletonBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSingletonBlockWrapper.h; sourceTree = "<group>"; };
@@ -398,8 +398,8 @@
 		AE2246FB188877E900626A29 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				AE6C80861899863C008FD848 /* STRSpecModule.h */,
-				AE6C80871899863C008FD848 /* STRSpecModule.m */,
+				AE6C80861899863C008FD848 /* STRSpecModuleFixture.h */,
+				AE6C80871899863C008FD848 /* STRSpecModuleFixture.m */,
 				AE022DD0188DF3C400D02568 /* fixture_image.png */,
 				AE2246FC1888782A00626A29 /* STRAdViewFixture.h */,
 				AE2246FD1888782A00626A29 /* STRAdViewFixture.m */,
@@ -810,7 +810,7 @@
 				AE022DF3188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AE6C808C1899873B008FD848 /* STRAppModule.m in Sources */,
 				AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */,
-				AE6C80881899863C008FD848 /* STRSpecModule.m in Sources */,
+				AE6C80881899863C008FD848 /* STRSpecModuleFixture.m in Sources */,
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
 				AE52B860188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
