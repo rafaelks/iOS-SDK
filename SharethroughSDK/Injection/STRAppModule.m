@@ -35,6 +35,8 @@
 
     [injector bind:[ASIdentifierManager class] toInstance:[ASIdentifierManager sharedManager]];
 
+    [injector bind:[NSRunLoop class] toInstance:[NSRunLoop mainRunLoop]];
+
     [injector bind:[STRBeaconService class] toBlock:^id(STRInjector *injector) {
         return [[STRBeaconService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
                                                dateProvider:[injector getInstance:[STRDateProvider class]]
@@ -48,7 +50,8 @@
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
-                                           beaconService:[injector getInstance:[STRBeaconService class]]];
+                                           beaconService:[injector getInstance:[STRBeaconService class]]
+                                                 runLoop:[injector getInstance:[NSRunLoop class]]];
     }];
 }
 

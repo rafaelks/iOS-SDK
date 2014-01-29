@@ -28,29 +28,30 @@ char const * const kAdTimerKey = "kAdTimerKey";
 @property (nonatomic, weak) UIView *spinner;
 @property (nonatomic, strong) STRAdvertisement *ad;
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic, weak) NSRunLoop *timerRunLoop;
 
 @end
 
 @implementation STRAdGenerator
 
-- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService {
+- (id)initWithAdService:(STRAdService *)adService
+          beaconService:(STRBeaconService *)beaconService
+                runLoop:(NSRunLoop *)timerRunLoop {
     self = [super init];
     if (self) {
         self.adService = adService;
         self.beaconService = beaconService;
+        self.timerRunLoop = timerRunLoop;
     }
     return self;
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
-    STRAdGenerator *oldGenerator = objc_getAssociatedObject(view, kAdGeneratorKey);
-    [view removeGestureRecognizer:oldGenerator.tapRecognizer];
+    [self prepareForNewAd:view];
 
     objc_setAssociatedObject(view, kAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.presentingViewController = presentingViewController;
-
     [self addSpinnerToView:view];
-    [self clearTextFromView:view];
 
     STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
     [adPromise then:^id(STRAdvertisement *ad) {
@@ -74,11 +75,9 @@ char const * const kAdTimerKey = "kAdTimerKey";
                                                userInfo:@{@"view": view, @"placementKey": placementKey}
                                                 repeats:YES];
         timer.tolerance = timer.timeInterval * 0.1;
+        [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
-        // spec timer saves the input parameters and returns a nil timer.
-        if (timer) {
-            [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-        }
+        objc_setAssociatedObject(view, kAdTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
         return ad;
     } error:^id(NSError *error) {
@@ -102,6 +101,7 @@ char const * const kAdTimerKey = "kAdTimerKey";
 
     CGFloat intersectionArea = intersection.size.width * intersection.size.height;
     CGFloat viewArea = view.frame.size.width * view.frame.size.height;
+
     if (intersectionArea/viewArea >= 0.5) {
         [self.beaconService fireVisibleImpressionForPlacementKey:timer.userInfo[@"placementKey"]];
         [timer invalidate];
@@ -121,6 +121,18 @@ char const * const kAdTimerKey = "kAdTimerKey";
 }
 
 #pragma mark - Private
+
+- (void)prepareForNewAd:(UIView<STRAdView> *)view {
+    NSTimer *oldTimer = objc_getAssociatedObject(view, kAdTimerKey);
+    [oldTimer invalidate];
+
+    objc_setAssociatedObject(view, kAdTimerKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+    STRAdGenerator *oldGenerator = objc_getAssociatedObject(view, kAdGeneratorKey);
+    [view removeGestureRecognizer:oldGenerator.tapRecognizer];
+
+    [self clearTextFromView:view];
+}
 
 - (void)setDescriptionText:(NSString *)text onView:(UIView<STRAdView> *)view {
     if ([view respondsToSelector:@selector(adDescription)]) {

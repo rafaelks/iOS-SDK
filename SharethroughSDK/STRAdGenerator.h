@@ -16,7 +16,7 @@ extern char const * const kAdTimerKey;
 
 @interface STRAdGenerator : NSObject
 
-- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService;
+- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService runLoop:(NSRunLoop *)timerRunLoop;
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController;
 
 @end

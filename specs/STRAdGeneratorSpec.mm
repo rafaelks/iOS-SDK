@@ -7,7 +7,6 @@
 #include "UIGestureRecognizer+Spec.h"
 #import "STRBeaconService.h"
 #import <objc/runtime.h>
-#import "NSTimer+Spec.h"
 #import "STRInjector.h"
 #import "STRAppModule.h"
 
@@ -22,6 +21,7 @@ describe(@"STRAdGenerator", ^{
     __block STRBeaconService *beaconService;
     __block STRAdvertisement *ad;
     __block STRInjector *injector;
+    __block NSRunLoop<CedarDouble> *fakeRunLoop;
 
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
@@ -34,6 +34,9 @@ describe(@"STRAdGenerator", ^{
         beaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:beaconService];
 
+        fakeRunLoop = nice_fake_for([NSRunLoop class]);
+        [injector bind:[NSRunLoop class] toInstance:fakeRunLoop];
+
         generator = [injector getInstance:[STRAdGenerator class]];
 
         ad = [STRAdvertisement new];
@@ -41,10 +44,6 @@ describe(@"STRAdGenerator", ^{
         ad.title = @"Meet Porter. He's a Dog.";
         ad.advertiser = @"Brand X";
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
-    });
-
-    afterEach(^{
-        [NSTimer clear];
     });
 
     describe(@"placing an ad in the view", ^{
@@ -135,21 +134,12 @@ describe(@"STRAdGenerator", ^{
                     [window addSubview:superView];
                     [superView addSubview:view];
 
-                    timer = nice_fake_for([NSTimer class]);
-                    timer stub_method(@selector(userInfo)).and_return([NSTimer userInfo]);
+                    [[fakeRunLoop.sent_messages firstObject] getArgument:&timer atIndex:2];
                 });
 
                 subjectAction(^{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                    [[NSTimer target] performSelector:[NSTimer action] withObject:timer];
-#pragma clang diagnostic pop
+                    [timer fire];
                 });
-
-                it(@"begins a timer", ^{
-                    [NSTimer target] should equal(generator);
-                });
-
 
                 context(@"when ad is >= 50% visible", ^{
                     beforeEach(^{
@@ -161,7 +151,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"invalidates timer", ^{
-                        timer should have_received(@selector(invalidate));
+                        timer.isValid should be_falsy;
                     });
                 });
 
@@ -175,8 +165,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"doesn't invalidate the timer", ^{
-                        [NSTimer isRepeating] should be_truthy;
-                        timer should_not have_received(@selector(invalidate));
+                        timer.isValid should be_truthy;
                     });
                 });
 
@@ -190,8 +179,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"does not invalidate the timer", ^{
-                        [NSTimer isRepeating] should be_truthy;
-                        timer should_not have_received(@selector(invalidate));
+                        timer.isValid should be_truthy;
                     });
                 });
 
@@ -202,7 +190,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"invalidates its timer", ^{
-                        timer should have_received(@selector(invalidate));
+                        timer.isValid should be_falsy;
                     });
 
                     it(@"does not send a beacon", ^{
@@ -246,16 +234,32 @@ describe(@"STRAdGenerator", ^{
 
         describe(@"when the view has already had an ad placed within it", ^{
             __block STRAdGenerator *secondGenerator;
+            __block NSTimer *oldTimer;
 
             beforeEach(^{
                 [deferred resolveWithValue:ad];
+                oldTimer = objc_getAssociatedObject(view, kAdTimerKey);
 
-                secondGenerator = [[STRAdGenerator alloc] initWithAdService:adService beaconService:beaconService];
+                STRDeferred *newDeferred = [STRDeferred defer];
+                
+                STRAdService *newAdService = nice_fake_for([STRAdService class]);
+                newAdService stub_method(@selector(fetchAdForPlacementKey:)).and_return(newDeferred.promise);
+
+                secondGenerator = [[STRAdGenerator alloc] initWithAdService:newAdService beaconService:beaconService runLoop:fakeRunLoop];
                 [secondGenerator placeAdInView:view placementKey:@"key" presentingViewController:presentingViewController];
+
+                [newDeferred resolveWithValue:ad];
             });
 
             it(@"should have cleaned up old tap gesture recognizers", ^{
                 [view.gestureRecognizers count] should equal(1);
+            });
+
+            it(@"invalidates the old ad's timer", ^{
+                oldTimer.isValid should be_falsy;
+
+                NSTimer *newTimer = objc_getAssociatedObject(view, kAdTimerKey);
+                newTimer should_not be_same_instance_as(oldTimer);
             });
         });
     });
