@@ -146,12 +146,42 @@ describe(@"STRAdGenerator", ^{
                         view.frame = CGRectMake(0, 0, 100, 100);
                     });
 
-                    it(@"should send a beacon", ^{
-                        beaconService should have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                    it(@"increments seconds visible", ^{
+                        [timer.userInfo[@"secondsVisible"] floatValue] should be_greater_than(0.0);
                     });
 
-                    it(@"invalidates timer", ^{
-                        timer.isValid should be_falsy;
+                    it(@"should not send a beacon", ^{
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                    });
+
+                    it(@"does not invalidates timer", ^{
+                        timer.isValid should be_truthy;
+                    });
+
+                    context(@"and one second has passed", ^{
+                        beforeEach(^{
+                            timer.userInfo[@"secondsVisible"] = @1.0;
+                        });
+
+                        it(@"sends a beacon", ^{
+                            beaconService should have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                        });
+
+                        it(@"invalidates its timer", ^{
+                            timer.isValid should be_falsy;
+                        });
+                    });
+
+                    describe(@"when the ad goes off screen before 1 second has passed", ^{
+                        beforeEach(^{
+                            timer.userInfo[@"secondsVisible"] = @0.5;
+
+                            view.frame = CGRectMake(1000, 1000, 100, 100);
+                        });
+
+                        it(@"resets the secondsVisible", ^{
+                            timer.userInfo[@"secondsVisible"] should be_nil;
+                        });
                     });
                 });
 
@@ -160,13 +190,18 @@ describe(@"STRAdGenerator", ^{
                         view.frame = CGRectMake(0, 360, 320, 480);
                     });
 
+                    it(@"does not set secondsVisible", ^{
+                        timer.userInfo[@"secondsVisible"] should be_nil;
+                    });
+
                     it(@"should not send a beacon", ^{
                         beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
                     });
 
-                    it(@"doesn't invalidate the timer", ^{
+                    it(@"does not invalidates timer", ^{
                         timer.isValid should be_truthy;
                     });
+
                 });
 
                 context(@"when ad is 0% visible", ^{
@@ -174,11 +209,15 @@ describe(@"STRAdGenerator", ^{
                         view.frame = CGRectMake(0, 481, 320, 500);
                     });
 
-                    it(@"does not send a beacon", ^{
+                    it(@"does not set secondsVisible", ^{
+                        timer.userInfo[@"secondsVisible"] should be_nil;
+                    });
+
+                    it(@"should not send a beacon", ^{
                         beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
                     });
 
-                    it(@"does not invalidate the timer", ^{
+                    it(@"does not invalidates timer", ^{
                         timer.isValid should be_truthy;
                     });
                 });

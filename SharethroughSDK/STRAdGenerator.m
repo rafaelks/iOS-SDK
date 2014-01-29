@@ -72,7 +72,7 @@ char const * const kAdTimerKey = "kAdTimerKey";
         NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
                                                  target:self
                                                selector:@selector(checkIfAdIsVisible:)
-                                               userInfo:@{@"view": view, @"placementKey": placementKey}
+                                               userInfo:[@{@"view": view, @"placementKey": placementKey} mutableCopy]
                                                 repeats:YES];
         timer.tolerance = timer.timeInterval * 0.1;
         [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
@@ -101,12 +101,20 @@ char const * const kAdTimerKey = "kAdTimerKey";
 
     CGFloat intersectionArea = intersection.size.width * intersection.size.height;
     CGFloat viewArea = view.frame.size.width * view.frame.size.height;
+    CGFloat percentVisible = intersectionArea/viewArea;
 
-    if (intersectionArea/viewArea >= 0.5) {
+    CGFloat secondsVisible = [timer.userInfo[@"secondsVisible"] floatValue];
+
+    if (percentVisible >= 0.5 && secondsVisible < 1.0) {
+        timer.userInfo[@"secondsVisible"] = @(secondsVisible + timer.timeInterval);
+    } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
         [self.beaconService fireVisibleImpressionForPlacementKey:timer.userInfo[@"placementKey"]];
         [timer invalidate];
+    } else {
+        [timer.userInfo removeObjectForKey:@"secondsVisible"];
     }
 }
+
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice]];
