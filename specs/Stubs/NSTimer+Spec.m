@@ -8,6 +8,8 @@
 
 #import "NSTimer+Spec.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 @implementation NSTimer (Spec)
 
 static id target;
@@ -44,5 +46,6 @@ static BOOL isRepeating;
 
     return nil;
 }
+#pragma clang diagnostic pop
 
 @end
