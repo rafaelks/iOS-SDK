@@ -47,6 +47,7 @@
 		AE1258C218971B2B0017F970 /* STRMinimalAdViewFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1258C118971B2B0017F970 /* STRMinimalAdViewFixture.m */; };
 		AE131E081898622800891A93 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
 		AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
+		AE131E1B1898923B00891A93 /* NSTimer+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AE131E1A1898923B00891A93 /* NSTimer+Spec.m */; };
 		AE2246831886138F00626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
 		AE2246841886138F00626A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246851886138F00626A29 /* CoreGraphics.framework */; };
@@ -140,7 +141,6 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
-				AE9FC0BB1896E7F90012D8F1 /* play-btn@1x.png in Copy Header Files */,
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
 				AE9FC0B81896E7F90012D8F1 /* play-btn@2x.png in Copy Header Files */,
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
@@ -180,6 +180,8 @@
 		AE022E00188E024700D02568 /* STRAdServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdServiceSpec.mm; sourceTree = "<group>"; };
 		AE1258C018971B2B0017F970 /* STRMinimalAdViewFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRMinimalAdViewFixture.h; sourceTree = "<group>"; };
 		AE1258C118971B2B0017F970 /* STRMinimalAdViewFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRMinimalAdViewFixture.m; sourceTree = "<group>"; };
+		AE131E191898923B00891A93 /* NSTimer+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Spec.h"; sourceTree = "<group>"; };
+		AE131E1A1898923B00891A93 /* NSTimer+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Spec.m"; sourceTree = "<group>"; };
 		AE2246821886138F00626A29 /* specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2246851886138F00626A29 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AE2246891886138F00626A29 /* specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "specs-Info.plist"; sourceTree = "<group>"; };
@@ -518,6 +520,8 @@
 			children = (
 				AED32FAE1891F12600693EFF /* UIActivityViewController+Spec.h */,
 				AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */,
+				AE131E191898923B00891A93 /* NSTimer+Spec.h */,
+				AE131E1A1898923B00891A93 /* NSTimer+Spec.m */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -534,7 +538,6 @@
 			isa = PBXGroup;
 			children = (
 				AE9FC0B61896E7F90012D8F1 /* play-btn@2x.png */,
-				AE9FC0B71896E7F90012D8F1 /* play-btn@1x.png */,
 				AEFBF1681890480700ADD742 /* youtube_embed.html */,
 			);
 			path = "Static Resources";
@@ -668,7 +671,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */,
-				AE9FC0BC1896E7F90012D8F1 /* play-btn@1x.png in Resources */,
 				AE9FC0B91896E7F90012D8F1 /* play-btn@2x.png in Resources */,
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
 				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
@@ -681,7 +683,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE9FC0BD1896E7F90012D8F1 /* play-btn@1x.png in Resources */,
 				AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */,
 				AE9FC0BA1896E7F90012D8F1 /* play-btn@2x.png in Resources */,
 				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
@@ -755,6 +756,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE022DE3188E004900D02568 /* STRRestClient.m in Sources */,
+				AE131E1B1898923B00891A93 /* NSTimer+Spec.m in Sources */,
 				AE022DED188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE022DF3188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */,

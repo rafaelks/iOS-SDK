@@ -43,4 +43,9 @@
 
     [self.restClient sendBeaconWithParameters:parameters];
 }
+
+
+- (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey {
+    
+}
 @end

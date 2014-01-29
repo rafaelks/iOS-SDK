@@ -7,6 +7,7 @@
 #include "UIGestureRecognizer+Spec.h"
 #import "STRBeaconService.h"
 #import <objc/runtime.h>
+#import "NSTimer+Spec.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -32,18 +33,23 @@ describe(@"STRAdGenerator", ^{
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
     });
 
+    afterEach(^{
+        [NSTimer clear];
+    });
+
     describe(@"placing an ad in the view", ^{
         __block STRAdViewFixture *view;
         __block STRDeferred *deferred;
         __block UIActivityIndicatorView *spinner;
         __block UIViewController *presentingViewController;
+        __block UIWindow *window;
 
         beforeEach(^{
             view = [STRAdViewFixture new];
             deferred = [STRDeferred defer];
 
             presentingViewController = [UIViewController new];
-            UIWindow *window = [UIWindow new];
+            window = [UIWindow new];
             window.rootViewController = presentingViewController;
             [window makeKeyAndVisible];
 
@@ -109,6 +115,80 @@ describe(@"STRAdGenerator", ^{
             it(@"adds a gesture recognizer for taps", ^{
                 [view.gestureRecognizers count] should equal(1);
                 [view.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
+            });
+
+            describe(@"view position timer", ^{
+                __block NSTimer *timer;
+
+                beforeEach(^{
+                    UIView *superView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+                    [window addSubview:superView];
+                    [superView addSubview:view];
+
+                    timer = nice_fake_for([NSTimer class]);
+                    timer stub_method(@selector(userInfo)).and_return([NSTimer userInfo]);
+                });
+
+                it(@"begins a timer", ^{
+                    [NSTimer target] should equal(generator);
+                });
+
+                context(@"when ad is visible", ^{
+                    beforeEach(^{
+                        view.frame = CGRectMake(0, 0, 100, 100);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                        [[NSTimer target] performSelector:[NSTimer action] withObject:timer];
+#pragma clang diagnostic pop
+                    });
+
+                    it(@"should send a beacon", ^{
+                        beaconService should have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                    });
+
+                    it(@"invalidates timer", ^{
+                        timer should have_received(@selector(invalidate));
+                    });
+                });
+
+                context(@"when ad is not visible", ^{
+                    beforeEach(^{
+                        view.frame = CGRectMake(0, 481, 320, 500);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                        [[NSTimer target] performSelector:[NSTimer action] withObject:timer];
+#pragma clang diagnostic pop
+
+                    });
+
+                    it(@"does not send a beacon", ^{
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                    });
+
+                    it(@"does not invalidate the timer", ^{
+                        [NSTimer isRepeating] should be_truthy;
+                        timer should_not have_received(@selector(invalidate));
+                    });
+                });
+
+                context(@"after the ad is removed from its superview", ^{
+                    beforeEach(^{
+                        view.frame = CGRectMake(0, 481, 320, 500);
+                        [view removeFromSuperview];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                        [[NSTimer target] performSelector:[NSTimer action] withObject:timer];
+#pragma clang diagnostic pop
+                    });
+
+                    it(@"invalidates its timer", ^{
+                        timer should have_received(@selector(invalidate));
+                    });
+
+                    it(@"does not send a beacon", ^{
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                    });
+                });
             });
 
             describe(@"when the ad is tapped on", ^{

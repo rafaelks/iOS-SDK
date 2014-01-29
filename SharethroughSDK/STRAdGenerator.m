@@ -62,6 +62,18 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
         [view addGestureRecognizer:tapRecognizer];
 
+        NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
+                                                 target:self
+                                               selector:@selector(checkIfAdIsVisible:)
+                                               userInfo:@{@"view": view, @"placementKey": placementKey}
+                                                repeats:YES];
+        timer.tolerance = timer.timeInterval * 0.1;
+
+        // spec timer saves the input parameters and returns a nil timer.
+        if (timer) {
+            [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        }
+
         return ad;
     } error:^id(NSError *error) {
         [self.spinner removeFromSuperview];
@@ -71,6 +83,20 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
     [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
 }
 
+- (void)checkIfAdIsVisible:(NSTimer *)timer {
+    UIView *view = timer.userInfo[@"view"];
+    CGRect viewFrame = [view convertRect:view.bounds toView:nil];
+
+    if (!view.superview) {
+        [timer invalidate];
+        return;
+    }
+
+    if (CGRectIntersectsRect(viewFrame, view.window.frame)) {
+        [self.beaconService fireVisibleImpressionForPlacementKey:timer.userInfo[@"placementKey"]];
+        [timer invalidate];
+    }
+}
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice]];
