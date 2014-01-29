@@ -7,6 +7,7 @@
 #import <AdSupport/AdSupport.h>
 #import "STRInjector.h"
 #import "STRAppModule.h"
+#import "STRAdvertisement.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -62,19 +63,24 @@ describe(@"STRBeaconService", ^{
         });
     });
 
-    describe(@"-fireVisibleImpressionForPlacementKey:", ^{
+    describe(@"-fireVisibleImpressionForPlacementKey:ad:", ^{
         beforeEach(^{
-            [service fireVisibleImpressionForPlacementKey:@"placementKey"];
+            STRAdvertisement *ad = [[STRAdvertisement alloc] init];
+            ad.creativeKey = @"creativeKey";
+            ad.variantKey = @"variantKey";
+            [service fireVisibleImpressionForPlacementKey:@"placementKey" ad:ad];
         });
 
         it(@"sends a beacon to the tracking servers", ^{
             restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
-                                                                                        @"type": @"visible",
-                                                                                        @"bwidth": @"200",
-                                                                                        @"bheight": @"400",
-                                                                                        @"umtime": @"10",
-                                                                                        @"session": @"AAAA",
-                                                                                        @"uid": @"fakeUUID"});
+                                                                                         @"ckey": @"creativeKey",
+                                                                                         @"vkey": @"variantKey",
+                                                                                         @"type": @"visible",
+                                                                                         @"bwidth": @"200",
+                                                                                         @"bheight": @"400",
+                                                                                         @"umtime": @"10",
+                                                                                         @"session": @"AAAA",
+                                                                                         @"uid": @"fakeUUID"});
         });
 
     });

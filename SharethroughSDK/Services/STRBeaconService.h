@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRRestClient, STRNetworkClient, STRDateProvider, ASIdentifierManager;
+@class STRRestClient, STRNetworkClient, STRDateProvider, ASIdentifierManager, STRAdvertisement;
 
 @interface STRBeaconService : NSObject
 
 - (id) initWithRestClient:(STRRestClient *)restClient dateProvider:(STRDateProvider *)dateProvider asIdentifierManager:(ASIdentifierManager *)identifierManager;
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey;
-- (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey;
+- (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey ad:(STRAdvertisement *)ad;
 @end

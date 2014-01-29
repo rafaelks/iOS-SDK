@@ -61,7 +61,9 @@ describe(@"STRAdService", ^{
                                                        @"title": @"Meet Porter. He's a Dog.",
                                                        @"advertiser": @"Brand X",
                                                        @"media_url": @"http://www.youtube.com/watch?v=BWAK0J8Uhzk",
-                                                       @"share_url": @"http://bit.ly/14hfvXG"
+                                                       @"share_url": @"http://bit.ly/14hfvXG",
+                                                       @"creative_key": @"imagination",
+                                                       @"variant_key": @"variation"
                                                        }];
             });
 
@@ -90,6 +92,8 @@ describe(@"STRAdService", ^{
                     ad.adDescription should equal(@"Dogs this smart deserve a home.");
                     [ad.mediaURL absoluteString] should equal(@"http://www.youtube.com/watch?v=BWAK0J8Uhzk");
                     [ad.shareURL absoluteString] should equal(@"http://bit.ly/14hfvXG");
+                    ad.creativeKey should equal(@"imagination");
+                    ad.variantKey should equal(@"variation");
                     UIImagePNGRepresentation(ad.thumbnailImage) should equal(UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]));
                 });
             });

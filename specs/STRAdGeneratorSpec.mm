@@ -151,7 +151,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:ad:));
                     });
 
                     it(@"does not invalidates timer", ^{
@@ -164,7 +164,8 @@ describe(@"STRAdGenerator", ^{
                         });
 
                         it(@"sends a beacon", ^{
-                            beaconService should have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                            beaconService should have_received(@selector(fireVisibleImpressionForPlacementKey:ad:))
+                            .with(@"placementKey", ad);
                         });
 
                         it(@"invalidates its timer", ^{
@@ -195,7 +196,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:ad:));
                     });
 
                     it(@"does not invalidates timer", ^{
@@ -214,7 +215,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:ad:));
                     });
 
                     it(@"does not invalidates timer", ^{
@@ -233,7 +234,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"does not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:));
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:ad:));
                     });
                 });
             });

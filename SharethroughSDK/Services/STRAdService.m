@@ -48,6 +48,8 @@
             ad.advertiser = adJSON[@"advertiser"];
             ad.title = adJSON[@"title"];
             ad.adDescription = adJSON[@"description"];
+            ad.creativeKey = adJSON[@"creative_key"];
+            ad.variantKey = adJSON[@"variant_key"];
             ad.mediaURL = [NSURL URLWithString:adJSON[@"media_url"]];
             ad.shareURL = [NSURL URLWithString:adJSON[@"share_url"]];
             ad.thumbnailImage = [UIImage imageWithData:data];

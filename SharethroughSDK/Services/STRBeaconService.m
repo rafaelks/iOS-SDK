@@ -11,6 +11,7 @@
 #import "STRDateProvider.h"
 #import "STRSession.h"
 #import <AdSupport/AdSupport.h>
+#import "STRAdvertisement.h"
 
 @interface STRBeaconService ()
 
@@ -42,8 +43,10 @@
 }
 
 
-- (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey {
+- (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey ad:(STRAdvertisement *)ad {
     NSDictionary *uniqueParameters = @{@"pkey": placementKey,
+                                       @"vkey": ad.variantKey,
+                                       @"ckey": ad.creativeKey,
                                        @"type": @"visible"};
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
