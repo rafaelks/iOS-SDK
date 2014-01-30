@@ -10,6 +10,7 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRAdGenerator.h"
+#import "STRTableViewAdGenerator.h"
 
 @interface SharethroughSDK ()
 
@@ -41,6 +42,9 @@
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     [generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
+}
+
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
 }
 
 
