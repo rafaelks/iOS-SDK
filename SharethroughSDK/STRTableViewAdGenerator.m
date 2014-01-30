@@ -95,6 +95,10 @@ const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib before providing to SharethroughSDK.", self.adCellReuseIdentifier];
     }
 
+    if (![adCell conformsToProtocol:@protocol(STRAdView)]) {
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib that conforms to the STRAdView protocol.", self.adCellReuseIdentifier];
+    }
+
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController];
 

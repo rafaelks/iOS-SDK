@@ -127,7 +127,7 @@ describe(@"STRTableViewAdGenerator", ^{
         });
     });
 
-    describe(@"placing an ad in the table view when the reuse identifier was not registered", ^{
+    describe(@"placing an ad in the table view when the reuse identifier was badly registered", ^{
         __block STRTableViewDataSource *dataSource;
 
         beforeEach(^{
@@ -137,7 +137,15 @@ describe(@"STRTableViewAdGenerator", ^{
             [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
         });
 
-        it(@"throws an exception indicating that sdk user should register reuse identifier", ^{
+        it(@"throws an exception if the sdk user does not register the identifier", ^{
+            expect(^{
+                [tableView layoutIfNeeded];
+            }).to(raise_exception());
+        });
+
+        it(@"throws an exception if the sdk user registers a cell that doesn't conform to STRAdView", ^{
+            [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"adCell"];
+
             expect(^{
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
