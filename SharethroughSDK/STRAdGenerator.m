@@ -108,7 +108,9 @@ char const * const kAdTimerKey = "kAdTimerKey";
     if (percentVisible >= 0.5 && secondsVisible < 1.0) {
         timer.userInfo[@"secondsVisible"] = @(secondsVisible + timer.timeInterval);
     } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
-        [self.beaconService fireVisibleImpressionForPlacementKey:timer.userInfo[@"placementKey"] ad:self.ad];
+        [self.beaconService fireVisibleImpressionForPlacementKey:timer.userInfo[@"placementKey"]
+                                                              ad:self.ad
+                                                          adSize:view.frame.size];
         [timer invalidate];
     } else {
         [timer.userInfo removeObjectForKey:@"secondsVisible"];

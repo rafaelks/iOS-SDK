@@ -63,12 +63,12 @@ describe(@"STRBeaconService", ^{
         });
     });
 
-    describe(@"-fireVisibleImpressionForPlacementKey:ad:", ^{
+    describe(@"-fireVisibleImpressionForPlacementKey:ad:adSize:", ^{
         beforeEach(^{
             STRAdvertisement *ad = [[STRAdvertisement alloc] init];
             ad.creativeKey = @"creativeKey";
             ad.variantKey = @"variantKey";
-            [service fireVisibleImpressionForPlacementKey:@"placementKey" ad:ad];
+            [service fireVisibleImpressionForPlacementKey:@"placementKey" ad:ad adSize:CGSizeMake(200, 100)];
         });
 
         it(@"sends a beacon to the tracking servers", ^{
@@ -80,7 +80,9 @@ describe(@"STRBeaconService", ^{
                                                                                          @"bheight": @"400",
                                                                                          @"umtime": @"10",
                                                                                          @"session": @"AAAA",
-                                                                                         @"uid": @"fakeUUID"});
+                                                                                         @"uid": @"fakeUUID",
+                                                                                         @"pwidth": @"200",
+                                                                                         @"pheight": @"100"});
         });
 
     });

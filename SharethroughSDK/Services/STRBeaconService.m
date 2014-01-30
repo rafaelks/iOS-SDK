@@ -43,11 +43,14 @@
 }
 
 
-- (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey ad:(STRAdvertisement *)ad {
+- (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey ad:(STRAdvertisement *)ad adSize:(CGSize)adSize {
     NSDictionary *uniqueParameters = @{@"pkey": placementKey,
                                        @"vkey": ad.variantKey,
                                        @"ckey": ad.creativeKey,
-                                       @"type": @"visible"};
+                                       @"type": @"visible",
+                                       @"pwidth": [NSString stringWithFormat:@"%g", adSize.width],
+                                       @"pheight": [NSString stringWithFormat:@"%g", adSize.height]};
+
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
 
@@ -59,7 +62,7 @@
 - (NSMutableDictionary *)commonParameters {
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
 
-    return [@{ @"bwidth" : [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
+    return [@{@"bwidth" : [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
               @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
               @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
               @"session": [STRSession sessionToken],
