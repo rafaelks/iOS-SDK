@@ -1,5 +1,5 @@
 //
-//  STRAdViewFixture.h
+//  STRFullAdView.h
 //  SharethroughSDK
 //
 //  Created by sharethrough on 1/16/14.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "STRAdView.h"
-#import "STRMinimalAdViewFixture.h"
+#import "STRPlainAdView.h"
 
-@interface STRAdViewFixture : STRMinimalAdViewFixture<STRAdView>
+@interface STRFullAdView : STRPlainAdView <STRAdView>
 
 @property (weak, nonatomic) UILabel *adDescription;
 

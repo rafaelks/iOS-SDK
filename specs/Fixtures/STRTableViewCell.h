@@ -1,5 +1,5 @@
 //
-//  STRTableViewCellFixture.h
+//  STRTableViewCell.h
 //  SharethroughSDK
 //
 //  Created by sharethrough on 1/29/14.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "STRAdView.h"
 
-@interface STRTableViewCellFixture : UITableViewCell<STRAdView>
+@interface STRTableViewCell : UITableViewCell<STRAdView>
 
 @property (weak, nonatomic) UILabel *adSponsoredBy;
 

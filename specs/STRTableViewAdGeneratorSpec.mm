@@ -4,7 +4,7 @@
 #import "STRTableViewDataSource.h"
 #import "STRInjector.h"
 #import "STRAppModule.h"
-#import "STRTableViewCellFixture.h"
+#import "STRTableViewCell.h"
 #import "STRAdGenerator.h"
 
 using namespace Cedar::Matchers;
@@ -34,7 +34,7 @@ describe(@"STRTableViewAdGenerator", ^{
             presentingViewController = [UIViewController new];
             tableView = [UITableView new];
 
-            [tableView registerClass:[STRTableViewCellFixture class] forCellReuseIdentifier:@"adCell"];
+            [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
             tableView.frame = CGRectMake(0, 0, 100, 400);
         });
 
@@ -59,8 +59,8 @@ describe(@"STRTableViewAdGenerator", ^{
                 UITableViewCell *contentCell = tableView.visibleCells[0];
                 contentCell.textLabel.text should equal(@"row: 0, section: 0");
 
-                STRTableViewCellFixture *adCell = (STRTableViewCellFixture *) tableView.visibleCells[1];
-                adCell should be_instance_of([STRTableViewCellFixture class]);
+                STRTableViewCell *adCell = (STRTableViewCell *) tableView.visibleCells[1];
+                adCell should be_instance_of([STRTableViewCell class]);
 
                 adGenerator should have_received(@selector(placeAdInView:placementKey:presentingViewController:)).with(adCell, @"placementKey", presentingViewController);
 
@@ -105,8 +105,8 @@ describe(@"STRTableViewAdGenerator", ^{
                     [tableView numberOfSections] should equal(1);
                     [tableView numberOfRowsInSection:0] should equal(1);
 
-                    STRTableViewCellFixture *adCell = (STRTableViewCellFixture *) tableView.visibleCells[0];
-                    adCell should be_instance_of([STRTableViewCellFixture class]);
+                    STRTableViewCell *adCell = (STRTableViewCell *) tableView.visibleCells[0];
+                    adCell should be_instance_of([STRTableViewCell class]);
                 });
             });
 

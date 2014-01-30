@@ -1,14 +1,14 @@
 //
-//  STRAdViewFixture.m
+//  STRFullAdView.m
 //  SharethroughSDK
 //
 //  Created by sharethrough on 1/16/14.
 //  Copyright (c) 2014 Sharethrough. All rights reserved.
 //
 
-#import "STRAdViewFixture.h"
+#import "STRFullAdView.h"
 
-@implementation STRAdViewFixture
+@implementation STRFullAdView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];

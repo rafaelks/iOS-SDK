@@ -1,5 +1,5 @@
 #import "STRInjector.h"
-#import "STRSpecModuleFixture.h"
+#import "STRSpecModule.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -15,7 +15,7 @@ describe(@"Injector", ^{
 
     describe(@"when configuring an injector from a module", ^{
         beforeEach(^{
-            id<STRInjectorModule> module = [SpecModuleFixture new];
+            id<STRInjectorModule> module = [SpecModule new];
             injector = [STRInjector injectorForModule:module];
         });
 

@@ -44,11 +44,10 @@
 		AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022E00188E024700D02568 /* STRAdServiceSpec.mm */; };
 		AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
-		AE1258C218971B2B0017F970 /* STRMinimalAdViewFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1258C118971B2B0017F970 /* STRMinimalAdViewFixture.m */; };
+		AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1258C118971B2B0017F970 /* STRPlainAdView.m */; };
 		AE131E081898622800891A93 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
 		AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
-		AE131E1B1898923B00891A93 /* NSTimer+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AE131E1A1898923B00891A93 /* NSTimer+Spec.m */; };
-		AE1F671D1899AD9E00E184D6 /* STRTableViewCellFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1F671C1899AD9E00E184D6 /* STRTableViewCellFixture.m */; };
+		AE1F671D1899AD9E00E184D6 /* STRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1F671C1899AD9E00E184D6 /* STRTableViewCell.m */; };
 		AE1F67241899BBC600E184D6 /* STRTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1F67231899BBC600E184D6 /* STRTableViewDataSource.m */; };
 		AE2246831886138F00626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
 		AE2246841886138F00626A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
@@ -60,7 +59,7 @@
 		AE2246F6188874D100626A29 /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F4188874D100626A29 /* STRAdGenerator.m */; };
 		AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F4188874D100626A29 /* STRAdGenerator.m */; };
 		AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */; };
-		AE2246FE1888782A00626A29 /* STRAdViewFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246FD1888782A00626A29 /* STRAdViewFixture.m */; };
+		AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246FD1888782A00626A29 /* STRFullAdView.m */; };
 		AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
 		AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
 		AE3120E21889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
@@ -84,7 +83,7 @@
 		AE6C80811899861E008FD848 /* STRInjector.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807E1899861E008FD848 /* STRInjector.m */; };
 		AE6C80821899861E008FD848 /* STRInjector.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807E1899861E008FD848 /* STRInjector.m */; };
 		AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808418998633008FD848 /* STRInjectorSpec.mm */; };
-		AE6C80881899863C008FD848 /* STRSpecModuleFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C80871899863C008FD848 /* STRSpecModuleFixture.m */; };
+		AE6C80881899863C008FD848 /* STRSpecModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C80871899863C008FD848 /* STRSpecModule.m */; };
 		AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
 		AE6C808C1899873B008FD848 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
 		AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
@@ -194,12 +193,10 @@
 		AE022DFB188E021C00D02568 /* STRNetworkClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRNetworkClientSpec.mm; sourceTree = "<group>"; };
 		AE022DFC188E021C00D02568 /* STRRestClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRRestClientSpec.mm; sourceTree = "<group>"; };
 		AE022E00188E024700D02568 /* STRAdServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdServiceSpec.mm; sourceTree = "<group>"; };
-		AE1258C018971B2B0017F970 /* STRMinimalAdViewFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRMinimalAdViewFixture.h; sourceTree = "<group>"; };
-		AE1258C118971B2B0017F970 /* STRMinimalAdViewFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRMinimalAdViewFixture.m; sourceTree = "<group>"; };
-		AE131E191898923B00891A93 /* NSTimer+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Spec.h"; sourceTree = "<group>"; };
-		AE131E1A1898923B00891A93 /* NSTimer+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Spec.m"; sourceTree = "<group>"; };
-		AE1F671B1899AD9E00E184D6 /* STRTableViewCellFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewCellFixture.h; sourceTree = "<group>"; };
-		AE1F671C1899AD9E00E184D6 /* STRTableViewCellFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewCellFixture.m; sourceTree = "<group>"; };
+		AE1258C018971B2B0017F970 /* STRPlainAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRPlainAdView.h; sourceTree = "<group>"; };
+		AE1258C118971B2B0017F970 /* STRPlainAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRPlainAdView.m; sourceTree = "<group>"; };
+		AE1F671B1899AD9E00E184D6 /* STRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewCell.h; sourceTree = "<group>"; };
+		AE1F671C1899AD9E00E184D6 /* STRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewCell.m; sourceTree = "<group>"; };
 		AE1F67221899BBC600E184D6 /* STRTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDataSource.h; sourceTree = "<group>"; };
 		AE1F67231899BBC600E184D6 /* STRTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDataSource.m; sourceTree = "<group>"; };
 		AE2246821886138F00626A29 /* specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,8 +210,8 @@
 		AE2246F3188874D100626A29 /* STRAdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdGenerator.h; sourceTree = "<group>"; };
 		AE2246F4188874D100626A29 /* STRAdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdGenerator.m; sourceTree = "<group>"; };
 		AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdGeneratorSpec.mm; sourceTree = "<group>"; };
-		AE2246FC1888782A00626A29 /* STRAdViewFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdViewFixture.h; sourceTree = "<group>"; };
-		AE2246FD1888782A00626A29 /* STRAdViewFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdViewFixture.m; sourceTree = "<group>"; };
+		AE2246FC1888782A00626A29 /* STRFullAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFullAdView.h; sourceTree = "<group>"; };
+		AE2246FD1888782A00626A29 /* STRFullAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFullAdView.m; sourceTree = "<group>"; };
 		AE3120DB1889E71900297F01 /* STRDeferred.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = STRDeferred.h; path = ../STRDeferred.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AE3120DC1889E71900297F01 /* STRDeferred.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = STRDeferred.m; path = ../STRDeferred.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE3120E01889E76F00297F01 /* STRPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = STRPromise.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -243,8 +240,8 @@
 		AE6C807D1899861E008FD848 /* STRInjector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRInjector.h; sourceTree = "<group>"; };
 		AE6C807E1899861E008FD848 /* STRInjector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRInjector.m; sourceTree = "<group>"; };
 		AE6C808418998633008FD848 /* STRInjectorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInjectorSpec.mm; sourceTree = "<group>"; };
-		AE6C80861899863C008FD848 /* STRSpecModuleFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSpecModuleFixture.h; sourceTree = "<group>"; };
-		AE6C80871899863C008FD848 /* STRSpecModuleFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSpecModuleFixture.m; sourceTree = "<group>"; };
+		AE6C80861899863C008FD848 /* STRSpecModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSpecModule.h; sourceTree = "<group>"; };
+		AE6C80871899863C008FD848 /* STRSpecModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSpecModule.m; sourceTree = "<group>"; };
 		AE6C80891899873B008FD848 /* STRAppModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAppModule.h; sourceTree = "<group>"; };
 		AE6C808A1899873B008FD848 /* STRAppModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAppModule.m; sourceTree = "<group>"; };
 		AE6C808D1899923E008FD848 /* STRSingletonBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSingletonBlockWrapper.h; sourceTree = "<group>"; };
@@ -415,18 +412,18 @@
 			isa = PBXGroup;
 			children = (
 				AE022DD0188DF3C400D02568 /* fixture_image.png */,
-				AE2246FC1888782A00626A29 /* STRAdViewFixture.h */,
-				AE2246FD1888782A00626A29 /* STRAdViewFixture.m */,
-				AE1258C018971B2B0017F970 /* STRMinimalAdViewFixture.h */,
-				AE1258C118971B2B0017F970 /* STRMinimalAdViewFixture.m */,
-				AE6C80861899863C008FD848 /* STRSpecModuleFixture.h */,
-				AE6C80871899863C008FD848 /* STRSpecModuleFixture.m */,
-				AE6C806F1898925C008FD848 /* STRFullTableViewDataSource.h */,
-				AE6C80701898925C008FD848 /* STRFullTableViewDataSource.m */,
-				AE1F671B1899AD9E00E184D6 /* STRTableViewCellFixture.h */,
-				AE1F671C1899AD9E00E184D6 /* STRTableViewCellFixture.m */,
+				AE1258C018971B2B0017F970 /* STRPlainAdView.h */,
+				AE1258C118971B2B0017F970 /* STRPlainAdView.m */,
+				AE2246FC1888782A00626A29 /* STRFullAdView.h */,
+				AE2246FD1888782A00626A29 /* STRFullAdView.m */,
+				AE6C80861899863C008FD848 /* STRSpecModule.h */,
+				AE6C80871899863C008FD848 /* STRSpecModule.m */,
 				AE1F67221899BBC600E184D6 /* STRTableViewDataSource.h */,
 				AE1F67231899BBC600E184D6 /* STRTableViewDataSource.m */,
+				AE6C806F1898925C008FD848 /* STRFullTableViewDataSource.h */,
+				AE6C80701898925C008FD848 /* STRFullTableViewDataSource.m */,
+				AE1F671B1899AD9E00E184D6 /* STRTableViewCell.h */,
+				AE1F671C1899AD9E00E184D6 /* STRTableViewCell.m */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -831,7 +828,7 @@
 				AE022DF3188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AE6C808C1899873B008FD848 /* STRAppModule.m in Sources */,
 				AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */,
-				AE6C80881899863C008FD848 /* STRSpecModuleFixture.m in Sources */,
+				AE6C80881899863C008FD848 /* STRSpecModule.m in Sources */,
 				AE6C806E1898914F008FD848 /* STRTableViewAdGeneratorSpec.mm in Sources */,
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
@@ -839,11 +836,11 @@
 				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
-				AE1258C218971B2B0017F970 /* STRMinimalAdViewFixture.m in Sources */,
+				AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
 				AE022DE8188E008000D02568 /* STRAdService.m in Sources */,
 				AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */,
-				AE2246FE1888782A00626A29 /* STRAdViewFixture.m in Sources */,
+				AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */,
 				AE46CE6D189844AB0096BDE9 /* STRSession.m in Sources */,
 				AE6C80711898925C008FD848 /* STRFullTableViewDataSource.m in Sources */,
 				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
@@ -856,7 +853,7 @@
 				AE22468E1886138F00626A29 /* main.m in Sources */,
 				AE022DFE188E021C00D02568 /* STRRestClientSpec.mm in Sources */,
 				AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */,
-				AE1F671D1899AD9E00E184D6 /* STRTableViewCellFixture.m in Sources */,
+				AE1F671D1899AD9E00E184D6 /* STRTableViewCell.m in Sources */,
 				AE3120E31889E76F00297F01 /* STRPromise.m in Sources */,
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C806818988ECE008FD848 /* STRTableViewAdGenerator.m in Sources */,

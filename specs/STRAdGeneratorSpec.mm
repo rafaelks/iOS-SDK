@@ -1,5 +1,5 @@
 #import "STRAdGenerator.h"
-#import "STRAdViewFixture.h"
+#import "STRFullAdView.h"
 #import "STRAdService.h"
 #import "STRDeferred.h"
 #import "STRAdvertisement.h"
@@ -47,14 +47,14 @@ describe(@"STRAdGenerator", ^{
     });
 
     describe(@"placing an ad in the view", ^{
-        __block STRAdViewFixture *view;
+        __block STRFullAdView *view;
         __block STRDeferred *deferred;
         __block UIActivityIndicatorView *spinner;
         __block UIViewController *presentingViewController;
         __block UIWindow *window;
 
         beforeEach(^{
-            view = [STRAdViewFixture new];
+            view = [STRFullAdView new];
             deferred = [STRDeferred defer];
 
             presentingViewController = [UIViewController new];
@@ -310,11 +310,11 @@ describe(@"STRAdGenerator", ^{
     });
 
     describe(@"place an ad in a view without an ad description", ^{
-        __block STRMinimalAdViewFixture *view;
+        __block STRPlainAdView *view;
         __block STRDeferred *deferred;
 
         beforeEach(^{
-            view = [STRMinimalAdViewFixture new];
+            view = [STRPlainAdView new];
             deferred = [STRDeferred defer];
 
             adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);

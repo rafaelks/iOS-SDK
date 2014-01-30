@@ -1,5 +1,5 @@
 //
-//  STRMinimalAdViewFixture.h
+//  STRPlainAdView.h
 //  SharethroughSDK
 //
 //  Created by sharethrough on 1/27/14.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "STRAdView.h"
 
-@interface STRMinimalAdViewFixture : UIView<STRAdView>
+@interface STRPlainAdView : UIView<STRAdView>
 
 @property (weak, nonatomic) UILabel *adTitle;
 @property (weak, nonatomic) UILabel *adSponsoredBy;
