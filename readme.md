@@ -17,6 +17,9 @@ In your application target, select Build Phases and add a new library to link ag
 Select and add AdSupport.framework.
 [Select AdSupport Framework][add-framework-screenshot]
 
+## Known Issues ##
+If you're running your iOS app on a physical iPad while connected to a computer and play a Youtube video from an ad, error messages will be displayed in the Xcode console. This is a known iPad on iOS7 issue, but do not affect your app's functionality. More information can be found [here][stack-overflow]
+
 ## Display some ads! Make some money! ##
 The docset can be downloaded from [here][docset].
 After downloading the docset and untaring, you can install these docs to Xcode by copying them over to the Shared Documentation folder:
@@ -33,3 +36,4 @@ and then restarting Xcode to pick up the new docset.
 [add-framework-screenshot]: documentation/getting_started/add_framework_screenshot.png
 [project_settings-screenshot]: documentation/getting_started/project_settings_screenshot.png
 [docset]: http://s3.amazonaws.com/iOS-SDK/com.sharethrough.Sharethrough-SDK.docset.tar
+[stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video
