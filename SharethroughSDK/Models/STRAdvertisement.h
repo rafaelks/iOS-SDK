@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *advertiser;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *adDescription;
+@property (nonatomic, copy) NSString *placementKey;
 @property (nonatomic, copy) NSString *creativeKey;
 @property (nonatomic, copy) NSString *variantKey;
 @property (nonatomic, copy) NSURL *mediaURL;

@@ -104,7 +104,7 @@ describe(@"STRAdGenerator", ^{
             });
 
             it(@"fires an impression kept beacon", ^{
-                beaconService should have_received(@selector(fireImpressionForPlacementKey:ad:adSize:)).with(@"placementKey", ad, CGSizeMake(100, 100));
+                beaconService should have_received(@selector(fireImpressionForAd:adSize:)).with(ad, CGSizeMake(100, 100));
             });
 
             it(@"fills out the ads' the title, description, and sponsored by", ^{
@@ -156,7 +156,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:ad:adSize:));
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
                     });
 
                     it(@"does not invalidates timer", ^{
@@ -169,8 +169,8 @@ describe(@"STRAdGenerator", ^{
                         });
 
                         it(@"sends a beacon", ^{
-                            beaconService should have_received(@selector(fireVisibleImpressionForPlacementKey:ad:adSize:))
-                            .with(@"placementKey", ad, CGSizeMake(100, 100));
+                            beaconService should have_received(@selector(fireVisibleImpressionForAd:adSize:))
+                            .with(ad, CGSizeMake(100, 100));
                         });
 
                         it(@"invalidates its timer", ^{
@@ -201,7 +201,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:ad:adSize:));
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
                     });
 
                     it(@"does not invalidates timer", ^{
@@ -220,7 +220,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:ad:adSize:));
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
                     });
 
                     it(@"does not invalidates timer", ^{
@@ -239,7 +239,7 @@ describe(@"STRAdGenerator", ^{
                     });
 
                     it(@"does not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForPlacementKey:ad:adSize:));
+                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
                     });
                 });
             });
@@ -263,6 +263,10 @@ describe(@"STRAdGenerator", ^{
                     [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
 
                     presentingViewController.presentedViewController should be_nil;
+                });
+
+                it(@"fires off a youtube play beacon", ^{
+                    beaconService should have_received(@selector(fireYoutubePlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
                 });
             });
         });

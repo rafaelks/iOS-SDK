@@ -53,6 +53,7 @@
             ad.mediaURL = [NSURL URLWithString:adJSON[@"media_url"]];
             ad.shareURL = [NSURL URLWithString:adJSON[@"share_url"]];
             ad.thumbnailImage = [UIImage imageWithData:data];
+            ad.placementKey = placementKey;
 
             [deferred resolveWithValue:ad];
             return data;

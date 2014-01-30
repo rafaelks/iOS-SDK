@@ -94,6 +94,7 @@ describe(@"STRAdService", ^{
                     [ad.shareURL absoluteString] should equal(@"http://bit.ly/14hfvXG");
                     ad.creativeKey should equal(@"imagination");
                     ad.variantKey should equal(@"variation");
+                    ad.placementKey should equal(@"placementKey");
                     UIImagePNGRepresentation(ad.thumbnailImage) should equal(UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]));
                 });
             });

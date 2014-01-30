@@ -55,7 +55,7 @@ char const * const kAdTimerKey = "kAdTimerKey";
 
     STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
     [adPromise then:^id(STRAdvertisement *ad) {
-        [self.beaconService fireImpressionForPlacementKey:placementKey ad:ad adSize:view.frame.size];
+        [self.beaconService fireImpressionForAd:ad adSize:view.frame.size];
 
         [self.spinner removeFromSuperview];
 
@@ -74,7 +74,7 @@ char const * const kAdTimerKey = "kAdTimerKey";
         NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
                                                  target:self
                                                selector:@selector(checkIfAdIsVisible:)
-                                               userInfo:[@{@"view": view, @"placementKey": placementKey} mutableCopy]
+                                               userInfo:[@{@"view": view} mutableCopy]
                                                 repeats:YES];
         timer.tolerance = timer.timeInterval * 0.1;
         [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
@@ -110,9 +110,8 @@ char const * const kAdTimerKey = "kAdTimerKey";
     if (percentVisible >= 0.5 && secondsVisible < 1.0) {
         timer.userInfo[@"secondsVisible"] = @(secondsVisible + timer.timeInterval);
     } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
-        [self.beaconService fireVisibleImpressionForPlacementKey:timer.userInfo[@"placementKey"]
-                                                              ad:self.ad
-                                                          adSize:view.frame.size];
+        [self.beaconService fireVisibleImpressionForAd:self.ad
+                                                adSize:view.frame.size];
         [timer invalidate];
     } else {
         [timer.userInfo removeObjectForKey:@"secondsVisible"];
@@ -121,6 +120,9 @@ char const * const kAdTimerKey = "kAdTimerKey";
 
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
+    UIView *view = tapRecognizer.view;
+    [self.beaconService fireYoutubePlayEvent:self.ad adSize:view.frame.size];
+
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice]];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];

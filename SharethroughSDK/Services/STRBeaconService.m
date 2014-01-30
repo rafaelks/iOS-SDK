@@ -43,9 +43,8 @@
 }
 
 
-- (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey ad:(STRAdvertisement *)ad adSize:(CGSize)adSize {
-    NSDictionary *uniqueParameters = @{@"pkey": placementKey,
-                                       @"type": @"visible"};
+- (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+    NSDictionary *uniqueParameters = @{@"type": @"visible"};
 
     NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:adSize];
     [parameters addEntriesFromDictionary:uniqueParameters];
@@ -53,11 +52,20 @@
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
-- (void)fireImpressionForPlacementKey:(NSString *)placementKey ad:(STRAdvertisement *)ad adSize:(CGSize)adSize {
-    NSDictionary *uniqueParameters = @{@"pkey": placementKey,
-                                       @"type": @"impression"};
+- (void)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+    NSDictionary *uniqueParameters = @{@"type": @"impression"};
 
     NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:adSize];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+
+    [self.restClient sendBeaconWithParameters:parameters];
+}
+
+- (void)fireYoutubePlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size {
+    NSDictionary *uniqueParameters = @{@"type": @"userEvent",
+                                       @"userEvent": @"youtubePlay",
+                                       @"engagement": @"true"};
+    NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:size];
     [parameters addEntriesFromDictionary:uniqueParameters];
 
     [self.restClient sendBeaconWithParameters:parameters];
@@ -66,7 +74,8 @@
 #pragma mark - Private
 
 - (NSMutableDictionary *)impressionParametersForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
-    NSMutableDictionary *params = [@{@"vkey": ad.variantKey,
+    NSMutableDictionary *params = [@{@"pkey": ad.placementKey,
+                                     @"vkey": ad.variantKey,
                                      @"ckey": ad.creativeKey,
                                      @"pwidth": [NSString stringWithFormat:@"%g", adSize.width],
                                      @"pheight": [NSString stringWithFormat:@"%g", adSize.height]}

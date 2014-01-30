@@ -18,6 +18,7 @@ describe(@"STRBeaconService", ^{
     __block STRBeaconService *service;
     __block STRRestClient *restClient;
     __block STRInjector *injector;
+    __block STRAdvertisement *ad;
 
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
@@ -45,6 +46,11 @@ describe(@"STRBeaconService", ^{
 
         restClient stub_method(@selector(sendBeaconWithParameters:));
         service = [injector getInstance:[STRBeaconService class]];
+
+        ad = [[STRAdvertisement alloc] init];
+        ad.creativeKey = @"creativeKey";
+        ad.variantKey = @"variantKey";
+        ad.placementKey = @"placementKey";
     });
 
     describe(@"-fireImpressionRequestForPlacementKey:", ^{
@@ -63,12 +69,9 @@ describe(@"STRBeaconService", ^{
         });
     });
 
-    describe(@"-fireImpressionForPlacementKey:ad:adSize:", ^{
+    describe(@"-fireImpressionForAd:adSize:", ^{
         beforeEach(^{
-            STRAdvertisement *ad = [[STRAdvertisement alloc] init];
-            ad.creativeKey = @"creativeKey";
-            ad.variantKey = @"variantKey";
-            [service fireImpressionForPlacementKey:@"placementKey" ad:ad adSize:CGSizeMake(200, 100)];
+            [service fireImpressionForAd:ad adSize:CGSizeMake(200, 100)];
         });
 
         it(@"sends a beacon to the tracking servers", ^{
@@ -87,12 +90,9 @@ describe(@"STRBeaconService", ^{
 
     });
 
-    describe(@"-fireVisibleImpressionForPlacementKey:ad:adSize:", ^{
+    describe(@"-fireVisibleImpressionForAd:adSize:", ^{
         beforeEach(^{
-            STRAdvertisement *ad = [[STRAdvertisement alloc] init];
-            ad.creativeKey = @"creativeKey";
-            ad.variantKey = @"variantKey";
-            [service fireVisibleImpressionForPlacementKey:@"placementKey" ad:ad adSize:CGSizeMake(200, 100)];
+            [service fireVisibleImpressionForAd:ad adSize:CGSizeMake(200, 100)];
         });
 
         it(@"sends a beacon to the tracking servers", ^{
@@ -110,6 +110,31 @@ describe(@"STRBeaconService", ^{
         });
 
     });
+
+    describe(@"-fireYoutubePlayEvent:adSize:", ^{
+        beforeEach(^{
+
+            [service fireYoutubePlayEvent:ad adSize:CGSizeMake(200, 100)];
+        });
+
+        it(@"sends a beacon to the tracking servers", ^{
+            restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
+                                                                                         @"ckey": @"creativeKey",
+                                                                                         @"vkey": @"variantKey",
+                                                                                         @"type": @"userEvent",
+                                                                                         @"engagement": @"true",
+                                                                                         @"userEvent": @"youtubePlay",
+                                                                                         @"bwidth": @"200",
+                                                                                         @"bheight": @"400",
+                                                                                         @"umtime": @"10",
+                                                                                         @"session": @"AAAA",
+                                                                                         @"uid": @"fakeUUID",
+                                                                                         @"pwidth": @"200",
+                                                                                         @"pheight": @"100"});
+        });
+
+    });
+
 
 });
 
