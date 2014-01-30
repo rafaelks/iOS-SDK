@@ -23,4 +23,8 @@
     return self.numberOfSections;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    return @"title for footer";
+}
+
 @end

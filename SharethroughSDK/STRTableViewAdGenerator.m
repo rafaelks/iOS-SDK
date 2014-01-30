@@ -10,6 +10,9 @@
 #import "SharethroughSDK.h"
 #import "STRInjector.h"
 #import "STRAdGenerator.h"
+#import <objc/runtime.h>
+
+const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
 
 @interface STRTableViewAdGenerator ()<UITableViewDataSource>
 
@@ -39,6 +42,8 @@
 
     self.originalDataSource = tableView.dataSource;
     tableView.dataSource = self;
+
+    objc_setAssociatedObject(tableView, kTableViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -51,10 +56,7 @@
     NSInteger rowPositionOfAd = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
 
     if (indexPath.row == rowPositionOfAd && indexPath.section == 0) {
-        UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];
-        STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-        [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController];
-        return adCell;
+        return [self adCellForTableView:tableView];
     }
 
     NSInteger adjustment = indexPath.row < rowPositionOfAd ? 0 : 1;
@@ -83,6 +85,21 @@
     }
 
     return nil;
+}
+
+#pragma mark - Private
+
+- (UITableViewCell *)adCellForTableView:(UITableView *)tableView {
+    UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];
+    if (!adCell) {
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib before providing to SharethroughSDK.", self.adCellReuseIdentifier];
+    }
+
+    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController];
+
+    return adCell;
+
 }
 
 @end

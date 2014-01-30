@@ -6,15 +6,20 @@
 #import "STRAppModule.h"
 #import "STRTableViewCell.h"
 #import "STRAdGenerator.h"
+#import <objc/runtime.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
+
+extern const char *const kTableViewAdGeneratorKey;
 
 SPEC_BEGIN(STRTableViewAdGeneratorSpec)
 
 describe(@"STRTableViewAdGenerator", ^{
     __block STRTableViewAdGenerator *tableViewAdGenerator;
     __block STRAdGenerator *adGenerator;
+    __block UITableView *tableView;
+    __block UIViewController *presentingViewController;
 
     beforeEach(^{
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
@@ -23,19 +28,22 @@ describe(@"STRTableViewAdGenerator", ^{
         [injector bind:[STRAdGenerator class] toInstance:adGenerator];
 
         tableViewAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
+
+        presentingViewController = [UIViewController new];
+        tableView = [UITableView new];
+        tableView.frame = CGRectMake(0, 0, 100, 400);
     });
 
     describe(@"placing an ad in the table view", ^{
-        __block UITableView *tableView;
-
-        __block UIViewController *presentingViewController;
-
         beforeEach(^{
-            presentingViewController = [UIViewController new];
-            tableView = [UITableView new];
-
             [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
-            tableView.frame = CGRectMake(0, 0, 100, 400);
+        });
+
+        it(@"stores itself as an associated object of the table view", ^{
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            [tableView layoutIfNeeded];
+
+            objc_getAssociatedObject(tableView, kTableViewAdGeneratorKey) should be_same_instance_as(tableViewAdGenerator);
         });
 
         describe(@"when the data source only implements required methods", ^{
@@ -110,6 +118,29 @@ describe(@"STRTableViewAdGenerator", ^{
                 });
             });
 
+            it(@"forwards other selectors to the data source", ^{
+                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                [tableView layoutIfNeeded];
+
+                [tableView footerViewForSection:0].textLabel.text should equal(@"title for footer");
+            });
+        });
+    });
+
+    describe(@"placing an ad in the table view when the reuse identifier was not registered", ^{
+        __block STRTableViewDataSource *dataSource;
+
+        beforeEach(^{
+            dataSource = [STRTableViewDataSource new];
+            tableView.dataSource = dataSource;
+
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+        });
+
+        it(@"throws an exception indicating that sdk user should register reuse identifier", ^{
+            expect(^{
+                [tableView layoutIfNeeded];
+            }).to(raise_exception());
         });
     });
 });
