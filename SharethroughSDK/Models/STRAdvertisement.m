@@ -16,7 +16,7 @@
 }
 
 - (UIImage *)thumbnailWithPlayImage {
-    NSString *playButtonPath = [[STRBundleSettings bundleForResources] pathForResource:@"play-btn@2x.png" ofType:nil];
+    NSString *playButtonPath = [[STRBundleSettings bundleForResources] pathForResource:@"play-btn-300x.png" ofType:nil];
     UIImage *playButton = [UIImage imageWithContentsOfFile:playButtonPath];
 
     CGSize size = self.thumbnailImage.size;
