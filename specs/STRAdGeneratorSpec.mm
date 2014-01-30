@@ -24,7 +24,7 @@ describe(@"STRAdGenerator", ^{
     __block NSRunLoop<CedarDouble> *fakeRunLoop;
 
     beforeEach(^{
-        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+        injector = [STRInjector injectorForModule:[STRAppModule new]];
 
         [UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdGenerator class]];
 

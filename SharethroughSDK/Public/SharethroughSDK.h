@@ -15,20 +15,9 @@
 @interface SharethroughSDK : NSObject
 
 /**
- A readonly property to determine if the Ad generator is running against staging. This value is set by the class constructor generatorWithPriceKey:isStaging:or production.
- */
-@property (nonatomic, assign, readonly, getter = isStaging) BOOL staging;
-
-/**
  The accessor for the SDK's shared instance.
  */
 + (instancetype)sharedInstance;
-
-/**
- Configure the shared instance to use the staging or production ad server. Configuration must be done at the beggining of your application's lifecycle, before using the shared instance for displaying ads.
- @param staging Whether to point to the staging ad service or production. YES indicates the staging servers.
- */
-- (void)configureWithStaging:(BOOL)staging;
 
 /**
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.

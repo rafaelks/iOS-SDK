@@ -16,12 +16,6 @@
 
 @implementation STRAppModule
 
-+ (instancetype)moduleWithStaging:(BOOL)staging {
-    STRAppModule *module = [self new];
-    module.staging = staging;
-    return module;
-}
-
 - (void)configureWithInjector:(STRInjector *)injector {
     [injector bind:[STRNetworkClient class] toInstance:[STRNetworkClient new]];
 

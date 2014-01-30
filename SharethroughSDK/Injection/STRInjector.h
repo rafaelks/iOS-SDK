@@ -7,7 +7,7 @@ typedef id(^STRInjectorBlock)(STRInjector *injector);
 
 @interface STRInjector : NSObject
 
-+ (instancetype)injectorForModule:(id<STRInjectorModule>)injectorModule;
++ (instancetype)injectorForModule:(id<STRInjectorModule>)module;
 
 - (void)bind:(id)key toInstance:(id)instance;
 - (void)bind:(id)key toBlock:(STRInjectorBlock)block;

@@ -14,7 +14,6 @@
 
 @interface SharethroughSDK ()
 
-@property (nonatomic, assign, readwrite, getter=isStaging) BOOL staging;
 @property (nonatomic, strong) STRInjector *injector;
 
 @end
@@ -29,14 +28,10 @@
 
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
+        [sharedObject configure];
     });
 
     return sharedObject;
-}
-
-- (void)configureWithStaging:(BOOL)staging {
-    self.staging = staging;
-    self.injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:self.isStaging]];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
@@ -49,5 +44,9 @@
     [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController];
 }
 
+#pragma mark - Private
 
+- (void)configure {
+    self.injector = [STRInjector injectorForModule:[STRAppModule new]];
+}
 @end

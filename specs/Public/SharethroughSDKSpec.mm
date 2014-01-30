@@ -11,14 +11,6 @@ describe(@"SharethroughSDK", ^{
             [SharethroughSDK sharedInstance] should be_same_instance_as([SharethroughSDK sharedInstance]);
         });
     });
-
-    describe(@"configuring settings", ^{
-        it(@"maintains settings", ^{
-            SharethroughSDK *sdk = [SharethroughSDK sharedInstance];
-            [sdk configureWithStaging:YES];
-            sdk.isStaging should equal(YES);
-        });
-    });
 });
 
 SPEC_END

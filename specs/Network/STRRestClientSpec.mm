@@ -15,7 +15,7 @@ describe(@"STRRestClient", ^{
     __block STRInjector *injector;
 
     beforeEach(^{
-        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+        injector = [STRInjector injectorForModule:[STRAppModule new]];
 
         networkClient = nice_fake_for([STRNetworkClient class]);
         [injector bind:[STRNetworkClient class] toInstance:networkClient];
@@ -31,27 +31,14 @@ describe(@"STRRestClient", ^{
         return request;
     };
 
-    describe(@"when pointed to the staging server", ^{
-        it(@"uses the staging endpoint", ^{
-            injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:YES]];
-            [injector bind:[STRNetworkClient class] toInstance:networkClient];
-            client = [injector getInstance:[STRRestClient class]];
-            [client getWithParameters:@{}];
+    it(@"uses the production endpoint", ^{
+        injector = [STRInjector injectorForModule:[STRAppModule new]];
+        [injector bind:[STRNetworkClient class] toInstance:networkClient];
+        client = [injector getInstance:[STRRestClient class]];
 
-            mostRecentRequest().URL.host should equal(@"btlr-staging.sharethrough.com");
-        });
-    });
+        [client getWithParameters:@{}];
 
-    describe(@"when pointed to the production server", ^{
-        it(@"uses the production endpoint", ^{
-            injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
-            [injector bind:[STRNetworkClient class] toInstance:networkClient];
-            client = [injector getInstance:[STRRestClient class]];
-
-            [client getWithParameters:@{}];
-
-            mostRecentRequest().URL.host should equal(@"btlr.sharethrough.com");
-        });
+        mostRecentRequest().URL.host should equal(@"btlr.sharethrough.com");
     });
 
     describe(@"-getWithParameters:", ^{

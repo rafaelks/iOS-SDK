@@ -21,7 +21,7 @@ describe(@"STRBeaconService", ^{
     __block STRAdvertisement *ad;
 
     beforeEach(^{
-        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+        injector = [STRInjector injectorForModule:[STRAppModule new]];
 
         restClient = nice_fake_for([STRRestClient class]);
         [injector bind:[STRRestClient class] toInstance:restClient];

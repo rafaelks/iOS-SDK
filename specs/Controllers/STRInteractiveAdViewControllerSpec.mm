@@ -21,7 +21,7 @@ describe(@"STRInteractiveAdViewController", ^{
     __block STRInjector *injector;
 
     beforeEach(^{
-        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+        injector = [STRInjector injectorForModule:[STRAppModule new]];
         beaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:beaconService];
 

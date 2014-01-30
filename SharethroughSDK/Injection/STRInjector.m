@@ -1,6 +1,7 @@
 #import "STRInjector.h"
 #import "STRBlockWrapper.h"
 #import "STRSingletonBlockWrapper.h"
+#import "STRAppModule.h"
 
 @interface STRInjector ()
 
@@ -10,9 +11,9 @@
 
 @implementation STRInjector
 
-+ (instancetype)injectorForModule:(id<STRInjectorModule>)injectorModule {
++ (instancetype)injectorForModule:(id<STRInjectorModule>)module {
     STRInjector *injector = [self new];
-    [injectorModule configureWithInjector:injector];
+    [module configureWithInjector:injector];
     return injector;
 }
 

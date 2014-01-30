@@ -3,6 +3,4 @@
 
 @interface STRAppModule : NSObject<STRInjectorModule>
 
-+ (instancetype)moduleWithStaging:(BOOL)staging;
-
 @end

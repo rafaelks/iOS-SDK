@@ -22,7 +22,7 @@ describe(@"STRTableViewAdGenerator", ^{
     __block UIViewController *presentingViewController;
 
     beforeEach(^{
-        STRInjector *injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+        STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
 
         adGenerator = nice_fake_for([STRAdGenerator class]);
         [injector bind:[STRAdGenerator class] toInstance:adGenerator];

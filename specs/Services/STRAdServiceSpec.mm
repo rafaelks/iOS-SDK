@@ -18,7 +18,7 @@ describe(@"STRAdService", ^{
     __block STRInjector *injector;
 
     beforeEach(^{
-        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+        injector = [STRInjector injectorForModule:[STRAppModule new]];
 
         restClient = nice_fake_for([STRRestClient class]);
         [injector bind:[STRRestClient class] toInstance:restClient];
