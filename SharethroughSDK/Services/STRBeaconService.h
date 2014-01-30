@@ -17,5 +17,6 @@
 - (void)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireYoutubePlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size;
+- (void)fireShareForAd:(STRAdvertisement *)ad shareType:(NSString *)uiActivityType;
 
 @end

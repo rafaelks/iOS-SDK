@@ -9,22 +9,27 @@
 #import "STRInteractiveAdViewController.h"
 #import "STRBundleSettings.h"
 #import "STRAdvertisement.h"
+#import "STRBeaconService.h"
 
 @interface STRInteractiveAdViewController ()<UIWebViewDelegate>
 
 @property (strong, nonatomic, readwrite) STRAdvertisement *ad;
 @property (weak, nonatomic) UIDevice *device;
+@property (weak, nonatomic) STRBeaconService *beaconService;
 @property (strong, nonatomic, readwrite) UIPopoverController *sharePopoverController;
 
 @end
 
 @implementation STRInteractiveAdViewController
 
-- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device {
+- (id)initWithAd:(STRAdvertisement *)ad
+        device:(UIDevice *)device
+    beaconService:(STRBeaconService *)beaconService{
     self = [super initWithNibName:nil bundle:[STRBundleSettings bundleForResources]];
     if (self) {
         self.ad = ad;
         self.device = device;
+        self.beaconService = beaconService;
     }
 
     return self;
@@ -89,6 +94,12 @@
                                                  UIActivityTypePostToTencentWeibo,
                                                  UIActivityTypeAirDrop,
                                                  ];
+
+    activityController.completionHandler = ^(NSString *activityType, BOOL completed) {
+        if (activityType) {
+            [self.beaconService fireShareForAd:self.ad shareType:activityType];
+        }
+    };
 
     if ([self.device userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         if (!self.sharePopoverController) {

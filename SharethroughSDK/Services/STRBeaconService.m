@@ -71,21 +71,45 @@
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
+- (void)fireShareForAd:(STRAdvertisement *)ad shareType:(NSString *)uiActivityType {
+    NSDictionary *knownShareTypes = @{UIActivityTypeMail: @"email",
+                                           UIActivityTypePostToFacebook: @"facebook",
+                                           UIActivityTypePostToTwitter: @"twitter"};
+    NSString *shareType = knownShareTypes[uiActivityType] ? knownShareTypes[uiActivityType] : uiActivityType ;
+
+    NSDictionary *uniqueParameters = @{@"type": @"userEvent",
+                                       @"userEvent": @"share",
+                                       @"share": shareType,
+                                       @"engagement": @"true"};
+    NSMutableDictionary *parameters = [self commonParametersWithAd:ad];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+
+    [self.restClient sendBeaconWithParameters:parameters];
+
+}
+
 #pragma mark - Private
 
 - (NSMutableDictionary *)impressionParametersForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
-    NSMutableDictionary *params = [@{@"pkey": ad.placementKey,
-                                     @"vkey": ad.variantKey,
-                                     @"ckey": ad.creativeKey,
-                                     @"pwidth": [NSString stringWithFormat:@"%g", adSize.width],
+    NSMutableDictionary *params = [@{@"pwidth": [NSString stringWithFormat:@"%g", adSize.width],
                                      @"pheight": [NSString stringWithFormat:@"%g", adSize.height]}
                                    mutableCopy];
-    [params addEntriesFromDictionary:[self commonParameters]];
+    [params addEntriesFromDictionary:[self commonParametersWithAd:ad]];
 
     return params;
 }
 
-- (NSMutableDictionary *)commonParameters {
+- (NSMutableDictionary *)commonParametersWithAd:(STRAdvertisement *)ad {
+    NSDictionary *adParams = @{@"pkey": ad.placementKey,
+                                @"vkey": ad.variantKey,
+                                @"ckey": ad.creativeKey};
+    NSMutableDictionary *commonParams = [self commonParameters];
+    [commonParams addEntriesFromDictionary:adParams];
+
+    return commonParams;
+}
+
+- (NSMutableDictionary *)commonParameters{
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
 
     return [@{@"bwidth" : [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],

@@ -113,7 +113,6 @@ describe(@"STRBeaconService", ^{
 
     describe(@"-fireYoutubePlayEvent:adSize:", ^{
         beforeEach(^{
-
             [service fireYoutubePlayEvent:ad adSize:CGSizeMake(200, 100)];
         });
 
@@ -133,6 +132,70 @@ describe(@"STRBeaconService", ^{
                                                                                          @"pheight": @"100"});
         });
 
+    });
+
+    describe(@"-fireShareForAd:shareType:", ^{
+        __block NSDictionary *shareOptions;
+        __block NSString *shareType;
+
+        subjectAction(^{
+            shareOptions = @{@"pkey": @"placementKey",
+                             @"ckey": @"creativeKey",
+                             @"vkey": @"variantKey",
+                             @"type": @"userEvent",
+                             @"share": shareType,
+                             @"engagement": @"true",
+                             @"userEvent": @"share",
+                             @"bwidth": @"200",
+                             @"bheight": @"400",
+                             @"umtime": @"10",
+                             @"session": @"AAAA",
+                             @"uid": @"fakeUUID"};
+        });
+
+        describe(@"when the share type is email", ^{
+            beforeEach(^{
+                [service fireShareForAd:ad shareType:UIActivityTypeMail];
+                shareType = @"email";
+            });
+
+            it(@"sends a beacon to the tracking servers, with the correct share type", ^{
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(shareOptions);
+            });
+        });
+
+        describe(@"when the share type is twitter", ^{
+            beforeEach(^{
+                [service fireShareForAd:ad shareType:UIActivityTypePostToTwitter];
+                shareType = @"twitter";
+            });
+
+            it(@"sends a beacon to the tracking servers, with the correct share type", ^{
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(shareOptions);
+            });
+        });
+
+        describe(@"when the share type is facebook", ^{
+            beforeEach(^{
+                [service fireShareForAd:ad shareType:UIActivityTypePostToFacebook];
+                shareType = @"facebook";
+            });
+
+            it(@"sends a beacon to the tracking servers, with the correct share type", ^{
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(shareOptions);
+            });
+        });
+
+        describe(@"when the share type is anything else", ^{
+            beforeEach(^{
+                [service fireShareForAd:ad shareType:UIActivityTypeMessage];
+                shareType = UIActivityTypeMessage;
+            });
+
+            it(@"sends a beacon to the tracking servers, with the Apple's string as the share type", ^{
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(shareOptions);
+            });
+        });
     });
 
 

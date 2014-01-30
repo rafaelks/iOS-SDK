@@ -4,6 +4,9 @@
 #include "UIBarButtonItem+Spec.h"
 #include "UIImage+Spec.h"
 #include "UIWebView+Spec.h"
+#import "STRBeaconService.h"
+#import "STRInjector.h"
+#import "STRAppModule.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -14,15 +17,21 @@ describe(@"STRInteractiveAdViewController", ^{
     __block STRInteractiveAdViewController *controller;
     __block STRAdvertisement *ad;
     __block UIDevice *device;
+    __block STRBeaconService *beaconService;
+    __block STRInjector *injector;
 
     beforeEach(^{
+        injector = [STRInjector injectorForModule:[STRAppModule moduleWithStaging:NO]];
+        beaconService = nice_fake_for([STRBeaconService class]);
+        [injector bind:[STRBeaconService class] toInstance:beaconService];
+
         ad = [STRAdvertisement new];
         device = [UIDevice currentDevice];
         ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
         ad.title = @"Superad";
         ad.shareURL = [NSURL URLWithString:@"http://bit.ly/23kljr"];
 
-        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad device:device];
+        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad device:device beaconService:beaconService];
         UIWindow *window = [UIWindow new];
         [window addSubview:controller.view];
         [controller.view layoutIfNeeded];
@@ -77,17 +86,39 @@ describe(@"STRInteractiveAdViewController", ^{
         });
     });
 
-    describe(@"when the user taps the share button", ^{
+    describe(@"when the user taps the share button on an iPhone", ^{
+        __block UIActivityViewController *activityController;
         beforeEach(^{
             spy_on(device);
             device stub_method(@selector(userInterfaceIdiom)).and_return(UIUserInterfaceIdiomPhone);
             [controller.shareButton tap];
+            activityController = (UIActivityViewController *) controller.presentedViewController;
         });
 
         it(@"presents the UIActivityViewController", ^{
-            UIActivityViewController *activityController = (UIActivityViewController *) controller.presentedViewController;
+
             activityController should be_instance_of([UIActivityViewController class]);
             activityController.activityItems should equal(@[ad.title, @"http://bit.ly/23kljr"]);
+        });
+
+        describe(@"when the user selects a share option", ^{
+            beforeEach(^{
+                activityController.completionHandler(UIActivityTypeMail, YES);
+            });
+
+            it(@"fires a sharing beacon", ^{
+                beaconService should have_received(@selector(fireShareForAd:shareType:)).with(ad, UIActivityTypeMail);
+            });
+        });
+
+        describe(@"when the user does not select a share option", ^{
+            beforeEach(^{
+                activityController.completionHandler(nil, NO);
+            });
+
+            it(@"does not fire a share beacon", ^{
+                beaconService should_not have_received(@selector(fireShareForAd:shareType:));
+            });
         });
     });
 

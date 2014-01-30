@@ -123,7 +123,7 @@ char const * const kAdTimerKey = "kAdTimerKey";
     UIView *view = tapRecognizer.view;
     [self.beaconService fireYoutubePlayEvent:self.ad adSize:view.frame.size];
 
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice]];
+    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
 }
