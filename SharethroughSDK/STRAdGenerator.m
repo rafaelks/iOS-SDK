@@ -17,8 +17,6 @@
 #import <objc/runtime.h>
 
 char const * const kAdGeneratorKey = "kAdGeneratorKey";
-char const * const kAdTimerKey = "kAdTimerKey";
-
 
 @interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
 
@@ -29,6 +27,7 @@ char const * const kAdTimerKey = "kAdTimerKey";
 @property (nonatomic, strong) STRAdvertisement *ad;
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, weak) NSRunLoop *timerRunLoop;
+@property (nonatomic, weak) NSTimer *adVisibleTimer;
 
 @end
 
@@ -79,7 +78,7 @@ char const * const kAdTimerKey = "kAdTimerKey";
         timer.tolerance = timer.timeInterval * 0.1;
         [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
-        objc_setAssociatedObject(view, kAdTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        self.adVisibleTimer = timer;
 
         return ad;
     } error:^id(NSError *error) {
@@ -137,12 +136,8 @@ char const * const kAdTimerKey = "kAdTimerKey";
 #pragma mark - Private
 
 - (void)prepareForNewAd:(UIView<STRAdView> *)view {
-    NSTimer *oldTimer = objc_getAssociatedObject(view, kAdTimerKey);
-    [oldTimer invalidate];
-
-    objc_setAssociatedObject(view, kAdTimerKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
     STRAdGenerator *oldGenerator = objc_getAssociatedObject(view, kAdGeneratorKey);
+    [oldGenerator.adVisibleTimer invalidate];
     [view removeGestureRecognizer:oldGenerator.tapRecognizer];
 
     [self clearTextFromView:view];

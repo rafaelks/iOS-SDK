@@ -287,7 +287,8 @@ describe(@"STRAdGenerator", ^{
 
             beforeEach(^{
                 [deferred resolveWithValue:ad];
-                oldTimer = objc_getAssociatedObject(view, kAdTimerKey);
+
+                [[fakeRunLoop.sent_messages firstObject] getArgument:&oldTimer atIndex:2];
 
                 STRDeferred *newDeferred = [STRDeferred defer];
                 
@@ -307,7 +308,9 @@ describe(@"STRAdGenerator", ^{
             it(@"invalidates the old ad's timer", ^{
                 oldTimer.isValid should be_falsy;
 
-                NSTimer *newTimer = objc_getAssociatedObject(view, kAdTimerKey);
+                __autoreleasing NSTimer *newTimer;
+                [[fakeRunLoop.sent_messages lastObject] getArgument:&newTimer atIndex:2];
+
                 newTimer should_not be_same_instance_as(oldTimer);
             });
         });
