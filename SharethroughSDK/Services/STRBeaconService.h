@@ -14,5 +14,7 @@
 
 - (id) initWithRestClient:(STRRestClient *)restClient dateProvider:(STRDateProvider *)dateProvider asIdentifierManager:(ASIdentifierManager *)identifierManager;
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey;
+- (void)fireImpressionForPlacementKey:(NSString *)placementKey ad:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireVisibleImpressionForPlacementKey:(NSString *)placementKey ad:(STRAdvertisement *)ad adSize:(CGSize)adSize;
+
 @end

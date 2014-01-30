@@ -95,11 +95,16 @@ describe(@"STRAdGenerator", ^{
             beforeEach(^{
                 spy_on(view);
 
+                view.frame = CGRectMake(0, 0, 100, 100);
                 [deferred resolveWithValue:ad];
             });
 
             it(@"removes the spinner", ^{
                 spinner.superview should be_nil;
+            });
+
+            it(@"fires an impression kept beacon", ^{
+                beaconService should have_received(@selector(fireImpressionForPlacementKey:ad:adSize:)).with(@"placementKey", ad, CGSizeMake(100, 100));
             });
 
             it(@"fills out the ads' the title, description, and sponsored by", ^{

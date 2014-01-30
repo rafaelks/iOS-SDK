@@ -55,6 +55,8 @@ char const * const kAdTimerKey = "kAdTimerKey";
 
     STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
     [adPromise then:^id(STRAdvertisement *ad) {
+        [self.beaconService fireImpressionForPlacementKey:placementKey ad:ad adSize:view.frame.size];
+
         [self.spinner removeFromSuperview];
 
         self.ad = ad;
