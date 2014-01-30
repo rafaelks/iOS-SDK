@@ -10,7 +10,7 @@
 #import "STRAdView.h"
 
 /**
- SharethroughSDK is the main interface to placing ads. There is a shared instance that can be accessed by [SharethroughSDK sharedInstance] which needs to be configured upon first use. Configuration is done through configureWithPriceKey:isStaging: which has more details there. After configuring it, the sharedInstance can be used to place ads, most commonly through placeAdInView:placementKey:.
+ SharethroughSDK is the main interface to placing ads. There is a shared instance that can be accessed by [SharethroughSDK sharedInstance]. It can be used to place ads, most commonly through placeAdInView:placementKey:.
  */
 @interface SharethroughSDK : NSObject
 
