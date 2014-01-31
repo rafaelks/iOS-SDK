@@ -13,6 +13,7 @@ static NSArray *passthroughSelectors;
 static NSArray *oneArgumentSelectors;
 static NSArray *twoArgumentSelectors;
 static NSArray *oneArgumentWithReturnSelectors;
+static NSArray *oneArgumentWithReturnIndexPathSelectors;
 
 
 @interface STRTableViewDelegateProxy ()
@@ -60,7 +61,8 @@ static NSArray *oneArgumentWithReturnSelectors;
     NSInteger indexPathIndex = -1;
 
     if ([oneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]
-        || [oneArgumentWithReturnSelectors containsObject:NSStringFromSelector(invocation.selector)] ) {
+        || [oneArgumentWithReturnSelectors containsObject:NSStringFromSelector(invocation.selector)]
+        || [oneArgumentWithReturnIndexPathSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
         indexPathIndex = 3;
     } else if ([twoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
         indexPathIndex = 4;
@@ -79,9 +81,18 @@ static NSArray *oneArgumentWithReturnSelectors;
         return;
     }
 
-    __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
-    [invocation setArgument:&newIndexPath atIndex:indexPathIndex];
+    __autoreleasing NSIndexPath *adjustedIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
+    [invocation setArgument:&adjustedIndexPath atIndex:indexPathIndex];
     [invocation invokeWithTarget:self.originalDelegate];
+
+    if ([oneArgumentWithReturnIndexPathSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        __autoreleasing NSIndexPath *indexPath;
+        [invocation getReturnValue:&indexPath];
+        if (indexPath) {
+            NSIndexPath *unadjustedIndexPath = [self.adPlacementAdjuster unadjustedIndexPath:indexPath];
+            [invocation setReturnValue:&unadjustedIndexPath];
+        }
+    }
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
@@ -124,7 +135,6 @@ static NSArray *oneArgumentWithReturnSelectors;
         [invocation setArgument:&newIndexPath atIndex:4];
         [invocation invokeWithTarget:self.originalDelegate];
     }
-
 }
 
 #pragma mark - Selector heck
@@ -162,8 +172,6 @@ static NSArray *oneArgumentWithReturnSelectors;
                                  ];
 
         oneArgumentWithReturnSelectors = @[
-                                           NSStringFromSelector(@selector(tableView:willSelectRowAtIndexPath:)),
-                                           NSStringFromSelector(@selector(tableView:willDeselectRowAtIndexPath:)),
                                            NSStringFromSelector(@selector(tableView:shouldIndentWhileEditingRowAtIndexPath:)),
                                            NSStringFromSelector(@selector(tableView:shouldShowMenuForRowAtIndexPath:)),
                                            NSStringFromSelector(@selector(tableView:shouldHighlightRowAtIndexPath:)),
@@ -172,8 +180,12 @@ static NSArray *oneArgumentWithReturnSelectors;
                                            NSStringFromSelector(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:)),
                                            NSStringFromSelector(@selector(tableView:indentationLevelForRowAtIndexPath:))
                                            ];
+
+        oneArgumentWithReturnIndexPathSelectors = @[
+                                                    NSStringFromSelector(@selector(tableView:willSelectRowAtIndexPath:)),
+                                                    NSStringFromSelector(@selector(tableView:willDeselectRowAtIndexPath:)),
+                                                    ];
     });
 }
-
 
 @end

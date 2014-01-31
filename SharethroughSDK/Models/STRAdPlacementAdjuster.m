@@ -39,4 +39,12 @@
     return [NSIndexPath indexPathForRow:indexPath.row - adjustment inSection:indexPath.section];
 }
 
+- (NSIndexPath *)unadjustedIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section != self.adIndexPath.section) {
+        return indexPath;
+    }
+
+    NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
+    return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];}
+
 @end

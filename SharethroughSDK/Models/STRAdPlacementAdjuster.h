@@ -14,5 +14,6 @@
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)adjustedIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)unadjustedIndexPath:(NSIndexPath *)indexPath;
 
 @end

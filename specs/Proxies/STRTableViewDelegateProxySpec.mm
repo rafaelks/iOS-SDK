@@ -313,18 +313,25 @@ describe(@"STRTableViewDelegateProxy", ^{
         });
 
         context(@"when the index path is not the ad cell index path", ^{
-            it(@"passes through tableView:willSelectRowAtIndexPath: ", ^{
-                [proxy tableView:tableView willSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
-                originalDelegate should have_received(@selector(tableView:willSelectRowAtIndexPath:))
-                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
-            });
+            describe(@"return value is an index path", ^{
+                it(@"passes through tableView:willSelectRowAtIndexPath: ", ^{
+                    [proxy tableView:tableView willSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                    adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                    originalDelegate should have_received(@selector(tableView:willSelectRowAtIndexPath:))
+                    .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+                });
 
-            it(@"passes through -tableView:willDeselectRowAtIndexPath: ", ^{
-                [proxy tableView:tableView willDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
-                originalDelegate should have_received(@selector(tableView:willDeselectRowAtIndexPath:))
-                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+                it(@"passes through -tableView:willDeselectRowAtIndexPath: ", ^{
+                    [proxy tableView:tableView willDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                    adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                    originalDelegate should have_received(@selector(tableView:willDeselectRowAtIndexPath:))
+                    .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+                });
+
+                it(@"readjusts the return value", ^{
+                    [proxy tableView:tableView willDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+                    [proxy tableView:tableView willSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+                });
             });
 
             it(@"passes through -tableView:shouldIndentWhileEditingRowAtIndexPath: ", ^{

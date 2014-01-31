@@ -27,7 +27,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             [adjuster adjustedIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
         });
 
-        it(@"leaves indexPath unchanged if it's equal to initialIndexPath", ^{
+        it(@"raises exception if indexPath is equal to initial index path", ^{
             expect(^{[adjuster adjustedIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];}).to(raise_exception());
         });
 
@@ -38,7 +38,24 @@ describe(@"STRAdPlacementAdjuster", ^{
         it(@"leaves indexPath unchanged for cells in different section", ^{
             [adjuster adjustedIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
         });
+    });
 
+    describe(@"-unadjustedIndexPath:", ^{
+        it(@"leaves indexPath unchanged if it's above initialIndexPath", ^{
+            [adjuster unadjustedIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+        });
+
+        it(@"increments indexPath if it's equal to initialIndexPath", ^{
+            [adjuster unadjustedIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+        });
+
+        it(@"increments indexPath for cells after ad row in same section", ^{
+            [adjuster unadjustedIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:3 inSection:0]);
+        });
+
+        it(@"leaves indexPath unchanged for cells in different section", ^{
+            [adjuster unadjustedIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+        });
     });
 });
 
