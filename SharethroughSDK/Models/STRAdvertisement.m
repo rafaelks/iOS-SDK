@@ -24,7 +24,7 @@
     UIGraphicsBeginImageContext(size);
     [self.thumbnailImage drawAtPoint:CGPointMake(0.0, 0.0)];
 
-    CGFloat diameter = ceilf(fminf(size.width, size.height) * 0.3);
+    CGFloat diameter = ceilf(fminf(size.width, size.height) * 0.15);
     CGFloat leftInset = fmaxf(ceilf((size.width - diameter) * 0.5), 0);
     CGFloat topInset = fmaxf(ceilf((size.height - diameter) * 0.5), 0);
     [centerImage drawInRect:CGRectMake(leftInset, topInset, diameter, diameter)];
