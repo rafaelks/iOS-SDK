@@ -92,6 +92,9 @@
 		AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
 		AE9C4600189AE83C001B407A /* play-btn-300x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
 		AE9C4601189AE83C001B407A /* play-btn-300x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
+		AE9C460A189B181B001B407A /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
+		AE9C460B189B181B001B407A /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
+		AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */; };
 		AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */; };
@@ -252,6 +255,9 @@
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		AE9C45FE189AE83C001B407A /* play-btn-300x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-btn-300x.png"; sourceTree = "<group>"; };
+		AE9C4608189B181B001B407A /* STRAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdCache.h; sourceTree = "<group>"; };
+		AE9C4609189B181B001B407A /* STRAdCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdCache.m; sourceTree = "<group>"; };
+		AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdCacheSpec.mm; sourceTree = "<group>"; };
 		AEBAEDC01898227200F02C5A /* STRBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRBeaconService.h; sourceTree = "<group>"; };
 		AEBAEDC11898227200F02C5A /* STRBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRBeaconService.m; sourceTree = "<group>"; };
 		AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRBeaconServiceSpec.mm; sourceTree = "<group>"; };
@@ -328,6 +334,8 @@
 				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
 				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
 				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
+				AE9C4608189B181B001B407A /* STRAdCache.h */,
+				AE9C4609189B181B001B407A /* STRAdCache.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -346,6 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				AE022DF5188E019100D02568 /* STRAdvertismentSpec.mm */,
+				AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -838,11 +847,13 @@
 				AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
+				AE9C460B189B181B001B407A /* STRAdCache.m in Sources */,
 				AE022DE8188E008000D02568 /* STRAdService.m in Sources */,
 				AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */,
 				AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */,
 				AE46CE6D189844AB0096BDE9 /* STRSession.m in Sources */,
 				AE6C80711898925C008FD848 /* STRFullTableViewDataSource.m in Sources */,
+				AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */,
 				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
@@ -881,6 +892,7 @@
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
+				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
