@@ -9,10 +9,8 @@
                 <outlet property="contentView" destination="zuh-ST-ZOh" id="r6u-Yl-m60"/>
                 <outlet property="doneButton" destination="1y3-4v-se1" id="aOb-UG-HWh"/>
                 <outlet property="shareButton" destination="Hol-nj-jHZ" id="zQh-NB-cfT"/>
-                <outlet property="spinner" destination="oAQ-Fy-q9H" id="Adw-eU-33T"/>
                 <outlet property="toolbar" destination="19T-JD-hAx" id="ta4-B0-nCs"/>
                 <outlet property="view" destination="1" id="3"/>
-                <outlet property="webView" destination="knK-K9-I8c" id="6SB-Sp-zTz"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -40,27 +38,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuh-ST-ZOh" userLabel="Content View">
                     <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knK-K9-I8c">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <dataDetectorType key="dataDetectorTypes"/>
-                        </webView>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="oAQ-Fy-q9H">
-                            <rect key="frame" x="150" y="252" width="20" height="20"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </activityIndicatorView>
-                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="knK-K9-I8c" firstAttribute="leading" secondItem="zuh-ST-ZOh" secondAttribute="leading" id="AHs-DZ-DGf"/>
-                        <constraint firstAttribute="trailing" secondItem="knK-K9-I8c" secondAttribute="trailing" id="fK4-ie-YeJ"/>
-                        <constraint firstItem="knK-K9-I8c" firstAttribute="top" secondItem="zuh-ST-ZOh" secondAttribute="top" id="hGh-t1-rjZ"/>
-                        <constraint firstAttribute="centerX" secondItem="oAQ-Fy-q9H" secondAttribute="centerX" id="teh-kI-QE2"/>
-                        <constraint firstAttribute="centerY" secondItem="oAQ-Fy-q9H" secondAttribute="centerY" id="u94-YO-iPL"/>
-                        <constraint firstAttribute="bottom" secondItem="knK-K9-I8c" secondAttribute="bottom" id="ygi-DY-EKX"/>
-                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

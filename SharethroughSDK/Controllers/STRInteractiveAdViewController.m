@@ -11,21 +11,20 @@
 #import "STRAdvertisement.h"
 #import "STRBeaconService.h"
 #import "STRAdYouTube.h"
+#import "STRYouTubeViewController.h"
 
-@interface STRInteractiveAdViewController ()<UIWebViewDelegate>
+@interface STRInteractiveAdViewController ()
 
 @property (strong, nonatomic, readwrite) STRAdvertisement *ad;
-@property (weak, nonatomic) UIDevice *device;
 @property (weak, nonatomic) STRBeaconService *beaconService;
+@property (weak, nonatomic) UIDevice *device;
 @property (strong, nonatomic, readwrite) UIPopoverController *sharePopoverController;
 
 @end
 
 @implementation STRInteractiveAdViewController
 
-- (id)initWithAd:(STRAdvertisement *)ad
-        device:(UIDevice *)device
-    beaconService:(STRBeaconService *)beaconService{
+- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService {
     self = [super initWithNibName:nil bundle:[STRBundleSettings bundleForResources]];
     if (self) {
         self.ad = ad;
@@ -46,33 +45,24 @@
                                                                      options:0
                                                                      metrics:nil
                                                                        views:views]];
+    if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
+        STRYouTubeViewController *youTubeController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
+        [youTubeController willMoveToParentViewController:self];
+        [self addChildViewController:youTubeController];
+        [youTubeController didMoveToParentViewController:self];
 
-    self.webView.scrollView.alwaysBounceHorizontal = NO;
-    self.webView.allowsInlineMediaPlayback = YES;
-    self.webView.mediaPlaybackRequiresUserAction = NO;
-
-    NSString *htmlPath = [[STRBundleSettings bundleForResources] pathForResource:@"youtube_embed.html" ofType:nil];
-    NSString *templateString = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
-    NSString *htmlString = [NSString stringWithFormat:templateString, [(STRAdYouTube *)self.ad youtubeVideoId]];
-
-    self.webView.delegate = self;
-
-    NSURL *baseUrl = [NSURL URLWithString:@"http://example.com"];
-
-    [self.webView loadHTMLString:htmlString baseURL:baseUrl];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-
-    [self resizeEmbed];
-}
-
-#pragma mark - UIWebViewDelegate
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.spinner removeFromSuperview];
-    [self resizeEmbed];
+        UIView *youTubeView = youTubeController.view;
+        youTubeView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addSubview:youTubeView];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[youTubeView]|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:NSDictionaryOfVariableBindings(youTubeView)]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[youTubeView]|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:NSDictionaryOfVariableBindings(youTubeView)]];
+    }
 }
 
 #pragma mark - Actions
@@ -112,15 +102,6 @@
         [self presentViewController:activityController animated:YES completion:nil];
     }
 
-}
-
-#pragma mark - private 
-
-- (void)resizeEmbed {
-    CGSize size = CGSizeApplyAffineTransform(self.contentView.frame.size, self.contentView.transform);
-
-    NSString *jsString = [NSString stringWithFormat:@"var elem = document.getElementById('player'); elem.width = %0.f; elem.height = %0.f", fabs(size.width), fabs(size.height)];
-    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
 @end

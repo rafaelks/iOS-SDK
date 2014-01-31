@@ -102,6 +102,12 @@
 		AE9C4623189C25A1001B407A /* STRAdYouTubeSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */; };
 		AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4625189C29B0001B407A /* STRAdVine.m */; };
 		AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4625189C29B0001B407A /* STRAdVine.m */; };
+		AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4629189C5288001B407A /* STRYouTubeViewController.m */; };
+		AE9C462C189C5288001B407A /* STRYouTubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4629189C5288001B407A /* STRYouTubeViewController.m */; };
+		AE9C462D189C5288001B407A /* STRYouTubeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */; };
+		AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C462E189C53D3001B407A /* STRYouTubeViewControllerSpec.mm */; };
+		AE9C4630189C6C4D001B407A /* STRYouTubeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */; };
+		AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */; };
 		AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */; };
@@ -170,6 +176,7 @@
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 				AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */,
+				AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */,
 			);
 			name = "Copy Header Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +279,10 @@
 		AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdYouTubeSpec.mm; sourceTree = "<group>"; };
 		AE9C4624189C29B0001B407A /* STRAdVine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdVine.h; sourceTree = "<group>"; };
 		AE9C4625189C29B0001B407A /* STRAdVine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdVine.m; sourceTree = "<group>"; };
+		AE9C4628189C5288001B407A /* STRYouTubeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRYouTubeViewController.h; sourceTree = "<group>"; };
+		AE9C4629189C5288001B407A /* STRYouTubeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRYouTubeViewController.m; sourceTree = "<group>"; };
+		AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STRYouTubeViewController.xib; sourceTree = "<group>"; };
+		AE9C462E189C53D3001B407A /* STRYouTubeViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRYouTubeViewControllerSpec.mm; sourceTree = "<group>"; };
 		AEBAEDC01898227200F02C5A /* STRBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRBeaconService.h; sourceTree = "<group>"; };
 		AEBAEDC11898227200F02C5A /* STRBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRBeaconService.m; sourceTree = "<group>"; };
 		AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRBeaconServiceSpec.mm; sourceTree = "<group>"; };
@@ -492,6 +503,9 @@
 				AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */,
 				AE52B847188EFC9B00C4DEF8 /* STRInteractiveAdViewController.h */,
 				AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */,
+				AE9C4628189C5288001B407A /* STRYouTubeViewController.h */,
+				AE9C4629189C5288001B407A /* STRYouTubeViewController.m */,
+				AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -625,6 +639,7 @@
 			isa = PBXGroup;
 			children = (
 				AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */,
+				AE9C462E189C53D3001B407A /* STRYouTubeViewControllerSpec.mm */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -769,6 +784,7 @@
 				AE9C4600189AE83C001B407A /* play-btn-300x.png in Resources */,
 				AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */,
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
+				AE9C462D189C5288001B407A /* STRYouTubeViewController.xib in Resources */,
 				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
 				AE52B899188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 				AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */,
@@ -783,6 +799,7 @@
 				AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */,
 				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 				AE9C4601189AE83C001B407A /* play-btn-300x.png in Resources */,
+				AE9C4630189C6C4D001B407A /* STRYouTubeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +875,7 @@
 				AE022DF3188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AE6C808C1899873B008FD848 /* STRAppModule.m in Sources */,
 				AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */,
+				AE9C462C189C5288001B407A /* STRYouTubeViewController.m in Sources */,
 				AE6C80881899863C008FD848 /* STRSpecModule.m in Sources */,
 				AE6C806E1898914F008FD848 /* STRTableViewAdGeneratorSpec.mm in Sources */,
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
@@ -892,6 +910,7 @@
 				AE3120E31889E76F00297F01 /* STRPromise.m in Sources */,
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C806818988ECE008FD848 /* STRTableViewAdGenerator.m in Sources */,
+				AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */,
 				AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -925,6 +944,7 @@
 				AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */,
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */,
+				AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */,
 				AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C80811899861E008FD848 /* STRInjector.m in Sources */,
 				AE2246F6188874D100626A29 /* STRAdGenerator.m in Sources */,
