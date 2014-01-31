@@ -23,32 +23,6 @@ describe(@"STRTableViewDelegateProxy", ^{
         proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
     });
 
-    describe(@"-tableView:heightForRowAtIndexPath:", ^{
-        context(@"when the index path is before the ad", ^{
-            it(@"does not offset the index path before calling the original delegate", ^{
-                [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                originalDelegate should have_received(@selector(tableView:heightForRowAtIndexPath:)).with(tableView, [NSIndexPath indexPathForRow:0 inSection:0]);
-            });
-        });
-
-        context(@"when the index path is the ad", ^{
-            it(@"does not call the delegate", ^{
-                [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-                originalDelegate should_not have_received(@selector(tableView:heightForRowAtIndexPath:));
-            });
-
-            it(@"returns a passed-in height value", ^{
-                [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(51.0);
-            });
-        });
-
-        context(@"when the index path is after the ad", ^{
-            it(@"offsets the index path and calls the original delegate", ^{
-                [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                originalDelegate should have_received(@selector(tableView:heightForRowAtIndexPath:)).with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
-            });
-        });
-    });
 
     describe(@"selectors that pass through", ^{
         it(@"passes through -tableView:viewForHeaderInSection:", ^{
@@ -290,6 +264,47 @@ describe(@"STRTableViewDelegateProxy", ^{
         });
     });
 
+    describe(@"height return value selectors that munge indexPaths", ^{
+        describe(@"-tableView:heightForRowAtIndexPath:", ^{
+            context(@"when the index path is not the ad cell", ^{
+                it(@"offsets the index path and calls the original delegate", ^{
+                    [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                    originalDelegate should have_received(@selector(tableView:heightForRowAtIndexPath:)).with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+                });
+            });
+
+            context(@"when the index path points to an ad index path", ^{
+                it(@"does not call the delegate", ^{
+                    [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                    originalDelegate should_not have_received(@selector(tableView:heightForRowAtIndexPath:));
+                });
+
+                it(@"returns a passed-in height value", ^{
+                    [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(51.0);
+                });
+            });
+        });
+
+        describe(@"-tableView:estimatedHeightForRowAtIndexPath:", ^{
+            context(@"when the index path is not the ad cell", ^{
+                it(@"offsets the index path and calls the original delegate", ^{
+                    [proxy tableView:tableView estimatedHeightForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                    originalDelegate should have_received(@selector(tableView:estimatedHeightForRowAtIndexPath:)).with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+                });
+            });
+
+            context(@"when the index path points to an ad index path", ^{
+                it(@"does not call the delegate", ^{
+                    [proxy tableView:tableView estimatedHeightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                    originalDelegate should_not have_received(@selector(tableView:estimatedHeightForRowAtIndexPath:));
+                });
+
+                it(@"returns a passed-in height value", ^{
+                    [proxy tableView:tableView estimatedHeightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(51.0);
+                });
+            });
+        });
+    });
 });
 
 SPEC_END

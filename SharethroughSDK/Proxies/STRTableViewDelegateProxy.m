@@ -44,7 +44,8 @@ static NSArray *twoArgumentSelectors;
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    if ([invocation selector] == @selector(tableView:heightForRowAtIndexPath:)) {
+    if ([invocation selector] == @selector(tableView:heightForRowAtIndexPath:)
+        || [invocation selector] == @selector(tableView:estimatedHeightForRowAtIndexPath:)) {
         __autoreleasing NSIndexPath *indexPath;
         [invocation getArgument:&indexPath atIndex:3];
 
