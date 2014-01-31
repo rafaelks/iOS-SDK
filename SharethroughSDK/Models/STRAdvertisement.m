@@ -15,18 +15,19 @@
     return [NSString stringWithFormat:@"Promoted by %@", self.advertiser];
 }
 
-- (UIImage *)thumbnailWithPlayImage {
-    NSString *playButtonPath = [[STRBundleSettings bundleForResources] pathForResource:@"play-btn-300x.png" ofType:nil];
-    UIImage *playButton = [UIImage imageWithContentsOfFile:playButtonPath];
+- (UIImage *)displayableThumbnail {
+    NSString *filePath = [[STRBundleSettings bundleForResources] pathForResource:[self centerImageFileName] ofType:nil];
+    UIImage *centerImage = [UIImage imageWithContentsOfFile:filePath];
 
     CGSize size = self.thumbnailImage.size;
+
     UIGraphicsBeginImageContext(size);
     [self.thumbnailImage drawAtPoint:CGPointMake(0.0, 0.0)];
 
     CGFloat diameter = ceilf(fminf(size.width, size.height) * 0.3);
     CGFloat leftInset = fmaxf(ceilf((size.width - diameter) * 0.5), 0);
     CGFloat topInset = fmaxf(ceilf((size.height - diameter) * 0.5), 0);
-    [playButton drawInRect:CGRectMake(leftInset, topInset, diameter, diameter)];
+    [centerImage drawInRect:CGRectMake(leftInset, topInset, diameter, diameter)];
 
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -34,15 +35,8 @@
     return newImage;
 }
 
-- (NSString *)youtubeVideoId {
-    NSArray *parameters = [[self.mediaURL query] componentsSeparatedByString:@"&"];
-    for (NSString *paramSet in parameters) {
-        NSArray *tuple = [paramSet componentsSeparatedByString:@"="];
-        if ([[tuple firstObject]  isEqual: @"v"]) {
-            return [tuple lastObject];
-        }
-    }
-    return nil;
+- (NSString *)centerImageFileName {
+    return @"play-btn-300x.png";
 }
 
 @end

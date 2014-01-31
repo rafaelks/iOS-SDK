@@ -62,7 +62,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
         view.adTitle.text = ad.title;
         view.adSponsoredBy.text = [ad sponsoredBy];
         [self setDescriptionText:ad.adDescription onView:view];
-        view.adThumbnail.image = [ad thumbnailWithPlayImage];
+        view.adThumbnail.image = [ad displayableThumbnail];
 
         [view setNeedsLayout];
 

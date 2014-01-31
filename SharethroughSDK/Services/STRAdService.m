@@ -7,11 +7,12 @@
 //
 
 #import "STRAdService.h"
-#import "STRAdvertisement.h"
 #import "STRRestClient.h"
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
 #import "STRAdCache.h"
+#import "STRAdYouTube.h"
+#import "STRAdVine.h"
 
 @interface STRAdService ()
 
@@ -53,7 +54,7 @@
         NSURLRequest *imageRequest = [NSURLRequest requestWithURL:sanitizedThumbnailURL];
 
         [[self.networkClient get:imageRequest] then:^id(NSData *data) {
-            STRAdvertisement *ad = [STRAdvertisement new];
+            STRAdvertisement *ad = [self adForAction:adJSON[@"action"]];
             ad.advertiser = adJSON[@"advertiser"];
             ad.title = adJSON[@"title"];
             ad.adDescription = adJSON[@"description"];
@@ -79,6 +80,17 @@
     }];
     
     return deferred.promise;
+}
+
+#pragma mark - Private
+
+- (STRAdvertisement *)adForAction:(NSString *)action {
+    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class]};
+    Class adClass = actionsToClasses[action];
+    if (!adClass) {
+        adClass = [STRAdvertisement class];
+    }
+    return [adClass new];
 }
 
 @end

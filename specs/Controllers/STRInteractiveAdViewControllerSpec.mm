@@ -1,5 +1,4 @@
 #import "STRInteractiveAdViewController.h"
-#import "STRAdvertisement.h"
 #import "UIActivityViewController+Spec.h"
 #include "UIBarButtonItem+Spec.h"
 #include "UIImage+Spec.h"
@@ -7,6 +6,7 @@
 #import "STRBeaconService.h"
 #import "STRInjector.h"
 #import "STRAppModule.h"
+#import "STRAdYouTube.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -25,7 +25,7 @@ describe(@"STRInteractiveAdViewController", ^{
         beaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:beaconService];
 
-        ad = [STRAdvertisement new];
+        ad = [STRAdYouTube new];
         device = [UIDevice currentDevice];
         ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
         ad.title = @"Superad";

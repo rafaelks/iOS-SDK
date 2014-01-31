@@ -95,6 +95,13 @@
 		AE9C460A189B181B001B407A /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
 		AE9C460B189B181B001B407A /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
 		AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */; };
+		AE9C4614189C1B8D001B407A /* vine-logo.png in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE9C4613189C1B8D001B407A /* vine-logo.png */; };
+		AE9C4615189C1B8D001B407A /* vine-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C4613189C1B8D001B407A /* vine-logo.png */; };
+		AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
+		AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
+		AE9C4623189C25A1001B407A /* STRAdYouTubeSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */; };
+		AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4625189C29B0001B407A /* STRAdVine.m */; };
+		AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4625189C29B0001B407A /* STRAdVine.m */; };
 		AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */; };
@@ -159,6 +166,7 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				AE9C4614189C1B8D001B407A /* vine-logo.png in Copy Header Files */,
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 				AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */,
@@ -258,6 +266,12 @@
 		AE9C4608189B181B001B407A /* STRAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdCache.h; sourceTree = "<group>"; };
 		AE9C4609189B181B001B407A /* STRAdCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdCache.m; sourceTree = "<group>"; };
 		AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdCacheSpec.mm; sourceTree = "<group>"; };
+		AE9C4613189C1B8D001B407A /* vine-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vine-logo.png"; sourceTree = "<group>"; };
+		AE9C461A189C2538001B407A /* STRAdYouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdYouTube.h; sourceTree = "<group>"; };
+		AE9C461B189C2538001B407A /* STRAdYouTube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdYouTube.m; sourceTree = "<group>"; };
+		AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdYouTubeSpec.mm; sourceTree = "<group>"; };
+		AE9C4624189C29B0001B407A /* STRAdVine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdVine.h; sourceTree = "<group>"; };
+		AE9C4625189C29B0001B407A /* STRAdVine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdVine.m; sourceTree = "<group>"; };
 		AEBAEDC01898227200F02C5A /* STRBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRBeaconService.h; sourceTree = "<group>"; };
 		AEBAEDC11898227200F02C5A /* STRBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRBeaconService.m; sourceTree = "<group>"; };
 		AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRBeaconServiceSpec.mm; sourceTree = "<group>"; };
@@ -332,6 +346,10 @@
 			children = (
 				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
 				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
+				AE9C461A189C2538001B407A /* STRAdYouTube.h */,
+				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
+				AE9C4624189C29B0001B407A /* STRAdVine.h */,
+				AE9C4625189C29B0001B407A /* STRAdVine.m */,
 				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
 				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
 				AE9C4608189B181B001B407A /* STRAdCache.h */,
@@ -355,6 +373,7 @@
 			children = (
 				AE022DF5188E019100D02568 /* STRAdvertismentSpec.mm */,
 				AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */,
+				AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -613,6 +632,7 @@
 		AEFBF162189047DC00ADD742 /* Static Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AE9C4613189C1B8D001B407A /* vine-logo.png */,
 				AE9C45FE189AE83C001B407A /* play-btn-300x.png */,
 				AEFBF1681890480700ADD742 /* youtube_embed.html */,
 			);
@@ -759,6 +779,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE9C4615189C1B8D001B407A /* vine-logo.png in Resources */,
 				AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */,
 				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 				AE9C4601189AE83C001B407A /* play-btn-300x.png in Resources */,
@@ -855,6 +876,9 @@
 				AE6C80711898925C008FD848 /* STRFullTableViewDataSource.m in Sources */,
 				AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */,
 				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
+				AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */,
+				AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */,
+				AE9C4623189C25A1001B407A /* STRAdYouTubeSpec.mm in Sources */,
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AE6C80801899861E008FD848 /* STRBlockWrapper.m in Sources */,
@@ -886,6 +910,7 @@
 				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
 				AE52B85F188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
+				AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */,
 				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AE6C806718988ECE008FD848 /* STRTableViewAdGenerator.m in Sources */,
 				AE022DE2188E004900D02568 /* STRRestClient.m in Sources */,
@@ -895,6 +920,7 @@
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
+				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
 				AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */,
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,

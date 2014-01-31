@@ -10,6 +10,7 @@
 #import "STRBundleSettings.h"
 #import "STRAdvertisement.h"
 #import "STRBeaconService.h"
+#import "STRAdYouTube.h"
 
 @interface STRInteractiveAdViewController ()<UIWebViewDelegate>
 
@@ -52,7 +53,7 @@
 
     NSString *htmlPath = [[STRBundleSettings bundleForResources] pathForResource:@"youtube_embed.html" ofType:nil];
     NSString *templateString = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
-    NSString *htmlString = [NSString stringWithFormat:templateString, [self.ad youtubeVideoId]];
+    NSString *htmlString = [NSString stringWithFormat:templateString, [(STRAdYouTube *)self.ad youtubeVideoId]];
 
     self.webView.delegate = self;
 

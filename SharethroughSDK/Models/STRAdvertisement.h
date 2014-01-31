@@ -11,6 +11,7 @@
 @interface STRAdvertisement : NSObject
 
 @property (nonatomic, copy) NSString *advertiser;
+@property (nonatomic, copy) NSString *action;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *adDescription;
 @property (nonatomic, copy) NSString *placementKey;
@@ -21,7 +22,6 @@
 @property (nonatomic, strong) UIImage *thumbnailImage;
 
 - (NSString *)sponsoredBy;
-- (UIImage *)thumbnailWithPlayImage;
-- (NSString *)youtubeVideoId;
+- (UIImage *)displayableThumbnail;
 
 @end
