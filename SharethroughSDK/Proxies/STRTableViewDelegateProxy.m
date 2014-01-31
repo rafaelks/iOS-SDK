@@ -48,18 +48,12 @@ static NSArray *oneArgumentWithReturnSelectors;
 - (void)forwardInvocation:(NSInvocation *)invocation {
     if ([invocation selector] == @selector(tableView:heightForRowAtIndexPath:)
         || [invocation selector] == @selector(tableView:estimatedHeightForRowAtIndexPath:)) {
-        __autoreleasing NSIndexPath *indexPath;
-        [invocation getArgument:&indexPath atIndex:3];
+        [self handleHeightsInvocation:invocation];
+        return;
+    }
 
-        CGFloat height = self.adHeight;
-        if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
-            [invocation setReturnValue:&height];
-        } else {
-            __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
-            [invocation setArgument:&newIndexPath atIndex:3];
-            [invocation invokeWithTarget:self.originalDelegate];
-        }
-
+    if ([invocation selector] == @selector(tableView:canPerformAction:forRowAtIndexPath:withSender:)) {
+        [self handleCanPerformActionInvocation:invocation];
         return;
     }
 
@@ -100,6 +94,37 @@ static NSArray *oneArgumentWithReturnSelectors;
     }
 
     return nil;
+}
+
+#pragma mark - Special cases
+
+- (void)handleHeightsInvocation:(NSInvocation *)invocation {
+    __autoreleasing NSIndexPath *indexPath;
+    [invocation getArgument:&indexPath atIndex:3];
+
+    CGFloat height = self.adHeight;
+    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+        [invocation setReturnValue:&height];
+    } else {
+        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
+        [invocation setArgument:&newIndexPath atIndex:3];
+        [invocation invokeWithTarget:self.originalDelegate];
+    }
+}
+
+- (void)handleCanPerformActionInvocation:(NSInvocation *)invocation {
+    __autoreleasing NSIndexPath *indexPath;
+    [invocation getArgument:&indexPath atIndex:4];
+
+    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+        id returnValue = 0;
+        [invocation setReturnValue:&returnValue];
+    } else {
+        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
+        [invocation setArgument:&newIndexPath atIndex:4];
+        [invocation invokeWithTarget:self.originalDelegate];
+    }
+
 }
 
 #pragma mark - Selector heck
@@ -144,7 +169,8 @@ static NSArray *oneArgumentWithReturnSelectors;
                                            NSStringFromSelector(@selector(tableView:shouldHighlightRowAtIndexPath:)),
                                            NSStringFromSelector(@selector(tableView:editingStyleForRowAtIndexPath:)),
                                            NSStringFromSelector(@selector(tableView:accessoryTypeForRowWithIndexPath:)),
-                                           NSStringFromSelector(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:))
+                                           NSStringFromSelector(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:)),
+                                           NSStringFromSelector(@selector(tableView:indentationLevelForRowAtIndexPath:))
                                            ];
     });
 }

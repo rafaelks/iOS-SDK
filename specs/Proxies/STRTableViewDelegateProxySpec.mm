@@ -23,7 +23,6 @@ describe(@"STRTableViewDelegateProxy", ^{
         proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
     });
 
-
     describe(@"selectors that pass through", ^{
         it(@"passes through -tableView:viewForHeaderInSection:", ^{
             [proxy tableView:tableView viewForHeaderInSection:1];
@@ -286,6 +285,28 @@ describe(@"STRTableViewDelegateProxy", ^{
         });
     });
 
+    describe(@"-tableView:canPerformAction:forRowAtIndexPath:withSender:", ^{
+        beforeEach(^{
+            spy_on(adPlacementAdjuster);
+        });
+
+        context(@"when the index path is not the ad cell", ^{
+            it(@"offsets the index path and calls the original delegate", ^{
+                [proxy tableView:tableView canPerformAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withSender:@[]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:canPerformAction:forRowAtIndexPath:withSender:))
+                .with(tableView, @selector(count), [NSIndexPath indexPathForRow:1 inSection:0], @[]);
+            });
+        });
+
+        context(@"when the index path points to an ad index path", ^{
+            it(@"returns own value instead of original delegate", ^{
+                [proxy tableView:tableView canPerformAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] withSender:@[]] should be_falsy;
+                originalDelegate should_not have_received(@selector(tableView:canPerformAction:forRowAtIndexPath:withSender:));
+            });
+        });
+    });
+
     describe(@"one argument selectors that munge the index path and have a return value", ^{
         beforeEach(^{
             spy_on(adPlacementAdjuster);
@@ -351,6 +372,13 @@ describe(@"STRTableViewDelegateProxy", ^{
                 .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
             });
 
+            it(@"passes through -tableView:indentationLevelForRowAtIndexPath: ", ^{
+                [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:indentationLevelForRowAtIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
         });
 
         context(@"when indexPath points to an ad index path", ^{
@@ -413,6 +441,12 @@ describe(@"STRTableViewDelegateProxy", ^{
                 originalDelegate should_not have_received(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:));
             });
 
+            it(@"returns own value instead of original delegate for -tableView:indentationLevelForRowAtIndexPath: ", ^{
+                [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(0);
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:indentationLevelForRowAtIndexPath:));
+            });
         });
     });
 });
