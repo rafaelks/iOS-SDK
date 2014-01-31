@@ -11,6 +11,7 @@
 
 static NSArray *passthroughSelectors;
 static NSArray *oneArgumentSelectors;
+static NSArray *twoArgumentSelectors;
 
 @interface STRTableViewDelegateProxy ()
 
@@ -68,13 +69,25 @@ static NSArray *oneArgumentSelectors;
         [invocation setArgument:&newIndexPath atIndex:3];
         [invocation invokeWithTarget:self.originalDelegate];
     }
+
+    if ([twoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        [invocation getArgument:&indexPath atIndex:4];
+
+        if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+            return;
+        }
+
+        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
+        [invocation setArgument:&newIndexPath atIndex:4];
+        [invocation invokeWithTarget:self.originalDelegate];
+    }
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
     if ([self.originalDelegate isKindOfClass:[NSObject class]]) {
         return [(NSObject *)self.originalDelegate methodSignatureForSelector:sel];
     }
-
+    
     if ([self.originalDelegate isKindOfClass:[NSProxy class]]) {
         return [(NSProxy *)self.originalDelegate methodSignatureForSelector:sel];
     }
@@ -112,6 +125,11 @@ static NSArray *oneArgumentSelectors;
                                  NSStringFromSelector(@selector(tableView:didUnhighlightRowAtIndexPath:)),
                                  ];
 
+        twoArgumentSelectors = @[
+                                 NSStringFromSelector(@selector(tableView:willDisplayCell:forRowAtIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:performAction:forRowAtIndexPath:withSender:))
+                                 ];
     });
 }
 

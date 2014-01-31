@@ -247,6 +247,63 @@ describe(@"STRTableViewDelegateProxy", ^{
             });
         });
     });
+
+    describe(@"two argument selectors that munge indexPath", ^{
+        __block UITableViewCell *tableCell;
+
+        beforeEach(^{
+            spy_on(adPlacementAdjuster);
+            tableCell = [UITableViewCell new];
+        });
+
+        context(@"when the index path is not the ad cell", ^{
+            it(@"passes through -tableView:willDisplayCell:forRowAtIndexPath: ", ^{
+                [proxy tableView:tableView willDisplayCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:willDisplayCell:forRowAtIndexPath:))
+                .with(tableView, tableCell, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:didEndDisplayingCell:forRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didEndDisplayingCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:))
+                .with(tableView, tableCell, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:performAction:forRowAtIndexPath:withSender: ", ^{
+                [proxy tableView:tableView performAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withSender:@[]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:performAction:forRowAtIndexPath:withSender:))
+                .with(tableView, @selector(count), [NSIndexPath indexPathForRow:1 inSection:0], @[]);
+            });
+        });
+
+        context(@"when the index path points to an ad index path", ^{
+            it(@"prevents original delegate from receiving -tableView:willDisplayCell:forRowAtIndexPath: ", ^{
+                [proxy tableView:tableView willDisplayCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:willDisplayCell:forRowAtIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving -tableView:didEndDisplayingCell:forRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didEndDisplayingCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:));
+            });
+
+
+            it(@"prevents original delegate from receiving -tableView:performAction:forRowAtIndexPath:withSender: ", ^{
+                [proxy tableView:tableView performAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] withSender:@[]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:performAction:forRowAtIndexPath:withSender:));
+            });
+        });
+    });
+
 });
 
 SPEC_END
