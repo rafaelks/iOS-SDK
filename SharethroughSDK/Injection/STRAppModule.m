@@ -7,6 +7,7 @@
 #import "STRDateProvider.h"
 #import <AdSupport/AdSupport.h>
 #import "STRTableViewAdGenerator.h"
+#import "STRAdCache.h"
 
 @interface STRAppModule ()
 
@@ -40,7 +41,7 @@
 
     [injector bind:[STRAdService class] toBlock:^id(STRInjector *injector) {
         return [[STRAdService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
-                                          networkClient:[injector getInstance:[STRNetworkClient class]]];
+                                          networkClient:[injector getInstance:[STRNetworkClient class]] adCache:[injector getInstance:[STRAdCache class]]];
     }];
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
@@ -52,6 +53,8 @@
     [injector bind:[STRTableViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRTableViewAdGenerator alloc] initWithInjector:injector];
     }];
+
+    [injector bind:[STRAdCache class] toInstance:[[STRAdCache alloc] initWithDateProvider:[injector getInstance:[STRDateProvider class]]]];
 }
 
 @end

@@ -11,21 +11,24 @@
 #import "STRRestClient.h"
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
+#import "STRAdCache.h"
 
 @interface STRAdService ()
 
 @property (nonatomic, strong) STRRestClient *restClient;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
+@property (nonatomic, strong) STRAdCache *adCache;
 
 @end
 
 @implementation STRAdService
 
-- (id)initWithRestClient:(STRRestClient *)restClient networkClient:(STRNetworkClient *)networkClient {
+- (id)initWithRestClient:(STRRestClient *)restClient networkClient:(STRNetworkClient *)networkClient adCache:(STRAdCache *)adCache {
     self = [super init];
     if (self) {
         self.restClient = restClient;
         self.networkClient = networkClient;
+        self.adCache = adCache;
     }
 
     return self;
@@ -33,6 +36,12 @@
 
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey {
     STRDeferred *deferred = [STRDeferred defer];
+
+    STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
+    if (cachedAd) {
+        [deferred resolveWithValue:cachedAd];
+        return deferred.promise;
+    }
 
     STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
     [adPromise then:^id(NSDictionary *adJSON) {
@@ -55,6 +64,7 @@
             ad.thumbnailImage = [UIImage imageWithData:data];
             ad.placementKey = placementKey;
 
+            [self.adCache saveAd:ad];
             [deferred resolveWithValue:ad];
             return data;
         } error:^id(NSError *error) {

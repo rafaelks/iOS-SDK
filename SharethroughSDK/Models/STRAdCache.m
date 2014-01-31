@@ -22,6 +22,11 @@ const NSInteger kAdCacheTimeoutInSeconds = 120;
 
 @implementation STRAdCache
 
+- (id)init {
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
 - (id)initWithDateProvider:(STRDateProvider *)dateProvider {
     self = [super init];
     if (self) {
@@ -33,17 +38,10 @@ const NSInteger kAdCacheTimeoutInSeconds = 120;
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey {
-
-//    if (self.cachedTimestamps[placementKey]) {
-        if ([self isAdStale:placementKey]) {
-            return nil;
-        } else {
-            return self.cachedAds[placementKey];
-        }
-//    } else {
-//        return nil;
-//    }
-
+    if ([self isAdStale:placementKey]) {
+        return nil;
+    }
+    return self.cachedAds[placementKey];
 }
 
 - (void)saveAd:(STRAdvertisement *)ad {

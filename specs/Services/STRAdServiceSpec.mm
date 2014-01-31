@@ -5,6 +5,7 @@
 #import "STRAdvertisement.h"
 #import "STRInjector.h"
 #import "STRAppModule.h"
+#import "STRAdCache.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -16,6 +17,7 @@ describe(@"STRAdService", ^{
     __block STRRestClient *restClient;
     __block STRNetworkClient *networkClient;
     __block STRInjector *injector;
+    __block STRAdCache *adCache;
 
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -26,21 +28,51 @@ describe(@"STRAdService", ^{
         networkClient = nice_fake_for([STRNetworkClient class]);
         [injector bind:[STRNetworkClient class] toInstance:networkClient];
 
+        adCache = nice_fake_for([STRAdCache class]);
+        [injector bind:[STRAdCache class] toInstance:adCache];
+
         service = [injector getInstance:[STRAdService class]];
     });
 
     describe(@"fetching an ad", ^{
-        describe(@"when no ad is cached for the given placement key", ^{
-            __block STRDeferred *restClientDeferred;
-            __block STRDeferred *networkClientDeferred;
-            __block STRPromise *returnedPromise;
+        __block STRDeferred *restClientDeferred;
+        __block STRDeferred *networkClientDeferred;
+        __block STRPromise *returnedPromise;
+
+        beforeEach(^{
+            restClientDeferred = [STRDeferred defer];
+            restClient stub_method(@selector(getWithParameters:)).and_return(restClientDeferred.promise);
+
+            networkClientDeferred = [STRDeferred defer];
+            networkClient stub_method(@selector(get:)).and_return(networkClientDeferred.promise);
+        });
+
+        describe(@"when an ad is retrieved from the cache", ^{
+            __block STRAdvertisement *ad;
 
             beforeEach(^{
-                restClientDeferred = [STRDeferred defer];
-                restClient stub_method(@selector(getWithParameters:)).and_return(restClientDeferred.promise);
+                ad = nice_fake_for([STRAdvertisement class]);
+                adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey").and_return(ad);
 
-                networkClientDeferred = [STRDeferred defer];
-                networkClient stub_method(@selector(get:)).and_return(networkClientDeferred.promise);
+                returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
+            });
+
+            it(@"should not make a request to the ad server", ^{
+                restClient should_not have_received(@selector(getWithParameters:));
+            });
+
+            it(@"should not make a request to the image server", ^{
+                networkClient should_not have_received(@selector(get:));
+            });
+
+            it(@"returns a promise that is resolved with the cached ad", ^{
+                returnedPromise.value should equal(ad);
+            });
+        });
+
+        describe(@"when no ad is cached for the given placement key", ^{
+            beforeEach(^{
+                adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey");
 
                 returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
             });
@@ -81,6 +113,10 @@ describe(@"STRAdService", ^{
                 describe(@"when the image is loaded successfully", ^{
                     beforeEach(^{
                         [networkClientDeferred resolveWithValue:UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"])];
+                    });
+
+                    it(@"saves the ad in the cache", ^{
+                        adCache should have_received(@selector(saveAd:)).with(returnedPromise.value);
                     });
 
                     it(@"resolves the returned promise with an advertisement", ^{
