@@ -105,6 +105,148 @@ describe(@"STRTableViewDelegateProxy", ^{
             originalDelegate should have_received(@selector(tableView:didEndDisplayingFooterView:forSection:)).with(tableView, view, 1);
         });
     });
+
+    describe(@"one argument selectors that munge indexPath", ^{
+        beforeEach(^{
+            spy_on(adPlacementAdjuster);
+        });
+
+        context(@"when the index path is not the ad cell", ^{
+            it(@"passes through -tableView:indentationLevelForRowAtIndexPath: ", ^{
+                [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:indentationLevelForRowAtIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through tableView:accessoryButtonTappedForRowWithIndexPath: ", ^{
+                [proxy tableView:tableView accessoryButtonTappedForRowWithIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:accessoryTypeForRowWithIndexPath: ", ^{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                [proxy tableView:tableView accessoryTypeForRowWithIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+#pragma clang diagnostic pop
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:accessoryTypeForRowWithIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:didSelectRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:didSelectRowAtIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:didDeselectRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:didDeselectRowAtIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:willBeginEditingRowAtIndexPath: ", ^{
+                [proxy tableView:tableView willBeginEditingRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:willBeginEditingRowAtIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:didEndEditingRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didEndEditingRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:didEndEditingRowAtIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:didHighlightRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didHighlightRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:didHighlightRowAtIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+
+            it(@"passes through -tableView:didUnhighlightRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didUnhighlightRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
+                originalDelegate should have_received(@selector(tableView:didUnhighlightRowAtIndexPath:))
+                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+        });
+
+        context(@"when indexPath points to an ad index path", ^{
+            it(@"prevents original delegate from receiving -tableView:indentationLevelForRowAtIndexPath: ", ^{
+                [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:indentationLevelForRowAtIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving tableView:accessoryButtonTappedForRowWithIndexPath: ", ^{
+                [proxy tableView:tableView accessoryButtonTappedForRowWithIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving -tableView:accessoryTypeForRowWithIndexPath: ", ^{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                [proxy tableView:tableView accessoryTypeForRowWithIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+#pragma clang diagnostic pop
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:accessoryTypeForRowWithIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving -tableView:didSelectRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:didSelectRowAtIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving -tableView:didDeselectRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:didDeselectRowAtIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving -tableView:willBeginEditingRowAtIndexPath: ", ^{
+                [proxy tableView:tableView willBeginEditingRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:willBeginEditingRowAtIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving -tableView:didEndEditingRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didEndEditingRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:didEndEditingRowAtIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving -tableView:didHighlightRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didHighlightRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:didHighlightRowAtIndexPath:));
+            });
+
+            it(@"prevents original delegate from receiving -tableView:didUnhighlightRowAtIndexPath: ", ^{
+                [proxy tableView:tableView didUnhighlightRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
+                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
+                originalDelegate should_not have_received(@selector(tableView:didUnhighlightRowAtIndexPath:));
+            });
+        });
+    });
 });
 
 SPEC_END

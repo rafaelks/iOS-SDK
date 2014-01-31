@@ -10,6 +10,7 @@
 #import "STRAdPlacementAdjuster.h"
 
 static NSArray *passthroughSelectors;
+static NSArray *oneArgumentSelectors;
 
 @interface STRTableViewDelegateProxy ()
 
@@ -45,10 +46,24 @@ static NSArray *passthroughSelectors;
     __autoreleasing NSIndexPath *indexPath;
     [invocation getArgument:&indexPath atIndex:3];
 
-    CGFloat height = self.adHeight;
-    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
-        [invocation setReturnValue:&height];
-    } else {
+    if ([invocation selector] == @selector(tableView:heightForRowAtIndexPath:)) {
+        CGFloat height = self.adHeight;
+        if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+            [invocation setReturnValue:&height];
+        } else {
+            __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
+            [invocation setArgument:&newIndexPath atIndex:3];
+            [invocation invokeWithTarget:self.originalDelegate];
+        }
+
+        return;
+    }
+
+    if ([oneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+            return;
+        }
+
         __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
         [invocation setArgument:&newIndexPath atIndex:3];
         [invocation invokeWithTarget:self.originalDelegate];
@@ -83,8 +98,20 @@ static NSArray *passthroughSelectors;
                                  NSStringFromSelector(@selector(tableView:willDisplayFooterView:forSection:)),
                                  NSStringFromSelector(@selector(tableView:didEndDisplayingHeaderView:forSection:)),
                                  NSStringFromSelector(@selector(tableView:didEndDisplayingFooterView:forSection:)),
-
                                  ];
+
+        oneArgumentSelectors = @[
+                                 NSStringFromSelector(@selector(tableView:indentationLevelForRowAtIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:accessoryTypeForRowWithIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:didSelectRowAtIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:didDeselectRowAtIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:willBeginEditingRowAtIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:didEndEditingRowAtIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:didHighlightRowAtIndexPath:)),
+                                 NSStringFromSelector(@selector(tableView:didUnhighlightRowAtIndexPath:)),
+                                 ];
+
     });
 }
 

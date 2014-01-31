@@ -436,21 +436,21 @@
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
-				AE8AF507189B0BB300A65B27 /* Proxies */,
-				AE6C808318998622008FD848 /* Injection */,
-				AED32FA91891F0BB00693EFF /* Stubs */,
+				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
 				AEFBF15D188F46D900ADD742 /* Controllers */,
-				AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */,
-				AE022DFF188E022000D02568 /* Services */,
-				AE022DFA188E01DD00D02568 /* Network */,
-				AE022DF7188E019600D02568 /* Public */,
-				AE022DF4188E015700D02568 /* Models */,
 				AE2246FB188877E900626A29 /* Fixtures */,
+				AE6C808318998622008FD848 /* Injection */,
+				AE022DF4188E015700D02568 /* Models */,
+				AE022DFA188E01DD00D02568 /* Network */,
+				AE8AF507189B0BB300A65B27 /* Proxies */,
+				AE022DF7188E019600D02568 /* Public */,
+				AE2246901886138F00626A29 /* Rakefile */,
+				AE022DFF188E022000D02568 /* Services */,
 				AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */,
 				AE6C806D1898914F008FD848 /* STRTableViewAdGeneratorSpec.mm */,
-				AE2246901886138F00626A29 /* Rakefile */,
-				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
+				AED32FA91891F0BB00693EFF /* Stubs */,
 				AE2246881886138F00626A29 /* Supporting Files */,
+				AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */,
 			);
 			path = specs;
 			sourceTree = "<group>";
