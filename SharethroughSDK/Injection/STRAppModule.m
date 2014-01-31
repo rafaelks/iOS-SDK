@@ -9,11 +9,6 @@
 #import "STRTableViewAdGenerator.h"
 #import "STRAdCache.h"
 
-@interface STRAppModule ()
-
-@property (nonatomic, assign) BOOL staging;
-
-@end
 
 @implementation STRAppModule
 
@@ -21,8 +16,7 @@
     [injector bind:[STRNetworkClient class] toInstance:[STRNetworkClient new]];
 
     [injector bind:[STRRestClient class] toBlockAsSingleton:^id(STRInjector *injector) {
-        return [[STRRestClient alloc] initWithStaging:self.staging
-                                        networkClient:[injector getInstance:[STRNetworkClient class]]];
+        return [[STRRestClient alloc] initWithNetworkClient:[injector getInstance:[STRNetworkClient class]]];
     }];
 
     [injector bind:[STRDateProvider class] toBlock:^id(STRInjector *injector) {

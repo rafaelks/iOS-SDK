@@ -13,7 +13,7 @@
 
 @interface STRRestClient : NSObject
 
-- (id)initWithStaging:(BOOL)isStaging networkClient:(STRNetworkClient *)networkClient;
+- (id)initWithNetworkClient:(STRNetworkClient *)networkClient;
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters;
 - (void)sendBeaconWithParameters:(NSDictionary *)parameters;
 
