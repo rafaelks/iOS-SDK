@@ -12,6 +12,8 @@
 static NSArray *passthroughSelectors;
 static NSArray *oneArgumentSelectors;
 static NSArray *twoArgumentSelectors;
+static NSArray *oneArgumentWithReturnSelectors;
+
 
 @interface STRTableViewDelegateProxy ()
 
@@ -63,7 +65,8 @@ static NSArray *twoArgumentSelectors;
 
     NSInteger indexPathIndex = -1;
 
-    if ([oneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+    if ([oneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]
+        || [oneArgumentWithReturnSelectors containsObject:NSStringFromSelector(invocation.selector)] ) {
         indexPathIndex = 3;
     } else if ([twoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
         indexPathIndex = 4;
@@ -75,6 +78,10 @@ static NSArray *twoArgumentSelectors;
     [invocation getArgument:&indexPath atIndex:indexPathIndex];
 
     if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+        if ([oneArgumentWithReturnSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+            id returnValue = 0;
+            [invocation setReturnValue:&returnValue];
+        }
         return;
     }
 
@@ -128,6 +135,17 @@ static NSArray *twoArgumentSelectors;
                                  NSStringFromSelector(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:)),
                                  NSStringFromSelector(@selector(tableView:performAction:forRowAtIndexPath:withSender:))
                                  ];
+
+        oneArgumentWithReturnSelectors = @[
+                                           NSStringFromSelector(@selector(tableView:willSelectRowAtIndexPath:)),
+                                           NSStringFromSelector(@selector(tableView:willDeselectRowAtIndexPath:)),
+                                           NSStringFromSelector(@selector(tableView:shouldIndentWhileEditingRowAtIndexPath:)),
+                                           NSStringFromSelector(@selector(tableView:shouldShowMenuForRowAtIndexPath:)),
+                                           NSStringFromSelector(@selector(tableView:shouldHighlightRowAtIndexPath:)),
+                                           NSStringFromSelector(@selector(tableView:editingStyleForRowAtIndexPath:)),
+                                           NSStringFromSelector(@selector(tableView:accessoryTypeForRowWithIndexPath:)),
+                                           NSStringFromSelector(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:))
+                                           ];
     });
 }
 
