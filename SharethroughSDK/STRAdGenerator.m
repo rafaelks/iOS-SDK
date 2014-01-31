@@ -79,7 +79,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
         [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
         self.adVisibleTimer = timer;
-
+        
         return ad;
     } error:^id(NSError *error) {
         [self.spinner removeFromSuperview];

@@ -88,6 +88,13 @@
 		AE6C808C1899873B008FD848 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
 		AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
 		AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
+		AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */; };
+		AE8AF505189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */; };
+		AE8AF506189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */; };
+		AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF508189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm */; };
+		AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
+		AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
+		AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
 		AE9C4600189AE83C001B407A /* play-btn-300x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
@@ -264,6 +271,14 @@
 		AE6C808A1899873B008FD848 /* STRAppModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAppModule.m; sourceTree = "<group>"; };
 		AE6C808D1899923E008FD848 /* STRSingletonBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSingletonBlockWrapper.h; sourceTree = "<group>"; };
 		AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSingletonBlockWrapper.m; sourceTree = "<group>"; };
+		AE8AF4FB189B07ED00A65B27 /* STRFullTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFullTableViewDelegate.h; sourceTree = "<group>"; };
+		AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFullTableViewDelegate.m; sourceTree = "<group>"; };
+		AE8AF503189B0B5900A65B27 /* STRTableViewDelegateProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDelegateProxy.h; sourceTree = "<group>"; };
+		AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDelegateProxy.m; sourceTree = "<group>"; };
+		AE8AF508189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDelegateProxySpec.mm; sourceTree = "<group>"; };
+		AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdPlacementAdjuster.h; sourceTree = "<group>"; };
+		AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdPlacementAdjuster.m; sourceTree = "<group>"; };
+		AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementAdjusterSpec.mm; sourceTree = "<group>"; };
 		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharethroughSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -365,6 +380,8 @@
 				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
 				AE9C4608189B181B001B407A /* STRAdCache.h */,
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
+				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
+				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -385,6 +402,7 @@
 				AE022DF5188E019100D02568 /* STRAdvertismentSpec.mm */,
 				AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */,
 				AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */,
+				AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -418,6 +436,7 @@
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
+				AE8AF507189B0BB300A65B27 /* Proxies */,
 				AE6C808318998622008FD848 /* Injection */,
 				AED32FA91891F0BB00693EFF /* Stubs */,
 				AEFBF15D188F46D900ADD742 /* Controllers */,
@@ -463,6 +482,8 @@
 				AE6C80701898925C008FD848 /* STRFullTableViewDataSource.m */,
 				AE1F671B1899AD9E00E184D6 /* STRTableViewCell.h */,
 				AE1F671C1899AD9E00E184D6 /* STRTableViewCell.m */,
+				AE8AF4FB189B07ED00A65B27 /* STRFullTableViewDelegate.h */,
+				AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -562,6 +583,23 @@
 			path = Injection;
 			sourceTree = "<group>";
 		};
+		AE8AF502189B0B0D00A65B27 /* Proxies */ = {
+			isa = PBXGroup;
+			children = (
+				AE8AF503189B0B5900A65B27 /* STRTableViewDelegateProxy.h */,
+				AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */,
+			);
+			path = Proxies;
+			sourceTree = "<group>";
+		};
+		AE8AF507189B0BB300A65B27 /* Proxies */ = {
+			isa = PBXGroup;
+			children = (
+				AE8AF508189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm */,
+			);
+			path = Proxies;
+			sourceTree = "<group>";
+		};
 		AE8ED3DA1885ADF00004AB32 = {
 			isa = PBXGroup;
 			children = (
@@ -600,6 +638,7 @@
 		AE8ED3E81885ADF00004AB32 /* SharethroughSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AE8AF502189B0B0D00A65B27 /* Proxies */,
 				AE6C807618998604008FD848 /* Injection */,
 				AEFBF162189047DC00ADD742 /* Static Resources */,
 				AE3120DA1889E6EF00297F01 /* External Libs */,
@@ -869,6 +908,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */,
 				AE022DE3188E004900D02568 /* STRRestClient.m in Sources */,
 				AE022DED188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE6C80821899861E008FD848 /* STRInjector.m in Sources */,
@@ -880,11 +920,14 @@
 				AE6C806E1898914F008FD848 /* STRTableViewAdGeneratorSpec.mm in Sources */,
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
+				AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */,
 				AE52B860188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
+				AE8AF506189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */,
 				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */,
+				AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
 				AE9C460B189B181B001B407A /* STRAdCache.m in Sources */,
 				AE022DE8188E008000D02568 /* STRAdService.m in Sources */,
@@ -908,6 +951,7 @@
 				AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */,
 				AE1F671D1899AD9E00E184D6 /* STRTableViewCell.m in Sources */,
 				AE3120E31889E76F00297F01 /* STRPromise.m in Sources */,
+				AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C806818988ECE008FD848 /* STRTableViewAdGenerator.m in Sources */,
 				AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */,
@@ -940,11 +984,13 @@
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
+				AE8AF505189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
 				AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */,
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */,
 				AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */,
+				AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C80811899861E008FD848 /* STRInjector.m in Sources */,
 				AE2246F6188874D100626A29 /* STRAdGenerator.m in Sources */,
