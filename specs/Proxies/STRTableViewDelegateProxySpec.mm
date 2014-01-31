@@ -112,13 +112,6 @@ describe(@"STRTableViewDelegateProxy", ^{
         });
 
         context(@"when the index path is not the ad cell", ^{
-            it(@"passes through -tableView:indentationLevelForRowAtIndexPath: ", ^{
-                [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
-                originalDelegate should have_received(@selector(tableView:indentationLevelForRowAtIndexPath:))
-                .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
-            });
-
             it(@"passes through tableView:accessoryButtonTappedForRowWithIndexPath: ", ^{
                 [proxy tableView:tableView accessoryButtonTappedForRowWithIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
                 adPlacementAdjuster should have_received(@selector(adjustedIndexPath:));
@@ -126,7 +119,7 @@ describe(@"STRTableViewDelegateProxy", ^{
                 .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
             });
 
-            it(@"passes through -tableView:accessoryTypeForRowWithIndexPath: ", ^{
+            xit(@"passes through -tableView:accessoryTypeForRowWithIndexPath: ", ^{
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
                 [proxy tableView:tableView accessoryTypeForRowWithIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
@@ -180,13 +173,6 @@ describe(@"STRTableViewDelegateProxy", ^{
         });
 
         context(@"when indexPath points to an ad index path", ^{
-            it(@"prevents original delegate from receiving -tableView:indentationLevelForRowAtIndexPath: ", ^{
-                [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-                adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                adPlacementAdjuster should_not have_received(@selector(adjustedIndexPath:));
-                originalDelegate should_not have_received(@selector(tableView:indentationLevelForRowAtIndexPath:));
-            });
-
             it(@"prevents original delegate from receiving tableView:accessoryButtonTappedForRowWithIndexPath: ", ^{
                 [proxy tableView:tableView accessoryButtonTappedForRowWithIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                 adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
@@ -194,7 +180,7 @@ describe(@"STRTableViewDelegateProxy", ^{
                 originalDelegate should_not have_received(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:));
             });
 
-            it(@"prevents original delegate from receiving -tableView:accessoryTypeForRowWithIndexPath: ", ^{
+            xit(@"prevents original delegate from receiving -tableView:accessoryTypeForRowWithIndexPath: ", ^{
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
                 [proxy tableView:tableView accessoryTypeForRowWithIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];

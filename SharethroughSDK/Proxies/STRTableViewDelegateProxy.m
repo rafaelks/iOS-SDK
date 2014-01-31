@@ -44,10 +44,10 @@ static NSArray *twoArgumentSelectors;
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    __autoreleasing NSIndexPath *indexPath;
-    [invocation getArgument:&indexPath atIndex:3];
-
     if ([invocation selector] == @selector(tableView:heightForRowAtIndexPath:)) {
+        __autoreleasing NSIndexPath *indexPath;
+        [invocation getArgument:&indexPath atIndex:3];
+
         CGFloat height = self.adHeight;
         if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
             [invocation setReturnValue:&height];
@@ -60,27 +60,26 @@ static NSArray *twoArgumentSelectors;
         return;
     }
 
+    NSInteger indexPathIndex = -1;
+
     if ([oneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
-        if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
-            return;
-        }
-
-        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
-        [invocation setArgument:&newIndexPath atIndex:3];
-        [invocation invokeWithTarget:self.originalDelegate];
+        indexPathIndex = 3;
+    } else if ([twoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        indexPathIndex = 4;
+    } else {
+        return;
     }
 
-    if ([twoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
-        [invocation getArgument:&indexPath atIndex:4];
+    __autoreleasing NSIndexPath *indexPath;
+    [invocation getArgument:&indexPath atIndex:indexPathIndex];
 
-        if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
-            return;
-        }
-
-        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
-        [invocation setArgument:&newIndexPath atIndex:4];
-        [invocation invokeWithTarget:self.originalDelegate];
+    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+        return;
     }
+
+    __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
+    [invocation setArgument:&newIndexPath atIndex:indexPathIndex];
+    [invocation invokeWithTarget:self.originalDelegate];
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
@@ -114,9 +113,7 @@ static NSArray *twoArgumentSelectors;
                                  ];
 
         oneArgumentSelectors = @[
-                                 NSStringFromSelector(@selector(tableView:indentationLevelForRowAtIndexPath:)),
                                  NSStringFromSelector(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:)),
-                                 NSStringFromSelector(@selector(tableView:accessoryTypeForRowWithIndexPath:)),
                                  NSStringFromSelector(@selector(tableView:didSelectRowAtIndexPath:)),
                                  NSStringFromSelector(@selector(tableView:didDeselectRowAtIndexPath:)),
                                  NSStringFromSelector(@selector(tableView:willBeginEditingRowAtIndexPath:)),
