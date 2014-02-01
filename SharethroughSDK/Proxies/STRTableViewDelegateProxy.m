@@ -38,6 +38,10 @@ static NSArray *oneArgumentWithReturnIndexPathSelectors;
     return self;
 }
 
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    return [[self class] instancesRespondToSelector:aSelector] || [self.originalDelegate respondsToSelector:aSelector];
+}
+
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     if ([self.originalDelegate respondsToSelector:aSelector] && [passthroughSelectors containsObject:NSStringFromSelector(aSelector)]) {
         return self.originalDelegate;
@@ -58,17 +62,8 @@ static NSArray *oneArgumentWithReturnIndexPathSelectors;
         return;
     }
 
-    NSInteger indexPathIndex = -1;
-
-    if ([oneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]
-        || [oneArgumentWithReturnSelectors containsObject:NSStringFromSelector(invocation.selector)]
-        || [oneArgumentWithReturnIndexPathSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
-        indexPathIndex = 3;
-    } else if ([twoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
-        indexPathIndex = 4;
-    } else {
-        return;
-    }
+    NSInteger indexPathIndex = [self indexOfIndexPathArgumentInInvocation:invocation];
+    if (indexPathIndex == -1) return;
 
     __autoreleasing NSIndexPath *indexPath;
     [invocation getArgument:&indexPath atIndex:indexPathIndex];
@@ -135,6 +130,20 @@ static NSArray *oneArgumentWithReturnIndexPathSelectors;
         [invocation setArgument:&newIndexPath atIndex:4];
         [invocation invokeWithTarget:self.originalDelegate];
     }
+}
+
+#pragma mark - Private
+
+- (NSInteger)indexOfIndexPathArgumentInInvocation:(NSInvocation *)invocation {
+    if ([oneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]
+        || [oneArgumentWithReturnSelectors containsObject:NSStringFromSelector(invocation.selector)]
+        || [oneArgumentWithReturnIndexPathSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        return 3;
+    } else if ([twoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        return 4;
+    }
+
+    return -1;
 }
 
 #pragma mark - Selector heck

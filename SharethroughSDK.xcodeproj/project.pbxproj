@@ -122,6 +122,7 @@
 		AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
 		AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
+		AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 		AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
 		AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
@@ -305,6 +306,8 @@
 		AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRDateProvider.m; sourceTree = "<group>"; };
 		AED32FAE1891F12600693EFF /* UIActivityViewController+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+Spec.h"; sourceTree = "<group>"; };
 		AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+Spec.m"; sourceTree = "<group>"; };
+		AEEE6C98189C719D00AA7EC9 /* STRTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDelegate.h; sourceTree = "<group>"; };
+		AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDelegate.m; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
 		AEFBF1681890480700ADD742 /* youtube_embed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = youtube_embed.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -482,6 +485,8 @@
 				AE6C80701898925C008FD848 /* STRFullTableViewDataSource.m */,
 				AE1F671B1899AD9E00E184D6 /* STRTableViewCell.h */,
 				AE1F671C1899AD9E00E184D6 /* STRTableViewCell.m */,
+				AEEE6C98189C719D00AA7EC9 /* STRTableViewDelegate.h */,
+				AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */,
 				AE8AF4FB189B07ED00A65B27 /* STRFullTableViewDelegate.h */,
 				AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */,
 			);
@@ -955,6 +960,7 @@
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C806818988ECE008FD848 /* STRTableViewAdGenerator.m in Sources */,
 				AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */,
+				AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */,
 				AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

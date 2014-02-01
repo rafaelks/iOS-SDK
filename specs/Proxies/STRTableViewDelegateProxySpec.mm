@@ -1,6 +1,7 @@
 #import "STRTableViewDelegateProxy.h"
 #import "STRFullTableViewDelegate.h"
 #import "STRAdPlacementAdjuster.h"
+#import "STRTableViewDelegate.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -21,6 +22,25 @@ describe(@"STRTableViewDelegateProxy", ^{
         tableView = [UITableView new];
 
         proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
+    });
+
+    context(@"when using a complete delegate", ^{
+        it(@"responds to selector", ^{
+            [proxy respondsToSelector:@selector(tableView:viewForHeaderInSection:)] should be_truthy;
+        });
+    });
+
+    context(@"when using an empty delegate", ^{
+        __block STRTableViewDelegate *emptyDelegate;
+        beforeEach(^{
+            emptyDelegate = [STRTableViewDelegate new];
+            spy_on(emptyDelegate);
+            proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
+        });
+
+        it(@"should fail to respond to selector", ^{
+            [proxy respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)] should be_falsy;
+        });
     });
 
     describe(@"selectors that pass through", ^{
