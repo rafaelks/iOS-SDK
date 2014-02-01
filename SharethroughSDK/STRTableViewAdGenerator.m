@@ -11,6 +11,8 @@
 #import "STRInjector.h"
 #import "STRAdGenerator.h"
 #import <objc/runtime.h>
+#import "STRTableViewDelegateProxy.h"
+#import "STRAdPlacementAdjuster.h"
 
 const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
 
@@ -21,6 +23,7 @@ const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
 @property (nonatomic, copy) NSString *adCellReuseIdentifier;
 @property (nonatomic, copy) NSString *placementKey;
 @property (nonatomic, weak) UIViewController *presentingViewController;
+@property (nonatomic, strong) STRTableViewDelegateProxy *proxy;
 
 @end
 
@@ -35,10 +38,15 @@ const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
     return self;
 }
 
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight {
     self.adCellReuseIdentifier = adCellReuseIdentifier;
     self.placementKey = placementKey;
     self.presentingViewController = presentingViewController;
+
+    NSIndexPath *adIndexPath = [NSIndexPath indexPathForRow:[self rowPositionOfAdForTableView:tableView] inSection:0];
+    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialIndexPath:adIndexPath];
+    self.proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:tableView.delegate adPlacementAdjuster:adjuster adHeight:adHeight];
+    tableView.delegate = self.proxy;
 
     self.originalDataSource = tableView.dataSource;
     tableView.dataSource = self;
@@ -53,7 +61,7 @@ const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSInteger rowPositionOfAd = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
+    NSInteger rowPositionOfAd = [self rowPositionOfAdForTableView:tableView];
 
     if (indexPath.row == rowPositionOfAd && indexPath.section == 0) {
         return [self adCellForTableView:tableView];
@@ -88,6 +96,12 @@ const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
 }
 
 #pragma mark - Private
+
+- (NSInteger) rowPositionOfAdForTableView:(UITableView *)tableView {
+    NSInteger adRowPosition = 0;
+    adRowPosition = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
+    return adRowPosition;
+}
 
 - (UITableViewCell *)adCellForTableView:(UITableView *)tableView {
     UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];

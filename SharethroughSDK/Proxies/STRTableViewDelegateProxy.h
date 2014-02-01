@@ -12,6 +12,8 @@
 
 @interface STRTableViewDelegateProxy : NSObject<UITableViewDelegate>
 
+@property (weak, nonatomic, readonly) id<UITableViewDelegate> originalDelegate;
+
 - (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight;
 
 @end

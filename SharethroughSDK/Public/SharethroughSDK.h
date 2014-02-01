@@ -34,8 +34,9 @@
  @param adCellReuseIdentifier The reuse identifier to use whenever displaying an ad cell; the reuse identifier must be registered with the table view with a cell that conforms to the STRAdView protocol
  @param placementKey The unique identifier for the ad to show
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
+ @param adHeight The height of the adCell. This value will be unused if your delegate does not implement -tableView:heightForRowAtIndexPath: (the tableView will use rowHeight instead)
  */
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController;
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight;
 
 
 @end

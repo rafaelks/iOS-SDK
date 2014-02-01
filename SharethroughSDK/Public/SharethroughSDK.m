@@ -39,9 +39,9 @@
     [generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
 }
 
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight {
     STRTableViewAdGenerator *tableViewAdGenerator = [self.injector getInstance:[STRTableViewAdGenerator class]];
-    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController];
+    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController adHeight:adHeight];
 }
 
 #pragma mark - Private

@@ -7,6 +7,8 @@
 #import "STRTableViewCell.h"
 #import "STRAdGenerator.h"
 #import <objc/runtime.h>
+#import "STRTableViewDelegateProxy.h"
+#import "STRTableViewDelegate.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -34,13 +36,38 @@ describe(@"STRTableViewAdGenerator", ^{
         tableView.frame = CGRectMake(0, 0, 100, 400);
     });
 
+    describe(@"wiring up tableview delegate", ^{
+        __block STRTableViewDelegate *tableViewController;
+
+        beforeEach(^{
+            tableViewController = [STRTableViewDelegate new];
+
+            tableView.delegate = tableViewController;
+            [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
+
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
+            [tableView layoutIfNeeded];
+        });
+
+        it(@"tableview's delegate points to a proxy", ^{
+            id<UITableViewDelegate> delegate = tableView.delegate;
+
+            [delegate isKindOfClass:[STRTableViewDelegateProxy class]] should be_truthy;
+        });
+
+        it(@"proxy points to tableview's original delegate", ^{
+            STRTableViewDelegateProxy *proxy = tableView.delegate;
+            proxy.originalDelegate should be_same_instance_as(tableViewController);
+        });
+    });
+
     describe(@"placing an ad in the table view", ^{
         beforeEach(^{
             [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
         });
 
         it(@"stores itself as an associated object of the table view", ^{
-            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
             [tableView layoutIfNeeded];
 
             objc_getAssociatedObject(tableView, kTableViewAdGeneratorKey) should be_same_instance_as(tableViewAdGenerator);
@@ -54,7 +81,7 @@ describe(@"STRTableViewAdGenerator", ^{
                 dataSource.rowsInEachSection = 2;
                 tableView.dataSource = dataSource;
 
-                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
                 [tableView layoutIfNeeded];
             });
 
@@ -90,7 +117,7 @@ describe(@"STRTableViewAdGenerator", ^{
                     dataSource.numberOfSections = 2;
                     dataSource.rowsInEachSection = 1;
 
-                    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
                     [tableView layoutIfNeeded];
                 });
 
@@ -105,7 +132,7 @@ describe(@"STRTableViewAdGenerator", ^{
                     dataSource.numberOfSections = 0;
                     dataSource.rowsInEachSection = 0;
 
-                    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
                     [tableView layoutIfNeeded];
                 });
 
@@ -119,7 +146,7 @@ describe(@"STRTableViewAdGenerator", ^{
             });
 
             it(@"forwards other selectors to the data source", ^{
-                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
                 [tableView layoutIfNeeded];
 
                 [tableView footerViewForSection:0].textLabel.text should equal(@"title for footer");
@@ -134,7 +161,7 @@ describe(@"STRTableViewAdGenerator", ^{
             dataSource = [STRTableViewDataSource new];
             tableView.dataSource = dataSource;
 
-            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
         });
 
         it(@"throws an exception if the sdk user does not register the identifier", ^{

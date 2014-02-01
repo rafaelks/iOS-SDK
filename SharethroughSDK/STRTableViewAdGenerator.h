@@ -13,6 +13,10 @@
 @interface STRTableViewAdGenerator : NSObject
 
 - (id)initWithInjector:(STRInjector *)injector;
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController;
+- (void)placeAdInTableView:(UITableView *)tableView
+     adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+              placementKey:(NSString *)placementKey
+  presentingViewController:(UIViewController *)presentingViewController
+                  adHeight:(CGFloat)adHeight;
 
 @end
