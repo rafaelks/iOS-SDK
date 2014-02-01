@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class STRAdvertisement, STRBeaconService;
+@class STRAdvertisement, STRBeaconService, STRInjector;
 @protocol STRInteractiveAdViewControllerDelegate;
 
 @interface STRInteractiveAdViewController : UIViewController
@@ -23,7 +23,7 @@
 
 @property (strong, nonatomic, readonly) UIPopoverController *sharePopoverController;
 
-- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService;
+- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService injector:(STRInjector *)injector;
 - (IBAction)doneButtonPressed:(id)sender;
 - (IBAction)shareButtonPressed:(id)sender;
 

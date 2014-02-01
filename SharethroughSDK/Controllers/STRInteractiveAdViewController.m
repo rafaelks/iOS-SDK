@@ -12,11 +12,16 @@
 #import "STRBeaconService.h"
 #import "STRAdYouTube.h"
 #import "STRYouTubeViewController.h"
+#import "STRAdVine.h"
+#import "STRVideoController.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import "STRInjector.h"
 
 @interface STRInteractiveAdViewController ()
 
 @property (strong, nonatomic, readwrite) STRAdvertisement *ad;
 @property (weak, nonatomic) STRBeaconService *beaconService;
+@property (weak, nonatomic) STRInjector *injector;
 @property (weak, nonatomic) UIDevice *device;
 @property (strong, nonatomic, readwrite) UIPopoverController *sharePopoverController;
 
@@ -24,12 +29,13 @@
 
 @implementation STRInteractiveAdViewController
 
-- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService {
+- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService injector:(STRInjector *)injector {
     self = [super initWithNibName:nil bundle:[STRBundleSettings bundleForResources]];
     if (self) {
         self.ad = ad;
         self.device = device;
         self.beaconService = beaconService;
+        self.injector = injector;
     }
 
     return self;
@@ -45,24 +51,28 @@
                                                                      options:0
                                                                      metrics:nil
                                                                        views:views]];
+    UIViewController *childViewController;
     if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
-        STRYouTubeViewController *youTubeController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
-        [youTubeController willMoveToParentViewController:self];
-        [self addChildViewController:youTubeController];
-        [youTubeController didMoveToParentViewController:self];
-
-        UIView *youTubeView = youTubeController.view;
-        youTubeView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addSubview:youTubeView];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[youTubeView]|"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:NSDictionaryOfVariableBindings(youTubeView)]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[youTubeView]|"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:NSDictionaryOfVariableBindings(youTubeView)]];
+        childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
+    } else if ([self.ad isKindOfClass:[STRAdVine class]]) {
+        childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]]];
     }
+
+    [childViewController willMoveToParentViewController:self];
+    [self addChildViewController:childViewController];
+    [childViewController didMoveToParentViewController:self];
+
+    UIView *childView = childViewController.view;
+    childView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:childView];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[childView]|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:NSDictionaryOfVariableBindings(childView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[childView]|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:NSDictionaryOfVariableBindings(childView)]];
 }
 
 #pragma mark - Actions

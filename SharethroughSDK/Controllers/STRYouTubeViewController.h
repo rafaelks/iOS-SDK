@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "STRAdYouTube.h"
+
+@class STRAdYouTube;
 
 @interface STRYouTubeViewController : UIViewController
 
+@property (strong, nonatomic, readonly) STRAdYouTube *ad;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 

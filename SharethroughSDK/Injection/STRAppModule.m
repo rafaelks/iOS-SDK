@@ -8,6 +8,7 @@
 #import <AdSupport/AdSupport.h>
 #import "STRTableViewAdGenerator.h"
 #import "STRAdCache.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 
 @implementation STRAppModule
@@ -27,6 +28,12 @@
 
     [injector bind:[NSRunLoop class] toInstance:[NSRunLoop mainRunLoop]];
 
+    [injector bind:[MPMoviePlayerController class] toBlock:^id(STRInjector *injector) {
+        return [MPMoviePlayerController new];
+    }];
+
+    [injector bind:[STRAdCache class] toInstance:[[STRAdCache alloc] initWithDateProvider:[injector getInstance:[STRDateProvider class]]]];
+
     [injector bind:[STRBeaconService class] toBlock:^id(STRInjector *injector) {
         return [[STRBeaconService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
                                                dateProvider:[injector getInstance:[STRDateProvider class]]
@@ -41,14 +48,13 @@
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
                                            beaconService:[injector getInstance:[STRBeaconService class]]
-                                                 runLoop:[injector getInstance:[NSRunLoop class]]];
+                                                 runLoop:[injector getInstance:[NSRunLoop class]]
+                                                injector:injector];
     }];
 
     [injector bind:[STRTableViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRTableViewAdGenerator alloc] initWithInjector:injector];
     }];
-
-    [injector bind:[STRAdCache class] toInstance:[[STRAdCache alloc] initWithDateProvider:[injector getInstance:[STRDateProvider class]]]];
 }
 
 @end

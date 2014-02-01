@@ -28,6 +28,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, weak) NSRunLoop *timerRunLoop;
 @property (nonatomic, weak) NSTimer *adVisibleTimer;
+@property (nonatomic, weak) STRInjector *injector;
 
 @end
 
@@ -35,12 +36,15 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 
 - (id)initWithAdService:(STRAdService *)adService
           beaconService:(STRBeaconService *)beaconService
-                runLoop:(NSRunLoop *)timerRunLoop {
+                runLoop:(NSRunLoop *)timerRunLoop
+               injector:(STRInjector *)injector
+{
     self = [super init];
     if (self) {
         self.adService = adService;
         self.beaconService = beaconService;
         self.timerRunLoop = timerRunLoop;
+        self.injector = injector;
     }
     return self;
 }
@@ -122,7 +126,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
     UIView *view = tapRecognizer.view;
     [self.beaconService fireYoutubePlayEvent:self.ad adSize:view.frame.size];
 
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService];
+    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
 }

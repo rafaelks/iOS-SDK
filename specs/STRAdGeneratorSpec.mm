@@ -295,7 +295,7 @@ describe(@"STRAdGenerator", ^{
                 STRAdService *newAdService = nice_fake_for([STRAdService class]);
                 newAdService stub_method(@selector(fetchAdForPlacementKey:)).and_return(newDeferred.promise);
 
-                secondGenerator = [[STRAdGenerator alloc] initWithAdService:newAdService beaconService:beaconService runLoop:fakeRunLoop];
+                secondGenerator = [[STRAdGenerator alloc] initWithAdService:newAdService beaconService:beaconService runLoop:fakeRunLoop injector:injector];
                 [secondGenerator placeAdInView:view placementKey:@"key" presentingViewController:presentingViewController];
 
                 [newDeferred resolveWithValue:ad];

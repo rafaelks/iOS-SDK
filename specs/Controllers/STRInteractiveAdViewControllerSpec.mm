@@ -7,6 +7,10 @@
 #import "STRAppModule.h"
 #import "STRAdYouTube.h"
 #import "STRYouTubeViewController.h"
+#import "STRVideoController.h"
+#import "STRAdVine.h"
+#import "STRAdFixtures.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -20,29 +24,62 @@ describe(@"STRInteractiveAdViewController", ^{
     __block STRBeaconService *beaconService;
     __block STRInjector *injector;
 
+    void(^setUpController)(void) = ^{
+        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad device:device beaconService:beaconService injector:injector];
+        UIWindow *window = [UIWindow new];
+        [window addSubview:controller.view];
+        [controller.view layoutIfNeeded];
+    };
+
+
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
         beaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:beaconService];
 
         device = [UIDevice currentDevice];
-
-        ad = [STRAdYouTube new];
-        ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
-        ad.title = @"Superad";
-        ad.shareURL = [NSURL URLWithString:@"http://bit.ly/23kljr"];
-
-        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad device:device beaconService:beaconService];
-        UIWindow *window = [UIWindow new];
-        [window addSubview:controller.view];
-        [controller.view layoutIfNeeded];
     });
 
     describe(@"when the ad is a youtube ad", ^{
+        __block STRYouTubeViewController *youTubeViewController;
+
+        beforeEach(^{
+            ad = [STRAdFixtures youTubeAd];
+            setUpController();
+            youTubeViewController = [controller.childViewControllers firstObject];
+        });
+
         it(@"presents a youtube view controller", ^{
-            STRYouTubeViewController *youTubeViewcontroller = [controller.childViewControllers firstObject];
-            youTubeViewcontroller should be_instance_of([STRYouTubeViewController class]);
-            controller.contentView.subviews.firstObject should be_same_instance_as(youTubeViewcontroller.view);
+            youTubeViewController should be_instance_of([STRYouTubeViewController class]);
+            controller.contentView.subviews.firstObject should be_same_instance_as(youTubeViewController.view);
+        });
+
+        it(@"gives that youtube view controller the ad", ^{
+            youTubeViewController.ad should be_same_instance_as(ad);
+        });
+    });
+
+    describe(@"when the ad is a vine ad", ^{
+        __block STRVideoController *videoController;
+        __block MPMoviePlayerController *moviePlayerController;
+
+        beforeEach(^{
+            ad = [STRAdFixtures vineAd];
+            moviePlayerController = nice_fake_for([MPMoviePlayerController class]);
+            moviePlayerController stub_method(@selector(view)).and_return([UIView new]);
+            [injector bind:[MPMoviePlayerController class] toInstance:moviePlayerController];
+            setUpController();
+
+            videoController = [controller.childViewControllers firstObject];
+        });
+
+        it(@"presents a generic web view controller", ^{
+            videoController should be_instance_of([STRVideoController class]);
+            controller.contentView.subviews.firstObject should be_same_instance_as(videoController.view);
+        });
+
+        it(@"gives that web view controller the ad", ^{
+            videoController.ad should be_same_instance_as(ad);
         });
     });
 
@@ -50,6 +87,8 @@ describe(@"STRInteractiveAdViewController", ^{
         __block id<STRInteractiveAdViewControllerDelegate> delegate;
 
         beforeEach(^{
+            ad = [STRAdFixtures youTubeAd];
+            setUpController();
             delegate = nice_fake_for(@protocol(STRInteractiveAdViewControllerDelegate));
             controller.delegate = delegate;
             [controller.doneButton tap];
@@ -63,6 +102,9 @@ describe(@"STRInteractiveAdViewController", ^{
     describe(@"when the user taps the share button on an iPhone", ^{
         __block UIActivityViewController *activityController;
         beforeEach(^{
+            ad = [STRAdFixtures youTubeAd];
+            setUpController();
+
             spy_on(device);
             device stub_method(@selector(userInterfaceIdiom)).and_return(UIUserInterfaceIdiomPhone);
             [controller.shareButton tap];
@@ -70,7 +112,6 @@ describe(@"STRInteractiveAdViewController", ^{
         });
 
         it(@"presents the UIActivityViewController", ^{
-
             activityController should be_instance_of([UIActivityViewController class]);
             activityController.activityItems should equal(@[ad.title, @"http://bit.ly/23kljr"]);
         });
@@ -98,6 +139,8 @@ describe(@"STRInteractiveAdViewController", ^{
 
     describe(@"when the user taps the share button on an iPad", ^{
         beforeEach(^{
+            ad = [STRAdFixtures youTubeAd];
+            setUpController();
             spy_on(device);
             device stub_method(@selector(userInterfaceIdiom)).and_return(UIUserInterfaceIdiomPad);
             [controller.shareButton tap];

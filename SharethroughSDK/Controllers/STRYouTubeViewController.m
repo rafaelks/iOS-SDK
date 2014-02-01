@@ -8,10 +8,11 @@
 
 #import "STRYouTubeViewController.h"
 #import "STRBundleSettings.h"
+#import "STRAdYouTube.h"
 
 @interface STRYouTubeViewController ()<UIWebViewDelegate>
 
-@property (nonatomic, strong) STRAdYouTube *ad;
+@property (nonatomic, strong, readwrite) STRAdYouTube *ad;
 
 @end
 
