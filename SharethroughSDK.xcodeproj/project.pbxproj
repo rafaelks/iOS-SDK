@@ -127,6 +127,10 @@
 		AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
 		AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */; };
+		AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
+		AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */; };
+		AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */; };
+		AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 		AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
 		AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
@@ -186,6 +190,7 @@
 			files = (
 				AE9C4614189C1B8D001B407A /* vine-logo.png in Copy Header Files */,
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
+				AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */,
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 				AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */,
 				AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */,
@@ -317,6 +322,9 @@
 		AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+Spec.m"; sourceTree = "<group>"; };
 		AEEE6C98189C719D00AA7EC9 /* STRTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDelegate.h; sourceTree = "<group>"; };
 		AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDelegate.m; sourceTree = "<group>"; };
+		AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+STR.h"; sourceTree = "<group>"; };
+		AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+STR.m"; sourceTree = "<group>"; };
+		AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UITableView+STRSpec.mm"; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
 		AEFBF1681890480700ADD742 /* youtube_embed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = youtube_embed.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -404,6 +412,8 @@
 				AE022DEF188E011100D02568 /* SharethroughSDK.h */,
 				AE022DF0188E011100D02568 /* SharethroughSDK.m */,
 				AE022DF1188E011100D02568 /* STRAdView.h */,
+				AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */,
+				AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -423,6 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				AE022DF8188E01D200D02568 /* SharethroughSDKSpec.mm */,
+				AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -963,11 +974,13 @@
 				AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */,
 				AE9C463B189C74B0001B407A /* STRAdFixtures.m in Sources */,
 				AE9C4623189C25A1001B407A /* STRAdYouTubeSpec.mm in Sources */,
+				AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */,
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AE6C80801899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */,
+				AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */,
 				AE1F67241899BBC600E184D6 /* STRTableViewDataSource.m in Sources */,
 				AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
@@ -996,6 +1009,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
+				AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */,
 				AE52B85F188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */,

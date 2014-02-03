@@ -16,9 +16,9 @@
 
 @implementation STRAdPlacementAdjuster
 
-+ (instancetype)adjusterWithInitialIndexPath:(NSIndexPath *)indexPath {
++ (instancetype)adjusterWithInitialTableView:(UITableView *)tableView {
     STRAdPlacementAdjuster *adjuster = [self new];
-    adjuster.adIndexPath = indexPath;
+    adjuster.adIndexPath = [adjuster initialRowForAd:tableView];
     return adjuster;
 }
 
@@ -47,4 +47,16 @@
     NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
     return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];}
 
+- (NSIndexPath *)initialRowForAd:(UITableView *)tableView {
+    NSInteger adRowPosition = 0;
+    adRowPosition = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
+
+    return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
+}
+
+- (void)didInsertRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row <= self.adIndexPath.row && indexPath.section == self.adIndexPath.section) {
+        self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + 1) inSection:self.adIndexPath.section];
+    }
+}
 @end

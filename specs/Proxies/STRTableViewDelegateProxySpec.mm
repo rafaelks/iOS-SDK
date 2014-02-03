@@ -17,9 +17,10 @@ describe(@"STRTableViewDelegateProxy", ^{
     beforeEach(^{
         originalDelegate = [STRFullTableViewDelegate new];
         spy_on(originalDelegate);
+        tableView = nice_fake_for([UITableView class]);
+        tableView stub_method(@selector(numberOfRowsInSection:)).with(0).and_return(2);
 
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-        tableView = [UITableView new];
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialTableView:tableView];
 
         proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
     });

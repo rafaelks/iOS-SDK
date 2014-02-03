@@ -10,10 +10,14 @@
 
 @interface STRAdPlacementAdjuster : NSObject
 
-+ (instancetype)adjusterWithInitialIndexPath:(NSIndexPath *)indexPath;
+@property (nonatomic, strong, readonly) NSIndexPath *adIndexPath;
+
++ (instancetype)adjusterWithInitialTableView:(UITableView *)tableView;
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)adjustedIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)unadjustedIndexPath:(NSIndexPath *)indexPath;
+
+- (void)didInsertRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

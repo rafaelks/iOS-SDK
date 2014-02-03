@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class SharethroughSDK, STRInjector;
+@class SharethroughSDK, STRInjector, STRAdPlacementAdjuster;
 
 @interface STRTableViewAdGenerator : NSObject
+
+@property (nonatomic, strong, readonly) STRAdPlacementAdjuster *adjuster;
 
 - (id)initWithInjector:(STRInjector *)injector;
 - (void)placeAdInTableView:(UITableView *)tableView
