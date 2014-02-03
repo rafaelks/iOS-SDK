@@ -59,27 +59,44 @@ describe(@"STRInteractiveAdViewController", ^{
         });
     });
 
-    describe(@"when the ad is a vine ad", ^{
-        __block STRVideoController *videoController;
-        __block MPMoviePlayerController *moviePlayerController;
+    describe(@"when the ad's media url is playable within the MoviePlayer", ^{
+        void(^itPlaysTheAdInAVideoController)(void) = ^{
+            __block STRVideoController *videoController;
+            __block MPMoviePlayerController *moviePlayerController;
 
-        beforeEach(^{
-            ad = [STRAdFixtures vineAd];
-            moviePlayerController = nice_fake_for([MPMoviePlayerController class]);
-            moviePlayerController stub_method(@selector(view)).and_return([UIView new]);
-            [injector bind:[MPMoviePlayerController class] toInstance:moviePlayerController];
-            setUpController();
+            beforeEach(^{
+                moviePlayerController = nice_fake_for([MPMoviePlayerController class]);
+                moviePlayerController stub_method(@selector(view)).and_return([UIView new]);
+                [injector bind:[MPMoviePlayerController class] toInstance:moviePlayerController];
+                setUpController();
 
-            videoController = [controller.childViewControllers firstObject];
+                videoController = [controller.childViewControllers firstObject];
+            });
+
+            it(@"presents a generic video controller", ^{
+                videoController should be_instance_of([STRVideoController class]);
+                controller.contentView.subviews.firstObject should be_same_instance_as(videoController.view);
+            });
+
+            it(@"gives that video controller the ad", ^{
+                videoController.ad should be_same_instance_as(ad);
+            });
+        };
+
+        describe(@"when the ad is a vine ad", ^{
+            beforeEach(^{
+                ad = [STRAdFixtures vineAd];
+            });
+
+            itPlaysTheAdInAVideoController();
         });
+        
+        describe(@"when the ad is a hosted video", ^{
+            beforeEach(^{
+                ad = [STRAdFixtures ad];
+            });
 
-        it(@"presents a generic web view controller", ^{
-            videoController should be_instance_of([STRVideoController class]);
-            controller.contentView.subviews.firstObject should be_same_instance_as(videoController.view);
-        });
-
-        it(@"gives that web view controller the ad", ^{
-            videoController.ad should be_same_instance_as(ad);
+            itPlaysTheAdInAVideoController();
         });
     });
 

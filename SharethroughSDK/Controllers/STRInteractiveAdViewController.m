@@ -54,7 +54,7 @@
     UIViewController *childViewController;
     if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
         childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
-    } else if ([self.ad isKindOfClass:[STRAdVine class]]) {
+    } else {
         childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]]];
     }
 

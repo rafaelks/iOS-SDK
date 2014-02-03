@@ -11,7 +11,6 @@
 
 @implementation STRAdVine
 
-
 - (NSString *)centerImageFileName {
     return @"vine-logo.png";
 }

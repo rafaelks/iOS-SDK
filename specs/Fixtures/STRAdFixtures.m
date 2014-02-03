@@ -9,8 +9,18 @@
 #import "STRAdFixtures.h"
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
+#import "STRAdvertisement.h"
 
 @implementation STRAdFixtures
+
++ (STRAdvertisement *)ad {
+    STRAdvertisement *ad = [STRAdvertisement new];
+    ad.mediaURL = [NSURL URLWithString:@"http://brightcove.vo.llnwd.net/9u9e1zone-minute-video.mp4"];
+    ad.title = @"Superad";
+    ad.shareURL = [NSURL URLWithString:@"http://sharethrough.ly/23asdf"];
+
+    return ad;
+}
 
 + (STRAdYouTube *)youTubeAd {
     STRAdYouTube *ad = [STRAdYouTube new];

@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRAdVine, STRAdYouTube;
+@class STRAdVine, STRAdYouTube, STRAdvertisement;
 
 @interface STRAdFixtures : NSObject
 
++ (STRAdvertisement *)ad;
 + (STRAdYouTube *)youTubeAd;
 + (STRAdVine *)vineAd;
 

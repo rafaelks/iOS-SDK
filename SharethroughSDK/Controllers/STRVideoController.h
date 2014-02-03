@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic, readonly) STRAdvertisement *ad;
 @property (strong, nonatomic, readonly) MPMoviePlayerController *moviePlayerController;
+@property (weak, nonatomic, readonly) UIView *moviePlayerView;
+@property (weak, nonatomic, readonly) UIActivityIndicatorView *spinner;
 
 
 - (id)initWithAd:(STRAdvertisement *)ad moviePlayerController:(MPMoviePlayerController *)moviePlayerController;
