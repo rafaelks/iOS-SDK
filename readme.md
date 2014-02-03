@@ -14,8 +14,15 @@ Choose 'Create groups for any added folders' and select 'Copy items into destina
 In your application target, select Build Phases and add a new library to link against.
 ![Link to new library screenshot][project_settings-screenshot]
 
-Select and add AdSupport.framework.
-[Select AdSupport Framework][add-framework-screenshot]
+The following list of frameworks are required:
+- Foundation.framework
+- UIKit.framework
+- CoreGraphics.framework
+- AdSupport.framework
+- MediaPlayer.framework
+
+After adding the frameworks, your project's "Link Binary With Libraries" should look something like the following:
+[Linked libraries][linked-libraries-screenshot]
 
 ## Known Issues ##
 If you're running your iOS app on a physical iPad while connected to a computer and play a Youtube video from an ad, error messages will be displayed in the Xcode console. This is a known iPad on iOS7 issue, but do not affect your app's functionality. More information can be found [here][stack-overflow]
@@ -33,7 +40,7 @@ and then restarting Xcode to pick up the new docset.
 [sdk]: http://s3.amazonaws.com/iOS-SDK/Sharethrough-SDK.framework.tar
 [nav-screenshot]: documentation/getting_started/nav_screenshot.png
 [copy-screenshot]: documentation/getting_started/copy_screenshot.png
-[add-framework-screenshot]: documentation/getting_started/add_framework_screenshot.png
+[linked-libraries-screenshot]: documentation/getting_started/frameworks_screenshot.png
 [project_settings-screenshot]: documentation/getting_started/project_settings_screenshot.png
 [docset]: http://s3.amazonaws.com/iOS-SDK/com.sharethrough.Sharethrough-SDK.docset.tar
 [stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video
