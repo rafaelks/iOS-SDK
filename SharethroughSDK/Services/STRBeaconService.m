@@ -61,6 +61,19 @@
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
+- (void)fireThirdPartyBeacons:(NSArray *)beaconPaths {
+    NSString *timeStamp = [NSString stringWithFormat:@"%lli", [self.dateProvider millisecondsSince1970]];
+    for (NSString *urlStub in beaconPaths) {
+        NSMutableString *urlString = [urlStub mutableCopy];
+        NSRange timeStampRange = [urlString rangeOfString:@"[timestamp]"];
+        if (timeStampRange.location != NSNotFound ) {
+            [urlString replaceCharactersInRange:timeStampRange withString:timeStamp];
+        }
+        [urlString insertString:@"http:" atIndex:0];
+        [self.restClient sendBeaconWithURL:[NSURL URLWithString:urlString]];
+    }
+}
+
 - (void)fireYoutubePlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size {
     NSDictionary *uniqueParameters = @{@"type": @"userEvent",
                                        @"userEvent": @"youtubePlay",

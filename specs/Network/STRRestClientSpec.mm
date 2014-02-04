@@ -115,6 +115,20 @@ describe(@"STRRestClient", ^{
         });
     });
 
+    describe(@"-sendBeaconWithURL:", ^{
+        __block NSURL *beaconURL;
+
+        beforeEach(^{
+            networkClient stub_method(@selector(get:));
+            beaconURL = [NSURL URLWithString:@"http://fake.com?timestamp=1234"];
+        });
+
+        it(@"should send a get message to the network client", ^{
+            [client sendBeaconWithURL:beaconURL];
+            mostRecentRequest().URL.absoluteString should equal(@"http://fake.com?timestamp=1234");
+        });
+    });
+
 });
 
 SPEC_END

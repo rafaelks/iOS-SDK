@@ -64,6 +64,9 @@
             ad.shareURL = [NSURL URLWithString:adJSON[@"share_url"]];
             ad.thumbnailImage = [UIImage imageWithData:data];
             ad.placementKey = placementKey;
+            ad.thirdPartyBeaconsForVisibility = adJSON[@"beacons"][@"visible"];
+            ad.thirdPartyBeaconsForClick = adJSON[@"beacons"][@"click"];
+            ad.thirdPartyBeaconsForPlay = adJSON[@"beacons"][@"play"];
 
             [self.adCache saveAd:ad];
             [deferred resolveWithValue:ad];

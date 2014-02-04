@@ -15,6 +15,7 @@
 - (id) initWithRestClient:(STRRestClient *)restClient dateProvider:(STRDateProvider *)dateProvider asIdentifierManager:(ASIdentifierManager *)identifierManager;
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey;
 - (void)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
+- (void)fireThirdPartyBeacons:(NSArray *)beaconPaths;
 - (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireYoutubePlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size;
 - (void)fireShareForAd:(STRAdvertisement *)ad shareType:(NSString *)uiActivityType;

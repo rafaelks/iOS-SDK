@@ -122,6 +122,11 @@ describe(@"STRAdService", ^{
                             ad.creativeKey should equal(@"imagination");
                             ad.variantKey should equal(@"variation");
                             ad.placementKey should equal(@"placementKey");
+
+                            ad.thirdPartyBeaconsForVisibility should equal(@[@"//reddit.com/ad?time=[timestamp]"]);
+                            ad.thirdPartyBeaconsForClick should equal(@[@"//yahoo.com/dance?danced_at=[timestamp]"]);
+                            ad.thirdPartyBeaconsForPlay should equal(@[@"//cupcakes.com/yum?allgone=[timestamp]"]);
+
                             UIImagePNGRepresentation(ad.thumbnailImage) should equal(UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]));
                         });
                     });
@@ -146,7 +151,10 @@ describe(@"STRAdService", ^{
                       @"media_url": @"http://www.google.com",
                       @"share_url": @"http://bit.ly/14hfvXG",
                       @"creative_key": @"imagination",
-                      @"variant_key": @"variation"
+                      @"variant_key": @"variation",
+                      @"beacons": @{@"visible": @[@"//reddit.com/ad?time=[timestamp]"],
+                                    @"click": @[@"//yahoo.com/dance?danced_at=[timestamp]"],
+                                    @"play": @[@"//cupcakes.com/yum?allgone=[timestamp]"]},
                       } mutableCopy];
                 });
 

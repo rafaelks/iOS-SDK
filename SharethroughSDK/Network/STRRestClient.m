@@ -63,6 +63,10 @@
     [self.networkClient get:request];
 }
 
+- (void)sendBeaconWithURL:(NSURL *)url{
+    [self.networkClient get:[NSURLRequest requestWithURL:url]];
+}
+
 - (NSString*)encodedQueryParams:(NSDictionary *)params {
     NSMutableArray *parts = [NSMutableArray array];
     for (id key in params) {

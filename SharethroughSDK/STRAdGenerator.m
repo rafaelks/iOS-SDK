@@ -115,6 +115,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
     } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
         [self.beaconService fireVisibleImpressionForAd:self.ad
                                                 adSize:view.frame.size];
+        [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility];
         [timer invalidate];
     } else {
         [timer.userInfo removeObjectForKey:@"secondsVisible"];
@@ -125,6 +126,8 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     UIView *view = tapRecognizer.view;
     [self.beaconService fireYoutubePlayEvent:self.ad adSize:view.frame.size];
+    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay];
+    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick];
 
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
     interactiveAdController.delegate = self;

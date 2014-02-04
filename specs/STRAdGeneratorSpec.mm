@@ -44,6 +44,9 @@ describe(@"STRAdGenerator", ^{
         ad.title = @"Meet Porter. He's a Dog.";
         ad.advertiser = @"Brand X";
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
+        ad.thirdPartyBeaconsForVisibility = @[@"//google.com?fakeParam=[timestamp]"];
+        ad.thirdPartyBeaconsForClick = @[@"//click.com?fakeParam=[timestamp]"];
+        ad.thirdPartyBeaconsForPlay = @[@"//play.com?fakeParam=[timestamp]"];
     });
 
     describe(@"placing an ad in the view", ^{
@@ -173,6 +176,10 @@ describe(@"STRAdGenerator", ^{
                             .with(ad, CGSizeMake(100, 100));
                         });
 
+                        it(@"fires a third party beacon", ^{
+                            beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//google.com?fakeParam=[timestamp]"]);
+                        });
+
                         it(@"invalidates its timer", ^{
                             timer.isValid should be_falsy;
                         });
@@ -267,6 +274,11 @@ describe(@"STRAdGenerator", ^{
 
                 it(@"fires off a youtube play beacon", ^{
                     beaconService should have_received(@selector(fireYoutubePlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+
+                it(@"fires off the third party beacons for click and for play", ^{
+                    beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//click.com?fakeParam=[timestamp]"]);
+                    beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//play.com?fakeParam=[timestamp]"]);
                 });
             });
         });

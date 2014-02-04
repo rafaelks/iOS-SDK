@@ -16,5 +16,6 @@
 - (id)initWithNetworkClient:(STRNetworkClient *)networkClient;
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters;
 - (void)sendBeaconWithParameters:(NSDictionary *)parameters;
+- (void)sendBeaconWithURL:(NSURL *)url;
 
 @end

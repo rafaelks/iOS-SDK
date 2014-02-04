@@ -134,6 +134,24 @@ describe(@"STRBeaconService", ^{
 
     });
 
+    describe(@"-fireThirdPartyBeacons:", ^{
+        context(@"when beacons are not present", ^{
+            it(@"should not call the rest client", ^{
+                [service fireThirdPartyBeacons:nil];
+                restClient should_not have_received(@selector(sendBeaconWithURL:));
+            });
+        });
+
+        context(@"when beacons are present", ^{
+            it(@"calls rest client with subsituted timestamp and full url", ^{
+                [service fireThirdPartyBeacons:@[@"//yahoo.com/beacon?=[timestamp]"]];
+
+                NSURL *targetURL = [NSURL URLWithString:@"http://yahoo.com/beacon?=10"];
+                restClient should have_received(@selector(sendBeaconWithURL:)).with(targetURL);
+            });
+        });
+    });
+
     describe(@"-fireShareForAd:shareType:", ^{
         __block NSDictionary *shareOptions;
         __block NSString *shareType;
