@@ -24,60 +24,61 @@ describe(@"STRAdPlacementAdjuster", ^{
         });
     });
 
-    describe(@"-adjustedIndexPath:", ^{
+    describe(@"-externalIndexPath:", ^{
         it(@"leaves indexPath unchanged if it's above adIndexPath", ^{
-            [adjuster adjustedIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+            [adjuster externalIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
         });
 
         it(@"raises exception if indexPath is equal to adIndexPath", ^{
-            expect(^{[adjuster adjustedIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];}).to(raise_exception());
+            expect(^{
+                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];}).to(raise_exception());
         });
 
         it(@"subtracts indexPath for cells after ad row in same section", ^{
-            [adjuster adjustedIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+            [adjuster externalIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:1 inSection:0]);
         });
 
         it(@"leaves indexPath unchanged for cells in different section", ^{
-            [adjuster adjustedIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+            [adjuster externalIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
         });
     });
 
-    describe(@"-unadjustedIndexPath:", ^{
+    describe(@"-trueIndexPath:", ^{
         it(@"leaves indexPath unchanged if it's above adIndexPath", ^{
-            [adjuster unadjustedIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+            [adjuster trueIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
         });
 
         it(@"increments indexPath if it's equal to adIndexPath", ^{
-            [adjuster unadjustedIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+            [adjuster trueIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
         });
 
         it(@"increments indexPath for cells after ad row in same section", ^{
-            [adjuster unadjustedIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:3 inSection:0]);
+            [adjuster trueIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:3 inSection:0]);
         });
 
         it(@"leaves indexPath unchanged for cells in different section", ^{
-            [adjuster unadjustedIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+            [adjuster trueIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
         });
     });
 
-    describe(@"-didInsertRowAtIndexPath:", ^{
+    describe(@"-didInsertRowAtTrueIndexPath:", ^{
         it(@"leaves adIndexPath unchanged if insertion is after adIndexPath", ^{
-            [adjuster didInsertRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            [adjuster didInsertRowAtTrueIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
             adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
         });
 
         it(@"increments adIndexPath if insertions is before adIndexPath", ^{
-            [adjuster didInsertRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [adjuster didInsertRowAtTrueIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:0]);
         });
 
         it(@"increments adIndexPath if insertion is at adIndexPath", ^{
-            [adjuster didInsertRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            [adjuster didInsertRowAtTrueIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
             adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:0]);
         });
 
         it(@"leaves adIndexPath unchanged for insertion in a different section", ^{
-            [adjuster didInsertRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            [adjuster didInsertRowAtTrueIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
             adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
         });
     });

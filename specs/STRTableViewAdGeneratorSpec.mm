@@ -127,24 +127,6 @@ describe(@"STRTableViewAdGenerator", ^{
                 });
             });
 
-            describe(@"if the original data source reports that there are no sections in the table view", ^{
-                beforeEach(^{
-                    dataSource.numberOfSections = 0;
-                    dataSource.rowsInEachSection = 0;
-
-                    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
-                    [tableView layoutIfNeeded];
-                });
-
-                it(@"creates a first section and then puts the ad in it", ^{
-                    [tableView numberOfSections] should equal(1);
-                    [tableView numberOfRowsInSection:0] should equal(1);
-
-                    STRTableViewCell *adCell = (STRTableViewCell *) tableView.visibleCells[0];
-                    adCell should be_instance_of([STRTableViewCell class]);
-                });
-            });
-
             it(@"forwards other selectors to the data source", ^{
                 [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
                 [tableView layoutIfNeeded];

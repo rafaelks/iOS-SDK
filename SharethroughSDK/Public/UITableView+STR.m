@@ -23,14 +23,14 @@ extern const char *const kTableViewAdGeneratorKey;
             return [@(obj1.row) compare:@(obj2.row)];
         }];
         
-        NSMutableArray *unadjustedIndexPaths = [NSMutableArray new];
+        NSMutableArray *trueIndexPaths = [NSMutableArray new];
         for (NSIndexPath *path in sortedIndexPaths) {
-            NSIndexPath *unadjustedIndexPath = [adGenerator.adjuster unadjustedIndexPath:path];
-            [unadjustedIndexPaths addObject:unadjustedIndexPath];
-            [adGenerator.adjuster didInsertRowAtIndexPath:unadjustedIndexPath];
+            NSIndexPath *trueIndexPath = [adGenerator.adjuster trueIndexPath:path];
+            [trueIndexPaths addObject:trueIndexPath];
+            [adGenerator.adjuster didInsertRowAtTrueIndexPath:trueIndexPath];
         }
 
-        [self insertRowsAtIndexPaths:unadjustedIndexPaths withRowAnimation:rowAnimation];
+        [self insertRowsAtIndexPaths:trueIndexPaths withRowAnimation:rowAnimation];
     } else {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:))];
     }

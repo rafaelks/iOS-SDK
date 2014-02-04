@@ -58,27 +58,16 @@ const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.originalDataSource tableView:tableView numberOfRowsInSection:section] + (section == 0 ? 1 : 0);
+    return [self.originalDataSource tableView:tableView numberOfRowsInSection:section] + [self.adjuster numberOfAdsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSInteger rowPositionOfAd = [self.adjuster.adIndexPath row];
-
-    if (indexPath.row == rowPositionOfAd && indexPath.section == 0) {
+    if ([self.adjuster isAdAtIndexPath:indexPath]) {
         return [self adCellForTableView:tableView];
     }
 
-    NSInteger adjustment = indexPath.row < rowPositionOfAd ? 0 : 1;
-    NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row - adjustment inSection:indexPath.section];
+    NSIndexPath *adjustedIndexPath = [self.adjuster externalIndexPath:indexPath];
     return [self.originalDataSource tableView:tableView cellForRowAtIndexPath:adjustedIndexPath];
-}
-
-- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger originalNumberOfSections = 1;
-    if ([self.originalDataSource respondsToSelector:@selector(numberOfSectionsInTableView:)]) {
-        originalNumberOfSections = [self.originalDataSource numberOfSectionsInTableView:tableView];
-    }
-    return MAX(originalNumberOfSections, 1);
 }
 
 #pragma mark - Forwarding

@@ -26,7 +26,14 @@
     return [indexPath isEqual:self.adIndexPath];
 }
 
-- (NSIndexPath *)adjustedIndexPath:(NSIndexPath *)indexPath {
+- (NSInteger)numberOfAdsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }
+    return 0;
+}
+
+- (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section != self.adIndexPath.section) {
         return indexPath;
     }
@@ -39,13 +46,14 @@
     return [NSIndexPath indexPathForRow:indexPath.row - adjustment inSection:indexPath.section];
 }
 
-- (NSIndexPath *)unadjustedIndexPath:(NSIndexPath *)indexPath {
+- (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section != self.adIndexPath.section) {
         return indexPath;
     }
 
     NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
-    return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];}
+    return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];
+}
 
 - (NSIndexPath *)initialRowForAd:(UITableView *)tableView {
     NSInteger adRowPosition = 0;
@@ -54,7 +62,7 @@
     return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
 }
 
-- (void)didInsertRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)didInsertRowAtTrueIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row <= self.adIndexPath.row && indexPath.section == self.adIndexPath.section) {
         self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + 1) inSection:self.adIndexPath.section];
     }

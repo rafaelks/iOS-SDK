@@ -15,9 +15,10 @@
 + (instancetype)adjusterWithInitialTableView:(UITableView *)tableView;
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)adjustedIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)unadjustedIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath;
+- (NSInteger)numberOfAdsInSection:(NSInteger)section;
 
-- (void)didInsertRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)didInsertRowAtTrueIndexPath:(NSIndexPath *)indexPath;
 
 @end

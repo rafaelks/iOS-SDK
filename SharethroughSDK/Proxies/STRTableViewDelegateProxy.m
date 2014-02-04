@@ -76,16 +76,16 @@ static NSArray *oneArgumentWithReturnIndexPathSelectors;
         return;
     }
 
-    __autoreleasing NSIndexPath *adjustedIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
-    [invocation setArgument:&adjustedIndexPath atIndex:indexPathIndex];
+    __autoreleasing NSIndexPath *externalIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
+    [invocation setArgument:&externalIndexPath atIndex:indexPathIndex];
     [invocation invokeWithTarget:self.originalDelegate];
 
     if ([oneArgumentWithReturnIndexPathSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
         __autoreleasing NSIndexPath *indexPath;
         [invocation getReturnValue:&indexPath];
         if (indexPath) {
-            NSIndexPath *unadjustedIndexPath = [self.adPlacementAdjuster unadjustedIndexPath:indexPath];
-            [invocation setReturnValue:&unadjustedIndexPath];
+            NSIndexPath *trueIndexPath = [self.adPlacementAdjuster trueIndexPath:indexPath];
+            [invocation setReturnValue:&trueIndexPath];
         }
     }
 }
@@ -112,7 +112,7 @@ static NSArray *oneArgumentWithReturnIndexPathSelectors;
     if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
         [invocation setReturnValue:&height];
     } else {
-        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
+        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
         [invocation setArgument:&newIndexPath atIndex:3];
         [invocation invokeWithTarget:self.originalDelegate];
     }
@@ -126,7 +126,7 @@ static NSArray *oneArgumentWithReturnIndexPathSelectors;
         id returnValue = 0;
         [invocation setReturnValue:&returnValue];
     } else {
-        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster adjustedIndexPath:indexPath];
+        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
         [invocation setArgument:&newIndexPath atIndex:4];
         [invocation invokeWithTarget:self.originalDelegate];
     }
