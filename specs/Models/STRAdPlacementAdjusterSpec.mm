@@ -61,25 +61,57 @@ describe(@"STRAdPlacementAdjuster", ^{
         });
     });
 
-    describe(@"-didInsertRowAtTrueIndexPath:", ^{
+    describe(@"-willInsertRowsAtExternalIndexPaths:", ^{
         it(@"leaves adIndexPath unchanged if insertion is after adIndexPath", ^{
-            [adjuster didInsertRowAtTrueIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            [adjuster willInsertRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]]];
             adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
         });
 
         it(@"increments adIndexPath if insertions is before adIndexPath", ^{
-            [adjuster didInsertRowAtTrueIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [adjuster willInsertRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
             adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:0]);
         });
 
         it(@"increments adIndexPath if insertion is at adIndexPath", ^{
-            [adjuster didInsertRowAtTrueIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            [adjuster willInsertRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]]];
             adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:0]);
         });
 
         it(@"leaves adIndexPath unchanged for insertion in a different section", ^{
-            [adjuster didInsertRowAtTrueIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            [adjuster willInsertRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]]];
             adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+        });
+
+        it(@"handles multiple indexPaths inserted and places the ad in the right place", ^{
+            [adjuster willInsertRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0], [NSIndexPath indexPathForRow:0 inSection:0]]];
+            adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:3 inSection:0]);
+        });
+    });
+
+    describe(@"-willDeleteRowsAtExternalIndexPaths:", ^{
+        it(@"leaves adIndexPath unchanged if deletion is after adIndexPath", ^{
+            [adjuster willDeleteRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]]];
+            adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+        });
+
+        it(@"decrements adIndexPath if deletion is before adIndexPath", ^{
+            [adjuster willDeleteRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
+            adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+        });
+
+        it(@"leaves adIndexPath unchanged if deletion is at adIndexPath", ^{
+            [adjuster willDeleteRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]]];
+            adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+        });
+
+        it(@"leaves adIndexPath unchanged for deletion in a different section", ^{
+            [adjuster willDeleteRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]]];
+            adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+        });
+
+        it(@"handles multiple indexPaths deleted and places the ad in the right place", ^{
+            [adjuster willDeleteRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:0]]];
+            adjuster.adIndexPath should equal([NSIndexPath indexPathForRow:0 inSection:0]);
         });
     });
 });

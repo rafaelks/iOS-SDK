@@ -15,16 +15,38 @@ extern const char *const kTableViewAdGeneratorKey;
 
 SPEC_BEGIN(UITableViewSpec)
 
+typedef void(^TriggerBlock)(UITableView *noAdTableView);
+void(^itThrowsIfTableWasntConfigured)(TriggerBlock) = ^(TriggerBlock trigger){
+    describe(@"when the table view wasn't configured", ^{
+        __block NSInteger originalRowCount;
+        __block UITableView *noAdTableView;
+        __block STRTableViewDataSource *dataSource;
+
+        beforeEach(^{
+            noAdTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
+            dataSource = [[STRTableViewDataSource alloc] init];
+            noAdTableView.dataSource = dataSource;
+
+            [noAdTableView reloadData];
+
+            originalRowCount = noAdTableView.visibleCells.count;
+        });
+
+        it(@"raises an exception", ^{
+            expect(^{trigger(noAdTableView);}).to(raise_exception);
+
+            noAdTableView.visibleCells.count should equal(originalRowCount);
+        });
+    });
+};
+
 describe(@"UITableView+STR", ^{
     __block UITableView *tableView;
-    __block UITableView *noAdTableView;
     __block STRTableViewDelegate *delegate;
     __block STRTableViewDataSource *dataSource;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
 
     beforeEach(^{
-        noAdTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
-
         tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
         delegate = [[STRTableViewDelegate alloc] init];
         dataSource = [[STRTableViewDataSource alloc] init];
@@ -32,8 +54,6 @@ describe(@"UITableView+STR", ^{
 
         tableView.dataSource = dataSource;
         tableView.delegate = delegate;
-        noAdTableView.dataSource = dataSource;
-        noAdTableView.delegate = delegate;
 
         [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCellReuseIdentifier"];
 
@@ -54,12 +74,10 @@ describe(@"UITableView+STR", ^{
                         presentingViewController:nil
                                         adHeight:100.0];
 
-        [noAdTableView reloadData];
         [tableView reloadData];
     });
 
     describe(@"-str_insertRowsAtIndexPaths:withAnimation:", ^{
-        __block NSInteger originalRowCount;
         __block NSArray *externalIndexPaths;
         __block NSArray *trueIndexPaths;
 
@@ -67,27 +85,18 @@ describe(@"UITableView+STR", ^{
             externalIndexPaths = @[[NSIndexPath indexPathForRow:1 inSection:0],
                            [NSIndexPath indexPathForRow:0 inSection:0],
                            [NSIndexPath indexPathForRow:3 inSection:0]];
-            trueIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
-                                     [NSIndexPath indexPathForRow:1 inSection:0],
-                                     [NSIndexPath indexPathForRow:4 inSection:0]];
+            trueIndexPaths = @[[NSIndexPath indexPathForRow:1 inSection:0],
+                               [NSIndexPath indexPathForRow:0 inSection:0],
+                               [NSIndexPath indexPathForRow:4 inSection:0]];
         });
 
-        describe(@"inserting a row in a table without an ad", ^{
-            beforeEach(^{
-                originalRowCount = noAdTableView.visibleCells.count;
-                dataSource.rowsInEachSection++;
-            });
-
-            it(@"raises an exception", ^{
-                expect(^{
-                    [noAdTableView str_insertRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
-                }).to(raise_exception);
-
-                noAdTableView.visibleCells.count should equal(originalRowCount);
-            });
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_insertRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
         });
 
-        describe(@"inserting a row in a table with an ad", ^{
+        describe(@"inserting rows in a table with an ad", ^{
+            __block NSInteger originalRowCount;
+
             beforeEach(^{
                 spy_on(tableView);
                 originalRowCount = tableView.visibleCells.count;
@@ -95,21 +104,55 @@ describe(@"UITableView+STR", ^{
                 [tableView str_insertRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
             });
 
-            it(@"inserts the row into the tableview", ^{
+            it(@"tells the table view to insert the rows at the correct index paths", ^{
+                tableView should have_received(@selector(insertRowsAtIndexPaths:withRowAnimation:)).with(trueIndexPaths, Arguments::anything);
+
                 tableView.visibleCells.count should equal(originalRowCount + 3);
             });
 
-            it(@"inserted rows are adjusted for indexpath", ^{
-                tableView should have_received(@selector(insertRowsAtIndexPaths:withRowAnimation:)).with(trueIndexPaths, Arguments::anything);
+            it(@"updates the index path of the adPlacementAdjuster", ^{
+                adPlacementAdjuster should have_received(@selector(willInsertRowsAtExternalIndexPaths:)).with(externalIndexPaths);
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:3 inSection:0]);
+            });
+        });
+    });
+
+    describe(@"-str_deleteRowsAtIndexPaths:withRowAnimation:", ^{
+        __block NSArray *externalIndexPaths;
+        __block NSArray *trueIndexPaths;
+
+        beforeEach(^{
+            externalIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
+                                   [NSIndexPath indexPathForRow:1 inSection:0]];
+            trueIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
+                               [NSIndexPath indexPathForRow:2 inSection:0]];
+        });
+
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_deleteRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
+        });
+
+        describe(@"deleting rows in a table with an ad", ^{
+            __block NSInteger originalRowCount;
+
+            beforeEach(^{
+                spy_on(tableView);
+                originalRowCount = tableView.visibleCells.count;
+                dataSource.rowsInEachSection -= 2;
+                [tableView str_deleteRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
+            });
+
+            it(@"tells the tableview to delete the correct rows", ^{
+                tableView should have_received(@selector(deleteRowsAtIndexPaths:withRowAnimation:)).with(trueIndexPaths, Arguments::anything);
+                tableView.visibleCells.count should equal(originalRowCount - 2);
             });
 
             it(@"updates the index path of the adPlacementAdjuster", ^{
-                for (NSIndexPath *path in trueIndexPaths) {
-                    adPlacementAdjuster should have_received(@selector(didInsertRowAtTrueIndexPath:)).with(path);
-                }
+                adPlacementAdjuster should have_received(@selector(willDeleteRowsAtExternalIndexPaths:)).with(externalIndexPaths);
+
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:0 inSection:0]);
             });
         });
-
     });
 });
 

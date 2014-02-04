@@ -55,6 +55,15 @@
     return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];
 }
 
+- (NSArray *)trueIndexPaths:(NSArray *)indexPaths {
+    NSMutableArray *trueIndexPaths = [NSMutableArray arrayWithCapacity:[indexPaths count]];
+    for (NSIndexPath *indexPath in indexPaths) {
+        [trueIndexPaths addObject:[self trueIndexPath:indexPath]];
+    }
+
+    return trueIndexPaths;
+}
+
 - (NSIndexPath *)initialRowForAd:(UITableView *)tableView {
     NSInteger adRowPosition = 0;
     adRowPosition = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
@@ -62,9 +71,31 @@
     return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
 }
 
-- (void)didInsertRowAtTrueIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row <= self.adIndexPath.row && indexPath.section == self.adIndexPath.section) {
-        self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + 1) inSection:self.adIndexPath.section];
+- (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths {
+    NSInteger numberOfRowsBeforeAd = 0;
+    for (NSIndexPath *path in indexPaths) {
+        if (path.row <= self.adIndexPath.row && path.section == self.adIndexPath.section) {
+            numberOfRowsBeforeAd++;
+        }
     }
+    
+    self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + numberOfRowsBeforeAd)
+                                          inSection:self.adIndexPath.section];
+    return [self trueIndexPaths:indexPaths];
 }
+
+- (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths {
+    NSInteger numberOfRowsBeforeAd = 0;
+    for (NSIndexPath *path in indexPaths) {
+        if (path.row < self.adIndexPath.row && path.section == self.adIndexPath.section) {
+            numberOfRowsBeforeAd--;
+        }
+    }
+
+    NSArray *preDeletionTrueIndexPaths = [self trueIndexPaths:indexPaths];
+    self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + numberOfRowsBeforeAd)
+                                          inSection:self.adIndexPath.section];
+    return preDeletionTrueIndexPaths;
+}
+
 @end

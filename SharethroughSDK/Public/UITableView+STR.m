@@ -16,24 +16,23 @@ extern const char *const kTableViewAdGeneratorKey;
 @implementation UITableView (STR)
 
 - (void)str_insertRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
+    NSArray *indexPathsForInsertion = [[self str_ensureAdjuster] willInsertRowsAtExternalIndexPaths:indexPaths];
+    [self insertRowsAtIndexPaths:indexPathsForInsertion withRowAnimation:rowAnimation];
+}
+
+
+- (void)str_deleteRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
+    NSArray *indexPathsForDeletion = [[self str_ensureAdjuster] willDeleteRowsAtExternalIndexPaths:indexPaths];
+    [self deleteRowsAtIndexPaths:indexPathsForDeletion withRowAnimation:rowAnimation];
+}
+
+- (STRAdPlacementAdjuster *)str_ensureAdjuster {
     STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, kTableViewAdGeneratorKey);
-
-    if (adGenerator) {
-        NSArray *sortedIndexPaths = [indexPaths sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
-            return [@(obj1.row) compare:@(obj2.row)];
-        }];
-        
-        NSMutableArray *trueIndexPaths = [NSMutableArray new];
-        for (NSIndexPath *path in sortedIndexPaths) {
-            NSIndexPath *trueIndexPath = [adGenerator.adjuster trueIndexPath:path];
-            [trueIndexPaths addObject:trueIndexPath];
-            [adGenerator.adjuster didInsertRowAtTrueIndexPath:trueIndexPath];
-        }
-
-        [self insertRowsAtIndexPaths:trueIndexPaths withRowAnimation:rowAnimation];
-    } else {
+    if (!adGenerator) {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:))];
     }
+
+    return adGenerator.adjuster;
 }
 
 @end

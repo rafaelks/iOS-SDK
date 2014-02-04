@@ -17,8 +17,10 @@
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath;
+- (NSArray *)trueIndexPaths:(NSArray *)indexPaths;
 - (NSInteger)numberOfAdsInSection:(NSInteger)section;
 
-- (void)didInsertRowAtTrueIndexPath:(NSIndexPath *)indexPath;
+- (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths;
+- (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths;
 
 @end
