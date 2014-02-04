@@ -3,7 +3,9 @@
 ## Getting started ##
 
 1. Download the SDK. The latest version can be found [here][sdk].
+
 1. Untar and add the SDK to your Xcode Project.
+
 1. Drag the Sharethrough-SDK.framework into the Frameworks section of your Project Navigator.
 ![Navigator Screenshot][nav-screenshot]
 
@@ -14,6 +16,7 @@
 ![Link to new library screenshot][project_settings-screenshot]
 
 The following list of frameworks are required:
+
 - MediaPlayer.framework
 - AdSupport.framework
 - CoreGraphics.framework
