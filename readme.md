@@ -3,26 +3,26 @@
 ## Getting started ##
 
 1. Download the SDK. The latest version can be found [here][sdk].
-1. Untar and add the SDK to your Xcode Project
-
-Drag the Sharethrough-SDK.framework into the Frameworks section of your Project Navigator.
+1. Untar and add the SDK to your Xcode Project.
+1. Drag the Sharethrough-SDK.framework into the Frameworks section of your Project Navigator.
 ![Navigator Screenshot][nav-screenshot]
 
-Choose 'Create groups for any added folders' and select 'Copy items into destination group's folder (if needed)' to copy the SDK into your app.
+1. Choose 'Create groups for any added folders' and select 'Copy items into destination group's folder (if needed)' to copy the SDK into your app.
 ![Add framework Screenshot][copy-screenshot]
 
-In your application target, select Build Phases and add a new library to link against.
+1. In your application target, select Build Phases and add a new library to link against.
 ![Link to new library screenshot][project_settings-screenshot]
 
 The following list of frameworks are required:
-- Foundation.framework
-- UIKit.framework
-- CoreGraphics.framework
-- AdSupport.framework
 - MediaPlayer.framework
+- AdSupport.framework
+- CoreGraphics.framework
+- SharethroughSDK.framework
+- UIKit.framework
+- Foundation.framework
 
 After adding the frameworks, your project's "Link Binary With Libraries" should look something like the following:
-[Linked libraries][linked-libraries-screenshot]
+![Linked libraries][linked-libraries-screenshot]
 
 ## Known Issues ##
 If you're running your iOS app on a physical iPad while connected to a computer and play a Youtube video from an ad, error messages will be displayed in the Xcode console. This is a known iPad on iOS7 issue, but do not affect your app's functionality. More information can be found [here][stack-overflow]
