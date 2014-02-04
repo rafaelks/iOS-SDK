@@ -58,12 +58,18 @@ describe(@"UITableView+STR", ^{
         [tableView reloadData];
     });
 
-    describe(@"-str_insertRowAtIndexPath:withAnimation:", ^{
+    describe(@"-str_insertRowsAtIndexPaths:withAnimation:", ^{
         __block NSInteger originalRowCount;
-        __block NSIndexPath *indexPath;
+        __block NSArray *indexPaths;
+        __block NSArray *unadjustedIndexPaths;
 
         beforeEach(^{
-            indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+            indexPaths = @[[NSIndexPath indexPathForRow:1 inSection:0],
+                           [NSIndexPath indexPathForRow:0 inSection:0],
+                           [NSIndexPath indexPathForRow:3 inSection:0]];
+            unadjustedIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
+                                     [NSIndexPath indexPathForRow:1 inSection:0],
+                                     [NSIndexPath indexPathForRow:4 inSection:0]];
         });
 
         describe(@"inserting a row in a table without an ad", ^{
@@ -74,7 +80,7 @@ describe(@"UITableView+STR", ^{
 
             it(@"raises an exception", ^{
                 expect(^{
-                    [noAdTableView str_insertRowAtIndexPath:indexPath withAnimation:UITableViewRowAnimationAutomatic];
+                    [noAdTableView str_insertRowsAtIndexPaths:indexPaths withAnimation:UITableViewRowAnimationAutomatic];
                 }).to(raise_exception);
 
                 noAdTableView.visibleCells.count should equal(originalRowCount);
@@ -85,22 +91,25 @@ describe(@"UITableView+STR", ^{
             beforeEach(^{
                 spy_on(tableView);
                 originalRowCount = tableView.visibleCells.count;
-                dataSource.rowsInEachSection++;
-                [tableView str_insertRowAtIndexPath:indexPath withAnimation:UITableViewRowAnimationAutomatic];
+                dataSource.rowsInEachSection += 3;
+                [tableView str_insertRowsAtIndexPaths:indexPaths withAnimation:UITableViewRowAnimationAutomatic];
             });
 
             it(@"inserts the row into the tableview", ^{
-                tableView.visibleCells.count should equal(originalRowCount + 1);
+                tableView.visibleCells.count should equal(originalRowCount + 3);
             });
 
-            it(@"inserted row is adjusted for indexpath", ^{
-                tableView should have_received(@selector(insertRowsAtIndexPaths:withRowAnimation:)).with(@[[NSIndexPath indexPathForRow:3 inSection:0]], Arguments::anything);
+            it(@"inserted rows are adjusted for indexpath", ^{
+                tableView should have_received(@selector(insertRowsAtIndexPaths:withRowAnimation:)).with(unadjustedIndexPaths, Arguments::anything);
             });
 
             it(@"updates the index path of the adPlacementAdjuster", ^{
-                adPlacementAdjuster should have_received(@selector(didInsertRowAtIndexPath:)).with(indexPath);
+                for (NSIndexPath *path in unadjustedIndexPaths) {
+                    adPlacementAdjuster should have_received(@selector(didInsertRowAtIndexPath:)).with(path);
+                }
             });
         });
+
     });
 });
 

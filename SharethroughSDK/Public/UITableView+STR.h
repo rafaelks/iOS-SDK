@@ -14,12 +14,12 @@
 @interface UITableView (STR)
 
 /**
- Supports inserting a single row while accounting for ad(s) provided by Sharethrough. Preferred over UITableView's built-in -insertRowsAtIndexPaths:withRowAnimation:. 
-
- @param indexPath indexPath of insertion
+ Supports inserting multiple rows while accounting for ad(s) provided by Sharethrough. Preferred over UITableView's built-in -insertRowsAtIndexPaths:withRowAnimation:
+ 
+ @param indexPaths NSArray with indexPaths to insert rows at
  @param rowAnimation type of row animation
  @warning will raise exception unless tableview has been set up with -[SharethroughSDK placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:]
  */
-- (void)str_insertRowAtIndexPath:(NSIndexPath *)indexPath withAnimation:(UITableViewRowAnimation)rowAnimation;
 
+- (void)str_insertRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation;
 @end

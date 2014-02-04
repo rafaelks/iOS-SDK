@@ -13,15 +13,24 @@
 
 extern const char *const kTableViewAdGeneratorKey;
 
-
 @implementation UITableView (STR)
 
-- (void)str_insertRowAtIndexPath:(NSIndexPath *)indexPath withAnimation:(UITableViewRowAnimation)rowAnimation {
+- (void)str_insertRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
     STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, kTableViewAdGeneratorKey);
+
     if (adGenerator) {
-        NSIndexPath *unadjustedIndexPath = [adGenerator.adjuster unadjustedIndexPath:indexPath];
-        [self insertRowsAtIndexPaths:@[unadjustedIndexPath] withRowAnimation:rowAnimation];
-        [adGenerator.adjuster didInsertRowAtIndexPath:indexPath];
+        NSArray *sortedIndexPaths = [indexPaths sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
+            return [@(obj1.row) compare:@(obj2.row)];
+        }];
+        
+        NSMutableArray *unadjustedIndexPaths = [NSMutableArray new];
+        for (NSIndexPath *path in sortedIndexPaths) {
+            NSIndexPath *unadjustedIndexPath = [adGenerator.adjuster unadjustedIndexPath:path];
+            [unadjustedIndexPaths addObject:unadjustedIndexPath];
+            [adGenerator.adjuster didInsertRowAtIndexPath:unadjustedIndexPath];
+        }
+
+        [self insertRowsAtIndexPaths:unadjustedIndexPaths withRowAnimation:rowAnimation];
     } else {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:))];
     }
