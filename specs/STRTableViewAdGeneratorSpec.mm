@@ -78,7 +78,7 @@ describe(@"STRTableViewAdGenerator", ^{
 
             beforeEach(^{
                 dataSource = [STRTableViewDataSource new];
-                dataSource.rowsInEachSection = 2;
+                dataSource.rowsForEachSection = @[@2];
                 tableView.dataSource = dataSource;
 
                 [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
@@ -115,7 +115,7 @@ describe(@"STRTableViewAdGenerator", ^{
             describe(@"and the original data source reports there is more than one section", ^{
                 beforeEach(^{
                     dataSource.numberOfSections = 2;
-                    dataSource.rowsInEachSection = 1;
+                    dataSource.rowsForEachSection = @[@1, @1];
 
                     [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
                     [tableView layoutIfNeeded];

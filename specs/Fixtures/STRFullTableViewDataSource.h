@@ -12,6 +12,5 @@
 @interface STRFullTableViewDataSource : STRTableViewDataSource<UITableViewDataSource>
 
 @property (nonatomic, assign) NSInteger numberOfSections;
-@property (nonatomic, assign) NSInteger rowsInEachSection;
 
 @end

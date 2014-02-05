@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong, readonly) NSIndexPath *adIndexPath;
 
-+ (instancetype)adjusterWithInitialTableView:(UITableView *)tableView;
++ (instancetype)adjusterWithInitialAdIndexPath:(NSIndexPath *)adIndexPath;
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath;
@@ -22,5 +22,10 @@
 
 - (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths;
 - (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths;
+- (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath;
+
+- (void)willInsertSections:(NSIndexSet *)sections;
+- (void)willDeleteSections:(NSIndexSet *)sections;
+- (void)willMoveSection:(NSInteger)section toSection:(NSInteger)newSection;
 
 @end

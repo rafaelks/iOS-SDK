@@ -1,6 +1,7 @@
 #import "UITableView+STR.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRTableViewDataSource.h"
+#import "STRFullTableViewDataSource.h"
 #import "STRTableViewDelegate.h"
 #import "STRTableViewAdGenerator.h"
 #import <objc/runtime.h>
@@ -43,21 +44,21 @@ void(^itThrowsIfTableWasntConfigured)(TriggerBlock) = ^(TriggerBlock trigger){
 describe(@"UITableView+STR", ^{
     __block UITableView *tableView;
     __block STRTableViewDelegate *delegate;
-    __block STRTableViewDataSource *dataSource;
+    __block STRFullTableViewDataSource *dataSource;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
 
     beforeEach(^{
         tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
         delegate = [[STRTableViewDelegate alloc] init];
-        dataSource = [[STRTableViewDataSource alloc] init];
-        dataSource.rowsInEachSection = 3;
+        dataSource = [[STRFullTableViewDataSource alloc] init];
+        dataSource.rowsForEachSection = @[@3, @3];
 
         tableView.dataSource = dataSource;
         tableView.delegate = delegate;
 
         [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCellReuseIdentifier"];
 
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialTableView:tableView];
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
         spy_on(adPlacementAdjuster);
 
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -65,7 +66,7 @@ describe(@"UITableView+STR", ^{
         [injector bind:[STRAdGenerator class] toInstance:nice_fake_for([STRAdGenerator class])];
 
         spy_on([STRAdPlacementAdjuster class]);
-        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialTableView:)).and_return(adPlacementAdjuster);
+        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
         STRTableViewAdGenerator *tableViewAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
         [tableViewAdGenerator placeAdInTableView:tableView
@@ -82,12 +83,12 @@ describe(@"UITableView+STR", ^{
         __block NSArray *trueIndexPaths;
 
         beforeEach(^{
-            externalIndexPaths = @[[NSIndexPath indexPathForRow:1 inSection:0],
-                           [NSIndexPath indexPathForRow:0 inSection:0],
-                           [NSIndexPath indexPathForRow:3 inSection:0]];
-            trueIndexPaths = @[[NSIndexPath indexPathForRow:1 inSection:0],
-                               [NSIndexPath indexPathForRow:0 inSection:0],
-                               [NSIndexPath indexPathForRow:4 inSection:0]];
+            externalIndexPaths = @[[NSIndexPath indexPathForRow:1 inSection:1],
+                           [NSIndexPath indexPathForRow:0 inSection:1],
+                           [NSIndexPath indexPathForRow:3 inSection:1]];
+            trueIndexPaths = @[[NSIndexPath indexPathForRow:1 inSection:1],
+                               [NSIndexPath indexPathForRow:0 inSection:1],
+                               [NSIndexPath indexPathForRow:4 inSection:1]];
         });
 
         itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
@@ -100,7 +101,7 @@ describe(@"UITableView+STR", ^{
             beforeEach(^{
                 spy_on(tableView);
                 originalRowCount = tableView.visibleCells.count;
-                dataSource.rowsInEachSection += 3;
+                dataSource.rowsForEachSection = @[@3, @6];
                 [tableView str_insertRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
             });
 
@@ -112,7 +113,7 @@ describe(@"UITableView+STR", ^{
 
             it(@"updates the index path of the adPlacementAdjuster", ^{
                 adPlacementAdjuster should have_received(@selector(willInsertRowsAtExternalIndexPaths:)).with(externalIndexPaths);
-                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:3 inSection:0]);
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:3 inSection:1]);
             });
         });
     });
@@ -122,10 +123,10 @@ describe(@"UITableView+STR", ^{
         __block NSArray *trueIndexPaths;
 
         beforeEach(^{
-            externalIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
-                                   [NSIndexPath indexPathForRow:1 inSection:0]];
-            trueIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
-                               [NSIndexPath indexPathForRow:2 inSection:0]];
+            externalIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:1],
+                                   [NSIndexPath indexPathForRow:1 inSection:1]];
+            trueIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:1],
+                               [NSIndexPath indexPathForRow:2 inSection:1]];
         });
 
         itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
@@ -138,7 +139,7 @@ describe(@"UITableView+STR", ^{
             beforeEach(^{
                 spy_on(tableView);
                 originalRowCount = tableView.visibleCells.count;
-                dataSource.rowsInEachSection -= 2;
+                dataSource.rowsForEachSection = @[@3, @1];
                 [tableView str_deleteRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
             });
 
@@ -150,7 +151,129 @@ describe(@"UITableView+STR", ^{
             it(@"updates the index path of the adPlacementAdjuster", ^{
                 adPlacementAdjuster should have_received(@selector(willDeleteRowsAtExternalIndexPaths:)).with(externalIndexPaths);
 
-                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:0 inSection:1]);
+            });
+        });
+    });
+
+    describe(@"-str_moveRowAtIndexPath:toIndexPath:", ^{
+        __block NSIndexPath *externalStartIndexPath;
+        __block NSIndexPath *externalEndIndexPath;
+
+        beforeEach(^{
+            externalStartIndexPath = [NSIndexPath indexPathForRow:2 inSection:1];
+            externalEndIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+        });
+
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_moveRowAtIndexPath:externalStartIndexPath toIndexPath:externalEndIndexPath];
+        });
+
+        describe(@"moving rows in a table with an ad", ^{
+            __block NSInteger originalRowCount;
+
+            beforeEach(^{
+                spy_on(tableView);
+                originalRowCount = tableView.visibleCells.count;
+                [tableView str_moveRowAtIndexPath:externalStartIndexPath toIndexPath:externalEndIndexPath];
+            });
+
+            it(@"tells the tableview to delete the correct rows", ^{
+                tableView should have_received(@selector(moveRowAtIndexPath:toIndexPath:)).with([NSIndexPath indexPathForRow:3 inSection:1], [NSIndexPath indexPathForRow:1 inSection:1]);
+                tableView.visibleCells.count should equal(originalRowCount);
+            });
+
+            it(@"updates the index path of the adPlacementAdjuster", ^{
+                adPlacementAdjuster should have_received(@selector(willMoveRowAtExternalIndexPath:toExternalIndexPath:)).with(externalStartIndexPath, externalEndIndexPath);
+
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+            });
+        });
+    });
+
+    describe(@"-str_insertSections:withRowAnimation:", ^{
+        __block NSIndexSet *sectionsToInsert;
+
+        beforeEach(^{
+            spy_on(tableView);
+            sectionsToInsert = [NSIndexSet indexSetWithIndex:0];
+        });
+
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_insertSections:sectionsToInsert withRowAnimation:UITableViewRowAnimationNone];
+        });
+
+        describe(@"deleting sections in a table with an ad", ^{
+            beforeEach(^{
+                dataSource.numberOfSections = 3;
+                dataSource.rowsForEachSection = @[@3, @3, @3];
+                [tableView str_insertSections:sectionsToInsert withRowAnimation:UITableViewRowAnimationNone];
+            });
+
+            it(@"passes the sections through to the table view's original method", ^{
+                tableView should have_received(@selector(insertSections:withRowAnimation:)).with([NSIndexSet indexSetWithIndex:0], UITableViewRowAnimationNone);
+            });
+
+            it(@"updates the ad's index path if necessary", ^{
+                adPlacementAdjuster should have_received(@selector(willInsertSections:)).with(sectionsToInsert);
+
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:2]);
+            });
+        });
+    });
+
+    describe(@"-str_deleteSections:withRowAnimation:", ^{
+        __block NSIndexSet *sectionsToDelete;
+
+        beforeEach(^{
+            spy_on(tableView);
+            sectionsToDelete = [NSIndexSet indexSetWithIndex:0];
+        });
+
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_deleteSections:sectionsToDelete withRowAnimation:UITableViewRowAnimationNone];
+        });
+
+        describe(@"deleting sections in a table with an ad", ^{
+            beforeEach(^{
+                dataSource.numberOfSections = 1;
+                [tableView str_deleteSections:sectionsToDelete withRowAnimation:UITableViewRowAnimationNone];
+            });
+
+            it(@"passes the sections through to the table view's original method", ^{
+                tableView should have_received(@selector(deleteSections:withRowAnimation:)).with([NSIndexSet indexSetWithIndex:0], UITableViewRowAnimationNone);
+            });
+
+            it(@"updates the ad's index path if necessary", ^{
+                adPlacementAdjuster should have_received(@selector(willDeleteSections:)).with(sectionsToDelete);
+
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+        });
+    });
+
+    describe(@"-str_moveSection:toSection:", ^{
+        beforeEach(^{
+            spy_on(tableView);
+        });
+
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_moveSection:1 toSection:0];
+        });
+
+        describe(@"moving sections in a table with an ad", ^{
+            beforeEach(^{
+                [tableView str_moveSection:1 toSection:0];
+            });
+
+            it(@"passes the sections through to the table view's original method", ^{
+                tableView should have_received(@selector(moveSection:toSection:)).with(1, 0);
+            });
+
+            it(@"updates the ad's index path if necessary", ^{
+                adPlacementAdjuster should have_received(@selector(willMoveSection:toSection:)).with(1, 0);
+
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
             });
         });
     });

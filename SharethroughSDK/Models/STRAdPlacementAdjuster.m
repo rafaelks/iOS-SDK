@@ -16,9 +16,9 @@
 
 @implementation STRAdPlacementAdjuster
 
-+ (instancetype)adjusterWithInitialTableView:(UITableView *)tableView {
++ (instancetype)adjusterWithInitialAdIndexPath:(NSIndexPath *)adIndexPath {
     STRAdPlacementAdjuster *adjuster = [self new];
-    adjuster.adIndexPath = [adjuster initialRowForAd:tableView];
+    adjuster.adIndexPath = adIndexPath;
     return adjuster;
 }
 
@@ -27,7 +27,7 @@
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section {
-    if (section == 0) {
+    if (section == self.adIndexPath.section) {
         return 1;
     }
     return 0;
@@ -50,7 +50,6 @@
     if (indexPath.section != self.adIndexPath.section) {
         return indexPath;
     }
-
     NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
     return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];
 }
@@ -62,13 +61,6 @@
     }
 
     return trueIndexPaths;
-}
-
-- (NSIndexPath *)initialRowForAd:(UITableView *)tableView {
-    NSInteger adRowPosition = 0;
-    adRowPosition = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
-
-    return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
 }
 
 - (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths {
@@ -96,6 +88,49 @@
     self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + numberOfRowsBeforeAd)
                                           inSection:self.adIndexPath.section];
     return preDeletionTrueIndexPaths;
+}
+
+- (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath {
+    NSArray *deleteIndexPaths = [self willDeleteRowsAtExternalIndexPaths:@[indexPath]];
+    NSArray *insertIndexPaths = [self willInsertRowsAtExternalIndexPaths:@[newIndexPath]];
+
+    return @[[deleteIndexPaths firstObject], [insertIndexPaths firstObject]];
+}
+
+- (void)willInsertSections:(NSIndexSet *)sections {
+    NSInteger section = self.adIndexPath.section + [self numberOfSectionsChangingWithAdSection:sections];
+    self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:section];
+}
+
+- (void)willDeleteSections:(NSIndexSet *)sections {
+    if ([sections containsIndex:self.adIndexPath.section]) {
+        self.adIndexPath = [NSIndexPath indexPathForRow:-1 inSection:-1];
+        return;
+    }
+
+    NSInteger section = self.adIndexPath.section - [self numberOfSectionsChangingWithAdSection:sections];
+    self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:section];
+}
+
+- (void)willMoveSection:(NSInteger)section toSection:(NSInteger)newSection {
+    if (section == self.adIndexPath.section) {
+        self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:newSection];
+        return;
+    }
+
+    [self willDeleteSections:[NSIndexSet indexSetWithIndex:section]];
+    [self willInsertSections:[NSIndexSet indexSetWithIndex:newSection]];
+}
+
+#pragma mark - Private
+
+- (NSInteger)numberOfSectionsChangingWithAdSection:(NSIndexSet *)sections {
+    if (self.adIndexPath.section == -1) {
+        return 0;
+    }
+
+    NSRange sectionsBeforeAd = NSMakeRange(0, self.adIndexPath.section + 1);
+    return [sections countOfIndexesInRange:sectionsBeforeAd];
 }
 
 @end
