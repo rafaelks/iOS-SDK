@@ -1,4 +1,10 @@
-# Getting started Sharethrough iOS-SDK #
+# Sharethrough iOS-SDK #
+## Getting Started ##
+* [Download SDK][sdk] The latest version of the SDK.
+* [Sample App][sample-app] Sample iOS app which utilizes the SDK.
+* [View SDK Documentation][sdk-docs]
+
+## Setup the SDK ##
 
 1. Download the SDK. The latest version can be found [here][sdk].
 
@@ -45,3 +51,5 @@ and then restarting Xcode to pick up the new docset.
 [project_settings-screenshot]: documentation/getting_started/project_settings_screenshot.png
 [docset]: http://s3.amazonaws.com/iOS-SDK/com.sharethrough.Sharethrough-SDK.docset.tar
 [stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video
+[sample-app]: https://github.com/sharethrough/iOS-Sample-App
+[sdk-docs]: iOS/index.html
