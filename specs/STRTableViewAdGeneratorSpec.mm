@@ -97,7 +97,7 @@ describe(@"STRTableViewAdGenerator", ^{
                 STRTableViewCell *adCell = (STRTableViewCell *) tableView.visibleCells[1];
                 adCell should be_instance_of([STRTableViewCell class]);
 
-                adGenerator should have_received(@selector(placeAdInView:placementKey:presentingViewController:)).with(adCell, @"placementKey", presentingViewController);
+                adGenerator should have_received(@selector(placeAdInView:placementKey:presentingViewController:delegate:)).with(adCell, @"placementKey", presentingViewController, nil);
 
                 contentCell = tableView.visibleCells[2];
                 contentCell.textLabel.text should equal(@"row: 1, section: 0");

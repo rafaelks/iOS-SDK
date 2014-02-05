@@ -15,6 +15,7 @@
 #import "STRBundleSettings.h"
 #import "STRBeaconService.h"
 #import <objc/runtime.h>
+#import "STRAdViewDelegate.h"
 
 char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
@@ -49,7 +50,7 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
     return self;
 }
 
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {
     [self prepareForNewAd:view];
 
     objc_setAssociatedObject(view, STRAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -83,10 +84,19 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
         [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
         self.adVisibleTimer = timer;
-        
+
+        if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
+            [delegate adView:view didFetchAdForPlacementKey:placementKey];
+        }
+
         return ad;
     } error:^id(NSError *error) {
         [self.spinner removeFromSuperview];
+
+        if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
+            [delegate adView:view didFailToFetchAdForPlacementKey:placementKey];
+            [view setNeedsLayout];
+        }
         return error;
     }];
 

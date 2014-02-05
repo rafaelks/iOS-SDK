@@ -34,9 +34,9 @@
     return sharedObject;
 }
 
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-    [generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController];
+    [generator placeAdInView:view placementKey:placementKey presentingViewController:presentingViewController delegate:delegate];
 }
 
 - (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight {

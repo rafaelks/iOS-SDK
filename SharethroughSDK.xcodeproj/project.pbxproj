@@ -119,6 +119,7 @@
 		AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
 		AE9C463B189C74B0001B407A /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
 		AE9C463D189C7776001B407A /* STRVideoControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */; };
+		AEB2F43C18A2B25600F415EE /* STRAdViewDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */; };
 		AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */; };
@@ -191,6 +192,7 @@
 				AE9C4614189C1B8D001B407A /* vine-logo.png in Copy Header Files */,
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
 				AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */,
+				AEB2F43C18A2B25600F415EE /* STRAdViewDelegate.h in Copy Header Files */,
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 				AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */,
 				AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */,
@@ -313,6 +315,7 @@
 		AE9C4639189C74B0001B407A /* STRAdFixtures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdFixtures.h; sourceTree = "<group>"; };
 		AE9C463A189C74B0001B407A /* STRAdFixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdFixtures.m; sourceTree = "<group>"; };
 		AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRVideoControllerSpec.mm; sourceTree = "<group>"; };
+		AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdViewDelegate.h; sourceTree = "<group>"; };
 		AEBAEDC01898227200F02C5A /* STRBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRBeaconService.h; sourceTree = "<group>"; };
 		AEBAEDC11898227200F02C5A /* STRBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRBeaconService.m; sourceTree = "<group>"; };
 		AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRBeaconServiceSpec.mm; sourceTree = "<group>"; };
@@ -412,6 +415,7 @@
 				AE022DEF188E011100D02568 /* SharethroughSDK.h */,
 				AE022DF0188E011100D02568 /* SharethroughSDK.m */,
 				AE022DF1188E011100D02568 /* STRAdView.h */,
+				AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */,
 				AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */,
 				AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */,
 			);

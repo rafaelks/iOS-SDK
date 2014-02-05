@@ -9,6 +9,7 @@
 #import <objc/runtime.h>
 #import "STRInjector.h"
 #import "STRAppModule.h"
+#import "STRAdViewDelegate.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -55,6 +56,7 @@ describe(@"STRAdGenerator", ^{
         __block UIActivityIndicatorView *spinner;
         __block UIViewController *presentingViewController;
         __block UIWindow *window;
+        __block id<STRAdViewDelegate> delegate;
 
         beforeEach(^{
             view = [STRFullAdView new];
@@ -68,7 +70,9 @@ describe(@"STRAdGenerator", ^{
             adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);
             beaconService stub_method(@selector(fireImpressionRequestForPlacementKey:));
 
-            [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:presentingViewController];
+            delegate = nice_fake_for(@protocol(STRAdViewDelegate));
+
+            [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:presentingViewController delegate:delegate];
             spinner = (UIActivityIndicatorView *) [view.subviews lastObject];
         });
 
@@ -92,6 +96,54 @@ describe(@"STRAdGenerator", ^{
 
         it(@"makes a network request", ^{
             adService should have_received(@selector(fetchAdForPlacementKey:)).with(@"placementKey");
+        });
+
+        describe(@"follows up with its delegate", ^{
+            describe(@"on success", ^{
+                subjectAction(^{
+                    [deferred resolveWithValue:ad];
+                });
+
+                context(@"when the delegate has a success callback", ^{
+                    it(@"tells the delegate", ^{
+                        delegate should have_received(@selector(adView:didFetchAdForPlacementKey:))
+                        .with(view, @"placementKey");
+                    });
+                });
+
+                context(@"when the delegate does not have a success callback", ^{
+                    beforeEach(^{
+                        delegate reject_method(@selector(adView:didFetchAdForPlacementKey:));
+                    });
+
+                    it(@"does not try to tell the delegate", ^{
+                        delegate should_not have_received(@selector(adView:didFetchAdForPlacementKey:));
+                    });
+                });
+            });
+
+            describe(@"on failure", ^{
+                subjectAction(^{
+                    [deferred rejectWithError:nil];
+                });
+
+                context(@"when the delegate has an error callback", ^{
+                    it(@"tells the delegate about the error", ^{
+                        delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:))
+                        .with(view, @"placementKey");
+                    });
+                });
+
+                context(@"when the delegate does not have an error callback", ^{
+                    beforeEach(^{
+                        delegate reject_method(@selector(adView:didFailToFetchAdForPlacementKey:));
+                    });
+
+                    it(@"does not try to call the delegate", ^{
+                        delegate should_not have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+                    });
+                });
+            });
         });
 
         describe(@"when the ad has fetched successfully", ^{
@@ -308,7 +360,7 @@ describe(@"STRAdGenerator", ^{
                 newAdService stub_method(@selector(fetchAdForPlacementKey:)).and_return(newDeferred.promise);
 
                 secondGenerator = [[STRAdGenerator alloc] initWithAdService:newAdService beaconService:beaconService runLoop:fakeRunLoop injector:injector];
-                [secondGenerator placeAdInView:view placementKey:@"key" presentingViewController:presentingViewController];
+                [secondGenerator placeAdInView:view placementKey:@"key" presentingViewController:presentingViewController delegate:nil];
 
                 [newDeferred resolveWithValue:ad];
             });
@@ -337,7 +389,7 @@ describe(@"STRAdGenerator", ^{
             deferred = [STRDeferred defer];
 
             adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);
-            [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:nil];
+            [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:nil delegate:nil];
         });
 
         it(@"does not try to include an ad description", ^{

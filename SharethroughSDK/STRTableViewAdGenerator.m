@@ -98,7 +98,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController];
+    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
 
     return adCell;
 

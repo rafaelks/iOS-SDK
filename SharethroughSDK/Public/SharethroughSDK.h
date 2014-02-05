@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "STRAdView.h"
+#import "STRAdViewDelegate.h"
 
 /**
  SharethroughSDK is the main interface to placing ads. There is a shared instance that can be accessed by [SharethroughSDK sharedInstance]. It can be used to place ads, most commonly through placeAdInView:placementKey:.
@@ -24,9 +25,10 @@
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
+ @param delegate Delegate for handling completion. This can be nil if you do not wish to customize success or failure behavior.
  @warning If you are placing the ad in a view returned by UITableView/UICollectionView's dequeue method (or any similar reuse mechanism), it is important that you register separate reuse identifier than your normal content cells. Using the same reuse identifier will result in artifacts left behind on content cells (such as ad interactivity behavior).
   */
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController;
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate;
 
 /**
  If your app is using a basic UITableView that you want to present ads within, you may alternately use the following method to insert an ad. It is required that the reuse identifier be registered with the UITableView to return a UITableViewCell (or subclass) that conforms to the STRAdView protocol. This reuse identifier should be separate from the reuse identifier used for your content cells, even if they are registered with the same class or xib. A good place to call this function would be -viewDidLoad.
