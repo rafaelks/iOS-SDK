@@ -1,12 +1,12 @@
 #import "STRTableViewAdGenerator.h"
 #import "SharethroughSDK.h"
-#import "STRFullTableViewDataSource.h"
-#import "STRTableViewDataSource.h"
+#import <objc/runtime.h>
 #import "STRInjector.h"
 #import "STRAppModule.h"
-#import "STRTableViewCell.h"
 #import "STRAdGenerator.h"
-#import <objc/runtime.h>
+#import "STRFullTableViewDataSource.h"
+#import "STRTableViewDataSource.h"
+#import "STRTableViewCell.h"
 #import "STRTableViewDelegateProxy.h"
 #import "STRTableViewDelegate.h"
 

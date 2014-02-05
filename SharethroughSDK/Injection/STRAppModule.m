@@ -9,6 +9,7 @@
 #import "STRTableViewAdGenerator.h"
 #import "STRAdCache.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "STRCollectionViewAdGenerator.h"
 
 
 @implementation STRAppModule
@@ -55,6 +56,11 @@
     [injector bind:[STRTableViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRTableViewAdGenerator alloc] initWithInjector:injector];
     }];
+
+    [injector bind:[STRCollectionViewAdGenerator class] toBlock:^id(STRInjector *injector) {
+        return [[STRCollectionViewAdGenerator alloc] initWithInjector:injector];
+    }];
+
 }
 
 @end

@@ -66,8 +66,8 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
         return [self adCellForTableView:tableView];
     }
 
-    NSIndexPath *adjustedIndexPath = [self.adjuster externalIndexPath:indexPath];
-    return [self.originalDataSource tableView:tableView cellForRowAtIndexPath:adjustedIndexPath];
+    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
+    return [self.originalDataSource tableView:tableView cellForRowAtIndexPath:externalIndexPath];
 }
 
 #pragma mark - Forwarding
