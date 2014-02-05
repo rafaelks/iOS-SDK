@@ -26,6 +26,13 @@ extern const char *const STRTableViewAdGeneratorKey;
     [self deleteRowsAtIndexPaths:indexPathsForDeletion withRowAnimation:rowAnimation];
 }
 
+- (void)str_moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+
+    NSArray *indexPaths = [adjuster willMoveRowAtExternalIndexPath:indexPath toExternalIndexPath:newIndexPath];
+    [self moveRowAtIndexPath:[indexPaths firstObject] toIndexPath:[indexPaths lastObject]];
+}
+
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
     STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRTableViewAdGeneratorKey);
     if (!adGenerator) {

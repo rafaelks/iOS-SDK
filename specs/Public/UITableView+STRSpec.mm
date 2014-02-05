@@ -154,6 +154,41 @@ describe(@"UITableView+STR", ^{
             });
         });
     });
+
+    describe(@"-str_moveRowAtIndexPath:toIndexPath:", ^{
+        __block NSIndexPath *externalStartIndexPath;
+        __block NSIndexPath *externalEndIndexPath;
+
+        beforeEach(^{
+            externalStartIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+            externalEndIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+        });
+
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_moveRowAtIndexPath:externalStartIndexPath toIndexPath:externalEndIndexPath];
+        });
+
+        describe(@"moving rows in a table with an ad", ^{
+            __block NSInteger originalRowCount;
+
+            beforeEach(^{
+                spy_on(tableView);
+                originalRowCount = tableView.visibleCells.count;
+                [tableView str_moveRowAtIndexPath:externalStartIndexPath toIndexPath:externalEndIndexPath];
+            });
+
+            it(@"tells the tableview to delete the correct rows", ^{
+                tableView should have_received(@selector(moveRowAtIndexPath:toIndexPath:)).with([NSIndexPath indexPathForRow:3 inSection:0], [NSIndexPath indexPathForRow:1 inSection:0]);
+                tableView.visibleCells.count should equal(originalRowCount);
+            });
+
+            it(@"updates the index path of the adPlacementAdjuster", ^{
+                adPlacementAdjuster should have_received(@selector(willMoveRowAtExternalIndexPath:toExternalIndexPath:)).with(externalStartIndexPath, externalEndIndexPath);
+
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+            });
+        });
+    });
 });
 
 SPEC_END

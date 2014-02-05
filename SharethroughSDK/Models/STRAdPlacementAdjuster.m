@@ -50,7 +50,6 @@
     if (indexPath.section != self.adIndexPath.section) {
         return indexPath;
     }
-
     NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
     return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];
 }
@@ -96,6 +95,13 @@
     self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + numberOfRowsBeforeAd)
                                           inSection:self.adIndexPath.section];
     return preDeletionTrueIndexPaths;
+}
+
+- (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath {
+    NSArray *deleteIndexPaths = [self willDeleteRowsAtExternalIndexPaths:@[indexPath]];
+    NSArray *insertIndexPaths = [self willInsertRowsAtExternalIndexPaths:@[newIndexPath]];
+
+    return @[[deleteIndexPaths firstObject], [insertIndexPaths firstObject]];
 }
 
 @end

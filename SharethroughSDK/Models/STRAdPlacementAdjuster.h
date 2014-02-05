@@ -22,5 +22,6 @@
 
 - (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths;
 - (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths;
+- (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath;
 
 @end
