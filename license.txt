@@ -1,3 +1,4 @@
 Licenses uses:
 
 - MIT License (Cedar, PivotalCoreKit, KSDeferred)
+- BSD License (appledoc)
