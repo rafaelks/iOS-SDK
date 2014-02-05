@@ -1,6 +1,4 @@
-# Sharethrough iOS-SDK #
-
-## Getting started ##
+# Getting started Sharethrough iOS-SDK #
 
 1. Download the SDK. The latest version can be found [here][sdk].
 
