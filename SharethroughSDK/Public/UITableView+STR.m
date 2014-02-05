@@ -11,7 +11,7 @@
 #import "STRAdPlacementAdjuster.h"
 #import "STRTableViewAdGenerator.h"
 
-extern const char *const kTableViewAdGeneratorKey;
+extern const char *const STRTableViewAdGeneratorKey;
 
 @implementation UITableView (STR)
 
@@ -27,7 +27,7 @@ extern const char *const kTableViewAdGeneratorKey;
 }
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
-    STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, kTableViewAdGeneratorKey);
+    STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRTableViewAdGeneratorKey);
     if (!adGenerator) {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:))];
     }

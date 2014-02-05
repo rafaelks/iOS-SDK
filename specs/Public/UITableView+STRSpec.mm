@@ -11,7 +11,7 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-extern const char *const kTableViewAdGeneratorKey;
+extern const char *const STRTableViewAdGeneratorKey;
 
 SPEC_BEGIN(UITableViewSpec)
 

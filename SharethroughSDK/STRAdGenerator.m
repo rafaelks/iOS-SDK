@@ -16,7 +16,7 @@
 #import "STRBeaconService.h"
 #import <objc/runtime.h>
 
-char const * const kAdGeneratorKey = "kAdGeneratorKey";
+char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
 @interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
 
@@ -52,7 +52,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
     [self prepareForNewAd:view];
 
-    objc_setAssociatedObject(view, kAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(view, STRAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.presentingViewController = presentingViewController;
     [self addSpinnerToView:view];
 
@@ -143,7 +143,7 @@ char const * const kAdGeneratorKey = "kAdGeneratorKey";
 #pragma mark - Private
 
 - (void)prepareForNewAd:(UIView<STRAdView> *)view {
-    STRAdGenerator *oldGenerator = objc_getAssociatedObject(view, kAdGeneratorKey);
+    STRAdGenerator *oldGenerator = objc_getAssociatedObject(view, STRAdGeneratorKey);
     [oldGenerator.adVisibleTimer invalidate];
     [view removeGestureRecognizer:oldGenerator.tapRecognizer];
 

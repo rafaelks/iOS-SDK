@@ -13,7 +13,7 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-extern const char *const kTableViewAdGeneratorKey;
+extern const char *const STRTableViewAdGeneratorKey;
 
 SPEC_BEGIN(STRTableViewAdGeneratorSpec)
 
@@ -70,7 +70,7 @@ describe(@"STRTableViewAdGenerator", ^{
             [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
             [tableView layoutIfNeeded];
 
-            objc_getAssociatedObject(tableView, kTableViewAdGeneratorKey) should be_same_instance_as(tableViewAdGenerator);
+            objc_getAssociatedObject(tableView, STRTableViewAdGeneratorKey) should be_same_instance_as(tableViewAdGenerator);
         });
 
         describe(@"when the data source only implements required methods", ^{

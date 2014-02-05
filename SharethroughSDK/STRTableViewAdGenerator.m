@@ -14,7 +14,7 @@
 #import "STRTableViewDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
 
-const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
+const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
 
 @interface STRTableViewAdGenerator ()<UITableViewDataSource>
 
@@ -52,7 +52,7 @@ const char *const kTableViewAdGeneratorKey = "kTableViewAdGeneratorKey";
     self.proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:tableView.delegate adPlacementAdjuster:adjuster adHeight:adHeight];
     tableView.delegate = self.proxy;
 
-    objc_setAssociatedObject(tableView, kTableViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(tableView, STRTableViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - <UITableViewDataSource>

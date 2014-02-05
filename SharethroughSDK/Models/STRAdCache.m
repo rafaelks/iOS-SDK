@@ -10,7 +10,7 @@
 #import "STRAdvertisement.h"
 #import "STRDateProvider.h"
 
-const NSInteger kAdCacheTimeoutInSeconds = 120;
+const NSInteger STRAdCacheTimeoutInSeconds = 120;
 
 @interface STRAdCache ()
 
@@ -56,7 +56,7 @@ const NSInteger kAdCacheTimeoutInSeconds = 120;
     NSDate *now = [self.dateProvider now];
     NSTimeInterval timeInterval = [now timeIntervalSinceDate:cacheDate];
 
-    if (timeInterval == NAN || timeInterval > kAdCacheTimeoutInSeconds) {
+    if (timeInterval == NAN || timeInterval > STRAdCacheTimeoutInSeconds) {
         [self.cachedTimestamps removeObjectForKey:placementKey];
         [self.cachedAds removeObjectForKey:placementKey];
         return YES;

@@ -73,7 +73,7 @@ describe(@"STRAdGenerator", ^{
         });
 
         it(@"stores the itself (the generator) as an associated object of the view", ^{
-            objc_getAssociatedObject(view, kAdGeneratorKey) should be_same_instance_as(generator);
+            objc_getAssociatedObject(view, STRAdGeneratorKey) should be_same_instance_as(generator);
         });
 
         it(@"fires an impressionRequest to the beacon", ^{
