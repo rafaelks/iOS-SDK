@@ -13,14 +13,14 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.rowsInEachSection = 1;
+        self.rowsForEachSection = @[@1];
     }
 
     return self;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.rowsInEachSection;
+    return [self.rowsForEachSection[section] integerValue];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

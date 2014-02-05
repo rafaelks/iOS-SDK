@@ -27,11 +27,26 @@ extern const char *const STRTableViewAdGeneratorKey;
 }
 
 - (void)str_moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-
-    NSArray *indexPaths = [adjuster willMoveRowAtExternalIndexPath:indexPath toExternalIndexPath:newIndexPath];
+    NSArray *indexPaths = [[self str_ensureAdjuster] willMoveRowAtExternalIndexPath:indexPath toExternalIndexPath:newIndexPath];
     [self moveRowAtIndexPath:[indexPaths firstObject] toIndexPath:[indexPaths lastObject]];
 }
+
+- (void)str_insertSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation {
+    [[self str_ensureAdjuster] willInsertSections:sections];
+    [self insertSections:sections withRowAnimation:animation];
+}
+
+- (void)str_deleteSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation {
+    [[self str_ensureAdjuster] willDeleteSections:sections];
+    [self deleteSections:sections withRowAnimation:animation];
+}
+
+- (void)str_moveSection:(NSInteger)section toSection:(NSInteger)newSection {
+    [[self str_ensureAdjuster] willMoveSection:section toSection:newSection];
+    [self moveSection:section toSection:newSection];
+}
+
+#pragma mark - Private
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
     STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRTableViewAdGeneratorKey);

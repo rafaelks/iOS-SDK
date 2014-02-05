@@ -14,6 +14,7 @@
     self = [super init];
     if (self) {
         self.numberOfSections = 2;
+        self.rowsForEachSection = @[@1, @1];
     }
 
     return self;

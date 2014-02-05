@@ -9,9 +9,7 @@ describe(@"STRAdPlacementAdjuster", ^{
     __block STRAdPlacementAdjuster *adjuster;
 
     beforeEach(^{
-        UITableView *tableView = nice_fake_for([UITableView class]);
-        tableView stub_method(@selector(numberOfRowsInSection:)).with(0).and_return(2);
-        adjuster = [STRAdPlacementAdjuster adjusterWithInitialTableView:tableView];
+        adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     });
 
     describe(@"-isAdAtIndexPath:", ^{
@@ -119,10 +117,7 @@ describe(@"STRAdPlacementAdjuster", ^{
         __block STRAdPlacementAdjuster *multiSectionAdjuster;
 
         beforeEach(^{
-            UITableView *tableView = nice_fake_for([UITableView class]);
-            tableView stub_method(@selector(numberOfSections)).and_return(3);
-            tableView stub_method(@selector(numberOfRowsInSection:)).and_return(2);
-            multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialTableView:tableView];
+            multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
         });
 
         sharedExamplesFor(@"moving a row", ^(NSDictionary *sharedContext) {
@@ -234,8 +229,7 @@ describe(@"STRAdPlacementAdjuster", ^{
                     sharedContext[@"externalFinalIndex"] = [NSIndexPath indexPathForRow:0 inSection:0];
                     sharedContext[@"expectedChangeToFinalRow"] = @0;
 
-                    [multiSectionAdjuster willInsertRowsAtExternalIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
-                    multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
                 });
 
                 itShouldBehaveLike(@"moving a row");
@@ -323,6 +317,141 @@ describe(@"STRAdPlacementAdjuster", ^{
         });
     });
 
+    describe(@"-willDeleteSections:", ^{
+        __block STRAdPlacementAdjuster *multiSectionAdjuster;
+
+        beforeEach(^{
+            multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        });
+
+        describe(@"when some of the sections around the ad section are being deleted", ^{
+            it(@"moves up the ad section by the appropriate amount", ^{
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+                NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
+                [indices addIndex:0];
+                [indices addIndex:1];
+                [indices addIndex:3];
+
+                [multiSectionAdjuster willDeleteSections:indices];
+                multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+            });
+        });
+
+        describe(@"when one of the sections being deleted contains an ad", ^{
+            it(@"updates the ad location", ^{
+                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:0];
+                [multiSectionAdjuster willDeleteSections:indices];
+                multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:-1 inSection:-1]);
+            });
+        });
+
+        describe(@"when none of the sections being deleted contains an ad", ^{
+            it(@"updates the ad location", ^{
+                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:1];
+                [multiSectionAdjuster willDeleteSections:indices];
+                multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+            });
+        });
+
+        describe(@"when the section containing the ad has already been deleted", ^{
+            beforeEach(^{
+                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:0];
+                [multiSectionAdjuster willDeleteSections:indices];
+            });
+
+            it(@"keeps the same nonexistant ad location", ^{
+                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:0];
+                [multiSectionAdjuster willDeleteSections:indices];
+                multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:-1 inSection:-1]);
+            });
+        });
+    });
+
+    describe(@"-willInsertSections:", ^{
+        __block STRAdPlacementAdjuster *multiSectionAdjuster;
+
+        beforeEach(^{
+            multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+        });
+
+        describe(@"when some of the sections around the ad section are being inserting", ^{
+            it(@"moves down the ad section by the appropriate amount", ^{
+                NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
+                [indices addIndex:0];
+                [indices addIndex:1];
+                [indices addIndex:3];
+
+                [multiSectionAdjuster willInsertSections:indices];
+                multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:3]);
+            });
+        });
+    });
+
+    describe(@"-willMoveSection:toSection:", ^{
+        __block STRAdPlacementAdjuster *multiSectionAdjuster;
+
+        beforeEach(^{
+            multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+        });
+
+        describe(@"moving a section that is before the ad section", ^{
+            describe(@"to still be before the ad section", ^{
+                beforeEach(^{
+                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+                });
+
+                it(@"does not adjust the ad placement", ^{
+                    [multiSectionAdjuster willMoveSection:0 toSection:1];
+                    multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:2]);
+                });
+            });
+
+            describe(@"to the ad section", ^{
+                it(@"adjusts the ad section up", ^{
+                    [multiSectionAdjuster willMoveSection:0 toSection:2];
+                    multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+                });
+            });
+
+            describe(@"to be after the ad section", ^{
+                it(@"adjusts the ad section up", ^{
+                    [multiSectionAdjuster willMoveSection:0 toSection:2];
+                    multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+                });
+            });
+        });
+
+        describe(@"moving a section that is after the ad section", ^{
+            describe(@"to be before the ad section", ^{
+                it(@"adjusts the ad section down", ^{
+                    [multiSectionAdjuster willMoveSection:2 toSection:0];
+                    multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:2]);
+                });
+            });
+
+            describe(@"to the ad section", ^{
+                it(@"adjusts the ad section down", ^{
+                    [multiSectionAdjuster willMoveSection:2 toSection:1];
+                    multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:2]);
+                });
+
+            });
+
+            describe(@"to still be after the ad section", ^{
+                it(@"does not adjust the ad placement", ^{
+                    [multiSectionAdjuster willMoveSection:3 toSection:2];
+                    multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
+                });
+            });
+        });
+
+        describe(@"moving the ad section", ^{
+            it(@"adjusts the ad section to be the new place", ^{
+                [multiSectionAdjuster willMoveSection:1 toSection:5];
+                multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:5]);
+            });
+        });
+    });
 });
 
 SPEC_END

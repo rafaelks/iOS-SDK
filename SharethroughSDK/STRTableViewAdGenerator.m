@@ -47,7 +47,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
     self.originalDataSource = tableView.dataSource;
     tableView.dataSource = self;
 
-    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialTableView:tableView];
+    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:tableView]];
     self.adjuster = adjuster;
     self.proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:tableView.delegate adPlacementAdjuster:adjuster adHeight:adHeight];
     tableView.delegate = self.proxy;
@@ -101,7 +101,13 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
     [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController];
 
     return adCell;
+}
 
+- (NSIndexPath *)initialIndexPathForAd:(UITableView *)tableView {
+    NSInteger adRowPosition = 0;
+    adRowPosition = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
+
+    return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
 }
 
 @end

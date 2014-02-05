@@ -10,6 +10,6 @@
 
 @interface STRTableViewDataSource : NSObject<UITableViewDataSource>
 
-@property (nonatomic, assign) NSInteger rowsInEachSection;
+@property (nonatomic, copy) NSArray *rowsForEachSection;
 
 @end
