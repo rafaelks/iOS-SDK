@@ -12,6 +12,7 @@
 #import "STRAdPlacementAdjuster.h"
 #import "STRAdView.h"
 #import "STRAdGenerator.h"
+#import "STRCollectionViewDelegateProxy.h"
 
 const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGeneratorKey";
 
@@ -24,6 +25,7 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
 @property (nonatomic, strong) NSString *adCellReuseIdentifier;
 @property (nonatomic, strong) NSString *placementKey;
 @property (nonatomic, weak) UIViewController *presentingViewController;
+@property (nonatomic, strong, readwrite) STRCollectionViewDelegateProxy *proxy;
 
 @end
 
@@ -51,6 +53,8 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
     self.adCellReuseIdentifier = adCellReuseIdentifier;
     self.placementKey = placementKey;
     self.presentingViewController = presentingViewController;
+    self.proxy = [[STRCollectionViewDelegateProxy alloc] initWithOriginalDelegate:collectionView.delegate adAdjuster:adjuster];
+    collectionView.delegate = self.proxy;
 
     objc_setAssociatedObject(collectionView, STRCollectionViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }

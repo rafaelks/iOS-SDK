@@ -6,6 +6,8 @@
 #import "STRAdGenerator.h"
 #import "STRCollectionViewDataSource.h"
 #import "STRCollectionViewCell.h"
+#import "STRCollectionViewDelegate.h"
+#import "STRCollectionViewDelegateProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -18,6 +20,8 @@ describe(@"STRCollectionViewAdGenerator", ^{
     __block UICollectionView *collectionView;
     __block UIViewController *presentingViewController;
 
+    __block STRCollectionViewDataSource *dataSource;
+
     beforeEach(^{
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
 
@@ -29,20 +33,15 @@ describe(@"STRCollectionViewAdGenerator", ^{
         presentingViewController = [UIViewController new];
         collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 100, 400)
                                             collectionViewLayout:[UICollectionViewFlowLayout new]];
+        [collectionView registerClass:[STRCollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
+        [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
+
+        dataSource = [STRCollectionViewDataSource new];
+        dataSource.itemsForEachSection = @[@2];
+        collectionView.dataSource = dataSource;
     });
 
     describe(@"placing an ad in the collection view", ^{
-        __block STRCollectionViewDataSource *dataSource;
-
-        beforeEach(^{
-            [collectionView registerClass:[STRCollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
-            [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
-
-            dataSource = [STRCollectionViewDataSource new];
-            dataSource.itemsForEachSection = @[@2];
-            collectionView.dataSource = dataSource;
-        });
-
         it(@"stores itself as an associated object of the collection view", ^{
             [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
             [collectionView layoutIfNeeded];
@@ -131,31 +130,31 @@ describe(@"STRCollectionViewAdGenerator", ^{
 //            }).to(raise_exception());
 //        });
 //    });
-//    describe(@"wiring up collectionview delegate", ^{
-//        __block STRCollectionViewDelegate *collectionViewController;
-//
-//        beforeEach(^{
-//            collectionViewController = [STRCollectionViewDelegate new];
-//
-//            collectionView.delegate = collectionViewController;
-//            [collectionView registerClass:[STRCollectionViewCell class] forCellReuseIdentifier:@"adCell"];
-//
-//            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
-//            [collectionView layoutIfNeeded];
-//        });
-//
-//        it(@"collectionview's delegate points to a proxy", ^{
-//            id<UICollectionViewDelegate> delegate = collectionView.delegate;
-//
-//            [delegate isKindOfClass:[STRCollectionViewDelegateProxy class]] should be_truthy;
-//        });
-//
-//        it(@"proxy points to collectionview's original delegate", ^{
-//            STRCollectionViewDelegateProxy *proxy = collectionView.delegate;
-//            proxy.originalDelegate should be_same_instance_as(collectionViewController);
-//        });
-//    });
-//
+    describe(@"wiring up collectionview delegate", ^{
+        __block STRCollectionViewDelegate *collectionViewController;
+
+        beforeEach(^{
+            collectionViewController = [STRCollectionViewDelegate new];
+
+            collectionView.delegate = collectionViewController;
+            [collectionView registerClass:[STRCollectionViewCell class]     forCellWithReuseIdentifier:@"adCell"];
+
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            [collectionView layoutIfNeeded];
+        });
+
+        it(@"collectionview's delegate points to a proxy", ^{
+            id<UICollectionViewDelegate> delegate = collectionView.delegate;
+
+            [delegate isKindOfClass:[STRCollectionViewDelegateProxy class]] should be_truthy;
+        });
+
+        it(@"proxy points to collectionview's original delegate", ^{
+            STRCollectionViewDelegateProxy *proxy = collectionView.delegate;
+            proxy.originalDelegate should be_same_instance_as(collectionViewController);
+        });
+    });
+
 });
 
 SPEC_END

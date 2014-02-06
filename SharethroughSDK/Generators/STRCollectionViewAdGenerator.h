@@ -10,11 +10,12 @@
 
 extern const char * const STRCollectionViewAdGeneratorKey;
 
-@class STRInjector, STRAdPlacementAdjuster;
+@class STRInjector, STRAdPlacementAdjuster, STRCollectionViewDelegateProxy;
 
 @interface STRCollectionViewAdGenerator : NSObject
 
 @property (nonatomic, strong, readonly) STRAdPlacementAdjuster *adjuster;
+@property (nonatomic, strong, readonly) STRCollectionViewDelegateProxy *proxy;
 
 - (id)initWithInjector:(STRInjector *)injector;
 - (void)placeAdInCollectionView:(UICollectionView *)collectionView

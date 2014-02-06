@@ -140,6 +140,13 @@
 		AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
 		AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */; };
+		AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */; };
+		AED6D1A018A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AED6D19E18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h */; };
+		AED6D1A118A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */; };
+		AED6D1A218A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */; };
+		AED6D1A318A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */; };
+		AED6D1A518A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */; };
+		AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */; };
 		AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */; };
 		AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
 		AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */; };
@@ -202,6 +209,7 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				AED6D1A018A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h in Copy Header Files */,
 				AE9C4614189C1B8D001B407A /* vine-logo.png in Copy Header Files */,
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
 				AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */,
@@ -209,6 +217,7 @@
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 				AE58227918A2F04F00672653 /* UICollectionView+STR.h in Copy Header Files */,
 				AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */,
+				AED6D1A218A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Copy Header Files */,
 				AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */,
 				AE58227B18A2F04F00672653 /* UICollectionView+STR.m in Copy Header Files */,
 			);
@@ -351,6 +360,13 @@
 		AED32FAE1891F12600693EFF /* UIActivityViewController+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+Spec.h"; sourceTree = "<group>"; };
 		AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+Spec.m"; sourceTree = "<group>"; };
 		AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRFakeAdGeneratorSpec.mm; sourceTree = "<group>"; };
+		AED6D19B18A400D7005DFDF4 /* STRCollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCollectionViewDelegate.h; sourceTree = "<group>"; };
+		AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCollectionViewDelegate.m; sourceTree = "<group>"; };
+		AED6D19E18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCollectionViewDelegateProxy.h; sourceTree = "<group>"; };
+		AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCollectionViewDelegateProxy.m; sourceTree = "<group>"; };
+		AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRCollectionViewDelegateProxySpec.mm; sourceTree = "<group>"; };
+		AED6D1A618A4079C005DFDF4 /* STRFullCollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFullCollectionViewDelegate.h; sourceTree = "<group>"; };
+		AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFullCollectionViewDelegate.m; sourceTree = "<group>"; };
 		AEEE6C98189C719D00AA7EC9 /* STRTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDelegate.h; sourceTree = "<group>"; };
 		AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDelegate.m; sourceTree = "<group>"; };
 		AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+STR.h"; sourceTree = "<group>"; };
@@ -536,6 +552,8 @@
 				AE6C44A518A2CDF000298166 /* STRCollectionViewCell.m */,
 				AE6C44A118A2CC7F00298166 /* STRCollectionViewDataSource.h */,
 				AE6C44A218A2CC7F00298166 /* STRCollectionViewDataSource.m */,
+				AED6D19B18A400D7005DFDF4 /* STRCollectionViewDelegate.h */,
+				AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */,
 				AE2246FC1888782A00626A29 /* STRFullAdView.h */,
 				AE2246FD1888782A00626A29 /* STRFullAdView.m */,
 				AE6C806F1898925C008FD848 /* STRFullTableViewDataSource.h */,
@@ -554,6 +572,8 @@
 				AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */,
 				AE8AF4FB189B07ED00A65B27 /* STRFullTableViewDelegate.h */,
 				AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */,
+				AED6D1A618A4079C005DFDF4 /* STRFullCollectionViewDelegate.h */,
+				AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -675,6 +695,8 @@
 			children = (
 				AE8AF503189B0B5900A65B27 /* STRTableViewDelegateProxy.h */,
 				AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */,
+				AED6D19E18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h */,
+				AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -683,6 +705,7 @@
 			isa = PBXGroup;
 			children = (
 				AE8AF508189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm */,
+				AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -993,6 +1016,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */,
 				AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */,
 				AE022DE3188E004900D02568 /* STRRestClient.m in Sources */,
 				AE022DED188E00C100D02568 /* STRAdvertisement.m in Sources */,
@@ -1031,6 +1055,7 @@
 				AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */,
 				AE6C44A318A2CC7F00298166 /* STRCollectionViewDataSource.m in Sources */,
+				AED6D1A518A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm in Sources */,
 				AE9C463B189C74B0001B407A /* STRAdFixtures.m in Sources */,
 				AE9C4623189C25A1001B407A /* STRAdYouTubeSpec.mm in Sources */,
 				AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */,
@@ -1038,10 +1063,13 @@
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AE6C80801899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */,
+				AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */,
 				AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */,
 				AE1F67241899BBC600E184D6 /* STRTableViewDataSource.m in Sources */,
 				AE52FD7818A41AB2009F69BD /* STRTableViewAdGenerator.m in Sources */,
+				AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */,
+				AED6D1A318A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
 				AE52FD7618A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
 				AE022DFE188E021C00D02568 /* STRRestClientSpec.mm in Sources */,
@@ -1069,6 +1097,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AED6D1A118A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */,
 				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
 				AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */,
 				AE52FD7318A41AB2009F69BD /* STRCollectionViewAdGenerator.m in Sources */,
