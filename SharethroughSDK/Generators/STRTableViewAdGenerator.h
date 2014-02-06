@@ -15,10 +15,7 @@
 @property (nonatomic, strong, readonly) STRAdPlacementAdjuster *adjuster;
 
 - (id)initWithInjector:(STRInjector *)injector;
-- (void)placeAdInTableView:(UITableView *)tableView
-     adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
-              placementKey:(NSString *)placementKey
-  presentingViewController:(UIViewController *)presentingViewController
-                  adHeight:(CGFloat)adHeight;
+
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adStartingIndexPath:(NSIndexPath *)adStartingIndexPath;
 
 @end

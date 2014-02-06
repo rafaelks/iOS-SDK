@@ -20,6 +20,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
 
 @property (nonatomic, strong) STRInjector *injector;
 @property (nonatomic, weak) id<UITableViewDataSource> originalDataSource;
+@property (nonatomic, weak) id<UITableViewDelegate> originalDelegate;
 @property (nonatomic, copy) NSString *adCellReuseIdentifier;
 @property (nonatomic, copy) NSString *placementKey;
 @property (nonatomic, weak) UIViewController *presentingViewController;
@@ -39,18 +40,33 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
     return self;
 }
 
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight {
+- (void)placeAdInTableView:(UITableView *)tableView
+     adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+              placementKey:(NSString *)placementKey
+  presentingViewController:(UIViewController *)presentingViewController
+                  adHeight:(CGFloat)adHeight
+       adStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
     self.adCellReuseIdentifier = adCellReuseIdentifier;
     self.placementKey = placementKey;
     self.presentingViewController = presentingViewController;
 
+    self.originalDelegate = tableView.delegate;
     self.originalDataSource = tableView.dataSource;
-    tableView.dataSource = self;
 
-    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:tableView]];
+    STRTableViewAdGenerator *oldGenerator = objc_getAssociatedObject(tableView, STRTableViewAdGeneratorKey);
+    if (oldGenerator) {
+        self.originalDataSource = oldGenerator.originalDataSource;
+        self.originalDelegate = oldGenerator.originalDelegate;
+    }
+
+    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:tableView preferredStartingIndexPath:adStartingIndexPath]];
     self.adjuster = adjuster;
-    self.proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:tableView.delegate adPlacementAdjuster:adjuster adHeight:adHeight];
+    self.proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:self.originalDelegate adPlacementAdjuster:adjuster adHeight:adHeight];
+
+    tableView.dataSource = self;
     tableView.delegate = self.proxy;
+
+    [tableView reloadData];
 
     objc_setAssociatedObject(tableView, STRTableViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -103,10 +119,17 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
     return adCell;
 }
 
-- (NSIndexPath *)initialIndexPathForAd:(UITableView *)tableView {
-    NSInteger adRowPosition = 0;
-    adRowPosition = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
+- (NSIndexPath *)initialIndexPathForAd:(UITableView *)tableView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
+    NSInteger numberOfRowsInAdSection = [tableView numberOfRowsInSection:adStartingIndexPath.section];
+    if (adStartingIndexPath.row > numberOfRowsInAdSection) {
+         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Provided indexPath for advertisement cell is out of bounds: %i beyond row count %i", adStartingIndexPath.row, numberOfRowsInAdSection];
+    }
 
+    if (adStartingIndexPath) {
+        return adStartingIndexPath;
+    }
+
+    NSInteger adRowPosition = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
     return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
 }
 

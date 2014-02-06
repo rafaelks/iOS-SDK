@@ -108,7 +108,7 @@ extern const char *const STRTableViewAdGeneratorKey;
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
     STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRTableViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:))];
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:adStartingIndexPath:))];
     }
 
     return adGenerator.adjuster;

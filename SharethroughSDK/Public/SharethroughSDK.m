@@ -59,14 +59,10 @@
                     delegate:delegate];
 }
 
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight {
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
 
     STRTableViewAdGenerator *tableViewAdGenerator = [self.injector getInstance:[STRTableViewAdGenerator class]];
-    [tableViewAdGenerator placeAdInTableView:tableView
-                       adCellReuseIdentifier:adCellReuseIdentifier
-                                placementKey:placementKey
-                    presentingViewController:presentingViewController
-                                    adHeight:adHeight];
+    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController adHeight:adHeight adStartingIndexPath:adStartingIndexPath];
 }
 
 - (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {

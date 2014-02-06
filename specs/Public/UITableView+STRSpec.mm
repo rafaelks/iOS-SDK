@@ -71,11 +71,7 @@ describe(@"UITableView+STR", ^{
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
         STRTableViewAdGenerator *tableViewAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
-        [tableViewAdGenerator placeAdInTableView:tableView
-                           adCellReuseIdentifier:@"adCellReuseIdentifier"
-                                    placementKey:@"placementKey"
-                        presentingViewController:nil
-                                        adHeight:100.0];
+        [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:100.0 adStartingIndexPath:nil ];
 
         [tableView reloadData];
     });
