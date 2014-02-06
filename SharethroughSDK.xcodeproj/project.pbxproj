@@ -82,7 +82,6 @@
 		AE52FD7818A41AB2009F69BD /* STRTableViewAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD7018A41AB2009F69BD /* STRTableViewAdGenerator.m */; };
 		AE58227918A2F04F00672653 /* UICollectionView+STR.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE58227718A2F04F00672653 /* UICollectionView+STR.h */; };
 		AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AE58227818A2F04F00672653 /* UICollectionView+STR.m */; };
-		AE58227B18A2F04F00672653 /* UICollectionView+STR.m in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE58227818A2F04F00672653 /* UICollectionView+STR.m */; };
 		AE58227C18A2F04F00672653 /* UICollectionView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AE58227818A2F04F00672653 /* UICollectionView+STR.m */; };
 		AE58228218A2F19100672653 /* UICollectionView+STRSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE58228118A2F19100672653 /* UICollectionView+STRSpec.mm */; };
 		AE6C44A018A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE6C449F18A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm */; };
@@ -141,9 +140,7 @@
 		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
 		AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */; };
 		AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */; };
-		AED6D1A018A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AED6D19E18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h */; };
 		AED6D1A118A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */; };
-		AED6D1A218A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */; };
 		AED6D1A318A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */; };
 		AED6D1A518A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */; };
 		AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */; };
@@ -209,7 +206,6 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
-				AED6D1A018A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h in Copy Header Files */,
 				AE9C4614189C1B8D001B407A /* vine-logo.png in Copy Header Files */,
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
 				AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */,
@@ -217,9 +213,7 @@
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 				AE58227918A2F04F00672653 /* UICollectionView+STR.h in Copy Header Files */,
 				AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */,
-				AED6D1A218A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Copy Header Files */,
 				AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */,
-				AE58227B18A2F04F00672653 /* UICollectionView+STR.m in Copy Header Files */,
 			);
 			name = "Copy Header Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1068,7 +1062,6 @@
 				AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */,
 				AE1F67241899BBC600E184D6 /* STRTableViewDataSource.m in Sources */,
 				AE52FD7818A41AB2009F69BD /* STRTableViewAdGenerator.m in Sources */,
-				AE2246F8188874D100626A29 /* STRAdGenerator.m in Sources */,
 				AED6D1A318A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
 				AE52FD7618A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
