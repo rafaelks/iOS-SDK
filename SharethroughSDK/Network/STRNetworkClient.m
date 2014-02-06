@@ -15,7 +15,20 @@
 
     STRDeferred *deferred = [STRDeferred defer];
 
-    [NSURLConnection sendAsynchronousRequest:request queue:NSOperationQueue.mainQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+    NSString *userAgentString;
+    NSString *model = [[UIDevice currentDevice] model];
+    if ( [model rangeOfString:@"iPad"].location != NSNotFound) {
+        userAgentString = @"iPad; OS like Mac OS X";
+    } else if ( [model rangeOfString:@"iPod"].location != NSNotFound) {
+        userAgentString = @"iPod/iPhone";
+    } else {
+        userAgentString = @"iPhone";
+    }
+
+    NSMutableURLRequest *requestWithUserAgent = [request mutableCopy];
+    [requestWithUserAgent setValue:userAgentString forHTTPHeaderField:@"User-Agent"];
+
+    [NSURLConnection sendAsynchronousRequest:requestWithUserAgent queue:NSOperationQueue.mainQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError) {
             [deferred rejectWithError:connectionError];
         } else {

@@ -43,7 +43,51 @@ describe(@"STRNetworkClient", ^{
     it(@"makes a request using the request passed in", ^{
         [client get:request];
 
-        recentRequest should be_same_instance_as(request);
+        recentRequest.URL should equal(request.URL);
+    });
+
+    describe(@"the user agent", ^{
+        __block UIDevice *currentDevice;
+
+        beforeEach(^{
+            currentDevice = [UIDevice currentDevice];
+            spy_on(currentDevice);
+        });
+
+        context(@"iPod", ^{
+            beforeEach(^{
+                currentDevice stub_method(@selector(model)).and_return(@"iPod touch");
+                [client get:request];
+            });
+
+            it(@"has a useful user agent that will be recognized by the ad server", ^{
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iPod");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iPhone");
+            });
+        });
+
+        context(@"iPad", ^{
+            beforeEach(^{
+                currentDevice stub_method(@selector(model)).and_return(@"iPad");
+                [client get:request];
+            });
+
+            it(@"has a useful user agent that will be recognized by the ad server", ^{
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iPad; OS like Mac OS X");
+            });
+        });
+
+        context(@"iPhone", ^{
+            beforeEach(^{
+                currentDevice stub_method(@selector(model)).and_return(@"iPhone");
+                [client get:request];
+            });
+
+            it(@"has a useful user agent that will be recognized by the ad server", ^{
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iPhone");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should_not contain(@"iPod");
+            });
+        });
     });
 
     describe(@"when the async request completes", ^{

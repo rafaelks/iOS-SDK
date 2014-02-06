@@ -37,7 +37,6 @@
 
     NSString *urlString = [self.adServerHostName stringByAppendingString:[self encodedQueryParams:parameters]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [request setValue:@"iPhone" forHTTPHeaderField:@"User-Agent"];
 
     [[self.networkClient get:request] then:^id(NSData *data) {
         NSError *jsonParseError;

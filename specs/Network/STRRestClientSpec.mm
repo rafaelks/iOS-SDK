@@ -56,12 +56,6 @@ describe(@"STRRestClient", ^{
             mostRecentRequest().URL.query should equal(@"foo=bar&key=fakeKey123");
         });
 
-        it(@"sets the User-Agent to pretend to be an iPhone (hack for server)", ^{
-            [client getWithParameters:@{}];
-
-            [mostRecentRequest() valueForHTTPHeaderField:@"User-Agent"] should equal(@"iPhone");
-        });
-
         it(@"returns an unresolved promise", ^{
             STRPromise *promise = [client getWithParameters:nil];
 
