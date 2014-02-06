@@ -116,7 +116,7 @@
 /**
  Returns an array of index paths each identifying a visible row in the receiver while accounting for ad(s) provided by Sharethrough.  Alternate to UITableView's built-in -indexPathsForVisibleRows
  
- @return An array of NSIndexPath objects each representing a row index and section index that together identify a visible row in the table view. Returns nil if no rows are visible.
+ @return An array of NSIndexPath objects each representing a row index and section index that together identify a visible row in the table view.
  */
 - (NSArray *)str_indexPathsForVisibleRows;
 
@@ -127,5 +127,43 @@
  @return A rectangle defining the area in which the table view draws the row or CGRectZero if indexPath is invalid.
  */
 - (CGRect)str_rectForRowAtIndexPath:(NSIndexPath *)indexPath;
+
+
+/**---------------------------------------------------------------------------------------
+ * @name Convenience methods around selection
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ Returns an index path identifying the row and section of the selected row while accounting for ad(s) provided by Sharethrough. Alternate to UITableView's built-in -indexPathForSelectedRow
+ 
+ @return An index path identifying the row and section indexes of the selected row or nil if the index path is invalid.
+ */
+- (NSIndexPath *)str_indexPathForSelectedRow;
+
+/**
+ Returns the index paths represented the selected rows while accounting for ad(s) provided by Sharethrough. Alternate to UITableView's built-in -indexPathsForSelectedRows
+ 
+ @return An array of index-path objects each identifying a row through its section and row index.
+ */
+
+- (NSArray *)str_indexPathsForSelectedRows;
+
+/**
+ Selects a row in the receiver identified by index path while accounting for ad(s) provided by Sharethrough, optionally scrolling the row to a location in the receiver. Alternate to UITableView's built-in -selectRowAtIndexPath:animated:scrollPosition:
+ 
+ @param indexPath      An index path identifying a row in the receiver.
+ @param animated       if you want to animate the selection and any change in position, NO if the change should be immediate.
+ @param scrollPosition A constant that identifies a relative position in the receiving table view (top, middle, bottom) for the row when scrolling concludes.
+ */
+- (void)str_selectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UITableViewScrollPosition)scrollPosition;
+
+/**
+ Deselects a given row identified by index path while accounting for ad(s) provided by Sharethrough, with an option to animate the deselection. Alternate to UITableView's built-in -deselectRowAtIndexPath:animated:
+ 
+ @param indexPath An index path identifying a row in the receiver
+ @param animated  YES if you want to animate the deselection and NO if the change should be immediate
+ */
+-(void)str_deselectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated;
 
 @end

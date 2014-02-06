@@ -27,9 +27,8 @@ describe(@"STRAdPlacementAdjuster", ^{
             [adjuster externalIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
         });
 
-        it(@"raises exception if indexPath is equal to adIndexPath", ^{
-            expect(^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];}).to(raise_exception());
+        it(@"returns nil if the index path is equal to adIndexPath", ^{
+            [adjuster externalIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_nil;
         });
 
         it(@"subtracts indexPath for cells after ad row in same section", ^{
@@ -42,6 +41,18 @@ describe(@"STRAdPlacementAdjuster", ^{
 
         it(@"returns nil if passed in a nil index path", ^{
             [adjuster externalIndexPath:nil] should be_nil;
+        });
+    });
+
+    describe(@"-externalIndexPaths", ^{
+        it(@"adjusts all of the index paths", ^{
+            NSArray *trueIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
+                                        [NSIndexPath indexPathForRow:1 inSection:0],
+                                        [NSIndexPath indexPathForRow:2 inSection:0]];
+
+            [adjuster externalIndexPaths:trueIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
+                                                                        [NSIndexPath indexPathForRow:1 inSection:0]]);
+
         });
     });
 
@@ -66,6 +77,19 @@ describe(@"STRAdPlacementAdjuster", ^{
             [adjuster trueIndexPath:nil] should be_nil;
         });
     });
+
+    describe(@"-trueIndexPaths", ^{
+        it(@"adjusts all of the index paths", ^{
+            NSArray *externalIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
+                                            [NSIndexPath indexPathForRow:1 inSection:0],
+                                            [NSIndexPath indexPathForRow:2 inSection:0]];
+
+            [adjuster trueIndexPaths:externalIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
+                                                                        [NSIndexPath indexPathForRow:2 inSection:0],
+                                                                        [NSIndexPath indexPathForRow:3 inSection:0]]);
+        });
+    });
+
 
     describe(@"-willInsertRowsAtExternalIndexPaths:", ^{
         it(@"leaves adIndexPath unchanged if insertion is after adIndexPath", ^{

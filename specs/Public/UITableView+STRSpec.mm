@@ -410,6 +410,61 @@ describe(@"UITableView+STR", ^{
             returnedRect should equal([tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:1]]);
         });
     });
+
+    describe(@"-str_indexPathForSelectedRow", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_indexPathForSelectedRow];
+        });
+
+        it(@"returns the adjusted index path for the selected row", ^{
+            [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1] animated:NO scrollPosition:UITableViewScrollPositionTop];
+
+            [tableView str_indexPathForSelectedRow] should equal([NSIndexPath indexPathForRow:1 inSection:1]);
+        });
+    });
+
+    describe(@"-str_indexPathsForSelectedRows", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_indexPathsForSelectedRows];
+        });
+
+        it(@"returns the adjusted index path for the selected rows", ^{
+            tableView.allowsMultipleSelection = YES;
+            [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO scrollPosition:UITableViewScrollPositionTop];
+            [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1] animated:NO scrollPosition:UITableViewScrollPositionTop];
+
+            [tableView str_indexPathsForSelectedRows] should equal(@[[NSIndexPath indexPathForRow:0 inSection:1],
+                                                                     [NSIndexPath indexPathForRow:1 inSection:1]]);
+        });
+    });
+
+    describe(@"-str_selectRowAtIndexPath:animated:scrollPosition:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+        });
+
+        it(@"selects the adjusted row", ^{
+            [tableView str_selectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] animated:NO scrollPosition:UITableViewScrollPositionTop];
+            tableView should have_received(@selector(selectRowAtIndexPath:animated:scrollPosition:))
+            .with([NSIndexPath indexPathForRow:2 inSection:1], NO, UITableViewScrollPositionTop);
+
+            [tableView indexPathForSelectedRow] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+        });
+    });
+
+    describe(@"-str_deselectRowAtIndexPath:animated:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES];
+        });
+
+        it(@"deselects the adjusted row", ^{
+            [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1] animated:NO scrollPosition:UITableViewScrollPositionTop];
+
+            [tableView str_deselectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] animated:NO];
+            tableView should have_received(@selector(deselectRowAtIndexPath:animated:)).with([NSIndexPath indexPathForRow:2 inSection:1], NO);
+            [tableView indexPathForSelectedRow] should be_nil;
+        });
+    });
 });
 
 SPEC_END

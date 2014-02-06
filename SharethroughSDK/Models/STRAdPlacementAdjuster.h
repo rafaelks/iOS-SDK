@@ -16,6 +16,7 @@
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath;
+- (NSArray *)externalIndexPaths:(NSArray *)indexPaths;
 - (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath;
 - (NSArray *)trueIndexPaths:(NSArray *)indexPaths;
 - (NSInteger)numberOfAdsInSection:(NSInteger)section;

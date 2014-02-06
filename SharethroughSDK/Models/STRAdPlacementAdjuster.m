@@ -34,7 +34,7 @@
 }
 
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath == nil) {
+    if (indexPath == nil || [self isAdAtIndexPath:indexPath]) {
         return nil;
     }
 
@@ -42,12 +42,20 @@
         return indexPath;
     }
 
-    if ([indexPath isEqual:self.adIndexPath]) {
-        [NSException raise:@"STRInternalConsistencyError" format:@"Called %@ for an indexPath that is the same as an ad's index path: %@", NSStringFromSelector(_cmd), indexPath];
-    }
-
     NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
     return [NSIndexPath indexPathForRow:indexPath.row - adjustment inSection:indexPath.section];
+}
+
+- (NSArray *)externalIndexPaths:(NSArray *)indexPaths {
+    NSMutableArray *externalIndexPaths = [NSMutableArray arrayWithCapacity:[indexPaths count]];
+    for (NSIndexPath *indexPath in indexPaths) {
+        NSIndexPath *externalIndexPath = [self externalIndexPath:indexPath];
+        if (externalIndexPath) {
+            [externalIndexPaths addObject:externalIndexPath];
+        }
+    }
+
+    return externalIndexPaths;
 }
 
 - (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath {
