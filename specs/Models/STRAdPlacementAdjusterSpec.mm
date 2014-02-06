@@ -39,6 +39,10 @@ describe(@"STRAdPlacementAdjuster", ^{
         it(@"leaves indexPath unchanged for cells in different section", ^{
             [adjuster externalIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
         });
+
+        it(@"returns nil if passed in a nil index path", ^{
+            [adjuster externalIndexPath:nil] should be_nil;
+        });
     });
 
     describe(@"-trueIndexPath:", ^{
@@ -56,6 +60,10 @@ describe(@"STRAdPlacementAdjuster", ^{
 
         it(@"leaves indexPath unchanged for cells in different section", ^{
             [adjuster trueIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+        });
+
+        it(@"returns nil if passed in a nil indexPath", ^{
+            [adjuster trueIndexPath:nil] should be_nil;
         });
     });
 

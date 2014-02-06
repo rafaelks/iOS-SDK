@@ -49,6 +49,8 @@ describe(@"UITableView+STR", ^{
 
     beforeEach(^{
         tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
+        spy_on(tableView);
+
         delegate = [[STRTableViewDelegate alloc] init];
         dataSource = [[STRFullTableViewDataSource alloc] init];
         dataSource.rowsForEachSection = @[@3, @3];
@@ -195,7 +197,6 @@ describe(@"UITableView+STR", ^{
         __block NSIndexSet *sectionsToInsert;
 
         beforeEach(^{
-            spy_on(tableView);
             sectionsToInsert = [NSIndexSet indexSetWithIndex:0];
         });
 
@@ -226,7 +227,6 @@ describe(@"UITableView+STR", ^{
         __block NSIndexSet *sectionsToDelete;
 
         beforeEach(^{
-            spy_on(tableView);
             sectionsToDelete = [NSIndexSet indexSetWithIndex:0];
         });
 
@@ -253,10 +253,6 @@ describe(@"UITableView+STR", ^{
     });
 
     describe(@"-str_moveSection:toSection:", ^{
-        beforeEach(^{
-            spy_on(tableView);
-        });
-
         itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
             [noAdTableView str_moveSection:1 toSection:0];
         });
@@ -275,6 +271,143 @@ describe(@"UITableView+STR", ^{
 
                 adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
             });
+        });
+    });
+
+    describe(@"-str_cellForRowAtIndexPath:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        });
+
+        it(@"returns the cell adjusted from the external index path", ^{
+            UITableViewCell *returnedCell = [tableView str_cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+
+            tableView should have_received(@selector(cellForRowAtIndexPath:)).with([NSIndexPath indexPathForRow:2 inSection:1]);
+            returnedCell should be_instance_of([UITableViewCell class]);
+        });
+    });
+
+    describe(@"-str_indexPathForCell:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_indexPathForCell:[tableView.visibleCells firstObject]];
+        });
+
+        it(@"returns an adjusted index path if not an ad cell", ^{
+            UITableViewCell *cell = tableView.visibleCells[5];
+            NSIndexPath *returnedIndexPath = [tableView str_indexPathForCell:cell];
+
+            tableView should have_received(@selector(indexPathForCell:)).with(cell);
+            returnedIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
+        });
+
+        it(@"returns nil if the cell passed in is an ad cell", ^{
+            UITableViewCell *cell = tableView.visibleCells[4];
+            NSIndexPath *returnedIndexPath = [tableView str_indexPathForCell:cell];
+
+            tableView should have_received(@selector(indexPathForCell:)).with(cell);
+            returnedIndexPath should be_nil;
+        });
+
+        it(@"returns nil if the cell passed in is nil", ^{
+            NSIndexPath *returnedIndexPath = [tableView str_indexPathForCell:nil];
+
+            tableView should have_received(@selector(indexPathForCell:)).with(nil);
+            returnedIndexPath should be_nil;
+        });
+    });
+
+    describe(@"-str_indexPathForRowAtPoint:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_indexPathForRowAtPoint:CGPointMake(0, 0)];
+        });
+
+        it(@"returns an adjusted index path if not a point within ad cell", ^{
+            UITableViewCell *cell = tableView.visibleCells[5];
+
+            NSIndexPath *returnedIndexPath = [tableView str_indexPathForRowAtPoint:cell.center];
+
+            tableView should have_received(@selector(indexPathForRowAtPoint:)).with(cell.center);
+            returnedIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
+        });
+
+        it(@"returns nil if the point passed in is within an ad cell", ^{
+            UITableViewCell *cell = tableView.visibleCells[4];
+            NSIndexPath *returnedIndexPath = [tableView str_indexPathForRowAtPoint:cell.center];
+
+            tableView should have_received(@selector(indexPathForRowAtPoint:)).with(cell.center);
+            returnedIndexPath should be_nil;
+        });
+
+        it(@"returns nil if the point passed in is out of bounds", ^{
+            NSIndexPath *returnedIndexPath = [tableView str_indexPathForRowAtPoint:CGPointMake(-1, -1)];
+
+            tableView should have_received(@selector(indexPathForRowAtPoint:)).with(CGPointMake(-1, -1));
+            returnedIndexPath should be_nil;
+        });
+    });
+
+    describe(@"-str_indexPathsForRowsInRect:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_indexPathsForRowsInRect:CGRectMake(0, 0, 10, 10)];
+        });
+
+        it(@"returns an array of adjusted index paths without the ad cell", ^{
+            CGRect rect = [tableView rectForSection:1];
+            NSArray *returnedIndexPaths = [tableView str_indexPathsForRowsInRect:rect];
+
+            tableView should have_received(@selector(indexPathsForRowsInRect:)).with(rect);
+            returnedIndexPaths should equal(@[[NSIndexPath indexPathForRow:0 inSection:1],
+                                              [NSIndexPath indexPathForRow:1 inSection:1],
+                                              [NSIndexPath indexPathForRow:2 inSection:1]]);
+        });
+    });
+
+    describe(@"-str_visibleCells", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_visibleCellsWithoutAds];
+        });
+
+        it(@"returns an array of UITableViewCells without the ad cell", ^{
+            [tableView.visibleCells count] should equal(7);
+            NSArray *returnedVisibleCells = [tableView str_visibleCellsWithoutAds];
+
+            tableView should have_received(@selector(visibleCells));
+            [returnedVisibleCells count] should equal(6);
+            for (UITableViewCell *cell in returnedVisibleCells) {
+                cell should be_instance_of([UITableViewCell class]);
+            }
+        });
+    });
+
+    describe(@"-str_indexPathsForVisibleRows", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_indexPathsForVisibleRows];
+        });
+
+        it(@"returns an array of NSIndexPaths without the ad cell", ^{
+            tableView.frame = [tableView rectForSection:1];
+            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
+            [tableView.visibleCells count] should equal(4);
+            NSArray *returnedIndexPaths = [tableView str_indexPathsForVisibleRows];
+
+            tableView should have_received(@selector(indexPathsForVisibleRows));
+            [returnedIndexPaths count] should equal(3);
+            returnedIndexPaths should equal(@[[NSIndexPath indexPathForRow:0 inSection:1],
+                                              [NSIndexPath indexPathForRow:1 inSection:1],
+                                              [NSIndexPath indexPathForRow:2 inSection:1]]);
+        });
+    });
+
+    describe(@"-str_rectForRowAtIndexPath:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        });
+
+        it(@"returns a rect for row at index path", ^{
+            CGRect returnedRect = [tableView str_rectForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+
+            returnedRect should equal([tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:1]]);
         });
     });
 });

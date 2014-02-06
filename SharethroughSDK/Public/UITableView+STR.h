@@ -15,6 +15,11 @@
  */
 @interface UITableView (STR)
 
+/**---------------------------------------------------------------------------------------
+ * @name Methods required to be used instead of corresponding UITableView methods
+ *  ---------------------------------------------------------------------------------------
+ */
+
 /**
  Supports inserting multiple rows while accounting for ad(s) provided by Sharethrough. Alternate to UITableView's built-in -insertRowsAtIndexPaths:withRowAnimation:
  
@@ -63,5 +68,64 @@
  @param newSection The index in the table view that is the destination of the move for the section. The existing section at that location slides up or down to an adjoining index position to make room for it.
  */
 - (void)str_moveSection:(NSInteger)section toSection:(NSInteger)newSection;
+
+/**---------------------------------------------------------------------------------------
+ * @name Convenience accessor methods that are ad aware
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ Retrieves the cell while accounting for ad(s) provided by Sharethrough. Alternate to UITableView's built-in -cellForRowAtIndexPath:
+ 
+ @param indexPath The index path locating the row in the receiver.
+ @return An object representing a cell of the table or nil if the cell is not visible or indexPath is out of range.
+ */
+- (UITableViewCell *)str_cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ Retrieves the index path for a cell while accounting for ad(s) provided by Sharethrough. Alternate to UITableView's built-in -indexPathForCell:
+
+ @param cell A cell object of the table view.
+ @return An index path representing the row and section of the cell or nil if the index path is invalid. Passing in an ad cell to this method will also return nil.
+ */
+- (NSIndexPath *)str_indexPathForCell:(UITableViewCell *)cell;
+
+/**
+ Returns an index path identifying the row and section at the given point while taking it account ad(s) provided by Sharethrough.  Alternate to UITableView's built-in -indexPathForRowAtPoint:
+ 
+ @param point A point in the local coordinate system of the receiver (the table view's bounds).
+ @return An index path representing the row and section associated with point or nil if the point is out of the bounds of any row. Passing in a point that corresponds to an ad cell will also return nil.
+ */
+- (NSIndexPath *)str_indexPathForRowAtPoint:(CGPoint)point;
+
+/**
+ Returns an array of index paths each representing a row enclosed by a given rectangle accounting for ad(s) provided by Sharethrough. Alternate to UITableView's built-in -indexPathsForRowsInRect:
+
+ @param rect A rectangle defining an area of the table view in local coordinates.
+ @return An array of NSIndexPath objects each representing a row and section index identifying a row within rect. Returns an empty array if there aren’t any rows to return.
+ */
+- (NSArray *)str_indexPathsForRowsInRect:(CGRect)rect;
+
+/**
+ Returns an array of UITableViewCells that are visible in the receiver while accounting for ad(s) provided by Sharethrough.  Alternate to UITableView's built-in -visibleCells
+ 
+ @return An array containing UITableViewCell objects, each representing a visible cell in the receiving table view.
+ */
+- (NSArray *)str_visibleCellsWithoutAds;
+
+/**
+ Returns an array of index paths each identifying a visible row in the receiver while accounting for ad(s) provided by Sharethrough.  Alternate to UITableView's built-in -indexPathsForVisibleRows
+ 
+ @return An array of NSIndexPath objects each representing a row index and section index that together identify a visible row in the table view. Returns nil if no rows are visible.
+ */
+- (NSArray *)str_indexPathsForVisibleRows;
+
+/**
+ Returns a drawing area for the index path while accounting for ad(s) provided by Sharethrough.  Alternate to UITableView's built-in -rectForRowAtIndexPath:
+
+ @param indexPath An index path object that identifies a row by its index and its section index.
+ @return A rectangle defining the area in which the table view draws the row or CGRectZero if indexPath is invalid.
+ */
+- (CGRect)str_rectForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

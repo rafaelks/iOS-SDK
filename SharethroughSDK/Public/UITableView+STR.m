@@ -46,6 +46,75 @@ extern const char *const STRTableViewAdGeneratorKey;
     [self moveSection:section toSection:newSection];
 }
 
+- (UITableViewCell *)str_cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self cellForRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath]];
+}
+
+- (NSIndexPath *)str_indexPathForCell:(UITableViewCell *)cell {
+    NSIndexPath *trueIndexPath = [self indexPathForCell:cell];
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+
+    if ([adjuster isAdAtIndexPath:trueIndexPath]) {
+        return nil;
+    }
+
+    return [adjuster externalIndexPath:trueIndexPath];
+}
+
+- (NSIndexPath *)str_indexPathForRowAtPoint:(CGPoint)point {
+    NSIndexPath *trueIndexPath = [self indexPathForRowAtPoint:point];
+    STRAdPlacementAdjuster  *adjuster = [self str_ensureAdjuster];
+
+    if ([adjuster isAdAtIndexPath:trueIndexPath]) {
+        return nil;
+    }
+
+    return [adjuster externalIndexPath:trueIndexPath];
+}
+
+- (NSArray *)str_indexPathsForRowsInRect:(CGRect)rect {
+    NSMutableArray *indexPathsWithoutAds = [NSMutableArray new];
+    STRAdPlacementAdjuster  *adjuster = [self str_ensureAdjuster];
+
+    for (NSIndexPath *indexPath in [self indexPathsForRowsInRect:rect]) {
+        if (![adjuster isAdAtIndexPath:indexPath]) {
+            [indexPathsWithoutAds addObject:[adjuster externalIndexPath:indexPath]];
+        }
+    }
+
+    return indexPathsWithoutAds;
+}
+
+- (NSArray *)str_visibleCellsWithoutAds {
+    NSMutableArray *cellsWithoutAds = [NSMutableArray new];
+    STRAdPlacementAdjuster  *adjuster = [self str_ensureAdjuster];
+
+    for (UITableViewCell *cell in [self visibleCells]) {
+        if (![adjuster isAdAtIndexPath:[self indexPathForCell:cell]]) {
+            [cellsWithoutAds addObject:cell];
+        }
+    }
+
+    return cellsWithoutAds;
+}
+
+- (NSArray *)str_indexPathsForVisibleRows {
+    NSMutableArray *indexPathsWithoutAds = [NSMutableArray new];
+    STRAdPlacementAdjuster  *adjuster = [self str_ensureAdjuster];
+
+    for (NSIndexPath *indexPath in [self indexPathsForVisibleRows]) {
+        if (![adjuster isAdAtIndexPath:indexPath]) {
+            [indexPathsWithoutAds addObject:[adjuster externalIndexPath:indexPath]];
+        }
+    }
+
+    return indexPathsWithoutAds;
+}
+
+- (CGRect)str_rectForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self rectForRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath]];
+}
+
 #pragma mark - Private
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {

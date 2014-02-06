@@ -34,6 +34,10 @@
 }
 
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath == nil) {
+        return nil;
+    }
+
     if (indexPath.section != self.adIndexPath.section) {
         return indexPath;
     }
@@ -47,6 +51,10 @@
 }
 
 - (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath == nil) {
+        return nil;
+    }
+
     if (indexPath.section != self.adIndexPath.section) {
         return indexPath;
     }
