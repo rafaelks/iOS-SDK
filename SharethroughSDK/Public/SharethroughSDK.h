@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "STRAdView.h"
 #import "STRAdViewDelegate.h"
+#import "UITableView+STR.h"
+#import "UICollectionView+STR.h"
 
 /**
  SharethroughSDK is the main interface to placing ads. There is a shared instance that can be accessed by [SharethroughSDK sharedInstance]. It can be used to place ads, most commonly through placeAdInView:placementKey:.
