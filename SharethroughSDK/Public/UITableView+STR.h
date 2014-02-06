@@ -128,7 +128,6 @@
  */
 - (CGRect)str_rectForRowAtIndexPath:(NSIndexPath *)indexPath;
 
-
 /**---------------------------------------------------------------------------------------
  * @name Convenience methods around selection
  *  ---------------------------------------------------------------------------------------
@@ -164,6 +163,19 @@
  @param indexPath An index path identifying a row in the receiver
  @param animated  YES if you want to animate the deselection and NO if the change should be immediate
  */
--(void)str_deselectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated;
+- (void)str_deselectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated;
 
+/**---------------------------------------------------------------------------------------
+ * @name Convenience method around scrolling
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ Scrolls the receiver until a row identified by index path (while accounting for ad(s) provided by Sharethrough) is at a particular location on the screen. Alternate to UITableView's built-in -scrollToRowAtIndexPath:atScrollPosition:animated:
+ 
+ @param indexPath      An index path that identifies a row in the table view by its row index and its section index.
+ @param scrollPosition A constant that identifies a relative position in the receiving table view (top, middle, bottom) for row when scrolling concludes.
+ @param animated       YES if you want to animate the change in position, NO if it should be immediate.
+ */
+- (void)str_scrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated;
 @end

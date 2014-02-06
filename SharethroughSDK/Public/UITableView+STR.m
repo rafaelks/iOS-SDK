@@ -99,6 +99,10 @@ extern const char *const STRTableViewAdGeneratorKey;
     [self deselectRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] animated:animated];
 }
 
+- (void)str_scrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated {
+    [self scrollToRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] atScrollPosition:scrollPosition animated:animated];
+}
+
 #pragma mark - Private
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {

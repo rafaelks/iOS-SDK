@@ -465,6 +465,30 @@ describe(@"UITableView+STR", ^{
             [tableView indexPathForSelectedRow] should be_nil;
         });
     });
+
+    describe(@"-str_scrollToRowAtIndexPath:atScrollPosition:animated:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        });
+
+        it(@"scrolls to the adjusted index path", ^{
+            tableView.frame = [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+
+            [tableView str_scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
+            NSIndexPath *trueIndexPath = [NSIndexPath indexPathForRow:2 inSection:1];
+            tableView should have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with(trueIndexPath, UITableViewScrollPositionTop, NO);
+            tableView.contentOffset should equal([tableView rectForRowAtIndexPath:trueIndexPath].origin);
+        });
+
+        it(@"is able to scroll to NSNotFound", ^{
+            tableView.frame = [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+
+            [tableView str_scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:NSNotFound inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
+            tableView.contentOffset should equal([tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]].origin);
+        });
+    });
 });
 
 SPEC_END
