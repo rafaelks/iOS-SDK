@@ -12,6 +12,9 @@
 #import "STRAdGenerator.h"
 #import "STRTableViewAdGenerator.h"
 #import "STRCollectionViewAdGenerator.h"
+#import "STRFakeAdGenerator.h"
+#import "STRBeaconService.h"
+#import "STRAdService.h"
 
 @interface SharethroughSDK ()
 
@@ -33,6 +36,18 @@
     });
 
     return sharedObject;
+}
+
++ (instancetype)testSafeInstance {
+    SharethroughSDK *sdk = [[self alloc] init];
+    [sdk configure];
+
+    STRAdGenerator *fakeAdGenerator = [[STRFakeAdGenerator alloc] init];
+    [sdk.injector bind:[STRAdGenerator class] toInstance:fakeAdGenerator];
+    [sdk.injector bind:[STRBeaconService class] toInstance:[NSNull null]];
+    [sdk.injector bind:[STRAdService class] toInstance:[NSNull null]];
+
+    return sdk;
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {

@@ -137,6 +137,9 @@
 		AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
 		AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
+		AED6D19318A30A4E005DFDF4 /* STRFakeAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19218A30A4E005DFDF4 /* STRFakeAdGenerator.m */; };
+		AED6D19418A30A4E005DFDF4 /* STRFakeAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19218A30A4E005DFDF4 /* STRFakeAdGenerator.m */; };
+		AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */; };
 		AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */; };
 		AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
 		AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */; };
@@ -345,6 +348,9 @@
 		AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRDateProvider.m; sourceTree = "<group>"; };
 		AED32FAE1891F12600693EFF /* UIActivityViewController+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+Spec.h"; sourceTree = "<group>"; };
 		AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+Spec.m"; sourceTree = "<group>"; };
+		AED6D19118A30A4E005DFDF4 /* STRFakeAdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFakeAdGenerator.h; sourceTree = "<group>"; };
+		AED6D19218A30A4E005DFDF4 /* STRFakeAdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFakeAdGenerator.m; sourceTree = "<group>"; };
+		AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRFakeAdGeneratorSpec.mm; sourceTree = "<group>"; };
 		AEEE6C98189C719D00AA7EC9 /* STRTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDelegate.h; sourceTree = "<group>"; };
 		AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDelegate.m; sourceTree = "<group>"; };
 		AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+STR.h"; sourceTree = "<group>"; };
@@ -500,6 +506,7 @@
 				AE022DFF188E022000D02568 /* Services */,
 				AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */,
 				AE6C449F18A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm */,
+				AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */,
 				AE6C806D1898914F008FD848 /* STRTableViewAdGeneratorSpec.mm */,
 				AED32FA91891F0BB00693EFF /* Stubs */,
 				AE2246881886138F00626A29 /* Supporting Files */,
@@ -717,6 +724,8 @@
 				AE2246F4188874D100626A29 /* STRAdGenerator.m */,
 				AE6C449718A2CA8300298166 /* STRCollectionViewAdGenerator.h */,
 				AE6C449818A2CA8300298166 /* STRCollectionViewAdGenerator.m */,
+				AED6D19118A30A4E005DFDF4 /* STRFakeAdGenerator.h */,
+				AED6D19218A30A4E005DFDF4 /* STRFakeAdGenerator.m */,
 				AE6C806518988ECE008FD848 /* STRTableViewAdGenerator.h */,
 				AE6C806618988ECE008FD848 /* STRTableViewAdGenerator.m */,
 				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
@@ -992,6 +1001,7 @@
 				AE52B860188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE8AF506189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */,
 				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
+				AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */,
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */,
@@ -1025,6 +1035,7 @@
 				AE22468E1886138F00626A29 /* main.m in Sources */,
 				AE022DFE188E021C00D02568 /* STRRestClientSpec.mm in Sources */,
 				AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */,
+				AED6D19418A30A4E005DFDF4 /* STRFakeAdGenerator.m in Sources */,
 				AE58227C18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
 				AE1F671D1899AD9E00E184D6 /* STRTableViewCell.m in Sources */,
 				AE3120E31889E76F00297F01 /* STRPromise.m in Sources */,
@@ -1066,6 +1077,7 @@
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
+				AED6D19318A30A4E005DFDF4 /* STRFakeAdGenerator.m in Sources */,
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE8AF505189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */,

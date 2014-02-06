@@ -21,6 +21,10 @@
 + (instancetype)sharedInstance;
 
 /**
+ Creates a SharethroughSDK object that is safe for testing with. It emulates all the behavior of a sharedInstance, but does not perform network activity. It will place the same ad in all views. This is not a singleton.
+ */
++ (instancetype)testSafeInstance;
+/**
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
