@@ -270,6 +270,72 @@ describe(@"UITableView+STR", ^{
         });
     });
 
+    describe(@"-str_reloadDataWithAdIndexPath:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        });
+
+        it(@"reloads the tableview, inserting a row at the new index path", ^{
+            [(id<CedarDouble>)tableView reset_sent_messages];
+            [tableView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+
+            tableView should have_received(@selector(reloadData));
+            [tableView layoutIfNeeded]; // ?
+
+            [tableView numberOfRowsInSection:0] should equal(4);
+            [tableView numberOfRowsInSection:1] should equal(3);
+
+            [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_instance_of([STRTableViewCell class]);
+        });
+    });
+
+    describe(@"-str_reloadRowsAtIndexPaths:withRowAnimation:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+        });
+
+        it(@"reloads those adjusted rows", ^{
+            [tableView str_reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1], [NSIndexPath indexPathForRow:1 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1]]
+                                 withRowAnimation:UITableViewRowAnimationLeft];
+
+            tableView should have_received(@selector(reloadRowsAtIndexPaths:withRowAnimation:))
+            .with(@[[NSIndexPath indexPathForRow:0 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]], UITableViewRowAnimationLeft);
+        });
+    });
+
+    describe(@"-str_reloadSections:withRowAnimation:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
+        });
+
+        context(@"when the new section size is larger than ad position", ^{
+            it(@"the ad remains in the same indexpath", ^{
+                dataSource.rowsForEachSection = @[@1, @1];
+
+                [tableView str_reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationMiddle];
+
+                tableView should have_received(@selector(reloadSections:withRowAnimation:))
+                .with([NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)], UITableViewRowAnimationMiddle);
+
+                [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]] should be_instance_of([STRTableViewCell class]);
+            });
+        });
+
+        context(@"when the new section size is smaller than ad position", ^{
+            it(@"adjusts the ad to be bottom-most in the section", ^{
+                dataSource.rowsForEachSection = @[@1, @0];
+
+                [tableView str_reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationMiddle];
+
+                tableView should have_received(@selector(reloadSections:withRowAnimation:))
+                .with([NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)], UITableViewRowAnimationMiddle);
+
+                [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]] should be_instance_of([STRTableViewCell class]);
+            });
+        });
+
+    });
+
     describe(@"-str_cellForRowAtIndexPath:", ^{
         itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
             [noAdTableView str_cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];

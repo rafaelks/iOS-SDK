@@ -69,6 +69,29 @@
  */
 - (void)str_moveSection:(NSInteger)section toSection:(NSInteger)newSection;
 
+/**
+ Reloads the rows and sections of the receiver. Previous ad(s) will be removed and replaced by an ad at the provided adIndexPath. Alternate to UITableView's built-in -reloadData
+ 
+ @param adIndexPath The index path to place an ad in. This index path should represent where the ad is, including the ad within the table view.
+ */
+- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath;
+
+/**
+ Reloads the specified rows using a certain animation effect while accounting for ad(s) provided by Sharethrough. Alternate to UITableView's built-in -reloadRowsAtIndexPaths:withRowAnimation:
+ 
+ @param indexPaths An array of NSIndexPath objects identifying the rows to reload.
+ @param animation  A constant that indicates how the reloading is to be animated, for example, fade out or slide out from the bottom.
+ */
+- (void)str_reloadRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation;
+
+/**
+ Reloads the specified sections using a given animation effect while accounting for ad(s) provided by Sharethrough. Ads present in sections that now contain less rows such that the row for the ad in that section is invalid, the ad will be placed at the bottom of that section.
+ 
+ @param sections  An index set identifying the sections to reload.
+ @param animation A constant that indicates how the reloading is to be animated, for example, fade out or slide out from the bottom.
+ */
+- (void)str_reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation;
+
 /**---------------------------------------------------------------------------------------
  * @name Convenience accessor methods that are ad aware
  *  ---------------------------------------------------------------------------------------

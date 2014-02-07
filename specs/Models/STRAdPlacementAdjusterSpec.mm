@@ -484,6 +484,14 @@ describe(@"STRAdPlacementAdjuster", ^{
             });
         });
     });
+
+    describe(@"-willReloadAdIndexPathTo:", ^{
+        it(@"sets the new adIndexPath", ^{
+            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:13 inSection:12];
+            [adjuster willReloadAdIndexPathTo:newIndexPath];
+            adjuster.adIndexPath should equal(newIndexPath);
+        });
+    });
 });
 
 SPEC_END

@@ -46,6 +46,26 @@ extern const char *const STRTableViewAdGeneratorKey;
     [self moveSection:section toSection:newSection];
 }
 
+- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
+    [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];
+    [self reloadData];
+}
+
+-(void)str_reloadRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
+    [self reloadRowsAtIndexPaths:[[self str_ensureAdjuster] trueIndexPaths:indexPaths] withRowAnimation:animation];
+}
+
+- (void)str_reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+    NSIndexPath *adIndexPath = adjuster.adIndexPath;
+    NSInteger newNumberOfRowsInAdSection = [self.dataSource tableView:self numberOfRowsInSection:adIndexPath.section];
+    newNumberOfRowsInAdSection = MIN(newNumberOfRowsInAdSection - 1, adIndexPath.row);
+
+    [adjuster willReloadAdIndexPathTo:[NSIndexPath indexPathForRow:newNumberOfRowsInAdSection inSection:adIndexPath.section]];
+
+    [self reloadSections:sections withRowAnimation:animation];
+}
+
 - (UITableViewCell *)str_cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self cellForRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath]];
 }

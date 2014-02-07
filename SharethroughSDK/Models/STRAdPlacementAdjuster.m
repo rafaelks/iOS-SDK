@@ -138,6 +138,10 @@
     [self willInsertSections:[NSIndexSet indexSetWithIndex:newSection]];
 }
 
+- (void)willReloadAdIndexPathTo:(NSIndexPath *)indexPath {
+    self.adIndexPath = indexPath;
+}
+
 #pragma mark - Private
 
 - (NSInteger)numberOfSectionsChangingWithAdSection:(NSIndexSet *)sections {
