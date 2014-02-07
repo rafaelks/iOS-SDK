@@ -1,15 +1,15 @@
-#import "STRCollectionViewDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRFullCollectionViewDelegate.h"
 #import "STRCollectionViewDelegate.h"
+#import "STRIndexPathDelegateProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRCollectionViewDelegateProxySpec)
 
-describe(@"STRCollectionViewDelegateProxy", ^{
-    __block STRCollectionViewDelegateProxy *proxy;
+describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
+    __block STRIndexPathDelegateProxy *proxy;
     __block STRFullCollectionViewDelegate *originalDelegate;
     __block UICollectionView *collectionView;
     __block STRAdPlacementAdjuster *adjuster;
@@ -29,7 +29,7 @@ describe(@"STRCollectionViewDelegateProxy", ^{
         trueIndexPath = [NSIndexPath indexPathForItem:2 inSection:0];
         externalIndexPath = [NSIndexPath indexPathForItem:1 inSection:0];
 
-        proxy = [[STRCollectionViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adAdjuster:adjuster];
+        proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster];
     });
 
     context(@"when using a complete delegate", ^{
@@ -43,7 +43,7 @@ describe(@"STRCollectionViewDelegateProxy", ^{
         beforeEach(^{
             emptyDelegate = [STRCollectionViewDelegate new];
             spy_on(emptyDelegate);
-            proxy = [[STRCollectionViewDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adAdjuster:adjuster];
+            proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adPlacementAdjuster:adjuster];
         });
 
         it(@"should not respond to selector", ^{

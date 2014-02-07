@@ -11,7 +11,7 @@
 #import "STRInjector.h"
 #import "STRAdGenerator.h"
 #import <objc/runtime.h>
-#import "STRTableViewDelegateProxy.h"
+#import "STRIndexPathDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
 
 const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
@@ -24,7 +24,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
 @property (nonatomic, copy) NSString *adCellReuseIdentifier;
 @property (nonatomic, copy) NSString *placementKey;
 @property (nonatomic, weak) UIViewController *presentingViewController;
-@property (nonatomic, strong) STRTableViewDelegateProxy *proxy;
+@property (nonatomic, strong) STRIndexPathDelegateProxy *proxy;
 @property (nonatomic, strong) STRAdPlacementAdjuster *adjuster;
 
 @end
@@ -61,7 +61,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
 
     STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:tableView preferredStartingIndexPath:adStartingIndexPath]];
     self.adjuster = adjuster;
-    self.proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:self.originalDelegate adPlacementAdjuster:adjuster adHeight:adHeight];
+    self.proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:self.originalDelegate adPlacementAdjuster:adjuster adHeight:adHeight];
 
     tableView.dataSource = self;
     tableView.delegate = self.proxy;

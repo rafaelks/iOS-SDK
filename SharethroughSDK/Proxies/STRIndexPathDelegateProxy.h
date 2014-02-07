@@ -1,5 +1,5 @@
 //
-//  STRTableViewDelegateProxy.h
+//  STRIndexPathDelegateProxy.h
 //  SharethroughSDK
 //
 //  Created by sharethrough on 1/30/14.
@@ -10,10 +10,10 @@
 
 @class STRAdPlacementAdjuster;
 
-@interface STRTableViewDelegateProxy : NSObject<UITableViewDelegate>
+@interface STRIndexPathDelegateProxy : NSObject<UITableViewDelegate, UICollectionViewDelegate>
 
-@property (weak, nonatomic, readonly) id<UITableViewDelegate> originalDelegate;
+@property (weak, nonatomic, readonly) id originalDelegate;
 
 - (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight;
-
+- (id)initWithOriginalDelegate:(id<UICollectionViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster;
 @end

@@ -7,7 +7,7 @@
 #import "STRCollectionViewDataSource.h"
 #import "STRCollectionViewCell.h"
 #import "STRCollectionViewDelegate.h"
-#import "STRCollectionViewDelegateProxy.h"
+#import "STRIndexPathDelegateProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -146,11 +146,11 @@ describe(@"STRCollectionViewAdGenerator", ^{
         it(@"collectionview's delegate points to a proxy", ^{
             id<UICollectionViewDelegate> delegate = collectionView.delegate;
 
-            [delegate isKindOfClass:[STRCollectionViewDelegateProxy class]] should be_truthy;
+            [delegate isKindOfClass:[STRIndexPathDelegateProxy class]] should be_truthy;
         });
 
         it(@"proxy points to collectionview's original delegate", ^{
-            STRCollectionViewDelegateProxy *proxy = collectionView.delegate;
+            STRIndexPathDelegateProxy *proxy = (id)collectionView.delegate;
             proxy.originalDelegate should be_same_instance_as(collectionViewController);
         });
     });
