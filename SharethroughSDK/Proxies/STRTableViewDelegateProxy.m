@@ -12,7 +12,7 @@
 static NSArray *strPassthroughSelectors;
 static NSArray *strOneArgumentSelectors;
 static NSArray *strTwoArgumentSelectors;
-static NSArray *strOneArgumentWithReturnSelectors;
+static NSArray *strSelectorsWithReturnValues;
 static NSArray *strOneArgumentWithReturnIndexPathSelectors;
 
 
@@ -43,7 +43,7 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
 }
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
-    if ([self.originalDelegate respondsToSelector:aSelector] && [strPassthroughSelectors containsObject:NSStringFromSelector(aSelector)]) {
+    if ([self.originalDelegate respondsToSelector:aSelector] && ![self willAdjustIndexPathForSelector:aSelector]){
         return self.originalDelegate;
     }
 
@@ -57,11 +57,6 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
         return;
     }
 
-    if ([invocation selector] == @selector(tableView:canPerformAction:forRowAtIndexPath:withSender:)) {
-        [self handleCanPerformActionInvocation:invocation];
-        return;
-    }
-
     NSInteger indexPathIndex = [self indexOfIndexPathArgumentInInvocation:invocation];
     if (indexPathIndex == -1) return;
 
@@ -69,7 +64,7 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
     [invocation getArgument:&indexPath atIndex:indexPathIndex];
 
     if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
-        if ([strOneArgumentWithReturnSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        if ([strSelectorsWithReturnValues containsObject:NSStringFromSelector(invocation.selector)]) {
             id returnValue = 0;
             [invocation setReturnValue:&returnValue];
         }
@@ -118,25 +113,11 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
     }
 }
 
-- (void)handleCanPerformActionInvocation:(NSInvocation *)invocation {
-    __autoreleasing NSIndexPath *indexPath;
-    [invocation getArgument:&indexPath atIndex:4];
-
-    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
-        id returnValue = 0;
-        [invocation setReturnValue:&returnValue];
-    } else {
-        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
-        [invocation setArgument:&newIndexPath atIndex:4];
-        [invocation invokeWithTarget:self.originalDelegate];
-    }
-}
-
 #pragma mark - Private
 
 - (NSInteger)indexOfIndexPathArgumentInInvocation:(NSInvocation *)invocation {
     if ([strOneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]
-        || [strOneArgumentWithReturnSelectors containsObject:NSStringFromSelector(invocation.selector)]
+        || [strSelectorsWithReturnValues containsObject:NSStringFromSelector(invocation.selector)]
         || [strOneArgumentWithReturnIndexPathSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
         return 3;
     } else if ([strTwoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
@@ -145,6 +126,19 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
 
     return -1;
 }
+
+- (BOOL)willAdjustIndexPathForSelector:(SEL)selector {
+    NSString *string = NSStringFromSelector(selector);
+
+    if ([strOneArgumentSelectors containsObject:string] ||
+        [strTwoArgumentSelectors containsObject:string] ||
+        [strSelectorsWithReturnValues containsObject:string] ||
+        [strOneArgumentWithReturnIndexPathSelectors containsObject:string]) {
+        return YES;
+    }
+    return NO;
+}
+
 
 #pragma mark - Selector heck
 
@@ -172,15 +166,18 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
                                     NSStringFromSelector(@selector(tableView:didEndEditingRowAtIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:didHighlightRowAtIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:didUnhighlightRowAtIndexPath:)),
+                                    NSStringFromSelector(@selector(tableView:estimatedHeightForRowAtIndexPath:)),
+                                    NSStringFromSelector(@selector(tableView:heightForRowAtIndexPath:)),
                                     ];
 
         strTwoArgumentSelectors = @[
                                     NSStringFromSelector(@selector(tableView:willDisplayCell:forRowAtIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:)),
-                                    NSStringFromSelector(@selector(tableView:performAction:forRowAtIndexPath:withSender:))
+                                    NSStringFromSelector(@selector(tableView:performAction:forRowAtIndexPath:withSender:)),
+                                    NSStringFromSelector(@selector(tableView:canPerformAction:forRowAtIndexPath:withSender:)),
                                     ];
 
-        strOneArgumentWithReturnSelectors = @[
+        strSelectorsWithReturnValues = @[
                                               NSStringFromSelector(@selector(tableView:shouldIndentWhileEditingRowAtIndexPath:)),
                                               NSStringFromSelector(@selector(tableView:shouldShowMenuForRowAtIndexPath:)),
                                               NSStringFromSelector(@selector(tableView:shouldHighlightRowAtIndexPath:)),
