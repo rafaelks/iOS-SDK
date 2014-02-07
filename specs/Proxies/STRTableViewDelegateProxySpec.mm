@@ -2,6 +2,7 @@
 #import "STRFullTableViewDelegate.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRTableViewDelegate.h"
+#import <objc/objc-runtime.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -42,6 +43,14 @@ describe(@"STRTableViewDelegateProxy", ^{
         it(@"should fail to respond to selector", ^{
             [proxy respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)] should be_falsy;
         });
+    });
+
+    it(@"raises an error when unrecognized selectors are received", ^{
+        spy_on(adPlacementAdjuster);
+        expect(^{
+            [(id)proxy addObject:[NSObject new]]; //prints exception from objc_msgSend level.
+        }).to(raise_exception);
+        adPlacementAdjuster should_not have_received(@selector(isAdAtIndexPath:));
     });
 
     describe(@"selectors that pass through", ^{

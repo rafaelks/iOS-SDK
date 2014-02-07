@@ -47,7 +47,7 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
         return self.originalDelegate;
     }
 
-    return nil;
+    return [super forwardingTargetForSelector:aSelector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
@@ -99,7 +99,7 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
         return [(NSProxy *)self.originalDelegate methodSignatureForSelector:sel];
     }
 
-    return nil;
+    return [super methodSignatureForSelector:sel];
 }
 
 #pragma mark - Special cases
