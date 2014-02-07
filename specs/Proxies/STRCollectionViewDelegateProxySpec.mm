@@ -1,16 +1,15 @@
-#import "STRCollectionViewDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRFullCollectionViewDelegate.h"
 #import "STRCollectionViewDelegate.h"
-#import "STRTableViewDelegateProxy.h"
+#import "STRIndexPathDelegateProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRCollectionViewDelegateProxySpec)
 
-describe(@"STRCollectionViewDelegateProxy", ^{
-    __block STRTableViewDelegateProxy *proxy;
+describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
+    __block STRIndexPathDelegateProxy *proxy;
     __block STRFullCollectionViewDelegate *originalDelegate;
     __block UICollectionView *collectionView;
     __block STRAdPlacementAdjuster *adjuster;
@@ -30,21 +29,21 @@ describe(@"STRCollectionViewDelegateProxy", ^{
         trueIndexPath = [NSIndexPath indexPathForItem:2 inSection:0];
         externalIndexPath = [NSIndexPath indexPathForItem:1 inSection:0];
 
-        proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster];
+        proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster];
     });
 
-    xcontext(@"when using a complete delegate", ^{
+    context(@"when using a complete delegate", ^{
         it(@"responds to selector", ^{
             [proxy respondsToSelector:@selector(collectionView:didDeselectItemAtIndexPath:)] should be_truthy;
         });
     });
 
-    xcontext(@"when using an empty/incomplete delegate", ^{
+    context(@"when using an empty/incomplete delegate", ^{
         __block STRCollectionViewDelegate *emptyDelegate;
         beforeEach(^{
             emptyDelegate = [STRCollectionViewDelegate new];
             spy_on(emptyDelegate);
-            proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adPlacementAdjuster:adjuster];
+            proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adPlacementAdjuster:adjuster];
         });
 
         it(@"should not respond to selector", ^{
@@ -52,7 +51,7 @@ describe(@"STRCollectionViewDelegateProxy", ^{
         });
     });
 
-    xdescribe(@"1 argument selectors w/ return values", ^{
+    describe(@"1 argument selectors w/ return values", ^{
         __block BOOL returnValue;
         afterEach(^{
             adjuster should have_received(@selector(isAdAtIndexPath:));
@@ -143,7 +142,6 @@ describe(@"STRCollectionViewDelegateProxy", ^{
         });
     });
 
-    //broken
     describe(@"1 argument selectors w/ no return value", ^{
         afterEach(^{
             adjuster should have_received(@selector(isAdAtIndexPath:));
@@ -186,7 +184,7 @@ describe(@"STRCollectionViewDelegateProxy", ^{
 
         describe(@"when the index path is NOT an ad cell", ^{
             describe(@"-collectionView:didSelectItemAtIndexPath:", ^{
-                fit(@"does pass through to the original delegate.", ^{
+                it(@"does pass through to the original delegate.", ^{
                     [proxy collectionView:collectionView didSelectItemAtIndexPath:trueIndexPath];
                     adjuster should have_received(@selector(externalIndexPath:)).with(trueIndexPath);
                     originalDelegate should have_received(@selector(collectionView:didSelectItemAtIndexPath:)).with(collectionView, externalIndexPath);
@@ -220,7 +218,7 @@ describe(@"STRCollectionViewDelegateProxy", ^{
 
     });
 
-    xdescribe(@"–collectionView:didEndDisplayingCell:forItemAtIndexPath:", ^{
+    describe(@"–collectionView:didEndDisplayingCell:forItemAtIndexPath:", ^{
         context(@"when the cell is not an ad cell", ^{
             it(@"adjusts the index path and calls through to original", ^{
                 UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:externalIndexPath];
