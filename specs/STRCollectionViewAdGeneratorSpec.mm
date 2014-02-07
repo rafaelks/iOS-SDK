@@ -8,6 +8,7 @@
 #import "STRCollectionViewCell.h"
 #import "STRCollectionViewDelegate.h"
 #import "STRIndexPathDelegateProxy.h"
+#import "STRFullCollectionViewDataSource.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -73,37 +74,39 @@ describe(@"STRCollectionViewAdGenerator", ^{
                 [(UILabel *)[contentCell.contentView.subviews lastObject] text] should equal(@"item: 1, section: 0");
             });
         });
-//
-//        describe(@"when the data source implements all methods", ^{
-//            __block STRFullCollectionViewDataSource<UICollectionViewDataSource> *dataSource;
-//
-//            beforeEach(^{
-//                dataSource = [STRFullCollectionViewDataSource new];
-//                collectionView.dataSource = dataSource;
-//            });
-//
-//            describe(@"and the original data source reports there is more than one section", ^{
-//                beforeEach(^{
-//                    dataSource.numberOfSections = 2;
-//                    dataSource.rowsForEachSection = @[@1, @1];
-//
-//                    [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
-//                    [collectionView layoutIfNeeded];
-//                });
-//
-//                it(@"only inserts a row in the first section", ^{
-//                    [collectionView numberOfRowsInSection:0] should equal(2);
-//                    [collectionView numberOfRowsInSection:1] should equal(1);
-//                });
-//            });
-//
-//            it(@"forwards other selectors to the data source", ^{
-//                [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
-//                [collectionView layoutIfNeeded];
-//
-//                [collectionView footerViewForSection:0].textLabel.text should equal(@"title for footer");
-//            });
-//        });
+
+        describe(@"when the data source implements all methods", ^{
+            __block STRFullCollectionViewDataSource<UICollectionViewDataSource> *dataSource;
+
+            beforeEach(^{
+                dataSource = [STRFullCollectionViewDataSource new];
+                spy_on(dataSource);
+                collectionView.dataSource = dataSource;
+            });
+
+            it(@"forwards selectors to the data source", ^{
+                [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                [collectionView layoutIfNeeded];
+
+                [collectionView numberOfSections];
+                dataSource should have_received(@selector(numberOfSectionsInCollectionView:));
+            });
+
+            describe(@"and the original data source reports there is more than one section", ^{
+                beforeEach(^{
+                    dataSource.numberOfSections = 2;
+                    dataSource.itemsForEachSection = @[@1, @1];
+
+                    [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                    [collectionView layoutIfNeeded];
+                });
+
+                it(@"only inserts a row in the first section", ^{
+                    [collectionView numberOfItemsInSection:0] should equal(2);
+                    [collectionView numberOfItemsInSection:1] should equal(1);
+                });
+            });
+        });
     });
 //
 //    describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{

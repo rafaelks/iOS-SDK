@@ -74,6 +74,21 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
     return [self.originalDataSource collectionView:collectionView numberOfItemsInSection:section] + [self.adjuster numberOfAdsInSection:section];
 }
 
+#pragma mark - Forwarding
+
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    return [[self class] instancesRespondToSelector:aSelector] || [self.originalDataSource respondsToSelector:
+                                                                   aSelector];
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+    if ([self.originalDataSource respondsToSelector:aSelector]) {
+        return self.originalDataSource;
+    }
+
+    return nil;
+}
+
 #pragma mark - Private
 
 - (UICollectionViewCell *)adCellForCollectionView:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {

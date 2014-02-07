@@ -26,4 +26,27 @@
  */
 - (id)str_dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath;
 
+/**---------------------------------------------------------------------------------------
+ * @name Convenience accessor methods that are ad aware
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ Returns the number of items in the specified section, excluding ads added by SharethroughSDK.
+ Alternative to -numberOfItemsInSection:
+ 
+ @param section The index of the section for which you want a count of the items.
+ 
+ @return The number of items in the specified section
+ */
+- (NSInteger)str_numberOfItemsInSection:(NSInteger)section;
+
+/**
+ Returns an array of visible cells currently displayed by the collection view, excluding ads added by SharethroughSDK.
+ Alternative to -visibleCells
+ 
+ @return An array of UICollectionViewCell objects.
+ */
+- (NSArray *)str_visibleCellsWithoutAds;
+
 @end
