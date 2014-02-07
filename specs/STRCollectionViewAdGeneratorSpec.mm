@@ -108,31 +108,32 @@ describe(@"STRCollectionViewAdGenerator", ^{
             });
         });
     });
-//
-//    describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
-//        __block STRCollectionViewDataSource *dataSource;
-//
-//        beforeEach(^{
-//            dataSource = [STRCollectionViewDataSource new];
-//            collectionView.dataSource = dataSource;
-//
-//            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
-//        });
-//
-//        it(@"throws an exception if the sdk user does not register the identifier", ^{
-//            expect(^{
-//                [collectionView layoutIfNeeded];
-//            }).to(raise_exception());
-//        });
-//
-//        it(@"throws an exception if the sdk user registers a cell that doesn't conform to STRAdView", ^{
-//            [collectionView registerClass:[UICollectionViewCell class] forCellReuseIdentifier:@"adCell"];
-//
-//            expect(^{
-//                [collectionView layoutIfNeeded];
-//            }).to(raise_exception());
-//        });
-//    });
+
+    describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
+        __block STRCollectionViewDataSource *dataSource;
+
+        beforeEach(^{
+            dataSource = [STRCollectionViewDataSource new];
+            collectionView.dataSource = dataSource;
+        });
+
+        it(@"throws Apple's exception if the sdk user does not register the identifier", ^{
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"unregisteredIdentifier" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            expect(^{
+                [collectionView layoutIfNeeded];
+            }).to(raise_exception());
+        });
+
+        it(@"throws an STR exception if the sdk user registers a cell that doesn't conform to STRAdView", ^{
+            [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+
+            expect(^{
+                [collectionView layoutIfNeeded];
+            }).to(raise_exception());
+        });
+    });
+
     describe(@"wiring up collectionview delegate", ^{
         __block STRCollectionViewDelegate *collectionViewController;
 

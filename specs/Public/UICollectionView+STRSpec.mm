@@ -143,6 +143,46 @@ describe(@"UICollectionView+STR", ^{
             [[collectionView str_visibleCellsWithoutAds] count] should equal(4);
         });
     });
+
+    describe(@"-str_insertItemsAtIndexPaths:", ^{
+        __block NSArray *externalIndexPaths;
+        __block NSArray *trueIndexPaths;
+
+        beforeEach(^{
+            externalIndexPaths = @[[NSIndexPath indexPathForRow:1 inSection:1],
+                                   [NSIndexPath indexPathForRow:0 inSection:1],
+                                   [NSIndexPath indexPathForRow:4 inSection:1]];
+            trueIndexPaths = @[[NSIndexPath indexPathForRow:1 inSection:1],
+                               [NSIndexPath indexPathForRow:0 inSection:1],
+                               [NSIndexPath indexPathForRow:5 inSection:1]];
+        });
+
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
+            [noAdCollectionView str_insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
+        });
+
+        describe(@"inserting items in a collectionView with an ad", ^{
+            __block NSInteger originalItemCount;
+
+            beforeEach(^{
+                spy_on(collectionView);
+                originalItemCount = collectionView.visibleCells.count;
+                dataSource.itemsForEachSection = @[@2, @5];
+                [collectionView str_insertItemsAtIndexPaths:externalIndexPaths];
+            });
+
+            it(@"tells the table view to insert the rows at the correct index paths", ^{
+                collectionView should have_received(@selector(insertItemsAtIndexPaths:)).with(trueIndexPaths);
+
+                collectionView.visibleCells.count should equal(originalItemCount + 3);
+            });
+            
+            it(@"updates the index path of the adPlacementAdjuster", ^{
+                adPlacementAdjuster should have_received(@selector(willInsertRowsAtExternalIndexPaths:)).with(externalIndexPaths);
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForItem:3 inSection:1]);
+            });
+        });
+    });
 });
 
 SPEC_END

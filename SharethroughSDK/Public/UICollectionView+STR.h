@@ -15,7 +15,7 @@
 @interface UICollectionView (STR)
 
 /**
- *  Preferred method of dequeuing UICollectionViewCells for collection views that have been processed through SharethroughSDK.
+    Preferred method of dequeuing UICollectionViewCells for collection views that have been processed through SharethroughSDK.
     Seriously, use this method instead of the built-in -dequeueReusableCellWithReuseIdentifier:forIndexPath:.
 
 
@@ -48,5 +48,10 @@
  @return An array of UICollectionViewCell objects.
  */
 - (NSArray *)str_visibleCellsWithoutAds;
+
+
+
+
+- (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths;
 
 @end

@@ -37,6 +37,12 @@ extern const char * const STRCollectionViewAdGeneratorKey;
     return [visibleCells copy];
 }
 
+- (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+    NSArray *trueIndexPaths = [adjuster willInsertRowsAtExternalIndexPaths:indexPaths];
+    [self insertItemsAtIndexPaths:trueIndexPaths];
+}
+
 #pragma mark - Private
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
