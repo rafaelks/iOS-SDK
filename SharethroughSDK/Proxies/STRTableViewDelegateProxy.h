@@ -10,10 +10,10 @@
 
 @class STRAdPlacementAdjuster;
 
-@interface STRTableViewDelegateProxy : NSObject<UITableViewDelegate>
+@interface STRTableViewDelegateProxy : NSObject<UITableViewDelegate, UICollectionViewDelegate>
 
-@property (weak, nonatomic, readonly) id<UITableViewDelegate> originalDelegate;
+@property (weak, nonatomic, readonly) id originalDelegate;
 
 - (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight;
-
+- (id)initWithOriginalDelegate:(id<UICollectionViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster;
 @end

@@ -10,15 +10,16 @@
 #import "STRAdPlacementAdjuster.h"
 
 static NSArray *strPassthroughSelectors;
-static NSArray *strOneArgumentSelectors;
 static NSArray *strTwoArgumentSelectors;
+static NSArray *strThreeArgumentSelectors;
+static NSArray *strFourArgumentSelectors;
 static NSArray *strSelectorsWithReturnValues;
 static NSArray *strOneArgumentWithReturnIndexPathSelectors;
 
 
 @interface STRTableViewDelegateProxy ()
 
-@property (weak, nonatomic) id<UITableViewDelegate> originalDelegate;
+@property (weak, nonatomic) id originalDelegate;
 @property (strong, nonatomic) STRAdPlacementAdjuster *adPlacementAdjuster;
 @property (assign, nonatomic) CGFloat adHeight;
 
@@ -31,6 +32,18 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
         self.originalDelegate = originalDelegate;
         self.adPlacementAdjuster = adPlacementAdjuster;
         self.adHeight = adHeight;
+
+        [self instantiateSelectors];
+    }
+
+    return self;
+}
+
+- (id)initWithOriginalDelegate:(id<UICollectionViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster {
+    self = [super init];
+    if (self) {
+        self.originalDelegate = originalDelegate;
+        self.adPlacementAdjuster = adPlacementAdjuster;
 
         [self instantiateSelectors];
     }
@@ -116,22 +129,24 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
 #pragma mark - Private
 
 - (NSInteger)indexOfIndexPathArgumentInInvocation:(NSInvocation *)invocation {
-    if ([strOneArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]
-        || [strSelectorsWithReturnValues containsObject:NSStringFromSelector(invocation.selector)]
-        || [strOneArgumentWithReturnIndexPathSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
-        return 3;
-    } else if ([strTwoArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
-        return 4;
-    }
+    NSInteger index = 3;
 
-    return -1;
+    if ([strThreeArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        index = 4;
+    } else if ([strFourArgumentSelectors containsObject:NSStringFromSelector(invocation.selector)]) {
+        index = 5;
+    }
+    return index;
+
+//    return -1;
 }
 
 - (BOOL)willAdjustIndexPathForSelector:(SEL)selector {
     NSString *string = NSStringFromSelector(selector);
 
-    if ([strOneArgumentSelectors containsObject:string] ||
-        [strTwoArgumentSelectors containsObject:string] ||
+    if ([strTwoArgumentSelectors containsObject:string] ||
+        [strThreeArgumentSelectors containsObject:string] ||
+        [strFourArgumentSelectors containsObject:string] ||
         [strSelectorsWithReturnValues containsObject:string] ||
         [strOneArgumentWithReturnIndexPathSelectors containsObject:string]) {
         return YES;
@@ -156,9 +171,11 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
                                     NSStringFromSelector(@selector(tableView:willDisplayFooterView:forSection:)),
                                     NSStringFromSelector(@selector(tableView:didEndDisplayingHeaderView:forSection:)),
                                     NSStringFromSelector(@selector(tableView:didEndDisplayingFooterView:forSection:)),
+
+                                    NSStringFromSelector(@selector(collectionView:transitionLayoutForOldLayout:newLayout:)),
                                     ];
 
-        strOneArgumentSelectors = @[
+        strTwoArgumentSelectors = @[
                                     NSStringFromSelector(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:didSelectRowAtIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:didDeselectRowAtIndexPath:)),
@@ -168,14 +185,21 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
                                     NSStringFromSelector(@selector(tableView:didUnhighlightRowAtIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:estimatedHeightForRowAtIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:heightForRowAtIndexPath:)),
+
+                                    NSStringFromSelector(@selector(collectionView:didSelectItemAtIndexPath:)),
                                     ];
 
-        strTwoArgumentSelectors = @[
+        strThreeArgumentSelectors = @[
                                     NSStringFromSelector(@selector(tableView:willDisplayCell:forRowAtIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:)),
                                     NSStringFromSelector(@selector(tableView:performAction:forRowAtIndexPath:withSender:)),
                                     NSStringFromSelector(@selector(tableView:canPerformAction:forRowAtIndexPath:withSender:)),
+
+                                    NSStringFromSelector(@selector(collectionView:didEndDisplayingCell:forItemAtIndexPath:)),
+                                    NSStringFromSelector(@selector(collectionView:canPerformAction:forItemAtIndexPath:withSender:)),
+                                    NSStringFromSelector(@selector(collectionView:performAction:forItemAtIndexPath:withSender:)),
                                     ];
+        strFourArgumentSelectors = @[NSStringFromSelector(@selector(collectionView:didEndDisplayingSupplementaryView:forElementOfKind:atIndexPath:))];
 
         strSelectorsWithReturnValues = @[
                                               NSStringFromSelector(@selector(tableView:shouldIndentWhileEditingRowAtIndexPath:)),
@@ -184,7 +208,13 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
                                               NSStringFromSelector(@selector(tableView:editingStyleForRowAtIndexPath:)),
                                               NSStringFromSelector(@selector(tableView:accessoryTypeForRowWithIndexPath:)),
                                               NSStringFromSelector(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:)),
-                                              NSStringFromSelector(@selector(tableView:indentationLevelForRowAtIndexPath:))
+                                              NSStringFromSelector(@selector(tableView:indentationLevelForRowAtIndexPath:)),
+
+                                              NSStringFromSelector(@selector(collectionView:shouldSelectItemAtIndexPath:)),
+                                              NSStringFromSelector(@selector(collectionView:shouldDeselectItemAtIndexPath:)),
+                                              NSStringFromSelector(@selector(collectionView:shouldHighlightItemAtIndexPath:)),
+                                              NSStringFromSelector(@selector(collectionView:shouldShowMenuForItemAtIndexPath:)),
+                                              NSStringFromSelector(@selector(collectionView:canPerformAction:forItemAtIndexPath:withSender:)),
                                               ];
 
         strOneArgumentWithReturnIndexPathSelectors = @[
