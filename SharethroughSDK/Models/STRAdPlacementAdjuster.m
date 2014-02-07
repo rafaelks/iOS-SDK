@@ -80,15 +80,17 @@
 }
 
 - (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths {
-    NSInteger numberOfRowsBeforeAd = 0;
-    for (NSIndexPath *path in indexPaths) {
+    NSArray *sortedIndexPaths = [indexPaths sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
+        return [obj1 compare:obj2];
+    }];
+
+    for (NSIndexPath *path in sortedIndexPaths) {
         if (path.row <= self.adIndexPath.row && path.section == self.adIndexPath.section) {
-            numberOfRowsBeforeAd++;
+            self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + 1)
+                                                  inSection:self.adIndexPath.section];
         }
     }
-    
-    self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + numberOfRowsBeforeAd)
-                                          inSection:self.adIndexPath.section];
+
     return [self trueIndexPaths:indexPaths];
 }
 
