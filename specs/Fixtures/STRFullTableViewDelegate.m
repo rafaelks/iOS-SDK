@@ -81,4 +81,8 @@
 - (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {};
 
 
+#pragma mark - <UIScrollViewDelegate>
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {}
+
 @end

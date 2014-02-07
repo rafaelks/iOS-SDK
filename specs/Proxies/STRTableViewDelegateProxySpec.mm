@@ -53,6 +53,11 @@ describe(@"STRTableViewDelegateProxy", ^{
         adPlacementAdjuster should_not have_received(@selector(isAdAtIndexPath:));
     });
 
+    it(@"passes scrollview methods through", ^{
+        [proxy scrollViewDidScroll:tableView];
+        originalDelegate should have_received(@selector(scrollViewDidScroll:)).with(tableView);
+    });
+
     describe(@"selectors that pass through", ^{
         it(@"passes through -tableView:viewForHeaderInSection:", ^{
             [proxy tableView:tableView viewForHeaderInSection:1];
