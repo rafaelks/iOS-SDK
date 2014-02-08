@@ -7,6 +7,7 @@
 3. [Viewing the Sample App][sect-sampleAppIntro]
 4. [Documentation][sect-docs]
 
+<hr/>
 <div id="setup"></div>
 ### 1. Setup the SDK ##
 
@@ -36,14 +37,63 @@ After adding the frameworks, your project's "Link Binary With Libraries" should 
 ![Linked libraries][linked-libraries-screenshot]
 
 <div id="adding-your-first-native-ad"><a href="#toc">Back to top</a></div>
+</hr>
 ### 2. Adding a Sharethrough Native ad to your stream ##
+The Sharethrough SDK allows you to integrate ads directly into your stream without any extra work on your part. It keeps track of your view's delegate and datasource, and intelligently ensures that you change only your content, without inadvertently affecting any advertisements.
+
+* In whichever controller owns the ``UITableView``, add the following import statement:
+
+```
+#import <Sharethrough-SDK/SharethroughSDK.h>
+```
+
+* In your ```viewDidLoad``` method, register a cell reuse identifier specifically for advertisement cells. This reuse identifier can register the same class as the rest of your content cells, or it can register a class that will only be used for ad cells. Whichever method you choose, the class must conform to the ```<STRAdView>``` protocol. For example, in our sample app, we have the following 2 lines of code:
+
+   ```
+    [self.tableView registerClass:[STSNewsFeedCell class] forCellReuseIdentifier:kCellIdentifier];
+    [self.tableView registerClass:[STSAdNewsFeedCell class] forCellReuseIdentifier:kTableViewAdCellReuseIdentifier];
+   ```
+
+
+	```kCellIdentifier``` and ```kTableViewAdCellReuseIdentifier``` are unique NSStrings defined at the beginning of our controller, but they can be defined wherever makes sense for your application. We chose to register 2 classes - the ```STSAdNewsFeedCell``` is just a subclass of ```STSNewsFeedCell```, with additional accessors to make it compatible with the ```<STRAdView>``` protocol:
+
+	```
+	- (UILabel *)adTitle {
+	    return self.textLabel;
+	}
+
+	- (UILabel *)adDescription {
+	    return self.descriptionTextLabel;
+	}
+
+	- (UIImageView *)adThumbnail {
+	    return self.imageView;
+	}
+
+	- (UILabel *)adSponsoredBy {
+	    return self.sponsorLabel;
+	}
+	```
+
+* Also in ```viewDidLoad```, tell the SDK to place the ad in your view, like below:
+
+	```
+	[[SharethroughSDK sharedInstance] placeAdInTableView:self.tableView adCellReuseIdentifier:kTableViewAdCellReuseIdentifier placementKey:kPlacementKey presentingViewController:self adHeight:118.0 adStartingIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
+	```
+
+ - The ```adHeight``` can be the same as the rest of your rows, but doesn't have to be.
+ - The ```adStartingIndexPath``` is the advertisement's initial position.
+ - ```kPlacementKey` is an ```NSString``` representing your Sharethrough placement key.
+
+That's it! Your stream now has an elegantly embedded advertisement.
 
 
 <div id="viewing-the-sample-app"><a href="#toc">Back to top</a></div>
+</hr>
 ### 3. Viewing the sample app ##
 
-
 <div id="documentation"><a href="#toc">Back to top</a></div>
+</hr>
 ### 4. Documentation ###
 Documentation for the SDK can be viewed online [here][sdk-docs].
 
