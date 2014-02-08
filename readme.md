@@ -1,10 +1,17 @@
 # Sharethrough iOS-SDK #
-## Getting Started ##
+## Quick Links ##
 * [Download SDK][sdk] The latest version of the SDK.
 * [Sample App][sample-app] Sample iOS app which utilizes the SDK.
 * [View SDK Documentation][sdk-docs]
 
-## Setup the SDK ##
+<div id="toc"></div>
+## Table of Contents ##
+1. [Setting up the SDK][sect-setup]
+2. [Adding a Sharethrough Native ad to your app][sect-firstAd]
+3. [Viewing the Sample App][sect-sampleAppIntro]
+
+<div id="setup"></div>
+## 1. Setup the SDK ##
 
 1. Download the SDK. The latest version can be found [here][sdk].
 
@@ -31,6 +38,14 @@ The following list of frameworks are required:
 After adding the frameworks, your project's "Link Binary With Libraries" should look something like the following:
 ![Linked libraries][linked-libraries-screenshot]
 
+<div id="adding-your-first-native-ad"><a href="#toc">Back to top</a></div>
+## 2. Adding a Sharethrough Native ad to your stream ##
+
+<div id="viewing-the-sample-app"><a href="#toc">Back to top</a></div>
+## 3. Viewing the sample app ##
+
+<div><a href="#toc">Back to top</a></div>
+
 ## Known Issues ##
 If you're running your iOS app on a physical iPad while connected to a computer and play a Youtube video from an ad, error messages will be displayed in the Xcode console. This is a known iPad on iOS7 issue, but do not affect your app's functionality. More information can be found [here][stack-overflow]
 
@@ -53,3 +68,6 @@ and then restarting Xcode to pick up the new docset.
 [stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video
 [sample-app]: https://github.com/sharethrough/iOS-Sample-App
 [sdk-docs]: iOS/index.html
+[sect-setup]: #setup
+[sect-firstAd]: #adding-your-first-native-ad
+[sect-sampleAppIntro]: #viewing-the-sample-app
