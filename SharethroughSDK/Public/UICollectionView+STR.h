@@ -15,7 +15,7 @@
 @interface UICollectionView (STR)
 
 /**
- *  Preferred method of dequeuing UICollectionViewCells for collection views that have been processed through SharethroughSDK.
+    Preferred method of dequeuing UICollectionViewCells for collection views that have been processed through SharethroughSDK.
     Seriously, use this method instead of the built-in -dequeueReusableCellWithReuseIdentifier:forIndexPath:.
 
 
@@ -26,4 +26,49 @@
  */
 - (id)str_dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath;
 
+/**---------------------------------------------------------------------------------------
+ * @name Convenience accessor methods that are ad aware
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ Returns the number of items in the specified section, excluding ads added by SharethroughSDK.
+ Alternative to -numberOfItemsInSection:
+ 
+ @param section The index of the section for which you want a count of the items.
+ 
+ @return The number of items in the specified section
+ */
+- (NSInteger)str_numberOfItemsInSection:(NSInteger)section;
+
+/**
+ Returns an array of visible cells currently displayed by the collection view, excluding ads added by SharethroughSDK.
+ Alternative to -visibleCells
+ 
+ @return An array of UICollectionViewCell objects.
+ */
+- (NSArray *)str_visibleCellsWithoutAds;
+
+
+/**
+ Supports inserting multiple items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -insertItemsAtIndexPaths:
+
+ @param indexPaths An array of NSIndexPath objects each representing an item in the collection view
+ */
+- (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths;
+
+/**
+ Supports deleting multiple items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -deleteItemsAtIndexPaths:
+
+ @param indexPaths An array of NSIndexPath objects each representing an item in the collection view
+ */
+- (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths;
+
+/**
+ Supports moving an item while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -moveItemAtIndexPath:toIndexPath:
+
+ @param indexPath An index path identifying the item to move.
+ @param newIndexPath An index path identifying the item that is the destination of the index at indexPath. The existing row at that location slides up or down to an adjoining index position to make room for it.
+ */
+- (void)str_moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
 @end

@@ -12,7 +12,7 @@
 #import "STRAdPlacementAdjuster.h"
 #import "STRAdView.h"
 #import "STRAdGenerator.h"
-#import "STRCollectionViewDelegateProxy.h"
+#import "STRIndexPathDelegateProxy.h"
 
 const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGeneratorKey";
 
@@ -25,7 +25,7 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
 @property (nonatomic, strong) NSString *adCellReuseIdentifier;
 @property (nonatomic, strong) NSString *placementKey;
 @property (nonatomic, weak) UIViewController *presentingViewController;
-@property (nonatomic, strong, readwrite) STRCollectionViewDelegateProxy *proxy;
+@property (nonatomic, strong, readwrite) STRIndexPathDelegateProxy *proxy;
 
 @end
 
@@ -53,7 +53,7 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
     self.adCellReuseIdentifier = adCellReuseIdentifier;
     self.placementKey = placementKey;
     self.presentingViewController = presentingViewController;
-    self.proxy = [[STRCollectionViewDelegateProxy alloc] initWithOriginalDelegate:collectionView.delegate adAdjuster:adjuster];
+    self.proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:collectionView.delegate adPlacementAdjuster:adjuster];
     collectionView.delegate = self.proxy;
 
     objc_setAssociatedObject(collectionView, STRCollectionViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -74,13 +74,24 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
     return [self.originalDataSource collectionView:collectionView numberOfItemsInSection:section] + [self.adjuster numberOfAdsInSection:section];
 }
 
+#pragma mark - Forwarding
+
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    return [[self class] instancesRespondToSelector:aSelector] || [self.originalDataSource respondsToSelector:aSelector];
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+    if ([self.originalDataSource respondsToSelector:aSelector]) {
+        return self.originalDataSource;
+    }
+
+    return [super forwardingTargetForSelector:aSelector];
+}
+
 #pragma mark - Private
 
 - (UICollectionViewCell *)adCellForCollectionView:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell<STRAdView> *adCell = [collectionView dequeueReusableCellWithReuseIdentifier:self.adCellReuseIdentifier forIndexPath:indexPath];
-    if (!adCell) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib before providing to SharethroughSDK.", self.adCellReuseIdentifier];
-    }
 
     if (![adCell conformsToProtocol:@protocol(STRAdView)]) {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib that conforms to the STRAdView protocol.", self.adCellReuseIdentifier];

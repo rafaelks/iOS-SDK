@@ -7,7 +7,7 @@
 #import "STRFullTableViewDataSource.h"
 #import "STRTableViewDataSource.h"
 #import "STRTableViewCell.h"
-#import "STRTableViewDelegateProxy.h"
+#import "STRIndexPathDelegateProxy.h"
 #import "STRTableViewDelegate.h"
 #import "STRFullTableViewDelegate.h"
 #import "STRTableViewDataSourceProxy.h"
@@ -54,11 +54,12 @@ describe(@"STRTableViewAdGenerator", ^{
 
         it(@"points the table view's delegate to a proxy", ^{
             id<UITableViewDelegate> delegate = tableView.delegate;
-            delegate should be_instance_of([STRTableViewDelegateProxy class]);
+            delegate should be_instance_of([STRIndexPathDelegateProxy class]);
         });
 
-        it(@"points the proxy's delegate to the table view's original delegate", ^{
-            STRTableViewDelegateProxy *proxy = tableView.delegate;
+
+        it(@"proxy points to tableview's original delegate", ^{
+            STRIndexPathDelegateProxy *proxy = (id)tableView.delegate;
             proxy.originalDelegate should be_same_instance_as(tableViewController);
         });
     });

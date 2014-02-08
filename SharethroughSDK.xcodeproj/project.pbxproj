@@ -99,9 +99,10 @@
 		AE6C808C1899873B008FD848 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
 		AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
 		AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
+		AE842DFA18A564020018F992 /* STRFullCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = AE842DF918A564020018F992 /* STRFullCollectionViewDataSource.m */; };
 		AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */; };
-		AE8AF505189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */; };
-		AE8AF506189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */; };
+		AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRIndexPathDelegateProxy.m */; };
+		AE8AF506189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRIndexPathDelegateProxy.m */; };
 		AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF508189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm */; };
 		AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
 		AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
@@ -140,8 +141,6 @@
 		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
 		AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */; };
 		AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */; };
-		AED6D1A118A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */; };
-		AED6D1A318A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */; };
 		AED6D1A518A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */; };
 		AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */; };
 		AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */; };
@@ -316,10 +315,12 @@
 		AE6C808A1899873B008FD848 /* STRAppModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAppModule.m; sourceTree = "<group>"; };
 		AE6C808D1899923E008FD848 /* STRSingletonBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSingletonBlockWrapper.h; sourceTree = "<group>"; };
 		AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSingletonBlockWrapper.m; sourceTree = "<group>"; };
+		AE842DF818A564020018F992 /* STRFullCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFullCollectionViewDataSource.h; sourceTree = "<group>"; };
+		AE842DF918A564020018F992 /* STRFullCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFullCollectionViewDataSource.m; sourceTree = "<group>"; };
 		AE8AF4FB189B07ED00A65B27 /* STRFullTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFullTableViewDelegate.h; sourceTree = "<group>"; };
 		AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFullTableViewDelegate.m; sourceTree = "<group>"; };
-		AE8AF503189B0B5900A65B27 /* STRTableViewDelegateProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDelegateProxy.h; sourceTree = "<group>"; };
-		AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDelegateProxy.m; sourceTree = "<group>"; };
+		AE8AF503189B0B5900A65B27 /* STRIndexPathDelegateProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRIndexPathDelegateProxy.h; sourceTree = "<group>"; };
+		AE8AF504189B0B5900A65B27 /* STRIndexPathDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRIndexPathDelegateProxy.m; sourceTree = "<group>"; };
 		AE8AF508189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDelegateProxySpec.mm; sourceTree = "<group>"; };
 		AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdPlacementAdjuster.h; sourceTree = "<group>"; };
 		AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdPlacementAdjuster.m; sourceTree = "<group>"; };
@@ -359,8 +360,6 @@
 		AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRFakeAdGeneratorSpec.mm; sourceTree = "<group>"; };
 		AED6D19B18A400D7005DFDF4 /* STRCollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCollectionViewDelegate.h; sourceTree = "<group>"; };
 		AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCollectionViewDelegate.m; sourceTree = "<group>"; };
-		AED6D19E18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCollectionViewDelegateProxy.h; sourceTree = "<group>"; };
-		AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCollectionViewDelegateProxy.m; sourceTree = "<group>"; };
 		AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRCollectionViewDelegateProxySpec.mm; sourceTree = "<group>"; };
 		AED6D1A618A4079C005DFDF4 /* STRFullCollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFullCollectionViewDelegate.h; sourceTree = "<group>"; };
 		AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFullCollectionViewDelegate.m; sourceTree = "<group>"; };
@@ -556,6 +555,8 @@
 				AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */,
 				AE2246FC1888782A00626A29 /* STRFullAdView.h */,
 				AE2246FD1888782A00626A29 /* STRFullAdView.m */,
+				AED6D1A618A4079C005DFDF4 /* STRFullCollectionViewDelegate.h */,
+				AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */,
 				AE6C806F1898925C008FD848 /* STRFullTableViewDataSource.h */,
 				AE6C80701898925C008FD848 /* STRFullTableViewDataSource.m */,
 				AE8AF4FB189B07ED00A65B27 /* STRFullTableViewDelegate.h */,
@@ -572,8 +573,8 @@
 				AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */,
 				AE8AF4FB189B07ED00A65B27 /* STRFullTableViewDelegate.h */,
 				AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */,
-				AED6D1A618A4079C005DFDF4 /* STRFullCollectionViewDelegate.h */,
-				AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */,
+				AE842DF818A564020018F992 /* STRFullCollectionViewDataSource.h */,
+				AE842DF918A564020018F992 /* STRFullCollectionViewDataSource.m */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -695,10 +696,8 @@
 			children = (
 				AEFBC49D18A5539500E24BBB /* STRTableViewDataSourceProxy.h */,
 				AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */,
-				AE8AF503189B0B5900A65B27 /* STRTableViewDelegateProxy.h */,
-				AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */,
-				AED6D19E18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h */,
-				AED6D19F18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m */,
+				AE8AF503189B0B5900A65B27 /* STRIndexPathDelegateProxy.h */,
+				AE8AF504189B0B5900A65B27 /* STRIndexPathDelegateProxy.m */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -1034,7 +1033,7 @@
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
 				AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */,
 				AE52B860188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
-				AE8AF506189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */,
+				AE8AF506189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
 				AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */,
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
@@ -1073,13 +1072,13 @@
 				AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */,
 				AE1F67241899BBC600E184D6 /* STRTableViewDataSource.m in Sources */,
 				AE52FD7818A41AB2009F69BD /* STRTableViewAdGenerator.m in Sources */,
-				AED6D1A318A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
 				AE52FD7618A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
 				AE022DFE188E021C00D02568 /* STRRestClientSpec.mm in Sources */,
 				AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */,
 				AE58227C18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
 				AE1F671D1899AD9E00E184D6 /* STRTableViewCell.m in Sources */,
+				AE842DFA18A564020018F992 /* STRFullCollectionViewDataSource.m in Sources */,
 				AE3120E31889E76F00297F01 /* STRPromise.m in Sources */,
 				AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
@@ -1101,7 +1100,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AED6D1A118A4014F005DFDF4 /* STRCollectionViewDelegateProxy.m in Sources */,
 				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
 				AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */,
 				AE52FD7318A41AB2009F69BD /* STRCollectionViewAdGenerator.m in Sources */,
@@ -1120,7 +1118,7 @@
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE52FD7718A41AB2009F69BD /* STRTableViewAdGenerator.m in Sources */,
-				AE8AF505189B0B5900A65B27 /* STRTableViewDelegateProxy.m in Sources */,
+				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
 				AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */,
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,

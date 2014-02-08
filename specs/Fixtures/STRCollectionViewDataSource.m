@@ -13,7 +13,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.itemsForEachSection = @[@1];
+        self.itemsForEachSection = @[@2];
     }
 
     return self;

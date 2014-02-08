@@ -7,7 +7,8 @@
 #import "STRCollectionViewDataSource.h"
 #import "STRCollectionViewCell.h"
 #import "STRCollectionViewDelegate.h"
-#import "STRCollectionViewDelegateProxy.h"
+#import "STRIndexPathDelegateProxy.h"
+#import "STRFullCollectionViewDataSource.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -73,63 +74,66 @@ describe(@"STRCollectionViewAdGenerator", ^{
                 [(UILabel *)[contentCell.contentView.subviews lastObject] text] should equal(@"item: 1, section: 0");
             });
         });
-//
-//        describe(@"when the data source implements all methods", ^{
-//            __block STRFullCollectionViewDataSource<UICollectionViewDataSource> *dataSource;
-//
-//            beforeEach(^{
-//                dataSource = [STRFullCollectionViewDataSource new];
-//                collectionView.dataSource = dataSource;
-//            });
-//
-//            describe(@"and the original data source reports there is more than one section", ^{
-//                beforeEach(^{
-//                    dataSource.numberOfSections = 2;
-//                    dataSource.rowsForEachSection = @[@1, @1];
-//
-//                    [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
-//                    [collectionView layoutIfNeeded];
-//                });
-//
-//                it(@"only inserts a row in the first section", ^{
-//                    [collectionView numberOfRowsInSection:0] should equal(2);
-//                    [collectionView numberOfRowsInSection:1] should equal(1);
-//                });
-//            });
-//
-//            it(@"forwards other selectors to the data source", ^{
-//                [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
-//                [collectionView layoutIfNeeded];
-//
-//                [collectionView footerViewForSection:0].textLabel.text should equal(@"title for footer");
-//            });
-//        });
+
+        describe(@"when the data source implements all methods", ^{
+            __block STRFullCollectionViewDataSource<UICollectionViewDataSource> *dataSource;
+
+            beforeEach(^{
+                dataSource = [STRFullCollectionViewDataSource new];
+                spy_on(dataSource);
+                collectionView.dataSource = dataSource;
+            });
+
+            it(@"forwards selectors to the data source", ^{
+                [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                [collectionView layoutIfNeeded];
+
+                [collectionView numberOfSections];
+                dataSource should have_received(@selector(numberOfSectionsInCollectionView:));
+            });
+
+            describe(@"and the original data source reports there is more than one section", ^{
+                beforeEach(^{
+                    dataSource.numberOfSections = 2;
+                    dataSource.itemsForEachSection = @[@1, @1];
+
+                    [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                    [collectionView layoutIfNeeded];
+                });
+
+                it(@"only inserts a row in the first section", ^{
+                    [collectionView numberOfItemsInSection:0] should equal(2);
+                    [collectionView numberOfItemsInSection:1] should equal(1);
+                });
+            });
+        });
     });
-//
-//    describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
-//        __block STRCollectionViewDataSource *dataSource;
-//
-//        beforeEach(^{
-//            dataSource = [STRCollectionViewDataSource new];
-//            collectionView.dataSource = dataSource;
-//
-//            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10];
-//        });
-//
-//        it(@"throws an exception if the sdk user does not register the identifier", ^{
-//            expect(^{
-//                [collectionView layoutIfNeeded];
-//            }).to(raise_exception());
-//        });
-//
-//        it(@"throws an exception if the sdk user registers a cell that doesn't conform to STRAdView", ^{
-//            [collectionView registerClass:[UICollectionViewCell class] forCellReuseIdentifier:@"adCell"];
-//
-//            expect(^{
-//                [collectionView layoutIfNeeded];
-//            }).to(raise_exception());
-//        });
-//    });
+
+    describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
+        __block STRCollectionViewDataSource *dataSource;
+
+        beforeEach(^{
+            dataSource = [STRCollectionViewDataSource new];
+            collectionView.dataSource = dataSource;
+        });
+
+        it(@"throws Apple's exception if the sdk user does not register the identifier", ^{
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"unregisteredIdentifier" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            expect(^{
+                [collectionView layoutIfNeeded];
+            }).to(raise_exception());
+        });
+
+        it(@"throws an STR exception if the sdk user registers a cell that doesn't conform to STRAdView", ^{
+            [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+
+            expect(^{
+                [collectionView layoutIfNeeded];
+            }).to(raise_exception());
+        });
+    });
+
     describe(@"wiring up collectionview delegate", ^{
         __block STRCollectionViewDelegate *collectionViewController;
 
@@ -146,11 +150,11 @@ describe(@"STRCollectionViewAdGenerator", ^{
         it(@"collectionview's delegate points to a proxy", ^{
             id<UICollectionViewDelegate> delegate = collectionView.delegate;
 
-            [delegate isKindOfClass:[STRCollectionViewDelegateProxy class]] should be_truthy;
+            [delegate isKindOfClass:[STRIndexPathDelegateProxy class]] should be_truthy;
         });
 
         it(@"proxy points to collectionview's original delegate", ^{
-            STRCollectionViewDelegateProxy *proxy = collectionView.delegate;
+            STRIndexPathDelegateProxy *proxy = (id)collectionView.delegate;
             proxy.originalDelegate should be_same_instance_as(collectionViewController);
         });
     });

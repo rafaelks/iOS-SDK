@@ -1,4 +1,4 @@
-#import "STRTableViewDelegateProxy.h"
+#import "STRIndexPathDelegateProxy.h"
 #import "STRFullTableViewDelegate.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRTableViewDelegate.h"
@@ -9,8 +9,8 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRTableViewDelegateProxySpec)
 
-describe(@"STRTableViewDelegateProxy", ^{
-    __block STRTableViewDelegateProxy *proxy;
+describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
+    __block STRIndexPathDelegateProxy *proxy;
     __block STRFullTableViewDelegate *originalDelegate;
     __block UITableView *tableView;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
@@ -23,7 +23,7 @@ describe(@"STRTableViewDelegateProxy", ^{
 
         adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
 
-        proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adjuster:adPlacementAdjuster adHeight:51.0];
+        proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
     });
 
     context(@"when using a complete delegate", ^{
@@ -38,7 +38,7 @@ describe(@"STRTableViewDelegateProxy", ^{
             emptyDelegate = [STRTableViewDelegate new];
             spy_on(emptyDelegate);
 
-            proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adjuster:adPlacementAdjuster adHeight:51.0];
+            proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
             tableView.delegate = proxy;
         });
 
