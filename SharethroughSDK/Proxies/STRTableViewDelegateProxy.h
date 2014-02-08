@@ -14,6 +14,6 @@
 
 @property (weak, nonatomic, readonly) id<UITableViewDelegate> originalDelegate;
 
-- (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight;
+- (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight;
 
 @end

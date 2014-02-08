@@ -13,18 +13,15 @@
 #import <objc/runtime.h>
 #import "STRTableViewDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
+#import "STRTableViewDataSourceProxy.h"
 
 const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
 
-@interface STRTableViewAdGenerator ()<UITableViewDataSource>
+@interface STRTableViewAdGenerator ()
 
 @property (nonatomic, strong) STRInjector *injector;
-@property (nonatomic, weak) id<UITableViewDataSource> originalDataSource;
-@property (nonatomic, weak) id<UITableViewDelegate> originalDelegate;
-@property (nonatomic, copy) NSString *adCellReuseIdentifier;
-@property (nonatomic, copy) NSString *placementKey;
-@property (nonatomic, weak) UIViewController *presentingViewController;
-@property (nonatomic, strong) STRTableViewDelegateProxy *proxy;
+@property (nonatomic, strong) STRTableViewDelegateProxy *delegateProxy;
+@property (nonatomic, strong) STRTableViewDataSourceProxy *dataSourceProxy;
 @property (nonatomic, strong) STRAdPlacementAdjuster *adjuster;
 
 @end
@@ -46,78 +43,31 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
   presentingViewController:(UIViewController *)presentingViewController
                   adHeight:(CGFloat)adHeight
        adStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
-    self.adCellReuseIdentifier = adCellReuseIdentifier;
-    self.placementKey = placementKey;
-    self.presentingViewController = presentingViewController;
-
-    self.originalDelegate = tableView.delegate;
-    self.originalDataSource = tableView.dataSource;
-
     STRTableViewAdGenerator *oldGenerator = objc_getAssociatedObject(tableView, STRTableViewAdGeneratorKey);
+
+    id<UITableViewDataSource> originalDataSource = tableView.dataSource;
+    id<UITableViewDelegate> originalDelegate = tableView.delegate;
     if (oldGenerator) {
-        self.originalDataSource = oldGenerator.originalDataSource;
-        self.originalDelegate = oldGenerator.originalDelegate;
+        originalDataSource = oldGenerator.dataSourceProxy.originalDataSource;
+        originalDelegate = oldGenerator.delegateProxy.originalDelegate;
     }
 
     STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:tableView preferredStartingIndexPath:adStartingIndexPath]];
     self.adjuster = adjuster;
-    self.proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:self.originalDelegate adPlacementAdjuster:adjuster adHeight:adHeight];
 
-    tableView.dataSource = self;
-    tableView.delegate = self.proxy;
+    self.dataSourceProxy = [[STRTableViewDataSourceProxy alloc] initWithOriginalDataSource:originalDataSource adjuster:adjuster adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+
+    self.delegateProxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adjuster:adjuster adHeight:adHeight];
+
+    tableView.dataSource = self.dataSourceProxy;
+    tableView.delegate = self.delegateProxy;
 
     [tableView reloadData];
 
     objc_setAssociatedObject(tableView, STRTableViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-#pragma mark - <UITableViewDataSource>
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.originalDataSource tableView:tableView numberOfRowsInSection:section] + [self.adjuster numberOfAdsInSection:section];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        return [self adCellForTableView:tableView];
-    }
-
-    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
-    return [self.originalDataSource tableView:tableView cellForRowAtIndexPath:externalIndexPath];
-}
-
-#pragma mark - Forwarding
-
-- (BOOL)respondsToSelector:(SEL)aSelector {
-    return [[self class] instancesRespondToSelector:aSelector] || [self.originalDataSource respondsToSelector:
-                                                                   aSelector];
-}
-
-- (id)forwardingTargetForSelector:(SEL)aSelector {
-    if ([self.originalDataSource respondsToSelector:aSelector]) {
-        return self.originalDataSource;
-    }
-
-    return nil;
-}
-
 #pragma mark - Private
-
-- (UITableViewCell *)adCellForTableView:(UITableView *)tableView {
-    UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];
-    if (!adCell) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib before providing to SharethroughSDK.", self.adCellReuseIdentifier];
-    }
-
-    if (![adCell conformsToProtocol:@protocol(STRAdView)]) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib that conforms to the STRAdView protocol.", self.adCellReuseIdentifier];
-    }
-
-    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
-
-    return adCell;
-}
 
 - (NSIndexPath *)initialIndexPathForAd:(UITableView *)tableView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
     NSInteger numberOfRowsInAdSection = [tableView numberOfRowsInSection:adStartingIndexPath.section];

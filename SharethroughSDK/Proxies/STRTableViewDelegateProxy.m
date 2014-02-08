@@ -18,15 +18,15 @@ static NSArray *strOneArgumentWithReturnIndexPathSelectors;
 
 @interface STRTableViewDelegateProxy ()
 
-@property (weak, nonatomic) id<UITableViewDelegate> originalDelegate;
 @property (strong, nonatomic) STRAdPlacementAdjuster *adPlacementAdjuster;
+@property (weak, nonatomic, readwrite) id<UITableViewDelegate> originalDelegate;
 @property (assign, nonatomic) CGFloat adHeight;
 
 @end
 
 @implementation STRTableViewDelegateProxy
 
-- (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight {
+- (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight {
     if (self) {
         self.originalDelegate = originalDelegate;
         self.adPlacementAdjuster = adPlacementAdjuster;

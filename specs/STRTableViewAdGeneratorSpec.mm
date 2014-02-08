@@ -10,6 +10,7 @@
 #import "STRTableViewDelegateProxy.h"
 #import "STRTableViewDelegate.h"
 #import "STRFullTableViewDelegate.h"
+#import "STRTableViewDataSourceProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -38,7 +39,7 @@ describe(@"STRTableViewAdGenerator", ^{
         tableView.frame = CGRectMake(0, 0, 100, 400);
     });
 
-    describe(@"wiring up tableview delegate", ^{
+    describe(@"taking over the table view delegate", ^{
         __block STRTableViewDelegate *tableViewController;
 
         beforeEach(^{
@@ -51,19 +52,40 @@ describe(@"STRTableViewAdGenerator", ^{
             [tableView layoutIfNeeded];
         });
 
-        it(@"tableview's delegate points to a proxy", ^{
+        it(@"points the table view's delegate to a proxy", ^{
             id<UITableViewDelegate> delegate = tableView.delegate;
-
-            [delegate isKindOfClass:[STRTableViewDelegateProxy class]] should be_truthy;
+            delegate should be_instance_of([STRTableViewDelegateProxy class]);
         });
 
-        it(@"proxy points to tableview's original delegate", ^{
+        it(@"points the proxy's delegate to the table view's original delegate", ^{
             STRTableViewDelegateProxy *proxy = tableView.delegate;
             proxy.originalDelegate should be_same_instance_as(tableViewController);
         });
     });
 
+    describe(@"taking over the table view data source", ^{
+        __block STRTableViewDataSource *dataSource;
 
+        beforeEach(^{
+            dataSource = [STRTableViewDataSource new];
+
+            tableView.dataSource = dataSource;
+            [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
+
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:nil ];
+            [tableView layoutIfNeeded];
+        });
+
+        it(@"points the table view's data source to a proxy", ^{
+            id<UITableViewDataSource> dataSource = tableView.dataSource;
+            dataSource should be_instance_of([STRTableViewDataSourceProxy class]);
+        });
+
+        it(@"points the proxy's data source to the table view's original data source", ^{
+            STRTableViewDataSourceProxy *proxy = tableView.dataSource;
+            proxy.originalDataSource should be_same_instance_as(dataSource);
+        });
+    });
 
     describe(@"placing an ad in the table view", ^{
         beforeEach(^{
@@ -75,68 +97,6 @@ describe(@"STRTableViewAdGenerator", ^{
             [tableView layoutIfNeeded];
 
             objc_getAssociatedObject(tableView, STRTableViewAdGeneratorKey) should be_same_instance_as(tableViewAdGenerator);
-        });
-
-        describe(@"when the data source only implements required methods", ^{
-            __block STRTableViewDataSource<UITableViewDataSource> *dataSource;
-
-            beforeEach(^{
-                dataSource = [STRTableViewDataSource new];
-                dataSource.rowsForEachSection = @[@2];
-                tableView.dataSource = dataSource;
-
-                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:nil ];
-                [tableView layoutIfNeeded];
-            });
-
-            it(@"inserts an extra row in the first section", ^{
-                [tableView numberOfSections] should equal(1);
-                [tableView numberOfRowsInSection:0] should equal(3);
-            });
-
-            it(@"inserts an ad into the second row of the first section", ^{
-                UITableViewCell *contentCell = tableView.visibleCells[0];
-                contentCell.textLabel.text should equal(@"row: 0, section: 0");
-
-                STRTableViewCell *adCell = (STRTableViewCell *) tableView.visibleCells[1];
-                adCell should be_instance_of([STRTableViewCell class]);
-
-                adGenerator should have_received(@selector(placeAdInView:placementKey:presentingViewController:delegate:)).with(adCell, @"placementKey", presentingViewController, nil);
-
-                contentCell = tableView.visibleCells[2];
-                contentCell.textLabel.text should equal(@"row: 1, section: 0");
-            });
-        });
-
-        describe(@"when the data source implements all methods", ^{
-            __block STRFullTableViewDataSource<UITableViewDataSource> *dataSource;
-
-            beforeEach(^{
-                dataSource = [STRFullTableViewDataSource new];
-                tableView.dataSource = dataSource;
-            });
-
-            describe(@"and the original data source reports there is more than one section", ^{
-                beforeEach(^{
-                    dataSource.numberOfSections = 2;
-                    dataSource.rowsForEachSection = @[@1, @1];
-
-                    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:nil ];
-                    [tableView layoutIfNeeded];
-                });
-
-                it(@"only inserts a row in the first section", ^{
-                    [tableView numberOfRowsInSection:0] should equal(2);
-                    [tableView numberOfRowsInSection:1] should equal(1);
-                });
-            });
-
-            it(@"forwards other selectors to the data source", ^{
-                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:nil ];
-                [tableView layoutIfNeeded];
-
-                [tableView footerViewForSection:0].textLabel.text should equal(@"title for footer");
-            });
         });
     });
 
@@ -214,31 +174,6 @@ describe(@"STRTableViewAdGenerator", ^{
 
             delegate should have_received(@selector(tableView:didSelectRowAtIndexPath:))
             .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
-        });
-    });
-
-    describe(@"placing an ad in the table view when the reuse identifier was badly registered", ^{
-        __block STRTableViewDataSource *dataSource;
-
-        beforeEach(^{
-            dataSource = [STRTableViewDataSource new];
-            tableView.dataSource = dataSource;
-
-            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:nil ];
-        });
-
-        it(@"throws an exception if the sdk user does not register the identifier", ^{
-            expect(^{
-                [tableView layoutIfNeeded];
-            }).to(raise_exception());
-        });
-
-        it(@"throws an exception if the sdk user registers a cell that doesn't conform to STRAdView", ^{
-            [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"adCell"];
-
-            expect(^{
-                [tableView layoutIfNeeded];
-            }).to(raise_exception());
         });
     });
 });

@@ -149,6 +149,9 @@
 		AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */; };
 		AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */; };
 		AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
+		AEFBC49F18A5539500E24BBB /* STRTableViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */; };
+		AEFBC4A018A5539500E24BBB /* STRTableViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */; };
+		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 		AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
 		AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
@@ -366,6 +369,9 @@
 		AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+STR.h"; sourceTree = "<group>"; };
 		AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+STR.m"; sourceTree = "<group>"; };
 		AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UITableView+STRSpec.mm"; sourceTree = "<group>"; };
+		AEFBC49D18A5539500E24BBB /* STRTableViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDataSourceProxy.h; sourceTree = "<group>"; };
+		AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDataSourceProxy.m; sourceTree = "<group>"; };
+		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
 		AEFBF1681890480700ADD742 /* youtube_embed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = youtube_embed.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -687,6 +693,8 @@
 		AE8AF502189B0B0D00A65B27 /* Proxies */ = {
 			isa = PBXGroup;
 			children = (
+				AEFBC49D18A5539500E24BBB /* STRTableViewDataSourceProxy.h */,
+				AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */,
 				AE8AF503189B0B5900A65B27 /* STRTableViewDelegateProxy.h */,
 				AE8AF504189B0B5900A65B27 /* STRTableViewDelegateProxy.m */,
 				AED6D19E18A4014F005DFDF4 /* STRCollectionViewDelegateProxy.h */,
@@ -700,6 +708,7 @@
 			children = (
 				AE8AF508189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm */,
 				AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */,
+				AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -1041,6 +1050,7 @@
 				AE9C463D189C7776001B407A /* STRVideoControllerSpec.mm in Sources */,
 				AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */,
 				AE52FD7418A41AB2009F69BD /* STRCollectionViewAdGenerator.m in Sources */,
+				AEFBC4A018A5539500E24BBB /* STRTableViewDataSourceProxy.m in Sources */,
 				AE46CE6D189844AB0096BDE9 /* STRSession.m in Sources */,
 				AE6C80711898925C008FD848 /* STRFullTableViewDataSource.m in Sources */,
 				AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */,
@@ -1055,6 +1065,7 @@
 				AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */,
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
+				AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */,
 				AE6C80801899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */,
 				AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */,
@@ -1117,6 +1128,7 @@
 				AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */,
 				AE52FD7518A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
 				AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */,
+				AEFBC49F18A5539500E24BBB /* STRTableViewDataSourceProxy.m in Sources */,
 				AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C80811899861E008FD848 /* STRInjector.m in Sources */,

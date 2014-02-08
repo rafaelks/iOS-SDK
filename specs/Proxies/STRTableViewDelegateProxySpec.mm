@@ -23,7 +23,7 @@ describe(@"STRTableViewDelegateProxy", ^{
 
         adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
 
-        proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
+        proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adjuster:adPlacementAdjuster adHeight:51.0];
     });
 
     context(@"when using a complete delegate", ^{
@@ -37,7 +37,9 @@ describe(@"STRTableViewDelegateProxy", ^{
         beforeEach(^{
             emptyDelegate = [STRTableViewDelegate new];
             spy_on(emptyDelegate);
-            proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adPlacementAdjuster:adPlacementAdjuster adHeight:51.0];
+
+            proxy = [[STRTableViewDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adjuster:adPlacementAdjuster adHeight:51.0];
+            tableView.delegate = proxy;
         });
 
         it(@"should fail to respond to selector", ^{
