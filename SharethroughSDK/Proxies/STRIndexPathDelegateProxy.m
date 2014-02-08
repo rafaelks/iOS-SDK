@@ -48,6 +48,12 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
     return self;
 }
 
+- (instancetype)proxyWithNewDelegate:(id)newDelegate {
+    return [[[self class] alloc] initWithOriginalDelegate:newDelegate adPlacementAdjuster:self.adPlacementAdjuster adHeight:self.adHeight];
+}
+
+#pragma mark - Forwarding
+
 - (BOOL)respondsToSelector:(SEL)aSelector {
     return [[self class] instancesRespondToSelector:aSelector] || [self.originalDelegate respondsToSelector:aSelector];
 }

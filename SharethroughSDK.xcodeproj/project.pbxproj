@@ -131,6 +131,7 @@
 		AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
 		AE9C463B189C74B0001B407A /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
 		AE9C463D189C7776001B407A /* STRVideoControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */; };
+		AEB044C018A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEB044BF18A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm */; };
 		AEB2F43C18A2B25600F415EE /* STRAdViewDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */; };
 		AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
@@ -349,6 +350,7 @@
 		AE9C4639189C74B0001B407A /* STRAdFixtures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdFixtures.h; sourceTree = "<group>"; };
 		AE9C463A189C74B0001B407A /* STRAdFixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdFixtures.m; sourceTree = "<group>"; };
 		AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRVideoControllerSpec.mm; sourceTree = "<group>"; };
+		AEB044BF18A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRIndexPathDelegateProxySpec.mm; sourceTree = "<group>"; };
 		AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdViewDelegate.h; sourceTree = "<group>"; };
 		AEBAEDC01898227200F02C5A /* STRBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRBeaconService.h; sourceTree = "<group>"; };
 		AEBAEDC11898227200F02C5A /* STRBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRBeaconService.m; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 				AE8AF508189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm */,
 				AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */,
 				AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */,
+				AEB044BF18A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -1071,6 +1074,7 @@
 				AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */,
 				AE1F67241899BBC600E184D6 /* STRTableViewDataSource.m in Sources */,
+				AEB044C018A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm in Sources */,
 				AE52FD7818A41AB2009F69BD /* STRTableViewAdGenerator.m in Sources */,
 				AE22468E1886138F00626A29 /* main.m in Sources */,
 				AE52FD7618A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,

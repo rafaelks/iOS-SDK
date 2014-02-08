@@ -66,6 +66,22 @@ extern const char *const STRTableViewAdGeneratorKey;
     [self reloadSections:sections withRowAnimation:animation];
 }
 
+- (id<UITableViewDataSource>)str_dataSource {
+    return [[self str_ensureGenerator] originalDataSource];
+}
+
+- (void)str_setDataSource:(id<UITableViewDataSource>)dataSource {
+    [[self str_ensureGenerator] setOriginalDataSource:dataSource tableView:self];
+}
+
+- (id<UITableViewDelegate>)str_delegate {
+    return [[self str_ensureGenerator] originalDelegate];
+}
+
+- (void)str_setDelegate:(id<UITableViewDelegate>)delegate {
+    [[self str_ensureGenerator] setOriginalDelegate:delegate tableView:self];
+}
+
 - (UITableViewCell *)str_cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self cellForRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath]];
 }
@@ -126,12 +142,15 @@ extern const char *const STRTableViewAdGeneratorKey;
 #pragma mark - Private
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
+    return [self str_ensureGenerator].adjuster;
+}
+
+- (STRTableViewAdGenerator *)str_ensureGenerator {
     STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRTableViewAdGeneratorKey);
     if (!adGenerator) {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:adStartingIndexPath:))];
     }
-
-    return adGenerator.adjuster;
+    return adGenerator;
 }
 
 @end

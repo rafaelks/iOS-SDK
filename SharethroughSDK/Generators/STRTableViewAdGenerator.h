@@ -18,4 +18,9 @@
 
 - (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adStartingIndexPath:(NSIndexPath *)adStartingIndexPath;
 
+- (id<UITableViewDelegate>)originalDelegate;
+- (void)setOriginalDelegate:(id<UITableViewDelegate>)newOriginalDelegate tableView:(UITableView *)tableView;
+- (id<UITableViewDataSource>)originalDataSource;
+- (void)setOriginalDataSource:(id<UITableViewDataSource>)newOriginalDataSource tableView:(UITableView *)tableView;
+
 @end

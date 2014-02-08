@@ -62,6 +62,20 @@ describe(@"STRTableViewAdGenerator", ^{
             STRIndexPathDelegateProxy *proxy = (id)tableView.delegate;
             proxy.originalDelegate should be_same_instance_as(tableViewController);
         });
+
+        it(@"provides an accessor to the original delegate", ^{
+            tableViewAdGenerator.originalDelegate should be_same_instance_as(tableViewController);
+        });
+
+        it(@"provides a setter to modify the original delegate", ^{
+            STRTableViewDelegate *newDelegate = [STRTableViewDelegate new];
+            STRIndexPathDelegateProxy *proxy = (STRIndexPathDelegateProxy *)tableView.delegate;
+            [tableViewAdGenerator setOriginalDelegate:newDelegate tableView:tableView];
+
+            tableViewAdGenerator.originalDelegate should be_same_instance_as(newDelegate);
+            tableView.delegate should_not be_same_instance_as(proxy);
+            tableView.delegate should be_instance_of([STRIndexPathDelegateProxy class]);
+        });
     });
 
     describe(@"taking over the table view data source", ^{
@@ -85,6 +99,20 @@ describe(@"STRTableViewAdGenerator", ^{
         it(@"points the proxy's data source to the table view's original data source", ^{
             STRTableViewDataSourceProxy *proxy = tableView.dataSource;
             proxy.originalDataSource should be_same_instance_as(dataSource);
+        });
+
+        it(@"provides an accessor to the original data source", ^{
+            tableViewAdGenerator.originalDataSource should be_same_instance_as(dataSource);
+        });
+
+        it(@"provides a setter to modify the original data source", ^{
+            STRTableViewDataSource *newDataSource = [STRTableViewDataSource new];
+            STRTableViewDataSourceProxy *proxy = (STRTableViewDataSourceProxy *)tableView.dataSource;
+            [tableViewAdGenerator setOriginalDataSource:newDataSource tableView:tableView];
+
+            tableViewAdGenerator.originalDataSource should be_same_instance_as(newDataSource);
+            tableView.dataSource should_not be_same_instance_as(proxy);
+            tableView.dataSource should be_instance_of([STRTableViewDataSourceProxy class]);
         });
     });
 

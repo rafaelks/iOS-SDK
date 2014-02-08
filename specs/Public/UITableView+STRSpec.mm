@@ -541,6 +541,7 @@ describe(@"UITableView+STR", ^{
             NSIndexPath *trueIndexPath = [NSIndexPath indexPathForRow:2 inSection:1];
             tableView should have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with(trueIndexPath, UITableViewScrollPositionTop, NO);
             tableView.contentOffset should equal([tableView rectForRowAtIndexPath:trueIndexPath].origin);
+
         });
 
         it(@"is able to scroll to NSNotFound", ^{
@@ -549,6 +550,55 @@ describe(@"UITableView+STR", ^{
             [tableView str_scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:NSNotFound inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 
             tableView.contentOffset should equal([tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]].origin);
+        });
+    });
+
+    describe(@"-str_dataSource", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_dataSource];
+        });
+
+        it(@"returns the original data source", ^{
+            [tableView str_dataSource] should be_same_instance_as(dataSource);
+        });
+    });
+
+    describe(@"-str_setDataSource:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_setDataSource:nil];
+        });
+
+        it(@"sets the tableview datasource", ^{
+            id<UITableViewDataSource> newDataSource = nice_fake_for(@protocol(UITableViewDataSource));
+
+            [tableView str_setDataSource:newDataSource];
+            tableView.str_dataSource should be_same_instance_as(newDataSource);
+        });
+    });
+
+    describe(@"-str_delegate", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_delegate];
+        });
+
+        it(@"returns the original delegate", ^{
+            [tableView str_delegate] should be_same_instance_as(delegate);
+        });
+    });
+
+    describe(@"-str_setDelegate:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_setDelegate:nil];
+        });
+
+        it(@"sets the tableview delegate", ^{
+            id<UITableViewDelegate> newDelegate = nice_fake_for(@protocol(UITableViewDelegate));
+
+            // suppress deprecated method warning
+            newDelegate reject_method(@selector(tableView:accessoryTypeForRowWithIndexPath:));
+
+            [tableView str_setDelegate:newDelegate];
+            tableView.str_delegate should be_same_instance_as(newDelegate);
         });
     });
 });

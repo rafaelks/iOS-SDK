@@ -15,9 +15,9 @@
  */
 @interface UITableView (STR)
 
-/**---------------------------------------------------------------------------------------
- * @name Methods required to be used instead of corresponding UITableView methods
- *  ---------------------------------------------------------------------------------------
+/**--------------------------------------------------------------------------------------------------
+ * @name Methods required to be used instead of corresponding UITableView methods that adjust content
+ *  -------------------------------------------------------------------------------------------------
  */
 
 /**
@@ -91,6 +91,43 @@
  @param animation A constant that indicates how the reloading is to be animated, for example, fade out or slide out from the bottom.
  */
 - (void)str_reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation;
+
+/**---------------------------------------------------------------------------------------
+ * @name Methods required to be used instead of corresponding UITableView methods for managing dataSource/delegate
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ Getter for object that acts as the data source of the receiving table view.
+ Sharethrough-aware alternate to UITableView's -dataSource.
+ 
+ @return tableview's datasource
+ */
+- (id<UITableViewDataSource>)str_dataSource;
+
+/**
+ Setter for the object that acts as the data source of the receiving table view.
+ Sharethrough-aware alternate to UITableView's -setDataSource:.
+ 
+ @param dataSource new datasource for the tableview
+ */
+- (void)str_setDataSource:(id<UITableViewDataSource>)dataSource;
+
+/**
+ Getter for the object that acts as the delegate of the receiving table view.
+ Sharethrough-aware alternate to UITableView's -delegate.
+
+ @return tableview's delegate
+ */
+- (id<UITableViewDelegate>)str_delegate;
+
+/**
+ Setter for the object that acts as the delegate of the receiving table view.
+ Sharethrough-aware alternate to UITableView's -setDelegate.
+
+ @param delegate new delegate for the tableview
+ */
+- (void)str_setDelegate:(id<UITableViewDelegate>)delegate;
 
 /**---------------------------------------------------------------------------------------
  * @name Convenience accessor methods that are ad aware

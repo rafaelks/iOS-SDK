@@ -66,6 +66,27 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
     objc_setAssociatedObject(tableView, STRTableViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+#pragma mark - Properties
+
+- (id<UITableViewDelegate>)originalDelegate {
+    return self.delegateProxy.originalDelegate;
+}
+
+
+- (void)setOriginalDelegate:(id<UITableViewDelegate>)newOriginalDelegate tableView:(UITableView *)tableView {
+    self.delegateProxy = [self.delegateProxy proxyWithNewDelegate:newOriginalDelegate];
+    tableView.delegate = self.delegateProxy;
+}
+
+- (id<UITableViewDataSource>)originalDataSource {
+    return self.dataSourceProxy.originalDataSource;
+}
+    
+- (void)setOriginalDataSource:(id<UITableViewDataSource>)newOriginalDataSource tableView:(UITableView *)tableView {
+    self.dataSourceProxy = [self.dataSourceProxy proxyWithNewDataSource:newOriginalDataSource];
+    tableView.dataSource = self.dataSourceProxy;
+}
+
 #pragma mark - Private
 
 - (NSIndexPath *)initialIndexPathForAd:(UITableView *)tableView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath {

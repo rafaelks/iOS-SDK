@@ -44,6 +44,14 @@
     return self;
 }
 
+- (instancetype)proxyWithNewDataSource:(id)newDataSource {
+    return [[[self class] alloc] initWithOriginalDataSource:newDataSource
+                                                   adjuster:self.adjuster adCellReuseIdentifier:self.adCellReuseIdentifier
+                                               placementKey:self.placementKey
+                                   presentingViewController:self.presentingViewController
+                                                   injector:self.injector];
+}
+
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

@@ -124,6 +124,20 @@ describe(@"STRTableViewDataSourceProxy", ^{
             }).to(raise_exception());
         });
     });
+
+    describe(@"-proxyWithNewDataSource:", ^{
+        it(@"returns a new proxy with a different data source", ^{
+            id <UITableViewDataSource> newDataSource = nice_fake_for(@protocol(UITableViewDataSource));
+
+            STRTableViewDataSourceProxy *newProxy = [proxy proxyWithNewDataSource:newDataSource];
+            newProxy should_not be_same_instance_as(proxy);
+            newProxy.originalDataSource should be_same_instance_as(newDataSource);
+            newProxy.adCellReuseIdentifier should equal(@"adCell");
+            newProxy.placementKey should equal(@"placementKey");
+            newProxy.presentingViewController should be_same_instance_as(presentingViewController);
+            newProxy.injector should be_same_instance_as(injector);
+        });
+    });
 });
 
 SPEC_END
