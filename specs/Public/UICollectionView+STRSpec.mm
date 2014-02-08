@@ -7,6 +7,7 @@
 #import "STRAdGenerator.h"
 #import "STRCollectionViewAdGenerator.h"
 #import "STRFullCollectionViewDataSource.h"
+#import "STRFakeAdGenerator.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -61,8 +62,7 @@ describe(@"UICollectionView+STR", ^{
 
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
 
-        [injector bind:[STRAdGenerator class] toInstance:nice_fake_for([STRAdGenerator class])];
-
+        [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
         spy_on([STRAdPlacementAdjuster class]);
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
@@ -74,6 +74,7 @@ describe(@"UICollectionView+STR", ^{
 
         [collectionView reloadData];
         [collectionView layoutIfNeeded];
+
         adCell = (STRCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
     });
 
@@ -171,7 +172,7 @@ describe(@"UICollectionView+STR", ^{
                 [collectionView str_insertItemsAtIndexPaths:externalIndexPaths];
             });
 
-            it(@"tells the table view to insert the rows at the correct index paths", ^{
+            it(@"tells the collection view to insert the items at the correct index paths", ^{
                 collectionView should have_received(@selector(insertItemsAtIndexPaths:)).with(trueIndexPaths);
 
                 collectionView.visibleCells.count should equal(originalItemCount + 3);
@@ -180,6 +181,82 @@ describe(@"UICollectionView+STR", ^{
             it(@"updates the index path of the adPlacementAdjuster", ^{
                 adPlacementAdjuster should have_received(@selector(willInsertRowsAtExternalIndexPaths:)).with(externalIndexPaths);
                 adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForItem:3 inSection:1]);
+            });
+        });
+    });
+
+    describe(@"-str_deleteItemsAtIndexPaths:", ^{
+        __block NSArray *externalIndexPaths;
+        __block NSArray *trueIndexPaths;
+
+        beforeEach(^{
+            externalIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:1],
+                                   [NSIndexPath indexPathForRow:1 inSection:1]];
+            trueIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:1],
+                               [NSIndexPath indexPathForRow:2 inSection:1]];
+        });
+
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
+            [noAdCollectionView str_deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
+        });
+
+        describe(@"deleting items in a collectionView with an ad", ^{
+            __block NSInteger originalRowCount;
+
+            beforeEach(^{
+                spy_on(collectionView);
+                originalRowCount = collectionView.visibleCells.count;
+                dataSource.itemsForEachSection = @[@2, @0];
+                [collectionView str_deleteItemsAtIndexPaths:externalIndexPaths];
+            });
+
+            it(@"tells the collection to delete the correct items", ^{
+                collectionView should have_received(@selector(deleteItemsAtIndexPaths:)).with(trueIndexPaths);
+                collectionView.visibleCells.count should equal(originalRowCount - 2);
+            });
+
+            it(@"updates the index path of the adPlacementAdjuster", ^{
+                adPlacementAdjuster should have_received(@selector(willDeleteRowsAtExternalIndexPaths:)).with(externalIndexPaths);
+
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForItem:0 inSection:1]);
+            });
+        });
+    });
+
+    describe(@"-str_moveItemAtIndexPath:toIndexPath:", ^{
+        __block NSIndexPath *externalStartIndexPath;
+        __block NSIndexPath *externalEndIndexPath;
+
+        beforeEach(^{
+            externalStartIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+            externalEndIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+        });
+
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
+            [noAdCollectionView str_moveItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1] toIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+        });
+
+        describe(@"moving items in a collectionview with an ad", ^{
+            __block NSInteger originalRowCount;
+
+            beforeEach(^{
+                spy_on(collectionView);
+                originalRowCount = collectionView.visibleCells.count;
+                [collectionView str_moveItemAtIndexPath:externalStartIndexPath
+                                            toIndexPath:externalEndIndexPath];
+            });
+
+            it(@"tells the collection view to move the correct items", ^{
+                collectionView should have_received(@selector(moveItemAtIndexPath:toIndexPath:))
+                .with([NSIndexPath indexPathForItem:2 inSection:1], [NSIndexPath indexPathForItem:0 inSection:1]);
+
+                collectionView.visibleCells.count should equal(originalRowCount);
+            });
+
+            it(@"updates the index path of the adPlacementAdjuster", ^{
+                adPlacementAdjuster should have_received(@selector(willMoveRowAtExternalIndexPath:toExternalIndexPath:)).with(externalStartIndexPath, externalEndIndexPath);
+
+                adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:1]);
             });
         });
     });

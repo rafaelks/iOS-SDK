@@ -77,8 +77,7 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
 #pragma mark - Forwarding
 
 - (BOOL)respondsToSelector:(SEL)aSelector {
-    return [[self class] instancesRespondToSelector:aSelector] || [self.originalDataSource respondsToSelector:
-                                                                   aSelector];
+    return [[self class] instancesRespondToSelector:aSelector] || [self.originalDataSource respondsToSelector:aSelector];
 }
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
@@ -86,7 +85,7 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
         return self.originalDataSource;
     }
 
-    return nil;
+    return [super forwardingTargetForSelector:aSelector];
 }
 
 #pragma mark - Private

@@ -176,7 +176,7 @@ describe(@"UITableView+STR", ^{
                 [tableView str_moveRowAtIndexPath:externalStartIndexPath toIndexPath:externalEndIndexPath];
             });
 
-            it(@"tells the tableview to delete the correct rows", ^{
+            it(@"tells the tableview to move the correct rows", ^{
                 tableView should have_received(@selector(moveRowAtIndexPath:toIndexPath:)).with([NSIndexPath indexPathForRow:3 inSection:1], [NSIndexPath indexPathForRow:1 inSection:1]);
                 tableView.visibleCells.count should equal(originalRowCount);
             });

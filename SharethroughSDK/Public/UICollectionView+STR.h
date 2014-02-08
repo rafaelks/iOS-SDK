@@ -50,8 +50,25 @@
 - (NSArray *)str_visibleCellsWithoutAds;
 
 
+/**
+ Supports inserting multiple items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -insertItemsAtIndexPaths:
 
-
+ @param indexPaths An array of NSIndexPath objects each representing an item in the collection view
+ */
 - (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths;
 
+/**
+ Supports deleting multiple items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -deleteItemsAtIndexPaths:
+
+ @param indexPaths An array of NSIndexPath objects each representing an item in the collection view
+ */
+- (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths;
+
+/**
+ Supports moving an item while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -moveItemAtIndexPath:toIndexPath:
+
+ @param indexPath An index path identifying the item to move.
+ @param newIndexPath An index path identifying the item that is the destination of the index at indexPath. The existing row at that location slides up or down to an adjoining index position to make room for it.
+ */
+- (void)str_moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
 @end

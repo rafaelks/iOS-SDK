@@ -43,6 +43,20 @@ extern const char * const STRCollectionViewAdGeneratorKey;
     [self insertItemsAtIndexPaths:trueIndexPaths];
 }
 
+
+- (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+
+    NSArray *trueIndexPaths = [adjuster willDeleteRowsAtExternalIndexPaths:indexPaths];
+    [self deleteItemsAtIndexPaths:trueIndexPaths];
+}
+
+- (void)str_moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+    NSArray *indexPaths = [adjuster willMoveRowAtExternalIndexPath:indexPath toExternalIndexPath:newIndexPath];
+    [self moveItemAtIndexPath:[indexPaths firstObject] toIndexPath:[indexPaths lastObject]];
+}
+
 #pragma mark - Private
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
