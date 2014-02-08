@@ -1,17 +1,14 @@
 # Sharethrough iOS-SDK #
-## Quick Links ##
-* [Download SDK][sdk] The latest version of the SDK.
-* [Sample App][sample-app] Sample iOS app which utilizes the SDK.
-* [View SDK Documentation][sdk-docs]
 
 <div id="toc"></div>
 ## Table of Contents ##
 1. [Setting up the SDK][sect-setup]
 2. [Adding a Sharethrough Native ad to your app][sect-firstAd]
 3. [Viewing the Sample App][sect-sampleAppIntro]
+4. [Documentation][sect-docs]
 
 <div id="setup"></div>
-## 1. Setup the SDK ##
+### 1. Setup the SDK ##
 
 1. Download the SDK. The latest version can be found [here][sdk].
 
@@ -39,25 +36,34 @@ After adding the frameworks, your project's "Link Binary With Libraries" should 
 ![Linked libraries][linked-libraries-screenshot]
 
 <div id="adding-your-first-native-ad"><a href="#toc">Back to top</a></div>
-## 2. Adding a Sharethrough Native ad to your stream ##
+### 2. Adding a Sharethrough Native ad to your stream ##
+
 
 <div id="viewing-the-sample-app"><a href="#toc">Back to top</a></div>
-## 3. Viewing the sample app ##
+### 3. Viewing the sample app ##
 
-<div><a href="#toc">Back to top</a></div>
 
-## Known Issues ##
-If you're running your iOS app on a physical iPad while connected to a computer and play a Youtube video from an ad, error messages will be displayed in the Xcode console. This is a known iPad on iOS7 issue, but do not affect your app's functionality. More information can be found [here][stack-overflow]
+<div id="documentation"><a href="#toc">Back to top</a></div>
+### 4. Documentation ###
+Documentation for the SDK can be viewed online [here][sdk-docs].
 
-## Display some ads! Make some money! ##
-The docset can be downloaded from [here][docset].
-After downloading the docset and untaring, you can install these docs to Xcode by copying them over to the Shared Documentation folder:
+If you would like to install the docset in Xcode, you can download it [here][docset]. After downloading the docset and untaring, you can install these docs to Xcode by copying them over to the Shared Documentation folder:
 
 ```
 cp -r ~/Downloads/com.sharethrough.Sharethrough-SDK.docset ~/Library/Developer/Shared/Documentation/DocSets/
 ```
 
 and then restarting Xcode to pick up the new docset.
+
+
+## Known Issues ##
+If you're running your iOS app on a physical iPad while connected to a computer and play a Youtube video from an ad, error messages will be displayed in the Xcode console. This is a known iPad on iOS7 issue, but do not affect your app's functionality. More information can be found [here][stack-overflow]
+
+
+## Quick Links ##
+* [Download SDK][sdk] The latest version of the SDK.
+* [Sample App][sample-app] Sample iOS app which utilizes the SDK.
+* [View SDK Documentation][sdk-docs]
 
 [sdk]: http://s3.amazonaws.com/iOS-SDK/Sharethrough-SDK.framework.tar
 [nav-screenshot]: documentation/getting_started/nav_screenshot.png
@@ -71,3 +77,4 @@ and then restarting Xcode to pick up the new docset.
 [sect-setup]: #setup
 [sect-firstAd]: #adding-your-first-native-ad
 [sect-sampleAppIntro]: #viewing-the-sample-app
+[sect-docs]: #documentation
