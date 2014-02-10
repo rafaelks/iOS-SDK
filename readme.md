@@ -4,6 +4,8 @@
 ## Table of Contents ##
 1. [Setting up the SDK][sect-setup]
 2. [Adding a Sharethrough Native ad to your app][sect-firstAd]
+	* [Basic, yet flexible API] [sect-firstAd-basic]
+	* [UITableView API][sect-firstAd-table]
 3. [Viewing the Sample App][sect-sampleAppIntro]
 4. [Documentation][sect-docs]
 
@@ -36,18 +38,48 @@ The following list of frameworks are required:
 After adding the frameworks, your project's "Link Binary With Libraries" should look something like the following:
 ![Linked libraries][linked-libraries-screenshot]
 
-<div id="adding-your-first-native-ad"><a href="#toc">Back to top</a></div>
+<div id="first-ad-intro"><a href="#toc">Back to top</a></div>
 </hr>
-### 2. Adding a Sharethrough Native ad to your stream ##
-The Sharethrough SDK allows you to integrate ads directly into your stream without any extra work on your part. It keeps track of your view's delegate and datasource, and intelligently ensures that you change only your content, without inadvertently affecting any advertisements.
 
-* In whichever controller owns the ``UITableView``, add the following import statement:
+### 2. Adding a Sharethrough Native ad to your app ###
+
+Sharethrough's API provides 2 ways for integrating native ads into your app.  The basic version is very flexible - you hand it a  `UIView`, and it places an ad in that view. You can use this view virtually anywhere in your app. The `UITableView` API allows you to place an ad in your `UITableView`, and then manages that ad for you so that your content's `NSIndexPaths` are unchanged.
+
+In either case, these ad views should be styled according to the rest of your app, giving it that customized native feel (fonts, colors, etc.)
+
+Import the API as below:
 
 ```
 #import <Sharethrough-SDK/SharethroughSDK.h>
 ```
 
-* In your ```viewDidLoad``` method, register a cell reuse identifier specifically for advertisement cells. This reuse identifier can register the same class as the rest of your content cells, or it can register a class that will only be used for ad cells. Whichever method you choose, the class must conform to the ```<STRAdView>``` protocol. For example, in our sample app, we have the following 2 lines of code:
+<div id="first-ad-basic"></div>
+#### Using the basic API ####
+
+* The UIView in which you'd like to place an advertisement must conform to the `<STRAdView>` protocol. This can be a new subclass of `UIView`, or it can be a new subclass of your existing view. In either case, it must implement the following methods:
+
+	```
+	- (UILabel *)adTitle;
+	- (UIImageView *)adThumbnail;
+	- (UILabel *)adSponsoredBy;
+
+	//optional
+	- (UILabel *)adDescription;
+	```
+
+* Then, use the sdk to place an ad in the view, for example from the current controller:
+
+	```
+ 	[[SharethroughSDK sharedInstance] placeAdInView:yourView placementKey:@"yourUniquePlacementKey" presentingViewController:self delegate:nil];
+	[self.view addSubview:yourView];
+	yourView.frame = CGRectMake(0, 0, 320, 100);
+	```
+
+<div id="first-ad-table"></div>
+#### Using the UITableView API ####
+The `UITableView API` allows you to integrate ads directly into your stream without any extra work on your part. It keeps track of your view's delegate and datasource, and intelligently ensures that you change only your content, without inadvertently affecting any advertisements.
+
+* In your `viewDidLoad` method, register a cell reuse identifier specifically for advertisement cells. This reuse identifier can register the same class as the rest of your content cells, or it can register a class that will only be used for ad cells. Whichever method you choose, the class must conform to the `<STRAdView>` protocol. For example, in our sample app, we have the following 2 lines of code:
 
    ```
     [self.tableView registerClass:[STSNewsFeedCell class] forCellReuseIdentifier:kCellIdentifier];
@@ -55,35 +87,17 @@ The Sharethrough SDK allows you to integrate ads directly into your stream witho
    ```
 
 
-	```kCellIdentifier``` and ```kTableViewAdCellReuseIdentifier``` are unique NSStrings defined at the beginning of our controller, but they can be defined wherever makes sense for your application. We chose to register 2 classes - the ```STSAdNewsFeedCell``` is just a subclass of ```STSNewsFeedCell```, with additional accessors to make it compatible with the ```<STRAdView>``` protocol:
+	`kCellIdentifier` and `kTableViewAdCellReuseIdentifier` are unique NSStrings defined at the beginning of our controller, but they can be defined wherever makes sense for your application. We chose to register 2 classes - the `STSAdNewsFeedCell` is just a subclass of `STSNewsFeedCell`, with additional accessors to make it compatible with the `<STRAdView>` protocol.
 
-	```
-	- (UILabel *)adTitle {
-	    return self.textLabel;
-	}
-
-	- (UILabel *)adDescription {
-	    return self.descriptionTextLabel;
-	}
-
-	- (UIImageView *)adThumbnail {
-	    return self.imageView;
-	}
-
-	- (UILabel *)adSponsoredBy {
-	    return self.sponsorLabel;
-	}
-	```
-
-* Also in ```viewDidLoad```, tell the SDK to place the ad in your view, like below:
+* Also in `viewDidLoad`, tell the SDK to place the ad in your view, like below:
 
 	```
 	[[SharethroughSDK sharedInstance] placeAdInTableView:self.tableView adCellReuseIdentifier:kTableViewAdCellReuseIdentifier placementKey:kPlacementKey presentingViewController:self adHeight:118.0 adStartingIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
 	```
 
- - The ```adHeight``` can be the same as the rest of your rows, but doesn't have to be.
- - The ```adStartingIndexPath``` is the advertisement's initial position.
- - ```kPlacementKey` is an ```NSString``` representing your Sharethrough placement key.
+ - The `adHeight` can be the same as the rest of your rows, but doesn't have to be.
+ - The `adStartingIndexPath` is the advertisement's initial position.
+ - `kPlacementKey` is an `NSString` representing your Sharethrough placement key.
 
 That's it! Your stream now has an elegantly embedded advertisement.
 
@@ -125,6 +139,8 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 [sample-app]: https://github.com/sharethrough/iOS-Sample-App
 [sdk-docs]: iOS/index.html
 [sect-setup]: #setup
-[sect-firstAd]: #adding-your-first-native-ad
+[sect-firstAd]: #first-ad-intro
+[sect-firstAd-basic]: #first-ad-basic
+[sect-firstAd-table]: #first-ad-table
 [sect-sampleAppIntro]: #viewing-the-sample-app
 [sect-docs]: #documentation
