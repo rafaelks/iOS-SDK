@@ -122,6 +122,9 @@ describe(@"STRAdService", ^{
                             ad.creativeKey should equal(@"imagination");
                             ad.variantKey should equal(@"variation");
                             ad.placementKey should equal(@"placementKey");
+                            ad.signature should equal(@"fakeSignature");
+                            ad.auctionType should equal(@"type");
+                            ad.auctionPrice should equal(@"1.0");
 
                             ad.thirdPartyBeaconsForVisibility should equal(@[@"//reddit.com/ad?time=[timestamp]"]);
                             ad.thirdPartyBeaconsForClick should equal(@[@"//yahoo.com/dance?danced_at=[timestamp]"]);
@@ -143,7 +146,9 @@ describe(@"STRAdService", ^{
                 __block NSDictionary *responseData;
 
                 beforeEach(^{
-                    responseData = @{
+                    responseData = @{ @"signature": @"fakeSignature",
+                                      @"price": @"1.0",
+                                      @"priceType": @"type",
                                       @"creative": [@{
                                                       @"description": @"Dogs this smart deserve a home.",
                                                       @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",

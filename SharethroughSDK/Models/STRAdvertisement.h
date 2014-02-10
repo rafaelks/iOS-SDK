@@ -17,6 +17,9 @@
 @property (nonatomic, copy) NSString *placementKey;
 @property (nonatomic, copy) NSString *creativeKey;
 @property (nonatomic, copy) NSString *variantKey;
+@property (nonatomic, copy) NSString *signature;
+@property (nonatomic, copy) NSString *auctionType;
+@property (nonatomic, copy) NSString *auctionPrice;
 @property (nonatomic, copy) NSURL *mediaURL;
 @property (nonatomic, copy) NSURL *shareURL;
 @property (nonatomic, strong) UIImage *thumbnailImage;

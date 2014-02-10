@@ -114,8 +114,11 @@
 
 - (NSMutableDictionary *)commonParametersWithAd:(STRAdvertisement *)ad {
     NSDictionary *adParams = @{@"pkey": ad.placementKey,
-                                @"vkey": ad.variantKey,
-                                @"ckey": ad.creativeKey};
+                               @"vkey": ad.variantKey,
+                               @"ckey": ad.creativeKey,
+                               @"as": ad.signature,
+                               @"at": ad.auctionType,
+                               @"ap": ad.auctionPrice};
     NSMutableDictionary *commonParams = [self commonParameters];
     [commonParams addEntriesFromDictionary:adParams];
 

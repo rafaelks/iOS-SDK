@@ -46,29 +46,32 @@
 
     STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
     [adPromise then:^id(NSDictionary *fullJSON) {
-        NSDictionary *adJSON = fullJSON[@"creative"];
+        NSDictionary *creativeJSON = fullJSON[@"creative"];
 
-        NSURL *sanitizedThumbnailURL = [NSURL URLWithString:adJSON[@"thumbnail_url"]];
+        NSURL *sanitizedThumbnailURL = [NSURL URLWithString:creativeJSON[@"thumbnail_url"]];
         if (![sanitizedThumbnailURL scheme]) {
-            sanitizedThumbnailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", adJSON[@"thumbnail_url"]]];
+            sanitizedThumbnailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", creativeJSON[@"thumbnail_url"]]];
         }
 
         NSURLRequest *imageRequest = [NSURLRequest requestWithURL:sanitizedThumbnailURL];
 
         [[self.networkClient get:imageRequest] then:^id(NSData *data) {
-            STRAdvertisement *ad = [self adForAction:adJSON[@"action"]];
-            ad.advertiser = adJSON[@"advertiser"];
-            ad.title = adJSON[@"title"];
-            ad.adDescription = adJSON[@"description"];
-            ad.creativeKey = adJSON[@"creative_key"];
-            ad.variantKey = adJSON[@"variant_key"];
-            ad.mediaURL = [NSURL URLWithString:adJSON[@"media_url"]];
-            ad.shareURL = [NSURL URLWithString:adJSON[@"share_url"]];
+            STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"]];
+            ad.advertiser = creativeJSON[@"advertiser"];
+            ad.title = creativeJSON[@"title"];
+            ad.adDescription = creativeJSON[@"description"];
+            ad.creativeKey = creativeJSON[@"creative_key"];
+            ad.variantKey = creativeJSON[@"variant_key"];
+            ad.mediaURL = [NSURL URLWithString:creativeJSON[@"media_url"]];
+            ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
             ad.thumbnailImage = [UIImage imageWithData:data];
             ad.placementKey = placementKey;
-            ad.thirdPartyBeaconsForVisibility = adJSON[@"beacons"][@"visible"];
-            ad.thirdPartyBeaconsForClick = adJSON[@"beacons"][@"click"];
-            ad.thirdPartyBeaconsForPlay = adJSON[@"beacons"][@"play"];
+            ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
+            ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
+            ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
+            ad.signature = fullJSON[@"signature"];
+            ad.auctionPrice = fullJSON[@"price"];
+            ad.auctionType = fullJSON[@"priceType"];
 
             [self.adCache saveAd:ad];
             [deferred resolveWithValue:ad];
@@ -78,7 +81,7 @@
             return error;
         }];
 
-        return adJSON;
+        return creativeJSON;
     } error:^id(NSError *error) {
         [deferred rejectWithError:error];
         return error;
