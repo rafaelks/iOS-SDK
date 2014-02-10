@@ -45,7 +45,9 @@
     }
 
     STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
-    [adPromise then:^id(NSDictionary *adJSON) {
+    [adPromise then:^id(NSDictionary *fullJSON) {
+        NSDictionary *adJSON = fullJSON[@"creative"];
+
         NSURL *sanitizedThumbnailURL = [NSURL URLWithString:adJSON[@"thumbnail_url"]];
         if (![sanitizedThumbnailURL scheme]) {
             sanitizedThumbnailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", adJSON[@"thumbnail_url"]]];

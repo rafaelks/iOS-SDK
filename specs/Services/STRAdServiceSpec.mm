@@ -140,27 +140,29 @@ describe(@"STRAdService", ^{
                     });
                 };
 
-                __block NSMutableDictionary *responseData;
+                __block NSDictionary *responseData;
 
                 beforeEach(^{
-                    responseData = [@{
-                      @"description": @"Dogs this smart deserve a home.",
-                      @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
-                      @"title": @"Meet Porter. He's a Dog.",
-                      @"advertiser": @"Brand X",
-                      @"media_url": @"http://www.google.com",
-                      @"share_url": @"http://bit.ly/14hfvXG",
-                      @"creative_key": @"imagination",
-                      @"variant_key": @"variation",
-                      @"beacons": @{@"visible": @[@"//reddit.com/ad?time=[timestamp]"],
-                                    @"click": @[@"//yahoo.com/dance?danced_at=[timestamp]"],
-                                    @"play": @[@"//cupcakes.com/yum?allgone=[timestamp]"]},
-                      } mutableCopy];
+                    responseData = @{
+                                      @"creative": [@{
+                                                      @"description": @"Dogs this smart deserve a home.",
+                                                      @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
+                                                      @"title": @"Meet Porter. He's a Dog.",
+                                                      @"advertiser": @"Brand X",
+                                                      @"media_url": @"http://www.google.com",
+                                                      @"share_url": @"http://bit.ly/14hfvXG",
+                                                      @"creative_key": @"imagination",
+                                                      @"variant_key": @"variation",
+                                                      @"beacons": @{@"visible": @[@"//reddit.com/ad?time=[timestamp]"],
+                                                                    @"click": @[@"//yahoo.com/dance?danced_at=[timestamp]"],
+                                                                    @"play": @[@"//cupcakes.com/yum?allgone=[timestamp]"]},
+                                                      } mutableCopy]
+                                      };
                 });
 
                 describe(@"when the ad server responds with a Vine ad", ^{
                     beforeEach(^{
-                        responseData[@"action"] = @"vine";
+                        responseData[@"creative"][@"action"] = @"vine";
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
@@ -169,7 +171,7 @@ describe(@"STRAdService", ^{
 
                 describe(@"when the ad server successfully responds with a YouTube ad", ^{
                     beforeEach(^{
-                        responseData[@"action"] = @"video";
+                        responseData[@"creative"][@"action"] = @"video";
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
@@ -179,9 +181,9 @@ describe(@"STRAdService", ^{
 
             describe(@"when the ad server responds without a protocol", ^{
                 beforeEach(^{
-                    [restClientDeferred resolveWithValue:@{
-                                                           @"thumbnail_url": @"//i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
-                                                           }];
+                    [restClientDeferred resolveWithValue:@{ @"creative":
+                                                                @{@"thumbnail_url": @"//i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"},
+                                                            }];
                 });
 
                 it(@"makes a request for the thumbnail image and inserts the protocol", ^{
