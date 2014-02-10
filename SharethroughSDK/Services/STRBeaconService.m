@@ -38,7 +38,7 @@
                                        @"type": @"impressionRequest"};
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
-    
+
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
@@ -128,6 +128,7 @@
     return [@{@"bwidth" : [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
               @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
               @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
+              @"ploc"   : [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey],
               @"session": [STRSession sessionToken],
               @"uid"    : [[self.identifierManager advertisingIdentifier] UUIDString]} mutableCopy];
 }

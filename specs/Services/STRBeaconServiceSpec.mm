@@ -65,7 +65,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"bheight": @"400",
                                                                                          @"umtime": @"10",
                                                                                          @"session": @"AAAA",
-                                                                                         @"uid": @"fakeUUID"});
+                                                                                         @"uid": @"fakeUUID",
+                                                                                         @"ploc": @"specs"});
         });
     });
 
@@ -85,7 +86,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"session": @"AAAA",
                                                                                          @"uid": @"fakeUUID",
                                                                                          @"pwidth": @"200",
-                                                                                         @"pheight": @"100"});
+                                                                                         @"pheight": @"100",
+                                                                                         @"ploc": @"specs"});
         });
 
     });
@@ -106,7 +108,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"session": @"AAAA",
                                                                                          @"uid": @"fakeUUID",
                                                                                          @"pwidth": @"200",
-                                                                                         @"pheight": @"100"});
+                                                                                         @"pheight": @"100",
+                                                                                         @"ploc": @"specs"});
         });
 
     });
@@ -129,7 +132,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"session": @"AAAA",
                                                                                          @"uid": @"fakeUUID",
                                                                                          @"pwidth": @"200",
-                                                                                         @"pheight": @"100"});
+                                                                                         @"pheight": @"100",
+                                                                                         @"ploc": @"specs"});
         });
 
     });
@@ -168,7 +172,8 @@ describe(@"STRBeaconService", ^{
                              @"bheight": @"400",
                              @"umtime": @"10",
                              @"session": @"AAAA",
-                             @"uid": @"fakeUUID"};
+                             @"uid": @"fakeUUID",
+                             @"ploc": @"specs"};
         });
 
         describe(@"when the share type is email", ^{
