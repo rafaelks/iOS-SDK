@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		AE22466C1885FD8100626A29 /* Sharethrough-SDK */ = {
+		AE22466C1885FD8100626A29 /* SharethroughSDK */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "Sharethrough-SDK" */;
+			buildConfigurationList = AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "SharethroughSDK" */;
 			buildPhases = (
-				AE2246701885FDC400626A29 /* Build Static Libraries and Resource Bundle */,
+				AE2246701885FDC400626A29 /* Build static library and Resource Bundle */,
 				AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */,
 				AE2246721885FEED00626A29 /* Copy Header Files */,
 				AE52B89F188F40D100C4DEF8 /* Copy created .bundle to resources */,
@@ -19,7 +19,7 @@
 			);
 			dependencies = (
 			);
-			name = "Sharethrough-SDK";
+			name = SharethroughSDK;
 			productName = "Build Framework";
 		};
 /* End PBXAggregateTarget section */
@@ -124,7 +124,6 @@
 		AE9C462D189C5288001B407A /* STRYouTubeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */; };
 		AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C462E189C53D3001B407A /* STRYouTubeViewControllerSpec.mm */; };
 		AE9C4630189C6C4D001B407A /* STRYouTubeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */; };
-		AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */; };
 		AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
 		AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
 		AE9C463B189C74B0001B407A /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
@@ -212,7 +211,6 @@
 				AEB2F43C18A2B25600F415EE /* STRAdViewDelegate.h in Copy Header Files */,
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 				AE58227918A2F04F00672653 /* UICollectionView+STR.h in Copy Header Files */,
-				AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */,
 			);
 			name = "Copy Header Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,7 +320,7 @@
 		AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdPlacementAdjuster.h; sourceTree = "<group>"; };
 		AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdPlacementAdjuster.m; sourceTree = "<group>"; };
 		AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementAdjusterSpec.mm; sourceTree = "<group>"; };
-		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSharethroughSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSharethroughSDK.a; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -841,9 +839,9 @@
 			productReference = AE52B88C188F3CA100C4DEF8 /* STRResources.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
-		AE8ED3E21885ADF00004AB32 /* SharethroughSDK */ = {
+		AE8ED3E21885ADF00004AB32 /* Sharethrough-SDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AE8ED4061885ADF00004AB32 /* Build configuration list for PBXNativeTarget "SharethroughSDK" */;
+			buildConfigurationList = AE8ED4061885ADF00004AB32 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK" */;
 			buildPhases = (
 				AE8ED3DF1885ADF00004AB32 /* Sources */,
 				AE8ED3E01885ADF00004AB32 /* Frameworks */,
@@ -853,7 +851,7 @@
 			);
 			dependencies = (
 			);
-			name = SharethroughSDK;
+			name = "Sharethrough-SDK";
 			productName = SharethroughSDK;
 			productReference = AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */;
 			productType = "com.apple.product-type.library.static";
@@ -885,8 +883,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				AE8ED3E21885ADF00004AB32 /* SharethroughSDK */,
-				AE22466C1885FD8100626A29 /* Sharethrough-SDK */,
+				AE8ED3E21885ADF00004AB32 /* Sharethrough-SDK */,
+				AE22466C1885FD8100626A29 /* SharethroughSDK */,
 				AE2246811886138F00626A29 /* specs */,
 				AE52B88B188F3CA100C4DEF8 /* STRResources */,
 			);
@@ -954,19 +952,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AE2246701885FDC400626A29 /* Build Static Libraries and Resource Bundle */ = {
+		AE2246701885FDC400626A29 /* Build static library and Resource Bundle */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Build Static Libraries and Resource Bundle";
+			name = "Build static library and Resource Bundle";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target STRResources -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal";
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK\" &&\nRESOURCE_BUNDLE_TARGET=\"STRResources\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PROJECT_NAME}\" &&\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target \"${RESOURCE_BUNDLE_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=\"${UNIVERSAL_LIBRARY_DIR}\"";
 		};
 		AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -980,7 +978,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK\" &&\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${STATIC_LIB_TARGET}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${STATIC_LIB_TARGET}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
 		};
 		AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1395,7 +1393,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "Sharethrough-SDK" */ = {
+		AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "SharethroughSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE22466D1885FD8100626A29 /* Debug */,
@@ -1431,7 +1429,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AE8ED4061885ADF00004AB32 /* Build configuration list for PBXNativeTarget "SharethroughSDK" */ = {
+		AE8ED4061885ADF00004AB32 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE8ED4071885ADF00004AB32 /* Debug */,
