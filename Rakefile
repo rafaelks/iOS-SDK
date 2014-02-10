@@ -7,14 +7,15 @@ namespace :docs do
   desc "Generate documentation"
   task :generate do
     success = system(<<CMD)
-      appledoc --project-name "Sharethrough-SDK" \
+      appledoc --project-name "SharethroughSDK" \
                --project-company "Sharethrough" \
                --output "/tmp/doc_output" \
                --ignore "*.m" \
                --company-id "com.sharethrough" \
                --no-repeat-first-par \
                --use-code-order SharethroughSDK && \
-      cp -r ~/Library/Developer/Shared/Documentation/DocSets/com.sharethrough.Sharethrough-SDK.docset built-framework/
+      mkdir -p built-framework &&
+      cp -r ~/Library/Developer/Shared/Documentation/DocSets/com.sharethrough.SharethroughSDK.docset built-framework/
 CMD
 
     raise "generating docs failed" unless success
@@ -41,7 +42,7 @@ CMD
     success = system("rm -rf #{website_docset_path}") &&
       system("cp -r documentation/ #{website_sdk_path}") &&
       system("cp readme.md #{website_includes_path}") &&
-      system("cp -r built-framework/com.sharethrough.Sharethrough-SDK.docset/Contents/Resources/Documents #{website_docset_path}")
+      system("cp -r built-framework/com.sharethrough.SharethroughSDK.docset/Contents/Resources/Documents #{website_docset_path}")
 
     success
   end

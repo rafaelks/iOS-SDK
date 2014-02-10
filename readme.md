@@ -17,7 +17,7 @@
 
 1. Untar and add the SDK to your Xcode Project.
 
-1. Drag the Sharethrough-SDK.framework into the Frameworks section of your Project Navigator.
+1. Drag the SharethroughSDK.framework into the Frameworks section of your Project Navigator.
 ![Navigator Screenshot][nav-screenshot]
 
 1. Choose 'Create groups for any added folders' and select 'Copy items into destination group's folder (if needed)' to copy the SDK into your app.
@@ -54,7 +54,7 @@ In either case, these ad views should be styled according to the rest of your ap
 Import the API as below:
 
 ```
-#import <Sharethrough-SDK/SharethroughSDK.h>
+#import <SharethroughSDK/SharethroughSDK.h>
 ```
 
 <div id="first-ad-basic"></div>
@@ -119,7 +119,7 @@ Documentation for the SDK can be viewed online [here][sdk-docs].
 If you would like to install the docset in Xcode, you can download it [here][docset]. After downloading the docset and untaring, you can install these docs to Xcode by copying them over to the Shared Documentation folder:
 
 ```
-cp -r ~/Downloads/com.sharethrough.Sharethrough-SDK.docset ~/Library/Developer/Shared/Documentation/DocSets/
+cp -r ~/Downloads/com.sharethrough.SharethroughSDK.docset ~/Library/Developer/Shared/Documentation/DocSets/
 ```
 
 and then restarting Xcode to pick up the new docset.
@@ -134,14 +134,14 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 * [Sample App][sample-app] Sample iOS app which utilizes the SDK.
 * [View SDK Documentation][sdk-docs]
 
-[sdk]: http://s3.amazonaws.com/iOS-SDK/Sharethrough-SDK.framework.tar
+[sdk]: http://s3.amazonaws.com/iOS-SDK/SharethroughSDK.framework.tar
 [nav-screenshot]: documentation/getting_started/nav_screenshot.png
 [copy-screenshot]: documentation/getting_started/copy_screenshot.png
 [linked-libraries-screenshot]: documentation/getting_started/frameworks_screenshot.png
 [linker-flag-screenshot]: documentation/getting_started/linker_flag_screenshot.png
 [apple-technical-note-linker-flag]: https://developer.apple.com/library/mac/qa/qa1490/_index.html
 [project_settings-screenshot]: documentation/getting_started/project_settings_screenshot.png
-[docset]: http://s3.amazonaws.com/iOS-SDK/com.sharethrough.Sharethrough-SDK.docset.tar
+[docset]: http://s3.amazonaws.com/iOS-SDK/com.sharethrough.SharethroughSDK.docset.tar
 [stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video
 [sample-app]: https://github.com/sharethrough/iOS-Sample-App
 [sdk-docs]: iOS/index.html
