@@ -108,13 +108,11 @@
 		AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
 		AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
-		AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
 		AE9C4600189AE83C001B407A /* play-btn-300x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
 		AE9C4601189AE83C001B407A /* play-btn-300x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
 		AE9C460A189B181B001B407A /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
 		AE9C460B189B181B001B407A /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
 		AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */; };
-		AE9C4614189C1B8D001B407A /* vine-logo.png in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE9C4613189C1B8D001B407A /* vine-logo.png */; };
 		AE9C4615189C1B8D001B407A /* vine-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C4613189C1B8D001B407A /* vine-logo.png */; };
 		AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
 		AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
@@ -209,13 +207,11 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
-				AE9C4614189C1B8D001B407A /* vine-logo.png in Copy Header Files */,
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
 				AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */,
 				AEB2F43C18A2B25600F415EE /* STRAdViewDelegate.h in Copy Header Files */,
 				AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */,
 				AE58227918A2F04F00672653 /* UICollectionView+STR.h in Copy Header Files */,
-				AE9C45FF189AE83C001B407A /* play-btn-300x.png in Copy Header Files */,
 				AE9C4631189C6C76001B407A /* STRYouTubeViewController.xib in Copy Header Files */,
 			);
 			name = "Copy Header Files";
@@ -1361,6 +1357,8 @@
 		AE8ED4071885ADF00004AB32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DSTROOT = /tmp/SharethroughSDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1369,7 +1367,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1378,6 +1376,8 @@
 		AE8ED4081885ADF00004AB32 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DSTROOT = /tmp/SharethroughSDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1386,7 +1386,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
