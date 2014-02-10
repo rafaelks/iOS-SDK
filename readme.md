@@ -23,7 +23,11 @@
 1. Choose 'Create groups for any added folders' and select 'Copy items into destination group's folder (if needed)' to copy the SDK into your app.
 ![Add framework Screenshot][copy-screenshot]
 
-1. In your application target, select Build Phases and add a new library to link against.
+1. In your application target, select "Build Settings" and add the `-ObjC` linker flag to other linker flags as in the following:
+![Link to add linker flag screenshot][linker-flag-screenshot]
+More information about this flag can be found [here][apple-technical-note-linker-flag]. This flag is not required if only using the basic API.
+
+1. In your application target, select "Build Phases" and add a new library to link against.
 ![Link to new library screenshot][project_settings-screenshot]
 
 The following list of frameworks are required:
@@ -41,7 +45,6 @@ After adding the frameworks, your project's "Link Binary With Libraries" should 
 </hr>
 <div id="first-ad-intro"><a href="#toc">Back to top</a></div>
 
-
 ### 2. Adding a Sharethrough Native ad to your app ###
 
 Sharethrough's API provides 2 ways for integrating native ads into your app.  The basic version is very flexible - you hand it a  `UIView`, and it places an ad in that view. You can use this view virtually anywhere in your app. The `UITableView` API allows you to place an ad in your `UITableView`, and then manages that ad for you so that your content's `NSIndexPaths` are unchanged.
@@ -55,7 +58,7 @@ Import the API as below:
 ```
 
 <div id="first-ad-basic"></div>
-#### Using the basic API ####
+#### Using the basic, yet flexible API ####
 
 * The UIView in which you'd like to place an advertisement must conform to the `<STRAdView>` protocol. This can be a new subclass of `UIView`, or it can be a new subclass of your existing view. In either case, it must implement the following methods:
 
@@ -135,6 +138,8 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 [nav-screenshot]: documentation/getting_started/nav_screenshot.png
 [copy-screenshot]: documentation/getting_started/copy_screenshot.png
 [linked-libraries-screenshot]: documentation/getting_started/frameworks_screenshot.png
+[linker-flag-screenshot]: documentation/getting_started/linker_flag_screenshot.png
+[apple-technical-note-linker-flag]: https://developer.apple.com/library/mac/qa/qa1490/_index.html
 [project_settings-screenshot]: documentation/getting_started/project_settings_screenshot.png
 [docset]: http://s3.amazonaws.com/iOS-SDK/com.sharethrough.Sharethrough-SDK.docset.tar
 [stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video

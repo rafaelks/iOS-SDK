@@ -22,16 +22,27 @@ CMD
 
   desc "Copy html docset to Sharethrough corporate website"
   task :copy_to_website do
-    website_docset_path = "tmp/website/publishers/sdk/iOS"
-    website_sdk_path = "tmp/website/publishers/sdk/documentation/"
-    website_includes_path = "tmp/website/_includes"
     success = system("git clone git@github.com:sharethrough/website.git tmp/website") &&
-      system("rm -rf #{website_docset_path}") &&
-      system("cp -r documentation/ #{website_sdk_path}") &&
-      system("cp readme.md #{website_includes_path}") &&
-      system("cp -r built-framework/com.sharethrough.Sharethrough-SDK.docset/Contents/Resources/Documents #{website_docset_path}") &&
+      copy_to_website("tmp/website") &&
       system("cd tmp/website && git add -A && (git diff --cached --quiet || (git commit -am'Update iOS SDK documentation' && git push origin master))")
 
     raise "copying docs to website failed" unless success
+  end
+
+  desc "Copy docs to local website (assumes website is neighbor of SDK)"
+  task :copy_to_local_website do
+    raise "copying docs to local website failed" unless copy_to_website("../website")
+  end
+
+  def copy_to_website(website_path)
+    website_docset_path = "#{website_path}/publishers/sdk/iOS"
+    website_sdk_path = "#{website_path}/publishers/sdk/documentation/"
+    website_includes_path = "#{website_path}/_includes"
+    success = system("rm -rf #{website_docset_path}") &&
+      system("cp -r documentation/ #{website_sdk_path}") &&
+      system("cp readme.md #{website_includes_path}") &&
+      system("cp -r built-framework/com.sharethrough.Sharethrough-SDK.docset/Contents/Resources/Documents #{website_docset_path}")
+
+    success
   end
 end
