@@ -49,6 +49,8 @@
 
 /**
  If your app is using a basic UICollectionView that you want to present ads within, you may alternately use the following method to insert an ad. It is required that the reuse identifier be registered with the UIColectionView to return a UICollectionViewCell (or subclass) that conforms to the STRAdView protocol. This reuse identifier should be separate from the reuse identifier used for your content cells, even if they are registered with the same class or xib. A good place to call this function would be -viewDidLoad.
+ 
+ Your collectionView's UICollectionViewLayout must be able to accomdate an ad cell, in addition it its content cells.
 
  @param collectionView           The collection view in which to inject an advertisment.
  @param adCellReuseIdentifier    The reuse identifier to use whenever displaying an ad cell; the reuse identifier must be registered with the table view with a cell that conforms to the STRAdView protocol
