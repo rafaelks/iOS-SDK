@@ -46,6 +46,7 @@ describe(@"UITableView+STR", ^{
     __block STRTableViewDelegate *delegate;
     __block STRFullTableViewDataSource *dataSource;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
+    __block STRTableViewAdGenerator *tableViewAdGenerator;
 
     beforeEach(^{
         tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
@@ -70,7 +71,7 @@ describe(@"UITableView+STR", ^{
         spy_on([STRAdPlacementAdjuster class]);
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
-        STRTableViewAdGenerator *tableViewAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
+        tableViewAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
         [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:100.0 adStartingIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
 
         [tableView reloadData];
@@ -277,13 +278,23 @@ describe(@"UITableView+STR", ^{
 
         it(@"reloads the tableview, inserting a row at the new index path", ^{
             [(id<CedarDouble>)tableView reset_sent_messages];
-            [tableView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            [tableView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
 
             tableView should have_received(@selector(reloadData));
             [tableView layoutIfNeeded]; // ?
 
             [tableView numberOfRowsInSection:0] should equal(4);
             [tableView numberOfRowsInSection:1] should equal(3);
+
+            [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should be_instance_of([STRTableViewCell class]);
+        });
+
+        it(@"allows a nil default", ^{
+            spy_on(tableViewAdGenerator);
+            [(id<CedarDouble>)tableView reset_sent_messages];
+            [tableView str_reloadDataWithAdIndexPath:nil];
+
+            tableViewAdGenerator should have_received(@selector(initialIndexPathForAd:preferredStartingIndexPath:)).with(tableView, nil);
 
             [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_instance_of([STRTableViewCell class]);
         });

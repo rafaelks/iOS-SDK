@@ -23,4 +23,6 @@
 - (id<UITableViewDataSource>)originalDataSource;
 - (void)setOriginalDataSource:(id<UITableViewDataSource>)newOriginalDataSource tableView:(UITableView *)tableView;
 
+- (NSIndexPath *)initialIndexPathForAd:(UITableView *)tableView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath;
+
 @end

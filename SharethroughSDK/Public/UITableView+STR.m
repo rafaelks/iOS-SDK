@@ -47,6 +47,10 @@ extern const char *const STRTableViewAdGeneratorKey;
 }
 
 - (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
+    if (adIndexPath == nil) {
+        adIndexPath = [[self str_ensureGenerator] initialIndexPathForAd:self preferredStartingIndexPath:nil];
+    }
+
     [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];
     [self reloadData];
 }

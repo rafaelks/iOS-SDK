@@ -72,7 +72,7 @@
 /**
  Reloads the rows and sections of the receiver. Previous ad(s) will be removed and replaced by an ad at the provided adIndexPath. Alternate to UITableView's built-in -reloadData
  
- @param adIndexPath The index path to place an ad in. This index path should represent where the ad is, including the ad within the table view.
+ @param adIndexPath The index path to place an ad in. This index path should represent where the ad is, including the ad within the table view. Pass nil to let the SharethroughSDK choose a default location.
  */
 - (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath;
 

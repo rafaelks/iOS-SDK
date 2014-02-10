@@ -87,7 +87,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
     tableView.dataSource = self.dataSourceProxy;
 }
 
-#pragma mark - Private
+#pragma mark - Initial Index Path
 
 - (NSIndexPath *)initialIndexPathForAd:(UITableView *)tableView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
     NSInteger numberOfRowsInAdSection = [tableView numberOfRowsInSection:adStartingIndexPath.section];
