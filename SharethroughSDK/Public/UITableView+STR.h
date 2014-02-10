@@ -188,6 +188,15 @@
  */
 - (CGRect)str_rectForRowAtIndexPath:(NSIndexPath *)indexPath;
 
+/**
+ Returns the number of rows (table cells) in a specified section while accounting for ad(s) provided by Sharethrough. Alternate to UITableView's built-in -numberOfRowsInSection:
+ 
+ @param section An index number that identifies a section of the table. Table views in a plain style have a section index of zero.
+ 
+ @return The number of rows in the section.
+ */
+- (NSInteger)str_numberOfRowsInSection:(NSInteger)section;
+
 /**---------------------------------------------------------------------------------------
  * @name Convenience methods around selection
  *  ---------------------------------------------------------------------------------------

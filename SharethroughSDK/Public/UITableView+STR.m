@@ -123,6 +123,10 @@ extern const char *const STRTableViewAdGeneratorKey;
     return [self rectForRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath]];
 }
 
+- (NSInteger)str_numberOfRowsInSection:(NSInteger)section {
+    return [self numberOfRowsInSection:section] - [[self str_ensureAdjuster] numberOfAdsInSection:section];
+}
+
 - (NSIndexPath *)str_indexPathForSelectedRow {
     return [[self str_ensureAdjuster] externalIndexPath:[self indexPathForSelectedRow]];
 }

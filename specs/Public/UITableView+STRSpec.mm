@@ -484,6 +484,36 @@ describe(@"UITableView+STR", ^{
         });
     });
 
+    describe(@"-str_numberOfRowsInSection:", ^{
+        itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
+            [noAdTableView str_numberOfRowsInSection:0];
+        });
+
+        context(@"when the section contains an ad", ^{
+            it(@"returns the number of rows minus the ad", ^{
+                [tableView numberOfRowsInSection:1] should equal(4);
+
+                [(id<CedarDouble>)tableView reset_sent_messages];
+                NSInteger numberOfRows = [tableView str_numberOfRowsInSection:1];
+
+                numberOfRows should equal(3);
+                tableView should have_received(@selector(numberOfRowsInSection:));
+            });
+        });
+
+        context(@"when the section does not contain an ad", ^{
+            it(@"returns the number of rows in the section", ^{
+                [tableView numberOfRowsInSection:0] should equal(3);
+
+                [(id<CedarDouble>)tableView reset_sent_messages];
+                NSInteger numberOfRows = [tableView str_numberOfRowsInSection:0];
+
+                numberOfRows should equal(3);
+                tableView should have_received(@selector(numberOfRowsInSection:));
+            });
+        });
+    });
+
     describe(@"-str_indexPathForSelectedRow", ^{
         itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
             [noAdTableView str_indexPathForSelectedRow];
