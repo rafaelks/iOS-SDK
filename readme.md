@@ -38,8 +38,9 @@ The following list of frameworks are required:
 After adding the frameworks, your project's "Link Binary With Libraries" should look something like the following:
 ![Linked libraries][linked-libraries-screenshot]
 
-<div id="first-ad-intro"><a href="#toc">Back to top</a></div>
 </hr>
+<div id="first-ad-intro"><a href="#toc">Back to top</a></div>
+
 
 ### 2. Adding a Sharethrough Native ad to your app ###
 
@@ -102,9 +103,10 @@ The `UITableView API` allows you to integrate ads directly into your stream with
 That's it! Your stream now has an elegantly embedded advertisement.
 
 
-<div id="viewing-the-sample-app"><a href="#toc">Back to top</a></div>
 </hr>
-### 3. Viewing the sample app ##
+<div id="viewing-the-sample-app"><a href="#toc">Back to top</a></div>
+### 3. Viewing the sample app ###
+The [sample app][sample-app] shows several ways of integrating the Sharethrough SDK to display ads. The sample app emulates a few different news reader styles, while including ads and test cases to help give suggestions of how the SDK can be unit tested within your application.
 
 <div id="documentation"><a href="#toc">Back to top</a></div>
 </hr>
