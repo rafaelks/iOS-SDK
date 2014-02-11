@@ -325,7 +325,7 @@ describe(@"STRAdGenerator", ^{
                 });
 
                 it(@"fires off a youtube play beacon", ^{
-                    beaconService should have_received(@selector(fireYoutubePlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
+                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
                 });
 
                 it(@"fires off the third party beacons for click and for play", ^{

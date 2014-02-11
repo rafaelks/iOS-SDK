@@ -89,7 +89,7 @@ describe(@"STRAdService", ^{
             });
 
             describe(@"when the ad server responds with an ad", ^{
-                void(^afterSuccessfulAdFetchedSpecs)(Class expectedAdClass) = ^(Class expectedAdClass) {
+                void(^afterSuccessfulAdFetchedSpecs)(Class expectedAdClass, NSString *expectedAction) = ^(Class expectedAdClass, NSString *expectedAction) {
                     it(@"makes a request for the thumbnail image", ^{
                         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"]];
                         networkClient should have_received(@selector(get:)).with(request);
@@ -125,6 +125,7 @@ describe(@"STRAdService", ^{
                             ad.signature should equal(@"fakeSignature");
                             ad.auctionType should equal(@"type");
                             ad.auctionPrice should equal(@"1.0");
+                            ad.action should equal(expectedAction);
 
                             ad.thirdPartyBeaconsForVisibility should equal(@[@"//reddit.com/ad?time=[timestamp]"]);
                             ad.thirdPartyBeaconsForClick should equal(@[@"//yahoo.com/dance?danced_at=[timestamp]"]);
@@ -171,7 +172,7 @@ describe(@"STRAdService", ^{
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
-                    afterSuccessfulAdFetchedSpecs([STRAdVine class]);
+                    afterSuccessfulAdFetchedSpecs([STRAdVine class], @"vine");
                 });
 
                 describe(@"when the ad server successfully responds with a YouTube ad", ^{
@@ -180,7 +181,7 @@ describe(@"STRAdService", ^{
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
-                    afterSuccessfulAdFetchedSpecs([STRAdYouTube class]);
+                    afterSuccessfulAdFetchedSpecs([STRAdYouTube class], @"video");
                 });
             });
 

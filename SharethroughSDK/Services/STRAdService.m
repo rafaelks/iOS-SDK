@@ -72,6 +72,7 @@
             ad.signature = fullJSON[@"signature"];
             ad.auctionPrice = fullJSON[@"price"];
             ad.auctionType = fullJSON[@"priceType"];
+            ad.action = creativeJSON[@"action"];
 
             [self.adCache saveAd:ad];
             [deferred resolveWithValue:ad];

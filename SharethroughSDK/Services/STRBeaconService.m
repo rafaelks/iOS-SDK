@@ -74,13 +74,20 @@
     }
 }
 
-- (void)fireYoutubePlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size {
+- (void)fireVideoPlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size {
+    NSString *userEvent = @"videoPlay";
+    if ([ad.action isEqualToString:@"video"]) {
+        userEvent = @"youtubePlay";
+    } else if ([ad.action isEqualToString:@"vine"]) {
+        userEvent = @"vinePlay";
+    }
+
     NSDictionary *uniqueParameters = @{@"type": @"userEvent",
-                                       @"userEvent": @"youtubePlay",
+                                       @"userEvent": userEvent,
                                        @"engagement": @"true"};
+
     NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:size];
     [parameters addEntriesFromDictionary:uniqueParameters];
-
     [self.restClient sendBeaconWithParameters:parameters];
 }
 

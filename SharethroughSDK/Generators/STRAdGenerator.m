@@ -135,7 +135,7 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     UIView *view = tapRecognizer.view;
-    [self.beaconService fireYoutubePlayEvent:self.ad adSize:view.frame.size];
+    [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay];
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick];
 

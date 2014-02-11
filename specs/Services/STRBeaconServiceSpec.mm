@@ -123,30 +123,65 @@ describe(@"STRBeaconService", ^{
 
     });
 
-    describe(@"-fireYoutubePlayEvent:adSize:", ^{
-        beforeEach(^{
-            [service fireYoutubePlayEvent:ad adSize:CGSizeMake(200, 100)];
+    describe(@"-fireVideoPlayEvent:adSize:", ^{
+        __block NSDictionary *parameters;
+        __block NSString *expectedUserEvent;
+
+        subjectAction(^{
+            parameters = @{@"pkey": @"placementKey",
+              @"ckey": @"creativeKey",
+              @"vkey": @"variantKey",
+              @"type": @"userEvent",
+              @"engagement": @"true",
+              @"userEvent": expectedUserEvent,
+              @"bwidth": @"200",
+              @"bheight": @"400",
+              @"umtime": @"10",
+              @"session": @"AAAA",
+              @"uid": @"fakeUUID",
+              @"pwidth": @"200",
+              @"pheight": @"100",
+              @"ploc": @"specs",
+              @"as": @"sig",
+              @"at": @"type",
+                           @"ap": @"price"};
+            [service fireVideoPlayEvent:ad adSize:CGSizeMake(200, 100)];
+
+
         });
 
-        it(@"sends a beacon to the tracking servers", ^{
-            restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
-                                                                                         @"ckey": @"creativeKey",
-                                                                                         @"vkey": @"variantKey",
-                                                                                         @"type": @"userEvent",
-                                                                                         @"engagement": @"true",
-                                                                                         @"userEvent": @"youtubePlay",
-                                                                                         @"bwidth": @"200",
-                                                                                         @"bheight": @"400",
-                                                                                         @"umtime": @"10",
-                                                                                         @"session": @"AAAA",
-                                                                                         @"uid": @"fakeUUID",
-                                                                                         @"pwidth": @"200",
-                                                                                         @"pheight": @"100",
-                                                                                         @"ploc": @"specs",
-                                                                                         @"as": @"sig",
-                                                                                         @"at": @"type",
-                                                                                         @"ap": @"price"});
+        context(@"when the video is hosted", ^{
+            beforeEach(^{
+                expectedUserEvent = @"videoPlay";
+            });
+
+            it(@"sends a beacon to the tracking servers", ^{
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+            });
         });
+
+        context(@"when video is youtube", ^{
+            beforeEach(^{
+                expectedUserEvent = @"youtubePlay";
+                ad.action = @"video";
+            });
+
+            it(@"sends a beacon to the tracking servers", ^{
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+            });
+        });
+
+        context(@"when the video is vine", ^{
+            beforeEach(^{
+                expectedUserEvent = @"vinePlay";
+                ad.action = @"vine";
+            });
+
+            it(@"sends a beacon to the tracking servers", ^{
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+            });
+        });
+
 
     });
 
