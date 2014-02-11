@@ -48,6 +48,7 @@ describe(@"UICollectionView+STR", ^{
 
     beforeEach(^{
         collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, 420) collectionViewLayout:[UICollectionViewFlowLayout new]];
+        spy_on(collectionView);
 
         dataSource = [[STRFullCollectionViewDataSource alloc] init];
         dataSource.itemsForEachSection = @[@2, @2];
@@ -258,6 +259,102 @@ describe(@"UICollectionView+STR", ^{
 
                 adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:1]);
             });
+        });
+    });
+
+    describe(@"-str_cellForItemAtIndexPath:", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
+            [noAdCollectionView str_cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+        });
+
+        it(@"returns the cell at the adjusted index path", ^{
+            UICollectionViewCell *cell = [collectionView str_cellForItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+
+            cell should be_same_instance_as([collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:2 inSection:1]]);
+        });
+    });
+
+    describe(@"-str_indexPathsForVisibleItems", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
+            [noAdCollectionView str_indexPathsForVisibleItems];
+        });
+
+        it(@"returns an array of NSIndexPaths without the ad cell", ^{
+            [collectionView.visibleCells count] should equal(5);
+
+            NSArray *returnedIndexPaths = [collectionView str_indexPathsForVisibleItems];
+            [returnedIndexPaths count] should equal(4);
+            returnedIndexPaths should equal(@[[NSIndexPath indexPathForItem:0 inSection:0],
+                                                      [NSIndexPath indexPathForItem:1 inSection:0],
+                                                      [NSIndexPath indexPathForItem:0 inSection:1],
+                                                      [NSIndexPath indexPathForItem:1 inSection:1]]);
+        });
+    });
+
+    describe(@"-str_indexPathForCell:", ^{
+        beforeEach(^{
+            spy_on(collectionView);
+        });
+
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
+            [noAdCollectionView str_indexPathForCell:nil];
+        });
+
+        it(@"returns an adjusted index path if not an ad cell", ^{
+            UICollectionViewCell *cell = collectionView.visibleCells[4];
+            NSIndexPath *returnedIndexPath = [collectionView str_indexPathForCell:cell];
+
+            collectionView should have_received(@selector(indexPathForCell:)).with(cell);
+            returnedIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
+        });
+
+        it(@"returns nil if the cell passed in is an ad cell", ^{
+            UICollectionViewCell *cell = collectionView.visibleCells[3];
+            NSIndexPath *returnedIndexPath = [collectionView str_indexPathForCell:cell];
+
+            collectionView should have_received(@selector(indexPathForCell:)).with(cell);
+            returnedIndexPath should be_nil;
+        });
+
+        it(@"returns nil if the cell passed in is nil", ^{
+            NSIndexPath *returnedIndexPath = [collectionView str_indexPathForCell:nil];
+
+            collectionView should have_received(@selector(indexPathForCell:)).with(nil);
+            returnedIndexPath should be_nil;
+        });
+    });
+
+    describe(@"–str_indexPathForItemAtPoint:", ^{
+        beforeEach(^{
+            spy_on(collectionView);
+        });
+
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
+            [noAdCollectionView str_indexPathForItemAtPoint:CGPointZero];
+        });
+
+        it(@"returns an adjusted index path if not a point within ad cell", ^{
+            UICollectionViewCell *cell = collectionView.visibleCells[4];
+
+            NSIndexPath *returnedIndexPath = [collectionView str_indexPathForItemAtPoint:cell.center];
+
+            collectionView should have_received(@selector(indexPathForItemAtPoint:)).with(cell.center);
+            returnedIndexPath should equal([NSIndexPath indexPathForItem:1 inSection:1]);
+        });
+
+        it(@"returns nil if the point passed in is within an ad cell", ^{
+            UITableViewCell *cell = collectionView.visibleCells[3];
+            NSIndexPath *returnedIndexPath = [collectionView str_indexPathForItemAtPoint:cell.center];
+
+            collectionView should have_received(@selector(indexPathForItemAtPoint:)).with(cell.center);
+            returnedIndexPath should be_nil;
+        });
+
+        it(@"returns nil if the point passed in is out of bounds", ^{
+            NSIndexPath *returnedIndexPath = [collectionView str_indexPathForItemAtPoint:CGPointMake(-1, -1)];
+
+            collectionView should have_received(@selector(indexPathForItemAtPoint:)).with(CGPointMake(-1, -1));
+            returnedIndexPath should be_nil;
         });
     });
 });

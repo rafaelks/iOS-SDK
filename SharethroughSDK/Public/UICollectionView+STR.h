@@ -14,6 +14,11 @@
  These methods will raise exception unless collectionview has been set up with -[SharethroughSDK placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:] */
 @interface UICollectionView (STR)
 
+/**--------------------------------------------------------------------------------------------------
+ * @name Methods required to be used instead of corresponding UICollectionView methods that adjust content
+ *  -------------------------------------------------------------------------------------------------
+ */
+
 /**
     Preferred method of dequeuing UICollectionViewCells for collection views that have been processed through SharethroughSDK.
     Seriously, use this method instead of the built-in -dequeueReusableCellWithReuseIdentifier:forIndexPath:.
@@ -25,6 +30,29 @@
  @return a valid UICollectionViewCell
  */
 - (id)str_dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ Supports inserting multiple items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -insertItemsAtIndexPaths:
+
+ @param indexPaths An array of NSIndexPath objects each representing an item in the collection view
+ */
+- (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths;
+
+/**
+ Supports deleting multiple items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -deleteItemsAtIndexPaths:
+
+ @param indexPaths An array of NSIndexPath objects each representing an item in the collection view
+ */
+- (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths;
+
+/**
+ Supports moving an item while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -moveItemAtIndexPath:toIndexPath:
+
+ @param indexPath An index path identifying the item to move.
+ @param newIndexPath An index path identifying the item that is the destination of the index at indexPath. The existing row at that location slides up or down to an adjoining index position to make room for it.
+ */
+- (void)str_moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
+
 
 /**---------------------------------------------------------------------------------------
  * @name Convenience accessor methods that are ad aware
@@ -49,26 +77,37 @@
  */
 - (NSArray *)str_visibleCellsWithoutAds;
 
+/**
+ *  Returns the visible cell object at the specified index path, while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -cellForItemAtIndexPath:
+ *
+ *  @param indexPath The index path that specifies the section and item number of the cell.
+ *
+ *  @return The cell object at the corresponding index path or nil if the cell is not visible or indexPath is out of range.
+ */
+- (UICollectionViewCell *)str_cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 /**
- Supports inserting multiple items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -insertItemsAtIndexPaths:
-
- @param indexPaths An array of NSIndexPath objects each representing an item in the collection view
+ *  Returns an array of the visible items in the collection view, while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -indexPathsForVisibleItems
+ *
+ *  @return An array of NSIndexPath objects, each of which corresponds to a visible cell in the collection view. This array does not include any supplementary views that are currently visible. If there are no visible non-ad items, this method returns an empty array.
  */
-- (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths;
+- (NSArray *)str_indexPathsForVisibleItems;
 
 /**
- Supports deleting multiple items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -deleteItemsAtIndexPaths:
-
- @param indexPaths An array of NSIndexPath objects each representing an item in the collection view
+ *  Returns the index path of the specified cell, while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -indexPathForCell.
+ *
+ *  @param cell The cell object whose index path you want.
+ *
+ *  @return The index path of the cell or nil if the specified cell is not in the collection view. If passed in an ad cell, then this will return nil.
  */
-- (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths;
+- (NSIndexPath *)str_indexPathForCell:(UICollectionViewCell *)cell;
 
 /**
- Supports moving an item while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -moveItemAtIndexPath:toIndexPath:
+ *  Returns the index path of the cell at the specified point, while accounting for ad(s) provided by Sharethrough
 
- @param indexPath An index path identifying the item to move.
- @param newIndexPath An index path identifying the item that is the destination of the index at indexPath. The existing row at that location slides up or down to an adjoining index position to make room for it.
+    @param point A point in the local coordinate system of the receiver (the table view's bounds).
+    @return An index path representing the row and section associated with point or nil if the point is out of the bounds of any row. Passing in a point that corresponds to an ad cell will also return nil.
  */
-- (void)str_moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
+- (NSIndexPath *)str_indexPathForItemAtPoint:(CGPoint)point;
+
 @end
