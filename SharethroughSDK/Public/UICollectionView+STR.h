@@ -110,4 +110,24 @@
  */
 - (NSIndexPath *)str_indexPathForItemAtPoint:(CGPoint)point;
 
+/**
+ Reloads the items and sections of the receiver. Previous ad(s) will be removed and replaced by an ad at the provided adIndexPath. Alternate to UICollectionView's built-in -reloadData
+
+ @param adIndexPath The index path to place an ad in. This index path represents where the ad will reside in the collection view. Pass nil to let the SharethroughSDK choose a default location.
+ */
+- (void) str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath;
+
+/**
+ Reloads the specified sections while accounting for ad(s) provided by Sharethrough. If an ad's location is now invalid (because the section has fewer rows), the ad will be placed at the bottom of its previous section. Alternate to UICollectionView's built-in -reloadSections:
+
+ @param sections  An index set identifying the sections to reload.
+ */
+- (void) str_reloadSections:(NSIndexSet *)sections;
+
+/**
+ Reloads the specified items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -reloadItemsAtIndexPaths:withRowAnimation:
+
+ @param indexPaths An array of NSIndexPath objects identifying the rows to reload.
+ */
+- (void) str_reloadItemsAtIndexPaths:(NSArray *)indexPaths;
 @end

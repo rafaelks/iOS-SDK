@@ -45,13 +45,14 @@ describe(@"UICollectionView+STR", ^{
     __block STRFullCollectionViewDataSource *dataSource;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
     __block STRCollectionViewCell *adCell;
+    __block STRCollectionViewAdGenerator *generator;
 
     beforeEach(^{
         collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, 420) collectionViewLayout:[UICollectionViewFlowLayout new]];
         spy_on(collectionView);
 
         dataSource = [[STRFullCollectionViewDataSource alloc] init];
-        dataSource.itemsForEachSection = @[@2, @2];
+        dataSource.itemsForEachSection = @[@3, @3];
         dataSource.numberOfSections = 2;
         collectionView.dataSource = dataSource;
 
@@ -62,12 +63,11 @@ describe(@"UICollectionView+STR", ^{
         spy_on(adPlacementAdjuster);
 
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
-
-        [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
         spy_on([STRAdPlacementAdjuster class]);
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
-        STRCollectionViewAdGenerator *generator = [injector getInstance:[STRCollectionViewAdGenerator class]];
+        [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
+        generator = [injector getInstance:[STRCollectionViewAdGenerator class]];
         [generator placeAdInCollectionView:collectionView
                      adCellReuseIdentifier:@"adCellReuseIdentifier"
                               placementKey:@"placementKey"
@@ -75,8 +75,6 @@ describe(@"UICollectionView+STR", ^{
 
         [collectionView reloadData];
         [collectionView layoutIfNeeded];
-
-        adCell = (STRCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
     });
 
     describe(@"-str_dequeueReusableCellWithIdentifier:forIndexPath", ^{
@@ -87,8 +85,6 @@ describe(@"UICollectionView+STR", ^{
         describe(@"when the collection view has been configured to display an ad", ^{
             context(@"when the index path is before the ad index path", ^{
                 beforeEach(^{
-                    spy_on(collectionView);
-
                     [collectionView str_dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]] should_not be_nil;
                 });
 
@@ -100,8 +96,6 @@ describe(@"UICollectionView+STR", ^{
 
             context(@"when the index path is after the ad index path", ^{
                 beforeEach(^{
-                    spy_on(collectionView);
-
                     [collectionView str_dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]] should_not be_nil;
                 });
 
@@ -121,13 +115,13 @@ describe(@"UICollectionView+STR", ^{
 
         describe(@"when the section contains an ad", ^{
             it(@"does not include that ad in the count", ^{
-                [collectionView str_numberOfItemsInSection:1] should equal(2);
+                [collectionView str_numberOfItemsInSection:1] should equal(3);
             });
         });
 
         describe(@"when the section has 0 ads", ^{
             it(@"doesn't return an adjusted count", ^{
-                [collectionView str_numberOfItemsInSection:0] should equal(2);
+                [collectionView str_numberOfItemsInSection:0] should equal(3);
             });
         });
     });
@@ -142,7 +136,7 @@ describe(@"UICollectionView+STR", ^{
         });
 
         it(@"does include all visible content cells", ^{
-            [[collectionView str_visibleCellsWithoutAds] count] should equal(4);
+            [[collectionView str_visibleCellsWithoutAds] count] should equal(6);
         });
     });
 
@@ -167,9 +161,8 @@ describe(@"UICollectionView+STR", ^{
             __block NSInteger originalItemCount;
 
             beforeEach(^{
-                spy_on(collectionView);
                 originalItemCount = collectionView.visibleCells.count;
-                dataSource.itemsForEachSection = @[@2, @5];
+                dataSource.itemsForEachSection = @[@3, @6]; //TODO: Why did 2/5 cause cedar to fail?
                 [collectionView str_insertItemsAtIndexPaths:externalIndexPaths];
             });
 
@@ -205,9 +198,8 @@ describe(@"UICollectionView+STR", ^{
             __block NSInteger originalRowCount;
 
             beforeEach(^{
-                spy_on(collectionView);
                 originalRowCount = collectionView.visibleCells.count;
-                dataSource.itemsForEachSection = @[@2, @0];
+                dataSource.itemsForEachSection = @[@3, @1];
                 [collectionView str_deleteItemsAtIndexPaths:externalIndexPaths];
             });
 
@@ -241,7 +233,6 @@ describe(@"UICollectionView+STR", ^{
             __block NSInteger originalRowCount;
 
             beforeEach(^{
-                spy_on(collectionView);
                 originalRowCount = collectionView.visibleCells.count;
                 [collectionView str_moveItemAtIndexPath:externalStartIndexPath
                                             toIndexPath:externalEndIndexPath];
@@ -280,36 +271,34 @@ describe(@"UICollectionView+STR", ^{
         });
 
         it(@"returns an array of NSIndexPaths without the ad cell", ^{
-            [collectionView.visibleCells count] should equal(5);
+            [collectionView.visibleCells count] should equal(7);
 
             NSArray *returnedIndexPaths = [collectionView str_indexPathsForVisibleItems];
-            [returnedIndexPaths count] should equal(4);
-            returnedIndexPaths should equal(@[[NSIndexPath indexPathForItem:0 inSection:0],
-                                                      [NSIndexPath indexPathForItem:1 inSection:0],
-                                                      [NSIndexPath indexPathForItem:0 inSection:1],
-                                                      [NSIndexPath indexPathForItem:1 inSection:1]]);
+            [returnedIndexPaths count] should equal(6);
+            returnedIndexPaths should contain([NSIndexPath indexPathForItem:0 inSection:0]);
+            returnedIndexPaths should contain([NSIndexPath indexPathForItem:1 inSection:0]);
+            returnedIndexPaths should contain([NSIndexPath indexPathForItem:2 inSection:0]);
+            returnedIndexPaths should contain([NSIndexPath indexPathForItem:0 inSection:1]);
+            returnedIndexPaths should contain([NSIndexPath indexPathForItem:1 inSection:1]);
+            returnedIndexPaths should contain([NSIndexPath indexPathForItem:2 inSection:1]);
         });
     });
 
     describe(@"-str_indexPathForCell:", ^{
-        beforeEach(^{
-            spy_on(collectionView);
-        });
-
         itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
             [noAdCollectionView str_indexPathForCell:nil];
         });
 
         it(@"returns an adjusted index path if not an ad cell", ^{
-            UICollectionViewCell *cell = collectionView.visibleCells[4];
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:3 inSection:1]];
             NSIndexPath *returnedIndexPath = [collectionView str_indexPathForCell:cell];
 
             collectionView should have_received(@selector(indexPathForCell:)).with(cell);
-            returnedIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
+            returnedIndexPath should equal([NSIndexPath indexPathForRow:2 inSection:1]);
         });
 
         it(@"returns nil if the cell passed in is an ad cell", ^{
-            UICollectionViewCell *cell = collectionView.visibleCells[3];
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
             NSIndexPath *returnedIndexPath = [collectionView str_indexPathForCell:cell];
 
             collectionView should have_received(@selector(indexPathForCell:)).with(cell);
@@ -325,25 +314,21 @@ describe(@"UICollectionView+STR", ^{
     });
 
     describe(@"–str_indexPathForItemAtPoint:", ^{
-        beforeEach(^{
-            spy_on(collectionView);
-        });
-
         itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
             [noAdCollectionView str_indexPathForItemAtPoint:CGPointZero];
         });
 
         it(@"returns an adjusted index path if not a point within ad cell", ^{
-            UICollectionViewCell *cell = collectionView.visibleCells[4];
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:3 inSection:1]];
 
             NSIndexPath *returnedIndexPath = [collectionView str_indexPathForItemAtPoint:cell.center];
 
             collectionView should have_received(@selector(indexPathForItemAtPoint:)).with(cell.center);
-            returnedIndexPath should equal([NSIndexPath indexPathForItem:1 inSection:1]);
+            returnedIndexPath should equal([NSIndexPath indexPathForItem:2 inSection:1]);
         });
 
         it(@"returns nil if the point passed in is within an ad cell", ^{
-            UITableViewCell *cell = collectionView.visibleCells[3];
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
             NSIndexPath *returnedIndexPath = [collectionView str_indexPathForItemAtPoint:cell.center];
 
             collectionView should have_received(@selector(indexPathForItemAtPoint:)).with(cell.center);
@@ -356,6 +341,84 @@ describe(@"UICollectionView+STR", ^{
             collectionView should have_received(@selector(indexPathForItemAtPoint:)).with(CGPointMake(-1, -1));
             returnedIndexPath should be_nil;
         });
+    });
+
+    describe(@"-str_reloadDataWithAdIndexPath:", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
+            [noAdCollectionView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        });
+
+        it(@"reloads the tableview, inserting a row at the new index path", ^{
+            [(id<CedarDouble>)collectionView reset_sent_messages];
+            [collectionView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForItem:2 inSection:0]];
+
+            collectionView should have_received(@selector(reloadData));
+            [collectionView layoutIfNeeded]; // ?
+
+            [collectionView numberOfItemsInSection:0] should equal(4);
+            [collectionView numberOfItemsInSection:1] should equal(3);
+
+            STRCollectionViewCell *adCell = (STRCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+            adCell.adTitle.text should equal(@"Generic Ad Title");
+        });
+
+        it(@"allows a nil default and places the ad at item1/section0", ^{
+            [collectionView str_reloadDataWithAdIndexPath:nil];
+
+            [collectionView layoutIfNeeded];
+
+            STRCollectionViewCell *adCell = (STRCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            adCell.adTitle.text should equal(@"Generic Ad Title");
+        });
+    });
+
+    describe(@"-str_reloadSections", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_reloadSections:nil];
+        });
+
+        context(@"when the new section size is larger than ad position", ^{
+            it(@"the ad remains in the same indexpath", ^{
+                [collectionView str_reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]];
+
+                collectionView should have_received(@selector(reloadSections:))
+                .with([NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]);
+
+                STRCollectionViewCell *adCell = (STRCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+                adCell.adTitle.text should equal(@"Generic Ad Title");
+            });
+        });
+
+        context(@"when the new section size is smaller than ad position", ^{
+            it(@"adjusts the ad to be bottom-most in the section", ^{
+                dataSource.itemsForEachSection = @[@0, @0];
+
+                [collectionView str_reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]];
+
+                collectionView should have_received(@selector(reloadSections:))
+                .with([NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]);
+                STRCollectionViewCell *adCell = (STRCollectionViewCell *)[collectionView.visibleCells lastObject];
+                adCell.adTitle.text should equal(@"Generic Ad Title");
+            });
+        });
+    });
+
+    describe(@"-str_reloadItemsAtIndexPaths:", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_reloadItemsAtIndexPaths:nil];
+        });
+
+        it(@"reloads those adjusted rows", ^{
+            [collectionView str_reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1],
+                                                          [NSIndexPath indexPathForRow:1 inSection:1],
+                                                          [NSIndexPath indexPathForRow:2 inSection:1]]];
+
+            collectionView should have_received(@selector(reloadItemsAtIndexPaths:))
+            .with(@[[NSIndexPath indexPathForRow:0 inSection:1],
+                    [NSIndexPath indexPathForRow:2 inSection:1],
+                    [NSIndexPath indexPathForRow:3 inSection:1]]);
+        });
+
     });
 });
 

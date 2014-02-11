@@ -76,6 +76,32 @@ extern const char * const STRCollectionViewAdGeneratorKey;
     return [[self str_ensureAdjuster] externalIndexPath:trueIndexPath];
 }
 
+- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
+    if (adIndexPath == nil) {
+        adIndexPath = [NSIndexPath indexPathForItem:1 inSection:0];
+    }
+
+    [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];
+    [self reloadData];
+}
+
+- (void)str_reloadSections:(NSIndexSet *)sections {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+    NSIndexPath *adIndexPath = adjuster.adIndexPath;
+    NSInteger newNumberOfItemsInAdSection = [self.dataSource collectionView:self numberOfItemsInSection:adIndexPath.section];
+
+    newNumberOfItemsInAdSection = MIN(newNumberOfItemsInAdSection - 1, adIndexPath.row);
+
+    [adjuster willReloadAdIndexPathTo:[NSIndexPath indexPathForRow:newNumberOfItemsInAdSection inSection:adIndexPath.section]];
+
+    [self reloadSections:sections];
+}
+
+- (void)str_reloadItemsAtIndexPaths:(NSArray *)indexPaths {
+    [self reloadItemsAtIndexPaths:[[self str_ensureAdjuster] trueIndexPaths:indexPaths]];
+
+}
+
 #pragma mark - Private
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
