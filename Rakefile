@@ -31,7 +31,7 @@ CMD
   end
 
   desc "Copy docs to local website (assumes website is neighbor of SDK)"
-  task :copy_to_local_website do
+  task :copy_to_local_website => ["docs:generate"] do
     raise "copying docs to local website failed" unless copy_to_website("../website")
   end
 

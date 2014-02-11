@@ -1,5 +1,7 @@
 # Sharethrough iOS-SDK #
 
+<div class="section-footer"></div>
+
 <div id="toc"></div>
 ## Table of Contents ##
 1. [Setting up the SDK][sect-setup]
@@ -43,11 +45,14 @@ After adding the frameworks, your project's "Link Binary With Libraries" should 
 ![Linked libraries][linked-libraries-screenshot]
 
 </hr>
+
 <div id="first-ad-intro"><a href="#toc">Back to top</a></div>
 
 ### 2. Adding a Sharethrough Native ad to your app ###
+Sharethrough's API provides the following ways to integrate native ads into your app.
 
-Sharethrough's API provides 2 ways for integrating native ads into your app.  The basic version is very flexible - you hand it a  `UIView`, and it places an ad in that view. You can use this view virtually anywhere in your app. The `UITableView` API allows you to place an ad in your `UITableView`, and then manages that ad for you so that your content's `NSIndexPaths` are unchanged.
+- The basic version is very flexible - you hand it a  `UIView`, and it places an ad in that view. You can use this view virtually anywhere in your app.
+- The `UITableView` API allows you to place an ad in your `UITableView`, and then manages that ad for you so that your content's `NSIndexPaths` are unchanged.
 
 In either case, these ad views should be styled according to the rest of your app, giving it that customized native feel (fonts, colors, etc.)
 
