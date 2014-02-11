@@ -12,8 +12,8 @@
 
 + (NSBundle *)bundleForResources {
     NSBundle *mainBundle = [NSBundle mainBundle];
-    if ([mainBundle pathForResource:@"Sharethrough-SDK.framework" ofType:nil]) {
-        NSString *fullResourcePath = [mainBundle pathForResource:@"Sharethrough-SDK.framework/Resources/STRResources.bundle" ofType:nil];
+    if ([mainBundle pathForResource:@"SharethroughSDK.framework" ofType:nil]) {
+        NSString *fullResourcePath = [mainBundle pathForResource:@"SharethroughSDK.framework/Resources/STRResources.bundle" ofType:nil];
         NSBundle *bundle = [NSBundle bundleWithPath:fullResourcePath];
 
         return bundle;
