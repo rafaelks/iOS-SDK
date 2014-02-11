@@ -62,6 +62,12 @@
 		AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
 		AE3120E21889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
 		AE3120E31889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
+		AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
+		AE3FF3FF18AA9F5A006061C2 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
+		AE3FF40518AAA078006061C2 /* STRImages.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40318AAA078006061C2 /* STRImages.m */; };
+		AE3FF40718AAA078006061C2 /* STRImages.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40318AAA078006061C2 /* STRImages.m */; };
+		AE3FF40918AAA242006061C2 /* play-btn-300x.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40818AAA242006061C2 /* play-btn-300x.c */; };
+		AE3FF40A18AAA242006061C2 /* play-btn-300x.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40818AAA242006061C2 /* play-btn-300x.c */; };
 		AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46CE6B189844AB0096BDE9 /* STRSession.m */; };
 		AE46CE6D189844AB0096BDE9 /* STRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46CE6B189844AB0096BDE9 /* STRSession.m */; };
 		AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
@@ -108,12 +114,9 @@
 		AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
 		AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */; };
 		AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
-		AE9C4600189AE83C001B407A /* play-btn-300x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
-		AE9C4601189AE83C001B407A /* play-btn-300x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C45FE189AE83C001B407A /* play-btn-300x.png */; };
 		AE9C460A189B181B001B407A /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
 		AE9C460B189B181B001B407A /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
 		AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */; };
-		AE9C4615189C1B8D001B407A /* vine-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9C4613189C1B8D001B407A /* vine-logo.png */; };
 		AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
 		AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
 		AE9C4623189C25A1001B407A /* STRAdYouTubeSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */; };
@@ -266,6 +269,11 @@
 		AE3120DC1889E71900297F01 /* STRDeferred.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = STRDeferred.m; path = ../STRDeferred.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE3120E01889E76F00297F01 /* STRPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = STRPromise.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AE3120E11889E76F00297F01 /* STRPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = STRPromise.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "vine-logo.c"; sourceTree = "<group>"; };
+		AE3FF40018AA9FF6006061C2 /* images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = images.h; sourceTree = "<group>"; };
+		AE3FF40218AAA078006061C2 /* STRImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRImages.h; sourceTree = "<group>"; };
+		AE3FF40318AAA078006061C2 /* STRImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRImages.m; sourceTree = "<group>"; };
+		AE3FF40818AAA242006061C2 /* play-btn-300x.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "play-btn-300x.c"; sourceTree = "<group>"; };
 		AE46CE6A189844AB0096BDE9 /* STRSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSession.h; sourceTree = "<group>"; };
 		AE46CE6B189844AB0096BDE9 /* STRSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSession.m; sourceTree = "<group>"; };
 		AE46CE6E189849B00096BDE9 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -325,11 +333,9 @@
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		AE9C45FE189AE83C001B407A /* play-btn-300x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-btn-300x.png"; sourceTree = "<group>"; };
 		AE9C4608189B181B001B407A /* STRAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdCache.h; sourceTree = "<group>"; };
 		AE9C4609189B181B001B407A /* STRAdCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdCache.m; sourceTree = "<group>"; };
 		AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdCacheSpec.mm; sourceTree = "<group>"; };
-		AE9C4613189C1B8D001B407A /* vine-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vine-logo.png"; sourceTree = "<group>"; };
 		AE9C461A189C2538001B407A /* STRAdYouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdYouTube.h; sourceTree = "<group>"; };
 		AE9C461B189C2538001B407A /* STRAdYouTube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdYouTube.m; sourceTree = "<group>"; };
 		AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdYouTubeSpec.mm; sourceTree = "<group>"; };
@@ -432,18 +438,18 @@
 		AE022DE9188E008800D02568 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
-				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
-				AE9C461A189C2538001B407A /* STRAdYouTube.h */,
-				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
-				AE9C4624189C29B0001B407A /* STRAdVine.h */,
-				AE9C4625189C29B0001B407A /* STRAdVine.m */,
-				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
-				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
 				AE9C4608189B181B001B407A /* STRAdCache.h */,
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
+				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
+				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
+				AE9C4624189C29B0001B407A /* STRAdVine.h */,
+				AE9C4625189C29B0001B407A /* STRAdVine.m */,
+				AE9C461A189C2538001B407A /* STRAdYouTube.h */,
+				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
+				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
+				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -623,10 +629,12 @@
 		AE52B85C188F290600C4DEF8 /* Extension Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				AEBAEDCB189839DE00F02C5A /* STRDateProvider.h */,
-				AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */,
 				AE52B85D188F296400C4DEF8 /* STRBundleSettings.h */,
 				AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */,
+				AEBAEDCB189839DE00F02C5A /* STRDateProvider.h */,
+				AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */,
+				AE3FF40218AAA078006061C2 /* STRImages.h */,
+				AE3FF40318AAA078006061C2 /* STRImages.m */,
 			);
 			path = "Extension Helpers";
 			sourceTree = "<group>";
@@ -793,8 +801,9 @@
 		AEFBF162189047DC00ADD742 /* Static Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AE9C4613189C1B8D001B407A /* vine-logo.png */,
-				AE9C45FE189AE83C001B407A /* play-btn-300x.png */,
+				AE3FF40018AA9FF6006061C2 /* images.h */,
+				AE3FF40818AAA242006061C2 /* play-btn-300x.c */,
+				AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */,
 				AEFBF1681890480700ADD742 /* youtube_embed.html */,
 			);
 			path = "Static Resources";
@@ -927,7 +936,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE9C4600189AE83C001B407A /* play-btn-300x.png in Resources */,
 				AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */,
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
 				AE9C462D189C5288001B407A /* STRYouTubeViewController.xib in Resources */,
@@ -941,10 +949,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE9C4615189C1B8D001B407A /* vine-logo.png in Resources */,
 				AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */,
 				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
-				AE9C4601189AE83C001B407A /* play-btn-300x.png in Resources */,
 				AE9C4630189C6C4D001B407A /* STRYouTubeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1062,6 +1068,7 @@
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */,
+				AE3FF40A18AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AE6C80801899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */,
 				AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */,
@@ -1081,7 +1088,9 @@
 				AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C44A018A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm in Sources */,
+				AE3FF3FF18AA9F5A006061C2 /* vine-logo.c in Sources */,
 				AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */,
+				AE3FF40718AAA078006061C2 /* STRImages.m in Sources */,
 				AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */,
 				AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */,
 			);
@@ -1103,6 +1112,7 @@
 				AE52FD7318A41AB2009F69BD /* STRCollectionViewAdGenerator.m in Sources */,
 				AE52B85F188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
+				AE3FF40918AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */,
 				AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
 				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,
@@ -1116,8 +1126,10 @@
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE52FD7718A41AB2009F69BD /* STRTableViewAdGenerator.m in Sources */,
+				AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */,
 				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
+				AE3FF40518AAA078006061C2 /* STRImages.m in Sources */,
 				AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */,
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE52FD7118A41AB2009F69BD /* STRAdGenerator.m in Sources */,

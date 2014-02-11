@@ -8,6 +8,7 @@
 
 #import "STRAdvertisement.h"
 #import "STRBundleSettings.h"
+#import "STRImages.h"
 
 @implementation STRAdvertisement
 
@@ -16,9 +17,6 @@
 }
 
 - (UIImage *)displayableThumbnail {
-    NSString *filePath = [[STRBundleSettings bundleForResources] pathForResource:[self centerImageFileName] ofType:nil];
-    UIImage *centerImage = [UIImage imageWithContentsOfFile:filePath];
-
     CGSize size = self.thumbnailImage.size;
 
     UIGraphicsBeginImageContext(size);
@@ -27,7 +25,7 @@
     CGFloat diameter = ceilf(fminf(size.width, size.height) * 0.15);
     CGFloat leftInset = fmaxf(ceilf((size.width - diameter) * 0.5), 0);
     CGFloat topInset = fmaxf(ceilf((size.height - diameter) * 0.5), 0);
-    [centerImage drawInRect:CGRectMake(leftInset, topInset, diameter, diameter)];
+    [[self centerImage] drawInRect:CGRectMake(leftInset, topInset, diameter, diameter)];
 
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -35,8 +33,8 @@
     return newImage;
 }
 
-- (NSString *)centerImageFileName {
-    return @"play-btn-300x.png";
+- (UIImage *)centerImage {
+    return [STRImages playBtn];
 }
 
 @end

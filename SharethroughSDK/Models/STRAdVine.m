@@ -8,11 +8,13 @@
 
 #import "STRAdVine.h"
 #import "STRBundleSettings.h"
+#import "STRImages.h"
 
 @implementation STRAdVine
 
-- (NSString *)centerImageFileName {
-    return @"vine-logo.png";
+
+- (UIImage *)centerImage {
+    return [STRImages vineImage];
 }
 
 @end
