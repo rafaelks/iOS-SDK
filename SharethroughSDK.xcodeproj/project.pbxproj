@@ -124,9 +124,7 @@
 		AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4625189C29B0001B407A /* STRAdVine.m */; };
 		AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4629189C5288001B407A /* STRYouTubeViewController.m */; };
 		AE9C462C189C5288001B407A /* STRYouTubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4629189C5288001B407A /* STRYouTubeViewController.m */; };
-		AE9C462D189C5288001B407A /* STRYouTubeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */; };
 		AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C462E189C53D3001B407A /* STRYouTubeViewControllerSpec.mm */; };
-		AE9C4630189C6C4D001B407A /* STRYouTubeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */; };
 		AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
 		AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
 		AE9C463B189C74B0001B407A /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
@@ -343,7 +341,6 @@
 		AE9C4625189C29B0001B407A /* STRAdVine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdVine.m; sourceTree = "<group>"; };
 		AE9C4628189C5288001B407A /* STRYouTubeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRYouTubeViewController.h; sourceTree = "<group>"; };
 		AE9C4629189C5288001B407A /* STRYouTubeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRYouTubeViewController.m; sourceTree = "<group>"; };
-		AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STRYouTubeViewController.xib; sourceTree = "<group>"; };
 		AE9C462E189C53D3001B407A /* STRYouTubeViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRYouTubeViewControllerSpec.mm; sourceTree = "<group>"; };
 		AE9C4632189C72B9001B407A /* STRVideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRVideoController.h; sourceTree = "<group>"; };
 		AE9C4633189C72B9001B407A /* STRVideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRVideoController.m; sourceTree = "<group>"; };
@@ -620,7 +617,6 @@
 				AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */,
 				AE9C4628189C5288001B407A /* STRYouTubeViewController.h */,
 				AE9C4629189C5288001B407A /* STRYouTubeViewController.m */,
-				AE9C462A189C5288001B407A /* STRYouTubeViewController.xib */,
 				AE9C4632189C72B9001B407A /* STRVideoController.h */,
 				AE9C4633189C72B9001B407A /* STRVideoController.m */,
 			);
@@ -939,7 +935,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
-				AE9C462D189C5288001B407A /* STRYouTubeViewController.xib in Resources */,
 				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
 				AE52B899188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 				AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */,
@@ -951,7 +946,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
-				AE9C4630189C6C4D001B407A /* STRYouTubeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

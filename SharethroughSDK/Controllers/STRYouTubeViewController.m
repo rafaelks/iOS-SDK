@@ -20,15 +20,62 @@
 @implementation STRYouTubeViewController
 
 - (id)initWithAd:(STRAdYouTube *)ad {
-    self = [super initWithNibName:nil bundle:[STRBundleSettings bundleForResources]];
+    self = [super init];
     if (self) {
         self.ad = ad;
     }
     return self;
 }
 
+- (void)loadView {
+    UIView *view = [[UIView alloc] initWithFrame:(CGRect){.size.width = 320, .size.height = 568}];
+    UIWebView *webview = [[UIWebView alloc] initWithFrame:view.bounds];
+    [view addSubview:webview];
+
+    UIActivityIndicatorView *spinny = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [view addSubview:spinny];
+
+    webview.translatesAutoresizingMaskIntoConstraints = NO;
+    spinny.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray *fitWebviewToWidth = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webview]-0-|"
+                                                                         options:0
+                                                                         metrics:nil
+                                                                           views:NSDictionaryOfVariableBindings(webview)];
+    [view addConstraints:fitWebviewToWidth];
+
+    NSArray *fitWebviewToHeight = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webview]-0-|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:NSDictionaryOfVariableBindings(webview)];
+    [view addConstraints:fitWebviewToHeight];
+
+    NSLayoutConstraint *centerSpinnyHorizontally = [NSLayoutConstraint constraintWithItem:spinny
+                                                                                attribute:NSLayoutAttributeCenterX
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:view
+                                                                                attribute:NSLayoutAttributeCenterX
+                                                                               multiplier:1.0 constant:0];
+    [view addConstraint:centerSpinnyHorizontally];
+
+    NSLayoutConstraint *centerSpinnyVertically = [NSLayoutConstraint constraintWithItem:spinny
+                                                                              attribute:NSLayoutAttributeCenterY
+                                                                              relatedBy:NSLayoutRelationEqual
+                                                                                 toItem:view
+                                                                              attribute:NSLayoutAttributeCenterY
+                                                                             multiplier:1.0 constant:0];
+    [view addConstraint:centerSpinnyVertically];
+
+    self.webView = webview;
+    self.spinner = spinny;
+
+    self.view = view;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self.spinner startAnimating];
 
     self.webView.scrollView.alwaysBounceHorizontal = NO;
     self.webView.allowsInlineMediaPlayback = YES;
