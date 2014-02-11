@@ -22,6 +22,25 @@ extern const char * const STRCollectionViewAdGeneratorKey;
     return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:trueIndexPath];
 }
 
+- (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+    NSArray *trueIndexPaths = [adjuster willInsertRowsAtExternalIndexPaths:indexPaths];
+    [self insertItemsAtIndexPaths:trueIndexPaths];
+}
+
+- (void)str_moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+    NSArray *indexPaths = [adjuster willMoveRowAtExternalIndexPath:indexPath toExternalIndexPath:newIndexPath];
+    [self moveItemAtIndexPath:[indexPaths firstObject] toIndexPath:[indexPaths lastObject]];
+}
+
+- (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths {
+    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+
+    NSArray *trueIndexPaths = [adjuster willDeleteRowsAtExternalIndexPaths:indexPaths];
+    [self deleteItemsAtIndexPaths:trueIndexPaths];
+}
+
 - (NSInteger)str_numberOfItemsInSection:(NSInteger)section {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
 
@@ -37,24 +56,24 @@ extern const char * const STRCollectionViewAdGeneratorKey;
     return [visibleCells copy];
 }
 
-- (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths {
+- (UICollectionViewCell *)str_cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSArray *trueIndexPaths = [adjuster willInsertRowsAtExternalIndexPaths:indexPaths];
-    [self insertItemsAtIndexPaths:trueIndexPaths];
+    NSIndexPath *trueIndexPath = [adjuster trueIndexPath:indexPath];
+    return [self cellForItemAtIndexPath:trueIndexPath];
 }
 
-
-- (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths {
+- (NSArray *)str_indexPathsForVisibleItems {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-
-    NSArray *trueIndexPaths = [adjuster willDeleteRowsAtExternalIndexPaths:indexPaths];
-    [self deleteItemsAtIndexPaths:trueIndexPaths];
+    return [adjuster externalIndexPaths:[self indexPathsForVisibleItems]];
 }
 
-- (void)str_moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSArray *indexPaths = [adjuster willMoveRowAtExternalIndexPath:indexPath toExternalIndexPath:newIndexPath];
-    [self moveItemAtIndexPath:[indexPaths firstObject] toIndexPath:[indexPaths lastObject]];
+- (NSIndexPath *)str_indexPathForCell:(UICollectionViewCell *)cell {
+    return [[self str_ensureAdjuster] externalIndexPath:[self indexPathForCell:cell]];
+}
+
+- (NSIndexPath *)str_indexPathForItemAtPoint:(CGPoint)point {
+    NSIndexPath *trueIndexPath = [self indexPathForItemAtPoint:point];
+    return [[self str_ensureAdjuster] externalIndexPath:trueIndexPath];
 }
 
 #pragma mark - Private

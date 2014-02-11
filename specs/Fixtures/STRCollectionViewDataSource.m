@@ -7,6 +7,7 @@
 //
 
 #import "STRCollectionViewDataSource.h"
+#import "UICollectionView+STR.h"
 
 @implementation STRCollectionViewDataSource
 
@@ -24,7 +25,8 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView str_dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
+
     UILabel *label = [[UILabel alloc] init];
     label.text = [NSString stringWithFormat:@"item: %d, section: %d", indexPath.item, indexPath.section];
     [cell.contentView addSubview:label];
