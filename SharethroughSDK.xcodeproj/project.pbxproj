@@ -133,6 +133,8 @@
 		AE9C463D189C7776001B407A /* STRVideoControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */; };
 		AEB044C018A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEB044BF18A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm */; };
 		AEB2F43C18A2B25600F415EE /* STRAdViewDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */; };
+		AEB4EF4618AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */; };
+		AEB4EF4718AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */; };
 		AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC31898227200F02C5A /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
 		AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */; };
@@ -153,8 +155,6 @@
 		AEFBC4A018A5539500E24BBB /* STRTableViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
-		AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
-		AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */ = {isa = PBXBuildFile; fileRef = AEFBF1681890480700ADD742 /* youtube_embed.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -352,6 +352,8 @@
 		AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRVideoControllerSpec.mm; sourceTree = "<group>"; };
 		AEB044BF18A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRIndexPathDelegateProxySpec.mm; sourceTree = "<group>"; };
 		AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdViewDelegate.h; sourceTree = "<group>"; };
+		AEB4EF4418AAB03E00B69CAC /* STRYouTubeEmbedPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRYouTubeEmbedPage.h; sourceTree = "<group>"; };
+		AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRYouTubeEmbedPage.m; sourceTree = "<group>"; };
 		AEBAEDC01898227200F02C5A /* STRBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRBeaconService.h; sourceTree = "<group>"; };
 		AEBAEDC11898227200F02C5A /* STRBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRBeaconService.m; sourceTree = "<group>"; };
 		AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRBeaconServiceSpec.mm; sourceTree = "<group>"; };
@@ -374,7 +376,6 @@
 		AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
-		AEFBF1681890480700ADD742 /* youtube_embed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = youtube_embed.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -635,6 +636,8 @@
 				AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */,
 				AE3FF40218AAA078006061C2 /* STRImages.h */,
 				AE3FF40318AAA078006061C2 /* STRImages.m */,
+				AEB4EF4418AAB03E00B69CAC /* STRYouTubeEmbedPage.h */,
+				AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */,
 			);
 			path = "Extension Helpers";
 			sourceTree = "<group>";
@@ -804,7 +807,6 @@
 				AE3FF40018AA9FF6006061C2 /* images.h */,
 				AE3FF40818AAA242006061C2 /* play-btn-300x.c */,
 				AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */,
-				AEFBF1681890480700ADD742 /* youtube_embed.html */,
 			);
 			path = "Static Resources";
 			sourceTree = "<group>";
@@ -936,7 +938,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEFBF1691890480700ADD742 /* youtube_embed.html in Resources */,
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
 				AE9C462D189C5288001B407A /* STRYouTubeViewController.xib in Resources */,
 				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
@@ -949,7 +950,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEFBF16A1890480700ADD742 /* youtube_embed.html in Resources */,
 				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 				AE9C4630189C6C4D001B407A /* STRYouTubeViewController.xib in Resources */,
 			);
@@ -1041,6 +1041,7 @@
 				AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */,
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
+				AEB4EF4718AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
 				AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */,
 				AE52FD7218A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */,
@@ -1113,6 +1114,7 @@
 				AE52B85F188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE3FF40918AAA242006061C2 /* play-btn-300x.c in Sources */,
+				AEB4EF4618AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
 				AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */,
 				AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
 				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,

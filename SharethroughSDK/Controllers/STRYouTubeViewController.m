@@ -9,6 +9,7 @@
 #import "STRYouTubeViewController.h"
 #import "STRBundleSettings.h"
 #import "STRAdYouTube.h"
+#import "STRYouTubeEmbedPage.h"
 
 @interface STRYouTubeViewController ()<UIWebViewDelegate>
 
@@ -33,8 +34,7 @@
     self.webView.allowsInlineMediaPlayback = YES;
     self.webView.mediaPlaybackRequiresUserAction = NO;
 
-    NSString *htmlPath = [[STRBundleSettings bundleForResources] pathForResource:@"youtube_embed.html" ofType:nil];
-    NSString *templateString = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
+    NSString *templateString = [STRYouTubeEmbedPage htmlForYouTubeEmbed];
     NSString *htmlString = [NSString stringWithFormat:templateString, [(STRAdYouTube *)self.ad youtubeVideoId]];
 
     self.webView.delegate = self;
