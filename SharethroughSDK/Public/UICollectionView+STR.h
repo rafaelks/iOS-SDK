@@ -102,6 +102,12 @@
  */
 - (NSIndexPath *)str_indexPathForCell:(UICollectionViewCell *)cell;
 
+/**
+ *  Returns the index path of the cell at the specified point, while accounting for ad(s) provided by Sharethrough
+
+    @param point A point in the local coordinate system of the receiver (the table view's bounds).
+    @return An index path representing the row and section associated with point or nil if the point is out of the bounds of any row. Passing in a point that corresponds to an ad cell will also return nil.
+ */
 - (NSIndexPath *)str_indexPathForItemAtPoint:(CGPoint)point;
 
 @end

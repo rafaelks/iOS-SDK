@@ -320,7 +320,7 @@
 		AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdPlacementAdjuster.h; sourceTree = "<group>"; };
 		AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdPlacementAdjuster.m; sourceTree = "<group>"; };
 		AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementAdjusterSpec.mm; sourceTree = "<group>"; };
-		AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSharethroughSDK.a; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE8ED3E31885ADF00004AB32 /* libSharethrough-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -724,7 +724,7 @@
 		AE8ED3E41885ADF00004AB32 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */,
+				AE8ED3E31885ADF00004AB32 /* libSharethrough-SDK.a */,
 				AE2246821886138F00626A29 /* specs.app */,
 				AE52B88C188F3CA100C4DEF8 /* STRResources.bundle */,
 			);
@@ -853,7 +853,7 @@
 			);
 			name = "Sharethrough-SDK";
 			productName = SharethroughSDK;
-			productReference = AE8ED3E31885ADF00004AB32 /* libSharethroughSDK.a */;
+			productReference = AE8ED3E31885ADF00004AB32 /* libSharethrough-SDK.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
