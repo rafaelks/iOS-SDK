@@ -10,7 +10,7 @@
 #import "STRIndexPathDelegateProxy.h"
 #import "STRTableViewDelegate.h"
 #import "STRFullTableViewDelegate.h"
-#import "STRTableViewDataSourceProxy.h"
+#import "STRGridlikeViewDataSourceProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -93,11 +93,11 @@ describe(@"STRTableViewAdGenerator", ^{
 
         it(@"points the table view's data source to a delegateProxy", ^{
             id<UITableViewDataSource> dataSource = tableView.dataSource;
-            dataSource should be_instance_of([STRTableViewDataSourceProxy class]);
+            dataSource should be_instance_of([STRGridlikeViewDataSourceProxy class]);
         });
 
         it(@"points the delegateProxy's data source to the table view's original data source", ^{
-            STRTableViewDataSourceProxy *proxy = tableView.dataSource;
+            STRGridlikeViewDataSourceProxy *proxy = (STRGridlikeViewDataSourceProxy *)tableView.dataSource;
             proxy.originalDataSource should be_same_instance_as(dataSource);
         });
 
@@ -107,12 +107,12 @@ describe(@"STRTableViewAdGenerator", ^{
 
         it(@"provides a setter to modify the original data source", ^{
             STRTableViewDataSource *newDataSource = [STRTableViewDataSource new];
-            STRTableViewDataSourceProxy *proxy = (STRTableViewDataSourceProxy *)tableView.dataSource;
+            STRGridlikeViewDataSourceProxy *proxy = (STRGridlikeViewDataSourceProxy *)tableView.dataSource;
             [tableViewAdGenerator setOriginalDataSource:newDataSource tableView:tableView];
 
             tableViewAdGenerator.originalDataSource should be_same_instance_as(newDataSource);
             tableView.dataSource should_not be_same_instance_as(proxy);
-            tableView.dataSource should be_instance_of([STRTableViewDataSourceProxy class]);
+            tableView.dataSource should be_instance_of([STRGridlikeViewDataSourceProxy class]);
         });
     });
 

@@ -1,4 +1,4 @@
-#import "STRTableViewDataSourceProxy.h"
+#import "STRGridlikeViewDataSourceProxy.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRAppModule.h"
 #import "STRAdGenerator.h"
@@ -10,19 +10,19 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRTableViewDataSourceProxySpec)
 
-describe(@"STRTableViewDataSourceProxy", ^{
-    __block STRTableViewDataSourceProxy *proxy;
+describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
+    __block STRGridlikeViewDataSourceProxy *proxy;
     __block STRAdGenerator *adGenerator;
     __block UITableView *tableView;
     __block UIViewController *presentingViewController;
     __block STRInjector *injector;
     __block id<UITableViewDataSource> originalDataSource;
 
-    STRTableViewDataSourceProxy *(^proxyWithDataSource)(id<UITableViewDataSource> dataSource) = ^STRTableViewDataSourceProxy *(id<UITableViewDataSource> dataSource) {
+    STRGridlikeViewDataSourceProxy *(^proxyWithDataSource)(id<UITableViewDataSource> dataSource) = ^STRGridlikeViewDataSourceProxy *(id<UITableViewDataSource> dataSource) {
 
         STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
 
-        return [[STRTableViewDataSourceProxy alloc] initWithOriginalDataSource:dataSource adjuster:adjuster adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
+        return [[STRGridlikeViewDataSourceProxy alloc] initWithOriginalDataSource:dataSource adjuster:adjuster adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
     };
 
     beforeEach(^{
@@ -109,7 +109,6 @@ describe(@"STRTableViewDataSourceProxy", ^{
     });
 
     describe(@"placing an ad in the table view when the reuse identifier was badly registered", ^{
-
         it(@"throws an exception if the sdk user does not register the identifier", ^{
             expect(^{
                 [tableView layoutIfNeeded];
@@ -122,20 +121,6 @@ describe(@"STRTableViewDataSourceProxy", ^{
             expect(^{
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
-        });
-    });
-
-    describe(@"-copyWithNewDataSource:", ^{
-        it(@"returns a new delegateProxy with a different data source", ^{
-            id <UITableViewDataSource> newDataSource = nice_fake_for(@protocol(UITableViewDataSource));
-
-            STRTableViewDataSourceProxy *newProxy = [proxy copyWithNewDataSource:newDataSource];
-            newProxy should_not be_same_instance_as(proxy);
-            newProxy.originalDataSource should be_same_instance_as(newDataSource);
-            newProxy.adCellReuseIdentifier should equal(@"adCell");
-            newProxy.placementKey should equal(@"placementKey");
-            newProxy.presentingViewController should be_same_instance_as(presentingViewController);
-            newProxy.injector should be_same_instance_as(injector);
         });
     });
 });

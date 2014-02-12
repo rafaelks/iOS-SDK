@@ -10,7 +10,7 @@
 #import "STRIndexPathDelegateProxy.h"
 #import "STRFullCollectionViewDataSource.h"
 #import "STRFakeAdGenerator.h"
-#import "STRCollectionViewDataSourceProxy.h"
+#import "STRGridlikeViewDataSourceProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -175,11 +175,11 @@ describe(@"STRCollectionViewAdGenerator", ^{
 
         it(@"points the collection view's data source to a delegateProxy", ^{
             id<UICollectionViewDataSource>dataSource = collectionView.dataSource;
-            dataSource should be_instance_of([STRCollectionViewDataSourceProxy class]);
+            dataSource should be_instance_of([STRGridlikeViewDataSourceProxy class]);
         });
 
         it(@"points the delegateProxy's data source to the table view's original data source", ^{
-            STRCollectionViewDataSourceProxy *proxy = collectionView.dataSource;
+            STRGridlikeViewDataSourceProxy *proxy = (STRGridlikeViewDataSourceProxy *)collectionView.dataSource;
             proxy.originalDataSource should be_same_instance_as(dataSource);
         });
 
@@ -189,12 +189,12 @@ describe(@"STRCollectionViewAdGenerator", ^{
 
         it(@"provides a setter to modify the original data source", ^{
             STRCollectionViewDataSource *newDataSource = [STRCollectionViewDataSource new];
-            STRCollectionViewDataSourceProxy *proxy = (STRCollectionViewDataSourceProxy *)collectionView.dataSource;
+            STRGridlikeViewDataSourceProxy *proxy = (STRGridlikeViewDataSourceProxy *)collectionView.dataSource;
             [collectionViewAdGenerator setOriginalDataSource:newDataSource collectionView:collectionView];
 
             collectionViewAdGenerator.originalDataSource should be_same_instance_as(newDataSource);
             collectionView.dataSource should_not be_same_instance_as(proxy);
-            collectionView.dataSource should be_instance_of([STRCollectionViewDataSourceProxy class]);
+            collectionView.dataSource should be_instance_of([STRGridlikeViewDataSourceProxy class]);
         });
     });
 

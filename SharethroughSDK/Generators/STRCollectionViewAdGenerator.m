@@ -13,7 +13,7 @@
 #import "STRAdView.h"
 #import "STRAdGenerator.h"
 #import "STRIndexPathDelegateProxy.h"
-#import "STRCollectionViewDataSourceProxy.h"
+#import "STRGridlikeViewDataSourceProxy.h"
 
 const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGeneratorKey";
 
@@ -22,7 +22,7 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
 
 @property (nonatomic, strong) STRInjector *injector;
 @property (nonatomic, strong) STRAdPlacementAdjuster *adjuster;
-@property (nonatomic, strong) STRCollectionViewDataSourceProxy *dataSourceProxy;
+@property (nonatomic, strong) STRGridlikeViewDataSourceProxy *dataSourceProxy;
 @property (nonatomic, strong, readwrite) STRIndexPathDelegateProxy *delegateProxy;
 
 @end
@@ -50,7 +50,7 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
 
     self.adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:collectionView preferredStartingIndexPath:adInitialIndexPath]];
 
-    self.dataSourceProxy = [[STRCollectionViewDataSourceProxy alloc] initWithOriginalDataSource:collectionView.dataSource
+    self.dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithOriginalDataSource:collectionView.dataSource
                                                                                        adjuster:self.adjuster
                                                                           adCellReuseIdentifier:adCellReuseIdentifier
                                                                                    placementKey:placementKey

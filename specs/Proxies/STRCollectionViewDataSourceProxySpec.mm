@@ -1,4 +1,4 @@
-#import "STRCollectionViewDataSourceProxy.h"
+#import "STRGridlikeViewDataSourceProxy.h"
 #import "STRInjector.h"
 #import "STRAdGenerator.h"
 #import "STRAppModule.h"
@@ -46,18 +46,18 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRCollectionViewDataSourceProxySpec)
 
-describe(@"STRCollectionViewDataSourceProxy", ^{
-    __block STRCollectionViewDataSourceProxy *proxy;
+describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
+    __block STRGridlikeViewDataSourceProxy *proxy;
     __block STRInjector *injector;
     __block STRAdGenerator *adGenerator;
     __block UIViewController *presentingViewController;
     __block UICollectionView *collectionView;
     __block STRCollectionViewDataSource *originalDataSource;
 
-    STRCollectionViewDataSourceProxy *(^proxyWithDataSource)(id<UICollectionViewDataSource> dataSource) = ^STRCollectionViewDataSourceProxy *(id<UICollectionViewDataSource> dataSource) {
+    STRGridlikeViewDataSourceProxy *(^proxyWithDataSource)(id<UICollectionViewDataSource> dataSource) = ^STRGridlikeViewDataSourceProxy *(id<UICollectionViewDataSource> dataSource) {
         STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
 
-        return [[STRCollectionViewDataSourceProxy alloc] initWithOriginalDataSource:dataSource adjuster:adjuster adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
+        return [[STRGridlikeViewDataSourceProxy alloc] initWithOriginalDataSource:dataSource adjuster:adjuster adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
     };
 
     beforeEach(^{
@@ -150,31 +150,6 @@ describe(@"STRCollectionViewDataSourceProxy", ^{
             expect(^{
                 [collectionView layoutIfNeeded];
             }).to(raise_exception());
-        });
-    });
-
-    describe(@"-copyWithNewDataSource", ^{
-        __block id<UICollectionViewDataSource> newDataSource;
-        __block STRFullCollectionViewDataSourceWithoutSpecialDequeue *dataSource;
-
-        beforeEach(^{
-            dataSource = [STRFullCollectionViewDataSourceWithoutSpecialDequeue new];
-
-            dataSource.numberOfSections = 2;
-            dataSource.itemsForEachSection = @[@1, @1];
-            proxy = proxyWithDataSource(dataSource);
-        });
-
-        it(@"returns a new delegateProxy with all the same values except the data source", ^{
-            newDataSource = nice_fake_for(@protocol(UICollectionViewDataSource));
-            STRCollectionViewDataSourceProxy *newProxy = [proxy copyWithNewDataSource:newDataSource];
-
-            newProxy should_not be_same_instance_as(proxy);
-            newProxy.originalDataSource should be_same_instance_as(newDataSource);
-            newProxy.adjuster should equal(proxy.adjuster);
-            newProxy.adCellReuseIdentifier should equal(@"adCell");
-            newProxy.placementKey should equal(@"placementKey");
-            newProxy.presentingViewController should be_same_instance_as(presentingViewController);
         });
     });
 });
