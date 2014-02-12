@@ -115,15 +115,35 @@ extern const char * const STRCollectionViewAdGeneratorKey;
     [self scrollToItemAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] atScrollPosition:scrollPosition animated:animated];
 }
 
+- (void)str_setDataSource:(id<UICollectionViewDataSource>)dataSource {
+    [[self str_ensureGenerator] setOriginalDataSource:dataSource collectionView:self];
+}
+
+- (void)str_setDelegate:(id<UICollectionViewDelegate>)delegate {
+    [[self str_ensureGenerator] setOriginalDelegate:delegate collectionView:self];
+}
+
+- (id<UICollectionViewDelegate>)str_delegate {
+    return [[self str_ensureGenerator] originalDelegate];
+}
+
+- (id<UICollectionViewDataSource>)str_dataSource {
+    return [[self str_ensureGenerator] originalDataSource];
+}
+
 #pragma mark - Private
 
-- (STRAdPlacementAdjuster *)str_ensureAdjuster {
+- (STRCollectionViewAdGenerator *)str_ensureGenerator {
     STRCollectionViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRCollectionViewAdGeneratorKey);
     if (!adGenerator) {
         [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:adInitialIndexPath:))];
     }
+    return adGenerator;
+}
 
-    return adGenerator.adjuster;
+- (STRAdPlacementAdjuster *)str_ensureAdjuster {
+
+    return [self str_ensureGenerator].adjuster;
 }
 
 

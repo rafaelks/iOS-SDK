@@ -74,6 +74,46 @@
  */
 - (void)str_reloadItemsAtIndexPaths:(NSArray *)indexPaths;
 
+
+
+/**---------------------------------------------------------------------------------------
+ * @name Methods required to be used instead of corresponding UITableView methods for managing dataSource/delegate
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ Getter for object that acts as the data source of the receiving collection view.
+ Sharethrough-aware alternate to UICollectionView's -dataSource.
+
+ @return collectionview's datasource
+ */
+- (id<UICollectionViewDataSource>)str_dataSource;
+
+/**
+ Setter for the object that acts as the data source of the receiving collection view.
+ Sharethrough-aware alternate to UICollectionView's -setDataSource:.
+
+ @param dataSource new datasource for the collectionview
+ */
+- (void)str_setDataSource:(id<UICollectionViewDataSource>)dataSource;
+
+/**
+ Getter for the object that acts as the delegate of the receiving collection view.
+ Sharethrough-aware alternate to UICollectionView's -delegate.
+
+ @return collectionview's delegate
+ */
+- (id<UICollectionViewDelegate>)str_delegate;
+
+/**
+ Setter for the object that acts as the delegate of the receiving collection view.
+ Sharethrough-aware alternate to UICollectionView's -setDelegate.
+
+ @param delegate new delegate for the collectionview
+ */
+- (void)str_setDelegate:(id<UICollectionViewDelegate>)delegate;
+
+
 /**---------------------------------------------------------------------------------------
  * @name Convenience accessor methods that are ad aware
  *  ---------------------------------------------------------------------------------------

@@ -43,6 +43,7 @@ void(^itThrowsIfCollectionWasntConfigured)(TriggerBlock) = ^(TriggerBlock trigge
 describe(@"UICollectionView+STR", ^{
     __block UICollectionView *collectionView;
     __block STRFullCollectionViewDataSource *dataSource;
+    __block id<UICollectionViewDelegate> delegate;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
     __block STRCollectionViewCell *adCell;
     __block STRCollectionViewAdGenerator *generator;
@@ -56,6 +57,8 @@ describe(@"UICollectionView+STR", ^{
         dataSource.numberOfSections = 2;
         collectionView.dataSource = dataSource;
 
+        delegate = nice_fake_for(@protocol(UICollectionViewDelegate));
+        collectionView.delegate = delegate;
         [collectionView registerClass:[STRCollectionViewCell class] forCellWithReuseIdentifier:@"adCellReuseIdentifier"];
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
 
@@ -471,6 +474,53 @@ describe(@"UICollectionView+STR", ^{
             collectionView.contentOffset should equal(CGPointZero);
         });
     });
+
+    describe(@"-str_dataSource", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_dataSource];
+        });
+
+        it(@"returns the original data source", ^{
+            [collectionView str_dataSource] should be_same_instance_as(dataSource);
+        });
+    });
+
+    describe(@"-str_setDataSource:", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_setDataSource:nil];
+        });
+
+        it(@"sets the collectionview datasource", ^{
+            id<UICollectionViewDataSource> newDataSource = nice_fake_for(@protocol(UICollectionViewDataSource));
+
+            [collectionView str_setDataSource:newDataSource];
+            collectionView.str_dataSource should be_same_instance_as(newDataSource);
+        });
+    });
+
+    describe(@"-str_delegate", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_delegate];
+        });
+
+        it(@"returns the original delegate", ^{
+            [collectionView str_delegate] should be_same_instance_as(delegate);
+        });
+    });
+
+    describe(@"-str_setDelegate:", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_setDelegate:nil];
+        });
+
+        it(@"sets the collectionview delegate", ^{
+            id<UICollectionViewDelegate> newDelegate = nice_fake_for(@protocol(UICollectionViewDelegate));
+
+            [collectionView str_setDelegate:newDelegate];
+            collectionView.str_delegate should be_same_instance_as(newDelegate);
+        });
+    });
+
 });
 
 SPEC_END
