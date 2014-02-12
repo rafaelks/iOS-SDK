@@ -156,7 +156,7 @@ extern const char *const STRTableViewAdGeneratorKey;
 - (STRTableViewAdGenerator *)str_ensureGenerator {
     STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRTableViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:adStartingIndexPath:))];
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:adInitialIndexPath:))];
     }
     return adGenerator;
 }

@@ -77,8 +77,11 @@ extern const char * const STRCollectionViewAdGeneratorKey;
 }
 
 - (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
-    if (adIndexPath == nil) {
-        adIndexPath = [NSIndexPath indexPathForItem:1 inSection:0];
+    [self str_ensureAdjuster];
+
+    if (!adIndexPath) {
+        STRCollectionViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRCollectionViewAdGeneratorKey);
+        adIndexPath = [adGenerator initialIndexPathForAd:self preferredStartingIndexPath:nil];
     }
 
     [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];
@@ -111,7 +114,7 @@ extern const char * const STRCollectionViewAdGeneratorKey;
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {
     STRCollectionViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRCollectionViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:))];
+        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:adInitialIndexPath:))];
     }
 
     return adGenerator.adjuster;

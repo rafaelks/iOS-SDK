@@ -9,6 +9,7 @@
 #import "STRCollectionViewDelegate.h"
 #import "STRIndexPathDelegateProxy.h"
 #import "STRFullCollectionViewDataSource.h"
+#import "STRFakeAdGenerator.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -26,7 +27,8 @@ describe(@"STRCollectionViewAdGenerator", ^{
     beforeEach(^{
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
 
-        adGenerator = nice_fake_for([STRAdGenerator class]);
+        adGenerator = [STRFakeAdGenerator new];
+        spy_on(adGenerator);
         [injector bind:[STRAdGenerator class] toInstance:adGenerator];
 
         collectionViewAdGenerator = [injector getInstance:[STRCollectionViewAdGenerator class]];
@@ -37,25 +39,22 @@ describe(@"STRCollectionViewAdGenerator", ^{
         [collectionView registerClass:[STRCollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
 
-        dataSource = [STRCollectionViewDataSource new];
-        dataSource.itemsForEachSection = @[@2];
-        collectionView.dataSource = dataSource;
     });
 
     describe(@"placing an ad in the collection view", ^{
-        it(@"stores itself as an associated object of the collection view", ^{
-            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
-            [collectionView layoutIfNeeded];
+        beforeEach(^{
+            dataSource = [STRCollectionViewDataSource new];
+            dataSource.itemsForEachSection = @[@2];
+            collectionView.dataSource = dataSource;
 
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
+            [collectionView layoutIfNeeded];
+        });
+        it(@"stores itself as an associated object of the collection view", ^{
             objc_getAssociatedObject(collectionView, STRCollectionViewAdGeneratorKey) should be_same_instance_as(collectionViewAdGenerator);
         });
 
         describe(@"when the data source only implements required methods", ^{
-            beforeEach(^{
-                [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
-                [collectionView layoutIfNeeded];
-            });
-
             it(@"inserts an extra row in the first section", ^{
                 [collectionView numberOfSections] should equal(1);
                 [collectionView numberOfItemsInSection:0] should equal(3);
@@ -85,7 +84,7 @@ describe(@"STRCollectionViewAdGenerator", ^{
             });
 
             it(@"forwards selectors to the data source", ^{
-                [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
                 [collectionView layoutIfNeeded];
 
                 [collectionView numberOfSections];
@@ -97,7 +96,7 @@ describe(@"STRCollectionViewAdGenerator", ^{
                     dataSource.numberOfSections = 2;
                     dataSource.itemsForEachSection = @[@1, @1];
 
-                    [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+                    [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
                     [collectionView layoutIfNeeded];
                 });
 
@@ -110,15 +109,13 @@ describe(@"STRCollectionViewAdGenerator", ^{
     });
 
     describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
-        __block STRCollectionViewDataSource *dataSource;
-
         beforeEach(^{
             dataSource = [STRCollectionViewDataSource new];
             collectionView.dataSource = dataSource;
         });
 
         it(@"throws Apple's exception if the sdk user does not register the identifier", ^{
-            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"unregisteredIdentifier" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"unregisteredIdentifier" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
             expect(^{
                 [collectionView layoutIfNeeded];
             }).to(raise_exception());
@@ -126,7 +123,7 @@ describe(@"STRCollectionViewAdGenerator", ^{
 
         it(@"throws an STR exception if the sdk user registers a cell that doesn't conform to STRAdView", ^{
             [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
-            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
 
             expect(^{
                 [collectionView layoutIfNeeded];
@@ -143,7 +140,7 @@ describe(@"STRCollectionViewAdGenerator", ^{
             collectionView.delegate = collectionViewController;
             [collectionView registerClass:[STRCollectionViewCell class]     forCellWithReuseIdentifier:@"adCell"];
 
-            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController];
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
             [collectionView layoutIfNeeded];
         });
 
@@ -156,6 +153,41 @@ describe(@"STRCollectionViewAdGenerator", ^{
         it(@"proxy points to collectionview's original delegate", ^{
             STRIndexPathDelegateProxy *proxy = (id)collectionView.delegate;
             proxy.originalDelegate should be_same_instance_as(collectionViewController);
+        });
+    });
+
+    describe(@"placing ad with a custom index path", ^{
+        __block STRFullCollectionViewDataSource *dataSource;
+
+        beforeEach(^{
+            dataSource = [STRFullCollectionViewDataSource new];
+            collectionView.dataSource = dataSource;
+            dataSource.itemsForEachSection = @[@0, @2];
+        });
+
+        it(@"puts the ad there", ^{
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            [collectionView layoutIfNeeded];
+            [collectionView numberOfItemsInSection:1] should equal(3);
+
+            [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]] should be_instance_of([STRCollectionViewCell class]);
+        });
+
+        context(@"and the index path is out of bounds", ^{
+            it(@"raises an exception", ^{
+                expect(^{
+                    [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+                }).to(raise_exception());
+            });
+        });
+
+        context(@"and then index path would be valid when the ad is inserted", ^{
+            it(@"is still able to place the ad there", ^{
+                [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+                [collectionView layoutIfNeeded];
+                [collectionView numberOfItemsInSection:1] should equal(3);
+                [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should be_instance_of([STRCollectionViewCell class]);
+            });
         });
     });
 

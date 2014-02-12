@@ -42,7 +42,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
               placementKey:(NSString *)placementKey
   presentingViewController:(UIViewController *)presentingViewController
                   adHeight:(CGFloat)adHeight
-       adStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
+       adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
     STRTableViewAdGenerator *oldGenerator = objc_getAssociatedObject(tableView, STRTableViewAdGeneratorKey);
 
     id<UITableViewDataSource> originalDataSource = tableView.dataSource;
@@ -52,7 +52,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
         originalDelegate = oldGenerator.delegateProxy.originalDelegate;
     }
 
-    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:tableView preferredStartingIndexPath:adStartingIndexPath]];
+    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:tableView preferredStartingIndexPath:adInitialIndexPath]];
     self.adjuster = adjuster;
 
     self.dataSourceProxy = [[STRTableViewDataSourceProxy alloc] initWithOriginalDataSource:originalDataSource adjuster:adjuster adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
@@ -102,5 +102,6 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
     NSInteger adRowPosition = [tableView numberOfRowsInSection:0] < 2 ? 0 : 1;
     return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
 }
+
 
 @end

@@ -21,6 +21,7 @@ extern const char * const STRCollectionViewAdGeneratorKey;
 - (void)placeAdInCollectionView:(UICollectionView *)collectionView
           adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
                    placementKey:(NSString *)placementKey
-       presentingViewController:(UIViewController *)presentingViewController;
-
+       presentingViewController:(UIViewController *)presentingViewController
+            adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
+- (NSIndexPath *)initialIndexPathForAd:(UICollectionView *)collectionView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath;
 @end

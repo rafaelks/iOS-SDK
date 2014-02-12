@@ -8,6 +8,7 @@
 #import "STRAdGenerator.h"
 #import "STRAppModule.h"
 #import "STRTableViewCell.h"
+#import "STRFakeAdGenerator.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -66,13 +67,13 @@ describe(@"UITableView+STR", ^{
 
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
 
-        [injector bind:[STRAdGenerator class] toInstance:nice_fake_for([STRAdGenerator class])];
+        [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
 
         spy_on([STRAdPlacementAdjuster class]);
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
         tableViewAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
-        [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:100.0 adStartingIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
+        [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:100.0 adInitialIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
 
         [tableView reloadData];
     });
@@ -296,7 +297,7 @@ describe(@"UITableView+STR", ^{
 
             tableViewAdGenerator should have_received(@selector(initialIndexPathForAd:preferredStartingIndexPath:)).with(tableView, nil);
 
-            [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_instance_of([STRTableViewCell class]);
+            [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_instance_of([STRTableViewCell class]);            
         });
     });
 

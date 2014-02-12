@@ -48,7 +48,7 @@ describe(@"STRTableViewAdGenerator", ^{
             tableView.delegate = tableViewController;
             [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
 
-            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:nil ];
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:nil ];
             [tableView layoutIfNeeded];
         });
 
@@ -87,7 +87,7 @@ describe(@"STRTableViewAdGenerator", ^{
             tableView.dataSource = dataSource;
             [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
 
-            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:nil ];
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:nil ];
             [tableView layoutIfNeeded];
         });
 
@@ -122,7 +122,7 @@ describe(@"STRTableViewAdGenerator", ^{
         });
 
         it(@"stores itself as an associated object of the table view", ^{
-            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:nil ];
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:nil ];
             [tableView layoutIfNeeded];
 
             objc_getAssociatedObject(tableView, STRTableViewAdGeneratorKey) should be_same_instance_as(tableViewAdGenerator);
@@ -141,7 +141,7 @@ describe(@"STRTableViewAdGenerator", ^{
         });
 
         it(@"puts the ad there", ^{
-            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
             [tableView numberOfRowsInSection:1] should equal(3);
             [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]] should be_instance_of([STRTableViewCell class]);
         });
@@ -149,14 +149,14 @@ describe(@"STRTableViewAdGenerator", ^{
         context(@"and the index path is out of bounds", ^{
             it(@"raises an exception", ^{
                 expect(^{
-                    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+                    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
                 }).to(raise_exception());
             });
         });
 
         context(@"and then index path would be valid when the ad is inserted", ^{
             it(@"is still able to place the ad there", ^{
-                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+                [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
                 [tableView numberOfRowsInSection:1] should equal(3);
                 [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should be_instance_of([STRTableViewCell class]);
             });
@@ -178,7 +178,7 @@ describe(@"STRTableViewAdGenerator", ^{
             delegate reject_method(@selector(tableView:accessoryTypeForRowWithIndexPath:));
             tableView.delegate = delegate;
 
-            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
 
             [tableView numberOfRowsInSection:0] should equal(3);
             [tableView numberOfRowsInSection:1] should equal(2);
@@ -186,7 +186,7 @@ describe(@"STRTableViewAdGenerator", ^{
 
         it(@"reloads the data to remove the previously placed ad", ^{
             STRTableViewAdGenerator *newTableAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
-            [newTableAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            [newTableAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
 
             [tableView numberOfRowsInSection:0] should equal(2);
             [tableView numberOfRowsInSection:1] should equal(3);
@@ -194,7 +194,7 @@ describe(@"STRTableViewAdGenerator", ^{
 
         it(@"points delegate proxy to original delegate", ^{
             STRTableViewAdGenerator *newTableAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
-            [newTableAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adStartingIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            [newTableAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
 
             [tableView.delegate tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
 

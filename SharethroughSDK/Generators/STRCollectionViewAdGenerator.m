@@ -43,18 +43,21 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
 - (void)placeAdInCollectionView:(UICollectionView *)collectionView
           adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
                    placementKey:(NSString *)placementKey
-       presentingViewController:(UIViewController *)presentingViewController {
+       presentingViewController:(UIViewController *)presentingViewController
+             adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
 
     self.originalDataSource = collectionView.dataSource;
     collectionView.dataSource = self;
 
-    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+    NSIndexPath *foo = [self initialIndexPathForAd:collectionView preferredStartingIndexPath:adInitialIndexPath];
+    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:foo];
     self.adjuster = adjuster;
     self.adCellReuseIdentifier = adCellReuseIdentifier;
     self.placementKey = placementKey;
     self.presentingViewController = presentingViewController;
     self.proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:collectionView.delegate adPlacementAdjuster:adjuster];
     collectionView.delegate = self.proxy;
+    [collectionView reloadData];
 
     objc_setAssociatedObject(collectionView, STRCollectionViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -71,6 +74,7 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+
     return [self.originalDataSource collectionView:collectionView numberOfItemsInSection:section] + [self.adjuster numberOfAdsInSection:section];
 }
 
@@ -103,7 +107,21 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
     return adCell;
 }
 
+#pragma mark - Initial Index Path
 
+- (NSIndexPath *)initialIndexPathForAd:(UICollectionView *)collectionView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
+    NSInteger numberOfItemsInAdSection = [collectionView numberOfItemsInSection:adStartingIndexPath.section];
+    if (adStartingIndexPath.row > numberOfItemsInAdSection) {
+        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Provided indexPath for advertisement cell is out of bounds: %i beyond item count %i", adStartingIndexPath.row, numberOfItemsInAdSection];
+    }
+
+    if (adStartingIndexPath) {
+        return adStartingIndexPath;
+    }
+
+    NSInteger adRowPosition = [collectionView numberOfItemsInSection:0] < 2 ? 0 : 1;
+    return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
+}
 
 
 @end

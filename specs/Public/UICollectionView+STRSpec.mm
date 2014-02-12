@@ -71,7 +71,9 @@ describe(@"UICollectionView+STR", ^{
         [generator placeAdInCollectionView:collectionView
                      adCellReuseIdentifier:@"adCellReuseIdentifier"
                               placementKey:@"placementKey"
-                  presentingViewController:nil];
+                  presentingViewController:nil
+                         adInitialIndexPath:nil];
+
 
         [collectionView reloadData];
         [collectionView layoutIfNeeded];
@@ -348,7 +350,7 @@ describe(@"UICollectionView+STR", ^{
             [noAdCollectionView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
         });
 
-        it(@"reloads the tableview, inserting a row at the new index path", ^{
+        it(@"reloads the collectionview, inserting a row at the new index path", ^{
             [(id<CedarDouble>)collectionView reset_sent_messages];
             [collectionView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForItem:2 inSection:0]];
 
@@ -362,13 +364,20 @@ describe(@"UICollectionView+STR", ^{
             adCell.adTitle.text should equal(@"Generic Ad Title");
         });
 
-        it(@"allows a nil default and places the ad at item1/section0", ^{
+        it(@"places the ad at the initialIndexPath", ^{
+            [(id<CedarDouble>)collectionView reset_sent_messages];
             [collectionView str_reloadDataWithAdIndexPath:nil];
-
+            collectionView should have_received(@selector(reloadData));
             [collectionView layoutIfNeeded];
 
             STRCollectionViewCell *adCell = (STRCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
             adCell.adTitle.text should equal(@"Generic Ad Title");
+        });
+
+        it(@"always ensures that index path is valid", ^{
+            spy_on(generator);
+            [collectionView str_reloadDataWithAdIndexPath:nil];
+            generator should have_received(@selector(initialIndexPathForAd:preferredStartingIndexPath:)).with(collectionView, nil);
         });
     });
 

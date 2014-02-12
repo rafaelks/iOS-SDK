@@ -59,19 +59,20 @@
                     delegate:delegate];
 }
 
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
 
     STRTableViewAdGenerator *tableViewAdGenerator = [self.injector getInstance:[STRTableViewAdGenerator class]];
-    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController adHeight:adHeight adStartingIndexPath:adStartingIndexPath];
+    [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController adHeight:adHeight adInitialIndexPath:adInitialIndexPath];
 }
 
-- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController {
+- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
 
     STRCollectionViewAdGenerator *collectionViewAdGenerator = [self.injector getInstance:[STRCollectionViewAdGenerator class]];
     [collectionViewAdGenerator placeAdInCollectionView:collectionView
                                  adCellReuseIdentifier:adCellReuseIdentifier
                                           placementKey:placementKey
-                              presentingViewController:presentingViewController];
+                              presentingViewController:presentingViewController
+                                    adInitialIndexPath:adInitialIndexPath];
 }
 
 #pragma mark - Private
