@@ -101,7 +101,7 @@ describe(@"STRTableViewDataSourceProxy", ^{
             });
 
             
-            it(@"only inserts a row in the first section", ^{
+            it(@"only inserts an ad in the first section", ^{
                 [tableView numberOfRowsInSection:0] should equal(2);
                 [tableView numberOfRowsInSection:1] should equal(1);
             });
@@ -125,11 +125,11 @@ describe(@"STRTableViewDataSourceProxy", ^{
         });
     });
 
-    describe(@"-proxyWithNewDataSource:", ^{
-        it(@"returns a new proxy with a different data source", ^{
+    describe(@"-copyWithNewDataSource:", ^{
+        it(@"returns a new delegateProxy with a different data source", ^{
             id <UITableViewDataSource> newDataSource = nice_fake_for(@protocol(UITableViewDataSource));
 
-            STRTableViewDataSourceProxy *newProxy = [proxy proxyWithNewDataSource:newDataSource];
+            STRTableViewDataSourceProxy *newProxy = [proxy copyWithNewDataSource:newDataSource];
             newProxy should_not be_same_instance_as(proxy);
             newProxy.originalDataSource should be_same_instance_as(newDataSource);
             newProxy.adCellReuseIdentifier should equal(@"adCell");

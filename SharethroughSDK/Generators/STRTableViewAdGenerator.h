@@ -16,12 +16,20 @@
 
 - (id)initWithInjector:(STRInjector *)injector;
 
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
+- (void)placeAdInTableView:(UITableView *)tableView
+     adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+              placementKey:(NSString *)placementKey
+  presentingViewController:(UIViewController *)presentingViewController
+                  adHeight:(CGFloat)adHeight
+        adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
 
 - (id<UITableViewDelegate>)originalDelegate;
-- (void)setOriginalDelegate:(id<UITableViewDelegate>)newOriginalDelegate tableView:(UITableView *)tableView;
+- (void)setOriginalDelegate:(id<UITableViewDelegate>)newOriginalDelegate
+                  tableView:(UITableView *)tableView;
+
 - (id<UITableViewDataSource>)originalDataSource;
-- (void)setOriginalDataSource:(id<UITableViewDataSource>)newOriginalDataSource tableView:(UITableView *)tableView;
+- (void)setOriginalDataSource:(id<UITableViewDataSource>)newOriginalDataSource
+                    tableView:(UITableView *)tableView;
 
 - (NSIndexPath *)initialIndexPathForAd:(UITableView *)tableView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath;
 

@@ -48,7 +48,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
     return self;
 }
 
-- (instancetype)proxyWithNewDelegate:(id)newDelegate {
+- (instancetype)copyWithNewDelegate:(id)newDelegate {
     return [[[self class] alloc] initWithOriginalDelegate:newDelegate adPlacementAdjuster:self.adPlacementAdjuster adHeight:self.adHeight];
 }
 

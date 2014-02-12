@@ -57,7 +57,7 @@ describe(@"UICollectionView+STR", ^{
         collectionView.dataSource = dataSource;
 
         [collectionView registerClass:[STRCollectionViewCell class] forCellWithReuseIdentifier:@"adCellReuseIdentifier"];
-        [collectionView registerClass:[STRCollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
+        [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
 
         adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
         spy_on(adPlacementAdjuster);
@@ -80,8 +80,27 @@ describe(@"UICollectionView+STR", ^{
     });
 
     describe(@"-str_dequeueReusableCellWithIdentifier:forIndexPath", ^{
-        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
-            [noAdCollectionView str_dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        describe(@"when the collection view has NOT been configured to display an ad", ^{
+            __block UICollectionView *noAdCollectionView;
+            __block NSInteger originalRowCount;
+            __block id dataSource;
+
+            beforeEach(^{
+                noAdCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 1000, 1000) collectionViewLayout:[UICollectionViewFlowLayout new]];
+                [noAdCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
+                dataSource = [[STRFullCollectionViewDataSource alloc] init];
+
+                noAdCollectionView.dataSource = dataSource;
+                [noAdCollectionView reloadData];
+
+                originalRowCount = noAdCollectionView.visibleCells.count;
+            });
+
+            it(@"does not raise an error", ^{
+                expect(^{
+                    [noAdCollectionView str_dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+                }).to_not(raise_exception);
+            });
         });
 
         describe(@"when the collection view has been configured to display an ad", ^{

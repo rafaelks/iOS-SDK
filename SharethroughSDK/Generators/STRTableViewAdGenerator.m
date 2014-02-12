@@ -74,7 +74,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
 
 
 - (void)setOriginalDelegate:(id<UITableViewDelegate>)newOriginalDelegate tableView:(UITableView *)tableView {
-    self.delegateProxy = [self.delegateProxy proxyWithNewDelegate:newOriginalDelegate];
+    self.delegateProxy = [self.delegateProxy copyWithNewDelegate:newOriginalDelegate];
     tableView.delegate = self.delegateProxy;
 }
 
@@ -83,7 +83,7 @@ const char *const STRTableViewAdGeneratorKey = "STRTableViewAdGeneratorKey";
 }
     
 - (void)setOriginalDataSource:(id<UITableViewDataSource>)newOriginalDataSource tableView:(UITableView *)tableView {
-    self.dataSourceProxy = [self.dataSourceProxy proxyWithNewDataSource:newOriginalDataSource];
+    self.dataSourceProxy = [self.dataSourceProxy copyWithNewDataSource:newOriginalDataSource];
     tableView.dataSource = self.dataSourceProxy;
 }
 

@@ -20,6 +20,6 @@
 - (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight;
 - (id)initWithOriginalDelegate:(id<UICollectionViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster;
 
-- (instancetype)proxyWithNewDelegate:(id)newDelegate;
+- (instancetype)copyWithNewDelegate:(id)newDelegate;
 
 @end

@@ -10,6 +10,7 @@
 #import "STRIndexPathDelegateProxy.h"
 #import "STRFullCollectionViewDataSource.h"
 #import "STRFakeAdGenerator.h"
+#import "STRCollectionViewDataSourceProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -47,7 +48,11 @@ describe(@"STRCollectionViewAdGenerator", ^{
             dataSource.itemsForEachSection = @[@2];
             collectionView.dataSource = dataSource;
 
-            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView
+                                         adCellReuseIdentifier:@"adCell"
+                                                  placementKey:@"placementKey"
+                                      presentingViewController:presentingViewController
+                                            adInitialIndexPath:nil];
             [collectionView layoutIfNeeded];
         });
         it(@"stores itself as an associated object of the collection view", ^{
@@ -108,51 +113,88 @@ describe(@"STRCollectionViewAdGenerator", ^{
         });
     });
 
-    describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
-        beforeEach(^{
-            dataSource = [STRCollectionViewDataSource new];
-            collectionView.dataSource = dataSource;
-        });
-
-        it(@"throws Apple's exception if the sdk user does not register the identifier", ^{
-            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"unregisteredIdentifier" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
-            expect(^{
-                [collectionView layoutIfNeeded];
-            }).to(raise_exception());
-        });
-
-        it(@"throws an STR exception if the sdk user registers a cell that doesn't conform to STRAdView", ^{
-            [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
-            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
-
-            expect(^{
-                [collectionView layoutIfNeeded];
-            }).to(raise_exception());
-        });
-    });
-
-    describe(@"wiring up collectionview delegate", ^{
+    describe(@"taking over the collectionview delegate", ^{
         __block STRCollectionViewDelegate *collectionViewController;
 
         beforeEach(^{
             collectionViewController = [STRCollectionViewDelegate new];
 
             collectionView.delegate = collectionViewController;
-            [collectionView registerClass:[STRCollectionViewCell class]     forCellWithReuseIdentifier:@"adCell"];
+            [collectionView registerClass:[STRCollectionViewCell class]
+               forCellWithReuseIdentifier:@"adCell"];
 
-            [collectionViewAdGenerator placeAdInCollectionView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adInitialIndexPath:nil];
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView
+                                         adCellReuseIdentifier:@"adCell"
+                                                  placementKey:@"placementKey"
+                                      presentingViewController:presentingViewController
+                                            adInitialIndexPath:nil];
             [collectionView layoutIfNeeded];
         });
 
-        it(@"collectionview's delegate points to a proxy", ^{
+        it(@"collectionview's delegate points to a delegateProxy", ^{
             id<UICollectionViewDelegate> delegate = collectionView.delegate;
 
             [delegate isKindOfClass:[STRIndexPathDelegateProxy class]] should be_truthy;
         });
 
-        it(@"proxy points to collectionview's original delegate", ^{
+        it(@"delegateProxy points to collectionview's original delegate", ^{
             STRIndexPathDelegateProxy *proxy = (id)collectionView.delegate;
             proxy.originalDelegate should be_same_instance_as(collectionViewController);
+        });
+
+        it(@"provides an accessor to the original delgate", ^{
+            collectionViewAdGenerator.originalDelegate should be_same_instance_as(collectionViewController);
+        });
+
+        it(@"provides a setter to modify the original delegate", ^{
+            STRCollectionViewDelegate *newDelegate = [STRCollectionViewDelegate new];
+            STRIndexPathDelegateProxy *oldProxy = (id)collectionView.delegate;
+
+            [collectionViewAdGenerator setOriginalDelegate:newDelegate collectionView:collectionView];
+
+            collectionViewAdGenerator.originalDelegate should be_same_instance_as(newDelegate);
+            collectionView.delegate should_not be_same_instance_as(oldProxy);
+            collectionView.delegate should be_instance_of([STRIndexPathDelegateProxy class]);
+        });
+    });
+
+    describe(@"taking over the collection view data source", ^{
+        __block STRCollectionViewDataSource *dataSource;
+
+        beforeEach(^{
+            dataSource = [STRCollectionViewDataSource new];
+            collectionView.dataSource = dataSource;
+
+            [collectionViewAdGenerator placeAdInCollectionView:collectionView
+                                         adCellReuseIdentifier:@"adCell"
+                                                  placementKey:@"placementKey"
+                                      presentingViewController:presentingViewController
+                                            adInitialIndexPath:nil];
+            [collectionView layoutIfNeeded];
+        });
+
+        it(@"points the collection view's data source to a delegateProxy", ^{
+            id<UICollectionViewDataSource>dataSource = collectionView.dataSource;
+            dataSource should be_instance_of([STRCollectionViewDataSourceProxy class]);
+        });
+
+        it(@"points the delegateProxy's data source to the table view's original data source", ^{
+            STRCollectionViewDataSourceProxy *proxy = collectionView.dataSource;
+            proxy.originalDataSource should be_same_instance_as(dataSource);
+        });
+
+        it(@"provides an accessor to the original data source", ^{
+            collectionViewAdGenerator.originalDataSource should be_same_instance_as(dataSource);
+        });
+
+        it(@"provides a setter to modify the original data source", ^{
+            STRCollectionViewDataSource *newDataSource = [STRCollectionViewDataSource new];
+            STRCollectionViewDataSourceProxy *proxy = (STRCollectionViewDataSourceProxy *)collectionView.dataSource;
+            [collectionViewAdGenerator setOriginalDataSource:newDataSource collectionView:collectionView];
+
+            collectionViewAdGenerator.originalDataSource should be_same_instance_as(newDataSource);
+            collectionView.dataSource should_not be_same_instance_as(proxy);
+            collectionView.dataSource should be_instance_of([STRCollectionViewDataSourceProxy class]);
         });
     });
 

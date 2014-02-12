@@ -132,6 +132,9 @@
 		AEBAEDC91898229300F02C5A /* STRBeaconServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */; };
 		AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
 		AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
+		AED281AE18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED281AD18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.m */; };
+		AED281AF18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED281AD18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.m */; };
+		AED281B518ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED281B418ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm */; };
 		AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
 		AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */; };
@@ -345,6 +348,9 @@
 		AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRBeaconServiceSpec.mm; sourceTree = "<group>"; };
 		AEBAEDCB189839DE00F02C5A /* STRDateProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRDateProvider.h; sourceTree = "<group>"; };
 		AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRDateProvider.m; sourceTree = "<group>"; };
+		AED281AC18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCollectionViewDataSourceProxy.h; sourceTree = "<group>"; };
+		AED281AD18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCollectionViewDataSourceProxy.m; sourceTree = "<group>"; };
+		AED281B418ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRCollectionViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AED32FAE1891F12600693EFF /* UIActivityViewController+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+Spec.h"; sourceTree = "<group>"; };
 		AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+Spec.m"; sourceTree = "<group>"; };
 		AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRFakeAdGeneratorSpec.mm; sourceTree = "<group>"; };
@@ -665,6 +671,8 @@
 				AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */,
 				AE8AF503189B0B5900A65B27 /* STRIndexPathDelegateProxy.h */,
 				AE8AF504189B0B5900A65B27 /* STRIndexPathDelegateProxy.m */,
+				AED281AC18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.h */,
+				AED281AD18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.m */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -676,6 +684,7 @@
 				AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */,
 				AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */,
 				AEB044BF18A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm */,
+				AED281B418ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -1004,9 +1013,11 @@
 				AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C44A018A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm in Sources */,
+				AED281AF18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.m in Sources */,
 				AE3FF3FF18AA9F5A006061C2 /* vine-logo.c in Sources */,
 				AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */,
 				AE3FF40718AAA078006061C2 /* STRImages.m in Sources */,
+				AED281B518ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm in Sources */,
 				AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */,
 				AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */,
 			);
@@ -1045,6 +1056,7 @@
 				AE52FD7118A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */,
 				AE52FD7518A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
+				AED281AE18ABEABC00432D43 /* STRCollectionViewDataSourceProxy.m in Sources */,
 				AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */,
 				AEFBC49F18A5539500E24BBB /* STRTableViewDataSourceProxy.m in Sources */,
 				AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,

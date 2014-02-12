@@ -13,22 +13,19 @@
 #import "STRAdView.h"
 #import "STRAdGenerator.h"
 #import "STRIndexPathDelegateProxy.h"
+#import "STRCollectionViewDataSourceProxy.h"
 
 const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGeneratorKey";
 
-@interface STRCollectionViewAdGenerator ()<UICollectionViewDataSource>
+@interface STRCollectionViewAdGenerator ()
 
 
 @property (nonatomic, strong) STRInjector *injector;
 @property (nonatomic, strong) STRAdPlacementAdjuster *adjuster;
-@property (nonatomic, weak) id<UICollectionViewDataSource> originalDataSource;
-@property (nonatomic, strong) NSString *adCellReuseIdentifier;
-@property (nonatomic, strong) NSString *placementKey;
-@property (nonatomic, weak) UIViewController *presentingViewController;
-@property (nonatomic, strong, readwrite) STRIndexPathDelegateProxy *proxy;
+@property (nonatomic, strong) STRCollectionViewDataSourceProxy *dataSourceProxy;
+@property (nonatomic, strong, readwrite) STRIndexPathDelegateProxy *delegateProxy;
 
 @end
-
 
 @implementation STRCollectionViewAdGenerator
 - (id)initWithInjector:(STRInjector *)injector {
@@ -40,71 +37,58 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
     return self;
 }
 
+- (id)init {
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
 - (void)placeAdInCollectionView:(UICollectionView *)collectionView
           adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
                    placementKey:(NSString *)placementKey
        presentingViewController:(UIViewController *)presentingViewController
              adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
 
-    self.originalDataSource = collectionView.dataSource;
-    collectionView.dataSource = self;
+    self.adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:collectionView preferredStartingIndexPath:adInitialIndexPath]];
 
-    NSIndexPath *foo = [self initialIndexPathForAd:collectionView preferredStartingIndexPath:adInitialIndexPath];
-    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:foo];
-    self.adjuster = adjuster;
-    self.adCellReuseIdentifier = adCellReuseIdentifier;
-    self.placementKey = placementKey;
-    self.presentingViewController = presentingViewController;
-    self.proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:collectionView.delegate adPlacementAdjuster:adjuster];
-    collectionView.delegate = self.proxy;
+    self.dataSourceProxy = [[STRCollectionViewDataSourceProxy alloc] initWithOriginalDataSource:collectionView.dataSource
+                                                                                       adjuster:self.adjuster
+                                                                          adCellReuseIdentifier:adCellReuseIdentifier
+                                                                                   placementKey:placementKey
+                                                                       presentingViewController:presentingViewController
+                                                                                       injector:self.injector];
+
+    self.delegateProxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:collectionView.delegate adPlacementAdjuster:self.adjuster];
+    
+    collectionView.dataSource = self.dataSourceProxy;
+    collectionView.delegate = self.delegateProxy;
     [collectionView reloadData];
 
     objc_setAssociatedObject(collectionView, STRCollectionViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-#pragma mark <UICollectionViewDataSource>
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
-    }
 
-    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
-    return [self.originalDataSource collectionView:collectionView cellForItemAtIndexPath:externalIndexPath];
+#pragma mark - Proxy getters
+- (id<UICollectionViewDelegate>)originalDelegate {
+    return self.delegateProxy.originalDelegate;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-
-    return [self.originalDataSource collectionView:collectionView numberOfItemsInSection:section] + [self.adjuster numberOfAdsInSection:section];
+- (id<UICollectionViewDataSource>)originalDataSource {
+    return self.dataSourceProxy.originalDataSource;
 }
 
-#pragma mark - Forwarding
+#pragma mark - Proxy setters
 
-- (BOOL)respondsToSelector:(SEL)aSelector {
-    return [[self class] instancesRespondToSelector:aSelector] || [self.originalDataSource respondsToSelector:aSelector];
+- (void)setOriginalDelegate:(id<UICollectionViewDelegate>)newOriginalDelegate collectionView:(UICollectionView *)collectionView {
+    STRIndexPathDelegateProxy *newProxy = [self.delegateProxy copyWithNewDelegate:newOriginalDelegate];
+    self.delegateProxy = newProxy;
+    collectionView.delegate = newProxy;
 }
 
-- (id)forwardingTargetForSelector:(SEL)aSelector {
-    if ([self.originalDataSource respondsToSelector:aSelector]) {
-        return self.originalDataSource;
-    }
-
-    return [super forwardingTargetForSelector:aSelector];
-}
-
-#pragma mark - Private
-
-- (UICollectionViewCell *)adCellForCollectionView:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell<STRAdView> *adCell = [collectionView dequeueReusableCellWithReuseIdentifier:self.adCellReuseIdentifier forIndexPath:indexPath];
-
-    if (![adCell conformsToProtocol:@protocol(STRAdView)]) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib that conforms to the STRAdView protocol.", self.adCellReuseIdentifier];
-    }
-
-    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
-
-    return adCell;
+- (void)setOriginalDataSource:(id<UICollectionViewDataSource>)newOriginalDataSource
+               collectionView:(UICollectionView *)collectionView {
+    self.dataSourceProxy = [self.dataSourceProxy copyWithNewDataSource:newOriginalDataSource];
+    collectionView.dataSource = self.dataSourceProxy;
 }
 
 #pragma mark - Initial Index Path
@@ -122,6 +106,5 @@ const char * const STRCollectionViewAdGeneratorKey = "STRCollectionViewAdGenerat
     NSInteger adRowPosition = [collectionView numberOfItemsInSection:0] < 2 ? 0 : 1;
     return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
 }
-
 
 @end

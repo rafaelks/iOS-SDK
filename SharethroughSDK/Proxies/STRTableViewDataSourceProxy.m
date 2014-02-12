@@ -44,7 +44,7 @@
     return self;
 }
 
-- (instancetype)proxyWithNewDataSource:(id)newDataSource {
+- (instancetype)copyWithNewDataSource:(id)newDataSource {
     return [[[self class] alloc] initWithOriginalDataSource:newDataSource
                                                    adjuster:self.adjuster adCellReuseIdentifier:self.adCellReuseIdentifier
                                                placementKey:self.placementKey

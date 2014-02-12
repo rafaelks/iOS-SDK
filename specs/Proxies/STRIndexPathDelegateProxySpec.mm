@@ -19,10 +19,10 @@ describe(@"STRIndexPathDelegateProxy", ^{
                                                                    adHeight:23];
     });
 
-    describe(@"-proxyWithNewDelegate:", ^{
-        it(@"returns a proxy with all same values except new delegate", ^{
+    describe(@"-copyWithNewDelegate:", ^{
+        it(@"returns a delegateProxy with all same values except new delegate", ^{
             id<UITableViewDelegate>newDelegate = nice_fake_for(@protocol(UITableViewDelegate));
-            STRIndexPathDelegateProxy *newProxy = [proxy proxyWithNewDelegate:newDelegate];
+            STRIndexPathDelegateProxy *newProxy = [proxy copyWithNewDelegate:newDelegate];
             newProxy should_not be_same_instance_as(proxy);
             newProxy.originalDelegate should be_same_instance_as(newDelegate);
             newProxy.adPlacementAdjuster should be_same_instance_as(adjuster);

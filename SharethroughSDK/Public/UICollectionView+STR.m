@@ -16,10 +16,16 @@ extern const char * const STRCollectionViewAdGeneratorKey;
 @implementation UICollectionView (STR)
 
 - (id)str_dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSIndexPath *trueIndexPath = [adjuster trueIndexPath:indexPath];
+    STRCollectionViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRCollectionViewAdGeneratorKey);
+    if (adGenerator) {
+        STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
+        NSIndexPath *trueIndexPath = [adjuster trueIndexPath:indexPath];
 
-    return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:trueIndexPath];
+        return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:trueIndexPath];
+    } else {
+        NSLog(@"WARNING: Called %@ on a collectionview that was not setup through SharethroughSDK %@. Did you intend to place an ad in this UICollectionView? If not, use UICollectionView's built-in -dequeueReusableCellWithReuseIdentifier: method", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:adInitialIndexPath:)));
+        return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    }
 }
 
 - (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths {

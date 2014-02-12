@@ -52,13 +52,13 @@ describe(@"STRTableViewAdGenerator", ^{
             [tableView layoutIfNeeded];
         });
 
-        it(@"points the table view's delegate to a proxy", ^{
+        it(@"points the table view's delegate to a delegateProxy", ^{
             id<UITableViewDelegate> delegate = tableView.delegate;
             delegate should be_instance_of([STRIndexPathDelegateProxy class]);
         });
 
 
-        it(@"proxy points to tableview's original delegate", ^{
+        it(@"delegateProxy points to tableview's original delegate", ^{
             STRIndexPathDelegateProxy *proxy = (id)tableView.delegate;
             proxy.originalDelegate should be_same_instance_as(tableViewController);
         });
@@ -91,12 +91,12 @@ describe(@"STRTableViewAdGenerator", ^{
             [tableView layoutIfNeeded];
         });
 
-        it(@"points the table view's data source to a proxy", ^{
+        it(@"points the table view's data source to a delegateProxy", ^{
             id<UITableViewDataSource> dataSource = tableView.dataSource;
             dataSource should be_instance_of([STRTableViewDataSourceProxy class]);
         });
 
-        it(@"points the proxy's data source to the table view's original data source", ^{
+        it(@"points the delegateProxy's data source to the table view's original data source", ^{
             STRTableViewDataSourceProxy *proxy = tableView.dataSource;
             proxy.originalDataSource should be_same_instance_as(dataSource);
         });
@@ -192,7 +192,7 @@ describe(@"STRTableViewAdGenerator", ^{
             [tableView numberOfRowsInSection:1] should equal(3);
         });
 
-        it(@"points delegate proxy to original delegate", ^{
+        it(@"points delegate delegateProxy to original delegate", ^{
             STRTableViewAdGenerator *newTableAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
             [newTableAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adHeight:10 adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
 
