@@ -7,7 +7,6 @@
 //
 
 #import "STRInteractiveAdViewController.h"
-#import "STRBundleSettings.h"
 #import "STRAdvertisement.h"
 #import "STRBeaconService.h"
 #import "STRAdYouTube.h"
@@ -17,7 +16,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "STRInjector.h"
 
-@interface STRInteractiveAdViewController ()
+@interface STRInteractiveAdViewController () 
 
 @property (strong, nonatomic, readwrite) STRAdvertisement *ad;
 @property (weak, nonatomic) STRBeaconService *beaconService;
@@ -30,7 +29,7 @@
 @implementation STRInteractiveAdViewController
 
 - (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService injector:(STRInjector *)injector {
-    self = [super initWithNibName:nil bundle:[STRBundleSettings bundleForResources]];
+    self = [super init];
     if (self) {
         self.ad = ad;
         self.device = device;
@@ -46,11 +45,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    NSDictionary *views = @{@"topGuide": self.topLayoutGuide, @"toolbar": self.toolbar};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topGuide]-[toolbar]"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
+    self.view.backgroundColor = [UIColor blackColor];
+
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)];
+
+    self.navigationItem.leftBarButtonItem = doneButton;
+    self.navigationItem.rightBarButtonItem = shareButton;
+
+    self.doneButton = doneButton;
+    self.shareButton = shareButton;
+
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
+    UIView *contentView = [[UIView alloc] initWithFrame:self.view.bounds];
+    contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:contentView];
+    self.contentView = contentView;
+
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-44-[contentView]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(contentView)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(contentView)]];
+
+
     UIViewController *childViewController;
     if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
         childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
@@ -58,7 +80,6 @@
         childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]]];
     }
 
-    [childViewController willMoveToParentViewController:self];
     [self addChildViewController:childViewController];
     [childViewController didMoveToParentViewController:self];
 
@@ -75,14 +96,18 @@
                                                                                views:NSDictionaryOfVariableBindings(childView)]];
 }
 
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationLandscapeRight;
+}
+
 #pragma mark - Actions
 
-- (IBAction)doneButtonPressed:(id)sender {
+- (void)doneButtonPressed:(id)sender {
     [self.sharePopoverController dismissPopoverAnimated:NO];
     [self.delegate closedInteractiveAdView:self];
 }
 
-- (IBAction)shareButtonPressed:(id)sender {
+- (void)shareButtonPressed:(id)sender {
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[self.ad.title, [self.ad.shareURL absoluteString]] applicationActivities:nil];
     activityController.excludedActivityTypes = @[
                                                  UIActivityTypePostToWeibo,
@@ -111,7 +136,6 @@
     } else {
         [self presentViewController:activityController animated:YES completion:nil];
     }
-
 }
 
 @end

@@ -11,10 +11,9 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "SharethroughSDK" */;
 			buildPhases = (
-				AE2246701885FDC400626A29 /* Build static library and Resource Bundle */,
+				AE2246701885FDC400626A29 /* Build static library */,
 				AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */,
 				AE2246721885FEED00626A29 /* Copy Header Files */,
-				AE52B89F188F40D100C4DEF8 /* Copy created .bundle to resources */,
 				AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */,
 			);
 			dependencies = (
@@ -73,11 +72,6 @@
 		AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
 		AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
 		AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B838188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
-		AE52B85F188F296400C4DEF8 /* STRBundleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */; };
-		AE52B860188F296400C4DEF8 /* STRBundleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */; };
-		AE52B88D188F3CA100C4DEF8 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B87B188F398A00C4DEF8 /* CoreFoundation.framework */; };
-		AE52B899188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */; };
-		AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */; };
 		AE52FD7118A41AB2009F69BD /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */; };
 		AE52FD7218A41AB2009F69BD /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */; };
 		AE52FD7318A41AB2009F69BD /* STRCollectionViewAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6C18A41AB2009F69BD /* STRCollectionViewAdGenerator.m */; };
@@ -149,6 +143,8 @@
 		AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */; };
 		AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */; };
 		AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
+		AEF54BB018AAF5230023C35B /* STRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF54BAF18AAF5230023C35B /* STRNavigationController.m */; };
+		AEF54BB118AAF5230023C35B /* STRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF54BAF18AAF5230023C35B /* STRNavigationController.m */; };
 		AEFBC49F18A5539500E24BBB /* STRTableViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */; };
 		AEFBC4A018A5539500E24BBB /* STRTableViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
@@ -278,14 +274,7 @@
 		AE52B82B188EF89F00C4DEF8 /* UIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIKit.xcodeproj; path = Vendor/PivotalCoreKit/UIKit/UIKit.xcodeproj; sourceTree = "<group>"; };
 		AE52B847188EFC9B00C4DEF8 /* STRInteractiveAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRInteractiveAdViewController.h; sourceTree = "<group>"; };
 		AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRInteractiveAdViewController.m; sourceTree = "<group>"; };
-		AE52B85D188F296400C4DEF8 /* STRBundleSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRBundleSettings.h; sourceTree = "<group>"; };
-		AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRBundleSettings.m; sourceTree = "<group>"; };
 		AE52B87B188F398A00C4DEF8 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		AE52B87F188F398A00C4DEF8 /* STRResources-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "STRResources-Info.plist"; sourceTree = "<group>"; };
-		AE52B881188F398A00C4DEF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AE52B883188F398A00C4DEF8 /* STRResources-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "STRResources-Prefix.pch"; sourceTree = "<group>"; };
-		AE52B88C188F3CA100C4DEF8 /* STRResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = STRResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STRInteractiveAdViewController.xib; sourceTree = "<group>"; };
 		AE52FD6918A41AB2009F69BD /* STRAdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdGenerator.h; sourceTree = "<group>"; };
 		AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdGenerator.m; sourceTree = "<group>"; };
 		AE52FD6B18A41AB2009F69BD /* STRCollectionViewAdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCollectionViewAdGenerator.h; sourceTree = "<group>"; };
@@ -369,6 +358,8 @@
 		AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+STR.h"; sourceTree = "<group>"; };
 		AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+STR.m"; sourceTree = "<group>"; };
 		AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UITableView+STRSpec.mm"; sourceTree = "<group>"; };
+		AEF54BAE18AAF5230023C35B /* STRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRNavigationController.h; sourceTree = "<group>"; };
+		AEF54BAF18AAF5230023C35B /* STRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRNavigationController.m; sourceTree = "<group>"; };
 		AEFBC49D18A5539500E24BBB /* STRTableViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDataSourceProxy.h; sourceTree = "<group>"; };
 		AEFBC49E18A5539500E24BBB /* STRTableViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
@@ -387,14 +378,6 @@
 				AE2246831886138F00626A29 /* UIKit.framework in Frameworks */,
 				AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */,
 				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AE52B889188F3CA100C4DEF8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AE52B88D188F3CA100C4DEF8 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,7 +595,6 @@
 		AE52B840188EFB3600C4DEF8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AE52B898188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib */,
 				AE52B847188EFC9B00C4DEF8 /* STRInteractiveAdViewController.h */,
 				AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */,
 				AE9C4628189C5288001B407A /* STRYouTubeViewController.h */,
@@ -626,34 +608,16 @@
 		AE52B85C188F290600C4DEF8 /* Extension Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				AE52B85D188F296400C4DEF8 /* STRBundleSettings.h */,
-				AE52B85E188F296400C4DEF8 /* STRBundleSettings.m */,
 				AEBAEDCB189839DE00F02C5A /* STRDateProvider.h */,
 				AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */,
 				AE3FF40218AAA078006061C2 /* STRImages.h */,
 				AE3FF40318AAA078006061C2 /* STRImages.m */,
 				AEB4EF4418AAB03E00B69CAC /* STRYouTubeEmbedPage.h */,
 				AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */,
+				AEF54BAE18AAF5230023C35B /* STRNavigationController.h */,
+				AEF54BAF18AAF5230023C35B /* STRNavigationController.m */,
 			);
 			path = "Extension Helpers";
-			sourceTree = "<group>";
-		};
-		AE52B87D188F398A00C4DEF8 /* STRResources */ = {
-			isa = PBXGroup;
-			children = (
-				AE52B87E188F398A00C4DEF8 /* Supporting Files */,
-			);
-			path = STRResources;
-			sourceTree = "<group>";
-		};
-		AE52B87E188F398A00C4DEF8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				AE52B87F188F398A00C4DEF8 /* STRResources-Info.plist */,
-				AE52B880188F398A00C4DEF8 /* InfoPlist.strings */,
-				AE52B883188F398A00C4DEF8 /* STRResources-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		AE52FD6418A41A4E009F69BD /* Generators */ = {
@@ -722,7 +686,6 @@
 				AE022DAB188DBB1400D02568 /* Default-568h@2x.png */,
 				AE8ED3E81885ADF00004AB32 /* SharethroughSDK */,
 				AE2246871886138F00626A29 /* specs */,
-				AE52B87D188F398A00C4DEF8 /* STRResources */,
 				AE8ED3E51885ADF00004AB32 /* Frameworks */,
 				AE8ED3E41885ADF00004AB32 /* Products */,
 			);
@@ -733,7 +696,6 @@
 			children = (
 				AE8ED3E31885ADF00004AB32 /* libSharethrough-SDK.a */,
 				AE2246821886138F00626A29 /* specs.app */,
-				AE52B88C188F3CA100C4DEF8 /* STRResources.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -829,23 +791,6 @@
 			productReference = AE2246821886138F00626A29 /* specs.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AE52B88B188F3CA100C4DEF8 /* STRResources */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AE52B895188F3CA100C4DEF8 /* Build configuration list for PBXNativeTarget "STRResources" */;
-			buildPhases = (
-				AE52B888188F3CA100C4DEF8 /* Sources */,
-				AE52B889188F3CA100C4DEF8 /* Frameworks */,
-				AE52B88A188F3CA100C4DEF8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = STRResources;
-			productName = STRResources;
-			productReference = AE52B88C188F3CA100C4DEF8 /* STRResources.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
 		AE8ED3E21885ADF00004AB32 /* Sharethrough-SDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AE8ED4061885ADF00004AB32 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK" */;
@@ -893,7 +838,6 @@
 				AE8ED3E21885ADF00004AB32 /* Sharethrough-SDK */,
 				AE22466C1885FD8100626A29 /* SharethroughSDK */,
 				AE2246811886138F00626A29 /* specs */,
-				AE52B88B188F3CA100C4DEF8 /* STRResources */,
 			);
 		};
 /* End PBXProject section */
@@ -936,35 +880,26 @@
 			files = (
 				AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */,
 				AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */,
-				AE52B899188F3D0D00C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 				AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AE52B88A188F3CA100C4DEF8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AE52B89A188F3D2600C4DEF8 /* STRInteractiveAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AE2246701885FDC400626A29 /* Build static library and Resource Bundle */ = {
+		AE2246701885FDC400626A29 /* Build static library */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Build static library and Resource Bundle";
+			name = "Build static library";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK\" &&\nRESOURCE_BUNDLE_TARGET=\"STRResources\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PROJECT_NAME}\" &&\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target \"${RESOURCE_BUNDLE_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=\"${UNIVERSAL_LIBRARY_DIR}\"";
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK\" &&\nRESOURCE_BUNDLE_TARGET=\"STRResources\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PROJECT_NAME}\" &&\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos";
 		};
 		AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -978,7 +913,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK\" &&\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${STATIC_LIB_TARGET}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${STATIC_LIB_TARGET}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK\" &&\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${STATIC_LIB_TARGET}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${STATIC_LIB_TARGET}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
 		};
 		AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -993,20 +928,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
-		};
-		AE52B89F188F40D100C4DEF8 /* Copy created .bundle to resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy created .bundle to resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\ncp -r \"${UNIVERSAL_LIBRARY_DIR}/STRResources.bundle\" \"${FRAMEWORK}/Resources/STRResources.bundle\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1029,7 +950,6 @@
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
 				AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */,
-				AE52B860188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE8AF506189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
 				AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */,
@@ -1080,6 +1000,7 @@
 				AE1F671D1899AD9E00E184D6 /* STRTableViewCell.m in Sources */,
 				AE842DFA18A564020018F992 /* STRFullCollectionViewDataSource.m in Sources */,
 				AE3120E31889E76F00297F01 /* STRPromise.m in Sources */,
+				AEF54BB118AAF5230023C35B /* STRNavigationController.m in Sources */,
 				AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C44A018A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm in Sources */,
@@ -1091,13 +1012,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AE52B888188F3CA100C4DEF8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AE8ED3DF1885ADF00004AB32 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1105,7 +1019,6 @@
 				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
 				AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */,
 				AE52FD7318A41AB2009F69BD /* STRCollectionViewAdGenerator.m in Sources */,
-				AE52B85F188F296400C4DEF8 /* STRBundleSettings.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE3FF40918AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AEB4EF4618AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
@@ -1116,6 +1029,7 @@
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
 				AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
+				AEF54BB018AAF5230023C35B /* STRNavigationController.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
@@ -1159,14 +1073,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AE22468B1886138F00626A29 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		AE52B880188F398A00C4DEF8 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AE52B881188F398A00C4DEF8 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1250,43 +1156,6 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		AE52B896188F3CA100C4DEF8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "STRResources/STRResources-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "STRResources/STRResources-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		AE52B897188F3CA100C4DEF8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "STRResources/STRResources-Prefix.pch";
-				INFOPLIST_FILE = "STRResources/STRResources-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -1415,15 +1284,6 @@
 			buildConfigurations = (
 				AE2246961886138F00626A29 /* Debug */,
 				AE2246971886138F00626A29 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AE52B895188F3CA100C4DEF8 /* Build configuration list for PBXNativeTarget "STRResources" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AE52B896188F3CA100C4DEF8 /* Debug */,
-				AE52B897188F3CA100C4DEF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

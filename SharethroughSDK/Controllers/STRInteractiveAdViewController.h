@@ -16,16 +16,15 @@
 @property (strong, nonatomic, readonly) STRAdvertisement *ad;
 @property (weak, nonatomic) id<STRInteractiveAdViewControllerDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareButton;
+@property (weak, nonatomic) UIView *contentView;
+@property (weak, nonatomic) UIBarButtonItem *doneButton;
+@property (weak, nonatomic) UIBarButtonItem *shareButton;
 
 @property (strong, nonatomic, readonly) UIPopoverController *sharePopoverController;
 
 - (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService injector:(STRInjector *)injector;
-- (IBAction)doneButtonPressed:(id)sender;
-- (IBAction)shareButtonPressed:(id)sender;
+- (void)doneButtonPressed:(id)sender;
+- (void)shareButtonPressed:(id)sender;
 
 @end
 

@@ -7,7 +7,6 @@
 //
 
 #import "STRAdvertisement.h"
-#import "STRBundleSettings.h"
 #import "STRImages.h"
 
 @implementation STRAdvertisement

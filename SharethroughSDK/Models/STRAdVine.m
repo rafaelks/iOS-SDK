@@ -7,7 +7,6 @@
 //
 
 #import "STRAdVine.h"
-#import "STRBundleSettings.h"
 #import "STRImages.h"
 
 @implementation STRAdVine

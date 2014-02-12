@@ -7,7 +7,6 @@
 //
 
 #import "STRYouTubeViewController.h"
-#import "STRBundleSettings.h"
 #import "STRAdYouTube.h"
 #import "STRYouTubeEmbedPage.h"
 
@@ -74,10 +73,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self.spinner startAnimating];
 
-    self.webView.scrollView.alwaysBounceHorizontal = NO;
+    self.webView.scrollView.scrollEnabled = NO;
     self.webView.allowsInlineMediaPlayback = YES;
     self.webView.mediaPlaybackRequiresUserAction = NO;
 
@@ -93,7 +91,6 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-
     [self resizeEmbed];
 }
 

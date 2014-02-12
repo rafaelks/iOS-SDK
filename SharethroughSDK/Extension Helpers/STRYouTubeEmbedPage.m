@@ -13,7 +13,7 @@
 + (NSString *)htmlForYouTubeEmbed {
     return @"<!DOCTYPE html>\
     <html>\
-    <body style='margin: 0;'>\
+    <body style='margin: 0; background-color: black;'>\
     <div id='player'></div>\
 \
     <script>\

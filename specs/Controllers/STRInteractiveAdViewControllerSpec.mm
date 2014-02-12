@@ -27,10 +27,10 @@ describe(@"STRInteractiveAdViewController", ^{
     void(^setUpController)(void) = ^{
         controller = [[STRInteractiveAdViewController alloc] initWithAd:ad device:device beaconService:beaconService injector:injector];
         UIWindow *window = [UIWindow new];
-        [window addSubview:controller.view];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+        [window addSubview:navController.view];
         [controller.view layoutIfNeeded];
     };
-
 
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
