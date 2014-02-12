@@ -102,6 +102,10 @@ extern const char * const STRCollectionViewAdGeneratorKey;
 
 }
 
+- (void)str_scrollToItemAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated {
+    [self scrollToItemAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] atScrollPosition:scrollPosition animated:animated];
+}
+
 #pragma mark - Private
 
 - (STRAdPlacementAdjuster *)str_ensureAdjuster {

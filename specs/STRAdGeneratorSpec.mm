@@ -309,7 +309,7 @@ describe(@"STRAdGenerator", ^{
                 beforeEach(^{
                     [[view.gestureRecognizers lastObject] recognize];
                     UINavigationController *navController = (UINavigationController *)presentingViewController.presentedViewController;
-                    interactiveAdController = navController.topViewController;
+                    interactiveAdController = (STRInteractiveAdViewController *)navController.topViewController;
 
                 });
 

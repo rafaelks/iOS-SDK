@@ -582,7 +582,6 @@ describe(@"UITableView+STR", ^{
             NSIndexPath *trueIndexPath = [NSIndexPath indexPathForRow:2 inSection:1];
             tableView should have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with(trueIndexPath, UITableViewScrollPositionTop, NO);
             tableView.contentOffset should equal([tableView rectForRowAtIndexPath:trueIndexPath].origin);
-
         });
 
         it(@"is able to scroll to NSNotFound", ^{

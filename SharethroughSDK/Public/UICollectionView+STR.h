@@ -115,19 +115,29 @@
 
  @param adIndexPath The index path to place an ad in. This index path represents where the ad will reside in the collection view. Pass nil to let the SharethroughSDK choose a default location.
  */
-- (void) str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath;
+- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath;
 
 /**
  Reloads the specified sections while accounting for ad(s) provided by Sharethrough. If an ad's location is now invalid (because the section has fewer rows), the ad will be placed at the bottom of its previous section. Alternate to UICollectionView's built-in -reloadSections:
 
  @param sections  An index set identifying the sections to reload.
  */
-- (void) str_reloadSections:(NSIndexSet *)sections;
+- (void)str_reloadSections:(NSIndexSet *)sections;
 
 /**
  Reloads the specified items while accounting for ad(s) provided by Sharethrough. Alternate to UICollectionView's built-in -reloadItemsAtIndexPaths:withRowAnimation:
 
  @param indexPaths An array of NSIndexPath objects identifying the rows to reload.
  */
-- (void) str_reloadItemsAtIndexPaths:(NSArray *)indexPaths;
+- (void)str_reloadItemsAtIndexPaths:(NSArray *)indexPaths;
+
+/**
+ Scrolls the collection view contents until the specified item is visible, while accounting for ad(s) provided by Sharethrough.
+ 
+ @param indexPath      The index path of the item to scroll into view.
+ @param scrollPosition An option that specifies where the item should be positioned when scrolling finishes.
+ @param animated       Specify YES to animate the scrolling behavior or NO to adjust the scroll view’s visible content immediately.
+ */
+- (void)str_scrollToItemAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated;
+
 @end

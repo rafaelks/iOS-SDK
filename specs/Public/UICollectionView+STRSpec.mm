@@ -418,7 +418,30 @@ describe(@"UICollectionView+STR", ^{
                     [NSIndexPath indexPathForRow:2 inSection:1],
                     [NSIndexPath indexPathForRow:3 inSection:1]]);
         });
+    });
 
+    describe(@"–str_scrollToItemAtIndexPath:atScrollPosition:animated:", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+        });
+
+        it(@"scrolls to the adjusted index path", ^{
+            collectionView.frame = [[collectionView layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] frame];
+
+            [collectionView str_scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+
+            NSIndexPath *trueIndexPath = [NSIndexPath indexPathForRow:2 inSection:1];
+            collectionView should have_received(@selector(scrollToItemAtIndexPath:atScrollPosition:animated:)).with(trueIndexPath, UICollectionViewScrollPositionTop, NO);
+            collectionView.contentOffset should equal([collectionView layoutAttributesForItemAtIndexPath:trueIndexPath].frame.origin);
+        });
+
+        it(@"is able to scroll to NSNotFound", ^{
+            collectionView.frame = [[collectionView layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] frame];
+
+            [collectionView str_scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:NSNotFound inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
+            collectionView.contentOffset should equal(CGPointZero);
+        });
     });
 });
 
