@@ -5,9 +5,9 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRAdGenerator.h"
-#import "STRCollectionViewAdGenerator.h"
 #import "STRFullCollectionViewDataSource.h"
 #import "STRFakeAdGenerator.h"
+#import "STRGridlikeViewAdGenerator.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -46,7 +46,7 @@ describe(@"UICollectionView+STR", ^{
     __block id<UICollectionViewDelegate> delegate;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
     __block STRCollectionViewCell *adCell;
-    __block STRCollectionViewAdGenerator *generator;
+    __block STRGridlikeViewAdGenerator *generator;
 
     beforeEach(^{
         collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, 420) collectionViewLayout:[UICollectionViewFlowLayout new]];
@@ -70,12 +70,8 @@ describe(@"UICollectionView+STR", ^{
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
         [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
-        generator = [injector getInstance:[STRCollectionViewAdGenerator class]];
-        [generator placeAdInCollectionView:collectionView
-                     adCellReuseIdentifier:@"adCellReuseIdentifier"
-                              placementKey:@"placementKey"
-                  presentingViewController:nil
-                         adInitialIndexPath:nil];
+        generator = [injector getInstance:[STRGridlikeViewAdGenerator class]];
+        [generator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:0 adInitialIndexPath:nil ];
 
 
         [collectionView reloadData];

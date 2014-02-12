@@ -9,9 +9,9 @@
 #import "UITableView+STR.h"
 #import <objc/runtime.h>
 #import "STRAdPlacementAdjuster.h"
-#import "STRTableViewAdGenerator.h"
+#import "STRGridlikeViewAdGenerator.h"
 
-extern const char *const STRTableViewAdGeneratorKey;
+extern const char *const STRGridlikeViewAdGeneratorKey;
 
 @implementation UITableView (STR)
 
@@ -75,7 +75,7 @@ extern const char *const STRTableViewAdGeneratorKey;
 }
 
 - (void)str_setDataSource:(id<UITableViewDataSource>)dataSource {
-    [[self str_ensureGenerator] setOriginalDataSource:dataSource tableView:self];
+    [[self str_ensureGenerator] setOriginalDataSource:dataSource gridlikeView:self];
 }
 
 - (id<UITableViewDelegate>)str_delegate {
@@ -83,7 +83,7 @@ extern const char *const STRTableViewAdGeneratorKey;
 }
 
 - (void)str_setDelegate:(id<UITableViewDelegate>)delegate {
-    [[self str_ensureGenerator] setOriginalDelegate:delegate tableView:self];
+    [[self str_ensureGenerator] setOriginalDelegate:delegate gridlikeView:self];
 }
 
 - (UITableViewCell *)str_cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -153,10 +153,10 @@ extern const char *const STRTableViewAdGeneratorKey;
     return [self str_ensureGenerator].adjuster;
 }
 
-- (STRTableViewAdGenerator *)str_ensureGenerator {
-    STRTableViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRTableViewAdGeneratorKey);
+- (STRGridlikeViewAdGenerator *)str_ensureGenerator {
+    STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInTableView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:adInitialIndexPath:))];
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:adInitialIndexPath:))];
     }
     return adGenerator;
 }

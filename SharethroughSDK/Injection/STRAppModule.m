@@ -6,11 +6,9 @@
 #import "STRNetworkClient.h"
 #import "STRDateProvider.h"
 #import <AdSupport/AdSupport.h>
-#import "STRTableViewAdGenerator.h"
+#import "STRGridlikeViewAdGenerator.h"
 #import "STRAdCache.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import "STRCollectionViewAdGenerator.h"
-
 
 @implementation STRAppModule
 
@@ -53,14 +51,9 @@
                                                 injector:injector];
     }];
 
-    [injector bind:[STRTableViewAdGenerator class] toBlock:^id(STRInjector *injector) {
-        return [[STRTableViewAdGenerator alloc] initWithInjector:injector];
+    [injector bind:[STRGridlikeViewAdGenerator class] toBlock:^id(STRInjector *injector) {
+        return [[STRGridlikeViewAdGenerator alloc] initWithInjector:injector];
     }];
-
-    [injector bind:[STRCollectionViewAdGenerator class] toBlock:^id(STRInjector *injector) {
-        return [[STRCollectionViewAdGenerator alloc] initWithInjector:injector];
-    }];
-
 }
 
 @end

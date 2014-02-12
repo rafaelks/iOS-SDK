@@ -9,21 +9,21 @@
 #import "UICollectionView+STR.h"
 #import "STRAdPlacementAdjuster.h"
 #import <objc/runtime.h>
-#import "STRCollectionViewAdGenerator.h"
+#import "STRGridlikeViewAdGenerator.h"
 
-extern const char * const STRCollectionViewAdGeneratorKey;
+extern const char * const STRGridlikeViewAdGeneratorKey;
 
 @implementation UICollectionView (STR)
 
 - (id)str_dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath {
-    STRCollectionViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRCollectionViewAdGeneratorKey);
+    STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (adGenerator) {
         STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
         NSIndexPath *trueIndexPath = [adjuster trueIndexPath:indexPath];
 
         return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:trueIndexPath];
     } else {
-        NSLog(@"WARNING: Called %@ on a collectionview that was not setup through SharethroughSDK %@. Did you intend to place an ad in this UICollectionView? If not, use UICollectionView's built-in -dequeueReusableCellWithReuseIdentifier: method", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:adInitialIndexPath:)));
+        NSLog(@"WARNING: Called %@ on a collectionview that was not setup through SharethroughSDK %@. Did you intend to place an ad in this UICollectionView? If not, use UICollectionView's built-in -dequeueReusableCellWithReuseIdentifier: method", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:adInitialIndexPath:)));
         return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     }
 }
@@ -86,7 +86,7 @@ extern const char * const STRCollectionViewAdGeneratorKey;
     [self str_ensureAdjuster];
 
     if (!adIndexPath) {
-        STRCollectionViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRCollectionViewAdGeneratorKey);
+        STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
         adIndexPath = [adGenerator initialIndexPathForAd:self preferredStartingIndexPath:nil];
     }
 
@@ -116,11 +116,11 @@ extern const char * const STRCollectionViewAdGeneratorKey;
 }
 
 - (void)str_setDataSource:(id<UICollectionViewDataSource>)dataSource {
-    [[self str_ensureGenerator] setOriginalDataSource:dataSource collectionView:self];
+    [[self str_ensureGenerator] setOriginalDataSource:dataSource gridlikeView:self];
 }
 
 - (void)str_setDelegate:(id<UICollectionViewDelegate>)delegate {
-    [[self str_ensureGenerator] setOriginalDelegate:delegate collectionView:self];
+    [[self str_ensureGenerator] setOriginalDelegate:delegate gridlikeView:self];
 }
 
 - (id<UICollectionViewDelegate>)str_delegate {
@@ -133,10 +133,10 @@ extern const char * const STRCollectionViewAdGeneratorKey;
 
 #pragma mark - Private
 
-- (STRCollectionViewAdGenerator *)str_ensureGenerator {
-    STRCollectionViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRCollectionViewAdGeneratorKey);
+- (STRGridlikeViewAdGenerator *)str_ensureGenerator {
+    STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:adInitialIndexPath:))];
+        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:adCellReuseIdentifier:placementKey:presentingViewController:adHeight:adInitialIndexPath:))];
     }
     return adGenerator;
 }

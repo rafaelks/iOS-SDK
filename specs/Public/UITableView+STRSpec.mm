@@ -3,7 +3,7 @@
 #import "STRTableViewDataSource.h"
 #import "STRFullTableViewDataSource.h"
 #import "STRTableViewDelegate.h"
-#import "STRTableViewAdGenerator.h"
+#import "STRGridlikeViewAdGenerator.h"
 #import <objc/runtime.h>
 #import "STRAdGenerator.h"
 #import "STRAppModule.h"
@@ -13,7 +13,7 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-extern const char *const STRTableViewAdGeneratorKey;
+extern const char *const STRGridlikeViewAdGeneratorKey;
 
 SPEC_BEGIN(UITableViewSpec)
 
@@ -47,7 +47,7 @@ describe(@"UITableView+STR", ^{
     __block STRTableViewDelegate *delegate;
     __block STRFullTableViewDataSource *dataSource;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
-    __block STRTableViewAdGenerator *tableViewAdGenerator;
+    __block STRGridlikeViewAdGenerator *tableViewAdGenerator;
 
     beforeEach(^{
         tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
@@ -72,8 +72,8 @@ describe(@"UITableView+STR", ^{
         spy_on([STRAdPlacementAdjuster class]);
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
-        tableViewAdGenerator = [injector getInstance:[STRTableViewAdGenerator class]];
-        [tableViewAdGenerator placeAdInTableView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:100.0 adInitialIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
+        tableViewAdGenerator = [injector getInstance:[STRGridlikeViewAdGenerator class]];
+        [tableViewAdGenerator placeAdInGridlikeView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:100.0 adInitialIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
 
         [tableView reloadData];
     });

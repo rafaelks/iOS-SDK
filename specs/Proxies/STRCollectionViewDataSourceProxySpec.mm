@@ -6,7 +6,6 @@
 #import "STRFullCollectionViewDataSource.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRCollectionViewCell.h"
-#import "STRCollectionViewAdGenerator.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
