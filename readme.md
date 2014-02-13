@@ -8,6 +8,7 @@
 2. [Adding a Sharethrough Native ad to your app][sect-firstAd]
 	* [Basic, yet flexible API] [sect-firstAd-basic]
 	* [UITableView API][sect-firstAd-table]
+	* [UICollectionView API][sect-firstAd-collection]
 3. [Viewing the Sample App][sect-sampleAppIntro]
 4. [Documentation][sect-docs]
 
@@ -52,9 +53,10 @@ After adding the frameworks, your project's "Link Binary With Libraries" should 
 Sharethrough's API provides the following ways to integrate native ads into your app.
 
 - The basic version is very flexible - you hand it a  `UIView`, and it places an ad in that view. You can use this view virtually anywhere in your app.
-- The `UITableView` API allows you to place an ad in your `UITableView`, and then manages that ad for you so that your content's `NSIndexPaths` are unchanged.
+- The `UITableView` API allows you to place an ad in your `UITableView`, and then manages that ad for you so that your content's `NSIndexPaths` are unchanged
+- The `UICollectionView` API allows you to place an ad in your `UICollectionView`, and then manages that ad for you so that your content's `NSIndexPaths` are unchanged.
 
-In either case, these ad views should be styled according to the rest of your app, giving it that customized native feel (fonts, colors, etc.)
+In all cases, these ad views should be styled according to the rest of your app, giving it that customized native feel (fonts, colors, etc.)
 
 Import the API as below:
 
@@ -101,11 +103,40 @@ The `UITableView API` allows you to integrate ads directly into your stream with
 * Also in `viewDidLoad`, tell the SDK to place the ad in your view, like below:
 
 	```
-	[[SharethroughSDK sharedInstance] placeAdInTableView:self.tableView adCellReuseIdentifier:kTableViewAdCellReuseIdentifier placementKey:kPlacementKey presentingViewController:self adHeight:118.0 adStartingIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
+	[[SharethroughSDK sharedInstance] placeAdInTableView:self.tableView adCellReuseIdentifier:kTableViewAdCellReuseIdentifier placementKey:kPlacementKey presentingViewController:self adHeight:118.0 adInitialIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
 	```
 
  - The `adHeight` can be the same as the rest of your rows, but doesn't have to be.
- - The `adStartingIndexPath` is the advertisement's initial position.
+ - The `adInitialIndexPath` is the advertisement's initial position.
+ - `kPlacementKey` is an `NSString` representing your Sharethrough placement key.
+
+That's it! Your stream now has an elegantly embedded advertisement.
+
+
+
+<div id="first-ad-collection"></div>
+#### Using the UICollectionView API ####
+The `UICollectionView API` also allows you to integrate ads directly into your stream without any extra work on your part. It keeps track of your view's delegate and dataSource, and intelligently ensures that you change only your content, without inadvertently affecting any advertisements.
+
+* In your `viewDidLoad` method, register a cell reuse identifier specifically for advertisement cells. This reuse identifier can register the same class as the rest of your content cells, or it can register a class that will only be used for ad cells. Whichever method you choose, the class must conform to the `<STRAdView>` protocol. For example, in our sample app, we have the following lines of code:
+
+   ```
+   UINib *cellNib = [UINib nibWithNibName:NSStringFromClass([STSCardStyleCell class]) bundle:[NSBundle mainBundle]];
+
+   [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:kCollectionViewCellReuseIdentifier];
+   [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:kCollectionViewAdCellReuseIdentifier];
+   ```
+
+
+	`kCollectionViewCellReuseIdentifier` and `kCollectionViewAdCellReuseIdentifier` are unique NSStrings defined at the beginning of our controller, but they can be defined wherever makes sense for your application. We registered the same class loaded from a nib, `STSCardStyleCell`, to be used for both normal cells and advertisement cells. We made minimal changes to `STSCardStyleCell` to become compatible with the `<STRAdView>` protocol.
+
+* Also in `viewDidLoad`, tell the SDK to place the ad in your collection view, like below:
+
+	```
+    [self.sdk placeAdInCollectionView:self.collectionView adCellReuseIdentifier:kCollectionViewAdCellReuseIdentifier placementKey:kPlacementKey presentingViewController:self adInitialIndexPath:[NSIndexPath indexPathForItem:2 inSection:0]];
+	```
+
+ - The `adInitialIndexPath` is the advertisement's initial position.
  - `kPlacementKey` is an `NSString` representing your Sharethrough placement key.
 
 That's it! Your stream now has an elegantly embedded advertisement.
@@ -154,5 +185,6 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 [sect-firstAd]: #first-ad-intro
 [sect-firstAd-basic]: #first-ad-basic
 [sect-firstAd-table]: #first-ad-table
+[sect-firstAd-collection]: #first-ad-collection
 [sect-sampleAppIntro]: #viewing-the-sample-app
 [sect-docs]: #documentation
