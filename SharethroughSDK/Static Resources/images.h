@@ -15,3 +15,4 @@ extern STRImage kSTRPlayBtn;
 extern STRImage kSTRVineLogo;
 extern STRImage kSTRYoutubeThumbnail;
 extern STRImage kSTRVineThumbnail;
+extern STRImage kSTRHostedVideoThumbnail;

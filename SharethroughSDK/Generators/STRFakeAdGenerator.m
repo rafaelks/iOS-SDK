@@ -53,6 +53,8 @@
         case STRFakeAdTypeVine:
             self.advertisement = (STRAdvertisement *)[STRAdFixtures vineAd];
             break;
+        case STRFakeAdTypeHostedVideo:
+            self.advertisement = (STRAdvertisement *)[STRAdFixtures hostedVideoAd];
         default:
             break;
     }
@@ -81,7 +83,6 @@ presentingViewController:(UIViewController *)presentingViewController
 
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
-
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:self.advertisement
                                                                                                device:[UIDevice currentDevice]
                                                                                         beaconService:nil

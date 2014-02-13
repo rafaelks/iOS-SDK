@@ -15,5 +15,6 @@
 + (STRAdvertisement *)ad;
 + (STRAdYouTube *)youTubeAd;
 + (STRAdVine *)vineAd;
++ (STRAdvertisement *)hostedVideoAd;
 
 @end

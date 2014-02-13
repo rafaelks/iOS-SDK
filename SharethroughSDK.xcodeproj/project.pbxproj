@@ -62,6 +62,8 @@
 		AE3120E21889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
 		AE3120E31889E76F00297F01 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
 		AE39256D18AC2B03000E15D7 /* STRGridlikeDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE39256C18AC2B03000E15D7 /* STRGridlikeDataSourceProxySpec.mm */; };
+		AE39F8C318AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */; };
+		AE39F8C418AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */; };
 		AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
 		AE3FF3FF18AA9F5A006061C2 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
 		AE3FF40518AAA078006061C2 /* STRImages.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40318AAA078006061C2 /* STRImages.m */; };
@@ -270,6 +272,7 @@
 		AE3120E01889E76F00297F01 /* STRPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = STRPromise.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AE3120E11889E76F00297F01 /* STRPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = STRPromise.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE39256C18AC2B03000E15D7 /* STRGridlikeDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRGridlikeDataSourceProxySpec.mm; sourceTree = "<group>"; };
+		AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hosted_sample_thumbnail.c; sourceTree = "<group>"; };
 		AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "vine-logo.c"; sourceTree = "<group>"; };
 		AE3FF40018AA9FF6006061C2 /* images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = images.h; sourceTree = "<group>"; };
 		AE3FF40218AAA078006061C2 /* STRImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRImages.h; sourceTree = "<group>"; };
@@ -785,6 +788,7 @@
 				AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */,
 				AEA0EC7818AC589E00B4286A /* vine_sample_thumbnail.c */,
 				AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */,
+				AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */,
 			);
 			path = "Static Resources";
 			sourceTree = "<group>";
@@ -993,6 +997,7 @@
 				AE6C80711898925C008FD848 /* STRFullTableViewDataSource.m in Sources */,
 				AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */,
 				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
+				AE39F8C418AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */,
 				AE58228218A2F19100672653 /* UICollectionView+STRSpec.mm in Sources */,
 				AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */,
@@ -1046,6 +1051,7 @@
 				AE3FF40918AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AEB4EF4618AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
 				AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */,
+				AE39F8C318AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */,
 				AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
 				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AE022DE2188E004900D02568 /* STRRestClient.m in Sources */,

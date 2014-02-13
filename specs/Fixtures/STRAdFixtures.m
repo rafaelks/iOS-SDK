@@ -47,4 +47,16 @@
     return ad;
 }
 
++ (STRAdvertisement *)hostedVideoAd {
+    STRAdvertisement *ad = [STRAdvertisement new];
+    ad.mediaURL = [NSURL URLWithString:@"http://media.sharethrough.com.s3.amazonaws.com/Val/iOS%20SDK%20Stuff/Media/New%20Silk%20ad%20-%20Whaddya%20think_%20Share%20your%20thoughts!.mp4"];
+    ad.title = @"Avoid the morning MOO";
+    ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];
+    ad.adDescription = @"Avoid the taste of the dreaded MOO and make your morning taste better with Silk Almond Milk";
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRHostedVideoThumbnail.bytes length:kSTRHostedVideoThumbnail.length]];
+    ad.advertiser = @"Silk";
+
+    return ad;
+}
+
 @end

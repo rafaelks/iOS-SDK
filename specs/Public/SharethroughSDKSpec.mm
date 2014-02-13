@@ -48,6 +48,21 @@ describe(@"SharethroughSDK", ^{
                 adView.adSponsoredBy.text should equal(@"Promoted by Intel");
             });
         });
+
+        describe(@"when ad type is hosted", ^{
+            it(@"displays an ad about almond milk", ^{
+                UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
+                [[SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeHostedVideo] placeAdInView:adView
+                                                                                   placementKey:nil
+                                                                       presentingViewController:nil
+                                                                                       delegate:nil];
+
+                adView.adTitle.text should equal(@"Avoid the morning MOO");
+                adView.adDescription.text should equal(@"Avoid the taste of the dreaded MOO and make your morning taste better with Silk Almond Milk");
+                adView.adSponsoredBy.text should equal(@"Promoted by Silk");
+
+            });
+        });
     });
 });
 
