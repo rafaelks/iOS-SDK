@@ -13,9 +13,12 @@
 #import "STRAdFixtures.h"
 #import "STRInteractiveAdViewController.h"
 #import "STRNavigationController.h"
+#import "STRInjector.h"
+#import "STRAppModule.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
+@property (nonatomic, strong) STRInjector *injector;
 @property (nonatomic, strong) UIViewController *presentingViewController;
 @end
 
@@ -38,12 +41,17 @@
     }
     return self;
 }
-- (id)initWithAdType:(STRFakeAdType)adType {
+- (id)initWithAdType:(STRFakeAdType)adType withInjector:(STRInjector *)injector{
     self = [super init];
+
+    self.injector = injector;
 
     switch (adType) {
         case STRFakeAdTypeYoutube:
             self.advertisement = (STRAdvertisement *)[STRAdFixtures youTubeAd];
+            break;
+        case STRFakeAdTypeVine:
+            self.advertisement = (STRAdvertisement *)[STRAdFixtures vineAd];
             break;
         default:
             break;
@@ -73,10 +81,11 @@ presentingViewController:(UIViewController *)presentingViewController
 
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
+
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:self.advertisement
                                                                                                device:[UIDevice currentDevice]
                                                                                         beaconService:nil
-                                                                                             injector:nil];
+                                                                                             injector:self.injector];
     adController.delegate = self;
     STRNavigationController *navController = [[STRNavigationController alloc] initWithRootViewController:adController];
     [self.presentingViewController presentViewController:navController animated:YES completion:nil];

@@ -37,9 +37,12 @@
 
 + (STRAdVine *)vineAd {
     STRAdVine *ad = [STRAdVine new];
-    ad.mediaURL = [NSURL URLWithString:@"http://www.vine.com/some.mp4"];
-    ad.title = @"Superad";
+    ad.mediaURL = [NSURL URLWithString:@"https://v.cdn.vine.co/r/videos/6CB419768A995421752886763520_10c1db02719.3.2_WvWVlM.kjm_rWfdKEnd.GNuCbvrPUbFRzc1tYb_krsyuepSZq4_L.bu_8BmJNZLj.mp4"];
+    ad.title = @"Meet A 15-year-old Cancer Researcher";
     ad.shareURL = [NSURL URLWithString:@"http://vine.ly/share"];
+    ad.adDescription = @"Meet Jack Andraka. Inventor, cancer researcher, 15 year old #ISEF winner. #findacure #lookinside";
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRVineThumbnail.bytes length:kSTRVineThumbnail.length]];
+    ad.advertiser = @"Intel";
 
     return ad;
 }

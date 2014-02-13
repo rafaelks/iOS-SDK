@@ -64,8 +64,8 @@
  */
 
 typedef NS_ENUM(NSInteger, STRFakeAdType) {
-//    STRFakeAdTypeGeneric = 0,
-    STRFakeAdTypeYoutube
+    STRFakeAdTypeYoutube,
+    STRFakeAdTypeVine
 };
 
 /**

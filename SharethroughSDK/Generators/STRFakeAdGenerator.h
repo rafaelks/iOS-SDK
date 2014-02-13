@@ -10,9 +10,10 @@
 #import "STRAdGenerator.h"
 #import "SharethroughSDK.h"
 
+@class STRInjector;
 
 @interface STRFakeAdGenerator : STRAdGenerator
 
-- (id)initWithAdType:(STRFakeAdType)adType;
+- (id)initWithAdType:(STRFakeAdType)adType withInjector:(STRInjector *)injector;
 
 @end

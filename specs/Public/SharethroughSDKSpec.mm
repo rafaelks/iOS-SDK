@@ -34,8 +34,19 @@ describe(@"SharethroughSDK", ^{
             });
 
         });
-        describe(@"when ad type is vine", ^{
 
+        describe(@"when ad type is vine", ^{
+            it(@"displays an Intel Ad", ^{
+                UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
+                [[SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeVine] placeAdInView:adView
+                                                                                    placementKey:nil
+                                                                        presentingViewController:nil
+                                                                                        delegate:nil];
+
+                adView.adTitle.text should equal(@"Meet A 15-year-old Cancer Researcher");
+                adView.adDescription.text should equal(@"Meet Jack Andraka. Inventor, cancer researcher, 15 year old #ISEF winner. #findacure #lookinside");
+                adView.adSponsoredBy.text should equal(@"Promoted by Intel");
+            });
         });
     });
 });
