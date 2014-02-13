@@ -16,3 +16,4 @@ extern STRImage kSTRVineLogo;
 extern STRImage kSTRYoutubeThumbnail;
 extern STRImage kSTRVineThumbnail;
 extern STRImage kSTRHostedVideoThumbnail;
+extern STRImage kSTRClickoutThumbnail;

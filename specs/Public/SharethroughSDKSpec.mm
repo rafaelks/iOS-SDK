@@ -63,6 +63,20 @@ describe(@"SharethroughSDK", ^{
 
             });
         });
+
+        describe(@"when the ad type is clickout", ^{
+            it(@"displays an ad about 22 gameday gifs ", ^{
+                UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
+                [[SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeClickout] placeAdInView:adView
+                                                                                     placementKey:nil
+                                                                         presentingViewController:nil
+                                                                                         delegate:nil];
+
+                adView.adTitle.text should equal(@"22 Game Day Gifs That Will Pump You Up For Anything");
+                adView.adDescription.text should equal(@"Get in the zone and check out these GIFs before your next big challenge to ensure victory. Then taste the winning kick of McDonald's® Mighty Wings® , now available nationwide.");
+                adView.adSponsoredBy.text should equal(@"Promoted by McDonald's");
+            });
+        });
     });
 });
 

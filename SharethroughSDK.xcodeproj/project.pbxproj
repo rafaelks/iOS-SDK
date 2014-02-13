@@ -69,6 +69,8 @@
 		AE39F8CA18AD56F700969C30 /* STRClickoutViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C918AD56F700969C30 /* STRClickoutViewControllerSpec.mm */; };
 		AE39F8CF18AD831200969C30 /* STRAdClickout.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8CE18AD831200969C30 /* STRAdClickout.m */; };
 		AE39F8D018AD831200969C30 /* STRAdClickout.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8CE18AD831200969C30 /* STRAdClickout.m */; };
+		AE39F8D218AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */; };
+		AE39F8D318AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */; };
 		AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
 		AE3FF3FF18AA9F5A006061C2 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
 		AE3FF40518AAA078006061C2 /* STRImages.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40318AAA078006061C2 /* STRImages.m */; };
@@ -283,6 +285,7 @@
 		AE39F8C918AD56F700969C30 /* STRClickoutViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRClickoutViewControllerSpec.mm; sourceTree = "<group>"; };
 		AE39F8CD18AD831200969C30 /* STRAdClickout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdClickout.h; sourceTree = "<group>"; };
 		AE39F8CE18AD831200969C30 /* STRAdClickout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdClickout.m; sourceTree = "<group>"; };
+		AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clickout_sample_thumbnail.c; sourceTree = "<group>"; };
 		AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "vine-logo.c"; sourceTree = "<group>"; };
 		AE3FF40018AA9FF6006061C2 /* images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = images.h; sourceTree = "<group>"; };
 		AE3FF40218AAA078006061C2 /* STRImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRImages.h; sourceTree = "<group>"; };
@@ -804,6 +807,7 @@
 				AEA0EC7818AC589E00B4286A /* vine_sample_thumbnail.c */,
 				AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */,
 				AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */,
+				AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */,
 			);
 			path = "Static Resources";
 			sourceTree = "<group>";
@@ -989,6 +993,7 @@
 				AE6C806E1898914F008FD848 /* STRTableViewAdGeneratorSpec.mm in Sources */,
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
+				AE39F8D318AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */,
 				AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */,
 				AE8AF506189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
@@ -1085,6 +1090,7 @@
 				AE39F8C718AD56DC00969C30 /* STRClickoutViewController.m in Sources */,
 				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE52FD7718A41AB2009F69BD /* STRGridlikeViewAdGenerator.m in Sources */,
+				AE39F8D218AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */,
 				AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */,
 				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,

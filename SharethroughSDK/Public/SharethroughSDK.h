@@ -66,7 +66,8 @@
 typedef NS_ENUM(NSInteger, STRFakeAdType) {
     STRFakeAdTypeYoutube,
     STRFakeAdTypeVine,
-    STRFakeAdTypeHostedVideo
+    STRFakeAdTypeHostedVideo,
+    STRFakeAdTypeClickout
 };
 
 /**

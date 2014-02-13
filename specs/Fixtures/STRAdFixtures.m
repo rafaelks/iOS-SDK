@@ -70,7 +70,7 @@
     ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];
     ad.adDescription = @"Get in the zone and check out these GIFs before your next big challenge to ensure victory. Then taste the winning kick of McDonald's® Mighty Wings® , now available nationwide.";
     ad.action = @"clickout";
-//    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRHostedVideoThumbnail.bytes length:kSTRHostedVideoThumbnail.length]];
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRClickoutThumbnail.bytes length:kSTRClickoutThumbnail.length]];
     ad.advertiser = @"McDonald's";
 
     return ad;

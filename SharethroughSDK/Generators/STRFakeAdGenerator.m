@@ -55,6 +55,10 @@
             break;
         case STRFakeAdTypeHostedVideo:
             self.advertisement = (STRAdvertisement *)[STRAdFixtures hostedVideoAd];
+            break;
+        case STRFakeAdTypeClickout:
+            self.advertisement = (STRAdvertisement *)[STRAdFixtures clickoutAd];
+            break;
         default:
             break;
     }
