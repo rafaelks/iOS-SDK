@@ -379,6 +379,41 @@ describe(@"STRAdGenerator", ^{
                 newTimer should_not be_same_instance_as(oldTimer);
             });
         });
+
+        context(@"when the ad is a clickout", ^{
+            beforeEach(^{
+                ad.action = @"clickout";
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                __block STRInteractiveAdViewController *interactiveAdController;
+
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                    UINavigationController *navController = (UINavigationController *)presentingViewController.presentedViewController;
+                    interactiveAdController = (STRInteractiveAdViewController *)navController.topViewController;
+
+                });
+
+                it(@"presents the STRInteractiveAdViewController", ^{
+                    interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
+                    interactiveAdController.ad should be_same_instance_as(ad);
+                    interactiveAdController.delegate should be_same_instance_as(generator);
+                });
+
+                it(@"dismisses the interactive ad controller when told", ^{
+                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
+
+                    presentingViewController.presentedViewController should be_nil;
+                });
+
+                it(@"does not call the beacon service", ^{
+                    [(id<CedarDouble>)beaconService sent_messages] should be_empty;
+                });
+            });
+        });
     });
 
     describe(@"place an ad in a view without an ad description", ^{

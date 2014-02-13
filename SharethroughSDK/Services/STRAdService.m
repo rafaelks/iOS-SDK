@@ -13,6 +13,7 @@
 #import "STRAdCache.h"
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
+#import "STRAdClickout.h"
 
 @interface STRAdService ()
 
@@ -94,7 +95,7 @@
 #pragma mark - Private
 
 - (STRAdvertisement *)adForAction:(NSString *)action {
-    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class]};
+    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class], @"clickout": [STRAdClickout class]};
     Class adClass = actionsToClasses[action];
     if (!adClass) {
         adClass = [STRAdvertisement class];

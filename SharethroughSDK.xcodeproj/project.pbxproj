@@ -64,6 +64,11 @@
 		AE39256D18AC2B03000E15D7 /* STRGridlikeDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE39256C18AC2B03000E15D7 /* STRGridlikeDataSourceProxySpec.mm */; };
 		AE39F8C318AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */; };
 		AE39F8C418AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */; };
+		AE39F8C718AD56DC00969C30 /* STRClickoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C618AD56DC00969C30 /* STRClickoutViewController.m */; };
+		AE39F8C818AD56DC00969C30 /* STRClickoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C618AD56DC00969C30 /* STRClickoutViewController.m */; };
+		AE39F8CA18AD56F700969C30 /* STRClickoutViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C918AD56F700969C30 /* STRClickoutViewControllerSpec.mm */; };
+		AE39F8CF18AD831200969C30 /* STRAdClickout.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8CE18AD831200969C30 /* STRAdClickout.m */; };
+		AE39F8D018AD831200969C30 /* STRAdClickout.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8CE18AD831200969C30 /* STRAdClickout.m */; };
 		AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
 		AE3FF3FF18AA9F5A006061C2 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
 		AE3FF40518AAA078006061C2 /* STRImages.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40318AAA078006061C2 /* STRImages.m */; };
@@ -273,6 +278,11 @@
 		AE3120E11889E76F00297F01 /* STRPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = STRPromise.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE39256C18AC2B03000E15D7 /* STRGridlikeDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRGridlikeDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hosted_sample_thumbnail.c; sourceTree = "<group>"; };
+		AE39F8C518AD56DC00969C30 /* STRClickoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRClickoutViewController.h; sourceTree = "<group>"; };
+		AE39F8C618AD56DC00969C30 /* STRClickoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRClickoutViewController.m; sourceTree = "<group>"; };
+		AE39F8C918AD56F700969C30 /* STRClickoutViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRClickoutViewControllerSpec.mm; sourceTree = "<group>"; };
+		AE39F8CD18AD831200969C30 /* STRAdClickout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdClickout.h; sourceTree = "<group>"; };
+		AE39F8CE18AD831200969C30 /* STRAdClickout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdClickout.m; sourceTree = "<group>"; };
 		AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "vine-logo.c"; sourceTree = "<group>"; };
 		AE3FF40018AA9FF6006061C2 /* images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = images.h; sourceTree = "<group>"; };
 		AE3FF40218AAA078006061C2 /* STRImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRImages.h; sourceTree = "<group>"; };
@@ -433,6 +443,8 @@
 			children = (
 				AE9C4608189B181B001B407A /* STRAdCache.h */,
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
+				AE39F8CD18AD831200969C30 /* STRAdClickout.h */,
+				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
 				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
@@ -604,10 +616,12 @@
 			children = (
 				AE52B847188EFC9B00C4DEF8 /* STRInteractiveAdViewController.h */,
 				AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */,
-				AE9C4628189C5288001B407A /* STRYouTubeViewController.h */,
-				AE9C4629189C5288001B407A /* STRYouTubeViewController.m */,
+				AE39F8C518AD56DC00969C30 /* STRClickoutViewController.h */,
+				AE39F8C618AD56DC00969C30 /* STRClickoutViewController.m */,
 				AE9C4632189C72B9001B407A /* STRVideoController.h */,
 				AE9C4633189C72B9001B407A /* STRVideoController.m */,
+				AE9C4628189C5288001B407A /* STRYouTubeViewController.h */,
+				AE9C4629189C5288001B407A /* STRYouTubeViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -774,6 +788,7 @@
 				AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */,
 				AE9C462E189C53D3001B407A /* STRYouTubeViewControllerSpec.mm */,
 				AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */,
+				AE39F8C918AD56F700969C30 /* STRClickoutViewControllerSpec.mm */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -962,6 +977,7 @@
 			files = (
 				AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */,
 				AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */,
+				AE39F8CA18AD56F700969C30 /* STRClickoutViewControllerSpec.mm in Sources */,
 				AE022DE3188E004900D02568 /* STRRestClient.m in Sources */,
 				AE022DED188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE6C80821899861E008FD848 /* STRInjector.m in Sources */,
@@ -1008,12 +1024,14 @@
 				AE9C4623189C25A1001B407A /* STRAdYouTubeSpec.mm in Sources */,
 				AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */,
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
+				AE39F8D018AD831200969C30 /* STRAdClickout.m in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */,
 				AE3FF40A18AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AE6C80801899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */,
 				AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */,
+				AE39F8C818AD56DC00969C30 /* STRClickoutViewController.m in Sources */,
 				AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */,
 				AE1F67241899BBC600E184D6 /* STRTableViewDataSource.m in Sources */,
@@ -1055,6 +1073,7 @@
 				AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
 				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,
 				AE022DE2188E004900D02568 /* STRRestClient.m in Sources */,
+				AE39F8CF18AD831200969C30 /* STRAdClickout.m in Sources */,
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
 				AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
@@ -1063,6 +1082,7 @@
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
+				AE39F8C718AD56DC00969C30 /* STRClickoutViewController.m in Sources */,
 				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE52FD7718A41AB2009F69BD /* STRGridlikeViewAdGenerator.m in Sources */,
 				AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */,

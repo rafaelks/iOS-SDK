@@ -15,6 +15,7 @@
 #import "STRVideoController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "STRInjector.h"
+#import "STRClickoutViewController.h"
 
 @interface STRInteractiveAdViewController () 
 
@@ -63,10 +64,12 @@
     [self.view addSubview:contentView];
     self.contentView = contentView;
 
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-44-[contentView]|"
+    id topGuide = self.topLayoutGuide;
+
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[contentView]|"
                                                                       options:0
                                                                       metrics:nil
-                                                                        views:NSDictionaryOfVariableBindings(contentView)]];
+                                                                        views:NSDictionaryOfVariableBindings(topGuide, contentView)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|"
                                                                       options:0
                                                                       metrics:nil
@@ -76,6 +79,8 @@
     UIViewController *childViewController;
     if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
         childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
+    } else if ([self.ad.action isEqualToString:@"clickout"]) {
+        childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad];
     } else {
         childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]]];
     }
@@ -97,7 +102,11 @@
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationLandscapeRight;
+    if ([self.ad.action isEqualToString:@"video"] || [self.ad.action isEqualToString:@"hosted-video"]) {
+        return UIInterfaceOrientationLandscapeRight;
+    } else {
+        return self.interfaceOrientation;
+    }
 }
 
 #pragma mark - Actions

@@ -8,6 +8,7 @@
 #import "STRAdCache.h"
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
+#import "STRAdClickout.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -183,6 +184,16 @@ describe(@"STRAdService", ^{
 
                     afterSuccessfulAdFetchedSpecs([STRAdYouTube class], @"video");
                 });
+
+                describe(@"when the ad server successfully responds with a clickout ad", ^{
+                    beforeEach(^{
+                        responseData[@"creative"][@"action"] = @"clickout";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRAdClickout class], @"clickout");
+                });
+
             });
 
             describe(@"when the ad server responds without a protocol", ^{

@@ -11,6 +11,7 @@
 #import "STRAdVine.h"
 #import "STRAdFixtures.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "STRClickoutViewController.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -30,6 +31,27 @@ describe(@"STRInteractiveAdViewController", ^{
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
         [window addSubview:navController.view];
         [controller.view layoutIfNeeded];
+    };
+    
+    void(^itPrefersCurrentInterfaceOrientation)(void) = ^{
+        it(@"prefers current orientation", ^{
+            spy_on(controller);
+            __block BOOL portrait = YES;
+            controller stub_method(@selector(interfaceOrientation)).and_do(^(NSInvocation *invocation) {
+                int orientation;
+                if (portrait) {
+                    orientation = UIInterfaceOrientationPortrait;
+                } else {
+                    orientation = UIInterfaceOrientationLandscapeLeft;
+                }
+
+                [invocation setReturnValue:&orientation];
+            });
+            portrait = YES;
+            [controller preferredInterfaceOrientationForPresentation] should equal(UIInterfaceOrientationPortrait);
+            portrait = NO;
+            [controller preferredInterfaceOrientationForPresentation] should equal(UIInterfaceOrientationLandscapeLeft);
+        });
     };
 
     beforeEach(^{
@@ -56,6 +78,10 @@ describe(@"STRInteractiveAdViewController", ^{
 
         it(@"gives that youtube view controller the ad", ^{
             youTubeViewController.ad should be_same_instance_as(ad);
+        });
+
+        it(@"prefers landscape orientation", ^{
+            UIInterfaceOrientationIsLandscape([controller preferredInterfaceOrientationForPresentation]) should be_truthy;
         });
     });
 
@@ -89,15 +115,42 @@ describe(@"STRInteractiveAdViewController", ^{
             });
 
             itPlaysTheAdInAVideoController();
+
+            itPrefersCurrentInterfaceOrientation();
         });
         
         describe(@"when the ad is a hosted video", ^{
             beforeEach(^{
-                ad = [STRAdFixtures ad];
+                ad = [STRAdFixtures hostedVideoAd];
             });
 
             itPlaysTheAdInAVideoController();
+
+            it(@"prefers landscape orientation", ^{
+                UIInterfaceOrientationIsLandscape([controller preferredInterfaceOrientationForPresentation]) should be_truthy;
+            });
         });
+    });
+
+    describe(@"when the ad is a clickout", ^{
+        __block STRClickoutViewController *clickoutViewController;
+
+        beforeEach(^{
+            ad = (id)[STRAdFixtures clickoutAd];
+            setUpController();
+            clickoutViewController = [controller.childViewControllers firstObject];
+        });
+
+        it(@"presents a clickout view controller", ^{
+            clickoutViewController should be_instance_of([STRClickoutViewController class]);
+            controller.contentView.subviews.firstObject should be_same_instance_as(clickoutViewController.view);
+        });
+
+        it(@"gives that clickout view controller the ad", ^{
+            clickoutViewController.ad should be_same_instance_as(ad);
+        });
+
+        itPrefersCurrentInterfaceOrientation();
     });
 
     describe(@"when the user taps the done button", ^{
