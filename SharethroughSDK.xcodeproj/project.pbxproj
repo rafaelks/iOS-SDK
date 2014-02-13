@@ -123,6 +123,9 @@
 		AE9C463B189C74B0001B407A /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
 		AE9C463D189C7776001B407A /* STRVideoControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */; };
 		AEA0EC6C18AC3D4B00B4286A /* STRGridlikeViewAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC6B18AC3D4B00B4286A /* STRGridlikeViewAdGeneratorSpec.mm */; };
+		AEA0EC7318AC4DBB00B4286A /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
+		AEA0EC7618AC50D700B4286A /* youtube_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */; };
+		AEA0EC7718AC50D700B4286A /* youtube_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */; };
 		AEB044C018A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEB044BF18A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm */; };
 		AEB2F43C18A2B25600F415EE /* STRAdViewDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */; };
 		AEB4EF4618AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */; };
@@ -333,10 +336,11 @@
 		AE9C462E189C53D3001B407A /* STRYouTubeViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRYouTubeViewControllerSpec.mm; sourceTree = "<group>"; };
 		AE9C4632189C72B9001B407A /* STRVideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRVideoController.h; sourceTree = "<group>"; };
 		AE9C4633189C72B9001B407A /* STRVideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRVideoController.m; sourceTree = "<group>"; };
-		AE9C4639189C74B0001B407A /* STRAdFixtures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdFixtures.h; sourceTree = "<group>"; };
-		AE9C463A189C74B0001B407A /* STRAdFixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdFixtures.m; sourceTree = "<group>"; };
+		AE9C4639189C74B0001B407A /* STRAdFixtures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRAdFixtures.h; path = ../../specs/Fixtures/STRAdFixtures.h; sourceTree = "<group>"; };
+		AE9C463A189C74B0001B407A /* STRAdFixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRAdFixtures.m; path = ../../specs/Fixtures/STRAdFixtures.m; sourceTree = "<group>"; };
 		AE9C463C189C7776001B407A /* STRVideoControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRVideoControllerSpec.mm; sourceTree = "<group>"; };
 		AEA0EC6B18AC3D4B00B4286A /* STRGridlikeViewAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRGridlikeViewAdGeneratorSpec.mm; sourceTree = "<group>"; };
+		AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = youtube_sample_thumbnail.c; sourceTree = "<group>"; };
 		AEB044BF18A5BBAF00202181 /* STRIndexPathDelegateProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRIndexPathDelegateProxySpec.mm; sourceTree = "<group>"; };
 		AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdViewDelegate.h; sourceTree = "<group>"; };
 		AEB4EF4418AAB03E00B69CAC /* STRYouTubeEmbedPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRYouTubeEmbedPage.h; sourceTree = "<group>"; };
@@ -527,8 +531,6 @@
 			isa = PBXGroup;
 			children = (
 				AE022DD0188DF3C400D02568 /* fixture_image.png */,
-				AE9C4639189C74B0001B407A /* STRAdFixtures.h */,
-				AE9C463A189C74B0001B407A /* STRAdFixtures.m */,
 				AE6C44A418A2CDF000298166 /* STRCollectionViewCell.h */,
 				AE6C44A518A2CDF000298166 /* STRCollectionViewCell.m */,
 				AE6C44A118A2CC7F00298166 /* STRCollectionViewDataSource.h */,
@@ -622,6 +624,8 @@
 		AE52FD6418A41A4E009F69BD /* Generators */ = {
 			isa = PBXGroup;
 			children = (
+				AE9C4639189C74B0001B407A /* STRAdFixtures.h */,
+				AE9C463A189C74B0001B407A /* STRAdFixtures.m */,
 				AE52FD6918A41AB2009F69BD /* STRAdGenerator.h */,
 				AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */,
 				AE52FD6D18A41AB2009F69BD /* STRFakeAdGenerator.h */,
@@ -776,6 +780,7 @@
 				AE3FF40018AA9FF6006061C2 /* images.h */,
 				AE3FF40818AAA242006061C2 /* play-btn-300x.c */,
 				AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */,
+				AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */,
 			);
 			path = "Static Resources";
 			sourceTree = "<group>";
@@ -971,6 +976,7 @@
 				AE52FD7218A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
+				AEA0EC7718AC50D700B4286A /* youtube_sample_thumbnail.c in Sources */,
 				AE9C460B189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C44A618A2CDF000298166 /* STRCollectionViewCell.m in Sources */,
 				AE022DE8188E008000D02568 /* STRAdService.m in Sources */,
@@ -1057,7 +1063,9 @@
 				AE52FD7118A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */,
 				AE52FD7518A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
+				AEA0EC7318AC4DBB00B4286A /* STRAdFixtures.m in Sources */,
 				AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */,
+				AEA0EC7618AC50D700B4286A /* youtube_sample_thumbnail.c in Sources */,
 				AEFBC49F18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */,
 				AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */,

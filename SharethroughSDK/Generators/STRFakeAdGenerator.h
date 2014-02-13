@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "STRAdGenerator.h"
+#import "SharethroughSDK.h"
+
 
 @interface STRFakeAdGenerator : STRAdGenerator
+
+- (id)initWithAdType:(STRFakeAdType)adType;
 
 @end

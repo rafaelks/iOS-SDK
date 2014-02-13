@@ -23,10 +23,6 @@
 + (instancetype)sharedInstance;
 
 /**
- Creates a SharethroughSDK object that is safe for testing. It is strongly recommended that you use this method (instead of a fake/mock/real sharedInstance) when testing your app. This returns an SDK object which emulates all the behavior of a sharedInstance, but does not perform network activity. It will place the same ad in all views. This is not a singleton.
- */
-+ (instancetype)testSafeInstance;
-/**
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
@@ -61,6 +57,21 @@
     This is the only time the index path is computed taking into account the ad position. Future calls to the collection view should use STR's provided category methods (instead of UICollectionView's corresponding built-in methods). In using these category methods, index paths do not need to account for the extra ad cell.
  */
 - (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
+
+/**---------------------------------------------------------------------------------------
+ * @name TestSafeInstance
+ *  ---------------------------------------------------------------------------------------
+ */
+
+typedef NS_ENUM(NSInteger, STRFakeAdType) {
+//    STRFakeAdTypeGeneric = 0,
+    STRFakeAdTypeYoutube
+};
+
+/**
+ Creates a SharethroughSDK object that is safe for testing. It is strongly recommended that you use this method (instead of a fake/mock/real sharedInstance) when testing your app. This returns an SDK object which emulates all the behavior of a sharedInstance, but does not perform network activity. It will place the same ad in all views. This is not a singleton.
+ */
++ (instancetype)testSafeInstanceWithAdType:(STRFakeAdType)adType;
 
 
 @end

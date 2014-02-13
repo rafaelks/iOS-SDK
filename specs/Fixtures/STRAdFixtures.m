@@ -10,6 +10,7 @@
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
 #import "STRAdvertisement.h"
+#import "images.h"
 
 @implementation STRAdFixtures
 
@@ -24,9 +25,12 @@
 
 + (STRAdYouTube *)youTubeAd {
     STRAdYouTube *ad = [STRAdYouTube new];
-    ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
-    ad.title = @"Superad";
+    ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=YSVL4FvFhvw"];
+    ad.title = @"Go Sip for Sip with Josh Duhamel";
     ad.shareURL = [NSURL URLWithString:@"http://bit.ly/23kljr"];
+    ad.adDescription = @"Grab a Diet Pepsi and share a delicious moment with Josh Duhamel";
+    ad.advertiser = @"Pepsi";
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRYoutubeThumbnail.bytes length:kSTRYoutubeThumbnail.length]];
 
     return ad;
 }

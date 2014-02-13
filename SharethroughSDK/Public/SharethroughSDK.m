@@ -37,11 +37,11 @@
     return sharedObject;
 }
 
-+ (instancetype)testSafeInstance {
++ (instancetype)testSafeInstanceWithAdType:(STRFakeAdType)adType {
     SharethroughSDK *sdk = [[self alloc] init];
     [sdk configure];
 
-    STRAdGenerator *fakeAdGenerator = [[STRFakeAdGenerator alloc] init];
+    STRAdGenerator *fakeAdGenerator = [[STRFakeAdGenerator alloc] initWithAdType:adType];
     [sdk.injector bind:[STRAdGenerator class] toInstance:fakeAdGenerator];
     [sdk.injector bind:[STRBeaconService class] toInstance:[NSNull null]];
     [sdk.injector bind:[STRAdService class] toInstance:[NSNull null]];
