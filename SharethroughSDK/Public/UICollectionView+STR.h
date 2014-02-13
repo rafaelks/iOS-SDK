@@ -179,4 +179,28 @@
  */
 - (void)str_scrollToItemAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated;
 
+/**
+ Returns the index paths for the selected items, while accounting for ad(s) provided by Sharethrough
+ 
+ @return An array of NSIndexPath objects, each of which corresponds to a visible cell in the collection view
+ */
+- (NSArray *)str_indexPathsForSelectedItems;
+
+/**
+ Selects the item at the specified index path (while accounting for ad(s) provided by Sharethrough) and optionally scrolls it into view.
+ 
+ @param indexPath      The index path of the item to select. Specifying nil for this parameter clears the current selection
+ @param animated       Specify YES to animate the change in the selection or NO to make the change without animating it
+ @param scrollPosition An option that specifies where the item should be positioned when scrolling finishes
+ */
+- (void)str_selectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UICollectionViewScrollPosition)scrollPosition;
+
+
+/**
+ *  Deselects the item at the specified index, while accounting for ad(s) provided by Sharethrough
+ *
+ *  @param indexPath The index path of the item to select. Specifying nil for this parameter removes the current selection
+ *  @param animated  Specify YES to animate the change in the selection or NO to make the change without animating it
+ */
+- (void)str_deselectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated;
 @end

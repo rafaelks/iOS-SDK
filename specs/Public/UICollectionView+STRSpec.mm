@@ -517,6 +517,52 @@ describe(@"UICollectionView+STR", ^{
         });
     });
 
+    describe(@"-str_indexPathsForSelectedItems", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_indexPathsForSelectedItems];
+        });
+
+        it(@"returns the adjusted index path for the selected items", ^{
+            collectionView.allowsMultipleSelection = YES;
+            [collectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO scrollPosition:UICollectionViewScrollPositionTop];
+            [collectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1] animated:NO scrollPosition:UICollectionViewScrollPositionTop];
+
+            [collectionView str_indexPathsForSelectedItems] should equal(@[[NSIndexPath indexPathForRow:0 inSection:1],
+                                                                     [NSIndexPath indexPathForRow:1 inSection:1]]);
+
+            collectionView should have_received(@selector(indexPathsForSelectedItems));
+        });
+    });
+
+    describe(@"-str_selectItemAtIndexPath:animated:scrollPosition:", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+        });
+
+        it(@"it selects the adjusted index path", ^{
+            [collectionView str_selectItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:1] animated:NO scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+
+            collectionView should have_received(@selector(selectItemAtIndexPath:animated:scrollPosition:))
+            .with([NSIndexPath indexPathForItem:2 inSection:1], NO, UICollectionViewScrollPositionCenteredHorizontally);
+
+            [collectionView indexPathsForSelectedItems] should contain([NSIndexPath indexPathForItem:2 inSection:1]);
+        });
+    });
+
+    describe(@"-str_deselectItemAtIndexPath:animated:", ^{
+        itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
+            [noAdCollectionView str_deselectItemAtIndexPath:nil animated:YES];
+        });
+
+        it(@"deselects the item at the adjusted index path", ^{
+            [collectionView str_selectItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]animated:NO scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+            [collectionView str_deselectItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:1] animated:NO];
+
+            collectionView should have_received(@selector(deselectItemAtIndexPath:animated:)).with([NSIndexPath indexPathForItem:2 inSection:1], NO);
+            [collectionView indexPathsForSelectedItems] should be_empty;
+
+        });
+    });
 });
 
 SPEC_END

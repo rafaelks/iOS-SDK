@@ -115,6 +115,20 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
     [self scrollToItemAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] atScrollPosition:scrollPosition animated:animated];
 }
 
+- (NSArray *)str_indexPathsForSelectedItems {
+    return [[self str_ensureAdjuster] externalIndexPaths:[self indexPathsForSelectedItems]];
+}
+
+- (void)str_selectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UICollectionViewScrollPosition)scrollPosition {
+    NSIndexPath *adjustedIndexPath = [[self str_ensureAdjuster] trueIndexPath:indexPath];
+
+    [self selectItemAtIndexPath:adjustedIndexPath animated:animated scrollPosition:scrollPosition];
+}
+
+-(void)str_deselectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
+    [self deselectItemAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] animated:animated];
+}
+
 - (void)str_setDataSource:(id<UICollectionViewDataSource>)dataSource {
     [[self str_ensureGenerator] setOriginalDataSource:dataSource gridlikeView:self];
 }
