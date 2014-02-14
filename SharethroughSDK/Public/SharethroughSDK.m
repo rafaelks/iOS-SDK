@@ -14,6 +14,7 @@
 #import "STRFakeAdGenerator.h"
 #import "STRBeaconService.h"
 #import "STRAdService.h"
+#import "STRTestSafeModule.h"
 
 @interface SharethroughSDK ()
 
@@ -27,11 +28,11 @@
 
     static dispatch_once_t p = 0;
 
-    __strong static id sharedObject = nil;
+    __strong static SharethroughSDK *sharedObject = nil;
 
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
-        [sharedObject configure];
+        sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];;
     });
 
     return sharedObject;
@@ -39,12 +40,7 @@
 
 + (instancetype)testSafeInstanceWithAdType:(STRFakeAdType)adType {
     SharethroughSDK *sdk = [[self alloc] init];
-    [sdk configure];
-
-    STRAdGenerator *fakeAdGenerator = [[STRFakeAdGenerator alloc] initWithAdType:adType withInjector:sdk.injector];
-    [sdk.injector bind:[STRAdGenerator class] toInstance:fakeAdGenerator];
-    [sdk.injector bind:[STRBeaconService class] toInstance:[NSNull null]];
-    [sdk.injector bind:[STRAdService class] toInstance:[NSNull null]];
+    sdk.injector = [STRInjector injectorForModule:[[STRTestSafeModule alloc] initWithAdType:adType]];
 
     return sdk;
 }
@@ -77,9 +73,4 @@
                                 adInitialIndexPath:adInitialIndexPath];
 }
 
-#pragma mark - Private
-
-- (void)configure {
-    self.injector = [STRInjector injectorForModule:[STRAppModule new]];
-}
 @end

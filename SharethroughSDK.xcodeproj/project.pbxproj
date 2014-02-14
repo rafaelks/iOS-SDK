@@ -153,6 +153,8 @@
 		AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */; };
 		AED6D1A518A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */; };
 		AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */; };
+		AEECC9C418AEAAB600E28C51 /* STRTestSafeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AEECC9C318AEAAB600E28C51 /* STRTestSafeModule.m */; };
+		AEECC9C518AEAAB600E28C51 /* STRTestSafeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AEECC9C318AEAAB600E28C51 /* STRTestSafeModule.m */; };
 		AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */; };
 		AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
 		AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */; };
@@ -378,6 +380,8 @@
 		AED6D1A418A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRCollectionViewDelegateProxySpec.mm; sourceTree = "<group>"; };
 		AED6D1A618A4079C005DFDF4 /* STRFullCollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFullCollectionViewDelegate.h; sourceTree = "<group>"; };
 		AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFullCollectionViewDelegate.m; sourceTree = "<group>"; };
+		AEECC9C218AEAAB600E28C51 /* STRTestSafeModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTestSafeModule.h; sourceTree = "<group>"; };
+		AEECC9C318AEAAB600E28C51 /* STRTestSafeModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTestSafeModule.m; sourceTree = "<group>"; };
 		AEEE6C98189C719D00AA7EC9 /* STRTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewDelegate.h; sourceTree = "<group>"; };
 		AEEE6C99189C719D00AA7EC9 /* STRTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRTableViewDelegate.m; sourceTree = "<group>"; };
 		AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+STR.h"; sourceTree = "<group>"; };
@@ -668,6 +672,8 @@
 				AE6C808A1899873B008FD848 /* STRAppModule.m */,
 				AE6C808D1899923E008FD848 /* STRSingletonBlockWrapper.h */,
 				AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */,
+				AEECC9C218AEAAB600E28C51 /* STRTestSafeModule.h */,
+				AEECC9C318AEAAB600E28C51 /* STRTestSafeModule.m */,
 			);
 			path = Injection;
 			sourceTree = "<group>";
@@ -982,6 +988,7 @@
 				AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */,
 				AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */,
 				AE39F8CA18AD56F700969C30 /* STRClickoutViewControllerSpec.mm in Sources */,
+				AEECC9C518AEAAB600E28C51 /* STRTestSafeModule.m in Sources */,
 				AE022DE3188E004900D02568 /* STRRestClient.m in Sources */,
 				AE022DED188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE6C80821899861E008FD848 /* STRInjector.m in Sources */,
@@ -1094,6 +1101,7 @@
 				AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */,
 				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
+				AEECC9C418AEAAB600E28C51 /* STRTestSafeModule.m in Sources */,
 				AEA0EC7918AC589E00B4286A /* vine_sample_thumbnail.c in Sources */,
 				AE3FF40518AAA078006061C2 /* STRImages.m in Sources */,
 				AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */,
