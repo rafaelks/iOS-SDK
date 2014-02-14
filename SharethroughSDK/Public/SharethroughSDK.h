@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, STRFakeAdType) {
  @param adType The enum value of the ad requested
  @return a fake instance of a SharethroughSDK, can be used to place fake ads
  */
-+ (instancetype)testSafeInstanceWithAdType:(STRFakeAdType)adType;
++ (instancetype)sharedTestSafeInstanceWithAdType:(STRFakeAdType)adType;
 
 
 @end

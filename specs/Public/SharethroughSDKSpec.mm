@@ -14,16 +14,15 @@ describe(@"SharethroughSDK", ^{
         });
     });
 
-    describe(@"+testSafeInstanceWithAdType:", ^{
-        it(@"always returns a new instance", ^{
-            [SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeYoutube] should_not be_same_instance_as([SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeYoutube]);
+    describe(@"+sharedTestSafeInstanceWithAdType:", ^{
+        it(@"returns the same instance each time", ^{
+            [SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeYoutube] should be_same_instance_as([SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeYoutube]);
         });
 
         describe(@"when ad type is youtube", ^{
-
             it(@"displays an ad about Pepsi", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
-                [[SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeYoutube] placeAdInView:adView
+                [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeYoutube] placeAdInView:adView
                                                                                     placementKey:nil
                                                                         presentingViewController:nil
                                                                                         delegate:nil];
@@ -38,7 +37,7 @@ describe(@"SharethroughSDK", ^{
         describe(@"when ad type is vine", ^{
             it(@"displays an Intel Ad", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
-                [[SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeVine] placeAdInView:adView
+                [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeVine] placeAdInView:adView
                                                                                     placementKey:nil
                                                                         presentingViewController:nil
                                                                                         delegate:nil];
@@ -52,7 +51,7 @@ describe(@"SharethroughSDK", ^{
         describe(@"when ad type is hosted", ^{
             it(@"displays an ad about almond milk", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
-                [[SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeHostedVideo] placeAdInView:adView
+                [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeHostedVideo] placeAdInView:adView
                                                                                    placementKey:nil
                                                                        presentingViewController:nil
                                                                                        delegate:nil];
@@ -67,7 +66,7 @@ describe(@"SharethroughSDK", ^{
         describe(@"when the ad type is clickout", ^{
             it(@"displays an ad about 22 gameday gifs ", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
-                [[SharethroughSDK testSafeInstanceWithAdType:STRFakeAdTypeClickout] placeAdInView:adView
+                [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeClickout] placeAdInView:adView
                                                                                      placementKey:nil
                                                                          presentingViewController:nil
                                                                                          delegate:nil];

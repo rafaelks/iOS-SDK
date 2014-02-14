@@ -25,11 +25,9 @@
 @implementation SharethroughSDK
 
 + (instancetype)sharedInstance {
-
-    static dispatch_once_t p = 0;
-
     __strong static SharethroughSDK *sharedObject = nil;
 
+    static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
         sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];;
@@ -38,11 +36,17 @@
     return sharedObject;
 }
 
-+ (instancetype)testSafeInstanceWithAdType:(STRFakeAdType)adType {
-    SharethroughSDK *sdk = [[self alloc] init];
-    sdk.injector = [STRInjector injectorForModule:[[STRTestSafeModule alloc] initWithAdType:adType]];
++ (instancetype)sharedTestSafeInstanceWithAdType:(STRFakeAdType)adType {
+    __strong static SharethroughSDK *testSafeSharedObject = nil;
 
-    return sdk;
+    static dispatch_once_t p = 0;
+    dispatch_once(&p, ^{
+        testSafeSharedObject = [[self alloc] init];
+    });
+
+    testSafeSharedObject.injector = [STRInjector injectorForModule:[[STRTestSafeModule alloc] initWithAdType:adType]];
+
+    return testSafeSharedObject;
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {

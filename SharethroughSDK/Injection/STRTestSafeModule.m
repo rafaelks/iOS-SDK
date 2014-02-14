@@ -31,8 +31,10 @@
 - (void)configureWithInjector:(STRInjector *)injector {
     [super configureWithInjector:injector];
 
-    STRAdGenerator *fakeAdGenerator = [[STRFakeAdGenerator alloc] initWithAdType:self.adType withInjector:injector];
-    [injector bind:[STRAdGenerator class] toInstance:fakeAdGenerator];
+    STRFakeAdType type = self.adType;
+    [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
+        return [[STRFakeAdGenerator alloc] initWithAdType:type withInjector:injector];
+    }];
     [injector bind:[STRBeaconService class] toInstance:[NSNull null]];
     [injector bind:[STRAdService class] toInstance:[NSNull null]];
 }
