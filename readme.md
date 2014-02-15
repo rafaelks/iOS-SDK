@@ -26,7 +26,7 @@
 1. Choose 'Create groups for any added folders' and select 'Copy items into destination group's folder (if needed)' to copy the SDK into your app.
 ![Add framework Screenshot][copy-screenshot]
 
-1. In your application target, select "Build Settings" and add the `-ObjC` linker flag to other linker flags as in the following:
+1. In your application target, select "Build Settings". You'll be in "Basic" settings by default - select "All" settings instead, then add the `-ObjC` linker flag to other linker flags as in the following:
 ![Link to add linker flag screenshot][linker-flag-screenshot]
 More information about this flag can be found [here][apple-technical-note-linker-flag]. This flag is not required if only using the basic API.
 
