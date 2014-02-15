@@ -112,6 +112,26 @@ The `UITableView API` allows you to integrate ads directly into your stream with
 
 That's it! Your stream now has an elegantly embedded advertisement.
 
+* **Important:** The SDK provides category methods on `UITableView` which replace `UITableView`'s default methods. These category methods are prefixed with `str_`, and can be used instead of the `UITableView` default methods. Some of the category methods are **required** to ensure that your content's behavior is not affected by the advertisement; other **optional** methods are convenient accessors that allow you to manipulate index paths without having to account for ads. The **required** category methods are below:
+	
+	```
+	– str_insertRowsAtIndexPaths:withAnimation:
+	– str_deleteRowsAtIndexPaths:withAnimation:
+	– str_moveRowAtIndexPath:toIndexPath:
+	– str_insertSections:withRowAnimation:
+	– str_deleteSections:withRowAnimation:
+	– str_moveSection:toSection:
+	– str_reloadDataWithAdIndexPath:
+	– str_reloadRowsAtIndexPaths:withRowAnimation:
+	– str_reloadSections:withRowAnimation:
+
+	– str_dataSource
+	– str_setDataSource:
+	– str_delegate
+	– str_setDelegate:
+	```
+The complete list of category methods, required and optional, is in the [documentation][docs-tableview-category].
+
 
 
 <div id="first-ad-collection"></div>
@@ -141,6 +161,23 @@ The `UICollectionView API` also allows you to integrate ads directly into your s
 
 That's it! Your stream now has an elegantly embedded advertisement.
 
+* **Important:** The SDK provides category methods on `UICollectionView` which replace `UICollectionView`'s default methods. These category methods are prefixed with `str_`, and can be used instead of the `UICollectionView` default methods. Some of the category methods are **required** to ensure that your content's behavior is not affected by the advertisement; other **optional** methods are convenient accessors that allow you to manipulate index paths without having to account for ads. The **required** category methods are below:
+
+	```
+	– str_dequeueReusableCellWithReuseIdentifier:forIndexPath:
+	– str_insertItemsAtIndexPaths:
+	– str_deleteItemsAtIndexPaths:
+	– str_moveItemAtIndexPath:toIndexPath:
+	– str_reloadDataWithAdIndexPath:
+	– str_reloadSections:
+	– str_reloadItemsAtIndexPaths:
+	
+	– str_dataSource
+	– str_setDataSource:
+	– str_delegate
+	– str_setDelegate:
+	```
+The complete list of category methods, required and optional, is in the [documentation][docs-collectionview-category].
 
 </hr>
 <div id="viewing-the-sample-app"><a href="#toc">Back to top</a></div>
@@ -178,6 +215,8 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 [apple-technical-note-linker-flag]: https://developer.apple.com/library/mac/qa/qa1490/_index.html
 [project_settings-screenshot]: documentation/getting_started/project_settings_screenshot.png
 [docset]: http://s3.amazonaws.com/iOS-SDK/com.sharethrough.SharethroughSDK.docset.tar
+[docs-tableview-category]: iOS/Categories/UITableView+STR.html
+[docs-collectionview-category]: iOS/Categories/UICollectionView+STR.html
 [stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video
 [sample-app]: https://github.com/sharethrough/iOS-Sample-App
 [sdk-docs]: iOS/index.html
