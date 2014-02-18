@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface STRFullCollectionViewDelegate : NSObject<UICollectionViewDelegate>
+@interface STRFullCollectionViewDelegate : NSObject<UICollectionViewDelegateFlowLayout>
 
 @end

@@ -41,7 +41,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
         adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
                  placementKey:(NSString *)placementKey
      presentingViewController:(UIViewController *)presentingViewController
-                     adHeight:(CGFloat)adHeight
+                       adSize:(CGSize)adSize
            adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
 
     [self validateGridlikeView:gridlikeView];
@@ -59,7 +59,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     self.adjuster = adjuster;
 
     self.dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithOriginalDataSource:originalDataSource adjuster:adjuster adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
-    self.delegateProxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adHeight:adHeight];
+    self.delegateProxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:adSize];
 
     [gridlikeView setDataSource:self.dataSourceProxy];
     [gridlikeView setDelegate:self.delegateProxy];

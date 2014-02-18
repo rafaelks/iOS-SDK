@@ -25,7 +25,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                            adCellReuseIdentifier:nil
                                     placementKey:nil
                         presentingViewController:nil
-                                        adHeight:0
+                                          adSize:CGSizeZero
                               adInitialIndexPath:nil];
             }).to_not(raise_exception);
 
@@ -40,7 +40,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                            adCellReuseIdentifier:nil
                                     placementKey:nil
                         presentingViewController:nil
-                                        adHeight:0
+                                          adSize:CGSizeZero
                               adInitialIndexPath:nil];
             }).to_not(raise_exception);
 
@@ -55,7 +55,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                            adCellReuseIdentifier:nil
                                     placementKey:nil
                         presentingViewController:nil
-                                        adHeight:0
+                                          adSize:CGSizeZero
                               adInitialIndexPath:nil];
             }).to(raise_exception);
 

@@ -71,7 +71,7 @@ describe(@"UICollectionView+STR", ^{
 
         [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
         generator = [injector getInstance:[STRGridlikeViewAdGenerator class]];
-        [generator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:0 adInitialIndexPath:nil ];
+        [generator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adSize:CGSizeZero adInitialIndexPath:nil ];
 
 
         [collectionView reloadData];

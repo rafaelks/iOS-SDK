@@ -29,7 +29,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
         trueIndexPath = [NSIndexPath indexPathForItem:2 inSection:0];
         externalIndexPath = [NSIndexPath indexPathForItem:1 inSection:0];
 
-        proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster];
+        proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:CGSizeZero];
     });
 
     context(@"when using a complete delegate", ^{
@@ -43,7 +43,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
         beforeEach(^{
             emptyDelegate = [STRCollectionViewDelegate new];
             spy_on(emptyDelegate);
-            proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adPlacementAdjuster:adjuster];
+            proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:emptyDelegate adPlacementAdjuster:adjuster adSize:CGSizeZero];
         });
 
         it(@"should not respond to selector", ^{
@@ -294,7 +294,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
         });
     });
 
-    describe(@"– collectionView:performAction:forItemAtIndexPath:withSender:", ^{
+    describe(@"–collectionView:performAction:forItemAtIndexPath:withSender:", ^{
         context(@"when the cell is not an ad cell", ^{
             it(@"adjusts the index path and calls through to original", ^{
                 [proxy collectionView:collectionView
@@ -302,8 +302,6 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                    forItemAtIndexPath:trueIndexPath
                            withSender:collectionView];
 
-                adjuster should have_received(@selector(isAdAtIndexPath:));
-                adjuster should have_received(@selector(externalIndexPath:)).with(trueIndexPath);
                 originalDelegate should have_received(@selector(collectionView:performAction:forItemAtIndexPath:withSender:)).with(collectionView, @selector(willPresentAlertView:), externalIndexPath, collectionView);
             });
         });
@@ -315,8 +313,6 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                    forItemAtIndexPath:adIndexPath
                            withSender:collectionView];
 
-                adjuster should have_received(@selector(isAdAtIndexPath:));
-                adjuster should_not have_received(@selector(externalIndexPath:));
                 originalDelegate should_not have_received(@selector(collectionView:performAction:forItemAtIndexPath:withSender:));
             });
         });
@@ -331,6 +327,38 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
             [proxy collectionView:collectionView transitionLayoutForOldLayout:oldLayout newLayout:newLayout];
 
             originalDelegate should have_received(@selector(collectionView:transitionLayoutForOldLayout:newLayout:)).with(collectionView, oldLayout, newLayout);
+        });
+    });
+
+    describe(@"-collectionView:layout:sizeForItemAtIndexPath", ^{
+        context(@"when the index path is not the ad cell", ^{
+            __block UICollectionViewLayout *layout;
+            
+            beforeEach(^{
+                layout = nice_fake_for([UICollectionViewLayout class]);
+            });
+
+            it(@"offsets the index path and calls through to the original delegate", ^{
+                [proxy collectionView:collectionView layout:layout sizeForItemAtIndexPath:trueIndexPath];
+
+                originalDelegate should have_received(@selector(collectionView:layout:sizeForItemAtIndexPath:)).with(collectionView, layout, externalIndexPath);
+            });
+        });
+
+        context(@"when the index path for the ad cell", ^{
+            __block UICollectionViewLayout *layout;
+
+            beforeEach(^{
+                layout = nice_fake_for([UICollectionViewLayout class]);
+                proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:CGSizeMake(100.0, 200.0)];
+            });
+
+            it(@"returns the passed in ad size", ^{
+                CGSize size = [proxy collectionView:collectionView layout:layout sizeForItemAtIndexPath:adIndexPath];
+
+                originalDelegate should_not have_received(@selector(collectionView:layout:sizeForItemAtIndexPath:));
+                size should equal(CGSizeMake(100.0, 200.0));
+            });
         });
     });
 });

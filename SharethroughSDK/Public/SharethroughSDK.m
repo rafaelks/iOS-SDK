@@ -63,17 +63,17 @@
                              adCellReuseIdentifier:adCellReuseIdentifier
                                       placementKey:placementKey
                           presentingViewController:presentingViewController
-                                          adHeight:adHeight
+                                            adSize:CGSizeMake(0, adHeight)
                                 adInitialIndexPath:adInitialIndexPath];
 }
 
-- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
+- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adSize:(CGSize)adSize adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     [gridlikeViewAdGenerator placeAdInGridlikeView:collectionView
                              adCellReuseIdentifier:adCellReuseIdentifier
                                       placementKey:placementKey
                           presentingViewController:presentingViewController
-                                          adHeight:0
+                                            adSize:adSize
                                 adInitialIndexPath:adInitialIndexPath];
 }
 

@@ -10,15 +10,13 @@
 
 @class STRAdPlacementAdjuster;
 
-@interface STRIndexPathDelegateProxy : NSObject<UITableViewDelegate, UICollectionViewDelegate>
+@interface STRIndexPathDelegateProxy : NSObject<UITableViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic, readonly) id originalDelegate;
 @property (strong, nonatomic, readonly) STRAdPlacementAdjuster *adPlacementAdjuster;
-@property (assign, nonatomic, readonly) CGFloat adHeight;
+@property (assign, nonatomic, readonly) CGSize adSize;
 
-
-- (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight;
-- (id)initWithOriginalDelegate:(id<UICollectionViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster;
+- (id)initWithOriginalDelegate:(id)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adSize:(CGSize)adSize;
 
 - (instancetype)copyWithNewDelegate:(id)newDelegate;
 

@@ -20,7 +20,7 @@
         adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
                  placementKey:(NSString *)placementKey
      presentingViewController:(UIViewController *)presentingViewController
-                     adHeight:(CGFloat)adHeight
+                       adSize:(CGSize)adSize
            adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
 
 - (id)originalDelegate;

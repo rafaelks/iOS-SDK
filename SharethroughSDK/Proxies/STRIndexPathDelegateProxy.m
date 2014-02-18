@@ -18,29 +18,17 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
 
 @property (weak, nonatomic) id originalDelegate;
 @property (strong, nonatomic) STRAdPlacementAdjuster *adPlacementAdjuster;
-@property (assign, nonatomic) CGFloat adHeight;
+@property (assign, nonatomic) CGSize adSize;
 
 @end
 
 @implementation STRIndexPathDelegateProxy
 
-- (id)initWithOriginalDelegate:(id<UITableViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adHeight:(CGFloat)adHeight {
+- (id)initWithOriginalDelegate:(id)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster adSize:(CGSize)adSize {
     if (self) {
         self.originalDelegate = originalDelegate;
         self.adPlacementAdjuster = adPlacementAdjuster;
-        self.adHeight = adHeight;
-
-        [self instantiateSelectors];
-    }
-
-    return self;
-}
-
-- (id)initWithOriginalDelegate:(id<UICollectionViewDelegate>)originalDelegate adPlacementAdjuster:(STRAdPlacementAdjuster *)adPlacementAdjuster {
-    self = [super init];
-    if (self) {
-        self.originalDelegate = originalDelegate;
-        self.adPlacementAdjuster = adPlacementAdjuster;
+        self.adSize = adSize;
 
         [self instantiateSelectors];
     }
@@ -49,7 +37,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
 }
 
 - (instancetype)copyWithNewDelegate:(id)newDelegate {
-    return [[[self class] alloc] initWithOriginalDelegate:newDelegate adPlacementAdjuster:self.adPlacementAdjuster adHeight:self.adHeight];
+    return [[[self class] alloc] initWithOriginalDelegate:newDelegate adPlacementAdjuster:self.adPlacementAdjuster adSize:self.adSize];
 }
 
 #pragma mark - Forwarding
@@ -70,6 +58,11 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
     if ([invocation selector] == @selector(tableView:heightForRowAtIndexPath:)
         || [invocation selector] == @selector(tableView:estimatedHeightForRowAtIndexPath:)) {
         [self handleHeightsInvocation:invocation];
+        return;
+    }
+
+    if ([invocation selector] == @selector(collectionView:layout:sizeForItemAtIndexPath:)) {
+        [self handleSizeInvocation:invocation];
         return;
     }
 
@@ -117,12 +110,27 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
     __autoreleasing NSIndexPath *indexPath;
     [invocation getArgument:&indexPath atIndex:3];
 
-    CGFloat height = self.adHeight;
     if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+        CGFloat height = self.adSize.height;
         [invocation setReturnValue:&height];
     } else {
         __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
         [invocation setArgument:&newIndexPath atIndex:3];
+        [invocation invokeWithTarget:self.originalDelegate];
+    }
+}
+
+- (void)handleSizeInvocation:(NSInvocation *)invocation {
+    __autoreleasing NSIndexPath *indexPath;
+    [invocation getArgument:&indexPath atIndex:4];
+
+    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+        CGSize adSize = self.adSize;
+        [invocation setReturnValue:&adSize];
+    } else {
+        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
+        [invocation setArgument:&newIndexPath atIndex:4];
+
         [invocation invokeWithTarget:self.originalDelegate];
     }
 }
@@ -188,6 +196,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
                                          NSStringFromSelector(@selector(collectionView:shouldHighlightItemAtIndexPath:)),
                                          NSStringFromSelector(@selector(collectionView:shouldShowMenuForItemAtIndexPath:)),
                                          NSStringFromSelector(@selector(collectionView:canPerformAction:forItemAtIndexPath:withSender:)),
+                                         NSStringFromSelector(@selector(collectionView:layout:sizeForItemAtIndexPath:))
                                          ];
 
         strSelectorsWhichReturnIndexPaths = @[

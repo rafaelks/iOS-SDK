@@ -16,7 +16,7 @@ describe(@"STRIndexPathDelegateProxy", ^{
         adjuster = [STRAdPlacementAdjuster new];
         proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:delegate
                                                         adPlacementAdjuster:adjuster
-                                                                   adHeight:23];
+                                                                   adSize:CGSizeMake(23.0, 23.0)];
     });
 
     describe(@"-copyWithNewDelegate:", ^{
@@ -26,7 +26,7 @@ describe(@"STRIndexPathDelegateProxy", ^{
             newProxy should_not be_same_instance_as(proxy);
             newProxy.originalDelegate should be_same_instance_as(newDelegate);
             newProxy.adPlacementAdjuster should be_same_instance_as(adjuster);
-            newProxy.adHeight should equal(23);
+            newProxy.adSize.height should equal(23);
         });
     });
 });

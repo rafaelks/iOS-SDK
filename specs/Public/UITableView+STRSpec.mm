@@ -73,7 +73,7 @@ describe(@"UITableView+STR", ^{
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
 
         tableViewAdGenerator = [injector getInstance:[STRGridlikeViewAdGenerator class]];
-        [tableViewAdGenerator placeAdInGridlikeView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adHeight:100.0 adInitialIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
+        [tableViewAdGenerator placeAdInGridlikeView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
 
         [tableView reloadData];
     });
