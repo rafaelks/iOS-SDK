@@ -14,23 +14,30 @@
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
 #import "STRAdClickout.h"
+#import "STRBeaconService.h"
 
 @interface STRAdService ()
 
 @property (nonatomic, strong) STRRestClient *restClient;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, strong) STRAdCache *adCache;
+@property (nonatomic, strong) STRBeaconService *beaconService;
 
 @end
 
 @implementation STRAdService
 
-- (id)initWithRestClient:(STRRestClient *)restClient networkClient:(STRNetworkClient *)networkClient adCache:(STRAdCache *)adCache {
+- (id)initWithRestClient:(STRRestClient *)restClient
+           networkClient:(STRNetworkClient *)networkClient
+                 adCache:(STRAdCache *)adCache
+           beaconService:(STRBeaconService *)beaconService
+{
     self = [super init];
     if (self) {
         self.restClient = restClient;
         self.networkClient = networkClient;
         self.adCache = adCache;
+        self.beaconService = beaconService;
     }
 
     return self;
@@ -45,6 +52,7 @@
         return deferred.promise;
     }
 
+    [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
     STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
     [adPromise then:^id(NSDictionary *fullJSON) {
         NSDictionary *creativeJSON = fullJSON[@"creative"];

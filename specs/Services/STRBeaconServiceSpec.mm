@@ -96,6 +96,16 @@ describe(@"STRBeaconService", ^{
                                                                                          @"ap": @"price"});
         });
 
+        describe(@"firing the impression again on the same ad", ^{
+            beforeEach(^{
+                [(id<CedarDouble>)restClient reset_sent_messages];
+                [service fireImpressionForAd:ad adSize:CGSizeMake(200, 100)];
+            });
+
+            it(@"does not send another beacon to the tracking servers", ^{
+                restClient should_not have_received(@selector(sendBeaconWithParameters:));
+            });
+        });
     });
 
     describe(@"-fireVisibleImpressionForAd:adSize:", ^{
@@ -119,6 +129,17 @@ describe(@"STRBeaconService", ^{
                                                                                          @"as": @"sig",
                                                                                          @"at": @"type",
                                                                                          @"ap": @"price"});
+        });
+
+        describe(@"firing the visible impression again on the same ad", ^{
+            beforeEach(^{
+                [(id<CedarDouble>)restClient reset_sent_messages];
+                [service fireVisibleImpressionForAd:ad adSize:CGSizeMake(200, 100)];
+            });
+
+            it(@"does not fire another visible impression beacon", ^{
+                restClient should_not have_received(@selector(sendBeaconWithParameters:));
+            });
         });
 
     });

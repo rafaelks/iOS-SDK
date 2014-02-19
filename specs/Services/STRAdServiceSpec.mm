@@ -9,6 +9,7 @@
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
 #import "STRAdClickout.h"
+#import "STRBeaconService.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -21,6 +22,7 @@ describe(@"STRAdService", ^{
     __block STRNetworkClient *networkClient;
     __block STRInjector *injector;
     __block STRAdCache *adCache;
+    __block STRBeaconService *beaconService;
 
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -33,6 +35,9 @@ describe(@"STRAdService", ^{
 
         adCache = nice_fake_for([STRAdCache class]);
         [injector bind:[STRAdCache class] toInstance:adCache];
+
+        beaconService = nice_fake_for([STRBeaconService class]);
+        [injector bind:[STRBeaconService class] toInstance:beaconService];
 
         service = [injector getInstance:[STRAdService class]];
     });
@@ -60,11 +65,15 @@ describe(@"STRAdService", ^{
                 returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
             });
 
-            it(@"should not make a request to the ad server", ^{
+            it(@"does not make a request to the ad server", ^{
                 restClient should_not have_received(@selector(getWithParameters:));
             });
 
-            it(@"should not make a request to the image server", ^{
+            it(@"does not fire an impression request", ^{
+                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
+            });
+
+            it(@"does not make a request to the image server", ^{
                 networkClient should_not have_received(@selector(get:));
             });
 
@@ -84,6 +93,10 @@ describe(@"STRAdService", ^{
                 restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey"});
             });
 
+            it(@"fires an impression request beacon", ^{
+                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:)).with(@"placementKey");
+            });
+
             it(@"returns an unresolved promise", ^{
                 returnedPromise should_not be_nil;
                 returnedPromise.value should be_nil;
@@ -91,6 +104,7 @@ describe(@"STRAdService", ^{
 
             describe(@"when the ad server responds with an ad", ^{
                 void(^afterSuccessfulAdFetchedSpecs)(Class expectedAdClass, NSString *expectedAction) = ^(Class expectedAdClass, NSString *expectedAction) {
+
                     it(@"makes a request for the thumbnail image", ^{
                         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"]];
                         networkClient should have_received(@selector(get:)).with(request);

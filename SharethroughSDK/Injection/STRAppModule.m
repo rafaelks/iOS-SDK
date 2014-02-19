@@ -41,7 +41,9 @@
 
     [injector bind:[STRAdService class] toBlock:^id(STRInjector *injector) {
         return [[STRAdService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
-                                          networkClient:[injector getInstance:[STRNetworkClient class]] adCache:[injector getInstance:[STRAdCache class]]];
+                                          networkClient:[injector getInstance:[STRNetworkClient class]]
+                                                adCache:[injector getInstance:[STRAdCache class]]
+                                          beaconService:[injector getInstance:[STRBeaconService class]]];
     }];
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {

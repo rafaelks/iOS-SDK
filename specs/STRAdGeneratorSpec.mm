@@ -80,10 +80,6 @@ describe(@"STRAdGenerator", ^{
             objc_getAssociatedObject(view, STRAdGeneratorKey) should be_same_instance_as(generator);
         });
 
-        it(@"fires an impressionRequest to the beacon", ^{
-            beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:)).with(@"placementKey");
-        });
-
         it(@"shows a spinner while the ad is being fetched", ^{
             spinner should be_instance_of([UIActivityIndicatorView class]);
         });

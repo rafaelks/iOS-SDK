@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "STRPromise.h"
 
-@class STRRestClient, STRNetworkClient, STRAdCache;
+@class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService;
 
 @interface STRAdService : NSObject
 
-- (id)initWithRestClient:(STRRestClient *)restClient networkClient:(STRNetworkClient *)networkClient adCache:(STRAdCache *)adCache;
+- (id)initWithRestClient:(STRRestClient *)restClient
+           networkClient:(STRNetworkClient *)networkClient
+                 adCache:(STRAdCache *)adCache
+           beaconService:(STRBeaconService *)beaconService;
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey;
 
 @end

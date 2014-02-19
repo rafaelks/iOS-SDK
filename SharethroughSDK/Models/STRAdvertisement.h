@@ -23,9 +23,12 @@
 @property (nonatomic, copy) NSURL *mediaURL;
 @property (nonatomic, copy) NSURL *shareURL;
 @property (nonatomic, strong) UIImage *thumbnailImage;
+
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForClick;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForPlay;
+@property (nonatomic, assign) BOOL impressionBeaconFired;
+@property (nonatomic, assign) BOOL visibleImpressionBeaconFired;
 
 - (NSString *)sponsoredBy;
 - (UIImage *)displayableThumbnail;

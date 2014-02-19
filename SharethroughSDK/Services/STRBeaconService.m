@@ -44,21 +44,27 @@
 
 
 - (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
-    NSDictionary *uniqueParameters = @{@"type": @"visible"};
+    if (!ad.visibleImpressionBeaconFired) {
+        ad.visibleImpressionBeaconFired = YES;
+        NSDictionary *uniqueParameters = @{@"type": @"visible"};
 
-    NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:adSize];
-    [parameters addEntriesFromDictionary:uniqueParameters];
+        NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:adSize];
+        [parameters addEntriesFromDictionary:uniqueParameters];
 
-    [self.restClient sendBeaconWithParameters:parameters];
+        [self.restClient sendBeaconWithParameters:parameters];
+    }
 }
 
 - (void)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
-    NSDictionary *uniqueParameters = @{@"type": @"impression"};
+    if (!ad.impressionBeaconFired) {
+        ad.impressionBeaconFired = YES;
+        NSDictionary *uniqueParameters = @{@"type": @"impression"};
 
-    NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:adSize];
-    [parameters addEntriesFromDictionary:uniqueParameters];
+        NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:adSize];
+        [parameters addEntriesFromDictionary:uniqueParameters];
 
-    [self.restClient sendBeaconWithParameters:parameters];
+        [self.restClient sendBeaconWithParameters:parameters];
+    }
 }
 
 - (void)fireThirdPartyBeacons:(NSArray *)beaconPaths {

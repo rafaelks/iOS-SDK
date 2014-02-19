@@ -99,8 +99,6 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
         }
         return error;
     }];
-
-    [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
 }
 
 - (void)checkIfAdIsVisible:(NSTimer *)timer {
