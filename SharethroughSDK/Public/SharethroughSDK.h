@@ -40,6 +40,8 @@
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
  @param adHeight The height of the adCell. This value will be unused if your delegate does not implement -tableView:heightForRowAtIndexPath: (the tableView will use rowHeight instead)
  @param adInitialIndexPath The inital index path to place the ad in. This index path should represent where the ad is, including the ad within the table view. This means that if you have 3 rows in a section, an index path of row 3 would in fact be valid. Index paths that are out of bounds will raise an exception. This should be the only index path computed with concern for there being an ad in the table view. Pass nil to let the SharethroughSDK choose a default location.
+ 
+ @discussion The UITableView's dataSource methods of –tableView:commitEditingStyle:forRowAtIndexPath:, –tableView:canEditRowAtIndexPath:, –tableView:canMoveRowAtIndexPath:, –tableView:moveRowAtIndexPath:toIndexPath: are curerently not supported. Apps that wish to use these should instead use the more generic -placeAdInView:placementKey:presentingViewController:delegate:
  */
 - (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
 
