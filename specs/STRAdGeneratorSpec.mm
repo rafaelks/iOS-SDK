@@ -383,6 +383,8 @@ describe(@"STRAdGenerator", ^{
         context(@"when the ad is a clickout", ^{
             beforeEach(^{
                 ad.action = @"clickout";
+
+                view.frame = CGRectMake(0, 0, 100, 100);
                 [deferred resolveWithValue:ad];
             });
 
@@ -409,8 +411,12 @@ describe(@"STRAdGenerator", ^{
                     presentingViewController.presentedViewController should be_nil;
                 });
 
-                it(@"does not call the beacon service", ^{
-                    [(id<CedarDouble>)beaconService sent_messages] should be_empty;
+                it(@"fires off a clickout click beacon", ^{
+                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+
+                it(@"fires off the third party beacons for click", ^{
+                    beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//click.com?fakeParam=[timestamp]"]);
                 });
             });
         });

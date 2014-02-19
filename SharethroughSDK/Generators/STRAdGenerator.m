@@ -135,11 +135,14 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     UIView *view = tapRecognizer.view;
-    if (![self.ad.action isEqualToString:@"clickout"]) {
+    if ([self.ad.action isEqualToString:@"clickout"]) {
+        [self.beaconService fireClickForAd:self.ad adSize:view.frame.size];
+    } else {
         [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];
-        [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay];
-        [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick];
     }
+    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay];
+    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick];
+
 
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
     interactiveAdController.delegate = self;

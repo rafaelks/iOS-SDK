@@ -271,7 +271,34 @@ describe(@"STRBeaconService", ^{
         });
     });
 
+    describe(@"-fireClickForAd:adSize:", ^{
+        __block NSDictionary *parameters;
 
+        subjectAction(^{
+            parameters = @{@"pkey": @"placementKey",
+                           @"ckey": @"creativeKey",
+                           @"vkey": @"variantKey",
+                           @"type": @"userEvent",
+                           @"engagement": @"true",
+                           @"userEvent": @"clickout",
+                           @"bwidth": @"200",
+                           @"bheight": @"400",
+                           @"umtime": @"10",
+                           @"session": @"AAAA",
+                           @"uid": @"fakeUUID",
+                           @"pwidth": @"200",
+                           @"pheight": @"100",
+                           @"ploc": @"specs",
+                           @"as": @"sig",
+                           @"at": @"type",
+                           @"ap": @"price"};
+            [service fireClickForAd:ad adSize:CGSizeMake(200, 100)];
+        });
+
+        it(@"sends a beacon to the tracking servers", ^{
+            restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+        });
+    });
 });
 
 SPEC_END

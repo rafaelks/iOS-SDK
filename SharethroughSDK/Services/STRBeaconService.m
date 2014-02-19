@@ -108,6 +108,16 @@
 
 }
 
+- (void)fireClickForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+    NSDictionary *uniqueParameters = @{@"type": @"userEvent",
+                                       @"userEvent": @"clickout",
+                                       @"engagement": @"true"};
+
+    NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:adSize];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+    [self.restClient sendBeaconWithParameters:parameters];
+}
+
 #pragma mark - Private
 
 - (NSMutableDictionary *)impressionParametersForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
