@@ -48,65 +48,33 @@
 
     self.view.backgroundColor = [UIColor blackColor];
 
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)];
+    UIView *headerView = [self headerView];
+    [self.view addSubview:headerView];
 
-    self.navigationItem.leftBarButtonItem = doneButton;
-    self.navigationItem.rightBarButtonItem = shareButton;
-
-    self.doneButton = doneButton;
-    self.shareButton = shareButton;
-
-    self.automaticallyAdjustsScrollViewInsets = NO;
-
-    UIView *contentView = [[UIView alloc] initWithFrame:self.view.bounds];
+    UIView *contentView = [UIView new];
     contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:contentView];
     self.contentView = contentView;
 
-    id topGuide = self.topLayoutGuide;
+    [self addAdDisplayChildController:contentView];
 
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[contentView]|"
+    id topGuide = self.topLayoutGuide;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topGuide]-[headerView(==45)]-0-[contentView]|"
                                                                       options:0
                                                                       metrics:nil
-                                                                        views:NSDictionaryOfVariableBindings(topGuide, contentView)]];
+                                                                        views:NSDictionaryOfVariableBindings(topGuide, headerView, contentView)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(headerView)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:NSDictionaryOfVariableBindings(contentView)]];
-
-
-    UIViewController *childViewController;
-    if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
-        childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
-    } else if ([self.ad.action isEqualToString:@"clickout"]) {
-        childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad];
-    } else {
-        childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]]];
-    }
-
-    [self addChildViewController:childViewController];
-    [childViewController didMoveToParentViewController:self];
-
-    UIView *childView = childViewController.view;
-    childView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:childView];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[childView]|"
-                                                                             options:0
-                                                                             metrics:nil
-                                                                               views:NSDictionaryOfVariableBindings(childView)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[childView]|"
-                                                                             options:0
-                                                                             metrics:nil
-                                                                               views:NSDictionaryOfVariableBindings(childView)]];
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    if ([self.ad.action isEqualToString:@"video"] || [self.ad.action isEqualToString:@"hosted-video"]) {
-        return UIInterfaceOrientationLandscapeRight;
-    } else {
-        return self.interfaceOrientation;
-    }
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 #pragma mark - Actions
@@ -147,4 +115,86 @@
     }
 }
 
+#pragma mark - Private
+
+- (UIView *)headerView {
+    UIView *headerView = [UIView new];
+
+    headerView.backgroundColor = [UIColor blackColor];
+    headerView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UILabel *adInfoHeader = [UILabel new];
+    NSString *adInfoText = [NSString stringWithFormat:@"%@ %@", self.ad.title, self.ad.sponsoredBy];
+    UIFont *lightFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:adInfoHeader.font.pointSize];
+    NSMutableAttributedString *attributedAdInfoText = [[NSMutableAttributedString alloc] initWithString:adInfoText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName: lightFont}];
+    UIFont *boldFont = [UIFont boldSystemFontOfSize:adInfoHeader.font.pointSize];
+
+    [attributedAdInfoText setAttributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName: boldFont} range:NSMakeRange(0, [self.ad.title length])];
+
+    adInfoHeader.attributedText = attributedAdInfoText;
+    adInfoHeader.translatesAutoresizingMaskIntoConstraints = NO;
+    self.adInfoHeader = adInfoHeader;
+    [headerView addSubview:adInfoHeader];
+
+    UIToolbar *toolbar = [self toolbar];
+    [headerView addSubview:toolbar];
+    NSNumber *toolbarWidth = @(121.0);
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[adInfoHeader]-[toolbar(==toolbarWidth)]|"
+                                                                       options:NSLayoutFormatAlignAllCenterY
+                                                                       metrics:NSDictionaryOfVariableBindings(toolbarWidth)
+                                                                         views:NSDictionaryOfVariableBindings(adInfoHeader, toolbar)]];
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[toolbar]|"
+                                                                       options:0
+                                                                       metrics:nil
+                                                                         views:NSDictionaryOfVariableBindings(toolbar)]];
+
+    return headerView;
+}
+
+- (UIToolbar *)toolbar {
+    UIToolbar *toolbar = [UIToolbar new];
+    toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+
+
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
+    UIBarButtonItem *buttonSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    buttonSpacer.width = 15.0;
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)];
+
+    self.doneButton = doneButton;
+    self.shareButton = shareButton;
+
+    toolbar.items = @[shareButton, buttonSpacer, doneButton];
+    toolbar.barTintColor = [UIColor clearColor];
+    toolbar.translucent = NO;
+    toolbar.tintColor = [UIColor lightGrayColor];
+
+    return toolbar;
+}
+
+- (void)addAdDisplayChildController:(UIView *)contentView {
+    UIViewController *childViewController;
+    if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
+        childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
+    } else if ([self.ad.action isEqualToString:@"clickout"]) {
+        childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad];
+    } else {
+        childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]]];
+    }
+
+    [self addChildViewController:childViewController];
+    [childViewController didMoveToParentViewController:self];
+
+    UIView *childView = childViewController.view;
+    childView.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentView addSubview:childView];
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[childView]|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:NSDictionaryOfVariableBindings(childView)]];
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[childView]|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:NSDictionaryOfVariableBindings(childView)]];
+}
 @end

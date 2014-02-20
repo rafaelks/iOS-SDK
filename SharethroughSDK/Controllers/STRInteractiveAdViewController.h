@@ -19,6 +19,7 @@
 @property (weak, nonatomic) UIView *contentView;
 @property (weak, nonatomic) UIBarButtonItem *doneButton;
 @property (weak, nonatomic) UIBarButtonItem *shareButton;
+@property (weak, nonatomic) UILabel *adInfoHeader;
 
 @property (strong, nonatomic, readonly) UIPopoverController *sharePopoverController;
 

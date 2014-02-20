@@ -160,8 +160,6 @@
 		AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */; };
 		AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */; };
 		AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
-		AEF54BB018AAF5230023C35B /* STRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF54BAF18AAF5230023C35B /* STRNavigationController.m */; };
-		AEF54BB118AAF5230023C35B /* STRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF54BAF18AAF5230023C35B /* STRNavigationController.m */; };
 		AEFBC49F18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
@@ -387,8 +385,6 @@
 		AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+STR.h"; sourceTree = "<group>"; };
 		AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+STR.m"; sourceTree = "<group>"; };
 		AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UITableView+STRSpec.mm"; sourceTree = "<group>"; };
-		AEF54BAE18AAF5230023C35B /* STRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRNavigationController.h; sourceTree = "<group>"; };
-		AEF54BAF18AAF5230023C35B /* STRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRNavigationController.m; sourceTree = "<group>"; };
 		AEFBC49D18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRGridlikeViewDataSourceProxy.h; sourceTree = "<group>"; };
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
@@ -642,8 +638,6 @@
 				AE3FF40318AAA078006061C2 /* STRImages.m */,
 				AEB4EF4418AAB03E00B69CAC /* STRYouTubeEmbedPage.h */,
 				AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */,
-				AEF54BAE18AAF5230023C35B /* STRNavigationController.h */,
-				AEF54BAF18AAF5230023C35B /* STRNavigationController.m */,
 			);
 			path = "Extension Helpers";
 			sourceTree = "<group>";
@@ -1058,7 +1052,6 @@
 				AE1F671D1899AD9E00E184D6 /* STRTableViewCell.m in Sources */,
 				AE842DFA18A564020018F992 /* STRFullCollectionViewDataSource.m in Sources */,
 				AE3120E31889E76F00297F01 /* STRPromise.m in Sources */,
-				AEF54BB118AAF5230023C35B /* STRNavigationController.m in Sources */,
 				AE8AF50D189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C44A018A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm in Sources */,
@@ -1089,7 +1082,6 @@
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
 				AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
-				AEF54BB018AAF5230023C35B /* STRNavigationController.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,

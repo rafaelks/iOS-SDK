@@ -61,8 +61,7 @@ describe(@"STRFakeAdGenerator", ^{
 
             beforeEach(^{
                 [[view.gestureRecognizers lastObject] recognize];
-                UINavigationController *navController = (UINavigationController *)presentingViewController.presentedViewController;
-                interactiveAdController = (STRInteractiveAdViewController *)navController.topViewController;
+                interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
 
             });
 

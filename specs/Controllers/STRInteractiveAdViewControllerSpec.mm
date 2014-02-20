@@ -28,38 +28,23 @@ describe(@"STRInteractiveAdViewController", ^{
     void(^setUpController)(void) = ^{
         controller = [[STRInteractiveAdViewController alloc] initWithAd:ad device:device beaconService:beaconService injector:injector];
         UIWindow *window = [UIWindow new];
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-        [window addSubview:navController.view];
+        [window addSubview:controller.view];
         [controller.view layoutIfNeeded];
     };
     
-    void(^itPrefersCurrentInterfaceOrientation)(void) = ^{
-        it(@"prefers current orientation", ^{
-            spy_on(controller);
-            __block BOOL portrait = YES;
-            controller stub_method(@selector(interfaceOrientation)).and_do(^(NSInvocation *invocation) {
-                int orientation;
-                if (portrait) {
-                    orientation = UIInterfaceOrientationPortrait;
-                } else {
-                    orientation = UIInterfaceOrientationLandscapeLeft;
-                }
-
-                [invocation setReturnValue:&orientation];
-            });
-            portrait = YES;
-            [controller preferredInterfaceOrientationForPresentation] should equal(UIInterfaceOrientationPortrait);
-            portrait = NO;
-            [controller preferredInterfaceOrientationForPresentation] should equal(UIInterfaceOrientationLandscapeLeft);
-        });
-    };
-
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
         beaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:beaconService];
 
         device = [UIDevice currentDevice];
+    });
+
+    it(@"inserts the ad title and promoted by information", ^{
+        ad = [STRAdFixtures youTubeAd];
+        setUpController();
+
+        controller.adInfoHeader.text should equal(@"Go Sip for Sip with Josh Duhamel Promoted by Pepsi");
     });
 
     describe(@"when the ad is a youtube ad", ^{
@@ -78,10 +63,6 @@ describe(@"STRInteractiveAdViewController", ^{
 
         it(@"gives that youtube view controller the ad", ^{
             youTubeViewController.ad should be_same_instance_as(ad);
-        });
-
-        it(@"prefers landscape orientation", ^{
-            UIInterfaceOrientationIsLandscape([controller preferredInterfaceOrientationForPresentation]) should be_truthy;
         });
     });
 
@@ -115,8 +96,6 @@ describe(@"STRInteractiveAdViewController", ^{
             });
 
             itPlaysTheAdInAVideoController();
-
-            itPrefersCurrentInterfaceOrientation();
         });
         
         describe(@"when the ad is a hosted video", ^{
@@ -125,10 +104,6 @@ describe(@"STRInteractiveAdViewController", ^{
             });
 
             itPlaysTheAdInAVideoController();
-
-            it(@"prefers landscape orientation", ^{
-                UIInterfaceOrientationIsLandscape([controller preferredInterfaceOrientationForPresentation]) should be_truthy;
-            });
         });
     });
 
@@ -149,8 +124,6 @@ describe(@"STRInteractiveAdViewController", ^{
         it(@"gives that clickout view controller the ad", ^{
             clickoutViewController.ad should be_same_instance_as(ad);
         });
-
-        itPrefersCurrentInterfaceOrientation();
     });
 
     describe(@"when the user taps the done button", ^{

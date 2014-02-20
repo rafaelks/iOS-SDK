@@ -12,7 +12,6 @@
 #import "STRAdvertisement.h"
 #import "STRAdFixtures.h"
 #import "STRInteractiveAdViewController.h"
-#import "STRNavigationController.h"
 #import "STRInjector.h"
 #import "STRAppModule.h"
 
@@ -92,8 +91,7 @@ presentingViewController:(UIViewController *)presentingViewController
                                                                                         beaconService:nil
                                                                                              injector:self.injector];
     adController.delegate = self;
-    STRNavigationController *navController = [[STRNavigationController alloc] initWithRootViewController:adController];
-    [self.presentingViewController presentViewController:navController animated:YES completion:nil];
+    [self.presentingViewController presentViewController:adController animated:YES completion:nil];
 }
 
 - (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {

@@ -15,7 +15,6 @@
 #import "STRBeaconService.h"
 #import <objc/runtime.h>
 #import "STRAdViewDelegate.h"
-#import "STRNavigationController.h"
 
 char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
@@ -144,8 +143,7 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
     interactiveAdController.delegate = self;
-    STRNavigationController *navController = [[STRNavigationController alloc] initWithRootViewController:interactiveAdController];
-    [self.presentingViewController presentViewController:navController animated:YES completion:nil];
+    [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
 }
 
 #pragma mark - <STRInteractiveAdViewControllerDelegate>

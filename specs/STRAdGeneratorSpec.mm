@@ -304,8 +304,7 @@ describe(@"STRAdGenerator", ^{
 
                 beforeEach(^{
                     [[view.gestureRecognizers lastObject] recognize];
-                    UINavigationController *navController = (UINavigationController *)presentingViewController.presentedViewController;
-                    interactiveAdController = (STRInteractiveAdViewController *)navController.topViewController;
+                    interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
 
                 });
 
@@ -332,7 +331,7 @@ describe(@"STRAdGenerator", ^{
             });
         });
 
-        describe(@"when the ad fetch fail", ^{
+        describe(@"when the ad fetch fails", ^{
             beforeEach(^{
                 [deferred rejectWithError:[NSError errorWithDomain:@"Error!" code:101 userInfo:nil]];
             });
@@ -390,9 +389,7 @@ describe(@"STRAdGenerator", ^{
                 beforeEach(^{
                     [(id<CedarDouble>)beaconService reset_sent_messages];
                     [[view.gestureRecognizers lastObject] recognize];
-                    UINavigationController *navController = (UINavigationController *)presentingViewController.presentedViewController;
-                    interactiveAdController = (STRInteractiveAdViewController *)navController.topViewController;
-
+                    interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
                 });
 
                 it(@"presents the STRInteractiveAdViewController", ^{
