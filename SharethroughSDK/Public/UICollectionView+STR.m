@@ -10,6 +10,7 @@
 #import "STRAdPlacementAdjuster.h"
 #import <objc/runtime.h>
 #import "STRGridlikeViewAdGenerator.h"
+#import "SharethroughSDK.h"
 
 extern const char * const STRGridlikeViewAdGeneratorKey;
 
@@ -150,7 +151,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 - (STRGridlikeViewAdGenerator *)str_ensureGenerator {
     STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:))];
+        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:))];
     }
     return adGenerator;
 }
