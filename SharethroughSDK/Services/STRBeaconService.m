@@ -82,9 +82,9 @@
 
 - (void)fireVideoPlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size {
     NSString *userEvent = @"videoPlay";
-    if ([ad.action isEqualToString:@"video"]) {
+    if ([ad.action isEqualToString:STRYouTubeAd]) {
         userEvent = @"youtubePlay";
-    } else if ([ad.action isEqualToString:@"vine"]) {
+    } else if ([ad.action isEqualToString:STRVineAd]) {
         userEvent = @"vinePlay";
     }
 

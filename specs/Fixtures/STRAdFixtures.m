@@ -31,7 +31,7 @@
     ad.shareURL = [NSURL URLWithString:@"http://bit.ly/23kljr"];
     ad.adDescription = @"Grab a Diet Pepsi and share a delicious moment with Josh Duhamel";
     ad.advertiser = @"Pepsi";
-    ad.action = @"video";
+    ad.action = STRYouTubeAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRYoutubeThumbnail.bytes length:kSTRYoutubeThumbnail.length]];
 
     return ad;
@@ -43,7 +43,7 @@
     ad.title = @"Meet A 15-year-old Cancer Researcher";
     ad.shareURL = [NSURL URLWithString:@"http://vine.ly/share"];
     ad.adDescription = @"Meet Jack Andraka. Inventor, cancer researcher, 15 year old #ISEF winner. #findacure #lookinside";
-    ad.action = @"vine";
+    ad.action = STRVineAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRVineThumbnail.bytes length:kSTRVineThumbnail.length]];
     ad.advertiser = @"Intel";
 
@@ -56,7 +56,7 @@
     ad.title = @"Avoid the morning MOO";
     ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];
     ad.adDescription = @"Avoid the taste of the dreaded MOO and make your morning taste better with Silk Almond Milk";
-    ad.action = @"hosted-video";
+    ad.action = STRHostedVideoAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRHostedVideoThumbnail.bytes length:kSTRHostedVideoThumbnail.length]];
     ad.advertiser = @"Silk";
 
@@ -69,7 +69,7 @@
     ad.title = @"22 Game Day Gifs That Will Pump You Up For Anything";
     ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];
     ad.adDescription = @"Get in the zone and check out these GIFs before your next big challenge to ensure victory. Then taste the winning kick of McDonald's® Mighty Wings® , now available nationwide.";
-    ad.action = @"clickout";
+    ad.action = STRClickoutAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRClickoutThumbnail.bytes length:kSTRClickoutThumbnail.length]];
     ad.advertiser = @"McDonald's";
 

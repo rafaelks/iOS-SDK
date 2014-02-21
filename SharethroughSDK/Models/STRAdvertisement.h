@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *STRYouTubeAd;
+extern NSString *STRVineAd;
+extern NSString *STRClickoutAd;
+extern NSString *STRHostedVideoAd;
+
 @interface STRAdvertisement : NSObject
 
 @property (nonatomic, copy) NSString *advertiser;

@@ -184,7 +184,7 @@ describe(@"STRBeaconService", ^{
         context(@"when video is youtube", ^{
             beforeEach(^{
                 expectedUserEvent = @"youtubePlay";
-                ad.action = @"video";
+                ad.action = STRYouTubeAd;
             });
 
             it(@"sends a beacon to the tracking servers", ^{
@@ -195,7 +195,7 @@ describe(@"STRBeaconService", ^{
         context(@"when the video is vine", ^{
             beforeEach(^{
                 expectedUserEvent = @"vinePlay";
-                ad.action = @"vine";
+                ad.action = STRVineAd;
             });
 
             it(@"sends a beacon to the tracking servers", ^{

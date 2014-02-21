@@ -377,7 +377,7 @@ describe(@"STRAdGenerator", ^{
 
         context(@"when the ad is a clickout", ^{
             beforeEach(^{
-                ad.action = @"clickout";
+                ad.action = STRClickoutAd;
 
                 view.frame = CGRectMake(0, 0, 100, 100);
                 [deferred resolveWithValue:ad];

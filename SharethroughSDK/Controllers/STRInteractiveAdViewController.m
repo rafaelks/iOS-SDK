@@ -176,7 +176,7 @@
     UIViewController *childViewController;
     if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
         childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
-    } else if ([self.ad.action isEqualToString:@"clickout"]) {
+    } else if ([self.ad.action isEqualToString:STRClickoutAd]) {
         childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad];
     } else {
         childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]]];

@@ -9,6 +9,11 @@
 #import "STRAdvertisement.h"
 #import "STRImages.h"
 
+NSString *STRYouTubeAd = @"video";
+NSString *STRVineAd = @"vine";
+NSString *STRClickoutAd = @"clickout";
+NSString *STRHostedVideoAd = @"hosted-video";
+
 @implementation STRAdvertisement
 
 - (NSString *)sponsoredBy {
