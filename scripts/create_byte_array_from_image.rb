@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'stringio'
 
 output_string = StringIO.new
