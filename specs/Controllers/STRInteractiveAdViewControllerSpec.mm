@@ -9,6 +9,7 @@
 #import "STRYouTubeViewController.h"
 #import "STRVideoController.h"
 #import "STRAdVine.h"
+#import "STRAdPinterest.h"
 #import "STRAdFixtures.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "STRClickoutViewController.h"
@@ -126,6 +127,25 @@ describe(@"STRInteractiveAdViewController", ^{
         });
     });
 
+    describe(@"when the ad is pinterest image", ^{
+        __block STRClickoutViewController *clickoutViewController;
+        
+        beforeEach(^{
+            ad = (id)[STRAdFixtures pinterestAd];
+            setUpController();
+            clickoutViewController = [controller.childViewControllers firstObject];
+        });
+        
+        it(@"presents a clickout view controller", ^{
+            clickoutViewController should be_instance_of([STRClickoutViewController class]);
+            controller.contentView.subviews.firstObject should be_same_instance_as(clickoutViewController.view);
+        });
+        
+        it(@"gives that clickout view controller the ad", ^{
+            clickoutViewController.ad should be_same_instance_as(ad);
+        });
+    });
+    
     describe(@"when the user taps the done button", ^{
         __block id<STRInteractiveAdViewControllerDelegate> delegate;
 

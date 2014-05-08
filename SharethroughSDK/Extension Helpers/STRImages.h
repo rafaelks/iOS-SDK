@@ -12,5 +12,6 @@
 
 + (UIImage *)playBtn;
 + (UIImage *)vineImage;
++ (UIImage *)pinterestImage;
 
 @end

@@ -17,3 +17,5 @@ extern STRImage kSTRYoutubeThumbnail;
 extern STRImage kSTRVineThumbnail;
 extern STRImage kSTRHostedVideoThumbnail;
 extern STRImage kSTRClickoutThumbnail;
+extern STRImage kSTRPinterestLogo;
+extern STRImage kSTRPinterestThumbnail;

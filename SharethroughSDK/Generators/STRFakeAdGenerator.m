@@ -58,6 +58,9 @@
         case STRFakeAdTypeClickout:
             self.advertisement = (STRAdvertisement *)[STRAdFixtures clickoutAd];
             break;
+        case STRFakeAdTypePinterest:
+            self.advertisement = (STRAdvertisement *)[STRAdFixtures pinterestAd];
+            break;
         default:
             break;
     }

@@ -12,6 +12,7 @@
 #import "STRAdvertisement.h"
 #import "images.h"
 #import "STRAdClickout.h"
+#import "STRAdPinterest.h"
 
 @implementation STRAdFixtures
 
@@ -73,6 +74,18 @@
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRClickoutThumbnail.bytes length:kSTRClickoutThumbnail.length]];
     ad.advertiser = @"McDonald's";
 
+    return ad;
+}
+
++ (STRAdPinterest *)pinterestAd {
+    STRAdPinterest *ad = [STRAdPinterest new];
+    ad.mediaURL = [NSURL URLWithString:@"http://www.pinterest.com/sephora/it-lists/"];
+    ad.title = @"My Top Picks at Sephora.com";
+    ad.adDescription = @"Erin F., Marketing Manager, Social Media, shares her favorite items on sephora.com";
+    ad.action = STRPinterestAd;
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRPinterestThumbnail.bytes length:kSTRPinterestThumbnail.length]];
+    ad.advertiser = @"Sephora";
+    
     return ad;
 }
 

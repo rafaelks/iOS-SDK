@@ -166,6 +166,10 @@
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 		E8B9759118EA052C0054F35F /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
 		E8B9759218EA052C0054F35F /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
+		E8EE49A8191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */; };
+		E8EE49A9191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */; };
+		E8EE49B2191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */; };
+		E8EE49B3191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -392,6 +396,9 @@
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
 		E8B9759018EA052C0054F35F /* pinterest-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pinterest-logo.c"; sourceTree = "<group>"; };
+		E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STRAdPinterest.h; sourceTree = "<group>"; };
+		E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STRAdPinterest.m; sourceTree = "<group>"; };
+		E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pinterest_sample_thumbnail.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -451,6 +458,8 @@
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
 				AE39F8CD18AD831200969C30 /* STRAdClickout.h */,
 				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
+				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
+				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
 				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
@@ -812,6 +821,7 @@
 				AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */,
 				AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */,
 				AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */,
+				E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */,
 			);
 			path = "Static Resources";
 			sourceTree = "<group>";
@@ -1034,6 +1044,7 @@
 				AEA0EC6C18AC3D4B00B4286A /* STRGridlikeViewAdGeneratorSpec.mm in Sources */,
 				AE9C4623189C25A1001B407A /* STRAdYouTubeSpec.mm in Sources */,
 				AEEE6CBC18A0131C00AA7EC9 /* UITableView+STRSpec.mm in Sources */,
+				E8EE49A8191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */,
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
 				AE39F8D018AD831200969C30 /* STRAdClickout.m in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
@@ -1041,6 +1052,7 @@
 				AE3FF40A18AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AE6C80801899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */,
+				E8EE49B2191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */,
 				AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */,
 				AE39F8C818AD56DC00969C30 /* STRClickoutViewController.m in Sources */,
 				AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */,
@@ -1082,6 +1094,7 @@
 				AE39F8C318AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */,
 				AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
 				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,
+				E8EE49A9191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */,
 				AE022DE2188E004900D02568 /* STRRestClient.m in Sources */,
 				AE39F8CF18AD831200969C30 /* STRAdClickout.m in Sources */,
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
@@ -1113,6 +1126,7 @@
 				AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C80811899861E008FD848 /* STRInjector.m in Sources */,
+				E8EE49B3191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */,
 				E8B9759118EA052C0054F35F /* pinterest-logo.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

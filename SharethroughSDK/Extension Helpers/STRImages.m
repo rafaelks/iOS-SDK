@@ -20,6 +20,10 @@
     return [self imageWithBytes:kSTRVineLogo.bytes length:kSTRVineLogo.length];
 }
 
++ (UIImage *)pinterestImage {
+    return [self imageWithBytes:kSTRPinterestLogo.bytes length:kSTRPinterestLogo.length];
+}
+
 + (UIImage *)imageWithBytes:(char *)bytes length:(NSUInteger)length {
     return [UIImage imageWithData:[NSData dataWithBytes:bytes length:length]];
 }

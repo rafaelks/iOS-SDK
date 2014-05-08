@@ -9,6 +9,7 @@
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
 #import "STRAdClickout.h"
+#import "STRAdPinterest.h"
 #import "STRBeaconService.h"
 
 using namespace Cedar::Matchers;
@@ -206,6 +207,15 @@ describe(@"STRAdService", ^{
                     });
 
                     afterSuccessfulAdFetchedSpecs([STRAdClickout class], @"clickout");
+                });
+                
+                describe(@"when the ad server successfully responds with a pinterest ad", ^{
+                    beforeEach(^{
+                        responseData[@"creative"][@"action"] = @"pinterest";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+                    
+                    afterSuccessfulAdFetchedSpecs([STRAdPinterest class], @"pinterest");
                 });
 
             });

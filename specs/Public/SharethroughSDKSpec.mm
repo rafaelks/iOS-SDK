@@ -76,6 +76,21 @@ describe(@"SharethroughSDK", ^{
                 adView.adSponsoredBy.text should equal(@"Promoted by McDonald's");
             });
         });
+        
+        describe(@"when the ad type is pinterest", ^{
+            it(@"displays an ad about Sephora top picks", ^{
+                UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
+                [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypePinterest] placeAdInView:adView
+                                                                                           placementKey:nil
+                                                                               presentingViewController:nil
+                                                                                               delegate:nil];
+                
+                adView.adTitle.text should equal(@"My Top Picks at Sephora.com");
+                adView.adDescription.text should equal(@"Erin F., Marketing Manager, Social Media, shares her favorite items on sephora.com");
+                adView.adSponsoredBy.text should equal(@"Promoted by Sephora");
+            });
+        });
+        
     });
 });
 
