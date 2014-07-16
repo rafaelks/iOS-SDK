@@ -96,8 +96,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        //return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
-        return self.collectionAdCell;
+        if (self.adjuster.adLoaded) {
+            return self.collectionAdCell;
+        }
     }
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
