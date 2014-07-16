@@ -91,6 +91,8 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
             proxy = proxyWithDataSource(dataSource);
             collectionView.dataSource = proxy;
 
+            [proxy prefetchAdForGridLikeView:collectionView];
+            
             [collectionView layoutIfNeeded];
         });
 
@@ -115,6 +117,8 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
 
             proxy = proxyWithDataSource(dataSource);
             collectionView.dataSource = proxy;
+            
+            [proxy prefetchAdForGridLikeView:collectionView];
 
             [collectionView layoutIfNeeded];
         });

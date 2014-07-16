@@ -63,6 +63,7 @@ describe(@"UITableView+STR", ^{
         [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCellReuseIdentifier"];
 
         adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+        adPlacementAdjuster.adLoaded = YES;
         spy_on(adPlacementAdjuster);
 
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];

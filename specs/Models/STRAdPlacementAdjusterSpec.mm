@@ -10,6 +10,7 @@ describe(@"STRAdPlacementAdjuster", ^{
 
     beforeEach(^{
         adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        adjuster.adLoaded = YES;
     });
 
     describe(@"-isAdAtIndexPath:", ^{

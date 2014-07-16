@@ -63,6 +63,7 @@ describe(@"UICollectionView+STR", ^{
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
 
         adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+        adPlacementAdjuster.adLoaded = YES;
         spy_on(adPlacementAdjuster);
 
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];

@@ -60,6 +60,10 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             tableView.dataSource = proxy;
 
             [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
+            
+            [proxy prefetchAdForGridLikeView:tableView];
+            [proxy adView:nil didFetchAdForPlacementKey:@"placementKey"];
+            
             [tableView layoutIfNeeded];
         });
 
@@ -75,7 +79,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             STRTableViewCell *adCell = (STRTableViewCell *) tableView.visibleCells[1];
             adCell should be_instance_of([STRTableViewCell class]);
 
-            adGenerator should have_received(@selector(placeAdInView:placementKey:presentingViewController:delegate:)).with(adCell, @"placementKey", presentingViewController, nil);
+            adGenerator should have_received(@selector(placeAdInView:placementKey:presentingViewController:delegate:));
 
             contentCell = tableView.visibleCells[2];
             contentCell.textLabel.text should equal(@"row: 1, section: 0");
@@ -97,6 +101,8 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
         describe(@"and the original data source reports there is more than one section", ^{
             beforeEach(^{
                 [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
+                [proxy prefetchAdForGridLikeView:tableView];
+                [proxy adView:nil didFetchAdForPlacementKey:@"placementKey"];
                 [tableView layoutIfNeeded];
             });
 
@@ -111,6 +117,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
     describe(@"placing an ad in the table view when the reuse identifier was badly registered", ^{
         it(@"throws an exception if the sdk user does not register the identifier", ^{
             expect(^{
+                [proxy prefetchAdForGridLikeView:tableView];
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
         });
@@ -119,6 +126,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"adCell"];
 
             expect(^{
+                [proxy prefetchAdForGridLikeView:tableView];
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
         });

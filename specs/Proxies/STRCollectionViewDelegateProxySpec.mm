@@ -24,6 +24,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
         collectionView stub_method(@selector(numberOfItemsInSection:)).with(0).and_return(2);
 
         adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        adjuster.adLoaded = YES;
         spy_on(adjuster);
         adIndexPath = [NSIndexPath indexPathForItem:1 inSection:0];
         trueIndexPath = [NSIndexPath indexPathForItem:2 inSection:0];

@@ -22,6 +22,7 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
         tableView stub_method(@selector(numberOfRowsInSection:)).with(0).and_return(2);
 
         adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        adPlacementAdjuster.adLoaded = YES;
 
         proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adSize:CGSizeMake(0, 51.0)];
     });
