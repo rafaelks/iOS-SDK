@@ -85,6 +85,10 @@ presentingViewController:(UIViewController *)presentingViewController
     [view setNeedsLayout];
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
     [view addGestureRecognizer:tapRecognizer];
+    
+    if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
+        [delegate adView:view didFetchAdForPlacementKey:placementKey];
+    }
 }
 
 

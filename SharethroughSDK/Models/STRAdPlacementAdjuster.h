@@ -11,6 +11,7 @@
 @interface STRAdPlacementAdjuster : NSObject
 
 @property (nonatomic, strong, readonly) NSIndexPath *adIndexPath;
+@property (nonatomic) BOOL adLoaded;
 
 + (instancetype)adjusterWithInitialAdIndexPath:(NSIndexPath *)adIndexPath;
 

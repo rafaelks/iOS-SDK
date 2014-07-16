@@ -27,18 +27,18 @@
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section {
-    if (section == self.adIndexPath.section) {
+    if (section == self.adIndexPath.section && self.adLoaded) {
         return 1;
     }
     return 0;
 }
 
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath == nil || [self isAdAtIndexPath:indexPath]) {
+    if (indexPath == nil || ([self isAdAtIndexPath:indexPath] && self.adLoaded)) {
         return nil;
     }
 
-    if (indexPath.section != self.adIndexPath.section) {
+    if (indexPath.section != self.adIndexPath.section || !self.adLoaded) {
         return indexPath;
     }
 

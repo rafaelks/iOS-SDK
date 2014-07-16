@@ -24,6 +24,9 @@
 @property (weak, nonatomic) UIViewController *presentingViewController;
 @property (weak, nonatomic) STRInjector *injector;
 
+@property (strong, nonatomic) UITableViewCell *tableAdCell;
+@property (strong, nonatomic) UICollectionViewCell *collectionAdCell;
+@property (weak, nonatomic) id gridlikeView;
 @end
 
 @implementation STRGridlikeViewDataSourceProxy
@@ -56,6 +59,19 @@
                                                    injector:self.injector];
 }
 
+
+- (void)prefetchAdForGridLikeView:(id)gridlikeView {
+    self.gridlikeView = gridlikeView;
+    if ([gridlikeView isKindOfClass:[UITableView class]]) {
+        self.tableAdCell = [self adCellForTableView:gridlikeView];
+    } else if ([gridlikeView isKindOfClass:[UICollectionView class]]) {
+        //self.adjuster.adLoaded = YES;
+        if ([gridlikeView numberOfItemsInSection:self.adjuster.adIndexPath.section] > 0) {
+            self.collectionAdCell = [self adCellForCollectionView:gridlikeView atIndexPath:self.adjuster.adIndexPath];
+        }
+    }
+}
+
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -64,7 +80,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        return [self adCellForTableView:tableView];
+        if (self.adjuster.adLoaded) {
+            return self.tableAdCell;
+        }
     }
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
@@ -78,7 +96,8 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
+        //return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
+        return self.collectionAdCell;
     }
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
@@ -100,6 +119,20 @@
     return [super forwardingTargetForSelector:aSelector];
 }
 
+#pragma mark STRAdViewDelegate
+- (void)adView:(id<STRAdView>)adView didFetchAdForPlacementKey:(NSString *)placementKey {
+    if ([placementKey isEqualToString:self.placementKey]) {
+        self.adjuster.adLoaded = YES;
+        [self.gridlikeView reloadData];
+    }
+}
+
+- (void)adView:(id<STRAdView>)adView didFailToFetchAdForPlacementKey:(NSString *)placementKey {
+    if ([placementKey isEqualToString:self.placementKey]) {
+        self.adjuster.adLoaded = NO;
+    }
+}
+
 #pragma mark - Private
 
 - (UITableViewCell *)adCellForTableView:(UITableView *)tableView {
@@ -113,7 +146,7 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
+    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:self];
 
     return adCell;
 }
@@ -126,7 +159,7 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
+    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:self];
 
     return adCell;
 }

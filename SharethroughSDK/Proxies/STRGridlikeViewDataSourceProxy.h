@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "STRAdViewDelegate.h"
 
 @class STRAdPlacementAdjuster, STRInjector;
 
-@interface STRGridlikeViewDataSourceProxy : NSObject<UITableViewDataSource, UICollectionViewDataSource>
+@interface STRGridlikeViewDataSourceProxy : NSObject<UITableViewDataSource, UICollectionViewDataSource, STRAdViewDelegate>
 
 @property (nonatomic, weak, readonly) id originalDataSource;
 @property (strong, nonatomic, readonly) STRAdPlacementAdjuster *adjuster;
@@ -27,5 +28,7 @@
                         injector:(STRInjector *)injector;
 
 - (instancetype)copyWithNewDataSource:(id)newDataSource;
+
+- (void)prefetchAdForGridLikeView:(id)gridlikeView;
 
 @end
