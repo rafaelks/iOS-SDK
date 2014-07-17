@@ -163,6 +163,7 @@ describe(@"STRAdPlacementAdjuster", ^{
                 externalStartIndex = sharedContext[@"externalStartIndex"];
                 externalFinalIndex = sharedContext[@"externalFinalIndex"];
                 initialAdIndex = multiSectionAdjuster.adIndexPath;
+                multiSectionAdjuster.adLoaded = YES;
                 trueIndexPaths = [multiSectionAdjuster willMoveRowAtExternalIndexPath:externalStartIndex
                                                                                     toExternalIndexPath:externalFinalIndex];
             });

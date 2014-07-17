@@ -14,6 +14,7 @@
 #import "STRInteractiveAdViewController.h"
 #import "STRInjector.h"
 #import "STRAppModule.h"
+#import "STRDeferred.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
@@ -105,4 +106,9 @@ presentingViewController:(UIViewController *)presentingViewController
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey {
+    STRDeferred *deferred = [STRDeferred defer];
+    [deferred resolveWithValue:nil];
+    return deferred.promise;
+}
 @end

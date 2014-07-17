@@ -143,6 +143,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
     describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
         it(@"throws Apple's exception if the sdk user does not register the identifier", ^{
             expect(^{
+                [proxy prefetchAdForGridLikeView:collectionView];
                 [collectionView layoutIfNeeded];
             }).to(raise_exception());
         });
@@ -151,6 +152,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
             [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
 
             expect(^{
+                [proxy prefetchAdForGridLikeView:collectionView];
                 [collectionView layoutIfNeeded];
             }).to(raise_exception());
         });

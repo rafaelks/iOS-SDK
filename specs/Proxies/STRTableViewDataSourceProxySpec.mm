@@ -2,6 +2,7 @@
 #import "STRAdPlacementAdjuster.h"
 #import "STRAppModule.h"
 #import "STRAdGenerator.h"
+#import "STRFakeAdGenerator.h"
 #import "STRFullTableViewDataSource.h"
 #import "STRTableViewCell.h"
 
@@ -28,7 +29,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
 
-        adGenerator = nice_fake_for([STRAdGenerator class]);
+        adGenerator = [STRFakeAdGenerator new];
         [injector bind:[STRAdGenerator class] toInstance:adGenerator];
 
         presentingViewController = [UIViewController new];
@@ -62,7 +63,6 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
             
             [proxy prefetchAdForGridLikeView:tableView];
-            [proxy adView:nil didFetchAdForPlacementKey:@"placementKey"];
             
             [tableView layoutIfNeeded];
         });
@@ -78,8 +78,6 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
 
             STRTableViewCell *adCell = (STRTableViewCell *) tableView.visibleCells[1];
             adCell should be_instance_of([STRTableViewCell class]);
-
-            adGenerator should have_received(@selector(placeAdInView:placementKey:presentingViewController:delegate:));
 
             contentCell = tableView.visibleCells[2];
             contentCell.textLabel.text should equal(@"row: 1, section: 0");
@@ -102,7 +100,6 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             beforeEach(^{
                 [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
                 [proxy prefetchAdForGridLikeView:tableView];
-                [proxy adView:nil didFetchAdForPlacementKey:@"placementKey"];
                 [tableView layoutIfNeeded];
             });
 
