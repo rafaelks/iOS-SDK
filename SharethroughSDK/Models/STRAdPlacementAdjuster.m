@@ -63,7 +63,7 @@
         return nil;
     }
 
-    if (indexPath.section != self.adIndexPath.section) {
+    if (indexPath.section != self.adIndexPath.section || !self.adLoaded) {
         return indexPath;
     }
     NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;

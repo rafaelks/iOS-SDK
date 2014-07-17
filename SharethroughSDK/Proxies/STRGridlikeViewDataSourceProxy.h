@@ -11,7 +11,7 @@
 
 @class STRAdPlacementAdjuster, STRInjector;
 
-@interface STRGridlikeViewDataSourceProxy : NSObject<UITableViewDataSource, UICollectionViewDataSource, STRAdViewDelegate>
+@interface STRGridlikeViewDataSourceProxy : NSObject<UITableViewDataSource, UICollectionViewDataSource>
 
 @property (nonatomic, weak, readonly) id originalDataSource;
 @property (strong, nonatomic, readonly) STRAdPlacementAdjuster *adjuster;

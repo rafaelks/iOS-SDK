@@ -24,8 +24,6 @@
 @property (weak, nonatomic) UIViewController *presentingViewController;
 @property (weak, nonatomic) STRInjector *injector;
 
-@property (strong, nonatomic) UITableViewCell *tableAdCell;
-@property (strong, nonatomic) UICollectionViewCell *collectionAdCell;
 @property (weak, nonatomic) id gridlikeView;
 @end
 
@@ -62,13 +60,17 @@
 
 - (void)prefetchAdForGridLikeView:(id)gridlikeView {
     self.gridlikeView = gridlikeView;
-    if ([gridlikeView isKindOfClass:[UITableView class]]) {
-        self.tableAdCell = [self adCellForTableView:gridlikeView];
-    } else if ([gridlikeView isKindOfClass:[UICollectionView class]]) {
-        //self.adjuster.adLoaded = YES;
-        if ([gridlikeView numberOfItemsInSection:self.adjuster.adIndexPath.section] > 0) {
-            self.collectionAdCell = [self adCellForCollectionView:gridlikeView atIndexPath:self.adjuster.adIndexPath];
-        }
+    if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
+        STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+        STRPromise *adPromise = [adGenerator prefetchAdForPlacementKey:self.placementKey];
+        [adPromise then:^id(id value) {
+            self.adjuster.adLoaded = YES;   
+            [self.gridlikeView reloadData];
+            return self.adjuster;
+        } error:^id(NSError *error) {
+            self.adjuster.adLoaded = NO;
+            return self.adjuster;
+        }];
     }
 }
 
@@ -81,7 +83,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
         if (self.adjuster.adLoaded) {
-            return self.tableAdCell;
+            return [self adCellForTableView:tableView];
         }
     }
 
@@ -97,7 +99,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
         if (self.adjuster.adLoaded) {
-            return self.collectionAdCell;
+            return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
         }
     }
 
@@ -120,20 +122,6 @@
     return [super forwardingTargetForSelector:aSelector];
 }
 
-#pragma mark STRAdViewDelegate
-- (void)adView:(id<STRAdView>)adView didFetchAdForPlacementKey:(NSString *)placementKey {
-    if ([placementKey isEqualToString:self.placementKey]) {
-        self.adjuster.adLoaded = YES;
-        [self.gridlikeView reloadData];
-    }
-}
-
-- (void)adView:(id<STRAdView>)adView didFailToFetchAdForPlacementKey:(NSString *)placementKey {
-    if ([placementKey isEqualToString:self.placementKey]) {
-        self.adjuster.adLoaded = NO;
-    }
-}
-
 #pragma mark - Private
 
 - (UITableViewCell *)adCellForTableView:(UITableView *)tableView {
@@ -147,7 +135,7 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:self];
+    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
 
     return adCell;
 }
@@ -160,7 +148,7 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:self];
+    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
 
     return adCell;
 }

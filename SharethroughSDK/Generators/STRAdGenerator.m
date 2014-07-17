@@ -9,7 +9,6 @@
 #import "STRAdGenerator.h"
 #import "STRAdView.h"
 #import "STRAdService.h"
-#import "STRPromise.h"
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 #import "STRBeaconService.h"
@@ -98,6 +97,10 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
         }
         return error;
     }];
+}
+
+- (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey {
+    return [self.adService fetchAdForPlacementKey:placementKey];
 }
 
 - (void)checkIfAdIsVisible:(NSTimer *)timer {
