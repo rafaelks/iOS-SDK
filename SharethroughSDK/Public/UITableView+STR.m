@@ -107,7 +107,7 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
     STRAdPlacementAdjuster  *adjuster = [self str_ensureAdjuster];
 
     for (UITableViewCell *cell in [self visibleCells]) {
-        if (![adjuster isAdAtIndexPath:[self indexPathForCell:cell]]) {
+        if (!adjuster.adLoaded || ![adjuster isAdAtIndexPath:[self indexPathForCell:cell]]) {
             [cellsWithoutAds addObject:cell];
         }
     }
