@@ -504,12 +504,8 @@ describe(@"STRAdPlacementAdjuster", ^{
         });
         
         describe(@"-isAdAtIndexPath:", ^{
-            it(@"returns YES if indexPaths match", ^{
-                [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_truthy;
-            });
-            
             it(@"returns NO if indexPaths match", ^{
-                [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]] should be_falsy;
+                [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_falsy;
             });
         });
         

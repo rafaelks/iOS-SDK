@@ -23,7 +23,7 @@
 }
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath {
-    return [indexPath isEqual:self.adIndexPath];
+    return [indexPath isEqual:self.adIndexPath] && self.adLoaded;
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section {
@@ -34,7 +34,7 @@
 }
 
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath == nil || ([self isAdAtIndexPath:indexPath] && self.adLoaded)) {
+    if (indexPath == nil || ([self isAdAtIndexPath:indexPath])) {
         return nil;
     }
 

@@ -82,9 +82,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        if (self.adjuster.adLoaded) {
-            return [self adCellForTableView:tableView];
-        }
+        return [self adCellForTableView:tableView];
     }
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
@@ -98,9 +96,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        if (self.adjuster.adLoaded) {
-            return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
-        }
+        return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
     }
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];

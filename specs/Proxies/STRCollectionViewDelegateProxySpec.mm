@@ -395,91 +395,41 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
         });
         
         describe(@"1 argument selectors w/ return values", ^{
-            __block BOOL returnValue;
             afterEach(^{
                 adjuster should have_received(@selector(isAdAtIndexPath:));
                 
-            });
-            
-            describe(@"when the index path is an ad cell", ^{
-                afterEach(^{
-                    returnValue should equal(NO);
-                });
-                
-                describe(@"-collectionView:shouldSelectItemAtIndexPath:", ^{
-                    beforeEach(^{
-                        returnValue = [proxy collectionView:collectionView shouldSelectItemAtIndexPath:adIndexPath];
-                    });
-                    
-                    it(@"returns NO and does not pass through", ^{
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:shouldSelectItemAtIndexPath:));
-                    });
-                });
-                
-                describe(@"-collectionView:shouldDeselectItemAtIndexPath:", ^{
-                    beforeEach(^{
-                        returnValue = [proxy collectionView:collectionView shouldDeselectItemAtIndexPath:adIndexPath];
-                    });
-                    
-                    it(@"does not pass through", ^{
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:shouldDeselectItemAtIndexPath:));
-                    });
-                });
-                
-                describe(@"-collectionView:shouldHighlightItemAtIndexPath:", ^{
-                    beforeEach(^{
-                        returnValue = [proxy collectionView:collectionView shouldHighlightItemAtIndexPath:adIndexPath];
-                    });
-                    
-                    it(@"does not pass through", ^{
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:shouldHighlightItemAtIndexPath:));
-                    });
-                });
-                
-                describe(@"-collectionView:shouldShowMenuForItemAtIndexPath:", ^{
-                    beforeEach(^{
-                        returnValue = [proxy collectionView:collectionView shouldHighlightItemAtIndexPath:adIndexPath];
-                    });
-                    it(@"does not pass through", ^{
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:shouldShowMenuForItemAtIndexPath:));
-                    });
-                });
             });
             
             describe(@"when the index path is NOT an ad cell", ^{
                 describe(@"-collectionView:shouldSelectItemAtIndexPath:", ^{
                     it(@"adjusts the index path before passing through", ^{
                         [proxy collectionView:collectionView shouldSelectItemAtIndexPath:trueIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:shouldSelectItemAtIndexPath:));
+                        adjuster should have_received(@selector(externalIndexPath:));
+                        originalDelegate should have_received(@selector(collectionView:shouldSelectItemAtIndexPath:));
                     });
                 });
                 
                 describe(@"-collectionView:shouldDeselectItemAtIndexPath:", ^{
                     it(@"adjusts the index path before passing through", ^{
                         [proxy collectionView:collectionView shouldDeselectItemAtIndexPath:trueIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:shouldDeselectItemAtIndexPath:));
+                        adjuster should have_received(@selector(externalIndexPath:));
+                        originalDelegate should have_received(@selector(collectionView:shouldDeselectItemAtIndexPath:));
                     });
                 });
                 
                 describe(@"-collectionView:shouldHighlightItemAtIndexPath:", ^{
                     it(@"adjusts the index path before passing through", ^{
                         [proxy collectionView:collectionView shouldHighlightItemAtIndexPath:trueIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:shouldHighlightItemAtIndexPath:));
+                        adjuster should have_received(@selector(externalIndexPath:));
+                        originalDelegate should have_received(@selector(collectionView:shouldHighlightItemAtIndexPath:));
                     });
                 });
                 
                 describe(@"-collectionView:shouldShowMenuForItemAtIndexPath:", ^{
                     it(@"adjusts the index path before passing through", ^{
                         [proxy collectionView:collectionView shouldShowMenuForItemAtIndexPath:trueIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:shouldShowMenuForItemAtIndexPath:));
+                        adjuster should have_received(@selector(externalIndexPath:));
+                        originalDelegate should have_received(@selector(collectionView:shouldShowMenuForItemAtIndexPath:));
                     });
                 });
             });
@@ -490,54 +440,19 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                 adjuster should have_received(@selector(isAdAtIndexPath:));
             });
             
-            describe(@"when the index path is an ad cell", ^{
-                describe(@"-collectionView:didSelectItemAtIndexPath:", ^{
-                    it(@"does not pass through to the original delegate.", ^{
-                        [proxy collectionView:collectionView didSelectItemAtIndexPath:adIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:didSelectItemAtIndexPath:));
-                    });
-                });
-                
-                describe(@"-collectionView:didDeselectItemAtIndexPath:", ^{
-                    it(@"does not pass through to the original delegate.", ^{
-                        [proxy collectionView:collectionView didDeselectItemAtIndexPath:adIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:didDeselectItemAtIndexPath:));
-                    });
-                });
-                
-                describe(@"-collectionView:didHighlightItemAtIndexPath:", ^{
-                    it(@"does not pass through to the original delegate.", ^{
-                        [proxy collectionView:collectionView didHighlightItemAtIndexPath:adIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:didHighlightItemAtIndexPath:));
-                    });
-                });
-                
-                describe(@"-collectionView:didUnhiglightItemAtIndexPath:", ^{
-                    it(@"does not pass through to the original delegate.", ^{
-                        [proxy collectionView:collectionView didUnhighlightItemAtIndexPath:adIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:));
-                        originalDelegate should_not have_received(@selector(collectionView:didUnhighlightItemAtIndexPath:));
-                    });
-                });
-            });
-            
-            
             describe(@"when the index path is NOT an ad cell", ^{
                 describe(@"-collectionView:didSelectItemAtIndexPath:", ^{
                     it(@"does pass through to the original delegate.", ^{
                         [proxy collectionView:collectionView didSelectItemAtIndexPath:trueIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:)).with(trueIndexPath);
-                        originalDelegate should_not have_received(@selector(collectionView:didSelectItemAtIndexPath:));
+                        adjuster should have_received(@selector(externalIndexPath:)).with(trueIndexPath);
+                        originalDelegate should have_received(@selector(collectionView:didSelectItemAtIndexPath:));
                     });
                 });
                 
                 describe(@"-collectionView:didDeselectItemAtIndexPath:", ^{
                     it(@"does pass through to the original delegate.", ^{
                         [proxy collectionView:collectionView didDeselectItemAtIndexPath:trueIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:)).with(trueIndexPath);
+                        adjuster should have_received(@selector(externalIndexPath:)).with(trueIndexPath);
                         originalDelegate should_not have_received(@selector(collectionView:didSelectItemAtIndexPath:));
                     });
                 });
@@ -545,7 +460,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                 describe(@"-collectionView:didHighlightItemAtIndexPath:", ^{
                     it(@"does pass through to the original delegate.", ^{
                         [proxy collectionView:collectionView didHighlightItemAtIndexPath:trueIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:)).with(trueIndexPath);
+                        adjuster should have_received(@selector(externalIndexPath:)).with(trueIndexPath);
                         originalDelegate should_not have_received(@selector(collectionView:didSelectItemAtIndexPath:));
                     });
                 });
@@ -553,7 +468,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                 describe(@"-collectionView:didUnhiglightItemAtIndexPath:", ^{
                     it(@"does pass through to the original delegate.", ^{
                         [proxy collectionView:collectionView didUnhighlightItemAtIndexPath:trueIndexPath];
-                        adjuster should_not have_received(@selector(externalIndexPath:)).with(trueIndexPath);
+                        adjuster should have_received(@selector(externalIndexPath:)).with(trueIndexPath);
                         originalDelegate should_not have_received(@selector(collectionView:didSelectItemAtIndexPath:));
                     });
                 });
@@ -568,19 +483,8 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                     [proxy collectionView:collectionView didEndDisplayingCell:cell forItemAtIndexPath:trueIndexPath];
                     
                     adjuster should have_received(@selector(isAdAtIndexPath:));
-                    adjuster should_not have_received(@selector(externalIndexPath:));
-                    originalDelegate should_not have_received(@selector(collectionView:didEndDisplayingCell:forItemAtIndexPath:));
-                });
-            });
-            
-            context(@"when the cell is an ad cell", ^{
-                it(@"does not call through to the original", ^{
-                    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:adIndexPath];
-                    [proxy collectionView:collectionView didEndDisplayingCell:cell forItemAtIndexPath:adIndexPath];
-                    
-                    adjuster should have_received(@selector(isAdAtIndexPath:));
-                    adjuster should_not have_received(@selector(externalIndexPath:));
-                    originalDelegate should_not have_received(@selector(collectionView:didEndDisplayingCell:forItemAtIndexPath:));
+                    adjuster should have_received(@selector(externalIndexPath:));
+                    originalDelegate should have_received(@selector(collectionView:didEndDisplayingCell:forItemAtIndexPath:));
                 });
             });
         });
@@ -592,19 +496,8 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                     [proxy collectionView:collectionView didEndDisplayingSupplementaryView:reusableView forElementOfKind:@"fakeViewKind" atIndexPath:trueIndexPath];
                     
                     adjuster should have_received(@selector(isAdAtIndexPath:));
-                    adjuster should_not have_received(@selector(externalIndexPath:));
-                    originalDelegate should_not have_received(@selector(collectionView:didEndDisplayingSupplementaryView:forElementOfKind:atIndexPath:));
-                });
-            });
-            
-            context(@"when the cell is an ad cell", ^{
-                it(@"does not call through to the original", ^{
-                    UICollectionReusableView *reusableView = nice_fake_for([UICollectionReusableView class]);
-                    [proxy collectionView:collectionView didEndDisplayingSupplementaryView:reusableView forElementOfKind:@"fakeViewKind" atIndexPath:adIndexPath];
-                    
-                    adjuster should have_received(@selector(isAdAtIndexPath:));
-                    adjuster should_not have_received(@selector(externalIndexPath:));
-                    originalDelegate should_not have_received(@selector(collectionView:didEndDisplayingSupplementaryView:forElementOfKind:atIndexPath:));
+                    adjuster should have_received(@selector(externalIndexPath:));
+                    originalDelegate should have_received(@selector(collectionView:didEndDisplayingSupplementaryView:forElementOfKind:atIndexPath:));
                 });
             });
         });
@@ -618,21 +511,8 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                                withSender:collectionView];
                     
                     adjuster should have_received(@selector(isAdAtIndexPath:));
-                    adjuster should_not have_received(@selector(externalIndexPath:));
-                    originalDelegate should_not have_received(@selector(collectionView:canPerformAction:forItemAtIndexPath:withSender:));
-                });
-            });
-            
-            context(@"when the cell is an ad cell", ^{
-                it(@"does not call through to the original", ^{
-                    [proxy collectionView:collectionView
-                         canPerformAction:@selector(willPresentAlertView:)
-                       forItemAtIndexPath:adIndexPath
-                               withSender:collectionView];
-                    
-                    adjuster should have_received(@selector(isAdAtIndexPath:));
-                    adjuster should_not have_received(@selector(externalIndexPath:));
-                    originalDelegate should_not have_received(@selector(collectionView:canPerformAction:forItemAtIndexPath:withSender:));
+                    adjuster should have_received(@selector(externalIndexPath:));
+                    originalDelegate should have_received(@selector(collectionView:canPerformAction:forItemAtIndexPath:withSender:));
                 });
             });
         });
@@ -645,21 +525,9 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                        forItemAtIndexPath:trueIndexPath
                                withSender:collectionView];
                     
-                    originalDelegate should_not have_received(@selector(collectionView:performAction:forItemAtIndexPath:withSender:));
+                    originalDelegate should have_received(@selector(collectionView:performAction:forItemAtIndexPath:withSender:));
                 });
             });
-            
-            context(@"when the cell is an ad cell", ^{
-                it(@"does not call through to the original", ^{
-                    [proxy collectionView:collectionView
-                            performAction:@selector(willPresentAlertView:)
-                       forItemAtIndexPath:adIndexPath
-                               withSender:collectionView];
-                    
-                    originalDelegate should_not have_received(@selector(collectionView:performAction:forItemAtIndexPath:withSender:));
-                });
-            });
-            
         });
         
         describe(@"-collectionView:transitionLayoutForOldLayout:newLayout:", ^{
