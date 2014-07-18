@@ -110,7 +110,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
     __autoreleasing NSIndexPath *indexPath;
     [invocation getArgument:&indexPath atIndex:3];
 
-    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath] && self.adPlacementAdjuster.adLoaded) {
         CGFloat height = self.adSize.height;
         [invocation setReturnValue:&height];
     } else {
@@ -124,7 +124,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
     __autoreleasing NSIndexPath *indexPath;
     [invocation getArgument:&indexPath atIndex:4];
 
-    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath]) {
+    if ([self.adPlacementAdjuster isAdAtIndexPath:indexPath] && self.adPlacementAdjuster.adLoaded) {
         CGSize adSize = self.adSize;
         [invocation setReturnValue:&adSize];
     } else {
