@@ -768,11 +768,11 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 context(@"when the index path points to an ad index path", ^{
                     it(@"does not call the delegate", ^{
                         [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-                        originalDelegate should_not have_received(@selector(tableView:heightForRowAtIndexPath:));
+                        originalDelegate should have_received(@selector(tableView:heightForRowAtIndexPath:));
                     });
                     
-                    it(@"returns a passed-in height value", ^{
-                        [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(51.0);
+                    it(@"returns the real cell height value", ^{
+                        [proxy tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(100.0);
                     });
                 });
             });
@@ -786,13 +786,13 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 });
                 
                 context(@"when the index path points to an ad index path", ^{
-                    it(@"does not call the delegate", ^{
+                    it(@"does call the delegate", ^{
                         [proxy tableView:tableView estimatedHeightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-                        originalDelegate should_not have_received(@selector(tableView:estimatedHeightForRowAtIndexPath:));
+                        originalDelegate should have_received(@selector(tableView:estimatedHeightForRowAtIndexPath:));
                     });
                     
-                    it(@"returns a passed-in height value", ^{
-                        [proxy tableView:tableView estimatedHeightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(51.0);
+                    it(@"returns the original cell value", ^{
+                        [proxy tableView:tableView estimatedHeightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(10.0);
                     });
                 });
             });

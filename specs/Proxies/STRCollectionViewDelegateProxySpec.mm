@@ -684,7 +684,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                 it(@"offsets the index path and calls through to the original delegate", ^{
                     [proxy collectionView:collectionView layout:layout sizeForItemAtIndexPath:trueIndexPath];
                     
-                    originalDelegate should_not have_received(@selector(collectionView:layout:sizeForItemAtIndexPath:));
+                    originalDelegate should have_received(@selector(collectionView:layout:sizeForItemAtIndexPath:));
                 });
             });
             
@@ -696,11 +696,11 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                     proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:CGSizeMake(100.0, 200.0)];
                 });
                 
-                it(@"returns the passed in ad size", ^{
+                it(@"returns the original cell size", ^{
                     CGSize size = [proxy collectionView:collectionView layout:layout sizeForItemAtIndexPath:adIndexPath];
                     
-                    originalDelegate should_not have_received(@selector(collectionView:layout:sizeForItemAtIndexPath:));
-                    size should equal(CGSizeMake(100.0, 200.0));
+                    originalDelegate should have_received(@selector(collectionView:layout:sizeForItemAtIndexPath:));
+                    size should equal(CGSizeMake(0.0, 0.0));
                 });
             });
         });
