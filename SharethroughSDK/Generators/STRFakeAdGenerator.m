@@ -14,6 +14,7 @@
 #import "STRInteractiveAdViewController.h"
 #import "STRInjector.h"
 #import "STRAppModule.h"
+#import "STRDeferred.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
@@ -85,6 +86,10 @@ presentingViewController:(UIViewController *)presentingViewController
     [view setNeedsLayout];
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
     [view addGestureRecognizer:tapRecognizer];
+    
+    if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
+        [delegate adView:view didFetchAdForPlacementKey:placementKey];
+    }
 }
 
 
@@ -101,4 +106,9 @@ presentingViewController:(UIViewController *)presentingViewController
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey {
+    STRDeferred *deferred = [STRDeferred defer];
+    [deferred resolveWithValue:nil];
+    return deferred.promise;
+}
 @end

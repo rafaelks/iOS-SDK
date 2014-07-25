@@ -24,6 +24,7 @@
 @property (weak, nonatomic) UIViewController *presentingViewController;
 @property (weak, nonatomic) STRInjector *injector;
 
+@property (weak, nonatomic) id gridlikeView;
 @end
 
 @implementation STRGridlikeViewDataSourceProxy
@@ -54,6 +55,23 @@
                                                placementKey:self.placementKey
                                    presentingViewController:self.presentingViewController
                                                    injector:self.injector];
+}
+
+
+- (void)prefetchAdForGridLikeView:(id)gridlikeView {
+    self.gridlikeView = gridlikeView;
+    if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
+        STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+        STRPromise *adPromise = [adGenerator prefetchAdForPlacementKey:self.placementKey];
+        [adPromise then:^id(id value) {
+            self.adjuster.adLoaded = YES;   
+            [self.gridlikeView reloadData];
+            return self.adjuster;
+        } error:^id(NSError *error) {
+            self.adjuster.adLoaded = NO;
+            return self.adjuster;
+        }];
+    }
 }
 
 #pragma mark - <UITableViewDataSource>

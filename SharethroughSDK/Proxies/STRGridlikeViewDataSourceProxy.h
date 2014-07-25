@@ -28,4 +28,6 @@
 
 - (instancetype)copyWithNewDataSource:(id)newDataSource;
 
+- (void)prefetchAdForGridLikeView:(id)gridlikeView;
+
 @end

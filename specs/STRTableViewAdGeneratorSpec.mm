@@ -4,6 +4,7 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRAdGenerator.h"
+#import "STRFakeAdGenerator.h"
 #import "STRFullTableViewDataSource.h"
 #import "STRTableViewDataSource.h"
 #import "STRTableViewCell.h"
@@ -29,7 +30,7 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
 
-        adGenerator = nice_fake_for([STRAdGenerator class]);
+        adGenerator = [STRFakeAdGenerator new];
         [injector bind:[STRAdGenerator class] toInstance:adGenerator];
 
         tableViewAdGenerator = [injector getInstance:[STRGridlikeViewAdGenerator class]];
