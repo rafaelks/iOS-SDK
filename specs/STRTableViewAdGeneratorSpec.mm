@@ -148,10 +148,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
         });
 
         context(@"and the index path is out of bounds", ^{
-            it(@"raises an exception", ^{
-                expect(^{
-                    [tableViewAdGenerator placeAdInGridlikeView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-                }).to(raise_exception());
+            it(@"places it in the last position", ^{
+                [tableViewAdGenerator placeAdInGridlikeView:tableView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+                [tableView numberOfRowsInSection:0] should equal(1);
             });
         });
 

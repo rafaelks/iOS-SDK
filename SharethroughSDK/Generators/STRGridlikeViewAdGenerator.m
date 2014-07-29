@@ -105,7 +105,11 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     }
 
     if (adStartingIndexPath.row > numberOfCellsInAdSection) {
-         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Provided indexPath for advertisement cell is out of bounds: %i beyond row count %i", adStartingIndexPath.row, numberOfCellsInAdSection];
+        if (adStartingIndexPath) {
+            return [NSIndexPath indexPathForRow:numberOfCellsInAdSection + 1 inSection:adStartingIndexPath.section];
+        } else {
+            return [NSIndexPath indexPathForRow:numberOfCellsInAdSection + 1 inSection:0];
+        }
     }
 
     if (adStartingIndexPath) {

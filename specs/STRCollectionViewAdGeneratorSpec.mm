@@ -164,10 +164,10 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
         });
 
         context(@"and the index path is out of bounds", ^{
-            it(@"raises an exception", ^{
-                expect(^{
-                    [collectionViewAdGenerator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-                }).to(raise_exception());
+            it(@"places it in the last position", ^{
+                [collectionViewAdGenerator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+                [collectionView layoutIfNeeded];
+                [collectionView numberOfItemsInSection:0] should equal(1);
             });
         });
 
