@@ -110,6 +110,7 @@ presentingViewController:(UIViewController *)presentingViewController
 {
     STRAdClickout *disclosureAd = [STRAdClickout new];
     disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com"];
+    disclosureAd.title = @"Opt Out Information";
     disclosureAd.action = STRClickoutAd;
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)disclosureAd
                                                                                                device:[UIDevice currentDevice]
