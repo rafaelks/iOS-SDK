@@ -14,6 +14,7 @@
 #import "STRBeaconService.h"
 #import <objc/runtime.h>
 #import "STRAdViewDelegate.h"
+#import "STRAdClickout.h"
 
 char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
@@ -66,6 +67,9 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
         view.adSponsoredBy.text = [ad sponsoredBy];
         [self setDescriptionText:ad.adDescription onView:view];
         view.adThumbnail.image = [ad displayableThumbnail];
+        
+        //TODO: Throw exception if buttonType !== 2
+        [view.disclosureButton addTarget:self action:@selector(tappedDisclosureBtn) forControlEvents:UIControlEventTouchUpInside];
 
         [view setNeedsLayout];
 
@@ -147,6 +151,19 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
+}
+
+- (void)tappedDisclosureBtn
+{
+    STRAdClickout *disclosureAd = [STRAdClickout new];
+    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com"];
+    disclosureAd.action = STRClickoutAd;
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)disclosureAd
+                                                                                               device:[UIDevice currentDevice]
+                                                                                        beaconService:nil
+                                                                                             injector:self.injector];
+    adController.delegate = self;
+    [self.presentingViewController presentViewController:adController animated:YES completion:nil];
 }
 
 #pragma mark - <STRInteractiveAdViewControllerDelegate>

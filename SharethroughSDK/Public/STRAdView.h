@@ -30,6 +30,11 @@
  */
 - (UILabel *)adSponsoredBy;
 
+/**
+ This method should return a UIButton (or subclass) that is appropriate for getting information about the ad including opt out info.
+ */
+- (UIButton *)disclosureButton;
+
 @optional
 
 /**

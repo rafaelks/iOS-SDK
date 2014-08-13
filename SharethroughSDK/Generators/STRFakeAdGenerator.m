@@ -15,6 +15,7 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRDeferred.h"
+#import "STRAdClickout.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
@@ -81,6 +82,9 @@ presentingViewController:(UIViewController *)presentingViewController
     if ([view respondsToSelector:@selector(adDescription)]) {
         view.adDescription.text = self.advertisement.adDescription;
     }
+    //TODO: Throw exception if buttonType !== 2
+    NSLog(@"UIButtonType:%d",view.disclosureButton.buttonType);
+    [view.disclosureButton addTarget:self action:@selector(tappedDisclosureBtn) forControlEvents:UIControlEventTouchUpInside];
 
     self.presentingViewController = presentingViewController;
     [view setNeedsLayout];
@@ -95,6 +99,19 @@ presentingViewController:(UIViewController *)presentingViewController
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:self.advertisement
+                                                                                               device:[UIDevice currentDevice]
+                                                                                        beaconService:nil
+                                                                                             injector:self.injector];
+    adController.delegate = self;
+    [self.presentingViewController presentViewController:adController animated:YES completion:nil];
+}
+
+- (void)tappedDisclosureBtn
+{
+    STRAdClickout *disclosureAd = [STRAdClickout new];
+    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com"];
+    disclosureAd.action = STRClickoutAd;
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)disclosureAd
                                                                                                device:[UIDevice currentDevice]
                                                                                         beaconService:nil
                                                                                              injector:self.injector];
