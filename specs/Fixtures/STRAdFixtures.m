@@ -89,4 +89,13 @@
     return ad;
 }
 
++ (STRAdClickout *)privacyInformationAd {
+    STRAdClickout *disclosureAd = [STRAdClickout new];
+    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com/privacy-policy/"];
+    disclosureAd.title = @"Privacy Information";
+    disclosureAd.action = STRClickoutAd;
+
+    return disclosureAd;
+}
+
 @end

@@ -14,7 +14,7 @@
 #import "STRBeaconService.h"
 #import <objc/runtime.h>
 #import "STRAdViewDelegate.h"
-#import "STRAdClickout.h"
+#import "STRAdFixtures.h"
 
 char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
@@ -158,11 +158,7 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
 - (IBAction)tappedDisclosureBtn:(id)sender
 {
-    STRAdClickout *disclosureAd = [STRAdClickout new];
-    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com/privacy-policy/"];
-    disclosureAd.title = @"Privacy Information";
-    disclosureAd.action = STRClickoutAd;
-    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)disclosureAd
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
                                                                                                device:[UIDevice currentDevice]
                                                                                         beaconService:nil
                                                                                              injector:self.injector];

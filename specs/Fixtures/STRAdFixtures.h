@@ -18,5 +18,6 @@
 + (STRAdvertisement *)hostedVideoAd;
 + (STRAdClickout *)clickoutAd;
 + (STRAdPinterest *)pinterestAd;
++ (STRAdClickout *)privacyInformationAd;
 
 @end

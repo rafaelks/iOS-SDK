@@ -15,7 +15,6 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRDeferred.h"
-#import "STRAdClickout.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
@@ -111,11 +110,7 @@ presentingViewController:(UIViewController *)presentingViewController
 
 - (IBAction)tappedDisclosureBtn:(id)sender
 {
-    STRAdClickout *disclosureAd = [STRAdClickout new];
-    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com/privacy-policy/"];
-    disclosureAd.title = @"Privacy Information";
-    disclosureAd.action = STRClickoutAd;
-    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)disclosureAd
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
                                                                                                device:[UIDevice currentDevice]
                                                                                         beaconService:nil
                                                                                              injector:self.injector];
