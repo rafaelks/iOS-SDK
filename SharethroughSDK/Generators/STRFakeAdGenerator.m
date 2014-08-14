@@ -85,8 +85,8 @@ presentingViewController:(UIViewController *)presentingViewController
     if (view.disclosureButton.buttonType != 2) {
         [NSException raise:@"STRDiscloseButtonType" format:@"The disclosure button provided by the STRAdView is not of type UIButtonTypeDetailDisclosure"];
     }
-    UITapGestureRecognizer *infoRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
-    [view.disclosureButton addGestureRecognizer:infoRecognizer];
+    UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
+    [view.disclosureButton addGestureRecognizer:disclosureRecognizer];
 
     self.presentingViewController = presentingViewController;
     [view setNeedsLayout];
@@ -97,7 +97,6 @@ presentingViewController:(UIViewController *)presentingViewController
         [delegate adView:view didFetchAdForPlacementKey:placementKey];
     }
 }
-
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:self.advertisement

@@ -26,6 +26,7 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 @property (nonatomic, weak) UIView *spinner;
 @property (nonatomic, strong) STRAdvertisement *ad;
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic, weak) UITapGestureRecognizer *disclosureTapRecognizer;
 @property (nonatomic, weak) NSRunLoop *timerRunLoop;
 @property (nonatomic, weak) NSTimer *adVisibleTimer;
 @property (nonatomic, weak) STRInjector *injector;
@@ -71,8 +72,9 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
         if (view.disclosureButton.buttonType != UIButtonTypeDetailDisclosure) {
             [NSException raise:@"STRDiscloseButtonType" format:@"The disclosure button provided by the STRAdView is not of type UIButtonTypeDetailDisclosure"];
         }
-        UITapGestureRecognizer *infoRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
-        [view.disclosureButton addGestureRecognizer:infoRecognizer];
+        UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
+        [view.disclosureButton addGestureRecognizer:disclosureRecognizer];
+        self.disclosureTapRecognizer = disclosureRecognizer;
 
         [view setNeedsLayout];
 
@@ -178,6 +180,7 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
     STRAdGenerator *oldGenerator = objc_getAssociatedObject(view, STRAdGeneratorKey);
     [oldGenerator.adVisibleTimer invalidate];
     [view removeGestureRecognizer:oldGenerator.tapRecognizer];
+    [view.disclosureButton removeGestureRecognizer:oldGenerator.disclosureTapRecognizer];
 
     [self clearTextFromView:view];
 }

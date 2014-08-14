@@ -182,6 +182,11 @@ describe(@"STRAdGenerator", ^{
                 [view.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
             });
 
+            it(@"adds a gesture recognizer to the disclosure button", ^{
+                [view.disclosureButton.gestureRecognizers count] should equal(1);
+                [view.disclosureButton.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
+            });
+
             describe(@"view position timer", ^{
                 __block NSTimer *timer;
 
@@ -329,6 +334,27 @@ describe(@"STRAdGenerator", ^{
                     beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//play.com?fakeParam=[timestamp]"]);
                 });
             });
+
+            describe(@"when the disclosure button is tapped", ^{
+                __block STRInteractiveAdViewController *interactiveAdController;
+
+                beforeEach(^{
+                    [[view.disclosureButton.gestureRecognizers lastObject] recognize];
+                    interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
+                });
+
+                it(@"presents the STRInteractiveAdViewController", ^{
+                    interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
+                    interactiveAdController.ad should_not be_same_instance_as(ad);
+                    interactiveAdController.delegate should be_same_instance_as(generator);
+                });
+
+                it(@"dismisses the interactive ad controller when told", ^{
+                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
+                    presentingViewController.presentedViewController should be_nil;
+                });
+
+            });
         });
 
         describe(@"when the ad fetch fails", ^{
@@ -363,6 +389,7 @@ describe(@"STRAdGenerator", ^{
 
             it(@"should have cleaned up old tap gesture recognizers", ^{
                 [view.gestureRecognizers count] should equal(1);
+                [view.disclosureButton.gestureRecognizers count] should equal(1);
             });
 
             it(@"invalidates the old ad's timer", ^{
