@@ -158,8 +158,8 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 - (IBAction)tappedDisclosureBtn:(id)sender
 {
     STRAdClickout *disclosureAd = [STRAdClickout new];
-    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com"];
-    disclosureAd.title = @"Opt Out Information";
+    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com/privacy-policy/"];
+    disclosureAd.title = @"Privacy Information";
     disclosureAd.action = STRClickoutAd;
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)disclosureAd
                                                                                                device:[UIDevice currentDevice]
