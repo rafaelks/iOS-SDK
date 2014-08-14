@@ -177,7 +177,9 @@
     UIViewController *childViewController;
     if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
         childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
-    } else if ([self.ad.action isEqualToString:STRClickoutAd] || [self.ad.action isEqualToString:STRPinterestAd]) {
+    } else if ([self.ad.action isEqualToString:STRClickoutAd] ||
+               [self.ad.action isEqualToString:STRInstagramAd] ||
+               [self.ad.action isEqualToString:STRPinterestAd]) {
         childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad];
     } else {
         childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]]];

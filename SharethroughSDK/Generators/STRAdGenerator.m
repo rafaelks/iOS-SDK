@@ -135,7 +135,10 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     UIView *view = tapRecognizer.view;
-    if ([self.ad.action isEqualToString:STRClickoutAd]) {
+    if ([self.ad.action isEqualToString:STRClickoutAd] ||
+        [self.ad.action isEqualToString:STRInstagramAd] ||
+        [self.ad.action isEqualToString:STRPinterestAd]) {
+
         [self.beaconService fireClickForAd:self.ad adSize:view.frame.size];
     } else {
         [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];

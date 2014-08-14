@@ -413,6 +413,106 @@ describe(@"STRAdGenerator", ^{
                 });
             });
         });
+
+        context(@"when the ad is a pinterest", ^{
+            beforeEach(^{
+                ad.action = STRPinterestAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a clickout click beacon", ^{
+                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
+
+        context(@"when the ad is an instagram", ^{
+            beforeEach(^{
+                ad.action = STRInstagramAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a clickout click beacon", ^{
+                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
+
+        context(@"when the ad is a hosted video", ^{
+            beforeEach(^{
+                ad.action = STRHostedVideoAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a video play beacon", ^{
+                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
+
+        context(@"when the ad is a youtube video", ^{
+            beforeEach(^{
+                ad.action = STRYouTubeAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a video play beacon", ^{
+                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
+
+        context(@"when the ad is a vine", ^{
+            beforeEach(^{
+                ad.action = STRVineAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a video play beacon", ^{
+                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
     });
 
     describe(@"place an ad in a view without an ad description", ^{
