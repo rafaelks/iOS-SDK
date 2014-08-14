@@ -69,7 +69,9 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
         view.adThumbnail.image = [ad displayableThumbnail];
         
         //TODO: Throw exception if buttonType !== 2
-        [view.disclosureButton addTarget:self action:@selector(tappedDisclosureBtn) forControlEvents:UIControlEventTouchUpInside];
+        //[view.disclosureButton addTarget:self action:@selector(tappedDisclosureBtn:) forControlEvents:UIControlEventTouchUpInside];
+        UITapGestureRecognizer *infoRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
+        [view.disclosureButton addGestureRecognizer:infoRecognizer];
 
         [view setNeedsLayout];
 
@@ -153,7 +155,7 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
 }
 
-- (void)tappedDisclosureBtn
+- (IBAction)tappedDisclosureBtn:(id)sender
 {
     STRAdClickout *disclosureAd = [STRAdClickout new];
     disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com"];

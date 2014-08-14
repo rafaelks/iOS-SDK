@@ -83,8 +83,9 @@ presentingViewController:(UIViewController *)presentingViewController
         view.adDescription.text = self.advertisement.adDescription;
     }
     //TODO: Throw exception if buttonType !== 2
-    NSLog(@"UIButtonType:%d",view.disclosureButton.buttonType);
-    [view.disclosureButton addTarget:self action:@selector(tappedDisclosureBtn) forControlEvents:UIControlEventTouchUpInside];
+    //[view.disclosureButton addTarget:self action:@selector(tappedDisclosureBtn:) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *infoRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
+    [view.disclosureButton addGestureRecognizer:infoRecognizer];
 
     self.presentingViewController = presentingViewController;
     [view setNeedsLayout];
@@ -106,7 +107,7 @@ presentingViewController:(UIViewController *)presentingViewController
     [self.presentingViewController presentViewController:adController animated:YES completion:nil];
 }
 
-- (void)tappedDisclosureBtn
+- (IBAction)tappedDisclosureBtn:(id)sender
 {
     STRAdClickout *disclosureAd = [STRAdClickout new];
     disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com"];
