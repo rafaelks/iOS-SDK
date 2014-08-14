@@ -68,8 +68,9 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
         [self setDescriptionText:ad.adDescription onView:view];
         view.adThumbnail.image = [ad displayableThumbnail];
         
-        //TODO: Throw exception if buttonType !== 2
-        //[view.disclosureButton addTarget:self action:@selector(tappedDisclosureBtn:) forControlEvents:UIControlEventTouchUpInside];
+        if (view.disclosureButton.buttonType != UIButtonTypeDetailDisclosure) {
+            [NSException raise:@"STRDiscloseButtonType" format:@"The disclosure button provided by the STRAdView is not of type UIButtonTypeDetailDisclosure"];
+        }
         UITapGestureRecognizer *infoRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
         [view.disclosureButton addGestureRecognizer:infoRecognizer];
 

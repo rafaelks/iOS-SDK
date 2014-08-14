@@ -82,8 +82,10 @@ presentingViewController:(UIViewController *)presentingViewController
     if ([view respondsToSelector:@selector(adDescription)]) {
         view.adDescription.text = self.advertisement.adDescription;
     }
-    //TODO: Throw exception if buttonType !== 2
-    //[view.disclosureButton addTarget:self action:@selector(tappedDisclosureBtn:) forControlEvents:UIControlEventTouchUpInside];
+
+    if (view.disclosureButton.buttonType != 2) {
+        [NSException raise:@"STRDiscloseButtonType" format:@"The disclosure button provided by the STRAdView is not of type UIButtonTypeDetailDisclosure"];
+    }
     UITapGestureRecognizer *infoRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
     [view.disclosureButton addGestureRecognizer:infoRecognizer];
 
