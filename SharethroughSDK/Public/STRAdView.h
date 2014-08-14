@@ -31,7 +31,7 @@
 - (UILabel *)adSponsoredBy;
 
 /**
- This method should return a UIButton (or subclass) that is appropriate for getting information about the ad including opt out info.
+ This method should return a UIButton of type UIButtonTypeDetailDisclosure for getting privacy information including ad tracking opt out info.
  */
 - (UIButton *)disclosureButton;
 
