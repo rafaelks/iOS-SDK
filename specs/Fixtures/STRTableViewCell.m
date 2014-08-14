@@ -17,6 +17,10 @@
         UILabel *adSponsoredBy = [UILabel new];
         [self addSubview:adSponsoredBy];
         self.adSponsoredBy = adSponsoredBy;
+        
+        UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        self.disclosureButton = disclosureButton;
+        [self addSubview:disclosureButton];
     }
     return self;
 }

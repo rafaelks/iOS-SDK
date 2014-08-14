@@ -12,5 +12,6 @@
 @interface STRTableViewCell : UITableViewCell<STRAdView>
 
 @property (weak, nonatomic) UILabel *adSponsoredBy;
+@property (weak, nonatomic) UIButton *disclosureButton;
 
 @end
