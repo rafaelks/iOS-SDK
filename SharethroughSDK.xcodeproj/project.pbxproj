@@ -166,7 +166,7 @@
 		AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
-		E880766B19A27A94006F33B2 /* Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* Info.plist */; };
+		E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		E8B9759118EA052C0054F35F /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
 		E8B9759218EA052C0054F35F /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
 		E8EE49A8191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */; };
@@ -251,7 +251,7 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Resources";
 			dstSubfolderSpec = 0;
 			files = (
-				E880766B19A27A94006F33B2 /* Info.plist in Copy Resource Files */,
+				E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */,
 			);
 			name = "Copy Resource Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,7 +410,7 @@
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
 		E8B9759018EA052C0054F35F /* pinterest-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pinterest-logo.c"; sourceTree = "<group>"; };
-		E8DF883519A279F200871FD9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.bplist; path = "SharethroughSDK-Info.plist"; sourceTree = "<group>"; };
 		E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STRAdPinterest.h; sourceTree = "<group>"; };
 		E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STRAdPinterest.m; sourceTree = "<group>"; };
 		E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pinterest_sample_thumbnail.c; sourceTree = "<group>"; };
@@ -787,7 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */,
-				E8DF883519A279F200871FD9 /* Info.plist */,
+				E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1013,7 +1013,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#############################################################################################\n#\n# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project. Add the contents to a\n# \"Run Script\" build phase for your application target.\n#\n# This script assumes you are tagging your git repo like so `v0.0`\n#\n#   git tag -a v0.0 -m \"First tag\"\n#\n# dd the contents to a \"Run Script\" build phase for your application target.\n#\n#############################################################################################\n\nset -o errexit\nset -o nounset\n\nINFO_PLIST=\"${PROJECT_DIR}/${PROJECT}/Info\"\necho \"Info.plist: ${INFO_PLIST}\"\n\n# Get git tag and hash in the FullVersion\nFULL_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe | sed -e 's/^v//' -e 's/g//')\n\n# Use the latest tag for short version (You'll have to make sure that all your tags are of the format 0.0.0,\n# this is to satisfy Apple's rule that short version be three integers separated by dots)\nSHORT_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe --abbrev=0 | sed -e 's/^v//' -e 's/g//')\n\n# Increasing integer, so use the number of commits on the master branch.\nVERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" rev-list master | wc -l)\n\n# Print to build log\necho \"VERSION: ${VERSION}\"\necho \"SHORT VERSION: ${SHORT_VERSION}\"\necho \"FULL VERSION: ${FULL_VERSION}\"\n\n#############################################################################################\n#\n# Update -Info.plist in the build direcotry\n#\n#############################################################################################\ndefaults write $INFO_PLIST CFBundleShortVersionString $SHORT_VERSION\ndefaults write $INFO_PLIST CFBundleVersion $VERSION\ndefaults write $INFO_PLIST FullVersion $FULL_VERSION";
+			shellScript = "#############################################################################################\n#\n# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project. Add the contents to a\n# \"Run Script\" build phase for your application target.\n#\n# This script assumes you are tagging your git repo like so `v0.0`\n#\n#   git tag -a v0.0 -m \"First tag\"\n#\n# dd the contents to a \"Run Script\" build phase for your application target.\n#\n#############################################################################################\n\nset -o errexit\nset -o nounset\n\nINFO_PLIST=\"${PROJECT_DIR}/${PROJECT}/SharethroughSDK-Info\"\necho \"Info.plist: ${INFO_PLIST}\"\n\n# Get git tag and hash in the FullVersion\nFULL_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe | sed -e 's/^v//' -e 's/g//')\n\n# Use the latest tag for short version (You'll have to make sure that all your tags are of the format 0.0.0,\n# this is to satisfy Apple's rule that short version be three integers separated by dots)\nSHORT_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe --abbrev=0 | sed -e 's/^v//' -e 's/g//')\n\n# Increasing integer, so use the number of commits on the master branch.\nVERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" rev-list master | wc -l)\n\n# Print to build log\necho \"VERSION: ${VERSION}\"\necho \"SHORT VERSION: ${SHORT_VERSION}\"\necho \"FULL VERSION: ${FULL_VERSION}\"\n\n#############################################################################################\n#\n# Update -Info.plist in the build direcotry\n#\n#############################################################################################\ndefaults write $INFO_PLIST CFBundleShortVersionString $SHORT_VERSION\ndefaults write $INFO_PLIST CFBundleVersion $VERSION\ndefaults write $INFO_PLIST FullVersion $FULL_VERSION";
 		};
 /* End PBXShellScriptBuildPhase section */
 
