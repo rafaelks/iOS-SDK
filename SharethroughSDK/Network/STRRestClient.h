@@ -18,4 +18,5 @@
 - (void)sendBeaconWithParameters:(NSDictionary *)parameters;
 - (void)sendBeaconWithURL:(NSURL *)url;
 
+- (NSString *)getUserAgent;
 @end

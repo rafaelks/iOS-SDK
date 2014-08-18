@@ -11,10 +11,10 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = AE22466F1885FD8100626A29 /* Build configuration list for PBXAggregateTarget "SharethroughSDK" */;
 			buildPhases = (
+				E880766D19A27D2E006F33B2 /* Run Version Update Script */,
 				AE2246701885FDC400626A29 /* Build static library */,
 				AE2246711885FDFE00626A29 /* Build Framework Structure with Fat Binary */,
 				AE2246721885FEED00626A29 /* Copy Header Files */,
-				E880766D19A27D2E006F33B2 /* ShellScript */,
 				E880766619A27A81006F33B2 /* Copy Resource Files */,
 				AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */,
 			);
@@ -167,6 +167,8 @@
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 		E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
+		E880767919A29DED006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
+		E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
 		E8B9759118EA052C0054F35F /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
 		E8B9759218EA052C0054F35F /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
 		E8EE49A8191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */; };
@@ -409,6 +411,8 @@
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		E880767719A29DED006F33B2 /* STRVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRVersion.h; sourceTree = "<group>"; };
+		E880767819A29DED006F33B2 /* STRVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRVersion.m; sourceTree = "<group>"; };
 		E8B9759018EA052C0054F35F /* pinterest-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pinterest-logo.c"; sourceTree = "<group>"; };
 		E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.bplist; path = "SharethroughSDK-Info.plist"; sourceTree = "<group>"; };
 		E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STRAdPinterest.h; sourceTree = "<group>"; };
@@ -788,6 +792,8 @@
 			children = (
 				AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */,
 				E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */,
+				E880767719A29DED006F33B2 /* STRVersion.h */,
+				E880767819A29DED006F33B2 /* STRVersion.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1002,18 +1008,19 @@
 			shellPath = /bin/sh;
 			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
 		};
-		E880766D19A27D2E006F33B2 /* ShellScript */ = {
+		E880766D19A27D2E006F33B2 /* Run Version Update Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Version Update Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#############################################################################################\n#\n# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project. Add the contents to a\n# \"Run Script\" build phase for your application target.\n#\n# This script assumes you are tagging your git repo like so `v0.0`\n#\n#   git tag -a v0.0 -m \"First tag\"\n#\n# dd the contents to a \"Run Script\" build phase for your application target.\n#\n#############################################################################################\n\nset -o errexit\nset -o nounset\n\nINFO_PLIST=\"${PROJECT_DIR}/${PROJECT}/SharethroughSDK-Info\"\necho \"Info.plist: ${INFO_PLIST}\"\n\n# Get git tag and hash in the FullVersion\nFULL_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe | sed -e 's/^v//' -e 's/g//')\n\n# Use the latest tag for short version (You'll have to make sure that all your tags are of the format 0.0.0,\n# this is to satisfy Apple's rule that short version be three integers separated by dots)\nSHORT_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe --abbrev=0 | sed -e 's/^v//' -e 's/g//')\n\n# Increasing integer, so use the number of commits on the master branch.\nVERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" rev-list master | wc -l)\n\n# Print to build log\necho \"VERSION: ${VERSION}\"\necho \"SHORT VERSION: ${SHORT_VERSION}\"\necho \"FULL VERSION: ${FULL_VERSION}\"\n\n#############################################################################################\n#\n# Update -Info.plist in the build direcotry\n#\n#############################################################################################\ndefaults write $INFO_PLIST CFBundleShortVersionString $SHORT_VERSION\ndefaults write $INFO_PLIST CFBundleVersion $VERSION\ndefaults write $INFO_PLIST FullVersion $FULL_VERSION";
+			shellScript = "#############################################################################################\n#\n# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project. Add the contents to a\n# \"Run Script\" build phase for your application target.\n#\n# This script assumes you are tagging your git repo like so `v0.0`\n#\n#   git tag -a v0.0 -m \"First tag\"\n#\n# dd the contents to a \"Run Script\" build phase for your application target.\n#\n#############################################################################################\n\nset -o errexit\nset -o nounset\n\nINFO_PLIST=\"${PROJECT_DIR}/${PROJECT}/SharethroughSDK-Info\"\necho \"Info.plist: ${INFO_PLIST}\"\n\n# Get git tag and hash in the FullVersion\nFULL_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe | sed -e 's/^v//' -e 's/g//')\n\n# Use the latest tag for short version (You'll have to make sure that all your tags are of the format 0.0.0,\n# this is to satisfy Apple's rule that short version be three integers separated by dots)\nSHORT_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe --abbrev=0 | sed -e 's/^v//' -e 's/g//')\n\n# Increasing integer, so use the number of commits on the master branch.\nVERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" rev-list master | wc -l)\n\n# Print to build log\necho \"VERSION: ${VERSION}\"\necho \"SHORT VERSION: ${SHORT_VERSION}\"\necho \"FULL VERSION: ${FULL_VERSION}\"\n\n#############################################################################################\n#\n# Update -Info.plist in the build direcotry\n#\n#############################################################################################\ndefaults write $INFO_PLIST CFBundleShortVersionString $SHORT_VERSION\ndefaults write $INFO_PLIST CFBundleVersion $VERSION\ndefaults write $INFO_PLIST FullVersion $FULL_VERSION\n\n\n#############################################################################################\n#\n# Update -Version.m file the build direcotry\n#\n#############################################################################################\nsed -i.bak '14s/.*/    return @\"'${FULL_VERSION}'\";/' ${PROJECT_DIR}/${PROJECT}/STRVersion.m";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1022,6 +1029,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */,
 				AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */,
 				AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */,
 				AE39F8CA18AD56F700969C30 /* STRClickoutViewControllerSpec.mm in Sources */,
@@ -1124,6 +1132,7 @@
 				AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
 				AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */,
 				E8EE49A9191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */,
+				E880767919A29DED006F33B2 /* STRVersion.m in Sources */,
 				AE022DE2188E004900D02568 /* STRRestClient.m in Sources */,
 				AE39F8CF18AD831200969C30 /* STRAdClickout.m in Sources */,
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
