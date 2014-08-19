@@ -45,6 +45,7 @@ describe(@"STRBeaconService", ^{
         [STRSession class] stub_method(@selector(sessionToken)).and_return(@"AAAA");
 
         restClient stub_method(@selector(sendBeaconWithParameters:));
+        restClient stub_method(@selector(getUserAgent)).and_return(@"User Agent");
         service = [injector getInstance:[STRBeaconService class]];
 
         ad = [[STRAdvertisement alloc] init];
@@ -69,6 +70,7 @@ describe(@"STRBeaconService", ^{
                                                                                          @"umtime": @"10",
                                                                                          @"session": @"AAAA",
                                                                                          @"uid": @"fakeUUID",
+                                                                                         @"ua": @"User Agent",
                                                                                          @"ploc": @"specs"});
         });
     });
@@ -88,6 +90,7 @@ describe(@"STRBeaconService", ^{
                                                                                          @"umtime": @"10",
                                                                                          @"session": @"AAAA",
                                                                                          @"uid": @"fakeUUID",
+                                                                                         @"ua": @"User Agent",
                                                                                          @"pwidth": @"200",
                                                                                          @"pheight": @"100",
                                                                                          @"ploc": @"specs",
@@ -123,6 +126,7 @@ describe(@"STRBeaconService", ^{
                                                                                          @"umtime": @"10",
                                                                                          @"session": @"AAAA",
                                                                                          @"uid": @"fakeUUID",
+                                                                                         @"ua": @"User Agent",
                                                                                          @"pwidth": @"200",
                                                                                          @"pheight": @"100",
                                                                                          @"ploc": @"specs",
@@ -160,6 +164,7 @@ describe(@"STRBeaconService", ^{
               @"umtime": @"10",
               @"session": @"AAAA",
               @"uid": @"fakeUUID",
+              @"ua": @"User Agent",
               @"pwidth": @"200",
               @"pheight": @"100",
               @"ploc": @"specs",
@@ -241,6 +246,7 @@ describe(@"STRBeaconService", ^{
                              @"umtime": @"10",
                              @"session": @"AAAA",
                              @"uid": @"fakeUUID",
+                             @"ua": @"User Agent",
                              @"ploc": @"specs",
                              @"as": @"sig",
                              @"at": @"type",
@@ -307,6 +313,7 @@ describe(@"STRBeaconService", ^{
                            @"umtime": @"10",
                            @"session": @"AAAA",
                            @"uid": @"fakeUUID",
+                           @"ua": @"User Agent",
                            @"pwidth": @"200",
                            @"pheight": @"100",
                            @"ploc": @"specs",

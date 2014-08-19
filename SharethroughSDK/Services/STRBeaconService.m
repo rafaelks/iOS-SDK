@@ -156,7 +156,8 @@
               @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
               @"ploc"   : [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey],
               @"session": [STRSession sessionToken],
-              @"uid"    : [[self.identifierManager advertisingIdentifier] UUIDString]} mutableCopy];
+              @"uid"    : [[self.identifierManager advertisingIdentifier] UUIDString],
+              @"ua"     : [self.restClient getUserAgent]} mutableCopy];
 }
 
 @end
