@@ -104,7 +104,7 @@
 #pragma mark - Private
 
 - (STRAdvertisement *)adForAction:(NSString *)action {
-    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class], @"clickout": [STRAdClickout class], @"pinterest": [STRAdPinterest class]};
+    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class], @"clickout": [STRAdClickout class], @"pinterest": [STRAdPinterest class], @"instagram": [STRAdClickout class]};
     Class adClass = actionsToClasses[action];
     if (!adClass) {
         adClass = [STRAdvertisement class];
