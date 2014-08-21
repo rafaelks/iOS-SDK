@@ -38,9 +38,6 @@ const NSInteger STRAdCacheTimeoutInSeconds = 120;
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey {
-    if ([self isAdStale:placementKey]) {
-        return nil;
-    }
     return self.cachedAds[placementKey];
 }
 
@@ -49,16 +46,15 @@ const NSInteger STRAdCacheTimeoutInSeconds = 120;
     self.cachedTimestamps[ad.placementKey] = [self.dateProvider now];
 }
 
-#pragma mark - Private
-
 - (BOOL)isAdStale:(NSString *)placementKey {
     NSDate *cacheDate = self.cachedTimestamps[placementKey];
+    if (!cacheDate) {
+        return YES;
+    }
     NSDate *now = [self.dateProvider now];
     NSTimeInterval timeInterval = [now timeIntervalSinceDate:cacheDate];
 
     if (timeInterval == NAN || timeInterval > STRAdCacheTimeoutInSeconds) {
-        [self.cachedTimestamps removeObjectForKey:placementKey];
-        [self.cachedAds removeObjectForKey:placementKey];
         return YES;
     }
     return NO;
