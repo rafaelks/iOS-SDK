@@ -83,9 +83,44 @@ describe(@"STRAdService", ^{
             });
         });
 
+        describe(@"when an ad is cached for longer than the timeout", ^{
+            __block STRAdvertisement *ad;
+
+            beforeEach(^{
+                ad = nice_fake_for([STRAdvertisement class]);
+
+                adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey").and_return(ad);
+                adCache stub_method(@selector(isAdStale:)).with(@"placementKey").and_return(YES);
+
+                returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
+            });
+
+            it(@"makes a request to the ad server", ^{
+                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey"});
+            });
+
+            it(@"fires an impression request beacon", ^{
+                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:)).with(@"placementKey");
+            });
+
+            it(@"returns an unresolved promise", ^{
+                returnedPromise should_not be_nil;
+                returnedPromise.value should be_nil;
+            });
+
+            describe(@"when the ad server unsuccessfully responds", ^{
+                it(@"returns the cached ad", ^{
+                    [restClientDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
+
+                    returnedPromise.value should equal(ad);
+                });
+            });
+        });
+
         describe(@"when no ad is cached for the given placement key", ^{
             beforeEach(^{
                 adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey");
+                adCache stub_method(@selector(isAdStale:)).with(@"placementKey").and_return(YES);
 
                 returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
             });

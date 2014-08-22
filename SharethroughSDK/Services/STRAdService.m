@@ -47,8 +47,8 @@
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey {
     STRDeferred *deferred = [STRDeferred defer];
 
-    STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
-    if (cachedAd) {
+    if (![self.adCache isAdStale:placementKey]) {
+        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
         [deferred resolveWithValue:cachedAd];
         return deferred.promise;
     }
@@ -94,7 +94,13 @@
 
         return creativeJSON;
     } error:^id(NSError *error) {
-        [deferred rejectWithError:error];
+        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
+        
+        if (cachedAd != nil) {
+            [deferred resolveWithValue:cachedAd];
+        } else {
+            [deferred rejectWithError:error];
+        }
         return error;
     }];
     
