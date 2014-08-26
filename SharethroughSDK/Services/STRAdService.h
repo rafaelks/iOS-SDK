@@ -18,5 +18,6 @@
                  adCache:(STRAdCache *)adCache
            beaconService:(STRBeaconService *)beaconService;
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey;
+- (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey creativeKey:(NSString *)creativeKey;
 
 @end

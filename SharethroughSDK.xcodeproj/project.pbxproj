@@ -166,6 +166,7 @@
 		AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
+		E8703D1819AD070000D3FA50 /* STRDFPAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703D1719AD070000D3FA50 /* STRDFPAdGenerator.m */; };
 		E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		E880767919A29DED006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
 		E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
@@ -411,6 +412,37 @@
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		E8703CF719AD003700D3FA50 /* DFPBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
+		E8703CF819AD003700D3FA50 /* DFPExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
+		E8703CF919AD003700D3FA50 /* DFPInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPInterstitial.h; sourceTree = "<group>"; };
+		E8703CFA19AD003700D3FA50 /* DFPSwipeableBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPSwipeableBannerView.h; sourceTree = "<group>"; };
+		E8703CFB19AD003700D3FA50 /* GADAdSizeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSizeDelegate.h; sourceTree = "<group>"; };
+		E8703CFC19AD003700D3FA50 /* GADAppEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAppEventDelegate.h; sourceTree = "<group>"; };
+		E8703CFD19AD003700D3FA50 /* GADSwipeableBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADSwipeableBannerViewDelegate.h; sourceTree = "<group>"; };
+		E8703CFF19AD003700D3FA50 /* GADCustomEventBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventBanner.h; sourceTree = "<group>"; };
+		E8703D0019AD003700D3FA50 /* GADCustomEventBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventBannerDelegate.h; sourceTree = "<group>"; };
+		E8703D0119AD003700D3FA50 /* GADCustomEventExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventExtras.h; sourceTree = "<group>"; };
+		E8703D0219AD003700D3FA50 /* GADCustomEventInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventInterstitial.h; sourceTree = "<group>"; };
+		E8703D0319AD003700D3FA50 /* GADCustomEventInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventInterstitialDelegate.h; sourceTree = "<group>"; };
+		E8703D0419AD003700D3FA50 /* GADCustomEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventRequest.h; sourceTree = "<group>"; };
+		E8703D0619AD003700D3FA50 /* GADSearchBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADSearchBannerView.h; sourceTree = "<group>"; };
+		E8703D0719AD003700D3FA50 /* GADSearchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADSearchRequest.h; sourceTree = "<group>"; };
+		E8703D0819AD003700D3FA50 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
+		E8703D0919AD003700D3FA50 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
+		E8703D0A19AD003700D3FA50 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
+		E8703D0B19AD003700D3FA50 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
+		E8703D0C19AD003700D3FA50 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
+		E8703D0D19AD003700D3FA50 /* GADInAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchase.h; sourceTree = "<group>"; };
+		E8703D0E19AD003700D3FA50 /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchaseDelegate.h; sourceTree = "<group>"; };
+		E8703D0F19AD003700D3FA50 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
+		E8703D1019AD003700D3FA50 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
+		E8703D1119AD003700D3FA50 /* GADModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADModules.h; sourceTree = "<group>"; };
+		E8703D1219AD003700D3FA50 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
+		E8703D1319AD003700D3FA50 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
+		E8703D1419AD003700D3FA50 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		E8703D1519AD003700D3FA50 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		E8703D1619AD070000D3FA50 /* STRDFPAdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRDFPAdGenerator.h; sourceTree = "<group>"; };
+		E8703D1719AD070000D3FA50 /* STRDFPAdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRDFPAdGenerator.m; sourceTree = "<group>"; };
 		E880767719A29DED006F33B2 /* STRVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRVersion.h; sourceTree = "<group>"; };
 		E880767819A29DED006F33B2 /* STRVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRVersion.m; sourceTree = "<group>"; };
 		E8B9759018EA052C0054F35F /* pinterest-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pinterest-logo.c"; sourceTree = "<group>"; };
@@ -678,6 +710,8 @@
 			children = (
 				AE52FD6918A41AB2009F69BD /* STRAdGenerator.h */,
 				AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */,
+				E8703D1619AD070000D3FA50 /* STRDFPAdGenerator.h */,
+				E8703D1719AD070000D3FA50 /* STRDFPAdGenerator.m */,
 				AE52FD6D18A41AB2009F69BD /* STRFakeAdGenerator.h */,
 				AE52FD6E18A41AB2009F69BD /* STRFakeAdGenerator.m */,
 				AE52FD6F18A41AB2009F69BD /* STRGridlikeViewAdGenerator.h */,
@@ -783,6 +817,7 @@
 				AE022DE4188E005300D02568 /* Services */,
 				AEFBF162189047DC00ADD742 /* Static Resources */,
 				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
+				E8703CEF19ACFF9C00D3FA50 /* Third Party */,
 			);
 			path = SharethroughSDK;
 			sourceTree = "<group>";
@@ -846,6 +881,82 @@
 				E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */,
 			);
 			path = "Static Resources";
+			sourceTree = "<group>";
+		};
+		E8703CEF19ACFF9C00D3FA50 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				E8703CF419AD000600D3FA50 /* GoogleMobileAdsSdkIOS */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		E8703CF419AD000600D3FA50 /* GoogleMobileAdsSdkIOS */ = {
+			isa = PBXGroup;
+			children = (
+				E8703CF519AD003700D3FA50 /* Add-ons */,
+				E8703D0819AD003700D3FA50 /* GADAdMobExtras.h */,
+				E8703D0919AD003700D3FA50 /* GADAdNetworkExtras.h */,
+				E8703D0A19AD003700D3FA50 /* GADAdSize.h */,
+				E8703D0B19AD003700D3FA50 /* GADBannerView.h */,
+				E8703D0C19AD003700D3FA50 /* GADBannerViewDelegate.h */,
+				E8703D0D19AD003700D3FA50 /* GADInAppPurchase.h */,
+				E8703D0E19AD003700D3FA50 /* GADInAppPurchaseDelegate.h */,
+				E8703D0F19AD003700D3FA50 /* GADInterstitial.h */,
+				E8703D1019AD003700D3FA50 /* GADInterstitialDelegate.h */,
+				E8703D1119AD003700D3FA50 /* GADModules.h */,
+				E8703D1219AD003700D3FA50 /* GADRequest.h */,
+				E8703D1319AD003700D3FA50 /* GADRequestError.h */,
+				E8703D1419AD003700D3FA50 /* libGoogleAdMobAds.a */,
+				E8703D1519AD003700D3FA50 /* README.txt */,
+			);
+			name = GoogleMobileAdsSdkIOS;
+			sourceTree = "<group>";
+		};
+		E8703CF519AD003700D3FA50 /* Add-ons */ = {
+			isa = PBXGroup;
+			children = (
+				E8703CF619AD003700D3FA50 /* DoubleClick */,
+				E8703CFE19AD003700D3FA50 /* Mediation */,
+				E8703D0519AD003700D3FA50 /* Search */,
+			);
+			path = "Add-ons";
+			sourceTree = "<group>";
+		};
+		E8703CF619AD003700D3FA50 /* DoubleClick */ = {
+			isa = PBXGroup;
+			children = (
+				E8703CF719AD003700D3FA50 /* DFPBannerView.h */,
+				E8703CF819AD003700D3FA50 /* DFPExtras.h */,
+				E8703CF919AD003700D3FA50 /* DFPInterstitial.h */,
+				E8703CFA19AD003700D3FA50 /* DFPSwipeableBannerView.h */,
+				E8703CFB19AD003700D3FA50 /* GADAdSizeDelegate.h */,
+				E8703CFC19AD003700D3FA50 /* GADAppEventDelegate.h */,
+				E8703CFD19AD003700D3FA50 /* GADSwipeableBannerViewDelegate.h */,
+			);
+			path = DoubleClick;
+			sourceTree = "<group>";
+		};
+		E8703CFE19AD003700D3FA50 /* Mediation */ = {
+			isa = PBXGroup;
+			children = (
+				E8703CFF19AD003700D3FA50 /* GADCustomEventBanner.h */,
+				E8703D0019AD003700D3FA50 /* GADCustomEventBannerDelegate.h */,
+				E8703D0119AD003700D3FA50 /* GADCustomEventExtras.h */,
+				E8703D0219AD003700D3FA50 /* GADCustomEventInterstitial.h */,
+				E8703D0319AD003700D3FA50 /* GADCustomEventInterstitialDelegate.h */,
+				E8703D0419AD003700D3FA50 /* GADCustomEventRequest.h */,
+			);
+			path = Mediation;
+			sourceTree = "<group>";
+		};
+		E8703D0519AD003700D3FA50 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				E8703D0619AD003700D3FA50 /* GADSearchBannerView.h */,
+				E8703D0719AD003700D3FA50 /* GADSearchRequest.h */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1165,6 +1276,7 @@
 				AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C80811899861E008FD848 /* STRInjector.m in Sources */,
 				E8EE49B3191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */,
+				E8703D1819AD070000D3FA50 /* STRDFPAdGenerator.m in Sources */,
 				E8B9759118EA052C0054F35F /* pinterest-logo.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
