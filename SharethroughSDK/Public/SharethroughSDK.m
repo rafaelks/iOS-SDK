@@ -15,6 +15,7 @@
 #import "STRBeaconService.h"
 #import "STRAdService.h"
 #import "STRTestSafeModule.h"
+#import "STRDFPAdGenerator.h"
 
 @interface SharethroughSDK ()
 
@@ -55,7 +56,11 @@
 
 - (void)placeAdInView:(UIView<STRAdView> *)view usingDFP:(BOOL)useDFP placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {
     if (useDFP) {
-        
+        STRDFPAdGenerator *generator = [self.injector getInstance:[STRDFPAdGenerator class]];
+        [generator placeAdInView:view
+                    placementKey:placementKey
+        presentingViewController:presentingViewController
+                        delegate:delegate];
     } else {
         STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
         [generator placeAdInView:view
