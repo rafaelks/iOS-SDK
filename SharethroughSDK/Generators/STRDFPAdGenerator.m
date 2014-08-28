@@ -14,11 +14,13 @@
 #import "STRAdService.h"
 #import "STRAdvertisement.h"
 #import "STRDeferred.h"
+#import "STRDFPManager.h"
 #import "STRInteractiveAdViewController.h"
 #import "STRBeaconService.h"
 #import "STRAdViewDelegate.h"
 
 #import "GADBannerView.h"
+#import "GADCustomEventExtras.h"
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
@@ -30,6 +32,8 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 @property (nonatomic, strong) STRAdvertisement *ad;
 @property (nonatomic, weak) STRInjector *injector;
 @property (nonatomic, strong) NSMutableDictionary *DFPPathCache;
+@property (nonatomic, strong) GADBannerView *bannerView;
+@property (nonatomic, strong) GADCustomEventExtras *extras;
 
 @end
 
@@ -43,32 +47,38 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         self.adService = adService;
         self.injector = injector;
         self.DFPPathCache = [NSMutableDictionary dictionary];
+        self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
+        self.extras = [[GADCustomEventExtras alloc] init];
     }
     return self;
 }
 
-- (void)placeAdInView:(UIView<STRAdView> *)view
-         placementKey:(NSString *)placementKey
-presentingViewController:(UIViewController *)presentingViewController
-             delegate:(id<STRAdViewDelegate>)delegate {
-    
-    STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placementKey];
-    [DFPPathPromise then:^id(id value) {
-        ALog(@"%@", (NSString *)value);
+- (void)placeAdInPlacement:(STRAdPlacement *)placement {
 
-        GADBannerView *bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
-        bannerView.adUnitID = @"/11935007/Test-Tags/Custom-Event-Test"; //value;
-        bannerView.rootViewController = presentingViewController;
+    if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
         
-        [view addSubview:bannerView];
-        
-        [bannerView loadRequest:[GADRequest request]];
-        
-        return value;
-    } error:^id(NSError *error) {
-        //TODO: Handle Error case
-        return error;
-    }];
+    } else {
+        STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
+        [DFPPathPromise then:^id(id value) {
+            self.bannerView.adUnitID = value;
+            self.bannerView.rootViewController = placement.presentingViewController;
+            
+            [placement.adView addSubview:self.bannerView];
+            
+            [self.extras setExtras:@{@"placementKey": placement.placementKey} forLabel:@"Sharethrough"];
+            
+            GADRequest *request = [GADRequest request];
+            [request registerAdNetworkExtras:self.extras];
+            [self.bannerView loadRequest:request];
+            
+            [[STRDFPManager sharedInstance] cacheAdPlacement:placement];
+            
+            return value;
+        } error:^id(NSError *error) {
+            //TODO: Handle Error case
+            return error;
+        }];
+    }
 }
 
 #pragma mark GADBannerViewDelegate

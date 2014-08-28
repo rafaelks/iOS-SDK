@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "STRPromise.h"
+#import "STRAdPlacement.h"
 
 #import "GADBannerViewDelegate.h"
 
@@ -20,7 +20,8 @@ extern char const * const STRDFPAdGeneratorKey;
 
 
 - (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService runLoop:(NSRunLoop *)timerRunLoop injector:(STRInjector *)injector;
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate;
+
+- (void)placeAdInPlacement:(STRAdPlacement *)placement;
 
 
 @end

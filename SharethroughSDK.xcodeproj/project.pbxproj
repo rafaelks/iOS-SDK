@@ -168,6 +168,8 @@
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 		E8703D1819AD070000D3FA50 /* STRDFPAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703D1719AD070000D3FA50 /* STRDFPAdGenerator.m */; };
 		E8703D2919AD53BD00D3FA50 /* STRDFPMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703D2819AD53BD00D3FA50 /* STRDFPMediator.m */; };
+		E8703DA519AE752900D3FA50 /* STRDFPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DA419AE752900D3FA50 /* STRDFPManager.m */; };
+		E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
 		E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		E880767919A29DED006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
 		E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
@@ -446,6 +448,10 @@
 		E8703D6B19AE413700D3FA50 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
 		E8703D6C19AE413700D3FA50 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		E8703D6D19AE413700D3FA50 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		E8703DA319AE752900D3FA50 /* STRDFPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPManager.h; path = Singletons/STRDFPManager.h; sourceTree = "<group>"; };
+		E8703DA419AE752900D3FA50 /* STRDFPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPManager.m; path = Singletons/STRDFPManager.m; sourceTree = "<group>"; };
+		E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdPlacement.h; sourceTree = "<group>"; };
+		E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdPlacement.m; sourceTree = "<group>"; };
 		E880767719A29DED006F33B2 /* STRVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRVersion.h; sourceTree = "<group>"; };
 		E880767819A29DED006F33B2 /* STRVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRVersion.m; sourceTree = "<group>"; };
 		E8B9759018EA052C0054F35F /* pinterest-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pinterest-logo.c"; sourceTree = "<group>"; };
@@ -514,6 +520,8 @@
 				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
 				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
 				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
+				E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */,
+				E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
 				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
@@ -819,6 +827,7 @@
 				AE022DDB188DFFE700D02568 /* Network */,
 				AE8AF502189B0B0D00A65B27 /* Proxies */,
 				AE022DEE188E00DD00D02568 /* Public */,
+				E8703DA219AE74EE00D3FA50 /* Singletons */,
 				AE022DE4188E005300D02568 /* Services */,
 				AEFBF162189047DC00ADD742 /* Static Resources */,
 				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
@@ -963,6 +972,15 @@
 				E8703D5F19AE413700D3FA50 /* GADSearchRequest.h */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		E8703DA219AE74EE00D3FA50 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				E8703DA319AE752900D3FA50 /* STRDFPManager.h */,
+				E8703DA419AE752900D3FA50 /* STRDFPManager.m */,
+			);
+			name = Singletons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1251,11 +1269,13 @@
 				E8EE49A9191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */,
 				E880767919A29DED006F33B2 /* STRVersion.m in Sources */,
 				AE022DE2188E004900D02568 /* STRRestClient.m in Sources */,
+				E8703DA519AE752900D3FA50 /* STRDFPManager.m in Sources */,
 				AE39F8CF18AD831200969C30 /* STRAdClickout.m in Sources */,
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
 				AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
+				E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				E8703D2919AD53BD00D3FA50 /* STRDFPMediator.m in Sources */,

@@ -10,6 +10,7 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRAdGenerator.h"
+#import "STRAdPlacement.h"
 #import "STRGridlikeViewAdGenerator.h"
 #import "STRFakeAdGenerator.h"
 #import "STRBeaconService.h"
@@ -57,10 +58,8 @@
 - (void)placeAdInView:(UIView<STRAdView> *)view usingDFP:(BOOL)useDFP placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {
     if (useDFP) {
         STRDFPAdGenerator *generator = [self.injector getInstance:[STRDFPAdGenerator class]];
-        [generator placeAdInView:view
-                    placementKey:placementKey
-        presentingViewController:presentingViewController
-                        delegate:delegate];
+        STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWith:view placementKey:placementKey presentingViewController:presentingViewController delegate:delegate];
+        [generator placeAdInPlacement:adPlacement];
     } else {
         STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
         [generator placeAdInView:view

@@ -61,7 +61,7 @@
     
     STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForCreativeKey:creativeKey];
     if (cachedAd) {
-        STRDeferred *deferred = [STRDeferred defer];;
+        STRDeferred *deferred = [STRDeferred defer];
         [deferred resolveWithValue:cachedAd];
         return deferred.promise;
     }
@@ -70,6 +70,10 @@
     [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
     
     return [self fetchAdWithParameters:@{@"placement_key": placementKey, @"creative_key": creativeKey} forPlacementKey:placementKey];
+}
+
+- (BOOL)isAdCachedForPlacementKey:(NSString *)placementKey {
+    return ![self.adCache isAdStale:placementKey];
 }
 
 #pragma mark - Private

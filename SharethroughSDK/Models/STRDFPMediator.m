@@ -8,6 +8,9 @@
 
 #import "STRDFPMediator.h"
 
+#import "STRDFPManager.h"
+#import "STRPromise.h"
+
 @implementation STRDFPMediator
 
 @synthesize delegate = delegate_;
@@ -18,6 +21,19 @@
                 request:(GADCustomEventRequest *)request {
     NSLog(@"Parameter:%@, Label:%@", serverParameter, serverLabel);
     
+    NSDictionary* extras = [request additionalParameters];
+    NSLog(@"Placement Key: %@", extras[@"placementKey"]);
+    
+    [self.delegate customEventBanner:self didReceiveAd:[UIView new]];
+    
+    STRPromise *placeAdPromise = [[STRDFPManager sharedInstance] renderCreative:serverParameter inPlacement:extras[@"placementKey"]];
+    [placeAdPromise then:^id(id value) {
+        //[self.delegate customEventBanner:self didReceiveAd:value];
+        return nil;
+    } error:^id(NSError *error) {
+        //[self.delegate customEventBanner:self didFailAd:error];
+        return nil;
+    }];
 }
 
 #pragma mark GADCustomEventBannerDelegate
