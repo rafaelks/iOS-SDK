@@ -8,6 +8,7 @@
 
 #import "STRDFPManager.h"
 
+#import "STRAdGenerator.h"
 #import "STRAppModule.h"
 #import "STRInjector.h"
 #import "STRDeferred.h"
@@ -23,14 +24,14 @@
 
 + (id)sharedInstance {
     __strong static STRDFPManager *sharedObject = nil;
-    
+
     static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
         sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];;
         sharedObject.adPlacementCache = [NSMutableDictionary dictionary];
     });
-    
+
     return sharedObject;
 }
 
@@ -40,9 +41,15 @@
 
 - (STRPromise *)renderCreative:(NSString *)creativeKey inPlacement:(NSString *)placementKey {
     STRDeferred *deferred = [STRDeferred defer];
-    
+
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:placementKey];
-    
+
+    STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
+    [generator placeAdInView:adPlacement.adView
+                placementKey:adPlacement.placementKey
+    presentingViewController:adPlacement.presentingViewController
+                    delegate:adPlacement.delegate];
+
     [deferred resolveWithValue:adPlacement.adView];
 
     return deferred.promise;

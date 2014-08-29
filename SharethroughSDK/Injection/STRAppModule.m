@@ -56,6 +56,12 @@
                                                 injector:injector];
     }];
     
+    [injector bind:[STRDFPAdGenerator class] toInstance:[[STRDFPAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
+                                                                                      beaconService:[injector getInstance:[STRBeaconService class]]
+                                                                                            runLoop:[injector getInstance:[NSRunLoop class]]
+                                                                                           injector:injector
+                                                                                         restClient:[injector getInstance:[STRRestClient class]]]];
+    /*
     [injector bind:[STRDFPAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRDFPAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
                                            beaconService:[injector getInstance:[STRBeaconService class]]
@@ -63,6 +69,7 @@
                                                 injector:injector
                                               restClient:[injector getInstance:[STRRestClient class]]];
     }];
+     */
 
     [injector bind:[STRGridlikeViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRGridlikeViewAdGenerator alloc] initWithInjector:injector];

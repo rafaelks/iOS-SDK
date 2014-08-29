@@ -54,6 +54,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         self.restClient = restClient;
         self.DFPPathCache = [NSMutableDictionary dictionary];
         self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
+        self.bannerView.delegate = self;
         self.extras = [[GADCustomEventExtras alloc] init];
     }
     return self;
@@ -63,11 +64,11 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
     if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
         //TODO: Show cached ad for placement
+        ALog(@"Cached Ad");
     } else {
         STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
         [DFPPathPromise then:^id(NSString *value) {
             if ([value length] > 0) {
-
                 self.bannerView.adUnitID = value;
                 self.bannerView.rootViewController = placement.presentingViewController;
 

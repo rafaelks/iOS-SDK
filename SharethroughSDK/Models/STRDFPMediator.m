@@ -19,11 +19,11 @@
               parameter:(NSString *)serverParameter
                   label:(NSString *)serverLabel
                 request:(GADCustomEventRequest *)request {
-    NSLog(@"Parameter:%@, Label:%@", serverParameter, serverLabel);
     
     NSDictionary* extras = [request additionalParameters];
-    NSLog(@"Placement Key: %@", extras[@"placementKey"]);
     
+    //NSLog(@"Parameter:%@, Label:%@, lacement Key: %@", serverParameter, serverLabel, extras[@"placementKey"]);
+
     [self.delegate customEventBanner:self didReceiveAd:[UIView new]];
     
     STRPromise *placeAdPromise = [[STRDFPManager sharedInstance] renderCreative:serverParameter inPlacement:extras[@"placementKey"]];
