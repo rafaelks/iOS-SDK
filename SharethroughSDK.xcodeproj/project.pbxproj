@@ -170,6 +170,7 @@
 		E8703D2919AD53BD00D3FA50 /* STRDFPMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703D2819AD53BD00D3FA50 /* STRDFPMediator.m */; };
 		E8703DA519AE752900D3FA50 /* STRDFPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DA419AE752900D3FA50 /* STRDFPManager.m */; };
 		E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
+		E8703DB119B12CB000D3FA50 /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
 		E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		E880767919A29DED006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
 		E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
@@ -452,6 +453,8 @@
 		E8703DA419AE752900D3FA50 /* STRDFPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPManager.m; path = Singletons/STRDFPManager.m; sourceTree = "<group>"; };
 		E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdPlacement.h; sourceTree = "<group>"; };
 		E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdPlacement.m; sourceTree = "<group>"; };
+		E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdRenderer.h; sourceTree = "<group>"; };
+		E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdRenderer.m; sourceTree = "<group>"; };
 		E880767719A29DED006F33B2 /* STRVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRVersion.h; sourceTree = "<group>"; };
 		E880767819A29DED006F33B2 /* STRVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRVersion.m; sourceTree = "<group>"; };
 		E8B9759018EA052C0054F35F /* pinterest-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pinterest-logo.c"; sourceTree = "<group>"; };
@@ -534,6 +537,8 @@
 				E8703D2819AD53BD00D3FA50 /* STRDFPMediator.m */,
 				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
 				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
+				E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */,
+				E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1262,6 +1267,7 @@
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE3FF40918AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AEB4EF4618AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
+				E8703DB119B12CB000D3FA50 /* STRAdRenderer.m in Sources */,
 				AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */,
 				AE39F8C318AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */,
 				AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */,

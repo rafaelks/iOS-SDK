@@ -10,14 +10,16 @@
 
 #import "STRDFPAdGenerator.h"
 
-#import "STRAdView.h"
+#import "STRAdGenerator.h"
+#import "STRAdRenderer.h"
 #import "STRAdService.h"
 #import "STRAdvertisement.h"
+#import "STRAdView.h"
+#import "STRAdViewDelegate.h"
 #import "STRDeferred.h"
 #import "STRDFPManager.h"
-#import "STRInteractiveAdViewController.h"
+#import "STRInjector.h"
 #import "STRBeaconService.h"
-#import "STRAdViewDelegate.h"
 #import "STRRestClient.h"
 
 
@@ -31,7 +33,6 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 @interface STRDFPAdGenerator ()
 
 @property (nonatomic, strong) STRAdService *adService;
-@property (nonatomic, strong) STRAdvertisement *ad;
 @property (nonatomic, weak) STRInjector *injector;
 @property (nonatomic, strong) STRRestClient *restClient;
 
@@ -63,8 +64,16 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 - (void)placeAdInPlacement:(STRAdPlacement *)placement {
 
     if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
-        //TODO: Show cached ad for placement
-        ALog(@"Cached Ad");
+        STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
+        [adPromise then:^id(STRAdvertisement *ad) {
+            
+            STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
+            [renderer renderAd:ad inPlacement:placement];
+            
+            return ad;
+        } error:^id(NSError *error) {
+            return error;
+        }];
     } else {
         STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
         [DFPPathPromise then:^id(NSString *value) {

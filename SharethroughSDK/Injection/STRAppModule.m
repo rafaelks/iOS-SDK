@@ -2,6 +2,7 @@
 
 #import "STRAdCache.h"
 #import "STRAdGenerator.h"
+#import "STRAdRenderer.h"
 #import "STRAdService.h"
 #import "STRBeaconService.h"
 #import "STRDateProvider.h"
@@ -73,6 +74,12 @@
 
     [injector bind:[STRGridlikeViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRGridlikeViewAdGenerator alloc] initWithInjector:injector];
+    }];
+    
+    [injector bind:[STRAdRenderer class] toBlock:^id(STRInjector *injector) {
+        return [[STRAdRenderer alloc] initWithBeaconService:[injector getInstance:[STRBeaconService class]]
+                                                  runLoop:[injector getInstance:[NSRunLoop class]]
+                                                 injector:injector];
     }];
 }
 
