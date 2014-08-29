@@ -75,7 +75,7 @@
     [injector bind:[STRGridlikeViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRGridlikeViewAdGenerator alloc] initWithInjector:injector];
     }];
-    
+
     [injector bind:[STRAdRenderer class] toBlock:^id(STRInjector *injector) {
         return [[STRAdRenderer alloc] initWithBeaconService:[injector getInstance:[STRBeaconService class]]
                                                   runLoop:[injector getInstance:[NSRunLoop class]]

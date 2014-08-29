@@ -48,23 +48,23 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (void)renderAd:(STRAdvertisement *)ad inPlacement:(STRAdPlacement *)placement {
     self.ad = ad;
-    
+
     objc_setAssociatedObject(placement.adView, STRAdRendererKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
+
     self.presentingViewController = placement.presentingViewController;
     [self.beaconService fireImpressionForAd:ad adSize:placement.adView.frame.size];
-    
+
     placement.adView.adTitle.text = ad.title;
     placement.adView.adSponsoredBy.text = [ad sponsoredBy];
     [self setDescriptionText:ad.adDescription onView:placement.adView];
     placement.adView.adThumbnail.image = [ad displayableThumbnail];
-    
+
     [placement.adView setNeedsLayout];
-    
+
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
     [placement.adView addGestureRecognizer:tapRecognizer];
     self.tapRecognizer = tapRecognizer;
-    
+
     NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
                                              target:self
                                            selector:@selector(checkIfAdIsVisible:)
@@ -72,9 +72,9 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
                                             repeats:YES];
     timer.tolerance = timer.timeInterval * 0.1;
     [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
-    
+
     self.adVisibleTimer = timer;
-    
+
     if ([placement.delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
         [placement.delegate adView:placement.adView didFetchAdForPlacementKey:@""];
     }
@@ -83,20 +83,20 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 - (void)checkIfAdIsVisible:(NSTimer *)timer {
     UIView *view = timer.userInfo[@"view"];
     CGRect viewFrame = [view convertRect:view.bounds toView:nil];
-    
+
     if (!view.superview) {
         [timer invalidate];
         return;
     }
-    
+
     CGRect intersection = CGRectIntersection(viewFrame, view.window.frame);
-    
+
     CGFloat intersectionArea = intersection.size.width * intersection.size.height;
     CGFloat viewArea = view.frame.size.width * view.frame.size.height;
     CGFloat percentVisible = intersectionArea/viewArea;
-    
+
     CGFloat secondsVisible = [timer.userInfo[@"secondsVisible"] floatValue];
-    
+
     if (percentVisible >= 0.5 && secondsVisible < 1.0) {
         timer.userInfo[@"secondsVisible"] = @(secondsVisible + timer.timeInterval);
     } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
@@ -114,15 +114,14 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     if ([self.ad.action isEqualToString:STRClickoutAd] ||
         [self.ad.action isEqualToString:STRInstagramAd] ||
         [self.ad.action isEqualToString:STRPinterestAd]) {
-        
+
         [self.beaconService fireClickForAd:self.ad adSize:view.frame.size];
     } else {
         [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];
     }
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay];
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick];
-    
-    
+
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
@@ -140,7 +139,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     STRAdRenderer *oldRenderer = objc_getAssociatedObject(view, STRAdRendererKey);
     [oldRenderer.adVisibleTimer invalidate];
     [view removeGestureRecognizer:oldRenderer.tapRecognizer];
-    
+
     [self clearTextFromView:view];
 }
 

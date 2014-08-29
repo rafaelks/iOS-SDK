@@ -66,10 +66,10 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
     if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
         STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
         [adPromise then:^id(STRAdvertisement *ad) {
-            
+
             STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
             [renderer renderAd:ad inPlacement:placement];
-            
+
             return ad;
         } error:^id(NSError *error) {
             return error;
