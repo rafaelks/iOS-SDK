@@ -62,28 +62,31 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 - (void)placeAdInPlacement:(STRAdPlacement *)placement {
 
     if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
-        
+        //TODO: Show cached ad for placement
     } else {
         STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
-        [DFPPathPromise then:^id(id value) {
-            ALog(@"Value: %@",value);
-            
-            self.bannerView.adUnitID = value;
-            self.bannerView.rootViewController = placement.presentingViewController;
-            
-            [placement.adView addSubview:self.bannerView];
-            
-            [self.extras setExtras:@{@"placementKey": placement.placementKey} forLabel:@"Sharethrough"];
-            
-            GADRequest *request = [GADRequest request];
-            [request registerAdNetworkExtras:self.extras];
-            [self.bannerView loadRequest:request];
-            
-            [[STRDFPManager sharedInstance] cacheAdPlacement:placement];
-            
+        [DFPPathPromise then:^id(NSString *value) {
+            if ([value length] > 0) {
+
+                self.bannerView.adUnitID = value;
+                self.bannerView.rootViewController = placement.presentingViewController;
+
+                [placement.adView addSubview:self.bannerView];
+
+                [self.extras setExtras:@{@"placementKey": placement.placementKey} forLabel:@"Sharethrough"];
+
+                GADRequest *request = [GADRequest request];
+                [request registerAdNetworkExtras:self.extras];
+                [self.bannerView loadRequest:request];
+
+                [[STRDFPManager sharedInstance] cacheAdPlacement:placement];
+
+            } else {
+                [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+            }
             return value;
         } error:^id(NSError *error) {
-            //TODO: Handle Error case
+            [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
             return error;
         }];
     }
@@ -129,7 +132,6 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
     } else {
         STRPromise *DFPPathPromise = [self.restClient getDFPPathForPlacement:placementKey];
         [DFPPathPromise then:^id(id value) {
-            ALog(@"Value: %@", value);
             [self.DFPPathCache setObject:value forKey:placementKey];
             [deferred resolveWithValue:value];
             return value;
@@ -137,7 +139,6 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
             [deferred rejectWithError:error];
             return error;
         }];
-        //[deferred resolveWithValue:@"/11935007/Test-Tags/Custom-Event-Test"];
     }
     return deferred.promise;
 }
