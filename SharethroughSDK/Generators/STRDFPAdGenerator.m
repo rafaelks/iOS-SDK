@@ -18,6 +18,8 @@
 #import "STRInteractiveAdViewController.h"
 #import "STRBeaconService.h"
 #import "STRAdViewDelegate.h"
+#import "STRRestClient.h"
+
 
 #import "GADBannerView.h"
 #import "GADCustomEventExtras.h"
@@ -31,6 +33,8 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 @property (nonatomic, strong) STRAdService *adService;
 @property (nonatomic, strong) STRAdvertisement *ad;
 @property (nonatomic, weak) STRInjector *injector;
+@property (nonatomic, strong) STRRestClient *restClient;
+
 @property (nonatomic, strong) NSMutableDictionary *DFPPathCache;
 @property (nonatomic, strong) GADBannerView *bannerView;
 @property (nonatomic, strong) GADCustomEventExtras *extras;
@@ -41,11 +45,13 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 - (id)initWithAdService:(STRAdService *)adService
           beaconService:(STRBeaconService *)beaconService
                 runLoop:(NSRunLoop *)timerRunLoop
-               injector:(STRInjector *)injector {
+               injector:(STRInjector *)injector
+             restClient:(STRRestClient *)restClient {
     self = [super init];
     if (self) {
         self.adService = adService;
         self.injector = injector;
+        self.restClient = restClient;
         self.DFPPathCache = [NSMutableDictionary dictionary];
         self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
         self.extras = [[GADCustomEventExtras alloc] init];
@@ -60,6 +66,8 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
     } else {
         STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
         [DFPPathPromise then:^id(id value) {
+            ALog(@"Value: %@",value);
+            
             self.bannerView.adUnitID = value;
             self.bannerView.rootViewController = placement.presentingViewController;
             
@@ -119,8 +127,17 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
     if (DFPPath) {
         [deferred resolveWithValue:DFPPath];
     } else {
-        //TODO:     Fetch from Bakery
-        [deferred resolveWithValue:@"/11935007/Test-Tags/Custom-Event-Test"];
+        STRPromise *DFPPathPromise = [self.restClient getDFPPathForPlacement:placementKey];
+        [DFPPathPromise then:^id(id value) {
+            ALog(@"Value: %@", value);
+            [self.DFPPathCache setObject:value forKey:placementKey];
+            [deferred resolveWithValue:value];
+            return value;
+        } error:^id(NSError *error) {
+            [deferred rejectWithError:error];
+            return error;
+        }];
+        //[deferred resolveWithValue:@"/11935007/Test-Tags/Custom-Event-Test"];
     }
     return deferred.promise;
 }

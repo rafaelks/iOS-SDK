@@ -12,14 +12,18 @@
 #import "GADBannerViewDelegate.h"
 
 @protocol STRAdView, STRAdViewDelegate;
-@class STRAdService, STRBeaconService, STRInjector;
+@class STRAdService, STRBeaconService, STRInjector, STRRestClient;
 
 extern char const * const STRDFPAdGeneratorKey;
 
 @interface STRDFPAdGenerator : NSObject<GADBannerViewDelegate>
 
 
-- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService runLoop:(NSRunLoop *)timerRunLoop injector:(STRInjector *)injector;
+- (id)initWithAdService:(STRAdService *)adService
+          beaconService:(STRBeaconService *)beaconService
+                runLoop:(NSRunLoop *)timerRunLoop
+               injector:(STRInjector *)injector
+             restClient:(STRRestClient *)restClient;
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement;
 
