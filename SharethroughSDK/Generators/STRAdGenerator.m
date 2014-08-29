@@ -7,43 +7,36 @@
 //
 
 #import "STRAdGenerator.h"
-#import "STRAdView.h"
+
+#import <objc/runtime.h>
+
 #import "STRAdService.h"
 #import "STRAdvertisement.h"
-#import "STRInteractiveAdViewController.h"
-#import "STRBeaconService.h"
-#import <objc/runtime.h>
-#import "STRAdViewDelegate.h"
-#import "STRAdRenderer.h"
 #import "STRAdPlacement.h"
+#import "STRAdRenderer.h"
+#import "STRAdViewDelegate.h"
 #import "STRInjector.h"
+#import "STRPromise.h"
 
 char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 
 @interface STRAdGenerator ()
 
 @property (nonatomic, strong) STRAdService *adService;
-@property (nonatomic, strong) STRBeaconService *beaconService;
-@property (nonatomic, weak) UIView *spinner;
-@property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, weak) NSRunLoop *timerRunLoop;
-@property (nonatomic, weak) NSTimer *adVisibleTimer;
 @property (nonatomic, weak) STRInjector *injector;
+
+@property (nonatomic, weak) UIView *spinner;
 
 @end
 
 @implementation STRAdGenerator
 
 - (id)initWithAdService:(STRAdService *)adService
-          beaconService:(STRBeaconService *)beaconService
-                runLoop:(NSRunLoop *)timerRunLoop
                injector:(STRInjector *)injector
 {
     self = [super init];
     if (self) {
         self.adService = adService;
-        self.beaconService = beaconService;
-        self.timerRunLoop = timerRunLoop;
         self.injector = injector;
     }
     return self;

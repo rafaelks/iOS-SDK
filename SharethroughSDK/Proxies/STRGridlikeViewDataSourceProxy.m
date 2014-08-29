@@ -12,6 +12,7 @@
 #import "STRAdGenerator.h"
 #import "STRInjector.h"
 #import "STRAdPlacement.h"
+#import "STRPromise.h"
 
 @interface STRGridlikeViewDataSourceProxy ()
 

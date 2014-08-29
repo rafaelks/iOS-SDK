@@ -52,8 +52,6 @@
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
-                                           beaconService:[injector getInstance:[STRBeaconService class]]
-                                                 runLoop:[injector getInstance:[NSRunLoop class]]
                                                 injector:injector];
     }];
     
@@ -62,15 +60,6 @@
                                                                                             runLoop:[injector getInstance:[NSRunLoop class]]
                                                                                            injector:injector
                                                                                          restClient:[injector getInstance:[STRRestClient class]]]];
-    /*
-    [injector bind:[STRDFPAdGenerator class] toBlock:^id(STRInjector *injector) {
-        return [[STRDFPAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
-                                           beaconService:[injector getInstance:[STRBeaconService class]]
-                                                 runLoop:[injector getInstance:[NSRunLoop class]]
-                                                injector:injector
-                                              restClient:[injector getInstance:[STRRestClient class]]];
-    }];
-     */
 
     [injector bind:[STRGridlikeViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRGridlikeViewAdGenerator alloc] initWithInjector:injector];

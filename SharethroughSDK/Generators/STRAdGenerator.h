@@ -7,16 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "STRPromise.h"
 
 @protocol STRAdView, STRAdViewDelegate;
-@class STRAdPlacement, STRAdService, STRBeaconService, STRInjector;
+@class STRAdPlacement, STRAdService, STRBeaconService, STRInjector, STRPromise;
 
 extern char const * const STRAdGeneratorKey;
 
 @interface STRAdGenerator : NSObject
 
-- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService runLoop:(NSRunLoop *)timerRunLoop injector:(STRInjector *)injector;
+- (id)initWithAdService:(STRAdService *)adService injector:(STRInjector *)injector;
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement;
 
