@@ -48,6 +48,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (void)renderAd:(STRAdvertisement *)ad inPlacement:(STRAdPlacement *)placement {
     self.ad = ad;
+    [self prepareForNewAd:placement.adView];
 
     objc_setAssociatedObject(placement.adView, STRAdRendererKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 

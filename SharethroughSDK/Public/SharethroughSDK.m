@@ -57,16 +57,15 @@
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view usingDFP:(BOOL)useDFP placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {
+
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWith:view placementKey:placementKey presentingViewController:presentingViewController delegate:delegate];
+
     if (useDFP) {
         STRDFPAdGenerator *generator = [self.injector getInstance:[STRDFPAdGenerator class]];
-        STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWith:view placementKey:placementKey presentingViewController:presentingViewController delegate:delegate];
         [generator placeAdInPlacement:adPlacement];
     } else {
         STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-        [generator placeAdInView:view
-                    placementKey:placementKey
-        presentingViewController:presentingViewController
-                        delegate:delegate];
+        [generator placeAdInPlacement:adPlacement];
     }
 }
 

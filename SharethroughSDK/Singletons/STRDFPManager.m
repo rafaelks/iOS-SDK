@@ -45,10 +45,7 @@
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:placementKey];
 
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-    [generator placeAdInView:adPlacement.adView
-                placementKey:adPlacement.placementKey
-    presentingViewController:adPlacement.presentingViewController
-                    delegate:adPlacement.delegate];
+    [generator placeAdInPlacement:adPlacement];
 
     [deferred resolveWithValue:adPlacement.adView];
 

@@ -11,6 +11,7 @@
 #import "STRAdPlacementAdjuster.h"
 #import "STRAdGenerator.h"
 #import "STRInjector.h"
+#import "STRAdPlacement.h"
 
 @interface STRGridlikeViewDataSourceProxy ()
 
@@ -131,7 +132,9 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWith:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
+
+    [adGenerator placeAdInPlacement:adPlacement];
 
     return adCell;
 }
@@ -144,8 +147,9 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWith:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
 
+    [adGenerator placeAdInPlacement:adPlacement];
     return adCell;
 }
 
