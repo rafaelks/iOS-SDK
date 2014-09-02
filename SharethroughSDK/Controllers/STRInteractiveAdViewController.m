@@ -176,7 +176,7 @@
 - (void)addAdDisplayChildController:(UIView *)contentView {
     UIViewController *childViewController;
     if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
-        childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad];
+        childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad beaconService:self.beaconService];
     } else if ([self.ad.action isEqualToString:STRHostedVideoAd] || [self.ad.action isEqualToString:STRVineAd]) {
         childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]] beaconService:self.beaconService];
     } else {

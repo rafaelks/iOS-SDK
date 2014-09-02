@@ -63,7 +63,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+    [super viewWillDisappear:animated];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerReadyForDisplayDidChangeNotification object:self.moviePlayerController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMovieDurationAvailableNotification object:self.moviePlayerController];

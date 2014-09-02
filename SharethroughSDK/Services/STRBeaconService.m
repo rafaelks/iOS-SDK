@@ -42,7 +42,6 @@
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
-
 - (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
     if (!ad.visibleImpressionBeaconFired) {
         ad.visibleImpressionBeaconFired = YES;
