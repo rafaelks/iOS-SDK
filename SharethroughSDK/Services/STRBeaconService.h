@@ -18,6 +18,7 @@
 - (void)fireThirdPartyBeacons:(NSArray *)beaconPaths;
 - (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireVideoPlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size;
+- (void)fireVideoCompletionForAd:(STRAdvertisement *)ad completionPercent:(NSNumber *)completionPercent;
 - (void)fireShareForAd:(STRAdvertisement *)ad shareType:(NSString *)uiActivityType;
 - (void)fireClickForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 

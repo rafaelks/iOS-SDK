@@ -97,6 +97,15 @@
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
+- (void)fireVideoCompletionForAd:(STRAdvertisement *)ad completionPercent:(NSNumber *)completionPercent {
+    NSDictionary *uniqueParameters = @{@"type": @"completionPercent",
+                                       @"value": completionPercent};
+
+    NSMutableDictionary *parameters = [self commonParametersWithAd:ad];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+    [self.restClient sendBeaconWithParameters:parameters];
+}
+
 - (void)fireShareForAd:(STRAdvertisement *)ad shareType:(NSString *)uiActivityType {
     NSDictionary *knownShareTypes = @{UIActivityTypeMail: @"email",
                                            UIActivityTypePostToFacebook: @"facebook",
