@@ -43,8 +43,12 @@ const NSInteger STRAdCacheTimeoutInSeconds = 120;
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey {
     NSString *creativeKey = self.cachedPlacementAdPointers[placementKey];
-    self.cachedTimestamps[creativeKey] = [self.dateProvider now];
-    return self.cachedCreatives[creativeKey];
+    if ([creativeKey length] > 0) {
+        self.cachedTimestamps[creativeKey] = [self.dateProvider now];
+        return self.cachedCreatives[creativeKey];
+    } else {
+        return nil;
+    }
 }
 
 - (STRAdvertisement *)fetchCachedAdForCreativeKey:(NSString *)creativeKey {
