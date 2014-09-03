@@ -11,9 +11,12 @@
 #import "STRAdView.h"
 #import "STRAdViewDelegate.h"
 #import "STRAdPlacement.h"
+#import "STRInjector.h"
 #import "STRPromise.h"
 
 @interface STRDFPManager : NSObject
+
+@property (nonatomic, strong) STRInjector *injector;
 
 + (instancetype)sharedInstance;
 

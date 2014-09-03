@@ -10,12 +10,10 @@
 
 #import "STRAdGenerator.h"
 #import "STRAppModule.h"
-#import "STRInjector.h"
 #import "STRDeferred.h"
 
 @interface STRDFPManager ()
 
-@property (nonatomic, strong) STRInjector *injector;
 @property (nonatomic, strong) NSMutableDictionary *adPlacementCache;
 
 @end
@@ -28,7 +26,6 @@
     static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
-        sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];;
         sharedObject.adPlacementCache = [NSMutableDictionary dictionary];
     });
 

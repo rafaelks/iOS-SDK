@@ -21,7 +21,6 @@
 #import "STRInjector.h"
 #import "STRRestClient.h"
 
-
 #import "GADBannerView.h"
 #import "GADCustomEventExtras.h"
 
@@ -53,7 +52,6 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
         self.DFPPathCache = [NSMutableDictionary dictionary];
         self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
-        self.bannerView.delegate = self;
         self.extras = [[GADCustomEventExtras alloc] init];
     }
     return self;
@@ -98,35 +96,6 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
             return error;
         }];
     }
-}
-
-#pragma mark GADBannerViewDelegate
-#pragma mark Ad Request Lifecycle Notifications
-
-- (void)adViewDidReceiveAd:(GADBannerView *)view {
-    ALog(@"");
-}
-
-- (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
-    ALog(@"");
-}
-
-#pragma mark Click-Time Lifecycle Notifications
-
-- (void)adViewWillPresentScreen:(GADBannerView *)adView {
-    ALog(@"");
-}
-
-- (void)adViewWillDismissScreen:(GADBannerView *)adView {
-    ALog(@"");
-}
-
-- (void)adViewDidDismissScreen:(GADBannerView *)adView {
-    ALog(@"");
-}
-
-- (void)adViewWillLeaveApplication:(GADBannerView *)adView {
-    ALog(@"");
 }
 
 #pragma mark private

@@ -38,7 +38,7 @@
         self.restClient = restClient;
         self.networkClient = networkClient;
         self.adCache = adCache;
-        self.beaconService = beaconService;
+        self.beaconService = beaconServic
     }
 
     return self;

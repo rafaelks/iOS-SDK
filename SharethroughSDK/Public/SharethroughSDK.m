@@ -17,6 +17,7 @@
 #import "STRAdService.h"
 #import "STRTestSafeModule.h"
 #import "STRDFPAdGenerator.h"
+#import "STRDFPManager.h"
 
 @interface SharethroughSDK ()
 
@@ -33,7 +34,9 @@
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
         sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];
-        [sharedObject.injector getInstance:[STRGridlikeViewAdGenerator class]];
+        [sharedObject.injector getInstance:[STRDFPAdGenerator class]];
+        STRDFPManager *dfpManager = [STRDFPManager sharedInstance];
+        dfpManager.injector = sharedObject.injector;
     });
 
     return sharedObject;

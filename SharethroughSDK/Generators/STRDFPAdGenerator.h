@@ -16,7 +16,7 @@
 
 extern char const * const STRDFPAdGeneratorKey;
 
-@interface STRDFPAdGenerator : NSObject<GADBannerViewDelegate>
+@interface STRDFPAdGenerator : NSObject
 
 - (id)initWithAdService:(STRAdService *)adService
                injector:(STRInjector *)injector
