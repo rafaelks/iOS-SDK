@@ -56,8 +56,6 @@
     }];
     
     [injector bind:[STRDFPAdGenerator class] toInstance:[[STRDFPAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
-                                                                                      beaconService:[injector getInstance:[STRBeaconService class]]
-                                                                                            runLoop:[injector getInstance:[NSRunLoop class]]
                                                                                            injector:injector
                                                                                          restClient:[injector getInstance:[STRRestClient class]]]];
 

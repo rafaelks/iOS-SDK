@@ -15,6 +15,7 @@
 #import "STRAdPlacement.h"
 #import "STRAdRenderer.h"
 #import "STRAdViewDelegate.h"
+#import "STRDeferred.h"
 #import "STRInjector.h"
 #import "STRPromise.h"
 
@@ -62,6 +63,28 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
         }
         return error;
     }];
+}
+
+- (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement {
+    STRDeferred *deferred = [STRDeferred defer];
+
+    STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
+    [adPromise then:^id(STRAdvertisement *ad) {
+        STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
+        [renderer renderAd:ad inPlacement:placement];
+        [deferred resolveWithValue:nil];
+        return ad;
+    } error:^id(NSError *error) {
+        [placement.adView setNeedsLayout];
+
+        if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
+            [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+        }
+        [deferred rejectWithError:error];
+        return error;
+    }];
+
+    return deferred.promise;
 }
 
 - (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey {

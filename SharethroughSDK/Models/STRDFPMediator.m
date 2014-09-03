@@ -22,16 +22,14 @@
     
     NSDictionary* extras = [request additionalParameters];
     
-    //NSLog(@"Parameter:%@, Label:%@, lacement Key: %@", serverParameter, serverLabel, extras[@"placementKey"]);
-
-    [self.delegate customEventBanner:self didReceiveAd:[UIView new]];
+    NSLog(@"Parameter:%@, Label:%@, Placement Key: %@", serverParameter, serverLabel, extras[@"placementKey"]);
     
     STRPromise *placeAdPromise = [[STRDFPManager sharedInstance] renderCreative:serverParameter inPlacement:extras[@"placementKey"]];
-    [placeAdPromise then:^id(id value) {
-        //[self.delegate customEventBanner:self didReceiveAd:value];
+    [placeAdPromise then:^id(UIView<STRAdView>  *adView) {
+        [self.delegate customEventBanner:self didReceiveAd:[UIView new]];
         return nil;
     } error:^id(NSError *error) {
-        //[self.delegate customEventBanner:self didFailAd:error];
+        [self.delegate customEventBanner:self didFailAd:error];
         return nil;
     }];
 }

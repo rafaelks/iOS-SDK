@@ -20,8 +20,6 @@ extern char const * const STRDFPAdGeneratorKey;
 
 
 - (id)initWithAdService:(STRAdService *)adService
-          beaconService:(STRBeaconService *)beaconService
-                runLoop:(NSRunLoop *)timerRunLoop
                injector:(STRInjector *)injector
              restClient:(STRRestClient *)restClient;
 

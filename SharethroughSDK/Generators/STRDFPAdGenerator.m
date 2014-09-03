@@ -19,7 +19,6 @@
 #import "STRDeferred.h"
 #import "STRDFPManager.h"
 #import "STRInjector.h"
-#import "STRBeaconService.h"
 #import "STRRestClient.h"
 
 
@@ -44,8 +43,6 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
 @implementation STRDFPAdGenerator
 - (id)initWithAdService:(STRAdService *)adService
-          beaconService:(STRBeaconService *)beaconService
-                runLoop:(NSRunLoop *)timerRunLoop
                injector:(STRInjector *)injector
              restClient:(STRRestClient *)restClient {
     self = [super init];
@@ -53,6 +50,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         self.adService = adService;
         self.injector = injector;
         self.restClient = restClient;
+
         self.DFPPathCache = [NSMutableDictionary dictionary];
         self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
         self.bannerView.delegate = self;

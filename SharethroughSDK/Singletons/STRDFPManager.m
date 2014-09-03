@@ -45,9 +45,14 @@
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:placementKey];
 
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-    [generator placeAdInPlacement:adPlacement];
-
-    [deferred resolveWithValue:adPlacement.adView];
+    STRPromise *promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
+    [promise then:^id(id value) {
+        [deferred resolveWithValue:adPlacement.adView];
+        return value;
+    } error:^id(NSError *error) {
+        [deferred rejectWithError:error];
+        return error;
+    }];
 
     return deferred.promise;
 }

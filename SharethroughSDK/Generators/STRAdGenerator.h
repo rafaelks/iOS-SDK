@@ -18,6 +18,7 @@ extern char const * const STRAdGeneratorKey;
 - (id)initWithAdService:(STRAdService *)adService injector:(STRInjector *)injector;
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement;
+- (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement;
 
 - (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey;
 @end
