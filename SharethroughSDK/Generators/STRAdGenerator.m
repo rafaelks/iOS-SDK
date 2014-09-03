@@ -44,37 +44,30 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 }
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement {
-    [self addSpinnerToView:placement.adView];
-
-    STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
-    [adPromise then:^id(STRAdvertisement *ad) {
-        [self.spinner removeFromSuperview];
-
-        STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
-        [renderer renderAd:ad inPlacement:placement];
-
-        return ad;
-    } error:^id(NSError *error) {
-        [self.spinner removeFromSuperview];
-        [placement.adView setNeedsLayout];
-
-        if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
-            [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
-        }
-        return error;
-    }];
+    [self placeCreative:@"" inPlacement:placement];
 }
 
 - (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement {
     STRDeferred *deferred = [STRDeferred defer];
+    [self addSpinnerToView:placement.adView];
 
-    STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
+    STRPromise *adPromise;
+    if ([creativeKey length] > 0){
+        adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
+    } else {
+        adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
+    }
+
     [adPromise then:^id(STRAdvertisement *ad) {
+        [self.spinner removeFromSuperview];
+
         STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
         [renderer renderAd:ad inPlacement:placement];
+
         [deferred resolveWithValue:nil];
         return ad;
     } error:^id(NSError *error) {
+        [self.spinner removeFromSuperview];
         [placement.adView setNeedsLayout];
 
         if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
