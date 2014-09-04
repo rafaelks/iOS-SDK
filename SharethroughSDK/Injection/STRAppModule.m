@@ -6,7 +6,6 @@
 #import "STRAdService.h"
 #import "STRBeaconService.h"
 #import "STRDateProvider.h"
-#import "STRDFPAdGenerator.h"
 #import "STRGridlikeViewAdGenerator.h"
 #import "STRNetworkClient.h"
 #import "STRRestClient.h"
@@ -54,10 +53,6 @@
         return [[STRAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
                                                 injector:injector];
     }];
-    
-    [injector bind:[STRDFPAdGenerator class] toInstance:[[STRDFPAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
-                                                                                            injector:injector
-                                                                                          restClient:[injector getInstance:[STRRestClient class]]]];
 
     [injector bind:[STRGridlikeViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRGridlikeViewAdGenerator alloc] initWithInjector:injector];
