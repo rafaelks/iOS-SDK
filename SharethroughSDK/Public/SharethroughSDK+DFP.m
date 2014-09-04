@@ -33,7 +33,7 @@
     static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
-        sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];
+        sharedObject.injector = [STRInjector injectorForModule:[STRDFPAppModule new]];
         [sharedObject.injector getInstance:[STRDFPAdGenerator class]];
         STRDFPManager *dfpManager = [STRDFPManager sharedInstance];
         dfpManager.injector = sharedObject.injector;
