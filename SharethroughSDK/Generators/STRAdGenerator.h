@@ -21,4 +21,6 @@ extern char const * const STRAdGeneratorKey;
 - (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement;
 
 - (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey;
+- (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement;
+
 @end

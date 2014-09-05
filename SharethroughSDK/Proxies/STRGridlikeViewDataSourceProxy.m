@@ -45,16 +45,13 @@
 }
 
 - (instancetype)copyWithNewDataSource:(id)newDataSource {
-    //TODO
-    /*
-    return [[[self class] alloc] initWithOriginalDataSource:newDataSource
-                                                   adjuster:self.adjuster
-                                      adCellReuseIdentifier:self.adCellReuseIdentifier
-                                               placementKey:self.placementKey
-                                   presentingViewController:self.presentingViewController
-                                                   injector:self.injector];
-     */
-    return self;
+    STRGridlikeViewDataSourceProxy *copy = [[[self class] alloc] initWithAdCellReuseIdentifier:self.adCellReuseIdentifier
+                                                                                     placementKey:self.placementKey
+                                                                         presentingViewController:self.presentingViewController
+                                                                                         injector:self.injector];
+    copy.originalDataSource = newDataSource;
+    copy.adjuster = self.adjuster;
+    return copy;
 }
 
 

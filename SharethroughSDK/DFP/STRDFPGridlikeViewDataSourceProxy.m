@@ -10,7 +10,7 @@
 
 #import "STRAdView.h"
 #import "STRAdPlacementAdjuster.h"
-#import "STRAdGenerator.h"
+#import "STRDFPAdGenerator.h"
 #import "STRInjector.h"
 #import "STRAdPlacement.h"
 #import "STRPromise.h"
@@ -23,14 +23,28 @@
 
 @implementation STRDFPGridlikeViewDataSourceProxy
 
-- (void)prefetchAdForGridLikeView:(id)gridlikeView {
-    NSLog(@"%@", NSStringFromClass([self class]));
+- (instancetype)copyWithNewDataSource:(id)newDataSource {
+    STRDFPGridlikeViewDataSourceProxy *copy = [[[self class] alloc] initWithAdCellReuseIdentifier:self.adCellReuseIdentifier
+                                                                                     placementKey:self.placementKey
+                                                                         presentingViewController:self.presentingViewController
+                                                                                         injector:self.injector];
+    copy.originalDataSource = newDataSource;
+    copy.adjuster = self.adjuster;
+    return copy;
+}
 
+- (void)prefetchAdForGridLikeView:(id)gridlikeView {
     self.gridlikeView = gridlikeView;
     if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
-        STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-        STRPromise *adPromise = [adGenerator prefetchAdForPlacementKey:self.placementKey];
-        [adPromise then:^id(id value) {
+
+        STRDFPAdGenerator *adGenerator = [self.injector getInstance:[STRDFPAdGenerator class]];
+
+        STRAdPlacement *placement = [[STRAdPlacement alloc] initWithPlacementKey:self.placementKey
+                                                        presentingViewController:self.gridlikeView
+                                                                        delegate:nil];
+        STRDeferred *deferred = [STRDeferred defer];
+        placement.deferred = deferred;
+        [deferred.promise then:^id(id value) {
             self.adjuster.adLoaded = YES;
             [self.gridlikeView reloadData];
             return self.adjuster;
@@ -38,6 +52,8 @@
             self.adjuster.adLoaded = NO;
             return self.adjuster;
         }];
+
+        [adGenerator placeAdInPlacement:placement];
     }
 }
 

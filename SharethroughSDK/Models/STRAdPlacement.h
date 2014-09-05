@@ -11,6 +11,7 @@
 #import "STRAdView.h"
 #import "STRAdViewDelegate.h"
 #import "STRAdPlacementAdjuster.h"
+#import "STRDeferred.h"
 
 @interface STRAdPlacement : NSObject
 
@@ -22,6 +23,6 @@ presentingViewController:(UIViewController *)presentingViewController
 @property (strong, nonatomic) NSString *placementKey;
 @property (strong, nonatomic) UIViewController *presentingViewController;
 @property (strong, nonatomic) id<STRAdViewDelegate> delegate;
-@property (strong, nonatomic) STRAdPlacementAdjuster *adjuster;
+@property (strong, nonatomic) STRDeferred *deferred;
 
 @end

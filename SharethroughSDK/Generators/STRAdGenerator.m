@@ -84,6 +84,10 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
     return [self.adService fetchAdForPlacementKey:placementKey];
 }
 
+- (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement {
+    return [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
+}
+
 - (void)addSpinnerToView:(UIView *)view {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     spinner.translatesAutoresizingMaskIntoConstraints = NO;

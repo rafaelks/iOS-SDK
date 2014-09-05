@@ -40,13 +40,25 @@
     STRDeferred *deferred = [STRDeferred defer];
 
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:placementKey];
-
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-    STRPromise *promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
+    STRPromise *promise;
+
+    if (adPlacement.deferred != nil) {
+        promise = [generator prefetchCreative:creativeKey forPlacement:adPlacement];
+    } else {
+        promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
+    }
+
     [promise then:^id(id value) {
+        if (adPlacement.deferred != nil) {
+            [adPlacement.deferred resolveWithValue:nil];
+        }
         [deferred resolveWithValue:adPlacement.adView];
         return value;
     } error:^id(NSError *error) {
+        if (adPlacement.deferred != nil) {
+            [adPlacement.deferred rejectWithError:error];
+        }
         [deferred rejectWithError:error];
         return error;
     }];

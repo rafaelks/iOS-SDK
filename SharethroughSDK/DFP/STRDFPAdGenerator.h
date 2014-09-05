@@ -24,8 +24,4 @@ extern char const * const STRDFPAdGeneratorKey;
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement;
 
-/*
-- (STRPromise *)prefetchAdForPlacement:(NSString *)placementKey;
- */
-
 @end

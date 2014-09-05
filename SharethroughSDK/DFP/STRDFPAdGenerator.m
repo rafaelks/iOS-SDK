@@ -60,16 +60,20 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 - (void)placeAdInPlacement:(STRAdPlacement *)placement {
 
     if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
-        STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
-        [adPromise then:^id(STRAdvertisement *ad) {
+        if (placement.deferred != nil) {
+            [placement.deferred resolveWithValue:nil];
+        } else {
+            STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
+            [adPromise then:^id(STRAdvertisement *ad) {
 
-            STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
-            [renderer renderAd:ad inPlacement:placement];
+                STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
+                [renderer renderAd:ad inPlacement:placement];
 
-            return ad;
-        } error:^id(NSError *error) {
-            return error;
-        }];
+                return ad;
+            } error:^id(NSError *error) {
+                return error;
+            }];
+        }
     } else {
         STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
         [DFPPathPromise then:^id(NSString *value) {
@@ -84,26 +88,6 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
             return error;
         }];
     }
-}
-
-- (STRPromise *)prefetchAdForPlacement:(NSString *)placementKey {
-    STRDeferred *deferred = [STRDeferred defer];
-
-    STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placementKey];
-    [DFPPathPromise then:^id(NSString *value) {
-        if ([value length] > 0) {
-            [self initializeDFPRrequestWithDFPPath:value placement:nil];
-            [deferred resolveWithValue:value];
-        } else {
-            [deferred rejectWithError:[NSError errorWithDomain:@"DFP Path Not Found" code:-1 userInfo:nil]];
-        }
-        return value;
-    } error:^id(NSError *error) {
-        [deferred rejectWithError:error];
-        return error;
-    }];
-
-    return deferred.promise;
 }
 
 #pragma mark private
