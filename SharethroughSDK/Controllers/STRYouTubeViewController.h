@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class STRAdYouTube;
+@class STRAdYouTube, STRBeaconService;
 
 @interface STRYouTubeViewController : UIViewController
 
@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
-- (id)initWithAd:(STRAdYouTube *)ad;
+- (id)initWithAd:(STRAdYouTube *)ad beaconService:(STRBeaconService *)beaconService;
 
 @end

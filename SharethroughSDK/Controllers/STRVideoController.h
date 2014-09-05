@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class STRAdvertisement, MPMoviePlayerController;
+@class STRAdvertisement, STRBeaconService, MPMoviePlayerController;
 
 @interface STRVideoController : UIViewController
 
@@ -18,6 +18,6 @@
 @property (weak, nonatomic, readonly) UIActivityIndicatorView *spinner;
 
 
-- (id)initWithAd:(STRAdvertisement *)ad moviePlayerController:(MPMoviePlayerController *)moviePlayerController;
+- (id)initWithAd:(STRAdvertisement *)ad moviePlayerController:(MPMoviePlayerController *)moviePlayerController beaconService:(STRBeaconService *)beaconService;
 
 @end

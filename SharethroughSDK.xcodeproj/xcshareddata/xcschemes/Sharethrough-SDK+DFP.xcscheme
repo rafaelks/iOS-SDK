@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E8703DF519B9092600D3FA50"
-               BuildableName = "libSharethrough-SDK copy.a"
+               BuildableName = "libSharethrough-SDK+DFP.a"
                BlueprintName = "Sharethrough-SDK+DFP"
                ReferencedContainer = "container:SharethroughSDK.xcodeproj">
             </BuildableReference>

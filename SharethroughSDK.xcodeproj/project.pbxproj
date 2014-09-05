@@ -55,13 +55,11 @@
 		AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
 		AE1F671D1899AD9E00E184D6 /* STRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1F671C1899AD9E00E184D6 /* STRTableViewCell.m */; };
 		AE1F67241899BBC600E184D6 /* STRTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1F67231899BBC600E184D6 /* STRTableViewDataSource.m */; };
-		AE2246831886138F00626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
 		AE2246841886138F00626A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
 		AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246851886138F00626A29 /* CoreGraphics.framework */; };
 		AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE22468A1886138F00626A29 /* InfoPlist.strings */; };
 		AE22468E1886138F00626A29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE22468D1886138F00626A29 /* main.m */; };
 		AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246911886138F00626A29 /* Cedar-iOS.framework */; };
-		AE2246E518874D7800626A29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3F71885ADF00004AB32 /* UIKit.framework */; };
 		AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */; };
 		AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246FD1888782A00626A29 /* STRFullAdView.m */; };
 		AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
@@ -468,7 +466,6 @@
 		AE8ED3E61885ADF00004AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE8ED3EA1885ADF00004AB32 /* SharethroughSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK-Prefix.pch"; sourceTree = "<group>"; };
 		AE8ED3F41885ADF00004AB32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		AE8ED3F71885ADF00004AB32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		AE9C4608189B181B001B407A /* STRAdCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdCache.h; sourceTree = "<group>"; };
 		AE9C4609189B181B001B407A /* STRAdCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdCache.m; sourceTree = "<group>"; };
 		AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdCacheSpec.mm; sourceTree = "<group>"; };
@@ -582,7 +579,6 @@
 				AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */,
 				AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
-				AE2246831886138F00626A29 /* UIKit.framework in Frameworks */,
 				AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */,
 				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
 			);
@@ -594,7 +590,6 @@
 			files = (
 				AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */,
 				AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */,
-				AE2246E518874D7800626A29 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -931,7 +926,6 @@
 				AE46CE6E189849B00096BDE9 /* AdSupport.framework */,
 				AE8ED3E61885ADF00004AB32 /* Foundation.framework */,
 				AE8ED3F41885ADF00004AB32 /* XCTest.framework */,
-				AE8ED3F71885ADF00004AB32 /* UIKit.framework */,
 				AE2246851886138F00626A29 /* CoreGraphics.framework */,
 				AE52B87B188F398A00C4DEF8 /* CoreFoundation.framework */,
 			);
