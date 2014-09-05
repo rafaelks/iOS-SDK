@@ -67,7 +67,6 @@ presentingViewController:(UIViewController *)presentingViewController
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     STRDFPGridlikeViewDataSourceProxy *dataSourceProxy = [[STRDFPGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
 
-    
     [gridlikeViewAdGenerator placeAdInGridlikeView:tableView
                                    dataSourceProxy:dataSourceProxy
                              adCellReuseIdentifier:adCellReuseIdentifier

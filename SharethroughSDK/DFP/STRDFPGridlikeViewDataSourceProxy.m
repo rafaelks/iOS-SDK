@@ -25,7 +25,7 @@
 
 - (void)prefetchAdForGridLikeView:(id)gridlikeView {
     NSLog(@"%@", NSStringFromClass([self class]));
-    
+
     self.gridlikeView = gridlikeView;
     if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
         STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
