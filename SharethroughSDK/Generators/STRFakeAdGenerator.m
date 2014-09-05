@@ -15,6 +15,7 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRDeferred.h"
+#import "STRAdPlacement.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
@@ -66,6 +67,13 @@
             break;
     }
     return self;
+}
+
+- (void)placeAdInPlacement:(STRAdPlacement *)placement {
+    [self placeAdInView:placement.adView
+           placementKey:placement.placementKey
+presentingViewController:placement.presentingViewController
+               delegate:placement.delegate];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view
