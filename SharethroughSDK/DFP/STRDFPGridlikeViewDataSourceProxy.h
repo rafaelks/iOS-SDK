@@ -10,6 +10,6 @@
 
 #import "STRGridlikeViewDataSourceProxy.h"
 
-@interface STRDFPGridlikeViewDataSourceProxyProtocol : STRGridlikeViewDataSourceProxy
+@interface STRDFPGridlikeViewDataSourceProxy : STRGridlikeViewDataSourceProxy
 
 @end

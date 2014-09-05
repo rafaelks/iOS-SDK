@@ -14,7 +14,6 @@
 #import "STRIndexPathDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRGridlikeViewDataSourceProxy.h"
-#import "STRGridlikeViewDataSourceProxyProtocol.h"
 
 const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey";
 
@@ -39,6 +38,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
 }
 
 - (void)placeAdInGridlikeView:(id)gridlikeView
+              dataSourceProxy:(STRGridlikeViewDataSourceProxy *)dataSourceProxy
         adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
                  placementKey:(NSString *)placementKey
      presentingViewController:(UIViewController *)presentingViewController
@@ -59,7 +59,10 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:gridlikeView preferredStartingIndexPath:adInitialIndexPath]];
     self.adjuster = adjuster;
 
-    self.dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithOriginalDataSource:originalDataSource adjuster:adjuster adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+    //self.dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+    self.dataSourceProxy = dataSourceProxy;
+    self.dataSourceProxy.adjuster = adjuster;
+    self.dataSourceProxy.originalDataSource = originalDataSource;
     
     [self.dataSourceProxy prefetchAdForGridLikeView:gridlikeView];
     

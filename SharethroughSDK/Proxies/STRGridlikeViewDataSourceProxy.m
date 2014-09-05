@@ -16,11 +16,9 @@
 
 @interface STRGridlikeViewDataSourceProxy ()
 
-@property (nonatomic, weak, readwrite) id originalDataSource;
 @property (nonatomic, weak) id<UITableViewDataSource> originalTVDataSource;
 @property (nonatomic, weak) id<UICollectionViewDataSource> originalCVDataSource;
 
-@property (strong, nonatomic) STRAdPlacementAdjuster *adjuster;
 @property (copy, nonatomic) NSString *adCellReuseIdentifier;
 @property (copy, nonatomic) NSString *placementKey;
 @property (weak, nonatomic) UIViewController *presentingViewController;
@@ -31,16 +29,12 @@
 
 @implementation STRGridlikeViewDataSourceProxy
 
-- (id)initWithOriginalDataSource:(id)originalDataSource
-                        adjuster:(STRAdPlacementAdjuster *)adjuster
-           adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
-                    placementKey:(NSString *)placementKey
-        presentingViewController:(UIViewController *)presentingViewController
-                        injector:(STRInjector *)injector {
+- (id)initWithAdCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+                       placementKey:(NSString *)placementKey
+           presentingViewController:(UIViewController *)presentingViewController
+                           injector:(STRInjector *)injector {
     self = [super init];
     if (self) {
-        self.originalDataSource = [self validateAndSetDataSource:originalDataSource];
-        self.adjuster = adjuster;
         self.adCellReuseIdentifier = adCellReuseIdentifier;
         self.placementKey = placementKey;
         self.presentingViewController = presentingViewController;
@@ -51,12 +45,16 @@
 }
 
 - (instancetype)copyWithNewDataSource:(id)newDataSource {
+    //TODO
+    /*
     return [[[self class] alloc] initWithOriginalDataSource:newDataSource
                                                    adjuster:self.adjuster
                                       adCellReuseIdentifier:self.adCellReuseIdentifier
                                                placementKey:self.placementKey
                                    presentingViewController:self.presentingViewController
                                                    injector:self.injector];
+     */
+    return self;
 }
 
 
@@ -74,6 +72,10 @@
             return self.adjuster;
         }];
     }
+}
+
+- (void)setOriginalDataSource:(id)originalDataSource {
+    _originalDataSource = [self validateAndSetDataSource:originalDataSource];
 }
 
 #pragma mark - <UITableViewDataSource>

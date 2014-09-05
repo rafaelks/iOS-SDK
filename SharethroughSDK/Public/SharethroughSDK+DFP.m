@@ -12,6 +12,7 @@
 #import "STRAdGenerator.h"
 #import "STRAdPlacement.h"
 #import "STRGridlikeViewAdGenerator.h"
+#import "STRDFPGridlikeViewDataSourceProxy.h"
 #import "STRFakeAdGenerator.h"
 #import "STRBeaconService.h"
 #import "STRAdService.h"
@@ -64,7 +65,11 @@ presentingViewController:(UIViewController *)presentingViewController
         adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
 
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
+    STRDFPGridlikeViewDataSourceProxy *dataSourceProxy = [[STRDFPGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+
+    
     [gridlikeViewAdGenerator placeAdInGridlikeView:tableView
+                                   dataSourceProxy:dataSourceProxy
                              adCellReuseIdentifier:adCellReuseIdentifier
                                       placementKey:placementKey
                           presentingViewController:presentingViewController
@@ -80,7 +85,10 @@ presentingViewController:(UIViewController *)presentingViewController
              adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
 
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
+    STRDFPGridlikeViewDataSourceProxy *dataSourceProxy = [[STRDFPGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+
     [gridlikeViewAdGenerator placeAdInGridlikeView:collectionView
+                                   dataSourceProxy:dataSourceProxy
                              adCellReuseIdentifier:adCellReuseIdentifier
                                       placementKey:placementKey
                           presentingViewController:presentingViewController

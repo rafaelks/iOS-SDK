@@ -8,8 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
-#import "STRGridlikeViewDataSourceProxyProtocol.h"
+@class STRAdPlacementAdjuster, STRInjector;
 
-@interface STRGridlikeViewDataSourceProxy : NSObject<STRGridlikeViewDataSourceProxyProtocol>
+@interface STRGridlikeViewDataSourceProxy : NSObject<UITableViewDataSource, UICollectionViewDataSource>
+
+@property (nonatomic, weak) id originalDataSource;
+@property (strong, nonatomic) STRAdPlacementAdjuster *adjuster;
+
+@property (copy, nonatomic, readonly) NSString *adCellReuseIdentifier;
+@property (copy, nonatomic, readonly) NSString *placementKey;
+@property (weak, nonatomic, readonly) UIViewController *presentingViewController;
+@property (weak, nonatomic, readonly) STRInjector *injector;
+
+- (id)initWithAdCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+                       placementKey:(NSString *)placementKey
+           presentingViewController:(UIViewController *)presentingViewController
+                           injector:(STRInjector *)injector;
+
+- (instancetype)copyWithNewDataSource:(id)newDataSource;
+
+- (void)prefetchAdForGridLikeView:(id)gridlikeView;
 
 @end

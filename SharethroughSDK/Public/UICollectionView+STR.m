@@ -24,7 +24,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 
         return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:trueIndexPath];
     } else {
-        NSLog(@"WARNING: Called %@ on a collectionview that was not setup through SharethroughSDK %@. Did you intend to place an ad in this UICollectionView? If not, use UICollectionView's built-in -dequeueReusableCellWithReuseIdentifier: method", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:)));
+        NSLog(@"WARNING: Called %@ on a collectionview that was not setup through SharethroughSDK %@. Did you intend to place an ad in this UICollectionView? If not, use UICollectionView's built-in -dequeueReusableCellWithReuseIdentifier: method", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:dataSourceProxy:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:)));
         return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     }
 }

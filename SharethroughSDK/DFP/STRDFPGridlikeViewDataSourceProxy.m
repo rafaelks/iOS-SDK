@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Sharethrough. All rights reserved.
 //
 
-#import "STRDFPGridlikeViewDataSourceProxyProtocol.h"
+#import "STRDFPGridlikeViewDataSourceProxy.h"
 
 #import "STRAdView.h"
 #import "STRAdPlacementAdjuster.h"
@@ -15,15 +15,17 @@
 #import "STRAdPlacement.h"
 #import "STRPromise.h"
 
-@interface STRDFPGridlikeViewDataSourceProxyProtocol ()
+@interface STRDFPGridlikeViewDataSourceProxy ()
 
 @property (weak, nonatomic) id gridlikeView;
 
 @end
 
-@implementation STRDFPGridlikeViewDataSourceProxyProtocol
+@implementation STRDFPGridlikeViewDataSourceProxy
 
 - (void)prefetchAdForGridLikeView:(id)gridlikeView {
+    NSLog(@"%@", NSStringFromClass([self class]));
+    
     self.gridlikeView = gridlikeView;
     if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
         STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
