@@ -14,6 +14,7 @@
 #import "STRIndexPathDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRGridlikeViewDataSourceProxy.h"
+#import "STRGridlikeViewDataSourceProxyProtocol.h"
 
 const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey";
 

@@ -12,7 +12,7 @@
 #import "GADBannerViewDelegate.h"
 
 @protocol STRAdView, STRAdViewDelegate;
-@class STRAdService, STRBeaconService, STRInjector, STRRestClient;
+@class STRAdService, STRBeaconService, STRInjector, STRPromise, STRRestClient;
 
 extern char const * const STRDFPAdGeneratorKey;
 
@@ -23,5 +23,9 @@ extern char const * const STRDFPAdGeneratorKey;
              restClient:(STRRestClient *)restClient;
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement;
+
+/*
+- (STRPromise *)prefetchAdForPlacement:(NSString *)placementKey;
+ */
 
 @end

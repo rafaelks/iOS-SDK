@@ -74,19 +74,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
         [DFPPathPromise then:^id(NSString *value) {
             if ([value length] > 0) {
-                self.bannerView.adUnitID = value;
-                self.bannerView.rootViewController = placement.presentingViewController;
-
-                [placement.adView addSubview:self.bannerView];
-
-                [self.extras setExtras:@{@"placementKey": placement.placementKey} forLabel:@"Sharethrough"];
-
-                GADRequest *request = [GADRequest request];
-                [request registerAdNetworkExtras:self.extras];
-                [self.bannerView loadRequest:request];
-
-                [[STRDFPManager sharedInstance] cacheAdPlacement:placement];
-
+                [self initializeDFPRrequestWithDFPPath:value placement:placement];
             } else {
                 [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
             }
@@ -96,6 +84,26 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
             return error;
         }];
     }
+}
+
+- (STRPromise *)prefetchAdForPlacement:(NSString *)placementKey {
+    STRDeferred *deferred = [STRDeferred defer];
+
+    STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placementKey];
+    [DFPPathPromise then:^id(NSString *value) {
+        if ([value length] > 0) {
+            [self initializeDFPRrequestWithDFPPath:value placement:nil];
+            [deferred resolveWithValue:value];
+        } else {
+            [deferred rejectWithError:[NSError errorWithDomain:@"DFP Path Not Found" code:-1 userInfo:nil]];
+        }
+        return value;
+    } error:^id(NSError *error) {
+        [deferred rejectWithError:error];
+        return error;
+    }];
+
+    return deferred.promise;
 }
 
 #pragma mark private
@@ -118,6 +126,21 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         }];
     }
     return deferred.promise;
+}
+
+- (void)initializeDFPRrequestWithDFPPath:(NSString *)DFPPath placement:(STRAdPlacement *)placement {
+    self.bannerView.adUnitID = DFPPath;
+    self.bannerView.rootViewController = placement.presentingViewController;
+
+    [placement.adView addSubview:self.bannerView];
+
+    [self.extras setExtras:@{@"placementKey": placement.placementKey} forLabel:@"Sharethrough"];
+
+    GADRequest *request = [GADRequest request];
+    [request registerAdNetworkExtras:self.extras];
+    [self.bannerView loadRequest:request];
+
+    [[STRDFPManager sharedInstance] cacheAdPlacement:placement];
 }
 
 @end

@@ -55,10 +55,10 @@
 presentingViewController:(UIViewController *)presentingViewController
              delegate:(id<STRAdViewDelegate>)delegate {
 
-    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWith:view
-                                                      placementKey:placementKey
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithPlacementKey:placementKey
                                           presentingViewController:presentingViewController
                                                           delegate:delegate];
+    adPlacement.adView = view;
 
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     [generator placeAdInPlacement:adPlacement];

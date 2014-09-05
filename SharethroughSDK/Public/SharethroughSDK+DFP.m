@@ -29,7 +29,7 @@
 
 + (instancetype)sharedInstance {
     __strong static SharethroughSDKDFP *sharedObject = nil;
-    
+
     static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
@@ -38,19 +38,22 @@
         STRDFPManager *dfpManager = [STRDFPManager sharedInstance];
         dfpManager.injector = sharedObject.injector;
     });
-    
+
     return sharedObject;
 }
 
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {
-    
-    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWith:view
-                                                      placementKey:placementKey
-                                          presentingViewController:presentingViewController
-                                                          delegate:delegate];
+- (void)placeAdInView:(UIView<STRAdView> *)view
+         placementKey:(NSString *)placementKey
+presentingViewController:(UIViewController *)presentingViewController
+             delegate:(id<STRAdViewDelegate>)delegate {
 
-        STRDFPAdGenerator *generator = [self.injector getInstance:[STRDFPAdGenerator class]];
-        [generator placeAdInPlacement:adPlacement];
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithPlacementKey:placementKey
+                                                      presentingViewController:presentingViewController
+                                                                      delegate:delegate];
+    adPlacement.adView = view;
+
+    STRDFPAdGenerator *generator = [self.injector getInstance:[STRDFPAdGenerator class]];
+    [generator placeAdInPlacement:adPlacement];
 }
 
 - (void)placeAdInTableView:(UITableView *)tableView
@@ -59,7 +62,7 @@
   presentingViewController:(UIViewController *)presentingViewController
                   adHeight:(CGFloat)adHeight
         adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
-    
+
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     [gridlikeViewAdGenerator placeAdInGridlikeView:tableView
                              adCellReuseIdentifier:adCellReuseIdentifier
@@ -75,7 +78,7 @@
        presentingViewController:(UIViewController *)presentingViewController
                          adSize:(CGSize)adSize
              adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
-    
+
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     [gridlikeViewAdGenerator placeAdInGridlikeView:collectionView
                              adCellReuseIdentifier:adCellReuseIdentifier

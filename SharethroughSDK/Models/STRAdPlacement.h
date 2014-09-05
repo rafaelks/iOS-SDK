@@ -10,11 +10,11 @@
 
 #import "STRAdView.h"
 #import "STRAdViewDelegate.h"
+#import "STRAdPlacementAdjuster.h"
 
 @interface STRAdPlacement : NSObject
 
-- (instancetype)initWith:(UIView<STRAdView> *)view
-            placementKey:(NSString *)placementKey
+- (instancetype)initWithPlacementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController
                 delegate:(id<STRAdViewDelegate>)delegate;
 
@@ -22,5 +22,6 @@ presentingViewController:(UIViewController *)presentingViewController
 @property (strong, nonatomic) NSString *placementKey;
 @property (strong, nonatomic) UIViewController *presentingViewController;
 @property (strong, nonatomic) id<STRAdViewDelegate> delegate;
+@property (strong, nonatomic) STRAdPlacementAdjuster *adjuster;
 
 @end

@@ -15,12 +15,10 @@
 
 @implementation STRAdPlacement
 
-- (id)initWith:(UIView<STRAdView> *)view
-  placementKey:(NSString *)placementKey
+- (id)initWithPlacementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController
       delegate:(id<STRAdViewDelegate>)delegate {
     
-    self.adView = view;
     self.placementKey = placementKey;
     self.presentingViewController = presentingViewController;
     self.delegate = delegate;
