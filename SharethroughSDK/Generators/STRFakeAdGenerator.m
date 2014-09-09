@@ -25,7 +25,7 @@
 
 @implementation STRFakeAdGenerator
 
-- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService runLoop:(NSRunLoop *)timerRunLoop injector:(STRInjector *)injector {
+- (id)initWithAdService:(STRAdService *)adService injector:(STRInjector *)injector {
 
     [NSException raise:@"STRFakeAdGeneratorError"
                 format:@"Fake ad generator does not respond to %@, because it does not use any of these things.", NSStringFromSelector(_cmd)];
@@ -80,8 +80,6 @@ presentingViewController:placement.presentingViewController
          placementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController
              delegate:(id<STRAdViewDelegate>)delegate {
-
-    objc_setAssociatedObject(view, STRAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
     view.adTitle.text = self.advertisement.title;
     view.adSponsoredBy.text = self.advertisement.sponsoredBy;

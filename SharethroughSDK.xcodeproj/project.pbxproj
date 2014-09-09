@@ -182,6 +182,9 @@
 		E83128EE19B936D9007C2FAB /* STRDFPAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E719B936D9007C2FAB /* STRDFPAppModule.m */; };
 		E83128EF19B936D9007C2FAB /* STRDFPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E919B936D9007C2FAB /* STRDFPManager.m */; };
 		E83128F019B936D9007C2FAB /* STRDFPMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128EB19B936D9007C2FAB /* STRDFPMediator.m */; };
+		E831290119BE4A7E007C2FAB /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
+		E831290219BE4A7E007C2FAB /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
+		E84FB57919BE7AB40034A41E /* STRAdRendererSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */; };
 		E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
 		E8703DB119B12CB000D3FA50 /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
 		E8703DF719B9092600D3FA50 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
@@ -524,6 +527,7 @@
 		E83128EA19B936D9007C2FAB /* STRDFPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPManager.h; path = DFP/STRDFPManager.h; sourceTree = "<group>"; };
 		E83128EB19B936D9007C2FAB /* STRDFPMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPMediator.m; path = DFP/STRDFPMediator.m; sourceTree = "<group>"; };
 		E83128EC19B936D9007C2FAB /* STRDFPMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPMediator.h; path = DFP/STRDFPMediator.h; sourceTree = "<group>"; };
+		E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdRendererSpec.mm; sourceTree = "<group>"; };
 		E8703D4F19AE413700D3FA50 /* DFPBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
 		E8703D5019AE413700D3FA50 /* DFPExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
 		E8703D5119AE413700D3FA50 /* DFPInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPInterstitial.h; sourceTree = "<group>"; };
@@ -640,6 +644,8 @@
 				E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
+				E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */,
+				E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */,
 				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
 				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
 				AE9C4624189C29B0001B407A /* STRAdVine.h */,
@@ -648,8 +654,6 @@
 				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
 				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
 				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
-				E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */,
-				E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -678,6 +682,7 @@
 				AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */,
 				AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */,
 				AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */,
+				E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1348,6 +1353,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E831290119BE4A7E007C2FAB /* STRAdPlacement.m in Sources */,
+				E831290219BE4A7E007C2FAB /* STRAdRenderer.m in Sources */,
 				E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */,
 				AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */,
 				AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */,
@@ -1374,6 +1381,7 @@
 				AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				AEB4EF4718AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
 				AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */,
+				E84FB57919BE7AB40034A41E /* STRAdRendererSpec.mm in Sources */,
 				AE52FD7218A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,

@@ -19,8 +19,6 @@
 #import "STRInjector.h"
 #import "STRPromise.h"
 
-char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
-
 @interface STRAdGenerator ()
 
 @property (nonatomic, strong) STRAdService *adService;
@@ -50,6 +48,7 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
 - (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement {
     STRDeferred *deferred = [STRDeferred defer];
     [self addSpinnerToView:placement.adView];
+    [self clearTextFromView:placement.adView];
 
     STRPromise *adPromise;
     if ([creativeKey length] > 0){
@@ -88,6 +87,8 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
     return [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
 }
 
+#pragma mark - Private
+
 - (void)addSpinnerToView:(UIView *)view {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     spinner.translatesAutoresizingMaskIntoConstraints = NO;
@@ -112,6 +113,18 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
                                                               attribute:NSLayoutAttributeCenterY
                                                              multiplier:1.0
                                                                constant:0]];
+}
+
+- (void)clearTextFromView:(UIView<STRAdView> *)view {
+    view.adTitle.text = @"";
+    view.adSponsoredBy.text = @"";
+    [self setDescriptionText:@"" onView:view];
+}
+
+- (void)setDescriptionText:(NSString *)text onView:(UIView<STRAdView> *)view {
+    if ([view respondsToSelector:@selector(adDescription)]) {
+        view.adDescription.text = text;
+    }
 }
 
 @end

@@ -77,7 +77,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     self.adVisibleTimer = timer;
 
     if ([placement.delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
-        [placement.delegate adView:placement.adView didFetchAdForPlacementKey:@""];
+        [placement.delegate adView:placement.adView didFetchAdForPlacementKey:placement.placementKey];
     }
 }
 
