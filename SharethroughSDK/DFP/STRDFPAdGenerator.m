@@ -60,6 +60,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 - (void)placeAdInPlacement:(STRAdPlacement *)placement {
 
     if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
+        //Placement.deferred is used for UITableView and UICollectionView APIs to prefetch ads
         if (placement.deferred != nil) {
             [placement.deferred resolveWithValue:nil];
         } else {
@@ -71,6 +72,9 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
                 return ad;
             } error:^id(NSError *error) {
+                if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
+                    [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+                }
                 return error;
             }];
         }
@@ -80,11 +84,15 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
             if ([value length] > 0) {
                 [self initializeDFPRrequestWithDFPPath:value placement:placement];
             } else {
-                [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+                if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
+                    [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+                }
             }
             return value;
         } error:^id(NSError *error) {
-            [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+            if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
+                [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+            }
             return error;
         }];
     }
