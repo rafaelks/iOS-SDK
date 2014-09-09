@@ -185,6 +185,7 @@
 		E831290119BE4A7E007C2FAB /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
 		E831290219BE4A7E007C2FAB /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
 		E84FB57919BE7AB40034A41E /* STRAdRendererSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */; };
+		E84FB58819BF78B50034A41E /* DFPAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB58719BF78B50034A41E /* DFPAdGeneratorSpec.mm */; };
 		E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
 		E8703DB119B12CB000D3FA50 /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
 		E8703DF719B9092600D3FA50 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
@@ -528,6 +529,7 @@
 		E83128EB19B936D9007C2FAB /* STRDFPMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPMediator.m; path = DFP/STRDFPMediator.m; sourceTree = "<group>"; };
 		E83128EC19B936D9007C2FAB /* STRDFPMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPMediator.h; path = DFP/STRDFPMediator.h; sourceTree = "<group>"; };
 		E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdRendererSpec.mm; sourceTree = "<group>"; };
+		E84FB58719BF78B50034A41E /* DFPAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DFPAdGeneratorSpec.mm; sourceTree = "<group>"; };
 		E8703D4F19AE413700D3FA50 /* DFPBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
 		E8703D5019AE413700D3FA50 /* DFPExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
 		E8703D5119AE413700D3FA50 /* DFPInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPInterstitial.h; sourceTree = "<group>"; };
@@ -719,6 +721,7 @@
 			isa = PBXGroup;
 			children = (
 				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
+				E84FB58619BF76EF0034A41E /* DFP */,
 				AEFBF15D188F46D900ADD742 /* Controllers */,
 				AE2246FB188877E900626A29 /* Fixtures */,
 				AEA0EC6618AC3D2C00B4286A /* Generators */,
@@ -1016,6 +1019,14 @@
 				E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */,
 			);
 			path = "Static Resources";
+			sourceTree = "<group>";
+		};
+		E84FB58619BF76EF0034A41E /* DFP */ = {
+			isa = PBXGroup;
+			children = (
+				E84FB58719BF78B50034A41E /* DFPAdGeneratorSpec.mm */,
+			);
+			name = DFP;
 			sourceTree = "<group>";
 		};
 		E8703CEF19ACFF9C00D3FA50 /* Third Party */ = {
@@ -1369,6 +1380,7 @@
 				AE9C462C189C5288001B407A /* STRYouTubeViewController.m in Sources */,
 				AE6C80881899863C008FD848 /* STRSpecModule.m in Sources */,
 				AE6C806E1898914F008FD848 /* STRTableViewAdGeneratorSpec.mm in Sources */,
+				E84FB58819BF78B50034A41E /* DFPAdGeneratorSpec.mm in Sources */,
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
 				AE39F8D318AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */,
