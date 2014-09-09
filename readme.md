@@ -85,6 +85,7 @@ Import the API as below:
 	[self.view addSubview:yourView];
 	yourView.frame = CGRectMake(0, 0, 320, 100);
 	```
+* **Note** The subclass of `UIView` which conforms to `<STRAdView` protocol (in this example `yourView`) must already have been added to a parent view before calling `placeAdInView:placementKey:presentingViewController:delegate`.  The ad may display in the view, but no tracking will take place, i.e. you won't receive credit for showing the ad.
 
 <div id="first-ad-table"></div>
 #### Using the UITableView API ####
