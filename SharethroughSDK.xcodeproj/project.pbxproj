@@ -193,6 +193,7 @@
 		E84FB59D19BFAE430034A41E /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8703D6C19AE413700D3FA50 /* libGoogleAdMobAds.a */; };
 		E84FB59F19BFCD750034A41E /* STRDFPManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB59E19BFCD750034A41E /* STRDFPManagerSpec.mm */; };
 		E84FB5A119BFCDA90034A41E /* DFPAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB5A019BFCDA90034A41E /* DFPAdGeneratorSpec.mm */; };
+		E84FB5B019C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB5AF19C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm */; };
 		E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
 		E8703DB119B12CB000D3FA50 /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
 		E8703DF719B9092600D3FA50 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
@@ -538,6 +539,7 @@
 		E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdRendererSpec.mm; sourceTree = "<group>"; };
 		E84FB59E19BFCD750034A41E /* STRDFPManagerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = STRDFPManagerSpec.mm; path = DFP/STRDFPManagerSpec.mm; sourceTree = "<group>"; };
 		E84FB5A019BFCDA90034A41E /* DFPAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DFPAdGeneratorSpec.mm; path = DFP/DFPAdGeneratorSpec.mm; sourceTree = "<group>"; };
+		E84FB5AF19C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRDFPGridlikeDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		E8703D4F19AE413700D3FA50 /* DFPBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
 		E8703D5019AE413700D3FA50 /* DFPExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
 		E8703D5119AE413700D3FA50 /* DFPInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPInterstitial.h; sourceTree = "<group>"; };
@@ -1035,6 +1037,7 @@
 			children = (
 				E84FB5A019BFCDA90034A41E /* DFPAdGeneratorSpec.mm */,
 				E84FB59E19BFCD750034A41E /* STRDFPManagerSpec.mm */,
+				E84FB5AF19C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm */,
 			);
 			name = DFP;
 			sourceTree = "<group>";
@@ -1411,6 +1414,7 @@
 				AE52FD7218A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
+				E84FB5B019C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm in Sources */,
 				AEA0EC7718AC50D700B4286A /* youtube_sample_thumbnail.c in Sources */,
 				AE9C460B189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C44A618A2CDF000298166 /* STRCollectionViewCell.m in Sources */,
