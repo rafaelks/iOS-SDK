@@ -45,6 +45,7 @@
 
 - (void)placeAdInView:(UIView<STRAdView> *)view
          placementKey:(NSString *)placementKey
+              dfpPath:(NSString *)dfpPath
 presentingViewController:(UIViewController *)presentingViewController
              delegate:(id<STRAdViewDelegate>)delegate {
 
@@ -52,7 +53,7 @@ presentingViewController:(UIViewController *)presentingViewController
                                                             PlacementKey:placementKey
                                                 presentingViewController:presentingViewController
                                                                 delegate:delegate
-                                                                 DFPPath:nil
+                                                                 DFPPath:dfpPath
                                                              DFPDeferred:nil];
 
     STRDFPAdGenerator *generator = [self.injector getInstance:[STRDFPAdGenerator class]];

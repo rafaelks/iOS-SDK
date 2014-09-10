@@ -61,6 +61,17 @@ describe(@"DFPAdGenerator", ^{
             adService stub_method(@selector(isAdCachedForPlacementKey:)).and_return(NO);
         });
 
+        describe(@"when the DFP Path is passed in", ^{
+            beforeEach(^{
+                adPlacement.DFPPath = @"/this/is/a/path/for/DFP";
+                [generator placeAdInPlacement:adPlacement];
+            });
+
+            it(@"does not call the rest client", ^{
+                restClient should_not have_received(@selector(getDFPPathForPlacement:)).with(adPlacement.placementKey);
+            });
+        });
+
         describe(@"successfully fetching the DFP Path from Bakery", ^{
             beforeEach(^{
                 [generator placeAdInPlacement:adPlacement];

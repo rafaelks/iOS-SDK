@@ -27,11 +27,12 @@
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
+ @param dfpPath The unique dfp path for the ad unit. Can be nil and it will be fetched from Sharethrough servers if available
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
  @param delegate Delegate for handling completion. This can be nil if you do not wish to customize success or failure behavior.
  @warning If you are placing the ad in a view returned by UITableView/UICollectionView's dequeue method (or any similar reuse mechanism), it is important that you register separate reuse identifier than your normal content cells. Using the same reuse identifier will result in artifacts left behind on content cells (such as ad interactivity behavior).
  */
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate;
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey dfpPath:(NSString*)dfpPath presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate;
 
 /**
  If your app is using a basic UITableView that you want to present ads within, you may alternately use the following method to insert an ad. It is required that the reuse identifier be registered with the UITableView to return a UITableViewCell (or subclass) that conforms to the STRAdView protocol. This reuse identifier should be separate from the reuse identifier used for your content cells, even if they are registered with the same class or xib. A good place to call this function would be -viewDidLoad. Calling this method on the same table view will remove previously existing ad(s) and place an ad at the place specified by adStartingIndexPath.
