@@ -48,10 +48,12 @@
 presentingViewController:(UIViewController *)presentingViewController
              delegate:(id<STRAdViewDelegate>)delegate {
 
-    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithPlacementKey:placementKey
-                                                      presentingViewController:presentingViewController
-                                                                      delegate:delegate];
-    adPlacement.adView = view;
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:view
+                                                            PlacementKey:placementKey
+                                                presentingViewController:presentingViewController
+                                                                delegate:delegate
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil];
 
     STRDFPAdGenerator *generator = [self.injector getInstance:[STRDFPAdGenerator class]];
     [generator placeAdInPlacement:adPlacement];

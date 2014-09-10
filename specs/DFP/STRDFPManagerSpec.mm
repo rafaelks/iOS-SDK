@@ -28,9 +28,12 @@ describe(@"DFPManager", ^{
 
         delegate = nice_fake_for(@protocol(STRAdViewDelegate));
 
-        adPlacement = [[STRAdPlacement alloc] initWithPlacementKey:@"placementKey"
-                                          presentingViewController:nil
-                                                          delegate:delegate];
+        adPlacement = [[STRAdPlacement alloc] initWithAdView:nil
+                                                PlacementKey:@"placementKey"
+                                    presentingViewController:nil
+                                                    delegate:delegate
+                                                     DFPPath:nil
+                                                 DFPDeferred:nil];
     });
 
     context(@"-renderCreative:inPlacement", ^{
@@ -82,7 +85,7 @@ describe(@"DFPManager", ^{
             
             beforeEach(^{
                 adDeferred = nice_fake_for([STRDeferred class]);
-                adPlacement.deferred = adDeferred;
+                adPlacement.DFPDeferred = adDeferred;
                 generatorDeferred = [STRDeferred defer];
                 generator stub_method(@selector(prefetchCreative:forPlacement:)).and_return(generatorDeferred.promise);
                 managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"placementKey"];

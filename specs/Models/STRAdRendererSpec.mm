@@ -71,11 +71,12 @@ describe(@"STRAdRenderer", ^{
             
             delegate = nice_fake_for(@protocol(STRAdViewDelegate));
             
-            placement = [[STRAdPlacement alloc] initWithPlacementKey:@"placementKey"
-                                            presentingViewController:presentingViewController
-                                                            delegate:delegate];
-            placement.adView = view;
-            
+            placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                  PlacementKey:@"placementKey"
+                                      presentingViewController:presentingViewController
+                                                      delegate:delegate
+                                                       DFPPath:nil
+                                                   DFPDeferred:nil];
         });
         
         describe(@"follows up with its delegate", ^{
@@ -290,9 +291,13 @@ describe(@"STRAdRenderer", ^{
                 beforeEach(^{
                     [[fakeRunLoop.sent_messages firstObject] getArgument:&oldTimer atIndex:2];
                     
-                    STRAdPlacement *placement = [[STRAdPlacement alloc] initWithPlacementKey:@"key" presentingViewController:presentingViewController delegate:nil];
-                    placement.adView = view;
-                    
+                    STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                         PlacementKey:@"key"
+                                                             presentingViewController:presentingViewController
+                                                                             delegate:nil
+                                                                              DFPPath:nil
+                                                                          DFPDeferred:nil];
+
                     secondRenderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop injector:injector];
                     
                     [secondRenderer renderAd:ad inPlacement:placement];
@@ -458,8 +463,12 @@ describe(@"STRAdRenderer", ^{
                 view = [STRPlainAdView new];
                 deferred = [STRDeferred defer];
                 
-                STRAdPlacement *placement = [[STRAdPlacement alloc] initWithPlacementKey:@"placementKey" presentingViewController:nil delegate:nil];
-                placement.adView = view;
+                placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                      PlacementKey:@"placementKey"
+                                                          presentingViewController:presentingViewController
+                                                                          delegate:nil
+                                                                           DFPPath:nil
+                                                                       DFPDeferred:nil];
             });
             
             it(@"does not try to include an ad description", ^{

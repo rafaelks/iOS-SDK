@@ -15,13 +15,19 @@
 
 @implementation STRAdPlacement
 
-- (id)initWithPlacementKey:(NSString *)placementKey
+- (id)initWithAdView:(UIView<STRAdView> *)adView
+        PlacementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController
-      delegate:(id<STRAdViewDelegate>)delegate {
-    
-    self.placementKey = placementKey;
-    self.presentingViewController = presentingViewController;
-    self.delegate = delegate;
+            delegate:(id<STRAdViewDelegate>)delegate
+             DFPPath:(NSString *)DFPPath
+         DFPDeferred:(STRDeferred *)deferred
+{
+    _adView = adView;
+    _placementKey = placementKey;
+    _DFPPath = DFPPath;
+    _presentingViewController = presentingViewController;
+    _delegate = delegate;
+    _DFPDeferred = deferred;
     
     return self;
 }

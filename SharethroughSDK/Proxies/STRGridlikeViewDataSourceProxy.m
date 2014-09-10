@@ -132,9 +132,12 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithPlacementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
-    adPlacement.adView = adCell;
-
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:adCell
+                                                            PlacementKey:self.placementKey
+                                                presentingViewController:self.presentingViewController
+                                                                delegate:nil
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil];
     [adGenerator placeAdInPlacement:adPlacement];
 
     return adCell;
@@ -148,8 +151,12 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithPlacementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
-    adPlacement.adView = adCell;
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:adCell
+                                                            PlacementKey:self.placementKey
+                                                presentingViewController:self.presentingViewController
+                                                                delegate:nil
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil];
 
     [adGenerator placeAdInPlacement:adPlacement];
     return adCell;

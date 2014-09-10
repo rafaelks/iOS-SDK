@@ -37,13 +37,15 @@
     self.gridlikeView = gridlikeView;
     if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
 
-        STRDFPAdGenerator *adGenerator = [self.injector getInstance:[STRDFPAdGenerator class]];
-
-        STRAdPlacement *placement = [[STRAdPlacement alloc] initWithPlacementKey:self.placementKey
-                                                        presentingViewController:self.gridlikeView
-                                                                        delegate:nil];
         STRDeferred *deferred = [STRDeferred defer];
-        placement.deferred = deferred;
+
+        STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:nil
+                                                                PlacementKey:self.placementKey
+                                                    presentingViewController:self.gridlikeView
+                                                                    delegate:nil
+                                                                     DFPPath:nil
+                                                                 DFPDeferred:deferred];
+
         [deferred.promise then:^id(id value) {
             self.adjuster.adLoaded = YES;
             [self.gridlikeView reloadData];
@@ -53,7 +55,9 @@
             return self.adjuster;
         }];
 
-        [adGenerator placeAdInPlacement:placement];
+        STRDFPAdGenerator *adGenerator = [self.injector getInstance:[STRDFPAdGenerator class]];
+
+        [adGenerator placeAdInPlacement:adPlacement];
     }
 }
 

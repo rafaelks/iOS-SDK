@@ -61,8 +61,8 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
     if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
         //Placement.deferred is used for UITableView and UICollectionView APIs to prefetch ads
-        if (placement.deferred != nil) {
-            [placement.deferred resolveWithValue:nil];
+        if (placement.DFPDeferred != nil) {
+            [placement.DFPDeferred resolveWithValue:nil];
         } else {
             STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
             [adPromise then:^id(STRAdvertisement *ad) {

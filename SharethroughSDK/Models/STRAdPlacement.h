@@ -15,14 +15,20 @@
 
 @interface STRAdPlacement : NSObject
 
-- (instancetype)initWithPlacementKey:(NSString *)placementKey
-presentingViewController:(UIViewController *)presentingViewController
-                delegate:(id<STRAdViewDelegate>)delegate;
+- (instancetype)initWithAdView:(UIView<STRAdView> *)adView
+                  PlacementKey:(NSString *)placementKey
+      presentingViewController:(UIViewController *)presentingViewController
+                      delegate:(id<STRAdViewDelegate>)delegate
+                       DFPPath:(NSString *)DFPPath
+                   DFPDeferred:(STRDeferred *)deferred;
 
 @property (strong, nonatomic) UIView<STRAdView> *adView;
 @property (strong, nonatomic) NSString *placementKey;
 @property (strong, nonatomic) UIViewController *presentingViewController;
 @property (strong, nonatomic) id<STRAdViewDelegate> delegate;
-@property (strong, nonatomic) STRDeferred *deferred;
+
+//Optional DFP related properties
+@property (strong, nonatomic) NSString *DFPPath;
+@property (strong, nonatomic) STRDeferred *DFPDeferred;
 
 @end

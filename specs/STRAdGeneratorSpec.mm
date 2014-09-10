@@ -78,7 +78,12 @@ describe(@"STRAdGenerator", ^{
 
             delegate = nice_fake_for(@protocol(STRAdViewDelegate));
 
-            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithPlacementKey:@"placementKey" presentingViewController:presentingViewController delegate:delegate];
+            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                  PlacementKey:@"placementKey"
+                                                      presentingViewController:presentingViewController
+                                                                      delegate:delegate
+                                                                       DFPPath:nil
+                                                                   DFPDeferred:nil];
             placement.adView = view;
 
             [generator placeAdInPlacement:placement];
@@ -363,9 +368,13 @@ describe(@"STRAdGenerator", ^{
 
                 secondGenerator = [[STRAdGenerator alloc] initWithAdService:newAdService injector:injector];
                 
-                STRAdPlacement *placement = [[STRAdPlacement alloc] initWithPlacementKey:@"key" presentingViewController:presentingViewController delegate:nil];
-                placement.adView = view;
-                
+                STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                      PlacementKey:@"placementKey"
+                                                          presentingViewController:presentingViewController
+                                                                          delegate:nil
+                                                                           DFPPath:nil
+                                                                       DFPDeferred:nil];
+
                 [secondGenerator placeAdInPlacement:placement];
 
                 [newDeferred resolveWithValue:ad];
@@ -535,9 +544,13 @@ describe(@"STRAdGenerator", ^{
 
             adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);
             
-            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithPlacementKey:@"placementKey" presentingViewController:nil delegate:nil];
-            placement.adView = view;
-            
+            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                  PlacementKey:@"placementKey"
+                                                      presentingViewController:nil
+                                                                      delegate:nil
+                                                                       DFPPath:nil
+                                                                   DFPDeferred:nil];
+
             [generator placeAdInPlacement:placement];
         });
 

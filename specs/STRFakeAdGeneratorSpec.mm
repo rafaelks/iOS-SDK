@@ -33,8 +33,12 @@ describe(@"STRFakeAdGenerator", ^{
             view = [STRFullAdView new];
             [UIGestureRecognizer whitelistClassForGestureSnooping:[STRFakeAdGenerator class]];
             presentingViewController = [UIViewController new];
-            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithPlacementKey:nil presentingViewController:presentingViewController delegate:nil];
-            placement.adView = view;
+            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                  PlacementKey:nil
+                                                      presentingViewController:presentingViewController
+                                                                      delegate:nil
+                                                                       DFPPath:nil
+                                                                   DFPDeferred:nil];
 
             [generator placeAdInPlacement:placement];
         });

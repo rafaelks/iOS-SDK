@@ -46,10 +46,12 @@ describe(@"DFPAdGenerator", ^{
 
         view = nice_fake_for([STRFullAdView class]);
 
-        adPlacement = [[STRAdPlacement alloc] initWithPlacementKey:@"placementKey"
-                                          presentingViewController:nil
-                                                          delegate:delegate];
-        adPlacement.adView = view;
+        adPlacement = [[STRAdPlacement alloc] initWithAdView:view
+                                                PlacementKey:@"placementKey"
+                                    presentingViewController:nil
+                                                    delegate:delegate
+                                                     DFPPath:nil
+                                                 DFPDeferred:nil];
 
         generator = [[STRDFPAdGenerator alloc] initWithAdService:adService injector:injector restClient:restClient];
     });
@@ -141,7 +143,7 @@ describe(@"DFPAdGenerator", ^{
             __block STRDeferred *placementDeferred;
             beforeEach(^{
                 placementDeferred = nice_fake_for([STRDeferred class]);
-                adPlacement.deferred = placementDeferred;
+                adPlacement.DFPDeferred = placementDeferred;
                 [generator placeAdInPlacement:adPlacement];
             });
 

@@ -61,7 +61,7 @@ describe(@"DFPManager", ^{
                 beforeEach(^{
                     generator stub_method(@selector(placeAdInPlacement:)).and_do(^(NSInvocation *invocation) {
                         [invocation getArgument:&placement atIndex:0];
-                        [placement.deferred resolveWithValue:nil];
+                        [placement.DFPDeferred resolveWithValue:nil];
                     });
 
                     it(@"reloads the gridlike view", ^{
@@ -75,7 +75,7 @@ describe(@"DFPManager", ^{
                 beforeEach(^{
                     generator stub_method(@selector(placeAdInPlacement:)).and_do(^(NSInvocation *invocation) {
                         [invocation getArgument:&placement atIndex:0];
-                        [placement.deferred rejectWithError:nil];
+                        [placement.DFPDeferred rejectWithError:nil];
                     });
 
                     it(@"reloads the gridlike view", ^{

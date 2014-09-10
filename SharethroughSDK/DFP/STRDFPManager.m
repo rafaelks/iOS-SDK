@@ -43,21 +43,21 @@
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     STRPromise *promise;
 
-    if (adPlacement.deferred != nil) {
+    if (adPlacement.DFPDeferred != nil) {
         promise = [generator prefetchCreative:creativeKey forPlacement:adPlacement];
     } else {
         promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
     }
 
     [promise then:^id(id value) {
-        if (adPlacement.deferred != nil) {
-            [adPlacement.deferred resolveWithValue:nil];
+        if (adPlacement.DFPDeferred != nil) {
+            [adPlacement.DFPDeferred resolveWithValue:nil];
         }
         [deferred resolveWithValue:adPlacement.adView];
         return value;
     } error:^id(NSError *error) {
-        if (adPlacement.deferred != nil) {
-            [adPlacement.deferred rejectWithError:error];
+        if (adPlacement.DFPDeferred != nil) {
+            [adPlacement.DFPDeferred rejectWithError:error];
         }
         [deferred rejectWithError:error];
         return error;
