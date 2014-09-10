@@ -11,6 +11,12 @@
 #import "STRDFPManager.h"
 #import "STRPromise.h"
 
+#ifdef DEBUG
+#   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else
+#   define DLog(...)
+#endif
+
 @implementation STRDFPMediator
 
 @synthesize delegate = delegate_;
@@ -22,7 +28,7 @@
     
     NSDictionary* extras = [request additionalParameters];
     
-    NSLog(@"Parameter:%@, Label:%@, Placement Key: %@", serverParameter, serverLabel, extras[@"placementKey"]);
+    DLog(@"Parameter:%@, Label:%@, Placement Key: %@", serverParameter, serverLabel, extras[@"placementKey"]);
     
     STRPromise *placeAdPromise = [[STRDFPManager sharedInstance] renderCreative:serverParameter inPlacement:extras[@"placementKey"]];
     [placeAdPromise then:^id(UIView<STRAdView>  *adView) {
