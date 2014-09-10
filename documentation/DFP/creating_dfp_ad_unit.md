@@ -9,7 +9,7 @@
 
 * Select *New Ad unit* at the logical level in your configuration
 ![New Ad Unit][new-adunit-ss]
-* Create a new ad with **Sizes** set to `Smart banner`
+* Create a new ad with **Sizes** set to `Smart banner`. Fill in other fields as required by DFP.
 ![New Ad Unit Form][new-adunit-form-ss]
 * After saving, Retrieve the `Ad Unit ID` by clicking *Generate tags*
 ![Generate Tags][generate-tags-ss]
