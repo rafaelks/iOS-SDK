@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class SharethroughSDK, STRInjector, STRAdPlacementAdjuster;
+@class SharethroughSDK, STRInjector, STRAdPlacementAdjuster, STRGridlikeViewDataSourceProxy;
 
 @interface STRGridlikeViewAdGenerator : NSObject
 
@@ -17,6 +17,7 @@
 - (id)initWithInjector:(STRInjector *)injector;
 
 - (void)placeAdInGridlikeView:(id)gridlikeView
+              dataSourceProxy:(STRGridlikeViewDataSourceProxy *)dataSourceProxy
         adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
                  placementKey:(NSString *)placementKey
      presentingViewController:(UIViewController *)presentingViewController

@@ -45,16 +45,52 @@
 }
 
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey {
-    STRDeferred *deferred = [STRDeferred defer];
 
     if (![self.adCache isAdStale:placementKey]) {
+        STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
         [deferred resolveWithValue:cachedAd];
         return deferred.promise;
     }
-
+    
     [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
-    STRPromise *adPromise = [self.restClient getWithParameters: @{@"placement_key": placementKey}];
+    return [self fetchAdWithParameters:@{@"placement_key": placementKey} forPlacementKey:placementKey];
+}
+
+- (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey creativeKey:(NSString *)creativeKey {
+    
+    STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForCreativeKey:creativeKey];
+    if (cachedAd) {
+        STRDeferred *deferred = [STRDeferred defer];
+        [deferred resolveWithValue:cachedAd];
+        return deferred.promise;
+    }
+    
+//TODO: Impression request should include creativeKey
+    [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
+    
+    return [self fetchAdWithParameters:@{@"placement_key": placementKey, @"creative_key": creativeKey} forPlacementKey:placementKey];
+}
+
+- (BOOL)isAdCachedForPlacementKey:(NSString *)placementKey {
+    return ![self.adCache isAdStale:placementKey];
+}
+
+#pragma mark - Private
+
+- (STRAdvertisement *)adForAction:(NSString *)action {
+    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class], @"clickout": [STRAdClickout class], @"pinterest": [STRAdPinterest class], @"instagram": [STRAdClickout class]};
+    Class adClass = actionsToClasses[action];
+    if (!adClass) {
+        adClass = [STRAdvertisement class];
+    }
+    return [adClass new];
+}
+
+- (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacementKey:(NSString *)placementKey{
+    STRDeferred *deferred = [STRDeferred defer];
+
+    STRPromise *adPromise = [self.restClient getWithParameters: parameters];
     [adPromise then:^id(NSDictionary *fullJSON) {
         NSDictionary *creativeJSON = fullJSON[@"creative"];
 
@@ -105,17 +141,6 @@
     }];
     
     return deferred.promise;
-}
-
-#pragma mark - Private
-
-- (STRAdvertisement *)adForAction:(NSString *)action {
-    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class], @"clickout": [STRAdClickout class], @"pinterest": [STRAdPinterest class], @"instagram": [STRAdClickout class]};
-    Class adClass = actionsToClasses[action];
-    if (!adClass) {
-        adClass = [STRAdvertisement class];
-    }
-    return [adClass new];
 }
 
 @end

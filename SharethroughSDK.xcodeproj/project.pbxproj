@@ -17,6 +17,11 @@
 				AE2246721885FEED00626A29 /* Copy Header Files */,
 				E880766619A27A81006F33B2 /* Copy Resource Files */,
 				AE22467D18860D2C00626A29 /* Copy built framework to /built-framework directory within project */,
+				E8AC4EF019B913F3003A9CE0 /* Build static library + DFP */,
+				E8AC4EF119B91435003A9CE0 /* Build DFP Framework Structure with Fat Binary */,
+				E8AC4EF219B91465003A9CE0 /* Copy DFP Header Files */,
+				E83128DA19B91500007C2FAB /* Copy DFP Resource Files */,
+				E83128DC19B91533007C2FAB /* Copy built DFP framework to /built-framework directory within project */,
 			);
 			dependencies = (
 			);
@@ -164,6 +169,83 @@
 		AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
+		E83128D019B914CA007C2FAB /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
+		E83128D519B914DB007C2FAB /* STRAdView.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
+		E83128D619B914DB007C2FAB /* STRAdViewDelegate.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */; };
+		E83128D719B914DB007C2FAB /* UICollectionView+STR.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE58227718A2F04F00672653 /* UICollectionView+STR.h */; };
+		E83128D819B914DB007C2FAB /* UITableView+STR.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */; };
+		E83128D919B914DB007C2FAB /* SharethroughSDK+DFP.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = E8703DC319B9031700D3FA50 /* SharethroughSDK+DFP.h */; };
+		E83128DB19B9151D007C2FAB /* SharethroughSDK-Info.plist in Copy DFP Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
+		E83128E319B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */; };
+		E83128E419B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */; };
+		E83128ED19B936D9007C2FAB /* STRDFPAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E619B936D9007C2FAB /* STRDFPAdGenerator.m */; };
+		E83128EE19B936D9007C2FAB /* STRDFPAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E719B936D9007C2FAB /* STRDFPAppModule.m */; };
+		E83128EF19B936D9007C2FAB /* STRDFPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E919B936D9007C2FAB /* STRDFPManager.m */; };
+		E83128F019B936D9007C2FAB /* STRDFPMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128EB19B936D9007C2FAB /* STRDFPMediator.m */; };
+		E831290119BE4A7E007C2FAB /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
+		E831290219BE4A7E007C2FAB /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
+		E84FB57919BE7AB40034A41E /* STRAdRendererSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */; };
+		E84FB59319BFAD1D0034A41E /* STRDFPAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E619B936D9007C2FAB /* STRDFPAdGenerator.m */; };
+		E84FB59419BFAD1D0034A41E /* STRDFPAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E719B936D9007C2FAB /* STRDFPAppModule.m */; };
+		E84FB59919BFAD3C0034A41E /* STRDFPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E919B936D9007C2FAB /* STRDFPManager.m */; };
+		E84FB59A19BFAD3C0034A41E /* STRDFPMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128EB19B936D9007C2FAB /* STRDFPMediator.m */; };
+		E84FB59B19BFAD3C0034A41E /* STRDFPGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */; };
+		E84FB59D19BFAE430034A41E /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8703D6C19AE413700D3FA50 /* libGoogleAdMobAds.a */; };
+		E84FB59F19BFCD750034A41E /* STRDFPManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB59E19BFCD750034A41E /* STRDFPManagerSpec.mm */; };
+		E84FB5A119BFCDA90034A41E /* DFPAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB5A019BFCDA90034A41E /* DFPAdGeneratorSpec.mm */; };
+		E84FB5B019C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB5AF19C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm */; };
+		E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
+		E8703DB119B12CB000D3FA50 /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
+		E8703DF719B9092600D3FA50 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
+		E8703DF819B9092600D3FA50 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
+		E8703DF919B9092600D3FA50 /* STRAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DEB188E00C100D02568 /* STRAdvertisement.m */; };
+		E8703DFA19B9092600D3FA50 /* play-btn-300x.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40818AAA242006061C2 /* play-btn-300x.c */; };
+		E8703DFB19B9092600D3FA50 /* STRYouTubeEmbedPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */; };
+		E8703DFC19B9092600D3FA50 /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
+		E8703DFD19B9092600D3FA50 /* STRAdVine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4625189C29B0001B407A /* STRAdVine.m */; };
+		E8703DFE19B9092600D3FA50 /* hosted_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */; };
+		E8703DFF19B9092600D3FA50 /* UICollectionView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AE58227818A2F04F00672653 /* UICollectionView+STR.m */; };
+		E8703E0119B9092600D3FA50 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF0188E011100D02568 /* SharethroughSDK.m */; };
+		E8703E0219B9092600D3FA50 /* STRAdPinterest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */; };
+		E8703E0319B9092600D3FA50 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
+		E8703E0419B9092600D3FA50 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDF188E004900D02568 /* STRRestClient.m */; };
+		E8703E0619B9092600D3FA50 /* STRAdClickout.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8CE18AD831200969C30 /* STRAdClickout.m */; };
+		E8703E0719B9092600D3FA50 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
+		E8703E0819B9092600D3FA50 /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
+		E8703E0919B9092600D3FA50 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
+		E8703E0A19B9092600D3FA50 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
+		E8703E0B19B9092600D3FA50 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
+		E8703E0C19B9092600D3FA50 /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
+		E8703E0D19B9092600D3FA50 /* STRBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807C1899861E008FD848 /* STRBlockWrapper.m */; };
+		E8703E0F19B9092600D3FA50 /* STRNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDD188E004900D02568 /* STRNetworkClient.m */; };
+		E8703E1019B9092600D3FA50 /* STRClickoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C618AD56DC00969C30 /* STRClickoutViewController.m */; };
+		E8703E1119B9092600D3FA50 /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
+		E8703E1219B9092600D3FA50 /* STRGridlikeViewAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD7018A41AB2009F69BD /* STRGridlikeViewAdGenerator.m */; };
+		E8703E1319B9092600D3FA50 /* clickout_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */; };
+		E8703E1419B9092600D3FA50 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
+		E8703E1519B9092600D3FA50 /* STRIndexPathDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRIndexPathDelegateProxy.m */; };
+		E8703E1619B9092600D3FA50 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
+		E8703E1719B9092600D3FA50 /* STRTestSafeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AEECC9C318AEAAB600E28C51 /* STRTestSafeModule.m */; };
+		E8703E1819B9092600D3FA50 /* vine_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC7818AC589E00B4286A /* vine_sample_thumbnail.c */; };
+		E8703E1919B9092600D3FA50 /* STRImages.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40318AAA078006061C2 /* STRImages.m */; };
+		E8703E1A19B9092600D3FA50 /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
+		E8703E1B19B9092600D3FA50 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
+		E8703E1C19B9092600D3FA50 /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */; };
+		E8703E1D19B9092600D3FA50 /* STRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46CE6B189844AB0096BDE9 /* STRSession.m */; };
+		E8703E1E19B9092600D3FA50 /* STRFakeAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6E18A41AB2009F69BD /* STRFakeAdGenerator.m */; };
+		E8703E1F19B9092600D3FA50 /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
+		E8703E2019B9092600D3FA50 /* STRYouTubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4629189C5288001B407A /* STRYouTubeViewController.m */; };
+		E8703E2119B9092600D3FA50 /* youtube_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */; };
+		E8703E2219B9092600D3FA50 /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
+		E8703E2319B9092600D3FA50 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
+		E8703E2419B9092600D3FA50 /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
+		E8703E2519B9092600D3FA50 /* STRInjector.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807E1899861E008FD848 /* STRInjector.m */; };
+		E8703E2619B9092600D3FA50 /* pinterest_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */; };
+		E8703E2719B9092600D3FA50 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
+		E8703E2919B9092600D3FA50 /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
+		E8703E2B19B9092600D3FA50 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
+		E8703E2C19B9092600D3FA50 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
+		E8703E2D19B9092600D3FA50 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		E880767919A29DED006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
 		E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
@@ -245,6 +327,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E83128DA19B91500007C2FAB /* Copy DFP Resource Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}+DFP.framework/Versions/A/Resources";
+			dstSubfolderSpec = 0;
+			files = (
+				E83128DB19B9151D007C2FAB /* SharethroughSDK-Info.plist in Copy DFP Resource Files */,
+			);
+			name = "Copy DFP Resource Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8703E2E19B9092600D3FA50 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E880766619A27A81006F33B2 /* Copy Resource Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -254,6 +356,22 @@
 				E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */,
 			);
 			name = "Copy Resource Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8AC4EF219B91465003A9CE0 /* Copy DFP Header Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}+DFP.framework/Versions/A/Headers";
+			dstSubfolderSpec = 0;
+			files = (
+				E83128D519B914DB007C2FAB /* STRAdView.h in Copy DFP Header Files */,
+				E83128D619B914DB007C2FAB /* STRAdViewDelegate.h in Copy DFP Header Files */,
+				E83128D719B914DB007C2FAB /* UICollectionView+STR.h in Copy DFP Header Files */,
+				E83128D819B914DB007C2FAB /* UITableView+STR.h in Copy DFP Header Files */,
+				E83128D919B914DB007C2FAB /* SharethroughSDK+DFP.h in Copy DFP Header Files */,
+				E83128D019B914CA007C2FAB /* SharethroughSDK.h in Copy DFP Header Files */,
+			);
+			name = "Copy DFP Header Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -408,6 +526,56 @@
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		E83128E119B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPGridlikeViewDataSourceProxy.h; path = DFP/STRDFPGridlikeViewDataSourceProxy.h; sourceTree = "<group>"; };
+		E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPGridlikeViewDataSourceProxy.m; path = DFP/STRDFPGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
+		E83128E519B936D9007C2FAB /* STRDFPAdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPAdGenerator.h; path = DFP/STRDFPAdGenerator.h; sourceTree = "<group>"; };
+		E83128E619B936D9007C2FAB /* STRDFPAdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPAdGenerator.m; path = DFP/STRDFPAdGenerator.m; sourceTree = "<group>"; };
+		E83128E719B936D9007C2FAB /* STRDFPAppModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPAppModule.m; path = DFP/STRDFPAppModule.m; sourceTree = "<group>"; };
+		E83128E819B936D9007C2FAB /* STRDFPAppModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPAppModule.h; path = DFP/STRDFPAppModule.h; sourceTree = "<group>"; };
+		E83128E919B936D9007C2FAB /* STRDFPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPManager.m; path = DFP/STRDFPManager.m; sourceTree = "<group>"; };
+		E83128EA19B936D9007C2FAB /* STRDFPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPManager.h; path = DFP/STRDFPManager.h; sourceTree = "<group>"; };
+		E83128EB19B936D9007C2FAB /* STRDFPMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPMediator.m; path = DFP/STRDFPMediator.m; sourceTree = "<group>"; };
+		E83128EC19B936D9007C2FAB /* STRDFPMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPMediator.h; path = DFP/STRDFPMediator.h; sourceTree = "<group>"; };
+		E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdRendererSpec.mm; sourceTree = "<group>"; };
+		E84FB59E19BFCD750034A41E /* STRDFPManagerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = STRDFPManagerSpec.mm; path = DFP/STRDFPManagerSpec.mm; sourceTree = "<group>"; };
+		E84FB5A019BFCDA90034A41E /* DFPAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DFPAdGeneratorSpec.mm; path = DFP/DFPAdGeneratorSpec.mm; sourceTree = "<group>"; };
+		E84FB5AF19C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRDFPGridlikeDataSourceProxySpec.mm; sourceTree = "<group>"; };
+		E8703D4F19AE413700D3FA50 /* DFPBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPBannerView.h; sourceTree = "<group>"; };
+		E8703D5019AE413700D3FA50 /* DFPExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPExtras.h; sourceTree = "<group>"; };
+		E8703D5119AE413700D3FA50 /* DFPInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPInterstitial.h; sourceTree = "<group>"; };
+		E8703D5219AE413700D3FA50 /* DFPSwipeableBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPSwipeableBannerView.h; sourceTree = "<group>"; };
+		E8703D5319AE413700D3FA50 /* GADAdSizeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSizeDelegate.h; sourceTree = "<group>"; };
+		E8703D5419AE413700D3FA50 /* GADAppEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAppEventDelegate.h; sourceTree = "<group>"; };
+		E8703D5519AE413700D3FA50 /* GADSwipeableBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADSwipeableBannerViewDelegate.h; sourceTree = "<group>"; };
+		E8703D5719AE413700D3FA50 /* GADCustomEventBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventBanner.h; sourceTree = "<group>"; };
+		E8703D5819AE413700D3FA50 /* GADCustomEventBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventBannerDelegate.h; sourceTree = "<group>"; };
+		E8703D5919AE413700D3FA50 /* GADCustomEventExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventExtras.h; sourceTree = "<group>"; };
+		E8703D5A19AE413700D3FA50 /* GADCustomEventInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventInterstitial.h; sourceTree = "<group>"; };
+		E8703D5B19AE413700D3FA50 /* GADCustomEventInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventInterstitialDelegate.h; sourceTree = "<group>"; };
+		E8703D5C19AE413700D3FA50 /* GADCustomEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADCustomEventRequest.h; sourceTree = "<group>"; };
+		E8703D5E19AE413700D3FA50 /* GADSearchBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADSearchBannerView.h; sourceTree = "<group>"; };
+		E8703D5F19AE413700D3FA50 /* GADSearchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADSearchRequest.h; sourceTree = "<group>"; };
+		E8703D6019AE413700D3FA50 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
+		E8703D6119AE413700D3FA50 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
+		E8703D6219AE413700D3FA50 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
+		E8703D6319AE413700D3FA50 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
+		E8703D6419AE413700D3FA50 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
+		E8703D6519AE413700D3FA50 /* GADInAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchase.h; sourceTree = "<group>"; };
+		E8703D6619AE413700D3FA50 /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchaseDelegate.h; sourceTree = "<group>"; };
+		E8703D6719AE413700D3FA50 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
+		E8703D6819AE413700D3FA50 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
+		E8703D6919AE413700D3FA50 /* GADModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADModules.h; sourceTree = "<group>"; };
+		E8703D6A19AE413700D3FA50 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
+		E8703D6B19AE413700D3FA50 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
+		E8703D6C19AE413700D3FA50 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		E8703D6D19AE413700D3FA50 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdPlacement.h; sourceTree = "<group>"; };
+		E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdPlacement.m; sourceTree = "<group>"; };
+		E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdRenderer.h; sourceTree = "<group>"; };
+		E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdRenderer.m; sourceTree = "<group>"; };
+		E8703DC319B9031700D3FA50 /* SharethroughSDK+DFP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SharethroughSDK+DFP.h"; sourceTree = "<group>"; };
+		E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SharethroughSDK+DFP.m"; sourceTree = "<group>"; };
+		E8703E3219B9092600D3FA50 /* libSharethrough-SDK+DFP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK+DFP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E880767719A29DED006F33B2 /* STRVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRVersion.h; sourceTree = "<group>"; };
 		E880767819A29DED006F33B2 /* STRVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRVersion.m; sourceTree = "<group>"; };
 		E8B9759018EA052C0054F35F /* pinterest-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pinterest-logo.c"; sourceTree = "<group>"; };
@@ -422,6 +590,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E84FB59D19BFAE430034A41E /* libGoogleAdMobAds.a in Frameworks */,
 				AE131E081898622800891A93 /* AdSupport.framework in Frameworks */,
 				AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */,
 				AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
@@ -437,6 +606,16 @@
 			files = (
 				AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */,
 				AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8703E2A19B9092600D3FA50 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8703E2B19B9092600D3FA50 /* AdSupport.framework in Frameworks */,
+				E8703E2C19B9092600D3FA50 /* Foundation.framework in Frameworks */,
+				E8703E2D19B9092600D3FA50 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,8 +653,12 @@
 				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
 				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
 				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
+				E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */,
+				E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
+				E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */,
+				E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */,
 				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
 				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
 				AE9C4624189C29B0001B407A /* STRAdVine.h */,
@@ -499,6 +682,8 @@
 				AE58227818A2F04F00672653 /* UICollectionView+STR.m */,
 				AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */,
 				AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */,
+				E8703DC319B9031700D3FA50 /* SharethroughSDK+DFP.h */,
+				E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -510,6 +695,7 @@
 				AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */,
 				AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */,
 				AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */,
+				E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -546,6 +732,7 @@
 			isa = PBXGroup;
 			children = (
 				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
+				E84FB58619BF76EF0034A41E /* DFP */,
 				AEFBF15D188F46D900ADD742 /* Controllers */,
 				AE2246FB188877E900626A29 /* Fixtures */,
 				AEA0EC6618AC3D2C00B4286A /* Generators */,
@@ -746,6 +933,7 @@
 			children = (
 				AE8ED3E31885ADF00004AB32 /* libSharethrough-SDK.a */,
 				AE2246821886138F00626A29 /* specs.app */,
+				E8703E3219B9092600D3FA50 /* libSharethrough-SDK+DFP.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -765,6 +953,7 @@
 		AE8ED3E81885ADF00004AB32 /* SharethroughSDK */ = {
 			isa = PBXGroup;
 			children = (
+				E8703DCA19B9032100D3FA50 /* DFP */,
 				AE52B840188EFB3600C4DEF8 /* Controllers */,
 				AE52B85C188F290600C4DEF8 /* Extension Helpers */,
 				AE3120DA1889E6EF00297F01 /* External Libs */,
@@ -777,6 +966,7 @@
 				AE022DE4188E005300D02568 /* Services */,
 				AEFBF162189047DC00ADD742 /* Static Resources */,
 				AE8ED3E91885ADF00004AB32 /* Supporting Files */,
+				E8703CEF19ACFF9C00D3FA50 /* Third Party */,
 			);
 			path = SharethroughSDK;
 			sourceTree = "<group>";
@@ -842,6 +1032,110 @@
 			path = "Static Resources";
 			sourceTree = "<group>";
 		};
+		E84FB58619BF76EF0034A41E /* DFP */ = {
+			isa = PBXGroup;
+			children = (
+				E84FB5A019BFCDA90034A41E /* DFPAdGeneratorSpec.mm */,
+				E84FB59E19BFCD750034A41E /* STRDFPManagerSpec.mm */,
+				E84FB5AF19C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm */,
+			);
+			name = DFP;
+			sourceTree = "<group>";
+		};
+		E8703CEF19ACFF9C00D3FA50 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				E8703D4C19AE413700D3FA50 /* GoogleMobileAdsSdkiOS */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		E8703D4C19AE413700D3FA50 /* GoogleMobileAdsSdkiOS */ = {
+			isa = PBXGroup;
+			children = (
+				E8703D4D19AE413700D3FA50 /* Add-ons */,
+				E8703D6019AE413700D3FA50 /* GADAdMobExtras.h */,
+				E8703D6119AE413700D3FA50 /* GADAdNetworkExtras.h */,
+				E8703D6219AE413700D3FA50 /* GADAdSize.h */,
+				E8703D6319AE413700D3FA50 /* GADBannerView.h */,
+				E8703D6419AE413700D3FA50 /* GADBannerViewDelegate.h */,
+				E8703D6519AE413700D3FA50 /* GADInAppPurchase.h */,
+				E8703D6619AE413700D3FA50 /* GADInAppPurchaseDelegate.h */,
+				E8703D6719AE413700D3FA50 /* GADInterstitial.h */,
+				E8703D6819AE413700D3FA50 /* GADInterstitialDelegate.h */,
+				E8703D6919AE413700D3FA50 /* GADModules.h */,
+				E8703D6A19AE413700D3FA50 /* GADRequest.h */,
+				E8703D6B19AE413700D3FA50 /* GADRequestError.h */,
+				E8703D6C19AE413700D3FA50 /* libGoogleAdMobAds.a */,
+				E8703D6D19AE413700D3FA50 /* README.txt */,
+			);
+			name = GoogleMobileAdsSdkiOS;
+			path = ThirdParty/GoogleMobileAdsSdkiOS;
+			sourceTree = SOURCE_ROOT;
+		};
+		E8703D4D19AE413700D3FA50 /* Add-ons */ = {
+			isa = PBXGroup;
+			children = (
+				E8703D4E19AE413700D3FA50 /* DoubleClick */,
+				E8703D5619AE413700D3FA50 /* Mediation */,
+				E8703D5D19AE413700D3FA50 /* Search */,
+			);
+			path = "Add-ons";
+			sourceTree = "<group>";
+		};
+		E8703D4E19AE413700D3FA50 /* DoubleClick */ = {
+			isa = PBXGroup;
+			children = (
+				E8703D4F19AE413700D3FA50 /* DFPBannerView.h */,
+				E8703D5019AE413700D3FA50 /* DFPExtras.h */,
+				E8703D5119AE413700D3FA50 /* DFPInterstitial.h */,
+				E8703D5219AE413700D3FA50 /* DFPSwipeableBannerView.h */,
+				E8703D5319AE413700D3FA50 /* GADAdSizeDelegate.h */,
+				E8703D5419AE413700D3FA50 /* GADAppEventDelegate.h */,
+				E8703D5519AE413700D3FA50 /* GADSwipeableBannerViewDelegate.h */,
+			);
+			path = DoubleClick;
+			sourceTree = "<group>";
+		};
+		E8703D5619AE413700D3FA50 /* Mediation */ = {
+			isa = PBXGroup;
+			children = (
+				E8703D5719AE413700D3FA50 /* GADCustomEventBanner.h */,
+				E8703D5819AE413700D3FA50 /* GADCustomEventBannerDelegate.h */,
+				E8703D5919AE413700D3FA50 /* GADCustomEventExtras.h */,
+				E8703D5A19AE413700D3FA50 /* GADCustomEventInterstitial.h */,
+				E8703D5B19AE413700D3FA50 /* GADCustomEventInterstitialDelegate.h */,
+				E8703D5C19AE413700D3FA50 /* GADCustomEventRequest.h */,
+			);
+			path = Mediation;
+			sourceTree = "<group>";
+		};
+		E8703D5D19AE413700D3FA50 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				E8703D5E19AE413700D3FA50 /* GADSearchBannerView.h */,
+				E8703D5F19AE413700D3FA50 /* GADSearchRequest.h */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		E8703DCA19B9032100D3FA50 /* DFP */ = {
+			isa = PBXGroup;
+			children = (
+				E83128E519B936D9007C2FAB /* STRDFPAdGenerator.h */,
+				E83128E619B936D9007C2FAB /* STRDFPAdGenerator.m */,
+				E83128E819B936D9007C2FAB /* STRDFPAppModule.h */,
+				E83128E719B936D9007C2FAB /* STRDFPAppModule.m */,
+				E83128EA19B936D9007C2FAB /* STRDFPManager.h */,
+				E83128E919B936D9007C2FAB /* STRDFPManager.m */,
+				E83128EC19B936D9007C2FAB /* STRDFPMediator.h */,
+				E83128EB19B936D9007C2FAB /* STRDFPMediator.m */,
+				E83128E119B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.h */,
+				E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */,
+			);
+			name = DFP;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -881,6 +1175,23 @@
 			productReference = AE8ED3E31885ADF00004AB32 /* libSharethrough-SDK.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		E8703DF519B9092600D3FA50 /* Sharethrough-SDK+DFP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E8703E2F19B9092600D3FA50 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK+DFP" */;
+			buildPhases = (
+				E8703DF619B9092600D3FA50 /* Sources */,
+				E8703E2A19B9092600D3FA50 /* Frameworks */,
+				E8703E2E19B9092600D3FA50 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Sharethrough-SDK+DFP";
+			productName = SharethroughSDK;
+			productReference = E8703E3219B9092600D3FA50 /* libSharethrough-SDK+DFP.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -909,6 +1220,7 @@
 			projectRoot = "";
 			targets = (
 				AE8ED3E21885ADF00004AB32 /* Sharethrough-SDK */,
+				E8703DF519B9092600D3FA50 /* Sharethrough-SDK+DFP */,
 				AE22466C1885FD8100626A29 /* SharethroughSDK */,
 				AE2246811886138F00626A29 /* specs */,
 			);
@@ -1002,6 +1314,20 @@
 			shellPath = /bin/sh;
 			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
 		};
+		E83128DC19B91533007C2FAB /* Copy built DFP framework to /built-framework directory within project */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy built DFP framework to /built-framework directory within project";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${PRODUCT_NAME}+DFP.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\n\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${SRC_FRAMEWORK}\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\n\nTHIRD_PARTY_LIB_DIR=\"${PROJECT_DIR}/ThirdParty\"\ncp -r \"${THIRD_PARTY_LIB_DIR}\" \"${BUILT_FRAMEWORK_DIR}\"";
+		};
 		E880766D19A27D2E006F33B2 /* Run Version Update Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1014,7 +1340,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#############################################################################################\n#\n# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project. Add the contents to a\n# \"Run Script\" build phase for your application target.\n#\n# This script assumes you are tagging your git repo like so `v0.0`\n#\n#   git tag -a v0.0 -m \"First tag\"\n#\n# dd the contents to a \"Run Script\" build phase for your application target.\n#\n#############################################################################################\n\nset -o errexit\nset -o nounset\n\nINFO_PLIST=\"${PROJECT_DIR}/${PROJECT}/SharethroughSDK-Info\"\necho \"Info.plist: ${INFO_PLIST}\"\n\n# Get git tag and hash in the FullVersion\nFULL_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe | sed -e 's/^v//' -e 's/g//')\n\n# Use the latest tag for short version (You'll have to make sure that all your tags are of the format 0.0.0,\n# this is to satisfy Apple's rule that short version be three integers separated by dots)\nSHORT_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe --abbrev=0 | sed -e 's/^v//' -e 's/g//')\n\n# Increasing integer, so use the number of commits on the master branch.\nVERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" rev-list master | wc -l)\n\n# Print to build log\necho \"VERSION: ${VERSION}\"\necho \"SHORT VERSION: ${SHORT_VERSION}\"\necho \"FULL VERSION: ${FULL_VERSION}\"\n\n#############################################################################################\n#\n# Update -Info.plist in the build direcotry\n#\n#############################################################################################\ndefaults write $INFO_PLIST CFBundleShortVersionString $SHORT_VERSION\ndefaults write $INFO_PLIST CFBundleVersion $VERSION\ndefaults write $INFO_PLIST FullVersion $FULL_VERSION\n\n\n#############################################################################################\n#\n# Update -Version.m file the build direcotry\n#\n#############################################################################################\nsed -i.bak '16s/.*/    return @\"'${FULL_VERSION}'\";/' ${PROJECT_DIR}/${PROJECT}/STRVersion.m";
+			shellScript = "#############################################################################################\n#\n# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project. Add the contents to a\n# \"Run Script\" build phase for your application target.\n#\n# This script assumes you are tagging your git repo like so `v0.0`\n#\n#   git tag -a v0.0 -m \"First tag\"\n#\n# dd the contents to a \"Run Script\" build phase for your application target.\n#\n#############################################################################################\n\nset -o errexit\nset -o nounset\n\nINFO_PLIST=\"${PROJECT_DIR}/${PROJECT}/SharethroughSDK-Info\"\necho \"Info.plist: ${INFO_PLIST}\"\n\n# Get git tag and hash in the FullVersion\nFULL_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe | sed -e 's/^v//' -e 's/g//')\n\n# Use the latest tag for short version (You'll have to make sure that all your tags are of the format 0.0.0,\n# this is to satisfy Apple's rule that short version be three integers separated by dots)\nSHORT_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe --abbrev=0 | sed -e 's/^v//' -e 's/g//')\n\n# Increasing integer, so use the number of commits on the master branch.\nVERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" rev-list master | wc -l)\n\n# Print to build log\necho \"VERSION: ${VERSION}\"\necho \"SHORT VERSION: ${SHORT_VERSION}\"\necho \"FULL VERSION: ${FULL_VERSION}\"\n\n#############################################################################################\n#\n# Update -Info.plist in the build direcotry\n#\n#############################################################################################\ndefaults write $INFO_PLIST CFBundleShortVersionString $SHORT_VERSION\ndefaults write $INFO_PLIST CFBundleVersion $VERSION\ndefaults write $INFO_PLIST FullVersion $FULL_VERSION\n\n\n#############################################################################################\n#\n# Update -Version.m file the build direcotry\n#\n#############################################################################################\nsed -i.bak '16s/.*/    return @\"'${FULL_VERSION}'\";/' ${PROJECT_DIR}/${PROJECT}/STRVersion.m\nrm  ${PROJECT_DIR}/${PROJECT}/STRVersion.m.bak";
+		};
+		E8AC4EF019B913F3003A9CE0 /* Build static library + DFP */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build static library + DFP";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK+DFP\" &&\nRESOURCE_BUNDLE_TARGET=\"STRResources\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PROJECT_NAME}\" &&\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos";
+		};
+		E8AC4EF119B91435003A9CE0 /* Build DFP Framework Structure with Fat Binary */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build DFP Framework Structure with Fat Binary";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK+DFP\" &&\nDFP_PRODUCT_NAME=\"${PRODUCT_NAME}+DFP\" &&\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${STATIC_LIB_TARGET}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${STATIC_LIB_TARGET}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${DFP_PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${DFP_PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${DFP_PRODUCT_NAME}\" \"${FRAMEWORK}/${DFP_PRODUCT_NAME}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1023,6 +1377,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E84FB59919BFAD3C0034A41E /* STRDFPManager.m in Sources */,
+				E84FB59A19BFAD3C0034A41E /* STRDFPMediator.m in Sources */,
+				E84FB59B19BFAD3C0034A41E /* STRDFPGridlikeViewDataSourceProxy.m in Sources */,
+				E84FB59319BFAD1D0034A41E /* STRDFPAdGenerator.m in Sources */,
+				E84FB59419BFAD1D0034A41E /* STRDFPAppModule.m in Sources */,
+				E831290119BE4A7E007C2FAB /* STRAdPlacement.m in Sources */,
+				E831290219BE4A7E007C2FAB /* STRAdRenderer.m in Sources */,
 				E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */,
 				AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */,
 				AE8AF509189B0BE500A65B27 /* STRTableViewDelegateProxySpec.mm in Sources */,
@@ -1049,9 +1410,11 @@
 				AE6C80901899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				AEB4EF4718AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
 				AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */,
+				E84FB57919BE7AB40034A41E /* STRAdRendererSpec.mm in Sources */,
 				AE52FD7218A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
+				E84FB5B019C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm in Sources */,
 				AEA0EC7718AC50D700B4286A /* youtube_sample_thumbnail.c in Sources */,
 				AE9C460B189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C44A618A2CDF000298166 /* STRCollectionViewCell.m in Sources */,
@@ -1061,12 +1424,14 @@
 				AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */,
 				AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */,
 				AE46CE6D189844AB0096BDE9 /* STRSession.m in Sources */,
+				E84FB5A119BFCDA90034A41E /* DFPAdGeneratorSpec.mm in Sources */,
 				E8B9759218EA052C0054F35F /* pinterest-logo.c in Sources */,
 				AE6C80711898925C008FD848 /* STRFullTableViewDataSource.m in Sources */,
 				AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */,
 				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
 				AE39F8C418AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */,
 				AE58228218A2F19100672653 /* UICollectionView+STRSpec.mm in Sources */,
+				E84FB59F19BFCD750034A41E /* STRDFPManagerSpec.mm in Sources */,
 				AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */,
 				AE6C44A318A2CC7F00298166 /* STRCollectionViewDataSource.m in Sources */,
@@ -1121,6 +1486,7 @@
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				AE3FF40918AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AEB4EF4618AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
+				E8703DB119B12CB000D3FA50 /* STRAdRenderer.m in Sources */,
 				AE9C4626189C29B0001B407A /* STRAdVine.m in Sources */,
 				AE39F8C318AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */,
 				AE58227A18A2F04F00672653 /* UICollectionView+STR.m in Sources */,
@@ -1133,6 +1499,7 @@
 				AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
+				E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
@@ -1150,6 +1517,7 @@
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE52FD7118A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */,
+				E83128E319B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m in Sources */,
 				AE52FD7518A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
 				AEA0EC7318AC4DBB00B4286A /* STRAdFixtures.m in Sources */,
 				AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */,
@@ -1160,6 +1528,65 @@
 				AE6C80811899861E008FD848 /* STRInjector.m in Sources */,
 				E8EE49B3191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */,
 				E8B9759118EA052C0054F35F /* pinterest-logo.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8703DF619B9092600D3FA50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8703DF719B9092600D3FA50 /* STRAdService.m in Sources */,
+				E8703DF819B9092600D3FA50 /* UITableView+STR.m in Sources */,
+				E83128E419B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m in Sources */,
+				E8703DF919B9092600D3FA50 /* STRAdvertisement.m in Sources */,
+				E8703DFA19B9092600D3FA50 /* play-btn-300x.c in Sources */,
+				E8703DFB19B9092600D3FA50 /* STRYouTubeEmbedPage.m in Sources */,
+				E8703DFC19B9092600D3FA50 /* STRAdRenderer.m in Sources */,
+				E8703DFD19B9092600D3FA50 /* STRAdVine.m in Sources */,
+				E8703DFE19B9092600D3FA50 /* hosted_sample_thumbnail.c in Sources */,
+				E8703DFF19B9092600D3FA50 /* UICollectionView+STR.m in Sources */,
+				E83128F019B936D9007C2FAB /* STRDFPMediator.m in Sources */,
+				E8703E0119B9092600D3FA50 /* SharethroughSDK.m in Sources */,
+				E8703E0219B9092600D3FA50 /* STRAdPinterest.m in Sources */,
+				E8703E0319B9092600D3FA50 /* STRVersion.m in Sources */,
+				E8703E0419B9092600D3FA50 /* STRRestClient.m in Sources */,
+				E8703E0619B9092600D3FA50 /* STRAdClickout.m in Sources */,
+				E8703E0719B9092600D3FA50 /* STRPromise.m in Sources */,
+				E83128EE19B936D9007C2FAB /* STRDFPAppModule.m in Sources */,
+				E8703E0819B9092600D3FA50 /* STRVideoController.m in Sources */,
+				E8703E0919B9092600D3FA50 /* STRSingletonBlockWrapper.m in Sources */,
+				E8703E0A19B9092600D3FA50 /* STRInteractiveAdViewController.m in Sources */,
+				E8703E0B19B9092600D3FA50 /* STRAdPlacement.m in Sources */,
+				E8703E0C19B9092600D3FA50 /* STRAdCache.m in Sources */,
+				E8703E0D19B9092600D3FA50 /* STRBlockWrapper.m in Sources */,
+				E8703E0F19B9092600D3FA50 /* STRNetworkClient.m in Sources */,
+				E8703E1019B9092600D3FA50 /* STRClickoutViewController.m in Sources */,
+				E8703E1119B9092600D3FA50 /* STRAdYouTube.m in Sources */,
+				E8703E1219B9092600D3FA50 /* STRGridlikeViewAdGenerator.m in Sources */,
+				E8703E1319B9092600D3FA50 /* clickout_sample_thumbnail.c in Sources */,
+				E83128EF19B936D9007C2FAB /* STRDFPManager.m in Sources */,
+				E8703E1419B9092600D3FA50 /* vine-logo.c in Sources */,
+				E8703E1519B9092600D3FA50 /* STRIndexPathDelegateProxy.m in Sources */,
+				E8703E1619B9092600D3FA50 /* STRAppModule.m in Sources */,
+				E8703E1719B9092600D3FA50 /* STRTestSafeModule.m in Sources */,
+				E8703E1819B9092600D3FA50 /* vine_sample_thumbnail.c in Sources */,
+				E8703E1919B9092600D3FA50 /* STRImages.m in Sources */,
+				E8703E1A19B9092600D3FA50 /* STRBeaconService.m in Sources */,
+				E8703E1B19B9092600D3FA50 /* STRDeferred.m in Sources */,
+				E8703E1C19B9092600D3FA50 /* STRAdGenerator.m in Sources */,
+				E8703E1D19B9092600D3FA50 /* STRSession.m in Sources */,
+				E8703E1E19B9092600D3FA50 /* STRFakeAdGenerator.m in Sources */,
+				E8703E1F19B9092600D3FA50 /* STRAdFixtures.m in Sources */,
+				E8703E2019B9092600D3FA50 /* STRYouTubeViewController.m in Sources */,
+				E8703E2119B9092600D3FA50 /* youtube_sample_thumbnail.c in Sources */,
+				E8703E2219B9092600D3FA50 /* STRGridlikeViewDataSourceProxy.m in Sources */,
+				E8703E2319B9092600D3FA50 /* STRAdPlacementAdjuster.m in Sources */,
+				E8703E2419B9092600D3FA50 /* STRDateProvider.m in Sources */,
+				E8703E2519B9092600D3FA50 /* STRInjector.m in Sources */,
+				E83128ED19B936D9007C2FAB /* STRDFPAdGenerator.m in Sources */,
+				E8703E2619B9092600D3FA50 /* pinterest_sample_thumbnail.c in Sources */,
+				E8703E2719B9092600D3FA50 /* SharethroughSDK+DFP.m in Sources */,
+				E8703E2919B9092600D3FA50 /* pinterest-logo.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,6 +1656,10 @@
 					"$(SRCROOT)/specs/Vendor/PivotalCoreKit/**",
 				);
 				INFOPLIST_FILE = "specs/specs-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/engineer/workspace/iOS-SDK/ThirdParty/GoogleMobileAdsSdkiOS",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -1256,6 +1687,10 @@
 					"$(SRCROOT)/specs/Vendor/PivotalCoreKit/**",
 				);
 				INFOPLIST_FILE = "specs/specs-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/engineer/workspace/iOS-SDK/ThirdParty/GoogleMobileAdsSdkiOS",
+				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1373,6 +1808,44 @@
 			};
 			name = Release;
 		};
+		E8703E3019B9092600D3FA50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DSTROOT = /tmp/SharethroughSDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "Sharethrough-SDK+DFP";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		E8703E3119B9092600D3FA50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DSTROOT = /tmp/SharethroughSDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "Sharethrough-SDK+DFP";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1408,6 +1881,15 @@
 			buildConfigurations = (
 				AE8ED4071885ADF00004AB32 /* Debug */,
 				AE8ED4081885ADF00004AB32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E8703E2F19B9092600D3FA50 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK+DFP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8703E3019B9092600D3FA50 /* Debug */,
+				E8703E3119B9092600D3FA50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -10,7 +10,9 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRAdGenerator.h"
+#import "STRAdPlacement.h"
 #import "STRGridlikeViewAdGenerator.h"
+#import "STRGridlikeViewDataSourceProxy.h"
 #import "STRFakeAdGenerator.h"
 #import "STRBeaconService.h"
 #import "STRAdService.h"
@@ -30,7 +32,7 @@
     static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
-        sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];;
+        sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];
     });
 
     return sharedObject;
@@ -49,17 +51,34 @@
     return testSafeSharedObject;
 }
 
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {
+- (void)placeAdInView:(UIView<STRAdView> *)view
+         placementKey:(NSString *)placementKey
+presentingViewController:(UIViewController *)presentingViewController
+             delegate:(id<STRAdViewDelegate>)delegate {
+
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:view
+                                                            PlacementKey:placementKey
+                                                presentingViewController:presentingViewController
+                                                                delegate:delegate
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil];
+
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-    [generator placeAdInView:view
-                placementKey:placementKey
-    presentingViewController:presentingViewController
-                    delegate:delegate];
+    [generator placeAdInPlacement:adPlacement];
 }
 
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
+- (void)placeAdInTableView:(UITableView *)tableView
+     adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+              placementKey:(NSString *)placementKey
+  presentingViewController:(UIViewController *)presentingViewController
+                  adHeight:(CGFloat)adHeight
+        adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
+
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
+    STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+
     [gridlikeViewAdGenerator placeAdInGridlikeView:tableView
+                                   dataSourceProxy:dataSourceProxy
                              adCellReuseIdentifier:adCellReuseIdentifier
                                       placementKey:placementKey
                           presentingViewController:presentingViewController
@@ -67,9 +86,18 @@
                                 adInitialIndexPath:adInitialIndexPath];
 }
 
-- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adSize:(CGSize)adSize adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
+- (void)placeAdInCollectionView:(UICollectionView *)collectionView
+          adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+                   placementKey:(NSString *)placementKey
+       presentingViewController:(UIViewController *)presentingViewController
+                         adSize:(CGSize)adSize
+             adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
+
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
+    STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+
     [gridlikeViewAdGenerator placeAdInGridlikeView:collectionView
+                                   dataSourceProxy:dataSourceProxy
                              adCellReuseIdentifier:adCellReuseIdentifier
                                       placementKey:placementKey
                           presentingViewController:presentingViewController

@@ -14,5 +14,6 @@
 - (instancetype)initWithDateProvider:(STRDateProvider *)dateProvider;
 - (void)saveAd:(STRAdvertisement *)ad;
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey;
+- (STRAdvertisement *)fetchCachedAdForCreativeKey:(NSString *)creativeKey;
 - (BOOL)isAdStale:(NSString *)placementKey;
 @end
