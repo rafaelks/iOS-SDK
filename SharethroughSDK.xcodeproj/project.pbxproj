@@ -176,7 +176,6 @@
 		E83128D819B914DB007C2FAB /* UITableView+STR.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */; };
 		E83128D919B914DB007C2FAB /* SharethroughSDK+DFP.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = E8703DC319B9031700D3FA50 /* SharethroughSDK+DFP.h */; };
 		E83128DB19B9151D007C2FAB /* SharethroughSDK-Info.plist in Copy DFP Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
-		E83128E319B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */; };
 		E83128E419B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */; };
 		E83128ED19B936D9007C2FAB /* STRDFPAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E619B936D9007C2FAB /* STRDFPAdGenerator.m */; };
 		E83128EE19B936D9007C2FAB /* STRDFPAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E719B936D9007C2FAB /* STRDFPAppModule.m */; };
@@ -1517,7 +1516,6 @@
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE52FD7118A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */,
-				E83128E319B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m in Sources */,
 				AE52FD7518A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
 				AEA0EC7318AC4DBB00B4286A /* STRAdFixtures.m in Sources */,
 				AE9C462B189C5288001B407A /* STRYouTubeViewController.m in Sources */,
