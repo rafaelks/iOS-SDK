@@ -282,6 +282,23 @@ describe(@"STRAdRenderer", ^{
                     beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//click.com?fakeParam=[timestamp]"]);
                     beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//play.com?fakeParam=[timestamp]"]);
                 });
+
+                describe(@"when the delegate has adView:userDidEngageAdForPlacementKey defined", ^{
+                   it(@"calls the delegate", ^{
+                       delegate should have_received(@selector(adView:userDidEngageAdForPlacementKey:));
+                   });
+                });
+            });
+
+            describe(@"when the ad is tapped on when the delegate does not have adView:userDidEngageAdForPlacementKey defined", ^{
+                beforeEach(^{
+                    delegate reject_method(@selector(adView:userDidEngageAdForPlacementKey:));
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"does not call the delegate", ^{
+                    delegate should_not have_received(@selector(adView:userDidEngageAdForPlacementKey:));
+                });
             });
             
             describe(@"when the view has already had an ad placed within it", ^{
@@ -345,6 +362,26 @@ describe(@"STRAdRenderer", ^{
                         presentingViewController.presentedViewController should be_nil;
                     });
                     
+                    describe(@"when the delegate has adView:willDismissModalForPlacementKey defined", ^{
+                        it(@"calls the delegate", ^{
+                            [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
+
+                            delegate should have_received(@selector(adView:willDismissModalForPlacementKey:));
+                        });
+                    });
+
+                    describe(@"when the ad is tapped on when the delegate does not have adView:willDismissModalForPlacementKey defined", ^{
+                        beforeEach(^{
+                            delegate reject_method(@selector(adView:willDismissModalForPlacementKey:));
+                        });
+
+                        it(@"does not call the delegate", ^{
+                            [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
+
+                            delegate should_not have_received(@selector(adView:willDismissModalForPlacementKey:));
+                        });
+                    });
+
                     it(@"fires off a clickout click beacon", ^{
                         beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
                     });
