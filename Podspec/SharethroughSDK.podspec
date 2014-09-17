@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "SharethroughSDK"
-  s.version      = "1.2.0"
+  s.version      = "1.3.0"
   s.summary      = "SharethroughSDK for adding native ads to your app"
 
   s.description  = <<-DESC
