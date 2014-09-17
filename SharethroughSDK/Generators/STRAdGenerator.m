@@ -7,172 +7,87 @@
 //
 
 #import "STRAdGenerator.h"
-#import "STRAdView.h"
+
+#import <objc/runtime.h>
+
 #import "STRAdService.h"
 #import "STRAdvertisement.h"
-#import "STRInteractiveAdViewController.h"
-#import "STRBeaconService.h"
-#import <objc/runtime.h>
+#import "STRAdPlacement.h"
+#import "STRAdRenderer.h"
 #import "STRAdViewDelegate.h"
+#import "STRDeferred.h"
+#import "STRInjector.h"
+#import "STRPromise.h"
 
-char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
-
-@interface STRAdGenerator ()<STRInteractiveAdViewControllerDelegate>
+@interface STRAdGenerator ()
 
 @property (nonatomic, strong) STRAdService *adService;
-@property (nonatomic, strong) STRBeaconService *beaconService;
-@property (nonatomic, weak) UIViewController *presentingViewController;
-@property (nonatomic, weak) UIView *spinner;
-@property (nonatomic, strong) STRAdvertisement *ad;
-@property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, weak) NSRunLoop *timerRunLoop;
-@property (nonatomic, weak) NSTimer *adVisibleTimer;
 @property (nonatomic, weak) STRInjector *injector;
+
+@property (nonatomic, weak) UIView *spinner;
 
 @end
 
 @implementation STRAdGenerator
 
 - (id)initWithAdService:(STRAdService *)adService
-          beaconService:(STRBeaconService *)beaconService
-                runLoop:(NSRunLoop *)timerRunLoop
                injector:(STRInjector *)injector
 {
     self = [super init];
     if (self) {
         self.adService = adService;
-        self.beaconService = beaconService;
-        self.timerRunLoop = timerRunLoop;
         self.injector = injector;
     }
     return self;
 }
 
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate {
-    [self prepareForNewAd:view];
+- (void)placeAdInPlacement:(STRAdPlacement *)placement {
+    [self placeCreative:@"" inPlacement:placement];
+}
 
-    objc_setAssociatedObject(view, STRAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    self.presentingViewController = presentingViewController;
-    [self addSpinnerToView:view];
+- (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement {
+    STRDeferred *deferred = [STRDeferred defer];
+    [self addSpinnerToView:placement.adView];
+    [self clearTextFromView:placement.adView];
 
-    STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placementKey];
+    STRPromise *adPromise;
+    if ([creativeKey length] > 0){
+        adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
+    } else {
+        adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
+    }
+
     [adPromise then:^id(STRAdvertisement *ad) {
-        [self.beaconService fireImpressionForAd:ad adSize:view.frame.size];
-
         [self.spinner removeFromSuperview];
 
-        self.ad = ad;
-        view.adTitle.text = ad.title;
-        view.adSponsoredBy.text = [ad sponsoredBy];
-        [self setDescriptionText:ad.adDescription onView:view];
-        view.adThumbnail.image = [ad displayableThumbnail];
+        STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
+        [renderer renderAd:ad inPlacement:placement];
 
-        [view setNeedsLayout];
-
-        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
-        [view addGestureRecognizer:tapRecognizer];
-        self.tapRecognizer = tapRecognizer;
-
-        NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
-                                                 target:self
-                                               selector:@selector(checkIfAdIsVisible:)
-                                               userInfo:[@{@"view": view} mutableCopy]
-                                                repeats:YES];
-        timer.tolerance = timer.timeInterval * 0.1;
-        [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
-
-        self.adVisibleTimer = timer;
-
-        if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
-            [delegate adView:view didFetchAdForPlacementKey:placementKey];
-        }
-
+        [deferred resolveWithValue:nil];
         return ad;
     } error:^id(NSError *error) {
         [self.spinner removeFromSuperview];
+        [placement.adView setNeedsLayout];
 
-        if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
-            [delegate adView:view didFailToFetchAdForPlacementKey:placementKey];
-            [view setNeedsLayout];
+        if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
+            [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
         }
+        [deferred rejectWithError:error];
         return error;
     }];
+
+    return deferred.promise;
 }
 
 - (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey {
     return [self.adService fetchAdForPlacementKey:placementKey];
 }
 
-- (void)checkIfAdIsVisible:(NSTimer *)timer {
-    UIView *view = timer.userInfo[@"view"];
-    CGRect viewFrame = [view convertRect:view.bounds toView:nil];
-
-    if (!view.superview) {
-        [timer invalidate];
-        return;
-    }
-
-    CGRect intersection = CGRectIntersection(viewFrame, view.window.frame);
-
-    CGFloat intersectionArea = intersection.size.width * intersection.size.height;
-    CGFloat viewArea = view.frame.size.width * view.frame.size.height;
-    CGFloat percentVisible = intersectionArea/viewArea;
-
-    CGFloat secondsVisible = [timer.userInfo[@"secondsVisible"] floatValue];
-
-    if (percentVisible >= 0.5 && secondsVisible < 1.0) {
-        timer.userInfo[@"secondsVisible"] = @(secondsVisible + timer.timeInterval);
-    } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
-        [self.beaconService fireVisibleImpressionForAd:self.ad
-                                                adSize:view.frame.size];
-        [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility];
-        [timer invalidate];
-    } else {
-        [timer.userInfo removeObjectForKey:@"secondsVisible"];
-    }
-}
-
-
-- (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
-    UIView *view = tapRecognizer.view;
-    if ([self.ad.action isEqualToString:STRClickoutAd] ||
-        [self.ad.action isEqualToString:STRInstagramAd] ||
-        [self.ad.action isEqualToString:STRPinterestAd]) {
-
-        [self.beaconService fireClickForAd:self.ad adSize:view.frame.size];
-    } else {
-        [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];
-    }
-    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay];
-    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick];
-
-
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
-    interactiveAdController.delegate = self;
-    [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
-}
-
-#pragma mark - <STRInteractiveAdViewControllerDelegate>
-
-- (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+- (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement {
+    return [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
 }
 
 #pragma mark - Private
-
-- (void)prepareForNewAd:(UIView<STRAdView> *)view {
-    STRAdGenerator *oldGenerator = objc_getAssociatedObject(view, STRAdGeneratorKey);
-    [oldGenerator.adVisibleTimer invalidate];
-    [view removeGestureRecognizer:oldGenerator.tapRecognizer];
-
-    [self clearTextFromView:view];
-}
-
-- (void)setDescriptionText:(NSString *)text onView:(UIView<STRAdView> *)view {
-    if ([view respondsToSelector:@selector(adDescription)]) {
-        view.adDescription.text = text;
-    }
-}
 
 - (void)addSpinnerToView:(UIView *)view {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -181,12 +96,6 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
     [spinner startAnimating];
     [self centerView:spinner toView:view];
     self.spinner = spinner;
-}
-
-- (void)clearTextFromView:(UIView<STRAdView> *)view {
-    view.adTitle.text = @"";
-    view.adSponsoredBy.text = @"";
-    [self setDescriptionText:@"" onView:view];
 }
 
 - (void)centerView:(UIView *)viewToCenter toView:(UIView *)referenceView {
@@ -204,6 +113,18 @@ char const * const STRAdGeneratorKey = "STRAdGeneratorKey";
                                                               attribute:NSLayoutAttributeCenterY
                                                              multiplier:1.0
                                                                constant:0]];
+}
+
+- (void)clearTextFromView:(UIView<STRAdView> *)view {
+    view.adTitle.text = @"";
+    view.adSponsoredBy.text = @"";
+    [self setDescriptionText:@"" onView:view];
+}
+
+- (void)setDescriptionText:(NSString *)text onView:(UIView<STRAdView> *)view {
+    if ([view respondsToSelector:@selector(adDescription)]) {
+        view.adDescription.text = text;
+    }
 }
 
 @end

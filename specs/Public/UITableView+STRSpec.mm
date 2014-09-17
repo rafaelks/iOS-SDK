@@ -9,6 +9,7 @@
 #import "STRAppModule.h"
 #import "STRTableViewCell.h"
 #import "STRFakeAdGenerator.h"
+#import "STRGridlikeViewDataSourceProxy.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -48,6 +49,7 @@ describe(@"UITableView+STR", ^{
     __block STRFullTableViewDataSource *dataSource;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
     __block STRGridlikeViewAdGenerator *tableViewAdGenerator;
+    __block STRGridlikeViewDataSourceProxy *dataSourceProxy;
     
     beforeEach(^{
         tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
@@ -72,8 +74,22 @@ describe(@"UITableView+STR", ^{
         spy_on([STRAdPlacementAdjuster class]);
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
         
+        dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCellReuseIdentifier"
+                                                                                   placementKey:@"placementKey"
+                                                                       presentingViewController:nil
+                                                                                       injector:injector];
+        dataSourceProxy.originalDataSource = dataSource;
+        dataSourceProxy.adjuster = adPlacementAdjuster;
+        
         tableViewAdGenerator = [injector getInstance:[STRGridlikeViewAdGenerator class]];
-        [tableViewAdGenerator placeAdInGridlikeView:tableView adCellReuseIdentifier:@"adCellReuseIdentifier" placementKey:@"placementKey" presentingViewController:nil adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
+        
+        [tableViewAdGenerator placeAdInGridlikeView:tableView
+                         dataSourceProxy:dataSourceProxy
+                   adCellReuseIdentifier:@"adCellReuseIdentifier"
+                            placementKey:@"placementKey"
+                presentingViewController:nil
+                                  adSize:CGSizeZero
+                      adInitialIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
         
         [tableView reloadData];
     });

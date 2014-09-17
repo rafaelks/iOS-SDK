@@ -15,6 +15,7 @@
 
 @property (nonatomic, copy) NSString *adServerHostName;
 @property (nonatomic, copy) NSString *beaconServerHostName;
+@property (nonatomic, copy) NSString *dfpPathUrlFormat;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 
 @end
@@ -26,6 +27,7 @@
     if (self) {
         self.adServerHostName = @"http://btlr.sharethrough.com";
         self.beaconServerHostName = @"http://b.sharethrough.com/butler";
+        self.dfpPathUrlFormat = @"https://native.sharethrough.com/placements/%@/sdk.json";
         self.networkClient = networkClient;
     }
     return self;
@@ -52,6 +54,29 @@
         return error;
     }];
 
+    return deferred.promise;
+}
+
+- (STRPromise *)getDFPPathForPlacement:(NSString *)placementKey {
+    STRDeferred *deferred = [STRDeferred defer];
+    
+    NSString *urlString = [NSString stringWithFormat:self.dfpPathUrlFormat, placementKey];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    
+    [[self.networkClient get:request] then:^id(NSData *data) {
+        NSError *jsonParseError;
+        NSDictionary *parsedObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
+        if (jsonParseError) {
+            [deferred rejectWithError:jsonParseError];
+        } else {
+            [deferred resolveWithValue:[parsedObj valueForKey:@"dfp_path"]];
+        }
+        return data;
+    } error:^id(NSError *error) {
+        [deferred rejectWithError:error];
+        return error;
+    }];
+    
     return deferred.promise;
 }
 

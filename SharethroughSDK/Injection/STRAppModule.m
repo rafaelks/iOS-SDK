@@ -1,13 +1,16 @@
 #import "STRAppModule.h"
+
+#import "STRAdCache.h"
 #import "STRAdGenerator.h"
+#import "STRAdRenderer.h"
 #import "STRAdService.h"
 #import "STRBeaconService.h"
-#import "STRRestClient.h"
-#import "STRNetworkClient.h"
 #import "STRDateProvider.h"
-#import <AdSupport/AdSupport.h>
 #import "STRGridlikeViewAdGenerator.h"
-#import "STRAdCache.h"
+#import "STRNetworkClient.h"
+#import "STRRestClient.h"
+
+#import <AdSupport/AdSupport.h>
 #import <MediaPlayer/MediaPlayer.h>
 
 @implementation STRAppModule
@@ -48,13 +51,17 @@
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
-                                           beaconService:[injector getInstance:[STRBeaconService class]]
-                                                 runLoop:[injector getInstance:[NSRunLoop class]]
                                                 injector:injector];
     }];
 
     [injector bind:[STRGridlikeViewAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRGridlikeViewAdGenerator alloc] initWithInjector:injector];
+    }];
+
+    [injector bind:[STRAdRenderer class] toBlock:^id(STRInjector *injector) {
+        return [[STRAdRenderer alloc] initWithBeaconService:[injector getInstance:[STRBeaconService class]]
+                                                  runLoop:[injector getInstance:[NSRunLoop class]]
+                                                 injector:injector];
     }];
 }
 
