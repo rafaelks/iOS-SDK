@@ -14,7 +14,13 @@
 
 <hr/>
 <div id="setup"></div>
-### 1. Setup the SDK ##
+### 1. Setup the SDK ###
+### 1.a Cocoapods ###
+Add the following to your Podfile
+
+    pod 'SharethroughSDK', '~> 1.3'
+
+### 1.b Manually ###
 
 1. Download the SDK. The latest version can be found [here][sdk].
 
