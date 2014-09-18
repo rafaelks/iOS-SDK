@@ -22,6 +22,7 @@
 				E8AC4EF219B91465003A9CE0 /* Copy DFP Header Files */,
 				E83128DA19B91500007C2FAB /* Copy DFP Resource Files */,
 				E83128DC19B91533007C2FAB /* Copy built DFP framework to /built-framework directory within project */,
+				E81C63D519CA311F00D5A86D /* Copy podspec */,
 			);
 			dependencies = (
 			);
@@ -1312,6 +1313,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
+		};
+		E81C63D519CA311F00D5A86D /* Copy podspec */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy podspec";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "BUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework/\"\nPODSPEC=\"${PROJECT_DIR}/Podspec/SharethroughSDK.podspec\"\ncp \"${PODSPEC}\" \"${BUILT_FRAMEWORK_DIR}\"\n";
 		};
 		E83128DC19B91533007C2FAB /* Copy built DFP framework to /built-framework directory within project */ = {
 			isa = PBXShellScriptBuildPhase;
