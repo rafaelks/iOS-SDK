@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.author             = { "Sharethrough Engineering" => "engineers@sharethrough.com" }
   s.social_media_url   = "https://twitter.com/SharethroughEng"
   s.source = {
-    :http => "http://s3.amazonaws.com/iOS-SDK/SharethroughSDK.framework.tar"
+    :http => "http://s3.amazonaws.com/iOS-SDK/SharethroughSDK.framework.zip"
   }
   s.platform           = :ios, "7.0"
   s.preserve_paths     = "SharethroughSDK.framework"
