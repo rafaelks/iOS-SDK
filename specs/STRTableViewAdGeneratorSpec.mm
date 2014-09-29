@@ -186,8 +186,21 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                                placementKey:@"placementKey"
                                    presentingViewController:presentingViewController
                                                      adSize:CGSizeZero
+                                         adInitialIndexPath:[NSIndexPath indexPathForRow:5 inSection:1]];
+                [tableView numberOfRowsInSection:1] should equal(3);
+            });
+        });
+
+        context(@"and there are no items in the section", ^{
+            it(@"doesn't place an ad in the section", ^{
+                [tableViewAdGenerator placeAdInGridlikeView:tableView
+                                            dataSourceProxy:dataSourceProxy
+                                      adCellReuseIdentifier:@"adCell"
+                                               placementKey:@"placementKey"
+                                   presentingViewController:presentingViewController
+                                                     adSize:CGSizeZero
                                          adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-                [tableView numberOfRowsInSection:0] should equal(1);
+                [tableView numberOfRowsInSection:0] should equal(0);
             });
         });
 
