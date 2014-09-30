@@ -16,6 +16,22 @@ describe(@"STRAdCache", ^{
 
         cache = [[STRAdCache alloc] initWithDateProvider:dateProvider];
     });
+    
+    describe(@"-setAdCacheTimeoutInSeconds", ^{
+        describe(@"when the value is >= 20", ^{
+            it(@"returns the set value", ^{
+                [cache setAdCacheTimeoutInSeconds:20] should equal(20);
+                [cache setAdCacheTimeoutInSeconds:NSUIntegerMax] should equal(NSUIntegerMax);
+            });
+        });
+        
+        describe(@"when the value is < 20", ^{
+            it(@"returns the set value", ^{
+                [cache setAdCacheTimeoutInSeconds:19] should equal(20);
+                [cache setAdCacheTimeoutInSeconds:0] should equal(20);
+            });
+        });
+    });
 
     describe(@"-fetchCachedAdForPlacementKey:", ^{
         __block STRAdvertisement *recentAd;
