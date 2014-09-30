@@ -18,6 +18,7 @@
 #import "STRAdService.h"
 #import "STRDFPAdGenerator.h"
 #import "STRDFPAppModule.h"
+#import "STRAdCache.h"
 #import "STRDFPManager.h"
 
 @interface SharethroughSDKDFP ()
@@ -98,4 +99,8 @@ presentingViewController:(UIViewController *)presentingViewController
                                 adInitialIndexPath:adInitialIndexPath];
 }
 
+- (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds {
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache setAdCacheTimeoutInSeconds:seconds];
+}
 @end
