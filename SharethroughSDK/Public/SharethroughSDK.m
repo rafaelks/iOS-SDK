@@ -16,6 +16,7 @@
 #import "STRFakeAdGenerator.h"
 #import "STRBeaconService.h"
 #import "STRAdService.h"
+#import "STRAdCache.h"
 #import "STRTestSafeModule.h"
 
 @interface SharethroughSDK ()
@@ -105,4 +106,8 @@ presentingViewController:(UIViewController *)presentingViewController
                                 adInitialIndexPath:adInitialIndexPath];
 }
 
+- (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds {
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache setAdCacheTimeoutInSeconds:seconds];
+}
 @end
