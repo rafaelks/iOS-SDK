@@ -68,6 +68,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerReadyForDisplayDidChangeNotification object:self.moviePlayerController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMovieDurationAvailableNotification object:self.moviePlayerController];
 
+    [self.moviePlayerController stop];
+
     [self.timer invalidate];
 }
 

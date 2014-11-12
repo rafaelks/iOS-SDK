@@ -11,10 +11,17 @@
 	* [UICollectionView API][sect-firstAd-collection]
 3. [Viewing the Sample App][sect-sampleAppIntro]
 4. [Documentation][sect-docs]
+5. [SDK+DFP][sect-dfp]
 
 <hr/>
 <div id="setup"></div>
-### 1. Setup the SDK ##
+### 1. Setup the SDK ###
+### 1.a Cocoapods ###
+Add the following to your Podfile
+
+    pod 'SharethroughSDK', '~> 1.3'
+
+### 1.b Manually ###
 
 1. Download the SDK. The latest version can be found [here][sdk].
 
@@ -198,6 +205,27 @@ cp -r ~/Downloads/com.sharethrough.SharethroughSDK.docset ~/Library/Developer/Sh
 
 and then restarting Xcode to pick up the new docset.
 
+<div id="dfp"></div>
+### 5. Integrating STR + DFP Framework ###
+Follow the instructions for integrating the SharethroughSDK with the following changes.
+
+####Linking
+* Use the SharethroughSDK+DFP.framework instead of the SharethroughSDK.framework ![Frameworks]
+* Link to the DFP third party library available from [Google DFP]
+
+#### Header Files
+
+* Import `#import <SharethroughSDK+DFP/SharethroughSDK+DFP.h>
+` instead of `#import <SharethroughSDK/SharethroughSDK.h>
+`
+
+#### Call changes
+* For the shared instance the call will be `[SharethroughSDKDFP sharedInstance]`
+* The interface for `placeAdInView:placementKey:presentingViewController:delegate` has changed to `placeAdInView:placementKey:dfpPath:presentingViewController:delegate` 
+  * The `dfpPath` parameter may be passed as nil or can be the **DFP Ad Unit ID** of the DFP Ad Unit.
+  * If it is nil or blank, the Sharethrough SDK will make a call to the Sharethrough platform to retrieve the **DFP Ad Unit ID** that was set inside the platform
+
+The SDK will handle all the work of calling out to DFP, retrieving the creative from DFP, using the parameter in the DFP creative to fetch the Sharethrough ad, and displaying the Sharethrough ad in the given `UIView` or `UITableView` or `UICollectionView`
 
 ## Known Issues ##
 If you're running your iOS app on a physical iPad while connected to a computer and play a Youtube video from an ad, error messages will be displayed in the Xcode console. This is a known iPad on iOS7 issue, but do not affect your app's functionality. More information can be found [here][stack-overflow]
@@ -207,6 +235,7 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 * [Download SDK][sdk] The latest version of the SDK.
 * [Sample App][sample-app] Sample iOS app which utilizes the SDK.
 * [View SDK Documentation][sdk-docs]
+
 
 [sdk]: http://s3.amazonaws.com/iOS-SDK/SharethroughSDK.framework.tar
 [nav-screenshot]: documentation/getting_started/nav_screenshot.png
@@ -228,3 +257,6 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 [sect-firstAd-collection]: #first-ad-collection
 [sect-sampleAppIntro]: #viewing-the-sample-app
 [sect-docs]: #documentation
+[sect-dfp]: #dfp
+[frameworks]: documentation/DFP/Frameworks.png
+[Google DFP]:https://developers.google.com/mobile-ads-sdk/download#download

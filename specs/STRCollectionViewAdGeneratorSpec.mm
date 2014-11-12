@@ -197,9 +197,23 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                                     placementKey:@"placementKey"
                                         presentingViewController:presentingViewController
                                                           adSize:CGSizeZero
-                                              adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+                                              adInitialIndexPath:[NSIndexPath indexPathForRow:5 inSection:1]];
                 [collectionView layoutIfNeeded];
-                [collectionView numberOfItemsInSection:0] should equal(1);
+                [collectionView numberOfItemsInSection:1] should equal(3);
+            });
+        });
+
+        context(@"and there are no items in the seciton", ^{
+            it(@"doesn't place an ad in the section", ^{
+                [collectionViewAdGenerator placeAdInGridlikeView:collectionView
+                                                 dataSourceProxy:dataSourceProxy
+                                           adCellReuseIdentifier:@"adCell"
+                                                    placementKey:@"placementKey"
+                                        presentingViewController:presentingViewController
+                                                          adSize:CGSizeZero
+                                              adInitialIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]];
+                [collectionView layoutIfNeeded];
+                [collectionView numberOfItemsInSection:0] should equal(0);
             });
         });
 

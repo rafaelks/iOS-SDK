@@ -10,13 +10,12 @@
 #import "STRAdvertisement.h"
 #import "STRDateProvider.h"
 
-const NSInteger STRAdCacheTimeoutInSeconds = 120;
-
 @interface STRAdCache ()
 
 @property (nonatomic, strong) NSMutableDictionary *cachedCreatives;
 @property (nonatomic, strong) NSMutableDictionary *cachedPlacementAdPointers;
 @property (nonatomic, strong) NSMutableDictionary *cachedTimestamps;
+@property (nonatomic, assign) NSUInteger STRAdCacheTimeoutInSeconds;
 @property (nonatomic, strong) STRDateProvider *dateProvider;
 
 @end
@@ -36,9 +35,20 @@ const NSInteger STRAdCacheTimeoutInSeconds = 120;
         self.cachedCreatives = [NSMutableDictionary dictionary];
         self.cachedPlacementAdPointers = [NSMutableDictionary dictionary];
         self.cachedTimestamps = [NSMutableDictionary dictionary];
+        self.STRAdCacheTimeoutInSeconds = 120;
         self.dateProvider = dateProvider;
     }
     return self;
+}
+
+- (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds {
+    if (seconds < 20) {
+        self.STRAdCacheTimeoutInSeconds = 20;
+    } else {
+        self.STRAdCacheTimeoutInSeconds = seconds;
+    }
+    
+    return self.STRAdCacheTimeoutInSeconds;
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey {
@@ -71,7 +81,7 @@ const NSInteger STRAdCacheTimeoutInSeconds = 120;
     NSDate *now = [self.dateProvider now];
     NSTimeInterval timeInterval = [now timeIntervalSinceDate:cacheDate];
 
-    if (timeInterval == NAN || timeInterval > STRAdCacheTimeoutInSeconds) {
+    if (timeInterval == NAN || timeInterval > self.STRAdCacheTimeoutInSeconds) {
         return YES;
     }
     return NO;
