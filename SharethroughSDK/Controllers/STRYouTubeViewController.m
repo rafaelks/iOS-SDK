@@ -107,6 +107,8 @@
     [super viewWillDisappear:animated];
 
     [self.timer invalidate];
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:@"player.stopVideo();"];
 }
 
 #pragma mark - UIWebViewDelegate
