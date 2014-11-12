@@ -26,6 +26,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 @property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, strong) STRAdvertisement *ad;
+@property (nonatomic, strong) STRAdPlacement *placement;
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, weak) NSTimer *adVisibleTimer;
 
@@ -48,6 +49,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (void)renderAd:(STRAdvertisement *)ad inPlacement:(STRAdPlacement *)placement {
     self.ad = ad;
+    self.placement = placement;
     [self prepareForNewAd:placement.adView];
 
     objc_setAssociatedObject(placement.adView, STRAdRendererKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -123,6 +125,10 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay];
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick];
 
+    if ([self.placement.delegate respondsToSelector:@selector(adView:userDidEngageAdForPlacementKey:)]) {
+        [self.placement.delegate adView:self.placement.adView userDidEngageAdForPlacementKey:self.placement.placementKey];
+    }
+
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
@@ -131,6 +137,9 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 #pragma mark - <STRInteractiveAdViewControllerDelegate>
 
 - (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
+    if ([self.placement.delegate respondsToSelector:@selector(adView:willDismissModalForPlacementKey:)]) {
+        [self.placement.delegate adView:self.placement.adView willDismissModalForPlacementKey:self.placement.placementKey];
+    }
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
