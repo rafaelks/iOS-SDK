@@ -69,7 +69,12 @@
         if (jsonParseError) {
             [deferred rejectWithError:jsonParseError];
         } else {
-            [deferred resolveWithValue:[parsedObj valueForKey:@"dfp_path"]];
+            NSString *dfpPath = [parsedObj valueForKey:@"dfp_path"];
+            if (dfpPath && ![dfpPath isEqual:[NSNull null]]) {
+                [deferred resolveWithValue:dfpPath];
+            } else {
+                [deferred rejectWithError:[NSError errorWithDomain:@"Emtpy DFP Path" code:1 userInfo:nil]];
+            }
         }
         return data;
     } error:^id(NSError *error) {
