@@ -28,7 +28,7 @@
     
     NSDictionary* extras = [request additionalParameters];
     
-    DLog(@"Parameter:%@, Label:%@, Placement Key: %@", serverParameter, serverLabel, extras[@"placementKey"]);
+    DLog(@"Parameter:%@, Label:%@, Placement Key: %@, DFP Path: %@", serverParameter, serverLabel, extras[@"placementKey"], extras[@"adUnitID"]);
     
     STRPromise *placeAdPromise = [[STRDFPManager sharedInstance] renderCreative:serverParameter inPlacement:extras[@"placementKey"]];
     [placeAdPromise then:^id(UIView<STRAdView>  *adView) {

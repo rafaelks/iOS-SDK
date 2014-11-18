@@ -10,6 +10,9 @@
 #import "STRAdPlacement.h"
 #import "STRDeferred.h"
 #import "STRFullAdView.h"
+#import "STRDFPManager.h"
+
+#import "GADBannerView.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -183,6 +186,27 @@ describe(@"DFPAdGenerator", ^{
 
             it(@"informs the delegate if it fails", ^{
                 [adServiceDeferred rejectWithError:nil];
+                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+            });
+        });
+    });
+
+    context(@"GAdBannerViewDelegate", ^{
+        __block GADBannerView *gBannerView;
+        __block STRDFPManager *dfpManager;
+
+        beforeEach(^{
+            gBannerView = nice_fake_for([GADBannerView class]);
+            gBannerView stub_method(@selector(adUnitID)).and_return(@"DFPPath");
+
+            dfpManager = [STRDFPManager sharedInstance];
+            adPlacement.DFPPath = @"DFPPath";
+            [dfpManager cacheAdPlacement:adPlacement];
+        });
+
+        describe(@"when the DFP request fails", ^{
+            it(@"calls the DFP Manager to infrom the delegate", ^{
+                [generator adView:gBannerView didFailToReceiveAdWithError:nil];
                 delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
             });
         });

@@ -33,13 +33,13 @@
 }
 
 - (void)cacheAdPlacement:(STRAdPlacement *)adPlacement {
-    [self.adPlacementCache setObject:adPlacement forKey:adPlacement.placementKey];
+    [self.adPlacementCache setObject:adPlacement forKey:adPlacement.DFPPath];
 }
 
-- (STRPromise *)renderCreative:(NSString *)creativeKey inPlacement:(NSString *)placementKey {
+- (STRPromise *)renderCreative:(NSString *)creativeKey inPlacement:(NSString *)DFPPath {
     STRDeferred *deferred = [STRDeferred defer];
 
-    STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:placementKey];
+    STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:DFPPath];
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     STRPromise *promise;
 
@@ -64,6 +64,14 @@
     }];
 
     return deferred.promise;
+}
+
+- (void)updateDelegateWithNoAdShownforPlacement:(NSString *)DFPPath {
+    STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:DFPPath];
+
+    if ([adPlacement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
+        [adPlacement.delegate adView:adPlacement.adView didFailToFetchAdForPlacementKey:adPlacement.placementKey];
+    }
 }
 
 @end

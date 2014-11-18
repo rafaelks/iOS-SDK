@@ -53,6 +53,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         self.DFPPathCache = [NSMutableDictionary dictionary];
         self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
         self.extras = [[GADCustomEventExtras alloc] init];
+        self.bannerView.delegate = self;
     }
     return self;
 }
@@ -129,13 +130,18 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
     [placement.adView addSubview:self.bannerView];
 
-    [self.extras setExtras:@{@"placementKey": placement.placementKey} forLabel:@"Sharethrough"];
+    [self.extras setExtras:@{@"placementKey": placement.placementKey, @"adUnitID": placement.DFPPath} forLabel:@"Sharethrough"];
 
     GADRequest *request = [GADRequest request];
     [request registerAdNetworkExtras:self.extras];
     [self.bannerView loadRequest:request];
 
     [[STRDFPManager sharedInstance] cacheAdPlacement:placement];
+}
+
+#pragma mark GAdBannerViewDelegate
+- (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
+    [[STRDFPManager sharedInstance] updateDelegateWithNoAdShownforPlacement:view.adUnitID];
 }
 
 @end

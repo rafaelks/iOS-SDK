@@ -32,7 +32,7 @@ describe(@"DFPManager", ^{
                                                 PlacementKey:@"placementKey"
                                     presentingViewController:nil
                                                     delegate:delegate
-                                                     DFPPath:nil
+                                                     DFPPath:@"DFPPath"
                                                  DFPDeferred:nil];
     });
 
@@ -48,7 +48,7 @@ describe(@"DFPManager", ^{
             beforeEach(^{
                 generatorDeferred = [STRDeferred defer];
                 generator stub_method(@selector(placeCreative:inPlacement:)).and_return(generatorDeferred.promise);
-                managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"placementKey"];
+                managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"DFPPath"];
             });
 
             it(@"calls placeCreative:inPlacement in the generator", ^{
@@ -88,7 +88,7 @@ describe(@"DFPManager", ^{
                 adPlacement.DFPDeferred = adDeferred;
                 generatorDeferred = [STRDeferred defer];
                 generator stub_method(@selector(prefetchCreative:forPlacement:)).and_return(generatorDeferred.promise);
-                managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"placementKey"];
+                managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"DFPPath"];
             });
 
             it(@"calls placeCreative:inPlacement in the generator", ^{
