@@ -73,7 +73,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
                 return ad;
             } error:^id(NSError *error) {
-                if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
+                if (error.code != kRequestInProgress && [placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
                     [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
                 }
                 return error;

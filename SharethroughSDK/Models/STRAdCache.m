@@ -15,8 +15,9 @@
 @property (nonatomic, strong) NSMutableDictionary *cachedCreatives;
 @property (nonatomic, strong) NSMutableDictionary *cachedPlacementAdPointers;
 @property (nonatomic, strong) NSMutableDictionary *cachedTimestamps;
-@property (nonatomic, assign) NSUInteger STRAdCacheTimeoutInSeconds;
-@property (nonatomic, strong) STRDateProvider *dateProvider;
+@property (nonatomic, strong) NSMutableSet        *pendingRequestPlacementKeys;
+@property (nonatomic, strong) STRDateProvider     *dateProvider;
+@property (nonatomic, assign) NSUInteger          STRAdCacheTimeoutInSeconds;
 
 @end
 
@@ -35,6 +36,7 @@
         self.cachedCreatives = [NSMutableDictionary dictionary];
         self.cachedPlacementAdPointers = [NSMutableDictionary dictionary];
         self.cachedTimestamps = [NSMutableDictionary dictionary];
+        self.pendingRequestPlacementKeys = [NSMutableSet set];
         self.STRAdCacheTimeoutInSeconds = 120;
         self.dateProvider = dateProvider;
     }
@@ -70,6 +72,7 @@
     self.cachedCreatives[ad.creativeKey] = ad;
     self.cachedPlacementAdPointers[ad.placementKey] = ad.creativeKey;
     self.cachedTimestamps[ad.creativeKey] = [self.dateProvider now];
+    [self clearPendingAdRequestForPlacement:ad.placementKey];
 }
 
 - (BOOL)isAdStale:(NSString *)placementKey {
@@ -87,4 +90,17 @@
     return NO;
 }
 
+- (BOOL)pendingAdRequestInProgressForPlacement:(NSString *)placementKey {
+    NSString *existingPlacementKey = [self.pendingRequestPlacementKeys member:placementKey];
+    if (existingPlacementKey == nil) { //not currently being requested
+        [self.pendingRequestPlacementKeys addObject:placementKey];
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (void)clearPendingAdRequestForPlacement:(NSString *)placementKey {
+    [self.pendingRequestPlacementKeys removeObject:placementKey];
+}
 @end

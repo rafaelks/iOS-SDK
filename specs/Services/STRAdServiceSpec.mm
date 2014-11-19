@@ -117,6 +117,22 @@ describe(@"STRAdService", ^{
             });
         });
 
+        describe(@"when there is a pending ad request", ^{
+            beforeEach(^{
+                adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey");
+                adCache stub_method(@selector(isAdStale:)).with(@"placementKey").and_return(YES);
+                adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).with(@"placementKey").and_return(YES);
+
+                returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
+            });
+
+            it(@"returns a pendingRequestInProgress error", ^{
+                returnedPromise should_not be_nil;
+                returnedPromise.error should_not be_nil;
+                returnedPromise.error.code should equal(kRequestInProgress);
+            });
+        });
+
         describe(@"when no ad is cached for the given placement key", ^{
             beforeEach(^{
                 adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey");
