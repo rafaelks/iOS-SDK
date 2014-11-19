@@ -30,7 +30,7 @@
     
     DLog(@"Parameter:%@, Label:%@, Placement Key: %@, DFP Path: %@", serverParameter, serverLabel, extras[@"placementKey"], extras[@"adUnitID"]);
     
-    STRPromise *placeAdPromise = [[STRDFPManager sharedInstance] renderCreative:serverParameter inPlacement:extras[@"placementKey"]];
+    STRPromise *placeAdPromise = [[STRDFPManager sharedInstance] renderCreative:serverParameter inPlacement:extras[@"adUnitID"]];
     [placeAdPromise then:^id(UIView<STRAdView>  *adView) {
         [self.delegate customEventBanner:self didReceiveAd:[UIView new]];
         return nil;
