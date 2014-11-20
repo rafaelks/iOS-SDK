@@ -309,7 +309,7 @@ describe(@"STRAdRenderer", ^{
                     [[fakeRunLoop.sent_messages firstObject] getArgument:&oldTimer atIndex:2];
                     
                     STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
-                                                                         PlacementKey:@"key"
+                                                                         PlacementKey:@"placementKey"
                                                              presentingViewController:presentingViewController
                                                                              delegate:nil
                                                                               DFPPath:nil

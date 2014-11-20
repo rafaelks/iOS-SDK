@@ -170,6 +170,7 @@
 		AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
+		E81FA0481A1E7B4400BCB289 /* STRAdPlacementSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */; };
 		E83128D019B914CA007C2FAB /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		E83128D519B914DB007C2FAB /* STRAdView.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
 		E83128D619B914DB007C2FAB /* STRAdViewDelegate.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */; };
@@ -526,6 +527,7 @@
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementSpec.mm; sourceTree = "<group>"; };
 		E83128E119B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPGridlikeViewDataSourceProxy.h; path = DFP/STRDFPGridlikeViewDataSourceProxy.h; sourceTree = "<group>"; };
 		E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPGridlikeViewDataSourceProxy.m; path = DFP/STRDFPGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		E83128E519B936D9007C2FAB /* STRDFPAdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPAdGenerator.h; path = DFP/STRDFPAdGenerator.h; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 				AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */,
 				AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */,
 				E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */,
+				E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1397,6 +1400,7 @@
 				E84FB59319BFAD1D0034A41E /* STRDFPAdGenerator.m in Sources */,
 				E84FB59419BFAD1D0034A41E /* STRDFPAppModule.m in Sources */,
 				E831290119BE4A7E007C2FAB /* STRAdPlacement.m in Sources */,
+				E81FA0481A1E7B4400BCB289 /* STRAdPlacementSpec.mm in Sources */,
 				E831290219BE4A7E007C2FAB /* STRAdRenderer.m in Sources */,
 				E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */,
 				AED6D1A818A4079C005DFDF4 /* STRFullCollectionViewDelegate.m in Sources */,

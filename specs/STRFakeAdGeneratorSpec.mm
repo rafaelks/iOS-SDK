@@ -34,7 +34,7 @@ describe(@"STRFakeAdGenerator", ^{
             [UIGestureRecognizer whitelistClassForGestureSnooping:[STRFakeAdGenerator class]];
             presentingViewController = [UIViewController new];
             STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
-                                                                  PlacementKey:nil
+                                                                  PlacementKey:@"fakePlacementKey"
                                                       presentingViewController:presentingViewController
                                                                       delegate:nil
                                                                        DFPPath:nil

@@ -24,7 +24,7 @@ describe(@"DFPManager", ^{
         [injector bind:[STRDFPAdGenerator class] toInstance:generator];
 
         dataSourceProxy = [[STRDFPGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"cell"
-                                                                                      placementKey:@"pkey"
+                                                                                      placementKey:@"placementKey"
                                                                           presentingViewController:nil
                                                                                           injector:injector];
     });
