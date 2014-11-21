@@ -29,6 +29,7 @@ extern NSString *STRInstagramAd;
 @property (nonatomic, copy) NSString *auctionPrice;
 @property (nonatomic, copy) NSURL *mediaURL;
 @property (nonatomic, copy) NSURL *shareURL;
+@property (nonatomic, copy) NSURL *brandLogoURL;
 @property (nonatomic, strong) UIImage *thumbnailImage;
 
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;

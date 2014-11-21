@@ -60,8 +60,9 @@
 
     [injector bind:[STRAdRenderer class] toBlock:^id(STRInjector *injector) {
         return [[STRAdRenderer alloc] initWithBeaconService:[injector getInstance:[STRBeaconService class]]
-                                                  runLoop:[injector getInstance:[NSRunLoop class]]
-                                                 injector:injector];
+                                                    runLoop:[injector getInstance:[NSRunLoop class]]
+                                              networkClient:[injector getInstance:[STRNetworkClient class]]
+                                                   injector:injector];
     }];
 }
 
