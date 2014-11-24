@@ -21,14 +21,14 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.itemsForEachSection[section] integerValue];
+    return [self.itemsForEachSection[section] longValue];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView str_dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
 
     UILabel *label = [[UILabel alloc] init];
-    label.text = [NSString stringWithFormat:@"item: %d, section: %d", indexPath.item, indexPath.section];
+    label.text = [NSString stringWithFormat:@"item: %ld, section: %ld", (long)indexPath.item, (long)indexPath.section];
     [cell.contentView addSubview:label];
 
     return cell;
