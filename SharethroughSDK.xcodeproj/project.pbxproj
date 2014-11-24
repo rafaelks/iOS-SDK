@@ -32,6 +32,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		7317D4E7A496DA18EB442FB5 /* libPods-specs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E553FF44E516DC2F2F00784 /* libPods-specs.a */; };
 		AE022DAC188DBB1400D02568 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE022DAB188DBB1400D02568 /* Default-568h@2x.png */; };
 		AE022DD1188DF3C400D02568 /* fixture_image.png in Resources */ = {isa = PBXBuildFile; fileRef = AE022DD0188DF3C400D02568 /* fixture_image.png */; };
 		AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDD188E004900D02568 /* STRNetworkClient.m */; };
@@ -60,7 +61,6 @@
 		AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246851886138F00626A29 /* CoreGraphics.framework */; };
 		AE22468C1886138F00626A29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE22468A1886138F00626A29 /* InfoPlist.strings */; };
 		AE22468E1886138F00626A29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE22468D1886138F00626A29 /* main.m */; };
-		AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2246911886138F00626A29 /* Cedar-iOS.framework */; };
 		AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */; };
 		AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2246FD1888782A00626A29 /* STRFullAdView.m */; };
 		AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
@@ -87,7 +87,6 @@
 		AE46CE6D189844AB0096BDE9 /* STRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46CE6B189844AB0096BDE9 /* STRSession.m */; };
 		AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
 		AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
-		AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B838188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
 		AE52FD7118A41AB2009F69BD /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */; };
 		AE52FD7218A41AB2009F69BD /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */; };
 		AE52FD7518A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6E18A41AB2009F69BD /* STRFakeAdGenerator.m */; };
@@ -153,7 +152,6 @@
 		AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
 		AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
 		AED281B518ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED281B418ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm */; };
-		AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE52B83A188EF89F00C4DEF8 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED32FAF1891F12600693EFF /* UIActivityViewController+Spec.m */; };
 		AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19918A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm */; };
 		AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED6D19C18A400D7005DFDF4 /* STRCollectionViewDelegate.m */; };
@@ -191,7 +189,6 @@
 		E84FB59919BFAD3C0034A41E /* STRDFPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E919B936D9007C2FAB /* STRDFPManager.m */; };
 		E84FB59A19BFAD3C0034A41E /* STRDFPMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128EB19B936D9007C2FAB /* STRDFPMediator.m */; };
 		E84FB59B19BFAD3C0034A41E /* STRDFPGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */; };
-		E84FB59D19BFAE430034A41E /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8703D6C19AE413700D3FA50 /* libGoogleAdMobAds.a */; };
 		E84FB59F19BFCD750034A41E /* STRDFPManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB59E19BFCD750034A41E /* STRDFPManagerSpec.mm */; };
 		E84FB5A119BFCDA90034A41E /* DFPAdGeneratorSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB5A019BFCDA90034A41E /* DFPAdGeneratorSpec.mm */; };
 		E84FB5B019C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E84FB5AF19C0CEB00034A41E /* STRDFPGridlikeDataSourceProxySpec.mm */; };
@@ -246,7 +243,6 @@
 		E8703E2919B9092600D3FA50 /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
 		E8703E2B19B9092600D3FA50 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
 		E8703E2C19B9092600D3FA50 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
-		E8703E2D19B9092600D3FA50 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E880766B19A27A94006F33B2 /* SharethroughSDK-Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		E880767919A29DED006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
 		E880767A19A2B6C4006F33B2 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
@@ -378,6 +374,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A35B15AF3966D155B47BFB7 /* Pods-specs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.debug.xcconfig"; sourceTree = "<group>"; };
+		3B728AEFE486DF5418998D61 /* Pods-Sharethrough-SDK+DFP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sharethrough-SDK+DFP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sharethrough-SDK+DFP/Pods-Sharethrough-SDK+DFP.debug.xcconfig"; sourceTree = "<group>"; };
+		542340D3696F77B7675793F7 /* libPods-Sharethrough-SDK+DFP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sharethrough-SDK+DFP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74C363FB4AEB293E0C48DD03 /* Pods-Sharethrough-SDK+DFP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sharethrough-SDK+DFP.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sharethrough-SDK+DFP/Pods-Sharethrough-SDK+DFP.release.xcconfig"; sourceTree = "<group>"; };
+		7E553FF44E516DC2F2F00784 /* libPods-specs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-specs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE022DAB188DBB1400D02568 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AE022DD0188DF3C400D02568 /* fixture_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fixture_image.png; sourceTree = "<group>"; };
 		AE022DDC188E004900D02568 /* STRNetworkClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRNetworkClient.h; sourceTree = "<group>"; };
@@ -409,7 +410,6 @@
 		AE22468D1886138F00626A29 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AE22468F1886138F00626A29 /* specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "specs-Prefix.pch"; sourceTree = "<group>"; };
 		AE2246901886138F00626A29 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
-		AE2246911886138F00626A29 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		AE2246F9188874ED00626A29 /* STRAdGeneratorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdGeneratorSpec.mm; sourceTree = "<group>"; };
 		AE2246FC1888782A00626A29 /* STRFullAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFullAdView.h; sourceTree = "<group>"; };
 		AE2246FD1888782A00626A29 /* STRFullAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFullAdView.m; sourceTree = "<group>"; };
@@ -527,6 +527,7 @@
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.release.xcconfig"; sourceTree = "<group>"; };
 		E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementSpec.mm; sourceTree = "<group>"; };
 		E83128E119B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPGridlikeViewDataSourceProxy.h; path = DFP/STRDFPGridlikeViewDataSourceProxy.h; sourceTree = "<group>"; };
 		E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRDFPGridlikeViewDataSourceProxy.m; path = DFP/STRDFPGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
@@ -592,13 +593,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E84FB59D19BFAE430034A41E /* libGoogleAdMobAds.a in Frameworks */,
 				AE131E081898622800891A93 /* AdSupport.framework in Frameworks */,
-				AED32F9B1890741400693EFF /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */,
-				AE52B84F188EFE0500C4DEF8 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
-				AE2246921886138F00626A29 /* Cedar-iOS.framework in Frameworks */,
 				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
+				7317D4E7A496DA18EB442FB5 /* libPods-specs.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,13 +615,23 @@
 			files = (
 				E8703E2B19B9092600D3FA50 /* AdSupport.framework in Frameworks */,
 				E8703E2C19B9092600D3FA50 /* Foundation.framework in Frameworks */,
-				E8703E2D19B9092600D3FA50 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AB46447E4FA9408D9F6C96D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3B728AEFE486DF5418998D61 /* Pods-Sharethrough-SDK+DFP.debug.xcconfig */,
+				74C363FB4AEB293E0C48DD03 /* Pods-Sharethrough-SDK+DFP.release.xcconfig */,
+				3A35B15AF3966D155B47BFB7 /* Pods-specs.debug.xcconfig */,
+				E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		AE022DDB188DFFE700D02568 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -734,7 +742,6 @@
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
-				AE2246911886138F00626A29 /* Cedar-iOS.framework */,
 				E84FB58619BF76EF0034A41E /* DFP */,
 				AEFBF15D188F46D900ADD742 /* Controllers */,
 				AE2246FB188877E900626A29 /* Fixtures */,
@@ -780,8 +787,6 @@
 				AED6D1A718A4079C005DFDF4 /* STRFullCollectionViewDelegate.m */,
 				AE6C806F1898925C008FD848 /* STRFullTableViewDataSource.h */,
 				AE6C80701898925C008FD848 /* STRFullTableViewDataSource.m */,
-				AE8AF4FB189B07ED00A65B27 /* STRFullTableViewDelegate.h */,
-				AE8AF4FC189B07ED00A65B27 /* STRFullTableViewDelegate.m */,
 				AE1258C018971B2B0017F970 /* STRPlainAdView.h */,
 				AE1258C118971B2B0017F970 /* STRPlainAdView.m */,
 				AE6C80861899863C008FD848 /* STRSpecModule.h */,
@@ -928,6 +933,7 @@
 				AE2246871886138F00626A29 /* specs */,
 				AE8ED3E51885ADF00004AB32 /* Frameworks */,
 				AE8ED3E41885ADF00004AB32 /* Products */,
+				1AB46447E4FA9408D9F6C96D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -949,6 +955,8 @@
 				AE8ED3F41885ADF00004AB32 /* XCTest.framework */,
 				AE2246851886138F00626A29 /* CoreGraphics.framework */,
 				AE52B87B188F398A00C4DEF8 /* CoreFoundation.framework */,
+				542340D3696F77B7675793F7 /* libPods-Sharethrough-SDK+DFP.a */,
+				7E553FF44E516DC2F2F00784 /* libPods-specs.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1146,9 +1154,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AE2246951886138F00626A29 /* Build configuration list for PBXNativeTarget "specs" */;
 			buildPhases = (
+				B853E9BE0C0A99730977EA5C /* Check Pods Manifest.lock */,
 				AE22467E1886138F00626A29 /* Sources */,
 				AE22467F1886138F00626A29 /* Frameworks */,
 				AE2246801886138F00626A29 /* Resources */,
+				DFD063E97A87337647355DD4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1182,9 +1192,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8703E2F19B9092600D3FA50 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK+DFP" */;
 			buildPhases = (
+				4F0FDC02372AEAE25D0C5440 /* Check Pods Manifest.lock */,
 				E8703DF619B9092600D3FA50 /* Sources */,
 				E8703E2A19B9092600D3FA50 /* Frameworks */,
 				E8703E2E19B9092600D3FA50 /* CopyFiles */,
+				59DC2B70B314C4AE9C4426D5 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1275,6 +1287,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4F0FDC02372AEAE25D0C5440 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\n#if [[ $? != 0 ]] ; then\n#    cat << EOM\n#error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\n#EOM\n#    exit 1\n#fi\n";
+			showEnvVarsInLog = 0;
+		};
+		59DC2B70B314C4AE9C4426D5 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#\"${SRCROOT}/Pods/Target Support Files/Pods-Sharethrough-SDK+DFP/Pods-Sharethrough-SDK+DFP-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AE2246701885FDC400626A29 /* Build static library */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1316,6 +1358,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
+		};
+		B853E9BE0C0A99730977EA5C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DFD063E97A87337647355DD4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-specs/Pods-specs-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		E81C63D519CA311F00D5A86D /* Copy podspec */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1654,6 +1726,7 @@
 		};
 		AE2246961886138F00626A29 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A35B15AF3966D155B47BFB7 /* Pods-specs.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1677,11 +1750,7 @@
 					"$(inherited)",
 					"/Users/engineer/workspace/iOS-SDK/ThirdParty/GoogleMobileAdsSdkiOS",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-					"-lstdc++",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1689,6 +1758,7 @@
 		};
 		AE2246971886138F00626A29 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1708,12 +1778,11 @@
 					"$(inherited)",
 					"/Users/engineer/workspace/iOS-SDK/ThirdParty/GoogleMobileAdsSdkiOS",
 				);
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-					"-lstdc++",
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
 				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1838,7 +1907,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "Sharethrough-SDK+DFP";
 				SKIP_INSTALL = YES;
 			};
@@ -1857,7 +1926,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "Sharethrough-SDK+DFP";
 				SKIP_INSTALL = YES;
 			};
