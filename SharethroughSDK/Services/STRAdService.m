@@ -157,7 +157,6 @@ const NSInteger kRequestInProgress = 202;
 }
 
 - (STRPromise *)requestInProgressError {
-    NSLog(@"ad request in progress");
     STRDeferred *deferred = [STRDeferred defer];
     [deferred rejectWithError:[NSError errorWithDomain:@"STR Request in Progress" code:kRequestInProgress userInfo:nil]];
     return deferred.promise;
