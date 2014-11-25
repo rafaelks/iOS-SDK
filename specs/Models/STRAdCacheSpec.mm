@@ -204,6 +204,23 @@ describe(@"STRAdCache", ^{
             });
         });
     });
+
+    describe(@"-pendingAdRequestInProgressforPlacement:", ^{
+        it(@"returns NO if no request pending", ^{
+            [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
+        });
+
+        it(@"returns YES if a pending request was added", ^{
+            [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
+            [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_truthy;
+        });
+
+        it(@"returns NO if the pending request was cleared", ^{
+            [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
+            [cache clearPendingAdRequestForPlacement:@"fakePlacementKey"];
+            [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
+        });
+    });
 });
 
 SPEC_END

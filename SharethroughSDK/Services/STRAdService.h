@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "STRPromise.h"
 
+extern const NSInteger kRequestInProgress;
+
 @class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService;
 
 @interface STRAdService : NSObject

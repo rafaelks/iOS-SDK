@@ -17,6 +17,9 @@
 #import "STRAdPinterest.h"
 #import "STRBeaconService.h"
 
+const NSInteger kRequestInProgress = 202;
+
+
 @interface STRAdService ()
 
 @property (nonatomic, strong) STRRestClient *restClient;
@@ -53,6 +56,10 @@
         return deferred.promise;
     }
     
+    if ([self.adCache pendingAdRequestInProgressForPlacement:placementKey]) {
+        return [self requestInProgressError];
+    }
+
     [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
     return [self fetchAdWithParameters:@{@"placement_key": placementKey} forPlacementKey:placementKey];
 }
@@ -66,6 +73,10 @@
         return deferred.promise;
     }
     
+    if ([self.adCache pendingAdRequestInProgressForPlacement:placementKey]) {
+        return [self requestInProgressError];
+    }
+
 //TODO: Impression request should include creativeKey
     [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
     
@@ -124,14 +135,16 @@
             [deferred resolveWithValue:ad];
             return data;
         } error:^id(NSError *error) {
+            [self.adCache clearPendingAdRequestForPlacement:placementKey];
             [deferred rejectWithError:error];
             return error;
         }];
 
         return creativeJSON;
     } error:^id(NSError *error) {
-        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
+        [self.adCache clearPendingAdRequestForPlacement:placementKey];
         
+        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
         if (cachedAd != nil) {
             [deferred resolveWithValue:cachedAd];
         } else {
@@ -140,6 +153,12 @@
         return error;
     }];
     
+    return deferred.promise;
+}
+
+- (STRPromise *)requestInProgressError {
+    STRDeferred *deferred = [STRDeferred defer];
+    [deferred rejectWithError:[NSError errorWithDomain:@"STR Request in Progress" code:kRequestInProgress userInfo:nil]];
     return deferred.promise;
 }
 
