@@ -35,6 +35,10 @@
                            injector:(STRInjector *)injector {
     self = [super init];
     if (self) {
+        if (placementKey == nil || [placementKey length] < 8) {
+            [NSException raise:@"Invalid placementKey" format:@"placementKey of %@ is invalid. Must not be nil or less than 8 characters.", placementKey];
+        }
+
         self.adCellReuseIdentifier = adCellReuseIdentifier;
         self.placementKey = placementKey;
         self.presentingViewController = presentingViewController;

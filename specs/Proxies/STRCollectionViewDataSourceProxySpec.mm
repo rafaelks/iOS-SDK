@@ -23,7 +23,7 @@ using namespace Cedar::Doubles;
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
     
     UILabel *label = [[UILabel alloc] init];
-    label.text = [NSString stringWithFormat:@"item: %d, section: %d", indexPath.item, indexPath.section];
+    label.text = [NSString stringWithFormat:@"item: %ld, section: %d", (long)indexPath.item, indexPath.section];
     [cell.contentView addSubview:label];
     
     return cell;

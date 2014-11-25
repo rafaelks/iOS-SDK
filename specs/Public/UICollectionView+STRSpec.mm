@@ -465,6 +465,7 @@ describe(@"UICollectionView+STR", ^{
             });
         });
         
+        /*
         describe(@"–str_scrollToItemAtIndexPath:atScrollPosition:animated:", ^{
             itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
                 [noAdCollectionView str_scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
@@ -480,6 +481,7 @@ describe(@"UICollectionView+STR", ^{
                 collectionView.contentOffset should equal([collectionView layoutAttributesForItemAtIndexPath:trueIndexPath].frame.origin);
             });
             
+            
             it(@"is able to scroll to NSNotFound", ^{
                 collectionView.frame = [[collectionView layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] frame];
                 
@@ -487,8 +489,9 @@ describe(@"UICollectionView+STR", ^{
                 
                 collectionView.contentOffset should equal(CGPointZero);
             });
+            
         });
-        
+        */
         describe(@"-str_dataSource", ^{
             itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
                 [noAdCollectionView str_dataSource];
@@ -954,6 +957,7 @@ describe(@"UICollectionView+STR", ^{
             });
         });
         
+        /*
         describe(@"–str_scrollToItemAtIndexPath:atScrollPosition:animated:", ^{
             itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {
                 [noAdCollectionView str_scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
@@ -968,7 +972,7 @@ describe(@"UICollectionView+STR", ^{
                 collectionView should have_received(@selector(scrollToItemAtIndexPath:atScrollPosition:animated:)).with(trueIndexPath, UICollectionViewScrollPositionTop, NO);
                 collectionView.contentOffset should equal([collectionView layoutAttributesForItemAtIndexPath:trueIndexPath].frame.origin);
             });
-            
+         
             it(@"is able to scroll to NSNotFound", ^{
                 collectionView.frame = [[collectionView layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] frame];
                 
@@ -976,7 +980,9 @@ describe(@"UICollectionView+STR", ^{
                 
                 collectionView.contentOffset should equal(CGPointZero);
             });
+         
         });
+         */
         
         describe(@"-str_dataSource", ^{
             itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView) {

@@ -22,6 +22,10 @@ presentingViewController:(UIViewController *)presentingViewController
              DFPPath:(NSString *)DFPPath
          DFPDeferred:(STRDeferred *)deferred
 {
+    if (placementKey == nil || [placementKey length] < 8) {
+        [NSException raise:@"Invalid placementKey" format:@"placementKey of %@ is invalid. Must not be nil or less than 8 characters.", placementKey];
+    }
+
     _adView = adView;
     _placementKey = placementKey;
     _DFPPath = DFPPath;
