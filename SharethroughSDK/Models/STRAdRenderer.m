@@ -178,14 +178,19 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (void)setBrandLogoFromAd:(STRAdvertisement *)ad onView:(UIView<STRAdView> *)view {
     if ([view respondsToSelector:@selector(adBrandLogo)] && ad.brandLogoURL != nil) {
-        
-        NSURLRequest *brandLogoRequest = [NSURLRequest requestWithURL:ad.brandLogoURL];
-        [[self.networkClient get:brandLogoRequest] then:^id(NSData *data) {
-            view.adBrandLogo.image = [UIImage imageWithData:data];
-            return data;
-        } error:^id(NSError *error) {
-            return error;
-        }];
+
+        if (ad.brandLogoImage != nil) {
+            view.adBrandLogo.image = ad.brandLogoImage;
+        } else {
+            NSURLRequest *brandLogoRequest = [NSURLRequest requestWithURL:ad.brandLogoURL];
+            [[self.networkClient get:brandLogoRequest] then:^id(NSData *data) {
+                ad.brandLogoImage = [UIImage imageWithData:data];
+                view.adBrandLogo.image = ad.brandLogoImage;
+                return data;
+            } error:^id(NSError *error) {
+                return error;
+            }];
+        }
     }
 }
 
