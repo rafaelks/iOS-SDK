@@ -9,7 +9,7 @@ describe(@"STRAdPlacement", ^{
     describe(@"- initWithAdView:PlacementKey:presentingViewController:delegate:DFPPath:DFPDeferred:", ^{
         it(@"throws an exception if placementKey is nil", ^{
             expect(^{
-                STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:nil
+                STRAdPlacement *placement __unused = [[STRAdPlacement alloc] initWithAdView:nil
                                                                       PlacementKey:nil
                                                           presentingViewController:nil
                                                                           delegate:nil
@@ -20,7 +20,7 @@ describe(@"STRAdPlacement", ^{
 
         it(@"throws an exception if placementKey is too short", ^{
             expect(^{
-                STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:nil
+                STRAdPlacement *placement __unused = [[STRAdPlacement alloc] initWithAdView:nil
                                                                       PlacementKey:@"1234567"
                                                           presentingViewController:nil
                                                                           delegate:nil
