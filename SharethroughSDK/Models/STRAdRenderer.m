@@ -8,13 +8,16 @@
 
 #import "STRAdRenderer.h"
 
+#import <objc/runtime.h>
+
 #import "STRAdPlacement.h"
 #import "STRAdView.h"
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 #import "STRBeaconService.h"
-#import <objc/runtime.h>
+#import "STRNetworkClient.h"
 #import "STRAdViewDelegate.h"
+#import "STRPromise.h"
 
 char const * const STRAdRendererKey = "STRAdRendererKey";
 
@@ -22,6 +25,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 @property (nonatomic, strong) STRBeaconService *beaconService;
 @property (nonatomic, weak) NSRunLoop *timerRunLoop;
+@property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, weak) STRInjector *injector;
 
 @property (nonatomic, weak) UIViewController *presentingViewController;
@@ -36,12 +40,14 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (id)initWithBeaconService:(STRBeaconService *)beaconService
                     runLoop:(NSRunLoop *)timerRunLoop
+              networkClient:(STRNetworkClient *)networkClient
                    injector:(STRInjector *)injector;
 {
     self = [super init];
     if (self) {
         self.beaconService = beaconService;
         self.timerRunLoop = timerRunLoop;
+        self.networkClient = networkClient;
         self.injector = injector;
     }
     return self;
@@ -60,6 +66,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     placement.adView.adTitle.text = ad.title;
     placement.adView.adSponsoredBy.text = [ad sponsoredBy];
     [self setDescriptionText:ad.adDescription onView:placement.adView];
+    [self setBrandLogoFromAd:ad onView:placement.adView];
     placement.adView.adThumbnail.image = [ad displayableThumbnail];
 
     [placement.adView setNeedsLayout];
@@ -156,12 +163,34 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 - (void)clearTextFromView:(UIView<STRAdView> *)view {
     view.adTitle.text = @"";
     view.adSponsoredBy.text = @"";
+    view.adThumbnail.image = nil;
     [self setDescriptionText:@"" onView:view];
+    if ([view respondsToSelector:@selector(adBrandLogo)]) {
+        view.adThumbnail.image = nil;
+    }
 }
 
 - (void)setDescriptionText:(NSString *)text onView:(UIView<STRAdView> *)view {
     if ([view respondsToSelector:@selector(adDescription)]) {
         view.adDescription.text = text;
+    }
+}
+
+- (void)setBrandLogoFromAd:(STRAdvertisement *)ad onView:(UIView<STRAdView> *)view {
+    if ([view respondsToSelector:@selector(adBrandLogo)] && ad.brandLogoURL != nil) {
+
+        if (ad.brandLogoImage != nil) {
+            view.adBrandLogo.image = ad.brandLogoImage;
+        } else {
+            NSURLRequest *brandLogoRequest = [NSURLRequest requestWithURL:ad.brandLogoURL];
+            [[self.networkClient get:brandLogoRequest] then:^id(NSData *data) {
+                ad.brandLogoImage = [UIImage imageWithData:data];
+                view.adBrandLogo.image = ad.brandLogoImage;
+                return data;
+            } error:^id(NSError *error) {
+                return error;
+            }];
+        }
     }
 }
 

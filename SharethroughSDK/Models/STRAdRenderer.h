@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRAdvertisement, STRAdPlacement, STRBeaconService, STRInjector;
+@class STRAdvertisement, STRAdPlacement, STRBeaconService, STRNetworkClient, STRInjector;
 
 @interface STRAdRenderer : NSObject
 
 - (id)initWithBeaconService:(STRBeaconService *)beaconService
                     runLoop:(NSRunLoop *)timerRunLoop
+              networkClient:(STRNetworkClient *)networkClient
                    injector:(STRInjector *)injector;
 
 - (void)renderAd:(STRAdvertisement *)ad inPlacement:(STRAdPlacement *)placement;

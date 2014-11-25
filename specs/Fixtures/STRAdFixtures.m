@@ -47,6 +47,7 @@
     ad.action = STRVineAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRVineThumbnail.bytes length:kSTRVineThumbnail.length]];
     ad.advertiser = @"Intel";
+    ad.brandLogoImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRIntelLogo.bytes length:kSTRIntelLogo.length]];
 
     return ad;
 }

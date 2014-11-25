@@ -168,6 +168,9 @@
 		AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
+		B2B466401A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
+		B2B466411A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
+		B2B466421A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		E81FA0481A1E7B4400BCB289 /* STRAdPlacementSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */; };
 		E83128D019B914CA007C2FAB /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		E83128D519B914DB007C2FAB /* STRAdView.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
@@ -527,6 +530,7 @@
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
 		E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.release.xcconfig"; sourceTree = "<group>"; };
 		E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementSpec.mm; sourceTree = "<group>"; };
 		E83128E119B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPGridlikeViewDataSourceProxy.h; path = DFP/STRDFPGridlikeViewDataSourceProxy.h; sourceTree = "<group>"; };
@@ -1039,6 +1043,7 @@
 				AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */,
 				AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */,
 				E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */,
+				B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */,
 			);
 			path = "Static Resources";
 			sourceTree = "<group>";
@@ -1501,6 +1506,7 @@
 				AEB4EF4718AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
 				AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */,
 				E84FB57919BE7AB40034A41E /* STRAdRendererSpec.mm in Sources */,
+				B2B466421A24F84300ED4E94 /* intel_sample_logo.c in Sources */,
 				AE52FD7218A41AB2009F69BD /* STRAdGenerator.m in Sources */,
 				AE8AF4FD189B07ED00A65B27 /* STRFullTableViewDelegate.m in Sources */,
 				AE022DF6188E019100D02568 /* STRAdvertismentSpec.mm in Sources */,
@@ -1574,6 +1580,7 @@
 				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
 				AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
+				B2B466401A24F84300ED4E94 /* intel_sample_logo.c in Sources */,
 				AE3FF40918AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AEB4EF4618AAB03E00B69CAC /* STRYouTubeEmbedPage.m in Sources */,
 				E8703DB119B12CB000D3FA50 /* STRAdRenderer.m in Sources */,
@@ -1639,6 +1646,7 @@
 				E8703E0219B9092600D3FA50 /* STRAdPinterest.m in Sources */,
 				E8703E0319B9092600D3FA50 /* STRVersion.m in Sources */,
 				E8703E0419B9092600D3FA50 /* STRRestClient.m in Sources */,
+				B2B466411A24F84300ED4E94 /* intel_sample_logo.c in Sources */,
 				E8703E0619B9092600D3FA50 /* STRAdClickout.m in Sources */,
 				E8703E0719B9092600D3FA50 /* STRPromise.m in Sources */,
 				E83128EE19B936D9007C2FAB /* STRDFPAppModule.m in Sources */,

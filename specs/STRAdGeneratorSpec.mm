@@ -23,6 +23,7 @@ describe(@"STRAdGenerator", ^{
     __block STRAdService *adService;
     __block STRBeaconService *beaconService;
     __block STRAdvertisement *ad;
+    __block STRNetworkClient *fakeNetworkClient;
     __block STRInjector *injector;
     __block NSRunLoop<CedarDouble> *fakeRunLoop;
     __block STRAdRenderer *renderer;
@@ -41,7 +42,7 @@ describe(@"STRAdGenerator", ^{
         fakeRunLoop = nice_fake_for([NSRunLoop class]);
         [injector bind:[NSRunLoop class] toInstance:fakeRunLoop];
         
-        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop injector:injector];
+        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient: injector:injector];
         [injector bind:[STRAdRenderer class] toInstance:renderer];
 
         generator = [injector getInstance:[STRAdGenerator class]];

@@ -121,6 +121,7 @@ const NSInteger kRequestInProgress = 202;
             ad.variantKey = creativeJSON[@"variant_key"];
             ad.mediaURL = [NSURL URLWithString:creativeJSON[@"media_url"]];
             ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
+            ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
             ad.thumbnailImage = [UIImage imageWithData:data];
             ad.placementKey = placementKey;
             ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
@@ -131,6 +132,12 @@ const NSInteger kRequestInProgress = 202;
             ad.auctionType = fullJSON[@"priceType"];
             ad.action = creativeJSON[@"action"];
 
+            NSURL *sanitizedBrandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
+            if (sanitizedBrandLogoURL != nil && ![sanitizedBrandLogoURL scheme]) {
+                sanitizedBrandLogoURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", creativeJSON[@"brand_logo_url"]]];
+            }
+            ad.brandLogoURL = sanitizedBrandLogoURL;
+            
             [self.adCache saveAd:ad];
             [deferred resolveWithValue:ad];
             return data;
