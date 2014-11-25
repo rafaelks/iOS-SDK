@@ -19,3 +19,4 @@ extern STRImage kSTRHostedVideoThumbnail;
 extern STRImage kSTRClickoutThumbnail;
 extern STRImage kSTRPinterestLogo;
 extern STRImage kSTRPinterestThumbnail;
+extern STRImage kSTRIntelLogo;

@@ -87,6 +87,9 @@ presentingViewController:(UIViewController *)presentingViewController
     if ([view respondsToSelector:@selector(adDescription)]) {
         view.adDescription.text = self.advertisement.adDescription;
     }
+    if ([view respondsToSelector:@selector(adBrandLogo)] && self.advertisement.brandLogoImage != nil) {
+        view.adBrandLogo.image = self.advertisement.brandLogoImage;
+    }
 
     self.presentingViewController = presentingViewController;
     [view setNeedsLayout];
