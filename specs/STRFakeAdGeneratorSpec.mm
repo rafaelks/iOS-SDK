@@ -31,7 +31,7 @@ describe(@"STRFakeAdGenerator", ^{
 
         beforeEach(^{
             view = [STRFullAdView new];
-            [UIGestureRecognizer whitelistClassForGestureSnooping:[STRFakeAdGenerator class]];
+//            [UIGestureRecognizer whitelistClassForGestureSnooping:[STRFakeAdGenerator class]];
             presentingViewController = [UIViewController new];
             STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
                                                                   PlacementKey:@"fakePlacementKey"
