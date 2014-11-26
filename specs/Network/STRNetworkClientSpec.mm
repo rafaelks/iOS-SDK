@@ -48,10 +48,16 @@ describe(@"STRNetworkClient", ^{
 
     describe(@"the user agent", ^{
         __block UIDevice *currentDevice;
+        __block NSBundle *mainBundle;
 
         beforeEach(^{
             currentDevice = [UIDevice currentDevice];
             spy_on(currentDevice);
+            currentDevice stub_method(@selector(systemVersion)).and_return(@"7.1.2");
+
+            mainBundle = [NSBundle mainBundle];
+            spy_on(mainBundle);
+            mainBundle stub_method(@selector(objectForInfoDictionaryKey:)).and_return(@"Fake App");
         });
 
         context(@"iPod", ^{
@@ -63,6 +69,9 @@ describe(@"STRNetworkClient", ^{
             it(@"has a useful user agent that will be recognized by the ad server", ^{
                 [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iPod");
                 [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iPhone");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iOS 7.1.2");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"Fake App");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"STR");
             });
         });
 
@@ -74,6 +83,9 @@ describe(@"STRNetworkClient", ^{
 
             it(@"has a useful user agent that will be recognized by the ad server", ^{
                 [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iPad; OS like Mac OS X");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iOS 7.1.2");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"Fake App");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"STR");
             });
         });
 
@@ -86,6 +98,9 @@ describe(@"STRNetworkClient", ^{
             it(@"has a useful user agent that will be recognized by the ad server", ^{
                 [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iPhone");
                 [recentRequest valueForHTTPHeaderField:@"User-Agent"] should_not contain(@"iPod");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"iOS 7.1.2");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"Fake App");
+                [recentRequest valueForHTTPHeaderField:@"User-Agent"] should contain(@"STR");
             });
         });
     });

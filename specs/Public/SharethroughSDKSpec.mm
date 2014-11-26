@@ -23,7 +23,7 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an ad about Pepsi", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeYoutube] placeAdInView:adView
-                                                                                    placementKey:nil
+                                                                                    placementKey:@"fakePlacementKey"
                                                                         presentingViewController:nil
                                                                                         delegate:nil];
 
@@ -38,7 +38,7 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an Intel Ad", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeVine] placeAdInView:adView
-                                                                                    placementKey:nil
+                                                                                    placementKey:@"fakePlacementKey"
                                                                         presentingViewController:nil
                                                                                         delegate:nil];
 
@@ -52,7 +52,7 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an ad about almond milk", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeHostedVideo] placeAdInView:adView
-                                                                                   placementKey:nil
+                                                                                   placementKey:@"fakePlacementKey"
                                                                        presentingViewController:nil
                                                                                        delegate:nil];
 
@@ -67,7 +67,7 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an ad about 22 gameday gifs ", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeClickout] placeAdInView:adView
-                                                                                     placementKey:nil
+                                                                                     placementKey:@"fakePlacementKey"
                                                                          presentingViewController:nil
                                                                                          delegate:nil];
 
@@ -81,7 +81,7 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an ad about Sephora top picks", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypePinterest] placeAdInView:adView
-                                                                                           placementKey:nil
+                                                                                           placementKey:@"fakePlacementKey"
                                                                                presentingViewController:nil
                                                                                                delegate:nil];
                 

@@ -13,6 +13,7 @@ extern NSString *STRVineAd;
 extern NSString *STRClickoutAd;
 extern NSString *STRHostedVideoAd;
 extern NSString *STRPinterestAd;
+extern NSString *STRInstagramAd;
 
 @interface STRAdvertisement : NSObject
 
@@ -28,7 +29,9 @@ extern NSString *STRPinterestAd;
 @property (nonatomic, copy) NSString *auctionPrice;
 @property (nonatomic, copy) NSURL *mediaURL;
 @property (nonatomic, copy) NSURL *shareURL;
+@property (nonatomic, copy) NSURL *brandLogoURL;
 @property (nonatomic, strong) UIImage *thumbnailImage;
+@property (nonatomic, strong) UIImage *brandLogoImage;
 
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForClick;

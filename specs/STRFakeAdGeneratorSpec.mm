@@ -2,6 +2,7 @@
 #import <objc/runtime.h>
 #import "STRFullAdView.h"
 #import "STRInteractiveAdViewController.h"
+#import "STRAdPlacement.h"
 #include "UIGestureRecognizer+Spec.h"
 
 using namespace Cedar::Matchers;
@@ -20,8 +21,6 @@ describe(@"STRFakeAdGenerator", ^{
         __block id dummyGenerator;
         expect(^{
             dummyGenerator = [[STRFakeAdGenerator alloc] initWithAdService:nil
-                                                             beaconService:nil
-                                                                   runLoop:nil
                                                                   injector:nil];
         }).to(raise_exception);
     });
@@ -32,17 +31,16 @@ describe(@"STRFakeAdGenerator", ^{
 
         beforeEach(^{
             view = [STRFullAdView new];
-            [UIGestureRecognizer whitelistClassForGestureSnooping:[STRFakeAdGenerator class]];
+//            [UIGestureRecognizer whitelistClassForGestureSnooping:[STRFakeAdGenerator class]];
             presentingViewController = [UIViewController new];
+            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                  PlacementKey:@"fakePlacementKey"
+                                                      presentingViewController:presentingViewController
+                                                                      delegate:nil
+                                                                       DFPPath:nil
+                                                                   DFPDeferred:nil];
 
-            [generator placeAdInView:view
-                        placementKey:nil
-            presentingViewController:presentingViewController
-                            delegate:nil];
-        });
-
-        it(@"stores the itself (the generator) as an associated object of the view", ^{
-            objc_getAssociatedObject(view, STRAdGeneratorKey) should be_same_instance_as(generator);
+            [generator placeAdInPlacement:placement];
         });
 
         it(@"sets the content of the view", ^{

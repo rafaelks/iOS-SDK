@@ -38,6 +38,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
 }
 
 - (void)placeAdInGridlikeView:(id)gridlikeView
+              dataSourceProxy:(STRGridlikeViewDataSourceProxy *)dataSourceProxy
         adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
                  placementKey:(NSString *)placementKey
      presentingViewController:(UIViewController *)presentingViewController
@@ -55,12 +56,17 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
         originalDelegate = oldGenerator.delegateProxy.originalDelegate;
     }
 
-    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[self initialIndexPathForAd:gridlikeView preferredStartingIndexPath:adInitialIndexPath]];
+    NSIndexPath *adjusterIndexPath = [self initialIndexPathForAd:gridlikeView preferredStartingIndexPath:adInitialIndexPath];
+    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:adjusterIndexPath];
     self.adjuster = adjuster;
 
-    self.dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithOriginalDataSource:originalDataSource adjuster:adjuster adCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+    self.dataSourceProxy = dataSourceProxy;
+    self.dataSourceProxy.adjuster = adjuster;
+    self.dataSourceProxy.originalDataSource = originalDataSource;
     
-    [self.dataSourceProxy prefetchAdForGridLikeView:gridlikeView];
+    if ([self numberOfItemsInGridLikeView:gridlikeView inSection:adjusterIndexPath.section] > 0) {
+        [self.dataSourceProxy prefetchAdForGridLikeView:gridlikeView];
+    }
     
     self.delegateProxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:adSize];
 
@@ -97,12 +103,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
 
 - (NSIndexPath *)initialIndexPathForAd:(id)gridlikeView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath {
 
-    NSInteger numberOfCellsInAdSection = 0;
-    if ([gridlikeView isKindOfClass:[UITableView class]]) {
-        numberOfCellsInAdSection = [gridlikeView numberOfRowsInSection:adStartingIndexPath.section];
-    } else if ([gridlikeView isKindOfClass:[UICollectionView class]]) {
-        numberOfCellsInAdSection = [gridlikeView numberOfItemsInSection:adStartingIndexPath.section];
-    }
+    NSInteger numberOfCellsInAdSection = [self numberOfItemsInGridLikeView:gridlikeView inSection:adStartingIndexPath.section];
 
     if (adStartingIndexPath.row > numberOfCellsInAdSection) {
         if (adStartingIndexPath) {
@@ -118,6 +119,15 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
 
     NSInteger adRowPosition = numberOfCellsInAdSection < 2 ? 0 : 1;
     return [NSIndexPath indexPathForRow:adRowPosition inSection:0];
+}
+
+- (NSInteger)numberOfItemsInGridLikeView:(id)gridlikeView inSection:(NSInteger)section {
+    if ([gridlikeView isKindOfClass:[UITableView class]]) {
+        return [gridlikeView numberOfRowsInSection:section];
+    } else if ([gridlikeView isKindOfClass:[UICollectionView class]]) {
+        return [gridlikeView numberOfItemsInSection:section];
+    }
+    return 0;
 }
 
 #pragma mark - private

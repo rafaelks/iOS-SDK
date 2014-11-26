@@ -47,6 +47,7 @@
     ad.action = STRVineAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRVineThumbnail.bytes length:kSTRVineThumbnail.length]];
     ad.advertiser = @"Intel";
+    ad.brandLogoImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRIntelLogo.bytes length:kSTRIntelLogo.length]];
 
     return ad;
 }
@@ -81,6 +82,7 @@
     STRAdPinterest *ad = [STRAdPinterest new];
     ad.mediaURL = [NSURL URLWithString:@"http://www.pinterest.com/sephora/it-lists/"];
     ad.title = @"My Top Picks at Sephora.com";
+    ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];
     ad.adDescription = @"Erin F., Marketing Manager, Social Media, shares her favorite items on sephora.com";
     ad.action = STRPinterestAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRPinterestThumbnail.bytes length:kSTRPinterestThumbnail.length]];

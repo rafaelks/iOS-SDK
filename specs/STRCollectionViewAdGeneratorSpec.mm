@@ -26,6 +26,7 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
     __block UIViewController *presentingViewController;
 
     __block STRCollectionViewDataSource *dataSource;
+    __block STRGridlikeViewDataSourceProxy *dataSourceProxy;
 
     beforeEach(^{
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -41,6 +42,11 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                             collectionViewLayout:[UICollectionViewFlowLayout new]];
         [collectionView registerClass:[STRCollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
+        
+        dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell"
+                                                                                   placementKey:@"placementKey"
+                                                                       presentingViewController:presentingViewController
+                                                                                       injector:injector];
 
     });
 
@@ -50,12 +56,16 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
             dataSource.itemsForEachSection = @[@2];
             collectionView.dataSource = dataSource;
 
+            dataSourceProxy.originalDataSource = dataSource;
+            
             [collectionViewAdGenerator placeAdInGridlikeView:collectionView
+                                             dataSourceProxy:dataSourceProxy
                                        adCellReuseIdentifier:@"adCell"
                                                 placementKey:@"placementKey"
                                     presentingViewController:presentingViewController
                                                       adSize:CGSizeZero
                                           adInitialIndexPath:nil];
+
             [collectionView layoutIfNeeded];
         });
 
@@ -75,6 +85,7 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                forCellWithReuseIdentifier:@"adCell"];
 
             [collectionViewAdGenerator placeAdInGridlikeView:collectionView
+                                             dataSourceProxy:dataSourceProxy
                                        adCellReuseIdentifier:@"adCell"
                                                 placementKey:@"placementKey"
                                     presentingViewController:presentingViewController
@@ -117,7 +128,15 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
             dataSource = [STRCollectionViewDataSource new];
             collectionView.dataSource = dataSource;
 
-            [collectionViewAdGenerator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adSize:CGSizeZero adInitialIndexPath:nil ];
+            dataSourceProxy.originalDataSource = dataSource;
+
+            [collectionViewAdGenerator placeAdInGridlikeView:collectionView
+                                             dataSourceProxy:dataSourceProxy
+                                       adCellReuseIdentifier:@"adCell"
+                                                placementKey:@"placementKey"
+                                    presentingViewController:presentingViewController
+                                                      adSize:CGSizeZero
+                                          adInitialIndexPath:nil];
             [collectionView layoutIfNeeded];
         });
 
@@ -153,10 +172,17 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
             dataSource = [STRFullCollectionViewDataSource new];
             collectionView.dataSource = dataSource;
             dataSource.itemsForEachSection = @[@0, @2];
+            dataSourceProxy.originalDataSource = dataSource;
         });
 
         it(@"puts the ad there", ^{
-            [collectionViewAdGenerator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            [collectionViewAdGenerator placeAdInGridlikeView:collectionView
+                                             dataSourceProxy:dataSourceProxy
+                                       adCellReuseIdentifier:@"adCell"
+                                                placementKey:@"placementKey"
+                                    presentingViewController:presentingViewController
+                                                      adSize:CGSizeZero
+                                          adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
             [collectionView layoutIfNeeded];
             [collectionView numberOfItemsInSection:1] should equal(3);
 
@@ -165,15 +191,41 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
 
         context(@"and the index path is out of bounds", ^{
             it(@"places it in the last position", ^{
-                [collectionViewAdGenerator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+                [collectionViewAdGenerator placeAdInGridlikeView:collectionView
+                                                 dataSourceProxy:dataSourceProxy
+                                           adCellReuseIdentifier:@"adCell"
+                                                    placementKey:@"placementKey"
+                                        presentingViewController:presentingViewController
+                                                          adSize:CGSizeZero
+                                              adInitialIndexPath:[NSIndexPath indexPathForRow:5 inSection:1]];
                 [collectionView layoutIfNeeded];
-                [collectionView numberOfItemsInSection:0] should equal(1);
+                [collectionView numberOfItemsInSection:1] should equal(3);
+            });
+        });
+
+        context(@"and there are no items in the seciton", ^{
+            it(@"doesn't place an ad in the section", ^{
+                [collectionViewAdGenerator placeAdInGridlikeView:collectionView
+                                                 dataSourceProxy:dataSourceProxy
+                                           adCellReuseIdentifier:@"adCell"
+                                                    placementKey:@"placementKey"
+                                        presentingViewController:presentingViewController
+                                                          adSize:CGSizeZero
+                                              adInitialIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]];
+                [collectionView layoutIfNeeded];
+                [collectionView numberOfItemsInSection:0] should equal(0);
             });
         });
 
         context(@"and then index path would be valid when the ad is inserted", ^{
             it(@"is still able to place the ad there", ^{
-                [collectionViewAdGenerator placeAdInGridlikeView:collectionView adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController adSize:CGSizeZero adInitialIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+                [collectionViewAdGenerator placeAdInGridlikeView:collectionView
+                                                 dataSourceProxy:dataSourceProxy
+                                           adCellReuseIdentifier:@"adCell"
+                                                    placementKey:@"placementKey"
+                                        presentingViewController:presentingViewController
+                                                          adSize:CGSizeZero
+                                              adInitialIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
                 [collectionView layoutIfNeeded];
                 [collectionView numberOfItemsInSection:1] should equal(3);
                 [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should be_instance_of([STRCollectionViewCell class]);

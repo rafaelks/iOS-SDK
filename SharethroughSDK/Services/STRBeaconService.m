@@ -42,7 +42,6 @@
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
-
 - (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
     if (!ad.visibleImpressionBeaconFired) {
         ad.visibleImpressionBeaconFired = YES;
@@ -93,6 +92,15 @@
                                        @"engagement": @"true"};
 
     NSMutableDictionary *parameters = [self impressionParametersForAd:ad adSize:size];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+    [self.restClient sendBeaconWithParameters:parameters];
+}
+
+- (void)fireVideoCompletionForAd:(STRAdvertisement *)ad completionPercent:(NSNumber *)completionPercent {
+    NSDictionary *uniqueParameters = @{@"type": @"completionPercent",
+                                       @"value": completionPercent};
+
+    NSMutableDictionary *parameters = [self commonParametersWithAd:ad];
     [parameters addEntriesFromDictionary:uniqueParameters];
     [self.restClient sendBeaconWithParameters:parameters];
 }
@@ -156,7 +164,8 @@
               @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
               @"ploc"   : [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey],
               @"session": [STRSession sessionToken],
-              @"uid"    : [[self.identifierManager advertisingIdentifier] UUIDString]} mutableCopy];
+              @"uid"    : [[self.identifierManager advertisingIdentifier] UUIDString],
+              @"ua"     : [self.restClient getUserAgent]} mutableCopy];
 }
 
 @end

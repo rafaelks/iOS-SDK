@@ -23,7 +23,7 @@ using namespace Cedar::Doubles;
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
     
     UILabel *label = [[UILabel alloc] init];
-    label.text = [NSString stringWithFormat:@"item: %d, section: %d", indexPath.item, indexPath.section];
+    label.text = [NSString stringWithFormat:@"item: %ld, section: %d", (long)indexPath.item, indexPath.section];
     [cell.contentView addSubview:label];
     
     return cell;
@@ -55,8 +55,12 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
     
     STRGridlikeViewDataSourceProxy *(^proxyWithDataSource)(id<UICollectionViewDataSource> dataSource) = ^STRGridlikeViewDataSourceProxy *(id<UICollectionViewDataSource> dataSource) {
         STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+
+        STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
+        dataSourceProxy.originalDataSource = dataSource;
+        dataSourceProxy.adjuster = adjuster;
         
-        return [[STRGridlikeViewDataSourceProxy alloc] initWithOriginalDataSource:dataSource adjuster:adjuster adCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
+        return dataSourceProxy;
     };
     
     beforeEach(^{

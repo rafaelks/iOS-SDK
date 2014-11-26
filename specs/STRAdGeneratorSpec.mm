@@ -10,24 +10,28 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRAdViewDelegate.h"
+#import "STRAdPlacement.h"
+#import "STRAdRenderer.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRAdGeneratorSpec)
-
+/*
 describe(@"STRAdGenerator", ^{
     __block STRAdGenerator *generator;
     __block STRAdService *adService;
     __block STRBeaconService *beaconService;
     __block STRAdvertisement *ad;
+    __block STRNetworkClient *fakeNetworkClient;
     __block STRInjector *injector;
     __block NSRunLoop<CedarDouble> *fakeRunLoop;
+    __block STRAdRenderer *renderer;
 
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
 
-        [UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdGenerator class]];
+        //[UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdRenderer class]];
 
         adService = nice_fake_for([STRAdService class]);
         [injector bind:[STRAdService class] toInstance:adService];
@@ -37,6 +41,9 @@ describe(@"STRAdGenerator", ^{
 
         fakeRunLoop = nice_fake_for([NSRunLoop class]);
         [injector bind:[NSRunLoop class] toInstance:fakeRunLoop];
+        
+        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient: injector:injector];
+        [injector bind:[STRAdRenderer class] toInstance:renderer];
 
         generator = [injector getInstance:[STRAdGenerator class]];
 
@@ -72,12 +79,17 @@ describe(@"STRAdGenerator", ^{
 
             delegate = nice_fake_for(@protocol(STRAdViewDelegate));
 
-            [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:presentingViewController delegate:delegate];
-            spinner = (UIActivityIndicatorView *) [view.subviews lastObject];
-        });
+            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                  PlacementKey:@"placementKey"
+                                                      presentingViewController:presentingViewController
+                                                                      delegate:delegate
+                                                                       DFPPath:nil
+                                                                   DFPDeferred:nil];
+            placement.adView = view;
 
-        it(@"stores the itself (the generator) as an associated object of the view", ^{
-            objc_getAssociatedObject(view, STRAdGeneratorKey) should be_same_instance_as(generator);
+            [generator placeAdInPlacement:placement];
+
+            spinner = (UIActivityIndicatorView *) [view.subviews lastObject];
         });
 
         it(@"shows a spinner while the ad is being fetched", ^{
@@ -316,7 +328,7 @@ describe(@"STRAdGenerator", ^{
                 it(@"presents the STRInteractiveAdViewController", ^{
                     interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
                     interactiveAdController.ad should be_same_instance_as(ad);
-                    interactiveAdController.delegate should be_same_instance_as(generator);
+                    interactiveAdController.delegate should be_same_instance_as(renderer);
                 });
 
                 it(@"dismisses the interactive ad controller when told", ^{
@@ -381,8 +393,16 @@ describe(@"STRAdGenerator", ^{
                 STRAdService *newAdService = nice_fake_for([STRAdService class]);
                 newAdService stub_method(@selector(fetchAdForPlacementKey:)).and_return(newDeferred.promise);
 
-                secondGenerator = [[STRAdGenerator alloc] initWithAdService:newAdService beaconService:beaconService runLoop:fakeRunLoop injector:injector];
-                [secondGenerator placeAdInView:view placementKey:@"key" presentingViewController:presentingViewController delegate:nil];
+                secondGenerator = [[STRAdGenerator alloc] initWithAdService:newAdService injector:injector];
+                
+                STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                      PlacementKey:@"placementKey"
+                                                          presentingViewController:presentingViewController
+                                                                          delegate:nil
+                                                                           DFPPath:nil
+                                                                       DFPDeferred:nil];
+
+                [secondGenerator placeAdInPlacement:placement];
 
                 [newDeferred resolveWithValue:ad];
             });
@@ -422,7 +442,7 @@ describe(@"STRAdGenerator", ^{
                 it(@"presents the STRInteractiveAdViewController", ^{
                     interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
                     interactiveAdController.ad should be_same_instance_as(ad);
-                    interactiveAdController.delegate should be_same_instance_as(generator);
+                    interactiveAdController.delegate should be_same_instance_as(renderer);
                 });
 
                 it(@"dismisses the interactive ad controller when told", ^{
@@ -440,6 +460,106 @@ describe(@"STRAdGenerator", ^{
                 });
             });
         });
+
+        context(@"when the ad is a pinterest", ^{
+            beforeEach(^{
+                ad.action = STRPinterestAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a clickout click beacon", ^{
+                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
+
+        context(@"when the ad is an instagram", ^{
+            beforeEach(^{
+                ad.action = STRInstagramAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a clickout click beacon", ^{
+                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
+
+        context(@"when the ad is a hosted video", ^{
+            beforeEach(^{
+                ad.action = STRHostedVideoAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a video play beacon", ^{
+                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
+
+        context(@"when the ad is a youtube video", ^{
+            beforeEach(^{
+                ad.action = STRYouTubeAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a video play beacon", ^{
+                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
+
+        context(@"when the ad is a vine", ^{
+            beforeEach(^{
+                ad.action = STRVineAd;
+
+                view.frame = CGRectMake(0, 0, 100, 100);
+                [deferred resolveWithValue:ad];
+            });
+
+            describe(@"the view is tapped on", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)beaconService reset_sent_messages];
+                    [[view.gestureRecognizers lastObject] recognize];
+                });
+
+                it(@"fires off a video play beacon", ^{
+                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
+                });
+            });
+        });
     });
 
     describe(@"place an ad in a view without an ad description", ^{
@@ -451,7 +571,15 @@ describe(@"STRAdGenerator", ^{
             deferred = [STRDeferred defer];
 
             adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(deferred.promise);
-            [generator placeAdInView:view placementKey:@"placementKey" presentingViewController:nil delegate:nil];
+            
+            STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+                                                                  PlacementKey:@"placementKey"
+                                                      presentingViewController:nil
+                                                                      delegate:nil
+                                                                       DFPPath:nil
+                                                                   DFPDeferred:nil];
+
+            [generator placeAdInPlacement:placement];
         });
 
         it(@"does not try to include an ad description", ^{
@@ -461,5 +589,5 @@ describe(@"STRAdGenerator", ^{
         });
     });
 });
-
+*/
 SPEC_END

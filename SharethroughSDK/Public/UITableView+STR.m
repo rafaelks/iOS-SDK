@@ -156,7 +156,7 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 - (STRGridlikeViewAdGenerator *)str_ensureGenerator {
     STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:))];
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:dataSourceProxy:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:))];
     }
     return adGenerator;
 }

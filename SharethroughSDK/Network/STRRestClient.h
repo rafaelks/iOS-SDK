@@ -15,7 +15,9 @@
 
 - (id)initWithNetworkClient:(STRNetworkClient *)networkClient;
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters;
+- (STRPromise *)getDFPPathForPlacement:(NSString *)placementKey;
 - (void)sendBeaconWithParameters:(NSDictionary *)parameters;
 - (void)sendBeaconWithURL:(NSURL *)url;
 
+- (NSString *)getUserAgent;
 @end

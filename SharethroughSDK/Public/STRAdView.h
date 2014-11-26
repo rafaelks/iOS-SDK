@@ -42,4 +42,9 @@
  */
 - (UILabel *)adDescription;
 
+/**
+ This optional method should return a 16x16 imageView to place the brand logo of the advertiser. You may choose not to display the brand logo and will only appear on ads where it is supplied by the advertiser.
+ */
+- (UIImageView *)adBrandLogo;
+
 @end

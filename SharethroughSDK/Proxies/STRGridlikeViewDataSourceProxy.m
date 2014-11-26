@@ -11,14 +11,14 @@
 #import "STRAdPlacementAdjuster.h"
 #import "STRAdGenerator.h"
 #import "STRInjector.h"
+#import "STRAdPlacement.h"
+#import "STRPromise.h"
 
 @interface STRGridlikeViewDataSourceProxy ()
 
-@property (nonatomic, weak, readwrite) id originalDataSource;
 @property (nonatomic, weak) id<UITableViewDataSource> originalTVDataSource;
 @property (nonatomic, weak) id<UICollectionViewDataSource> originalCVDataSource;
 
-@property (strong, nonatomic) STRAdPlacementAdjuster *adjuster;
 @property (copy, nonatomic) NSString *adCellReuseIdentifier;
 @property (copy, nonatomic) NSString *placementKey;
 @property (weak, nonatomic) UIViewController *presentingViewController;
@@ -29,16 +29,16 @@
 
 @implementation STRGridlikeViewDataSourceProxy
 
-- (id)initWithOriginalDataSource:(id)originalDataSource
-                        adjuster:(STRAdPlacementAdjuster *)adjuster
-           adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
-                    placementKey:(NSString *)placementKey
-        presentingViewController:(UIViewController *)presentingViewController
-                        injector:(STRInjector *)injector {
+- (id)initWithAdCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+                       placementKey:(NSString *)placementKey
+           presentingViewController:(UIViewController *)presentingViewController
+                           injector:(STRInjector *)injector {
     self = [super init];
     if (self) {
-        self.originalDataSource = [self validateAndSetDataSource:originalDataSource];
-        self.adjuster = adjuster;
+        if (placementKey == nil || [placementKey length] < 8) {
+            [NSException raise:@"Invalid placementKey" format:@"placementKey of %@ is invalid. Must not be nil or less than 8 characters.", placementKey];
+        }
+
         self.adCellReuseIdentifier = adCellReuseIdentifier;
         self.placementKey = placementKey;
         self.presentingViewController = presentingViewController;
@@ -49,12 +49,13 @@
 }
 
 - (instancetype)copyWithNewDataSource:(id)newDataSource {
-    return [[[self class] alloc] initWithOriginalDataSource:newDataSource
-                                                   adjuster:self.adjuster
-                                      adCellReuseIdentifier:self.adCellReuseIdentifier
-                                               placementKey:self.placementKey
-                                   presentingViewController:self.presentingViewController
-                                                   injector:self.injector];
+    STRGridlikeViewDataSourceProxy *copy = [[[self class] alloc] initWithAdCellReuseIdentifier:self.adCellReuseIdentifier
+                                                                                     placementKey:self.placementKey
+                                                                         presentingViewController:self.presentingViewController
+                                                                                         injector:self.injector];
+    copy.originalDataSource = newDataSource;
+    copy.adjuster = self.adjuster;
+    return copy;
 }
 
 
@@ -72,6 +73,10 @@
             return self.adjuster;
         }];
     }
+}
+
+- (void)setOriginalDataSource:(id)originalDataSource {
+    _originalDataSource = [self validateAndSetDataSource:originalDataSource];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -131,7 +136,13 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:adCell
+                                                            PlacementKey:self.placementKey
+                                                presentingViewController:self.presentingViewController
+                                                                delegate:nil
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil];
+    [adGenerator placeAdInPlacement:adPlacement];
 
     return adCell;
 }
@@ -144,8 +155,14 @@
     }
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    [adGenerator placeAdInView:adCell placementKey:self.placementKey presentingViewController:self.presentingViewController delegate:nil];
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:adCell
+                                                            PlacementKey:self.placementKey
+                                                presentingViewController:self.presentingViewController
+                                                                delegate:nil
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil];
 
+    [adGenerator placeAdInPlacement:adPlacement];
     return adCell;
 }
 

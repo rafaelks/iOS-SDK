@@ -22,6 +22,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
 
             expect(^{
                 [generator placeAdInGridlikeView:view
+                                 dataSourceProxy:nil
                            adCellReuseIdentifier:nil
                                     placementKey:nil
                         presentingViewController:nil
@@ -37,6 +38,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                                       collectionViewLayout:[UICollectionViewFlowLayout new]];
             expect(^{
                 [generator placeAdInGridlikeView:view
+                                 dataSourceProxy:nil
                            adCellReuseIdentifier:nil
                                     placementKey:nil
                         presentingViewController:nil
@@ -52,6 +54,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
             view = [UIView new];
             expect(^{
                 [generator placeAdInGridlikeView:view
+                                 dataSourceProxy:nil
                            adCellReuseIdentifier:nil
                                     placementKey:nil
                         presentingViewController:nil

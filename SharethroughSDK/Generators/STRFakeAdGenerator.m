@@ -15,6 +15,7 @@
 #import "STRInjector.h"
 #import "STRAppModule.h"
 #import "STRDeferred.h"
+#import "STRAdPlacement.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
@@ -24,7 +25,7 @@
 
 @implementation STRFakeAdGenerator
 
-- (id)initWithAdService:(STRAdService *)adService beaconService:(STRBeaconService *)beaconService runLoop:(NSRunLoop *)timerRunLoop injector:(STRInjector *)injector {
+- (id)initWithAdService:(STRAdService *)adService injector:(STRInjector *)injector {
 
     [NSException raise:@"STRFakeAdGeneratorError"
                 format:@"Fake ad generator does not respond to %@, because it does not use any of these things.", NSStringFromSelector(_cmd)];
@@ -68,18 +69,26 @@
     return self;
 }
 
+- (void)placeAdInPlacement:(STRAdPlacement *)placement {
+    [self placeAdInView:placement.adView
+           placementKey:placement.placementKey
+presentingViewController:placement.presentingViewController
+               delegate:placement.delegate];
+}
+
 - (void)placeAdInView:(UIView<STRAdView> *)view
          placementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController
              delegate:(id<STRAdViewDelegate>)delegate {
-
-    objc_setAssociatedObject(view, STRAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
     view.adTitle.text = self.advertisement.title;
     view.adSponsoredBy.text = self.advertisement.sponsoredBy;
     view.adThumbnail.image = [self.advertisement displayableThumbnail];
     if ([view respondsToSelector:@selector(adDescription)]) {
         view.adDescription.text = self.advertisement.adDescription;
+    }
+    if ([view respondsToSelector:@selector(adBrandLogo)] && self.advertisement.brandLogoImage != nil) {
+        view.adBrandLogo.image = self.advertisement.brandLogoImage;
     }
 
     if (view.disclosureButton.buttonType != 2) {

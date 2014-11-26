@@ -12,5 +12,5 @@
 @interface STRNetworkClient : NSObject
 
 - (STRPromise *)get:(NSURLRequest *)request;
-
+- (NSString *)userAgent;
 @end

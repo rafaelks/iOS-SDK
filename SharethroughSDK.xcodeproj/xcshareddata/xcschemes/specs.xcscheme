@@ -28,6 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E8703DDE19B9089C00D3FA50"
+               BuildableName = "Sharethrough-SDK+DFPTests.xctest"
+               BlueprintName = "Sharethrough-SDK+DFPTests"
+               ReferencedContainer = "container:SharethroughSDK.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

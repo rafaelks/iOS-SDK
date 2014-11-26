@@ -14,6 +14,7 @@ NSString *STRVineAd = @"vine";
 NSString *STRClickoutAd = @"clickout";
 NSString *STRHostedVideoAd = @"hosted-video";
 NSString *STRPinterestAd = @"pinterest";
+NSString *STRInstagramAd = @"instagram";
 
 @implementation STRAdvertisement
 

@@ -12,7 +12,12 @@
 @interface STRAdCache : NSObject
 
 - (instancetype)initWithDateProvider:(STRDateProvider *)dateProvider;
+- (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds;
 - (void)saveAd:(STRAdvertisement *)ad;
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey;
+- (STRAdvertisement *)fetchCachedAdForCreativeKey:(NSString *)creativeKey;
+- (BOOL)isAdStale:(NSString *)placementKey;
 
+- (BOOL)pendingAdRequestInProgressForPlacement:(NSString *)placementKey;
+- (void)clearPendingAdRequestForPlacement:(NSString *)placementKey;
 @end

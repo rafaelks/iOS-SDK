@@ -1,5 +1,6 @@
 #import "STRYouTubeViewController.h"
 #import "STRAdYouTube.h"
+#import "STRBeaconService.h"
 #include "UIWebView+Spec.h"
 
 using namespace Cedar::Matchers;
@@ -10,14 +11,17 @@ SPEC_BEGIN(STRYouTubeViewControllerSpec)
 describe(@"STRYouTubeViewController", ^{
     __block STRYouTubeViewController *controller;
     __block STRAdYouTube *ad;
+    __block STRBeaconService *beaconService;
 
     beforeEach(^{
+        beaconService = nice_fake_for([STRBeaconService class]);
+        
         ad = [STRAdYouTube new];
         ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=BWAK0J8Uhzk"];
         ad.title = @"Superad";
         ad.shareURL = [NSURL URLWithString:@"http://bit.ly/23kljr"];
-
-        controller = [[STRYouTubeViewController alloc] initWithAd:ad];
+        
+        controller = [[STRYouTubeViewController alloc] initWithAd:ad beaconService:beaconService];
         [controller.view layoutIfNeeded];
     });
 

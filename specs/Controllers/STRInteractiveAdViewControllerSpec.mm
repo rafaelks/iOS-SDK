@@ -146,6 +146,46 @@ describe(@"STRInteractiveAdViewController", ^{
         });
     });
     
+    describe(@"when the ad is instagram image", ^{
+        __block STRClickoutViewController *clickoutViewController;
+
+        beforeEach(^{
+            ad = (id)[STRAdFixtures pinterestAd];
+            ad.action = STRInstagramAd;
+            setUpController();
+            clickoutViewController = [controller.childViewControllers firstObject];
+        });
+
+        it(@"presents a clickout view controller", ^{
+            clickoutViewController should be_instance_of([STRClickoutViewController class]);
+            controller.contentView.subviews.firstObject should be_same_instance_as(clickoutViewController.view);
+        });
+
+        it(@"gives that clickout view controller the ad", ^{
+            clickoutViewController.ad should be_same_instance_as(ad);
+        });
+    });
+
+    describe(@"when the ad is unknown", ^{
+        __block STRClickoutViewController *clickoutViewController;
+
+        beforeEach(^{
+            ad = (id)[STRAdFixtures pinterestAd];
+            ad.action = @"Unknown";
+            setUpController();
+            clickoutViewController = [controller.childViewControllers firstObject];
+        });
+
+        it(@"presents a clickout view controller", ^{
+            clickoutViewController should be_instance_of([STRClickoutViewController class]);
+            controller.contentView.subviews.firstObject should be_same_instance_as(clickoutViewController.view);
+        });
+
+        it(@"gives that clickout view controller the ad", ^{
+            clickoutViewController.ad should be_same_instance_as(ad);
+        });
+    });
+
     describe(@"when the user taps the done button", ^{
         __block id<STRInteractiveAdViewControllerDelegate> delegate;
 

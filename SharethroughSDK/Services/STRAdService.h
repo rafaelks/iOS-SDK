@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "STRPromise.h"
 
+extern const NSInteger kRequestInProgress;
+
 @class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService;
 
 @interface STRAdService : NSObject
@@ -18,5 +20,7 @@
                  adCache:(STRAdCache *)adCache
            beaconService:(STRBeaconService *)beaconService;
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey;
+- (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey creativeKey:(NSString *)creativeKey;
+- (BOOL)isAdCachedForPlacementKey:(NSString *)placementKey;
 
 @end
