@@ -58,11 +58,9 @@ describe(@"STRBeaconService", ^{
     });
 
     describe(@"-fireImpressionRequestForPlacementKey:", ^{
-        beforeEach(^{
-            [service fireImpressionRequestForPlacementKey:@"placementKey"];
-        });
-
         it(@"sends a beacon to the tracking servers", ^{
+            [service fireImpressionRequestForPlacementKey:@"placementKey"];
+
             restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
                                                                                          @"type": @"impressionRequest",
                                                                                          @"bwidth": @"200",
@@ -73,6 +71,91 @@ describe(@"STRBeaconService", ^{
                                                                                          @"ua": @"User Agent",
                                                                                          @"ploc": @"specs"});
         });
+
+        context(@"when the pkey is nil", ^{
+            it(@"sends a beacon to the tracking servers with a blank pkey", ^{
+                [service fireImpressionRequestForPlacementKey:nil];
+
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"",
+                                                                                             @"type": @"impressionRequest",
+                                                                                             @"bwidth": @"200",
+                                                                                             @"bheight": @"400",
+                                                                                             @"umtime": @"10",
+                                                                                             @"session": @"AAAA",
+                                                                                             @"uid": @"fakeUUID",
+                                                                                             @"ua": @"User Agent",
+                                                                                             @"ploc": @"specs"});
+            });
+        });
+    });
+
+    describe(@"-fireImpressionRequestForPlacementKey:CreativeKey:", ^{
+        it(@"sends a beacon to the tracking servers", ^{
+            [service fireImpressionRequestForPlacementKey:@"placementKey" CreativeKey:@"creativeKey"];
+
+            restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
+                                                                                         @"ckey": @"creativeKey",
+                                                                                         @"type": @"impressionRequest",
+                                                                                         @"bwidth": @"200",
+                                                                                         @"bheight": @"400",
+                                                                                         @"umtime": @"10",
+                                                                                         @"session": @"AAAA",
+                                                                                         @"uid": @"fakeUUID",
+                                                                                         @"ua": @"User Agent",
+                                                                                         @"ploc": @"specs"});
+        });
+
+        context(@"when placementKey is nil", ^{
+            it(@"sends a beacon to the tracking servers with a blank pkey", ^{
+                [service fireImpressionRequestForPlacementKey:nil CreativeKey:@"creativeKey"];
+
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"",
+                                                                                             @"ckey": @"creativeKey",
+                                                                                             @"type": @"impressionRequest",
+                                                                                             @"bwidth": @"200",
+                                                                                             @"bheight": @"400",
+                                                                                             @"umtime": @"10",
+                                                                                             @"session": @"AAAA",
+                                                                                             @"uid": @"fakeUUID",
+                                                                                             @"ua": @"User Agent",
+                                                                                             @"ploc": @"specs"});
+            });
+        });
+
+        context(@"when creativeKey is nil", ^{
+            it(@"sends a beacon to the tracking servers with a blank pkey", ^{
+                [service fireImpressionRequestForPlacementKey:@"placementKey" CreativeKey:nil];
+
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
+                                                                                             @"ckey": @"",
+                                                                                             @"type": @"impressionRequest",
+                                                                                             @"bwidth": @"200",
+                                                                                             @"bheight": @"400",
+                                                                                             @"umtime": @"10",
+                                                                                             @"session": @"AAAA",
+                                                                                             @"uid": @"fakeUUID",
+                                                                                             @"ua": @"User Agent",
+                                                                                             @"ploc": @"specs"});
+            });
+        });
+
+        context(@"when placementKey and creativeKey are nil", ^{
+            it(@"sends a beacon to the tracking servers with a blank pkey", ^{
+                [service fireImpressionRequestForPlacementKey:nil CreativeKey:nil];
+
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"",
+                                                                                             @"ckey": @"",
+                                                                                             @"type": @"impressionRequest",
+                                                                                             @"bwidth": @"200",
+                                                                                             @"bheight": @"400",
+                                                                                             @"umtime": @"10",
+                                                                                             @"session": @"AAAA",
+                                                                                             @"uid": @"fakeUUID",
+                                                                                             @"ua": @"User Agent",
+                                                                                             @"ploc": @"specs"});
+            });
+        });
+
     });
 
     describe(@"-fireImpressionForAd:adSize:", ^{

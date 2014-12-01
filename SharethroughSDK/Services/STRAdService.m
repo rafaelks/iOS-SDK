@@ -77,8 +77,7 @@ const NSInteger kRequestInProgress = 202;
         return [self requestInProgressError];
     }
 
-//TODO: Impression request should include creativeKey
-    [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
+    [self.beaconService fireImpressionRequestForPlacementKey:placementKey CreativeKey:creativeKey];
     
     return [self fetchAdWithParameters:@{@"placement_key": placementKey, @"creative_key": creativeKey} forPlacementKey:placementKey];
 }
