@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRAdVine, STRAdYouTube, STRAdvertisement, STRAdClickout, STRAdPinterest;
+@class STRAdVine, STRAdYouTube, STRAdvertisement, STRAdClickout, STRAdPinterest, STRAdInstagram;
 
 @interface STRAdFixtures : NSObject
 
@@ -18,5 +18,6 @@
 + (STRAdvertisement *)hostedVideoAd;
 + (STRAdClickout *)clickoutAd;
 + (STRAdPinterest *)pinterestAd;
++ (STRAdInstagram *)instagramAd;
 
 @end

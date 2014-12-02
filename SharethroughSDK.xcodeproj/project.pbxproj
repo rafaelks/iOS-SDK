@@ -168,6 +168,14 @@
 		AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
+		B229F0981A2E219A0094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; };
+		B229F0991A2E219A0094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; };
+		B229F09B1A2E47CA0094A8B3 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; };
+		B229F09C1A2E47CA0094A8B3 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; };
+		B229F09F1A2E486A0094A8B3 /* STRAdInstagram.m in Sources */ = {isa = PBXBuildFile; fileRef = B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */; };
+		B229F0A01A2E486A0094A8B3 /* STRAdInstagram.m in Sources */ = {isa = PBXBuildFile; fileRef = B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */; };
+		B229F0A21A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */; };
+		B229F0A31A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */; };
 		B2B466401A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466411A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466421A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
@@ -530,6 +538,11 @@
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		B229F0971A2E219A0094A8B3 /* yt-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "yt-logo.c"; sourceTree = "<group>"; };
+		B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "instagram-logo.c"; sourceTree = "<group>"; };
+		B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdInstagram.h; sourceTree = "<group>"; };
+		B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdInstagram.m; sourceTree = "<group>"; };
+		B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = instagram_sample_thumbnail.c; sourceTree = "<group>"; };
 		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
 		E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.release.xcconfig"; sourceTree = "<group>"; };
 		E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementSpec.mm; sourceTree = "<group>"; };
@@ -665,6 +678,8 @@
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
 				AE39F8CD18AD831200969C30 /* STRAdClickout.h */,
 				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
+				B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */,
+				B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */,
 				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
 				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
 				E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */,
@@ -1035,14 +1050,17 @@
 				AE9C4639189C74B0001B407A /* STRAdFixtures.h */,
 				AE9C463A189C74B0001B407A /* STRAdFixtures.m */,
 				AE3FF40018AA9FF6006061C2 /* images.h */,
+				B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */,
 				AE3FF40818AAA242006061C2 /* play-btn-300x.c */,
-				AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */,
 				E8B9759018EA052C0054F35F /* pinterest-logo.c */,
+				AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */,
+				B229F0971A2E219A0094A8B3 /* yt-logo.c */,
 				AEA0EC7818AC589E00B4286A /* vine_sample_thumbnail.c */,
 				AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */,
 				AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */,
 				AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */,
 				E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */,
+				B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */,
 				B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */,
 			);
 			path = "Static Resources";
@@ -1578,6 +1596,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
+				B229F09F1A2E486A0094A8B3 /* STRAdInstagram.m in Sources */,
 				AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
 				B2B466401A24F84300ED4E94 /* intel_sample_logo.c in Sources */,
@@ -1598,13 +1617,16 @@
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
+				B229F0981A2E219A0094A8B3 /* yt-logo.c in Sources */,
 				AE6C807F1899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE022DE0188E004900D02568 /* STRNetworkClient.m in Sources */,
+				B229F0A21A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c in Sources */,
 				AE39F8C718AD56DC00969C30 /* STRClickoutViewController.m in Sources */,
 				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE52FD7718A41AB2009F69BD /* STRGridlikeViewAdGenerator.m in Sources */,
 				AE39F8D218AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */,
 				AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */,
+				B229F09B1A2E47CA0094A8B3 /* instagram-logo.c in Sources */,
 				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
 				AEECC9C418AEAAB600E28C51 /* STRTestSafeModule.m in Sources */,
@@ -1640,9 +1662,11 @@
 				E8703DFC19B9092600D3FA50 /* STRAdRenderer.m in Sources */,
 				E8703DFD19B9092600D3FA50 /* STRAdVine.m in Sources */,
 				E8703DFE19B9092600D3FA50 /* hosted_sample_thumbnail.c in Sources */,
+				B229F0991A2E219A0094A8B3 /* yt-logo.c in Sources */,
 				E8703DFF19B9092600D3FA50 /* UICollectionView+STR.m in Sources */,
 				E83128F019B936D9007C2FAB /* STRDFPMediator.m in Sources */,
 				E8703E0119B9092600D3FA50 /* SharethroughSDK.m in Sources */,
+				B229F0A31A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c in Sources */,
 				E8703E0219B9092600D3FA50 /* STRAdPinterest.m in Sources */,
 				E8703E0319B9092600D3FA50 /* STRVersion.m in Sources */,
 				E8703E0419B9092600D3FA50 /* STRRestClient.m in Sources */,
@@ -1682,8 +1706,10 @@
 				E8703E2519B9092600D3FA50 /* STRInjector.m in Sources */,
 				E83128ED19B936D9007C2FAB /* STRDFPAdGenerator.m in Sources */,
 				E8703E2619B9092600D3FA50 /* pinterest_sample_thumbnail.c in Sources */,
+				B229F09C1A2E47CA0094A8B3 /* instagram-logo.c in Sources */,
 				E8703E2719B9092600D3FA50 /* SharethroughSDK+DFP.m in Sources */,
 				E8703E2919B9092600D3FA50 /* pinterest-logo.c in Sources */,
+				B229F0A01A2E486A0094A8B3 /* STRAdInstagram.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,24 +23,21 @@ NSString *STRInstagramAd = @"instagram";
 }
 
 - (UIImage *)displayableThumbnail {
-    CGSize size = self.thumbnailImage.size;
-
-    UIGraphicsBeginImageContext(size);
-    [self.thumbnailImage drawAtPoint:CGPointMake(0.0, 0.0)];
-
-    CGFloat diameter = ceilf(fminf(size.width, size.height) * 0.15);
-    CGFloat leftInset = fmaxf(ceilf((size.width - diameter) * 0.5), 0);
-    CGFloat topInset = fmaxf(ceilf((size.height - diameter) * 0.5), 0);
-    [[self centerImage] drawInRect:CGRectMake(leftInset, topInset, diameter, diameter)];
-
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return newImage;
+    return  self.thumbnailImage;
 }
 
 - (UIImage *)centerImage {
     return [STRImages playBtn];
+}
+
+- (UIImageView *)platformLogoForWidth:(CGFloat)width {
+    UIImage *logo = [self centerImage];
+    UIImageView *platformLogoView = [[UIImageView alloc] initWithImage:logo];
+    CGFloat size = fminf(ceilf(width * 0.25), logo.size.width/2);
+    platformLogoView.frame = CGRectMake(0, 0, size, size);
+    NSLog(@"Trying to draw logo of Size %f", size);
+
+    return platformLogoView;
 }
 
 @end
