@@ -16,6 +16,17 @@ describe(@"STRAdvertisement", ^{
     it(@"has a sponsored by method that prefixes the 'Promoted by' string", ^{
         [ad sponsoredBy] should equal(@"Promoted by ginny minis");
     });
+
+    describe(@"-platformLogoForWidth", ^{
+        it(@"returns a UIImageView with the Image set to the centerImage", ^{
+        });
+
+        it(@"returns a view with a maximum size of the platform logo", ^{
+        });
+
+        it(@"returns a view with a minimum size of 24", ^{
+        });
+    });
 });
 
 SPEC_END

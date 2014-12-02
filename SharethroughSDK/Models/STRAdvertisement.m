@@ -25,7 +25,7 @@ NSString *STRInstagramAd = @"instagram";
 - (UIImage *)displayableThumbnail {
     return  self.thumbnailImage;
 }
-
+//The name center image is out of date, but this is the platform logo now
 - (UIImage *)centerImage {
     return [STRImages playBtn];
 }
