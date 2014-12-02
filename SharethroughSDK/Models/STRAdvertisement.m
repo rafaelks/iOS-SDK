@@ -34,8 +34,8 @@ NSString *STRInstagramAd = @"instagram";
     UIImage *logo = [self centerImage];
     UIImageView *platformLogoView = [[UIImageView alloc] initWithImage:logo];
     CGFloat size = fminf(ceilf(width * 0.25), logo.size.width/2);
+    size = fmaxf(size, 24);
     platformLogoView.frame = CGRectMake(0, 0, size, size);
-    NSLog(@"Trying to draw logo of Size %f", size);
 
     return platformLogoView;
 }
