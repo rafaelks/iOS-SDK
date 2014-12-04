@@ -80,7 +80,8 @@ typedef NS_ENUM(NSInteger, STRFakeAdType) {
     STRFakeAdTypeVine,
     STRFakeAdTypeHostedVideo,
     STRFakeAdTypeClickout,
-    STRFakeAdTypePinterest
+    STRFakeAdTypePinterest,
+    STRFakeAdTypeInstagram
 };
 
 /**

@@ -41,5 +41,6 @@ extern NSString *STRInstagramAd;
 
 - (NSString *)sponsoredBy;
 - (UIImage *)displayableThumbnail;
+- (UIImageView *)platformLogoForWidth:(CGFloat)width;
 
 @end

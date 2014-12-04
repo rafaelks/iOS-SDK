@@ -34,7 +34,26 @@
 }
 
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey {
+    if (!placementKey) {
+        placementKey = @"";
+    }
     NSDictionary *uniqueParameters = @{@"pkey": placementKey,
+                                       @"type": @"impressionRequest"};
+    NSMutableDictionary *parameters = [self commonParameters];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+
+    [self.restClient sendBeaconWithParameters:parameters];
+}
+
+- (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey {
+    if (!placementKey) {
+        placementKey = @"";
+    }
+    if (!creativeKey) {
+        creativeKey = @"";
+    }
+    NSDictionary *uniqueParameters = @{@"pkey": placementKey,
+                                       @"ckey": creativeKey,
                                        @"type": @"impressionRequest"};
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
@@ -158,11 +177,15 @@
 
 - (NSMutableDictionary *)commonParameters{
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    NSString *ploc = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
+    if (!ploc) {
+        ploc = @"";
+    }
 
     return [@{@"bwidth" : [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
               @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
               @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
-              @"ploc"   : [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey],
+              @"ploc"   : ploc,
               @"session": [STRSession sessionToken],
               @"uid"    : [[self.identifierManager advertisingIdentifier] UUIDString],
               @"ua"     : [self.restClient getUserAgent]} mutableCopy];

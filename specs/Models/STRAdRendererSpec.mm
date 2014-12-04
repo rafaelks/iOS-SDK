@@ -10,34 +10,39 @@
 #import "STRAppModule.h"
 #import "STRAdViewDelegate.h"
 #import "STRAdPlacement.h"
+#import "STRNetworkClient.h"
 #import "STRAdRenderer.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRAdRendererSpec)
-/*
+
 describe(@"STRAdRenderer", ^{
     __block STRBeaconService *beaconService;
     __block STRAdvertisement *ad;
     __block STRInjector *injector;
     __block NSRunLoop<CedarDouble> *fakeRunLoop;
+    __block STRNetworkClient *fakeNetworkClient;
     __block STRAdRenderer *renderer;
     
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
-        
+
         //[UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdRenderer class]];
-        
+
         beaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:beaconService];
-        
+
         fakeRunLoop = nice_fake_for([NSRunLoop class]);
         [injector bind:[NSRunLoop class] toInstance:fakeRunLoop];
-        
-        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop injector:injector];
+
+        fakeNetworkClient = nice_fake_for([STRNetworkClient class]);
+        [injector bind:[STRNetworkClient class] toInstance:fakeNetworkClient];
+
+        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
         [injector bind:[STRAdRenderer class] toInstance:renderer];
-        
+
         ad = [STRAdvertisement new];
         ad.adDescription = @"Dogs this smart deserve a home.";
         ad.title = @"Meet Porter. He's a Dog.";
@@ -127,6 +132,10 @@ describe(@"STRAdRenderer", ^{
                 imageData should equal(expectedData);
             });
             
+            it(@"adds the platform log", ^{
+                [view.adThumbnail.subviews count] should equal(1);
+            });
+
             it(@"relayouts view because tableviewcells need to have content in subviews to determine dimensions", ^{
                 view should have_received(@selector(setNeedsLayout));
             });
@@ -135,7 +144,7 @@ describe(@"STRAdRenderer", ^{
                 [view.gestureRecognizers count] should equal(1);
                 [view.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
             });
-            
+            /*
             describe(@"view position timer", ^{
                 __block NSTimer *timer;
                 
@@ -252,7 +261,7 @@ describe(@"STRAdRenderer", ^{
                     });
                 });
             });
-            
+            */
             describe(@"when the ad is tapped on", ^{
                 __block STRInteractiveAdViewController *interactiveAdController;
                 
@@ -300,7 +309,7 @@ describe(@"STRAdRenderer", ^{
                     delegate should_not have_received(@selector(adView:userDidEngageAdForPlacementKey:));
                 });
             });
-            
+            /*
             describe(@"when the view has already had an ad placed within it", ^{
                 __block STRAdRenderer *secondRenderer;
                 __block NSTimer *oldTimer;
@@ -315,7 +324,7 @@ describe(@"STRAdRenderer", ^{
                                                                               DFPPath:nil
                                                                           DFPDeferred:nil];
 
-                    secondRenderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop injector:injector];
+                    secondRenderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
                     
                     [secondRenderer renderAd:ad inPlacement:placement];
                 });
@@ -333,7 +342,7 @@ describe(@"STRAdRenderer", ^{
                     newTimer should_not be_same_instance_as(oldTimer);
                 });
             });
-            
+            */
             context(@"when the ad is a clickout", ^{
                 beforeEach(^{
                     ad.action = STRClickoutAd;
@@ -391,6 +400,7 @@ describe(@"STRAdRenderer", ^{
                     });
                 });
             });
+
             context(@"when the ad is a pinterest", ^{
                 beforeEach(^{
                     ad.action = STRPinterestAd;
@@ -410,7 +420,7 @@ describe(@"STRAdRenderer", ^{
                     });
                 });
             });
-            
+
             context(@"when the ad is an instagram", ^{
                 beforeEach(^{
                     ad.action = STRInstagramAd;
@@ -430,7 +440,7 @@ describe(@"STRAdRenderer", ^{
                     });
                 });
             });
-            
+
             context(@"when the ad is a hosted video", ^{
                 beforeEach(^{
                     ad.action = STRHostedVideoAd;
@@ -450,7 +460,7 @@ describe(@"STRAdRenderer", ^{
                     });
                 });
             });
-            
+
             context(@"when the ad is a youtube video", ^{
                 beforeEach(^{
                     ad.action = STRYouTubeAd;
@@ -458,40 +468,40 @@ describe(@"STRAdRenderer", ^{
                     view.frame = CGRectMake(0, 0, 100, 100);
                     [deferred resolveWithValue:ad];
                 });
-                
+
                 describe(@"the view is tapped on", ^{
                     beforeEach(^{
                         [(id<CedarDouble>)beaconService reset_sent_messages];
                         [[view.gestureRecognizers lastObject] recognize];
                     });
-                    
+
                     it(@"fires off a video play beacon", ^{
                         beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
                     });
                 });
             });
-            
+
             context(@"when the ad is a vine", ^{
                 beforeEach(^{
                     ad.action = STRVineAd;
-                    
+
                     view.frame = CGRectMake(0, 0, 100, 100);
                     [deferred resolveWithValue:ad];
                 });
-                
+
                 describe(@"the view is tapped on", ^{
                     beforeEach(^{
                         [(id<CedarDouble>)beaconService reset_sent_messages];
                         [[view.gestureRecognizers lastObject] recognize];
                     });
-                    
+
                     it(@"fires off a video play beacon", ^{
                         beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
                     });
                 });
             });
         });
-        
+
         describe(@"place an ad in a view without an ad description", ^{
             __block STRPlainAdView *view;
             __block STRDeferred *deferred;
@@ -516,5 +526,5 @@ describe(@"STRAdRenderer", ^{
         });
     });
 });
-*/
+
 SPEC_END

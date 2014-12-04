@@ -13,6 +13,7 @@
 #import "images.h"
 #import "STRAdClickout.h"
 #import "STRAdPinterest.h"
+#import "STRAdInstagram.h"
 
 @implementation STRAdFixtures
 
@@ -87,7 +88,7 @@
     ad.action = STRPinterestAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRPinterestThumbnail.bytes length:kSTRPinterestThumbnail.length]];
     ad.advertiser = @"Sephora";
-    
+
     return ad;
 }
 
@@ -98,6 +99,19 @@
     disclosureAd.action = STRClickoutAd;
 
     return disclosureAd;
+}
++ (STRAdInstagram *)instagramAd {
+    STRAdInstagram *ad = [STRAdInstagram new];
+    ad.mediaURL = [NSURL URLWithString:@"http://instagram.com/p/vqzQAJwQPg/?modal=true"];
+    ad.title = @"Take a break from reality";
+    ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];
+    ad.adDescription = @"The #oculusrift enables you to take a different kind of break";
+    ad.action = STRInstagramAd;
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRInstagramThumbnail.bytes length:kSTRInstagramThumbnail.length]];
+    ad.advertiser = @"Intel";
+    ad.brandLogoImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRIntelLogo.bytes length:kSTRIntelLogo.length]];
+
+    return ad;
 }
 
 @end

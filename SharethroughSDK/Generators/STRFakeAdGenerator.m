@@ -63,6 +63,9 @@
         case STRFakeAdTypePinterest:
             self.advertisement = (STRAdvertisement *)[STRAdFixtures pinterestAd];
             break;
+        case STRFakeAdTypeInstagram:
+            self.advertisement = (STRAdvertisement *)[STRAdFixtures instagramAd];
+            break;
         default:
             break;
     }
@@ -84,6 +87,8 @@ presentingViewController:(UIViewController *)presentingViewController
     view.adTitle.text = self.advertisement.title;
     view.adSponsoredBy.text = self.advertisement.sponsoredBy;
     view.adThumbnail.image = [self.advertisement displayableThumbnail];
+    [view.adThumbnail addSubview:[self.advertisement platformLogoForWidth:view.adThumbnail.frame.size.width]];
+
     if ([view respondsToSelector:@selector(adDescription)]) {
         view.adDescription.text = self.advertisement.adDescription;
     }

@@ -7,6 +7,7 @@
 //
 
 #import "STRAdYouTube.h"
+#import "STRImages.h"
 
 @implementation STRAdYouTube
 
@@ -19,6 +20,10 @@
         }
     }
     return nil;
+}
+
+- (UIImage *)centerImage {
+    return [STRImages youtubeImage];
 }
 
 @end
