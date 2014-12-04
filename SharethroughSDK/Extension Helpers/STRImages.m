@@ -24,6 +24,14 @@
     return [self imageWithBytes:kSTRPinterestLogo.bytes length:kSTRPinterestLogo.length];
 }
 
++ (UIImage *)youtubeImage {
+    return [self imageWithBytes:kSTRYouTubeLogo.bytes length:kSTRYouTubeLogo.length];
+}
+
++ (UIImage *)instagramImage {
+    return [self imageWithBytes:kSTRInstagramLogo.bytes length:kSTRInstagramLogo.length];
+}
+
 + (UIImage *)imageWithBytes:(char *)bytes length:(NSUInteger)length {
     return [UIImage imageWithData:[NSData dataWithBytes:bytes length:length]];
 }

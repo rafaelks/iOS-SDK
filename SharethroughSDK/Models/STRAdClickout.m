@@ -14,4 +14,8 @@
     return self.thumbnailImage;
 }
 
+- (UIImageView *)platformLogoForWidth:(CGFloat)width {
+    return nil;
+}
+
 @end

@@ -15,6 +15,7 @@
 #import "STRAdVine.h"
 #import "STRAdClickout.h"
 #import "STRAdPinterest.h"
+#import "STRAdInstagram.h"
 #import "STRBeaconService.h"
 
 const NSInteger kRequestInProgress = 202;
@@ -89,7 +90,7 @@ const NSInteger kRequestInProgress = 202;
 #pragma mark - Private
 
 - (STRAdvertisement *)adForAction:(NSString *)action {
-    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class], @"clickout": [STRAdClickout class], @"pinterest": [STRAdPinterest class], @"instagram": [STRAdClickout class]};
+    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class], @"clickout": [STRAdClickout class], @"pinterest": [STRAdPinterest class], @"instagram": [STRAdInstagram class]};
     Class adClass = actionsToClasses[action];
     if (!adClass) {
         adClass = [STRAdvertisement class];

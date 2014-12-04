@@ -13,5 +13,7 @@
 + (UIImage *)playBtn;
 + (UIImage *)vineImage;
 + (UIImage *)pinterestImage;
++ (UIImage *)youtubeImage;
++ (UIImage *)instagramImage;
 
 @end
