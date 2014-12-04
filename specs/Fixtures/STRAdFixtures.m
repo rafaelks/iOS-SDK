@@ -88,10 +88,18 @@
     ad.action = STRPinterestAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRPinterestThumbnail.bytes length:kSTRPinterestThumbnail.length]];
     ad.advertiser = @"Sephora";
-    
+
     return ad;
 }
 
++ (STRAdClickout *)privacyInformationAd {
+    STRAdClickout *disclosureAd = [STRAdClickout new];
+    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com/privacy-policy/"];
+    disclosureAd.title = @"Privacy Information";
+    disclosureAd.action = STRClickoutAd;
+
+    return disclosureAd;
+}
 + (STRAdInstagram *)instagramAd {
     STRAdInstagram *ad = [STRAdInstagram new];
     ad.mediaURL = [NSURL URLWithString:@"http://instagram.com/p/vqzQAJwQPg/?modal=true"];

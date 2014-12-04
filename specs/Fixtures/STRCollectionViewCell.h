@@ -15,5 +15,6 @@
 @property (strong, nonatomic) UILabel *adTitle;
 @property (strong, nonatomic) UIImageView *adThumbnail;
 @property (strong, nonatomic) UILabel *adSponsoredBy;
+@property (strong, nonatomic) UIButton *disclosureButton;
 
 @end

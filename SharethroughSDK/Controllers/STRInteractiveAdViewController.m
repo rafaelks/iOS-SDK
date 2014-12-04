@@ -125,7 +125,14 @@
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
 
     UILabel *adInfoHeader = [UILabel new];
-    NSString *adInfoText = [NSString stringWithFormat:@"%@ %@", self.ad.title, self.ad.sponsoredBy];
+    
+    NSString *adInfoText;
+    if ([self.ad.advertiser length] > 0) {
+        adInfoText = [NSString stringWithFormat:@"%@ %@", self.ad.title, self.ad.sponsoredBy];
+    } else {
+        adInfoText = [NSString stringWithFormat:@"%@", self.ad.title];
+    }
+    
     UIFont *lightFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:adInfoHeader.font.pointSize];
     NSMutableAttributedString *attributedAdInfoText = [[NSMutableAttributedString alloc] initWithString:adInfoText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName: lightFont}];
     UIFont *boldFont = [UIFont boldSystemFontOfSize:adInfoHeader.font.pointSize];
@@ -159,13 +166,18 @@
 
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
     UIBarButtonItem *buttonSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    buttonSpacer.width = 15.0;
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)];
 
     self.doneButton = doneButton;
     self.shareButton = shareButton;
-
-    toolbar.items = @[shareButton, buttonSpacer, doneButton];
+    
+    if ([[self.ad.shareURL absoluteString] length] > 0) {
+        buttonSpacer.width = 15.0;
+        toolbar.items = @[shareButton, buttonSpacer, doneButton];
+    } else {
+        buttonSpacer.width = 44.0;
+        toolbar.items = @[buttonSpacer, doneButton];
+    }
     toolbar.barTintColor = [UIColor clearColor];
     toolbar.translucent = NO;
     toolbar.tintColor = [UIColor lightGrayColor];

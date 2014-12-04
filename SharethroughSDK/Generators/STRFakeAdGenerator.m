@@ -96,6 +96,12 @@ presentingViewController:(UIViewController *)presentingViewController
         view.adBrandLogo.image = self.advertisement.brandLogoImage;
     }
 
+    if (view.disclosureButton.buttonType != 2) {
+        [NSException raise:@"STRDiscloseButtonType" format:@"The disclosure button provided by the STRAdView is not of type UIButtonTypeDetailDisclosure"];
+    }
+    UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
+    [view.disclosureButton addGestureRecognizer:disclosureRecognizer];
+
     self.presentingViewController = presentingViewController;
     [view setNeedsLayout];
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
@@ -106,9 +112,18 @@ presentingViewController:(UIViewController *)presentingViewController
     }
 }
 
-
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:self.advertisement
+                                                                                               device:[UIDevice currentDevice]
+                                                                                        beaconService:nil
+                                                                                             injector:self.injector];
+    adController.delegate = self;
+    [self.presentingViewController presentViewController:adController animated:YES completion:nil];
+}
+
+- (IBAction)tappedDisclosureBtn:(id)sender
+{
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
                                                                                                device:[UIDevice currentDevice]
                                                                                         beaconService:nil
                                                                                              injector:self.injector];

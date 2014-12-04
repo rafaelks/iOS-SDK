@@ -18,6 +18,7 @@
 #import "STRNetworkClient.h"
 #import "STRAdViewDelegate.h"
 #import "STRPromise.h"
+#import "STRAdFixtures.h"
 
 char const * const STRAdRendererKey = "STRAdRendererKey";
 
@@ -59,6 +60,12 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     [self prepareForNewAd:placement.adView];
 
     objc_setAssociatedObject(placement.adView, STRAdRendererKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+    if (placement.adView.disclosureButton.buttonType != 2) {
+        [NSException raise:@"STRDiscloseButtonType" format:@"The disclosure button provided by the STRAdView is not of type UIButtonTypeDetailDisclosure"];
+    }
+    UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
+    [placement.adView.disclosureButton addGestureRecognizer:disclosureRecognizer];
 
     self.presentingViewController = placement.presentingViewController;
     [self.beaconService fireImpressionForAd:ad adSize:placement.adView.frame.size];
@@ -140,6 +147,16 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
+}
+
+- (IBAction)tappedDisclosureBtn:(id)sender
+{
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
+                                                                                               device:[UIDevice currentDevice]
+                                                                                        beaconService:nil
+                                                                                             injector:self.injector];
+    adController.delegate = self;
+    [self.presentingViewController presentViewController:adController animated:YES completion:nil];
 }
 
 #pragma mark - <STRInteractiveAdViewControllerDelegate>

@@ -26,6 +26,10 @@
         UIImageView *adThumbnail = [UIImageView new];
         self.adThumbnail = adThumbnail;
         [self addSubview:adThumbnail];
+        
+        UIButton *disclouseButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        self.disclosureButton = disclouseButton;
+        [self addSubview:disclouseButton];
     }
 
     return self;
