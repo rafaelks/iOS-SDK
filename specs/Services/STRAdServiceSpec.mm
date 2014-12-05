@@ -10,6 +10,7 @@
 #import "STRAdVine.h"
 #import "STRAdClickout.h"
 #import "STRAdPinterest.h"
+#import "STRAdInstagram.h"
 #import "STRBeaconService.h"
 
 using namespace Cedar::Matchers;
@@ -214,28 +215,31 @@ describe(@"STRAdService", ^{
                 __block NSDictionary *responseData;
 
                 beforeEach(^{
-                    responseData = @{ @"signature": @"fakeSignature",
-                                      @"price": @"1.0",
-                                      @"priceType": @"type",
-                                      @"creative": [@{
-                                                      @"description": @"Dogs this smart deserve a home.",
-                                                      @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
-                                                      @"title": @"Meet Porter. He's a Dog.",
-                                                      @"advertiser": @"Brand X",
-                                                      @"media_url": @"http://www.google.com",
-                                                      @"share_url": @"http://bit.ly/14hfvXG",
-                                                      @"creative_key": @"imagination",
-                                                      @"variant_key": @"variation",
-                                                      @"beacons": @{@"visible": @[@"//reddit.com/ad?time=[timestamp]"],
-                                                                    @"click": @[@"//yahoo.com/dance?danced_at=[timestamp]"],
-                                                                    @"play": @[@"//cupcakes.com/yum?allgone=[timestamp]"]},
-                                                      } mutableCopy]
-                                      };
+                    responseData = @{
+                                     @"creatives": @[[@{ @"signature": @"fakeSignature",
+                                                       @"price": @"1.0",
+                                                       @"priceType": @"type",
+                                                       @"creative": [@{
+                                                                       @"description": @"Dogs this smart deserve a home.",
+                                                                       @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
+                                                                       @"title": @"Meet Porter. He's a Dog.",
+                                                                       @"advertiser": @"Brand X",
+                                                                       @"media_url": @"http://www.google.com",
+                                                                       @"share_url": @"http://bit.ly/14hfvXG",
+                                                                       @"creative_key": @"imagination",
+                                                                       @"variant_key": @"variation",
+                                                                       @"beacons": @{@"visible": @[@"//reddit.com/ad?time=[timestamp]"],
+                                                                                     @"click": @[@"//yahoo.com/dance?danced_at=[timestamp]"],
+                                                                                     @"play": @[@"//cupcakes.com/yum?allgone=[timestamp]"]},
+                                                                       } mutableCopy]
+                                                         } mutableCopy]
+                                                     ]
+                                    };
                 });
 
                 describe(@"when the ad server responds with a Vine ad", ^{
                     beforeEach(^{
-                        responseData[@"creative"][@"action"] = @"vine";
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"vine";
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
@@ -244,7 +248,7 @@ describe(@"STRAdService", ^{
 
                 describe(@"when the ad server successfully responds with a YouTube ad", ^{
                     beforeEach(^{
-                        responseData[@"creative"][@"action"] = @"video";
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"video";
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
@@ -253,7 +257,7 @@ describe(@"STRAdService", ^{
 
                 describe(@"when the ad server successfully responds with a clickout ad", ^{
                     beforeEach(^{
-                        responseData[@"creative"][@"action"] = @"clickout";
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"clickout";
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
@@ -262,19 +266,31 @@ describe(@"STRAdService", ^{
                 
                 describe(@"when the ad server successfully responds with a pinterest ad", ^{
                     beforeEach(^{
-                        responseData[@"creative"][@"action"] = @"pinterest";
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"pinterest";
                         [restClientDeferred resolveWithValue:responseData];
                     });
                     
                     afterSuccessfulAdFetchedSpecs([STRAdPinterest class], @"pinterest");
+                });
+                
+                describe(@"when the ad server successfully responds with a instagram ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"instagram";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+                    
+                    afterSuccessfulAdFetchedSpecs([STRAdInstagram class], @"instagram");
                 });
 
             });
 
             describe(@"when the ad server responds without a protocol", ^{
                 beforeEach(^{
-                    [restClientDeferred resolveWithValue:@{ @"creative":
-                                                                @{@"thumbnail_url": @"//i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"},
+                    [restClientDeferred resolveWithValue:@{ @"creatives": @[
+                                                                    @{@"creative":
+                                                                          @{@"thumbnail_url": @"//i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"},
+                                                                      }
+                                                                    ]
                                                             }];
                 });
 

@@ -103,49 +103,57 @@ const NSInteger kRequestInProgress = 202;
 
     STRPromise *adPromise = [self.restClient getWithParameters: parameters];
     [adPromise then:^id(NSDictionary *fullJSON) {
-        NSDictionary *creativeJSON = fullJSON[@"creative"];
-
-        NSURL *sanitizedThumbnailURL = [NSURL URLWithString:creativeJSON[@"thumbnail_url"]];
-        if (![sanitizedThumbnailURL scheme]) {
-            sanitizedThumbnailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", creativeJSON[@"thumbnail_url"]]];
-        }
-
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:sanitizedThumbnailURL];
-
-        [[self.networkClient get:imageRequest] then:^id(NSData *data) {
-            STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"]];
-            ad.advertiser = creativeJSON[@"advertiser"];
-            ad.title = creativeJSON[@"title"];
-            ad.adDescription = creativeJSON[@"description"];
-            ad.creativeKey = creativeJSON[@"creative_key"];
-            ad.variantKey = creativeJSON[@"variant_key"];
-            ad.mediaURL = [NSURL URLWithString:creativeJSON[@"media_url"]];
-            ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
-            ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
-            ad.thumbnailImage = [UIImage imageWithData:data];
-            ad.placementKey = placementKey;
-            ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
-            ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
-            ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
-            ad.signature = fullJSON[@"signature"];
-            ad.auctionPrice = fullJSON[@"price"];
-            ad.auctionType = fullJSON[@"priceType"];
-            ad.action = creativeJSON[@"action"];
-
-            NSURL *sanitizedBrandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
-            if (sanitizedBrandLogoURL != nil && ![sanitizedBrandLogoURL scheme]) {
-                sanitizedBrandLogoURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", creativeJSON[@"brand_logo_url"]]];
-            }
-            ad.brandLogoURL = sanitizedBrandLogoURL;
+        NSArray *creativesJSON = fullJSON[@"creatives"];
+        
+        NSDictionary *creativeJSON;
+        NSDictionary *creativeWrapperJSON;
+        
+        for (int i = 0; i < [creativesJSON count]; i++) {
+            creativeWrapperJSON = creativesJSON[i];
+            creativeJSON = creativeWrapperJSON[@"creative"];
             
-            [self.adCache saveAd:ad];
-            [deferred resolveWithValue:ad];
-            return data;
-        } error:^id(NSError *error) {
-            [self.adCache clearPendingAdRequestForPlacement:placementKey];
-            [deferred rejectWithError:error];
-            return error;
-        }];
+            NSURL *sanitizedThumbnailURL = [NSURL URLWithString:creativeJSON[@"thumbnail_url"]];
+            if (![sanitizedThumbnailURL scheme]) {
+                sanitizedThumbnailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", creativeJSON[@"thumbnail_url"]]];
+            }
+            
+            NSURLRequest *imageRequest = [NSURLRequest requestWithURL:sanitizedThumbnailURL];
+            
+            [[self.networkClient get:imageRequest] then:^id(NSData *data) {
+                STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"]];
+                ad.advertiser = creativeJSON[@"advertiser"];
+                ad.title = creativeJSON[@"title"];
+                ad.adDescription = creativeJSON[@"description"];
+                ad.creativeKey = creativeJSON[@"creative_key"];
+                ad.variantKey = creativeJSON[@"variant_key"];
+                ad.mediaURL = [NSURL URLWithString:creativeJSON[@"media_url"]];
+                ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
+                ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
+                ad.thumbnailImage = [UIImage imageWithData:data];
+                ad.placementKey = placementKey;
+                ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
+                ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
+                ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
+                ad.action = creativeJSON[@"action"];
+                ad.signature = creativeWrapperJSON[@"signature"];
+                ad.auctionPrice = creativeWrapperJSON[@"price"];
+                ad.auctionType = creativeWrapperJSON[@"priceType"];
+
+                NSURL *sanitizedBrandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
+                if (sanitizedBrandLogoURL != nil && ![sanitizedBrandLogoURL scheme]) {
+                    sanitizedBrandLogoURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", creativeJSON[@"brand_logo_url"]]];
+                }
+                ad.brandLogoURL = sanitizedBrandLogoURL;
+
+                [self.adCache saveAd:ad];
+                [deferred resolveWithValue:ad];
+                return data;
+            } error:^id(NSError *error) {
+                [self.adCache clearPendingAdRequestForPlacement:placementKey];
+                [deferred rejectWithError:error];
+                return error;
+            }];
+        }
 
         return creativeJSON;
     } error:^id(NSError *error) {
