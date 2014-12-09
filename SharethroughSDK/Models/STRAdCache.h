@@ -7,17 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-@class STRAdvertisement, STRDateProvider;
+@class STRAdvertisement, STRDateProvider, STRAdPlacementInfiniteScrollFields;
 
-@interface STRAdCache : NSObject
+@interface STRAdCache : NSObject <NSCacheDelegate>
 
 - (instancetype)initWithDateProvider:(STRDateProvider *)dateProvider;
 - (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds;
-- (void)saveAd:(STRAdvertisement *)ad;
+
+- (void)saveAds:(NSMutableArray *)creatives forPlacementKey:(NSString *)placementKey;
+
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey;
-- (STRAdvertisement *)fetchCachedAdForCreativeKey:(NSString *)creativeKey;
-- (BOOL)isAdStale:(NSString *)placementKey;
+- (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey;
+- (BOOL)isAdStaleForPlacement:(NSString *)placementKey atIndex:(NSUInteger)index;
+//- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey;
 
 - (BOOL)pendingAdRequestInProgressForPlacement:(NSString *)placementKey;
 - (void)clearPendingAdRequestForPlacement:(NSString *)placementKey;
+
+- (STRAdPlacementInfiniteScrollFields *)getInfiniteScrollFieldsForPlacement:(NSString *)placementKey;
+- (void)saveInfiniteScrollFields:(STRAdPlacementInfiniteScrollFields *)fields;
 @end

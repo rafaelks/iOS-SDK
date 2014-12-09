@@ -19,12 +19,14 @@
 #import "STRAdViewDelegate.h"
 #import "STRPromise.h"
 #import "STRAdFixtures.h"
+#import "STRDateProvider.h"
 
 char const * const STRAdRendererKey = "STRAdRendererKey";
 
 @interface STRAdRenderer ()<STRInteractiveAdViewControllerDelegate>
 
 @property (nonatomic, strong) STRBeaconService *beaconService;
+@property (nonatomic, strong) STRDateProvider *dateProvider;
 @property (nonatomic, weak) NSRunLoop *timerRunLoop;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, weak) STRInjector *injector;
@@ -40,6 +42,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 @implementation STRAdRenderer
 
 - (id)initWithBeaconService:(STRBeaconService *)beaconService
+               dateProvider:(STRDateProvider *)dateProvider
                     runLoop:(NSRunLoop *)timerRunLoop
               networkClient:(STRNetworkClient *)networkClient
                    injector:(STRInjector *)injector;
@@ -47,6 +50,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     self = [super init];
     if (self) {
         self.beaconService = beaconService;
+        self.dateProvider = dateProvider;
         self.timerRunLoop = timerRunLoop;
         self.networkClient = networkClient;
         self.injector = injector;
@@ -121,6 +125,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
         [self.beaconService fireVisibleImpressionForAd:self.ad
                                                 adSize:view.frame.size];
         [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility];
+        self.ad.visibleImpressionTime = [self.dateProvider now];
         [timer invalidate];
     } else {
         [timer.userInfo removeObjectForKey:@"secondsVisible"];

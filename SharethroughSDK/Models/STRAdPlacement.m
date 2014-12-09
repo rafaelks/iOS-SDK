@@ -37,3 +37,7 @@ presentingViewController:(UIViewController *)presentingViewController
 }
 
 @end
+
+@implementation STRAdPlacementInfiniteScrollFields
+
+@end

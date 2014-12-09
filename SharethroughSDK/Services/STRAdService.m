@@ -17,9 +17,9 @@
 #import "STRAdPinterest.h"
 #import "STRAdInstagram.h"
 #import "STRBeaconService.h"
+#import "STRAdPlacement.h"
 
 const NSInteger kRequestInProgress = 202;
-
 
 @interface STRAdService ()
 
@@ -50,7 +50,7 @@ const NSInteger kRequestInProgress = 202;
 
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey {
 
-    if (![self.adCache isAdStale:placementKey]) {
+    if (![self.adCache isAdStaleForPlacement:placementKey atIndex:0]) {
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
         [deferred resolveWithValue:cachedAd];
@@ -67,7 +67,7 @@ const NSInteger kRequestInProgress = 202;
 
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey creativeKey:(NSString *)creativeKey {
     
-    STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForCreativeKey:creativeKey];
+    STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey CreativeKey:creativeKey];
     if (cachedAd) {
         STRDeferred *deferred = [STRDeferred defer];
         [deferred resolveWithValue:cachedAd];
@@ -84,13 +84,18 @@ const NSInteger kRequestInProgress = 202;
 }
 
 - (BOOL)isAdCachedForPlacementKey:(NSString *)placementKey {
-    return ![self.adCache isAdStale:placementKey];
+    return ![self.adCache isAdStaleForPlacement:placementKey atIndex:0];
 }
 
 #pragma mark - Private
 
 - (STRAdvertisement *)adForAction:(NSString *)action {
-    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class], @"vine": [STRAdVine class], @"clickout": [STRAdClickout class], @"pinterest": [STRAdPinterest class], @"instagram": [STRAdInstagram class]};
+    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
+                                       @"vine": [STRAdVine class],
+                                       @"clickout": [STRAdClickout class],
+                                       @"pinterest": [STRAdPinterest class],
+                                       @"instagram": [STRAdInstagram class]
+                                       };
     Class adClass = actionsToClasses[action];
     if (!adClass) {
         adClass = [STRAdvertisement class];
@@ -104,61 +109,22 @@ const NSInteger kRequestInProgress = 202;
     STRPromise *adPromise = [self.restClient getWithParameters: parameters];
     [adPromise then:^id(NSDictionary *fullJSON) {
         NSArray *creativesJSON = fullJSON[@"creatives"];
-        
-        NSDictionary *creativeJSON;
-        NSDictionary *creativeWrapperJSON;
-        
+
+        NSMutableArray *creativesArray = [NSMutableArray arrayWithCapacity:[creativesJSON count]];
+
         for (int i = 0; i < [creativesJSON count]; i++) {
-            creativeWrapperJSON = creativesJSON[i];
-            creativeJSON = creativeWrapperJSON[@"creative"];
-            
-            NSURL *sanitizedThumbnailURL = [NSURL URLWithString:creativeJSON[@"thumbnail_url"]];
-            if (![sanitizedThumbnailURL scheme]) {
-                sanitizedThumbnailURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", creativeJSON[@"thumbnail_url"]]];
-            }
-            
-            NSURLRequest *imageRequest = [NSURLRequest requestWithURL:sanitizedThumbnailURL];
-            
-            [[self.networkClient get:imageRequest] then:^id(NSData *data) {
-                STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"]];
-                ad.advertiser = creativeJSON[@"advertiser"];
-                ad.title = creativeJSON[@"title"];
-                ad.adDescription = creativeJSON[@"description"];
-                ad.creativeKey = creativeJSON[@"creative_key"];
-                ad.variantKey = creativeJSON[@"variant_key"];
-                ad.mediaURL = [NSURL URLWithString:creativeJSON[@"media_url"]];
-                ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
-                ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
-                ad.thumbnailImage = [UIImage imageWithData:data];
-                ad.placementKey = placementKey;
-                ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
-                ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
-                ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
-                ad.action = creativeJSON[@"action"];
-                ad.signature = creativeWrapperJSON[@"signature"];
-                ad.auctionPrice = creativeWrapperJSON[@"price"];
-                ad.auctionType = creativeWrapperJSON[@"priceType"];
-
-                NSURL *sanitizedBrandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
-                if (sanitizedBrandLogoURL != nil && ![sanitizedBrandLogoURL scheme]) {
-                    sanitizedBrandLogoURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", creativeJSON[@"brand_logo_url"]]];
-                }
-                ad.brandLogoURL = sanitizedBrandLogoURL;
-
-                [self.adCache saveAd:ad];
-                [deferred resolveWithValue:ad];
-                return data;
-            } error:^id(NSError *error) {
-                [self.adCache clearPendingAdRequestForPlacement:placementKey];
-                [deferred rejectWithError:error];
-                return error;
-            }];
+            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placementKey]];
         }
 
-        return creativeJSON;
+        [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacementKey:placementKey];
+        [self.adCache saveAds:creativesArray forPlacementKey:placementKey];
+
+        [deferred resolveWithValue:creativesArray[0]];
+
+        return nil;
     } error:^id(NSError *error) {
         [self.adCache clearPendingAdRequestForPlacement:placementKey];
-        
+
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
         if (cachedAd != nil) {
             [deferred resolveWithValue:cachedAd];
@@ -167,7 +133,7 @@ const NSInteger kRequestInProgress = 202;
         }
         return error;
     }];
-    
+
     return deferred.promise;
 }
 
@@ -175,6 +141,60 @@ const NSInteger kRequestInProgress = 202;
     STRDeferred *deferred = [STRDeferred defer];
     [deferred rejectWithError:[NSError errorWithDomain:@"STR Request in Progress" code:kRequestInProgress userInfo:nil]];
     return deferred.promise;
+}
+
+- (NSURL *)URLFromSanitizedString:(NSString*)urlString {
+    NSURL *sanitizedURL = [NSURL URLWithString:urlString];
+    if (sanitizedURL != nil && ![sanitizedURL scheme]) {
+        sanitizedURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", urlString]];
+    }
+    return sanitizedURL;
+}
+
+- (STRAdvertisement *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(NSString *)placementKey {
+    NSDictionary *creativeJSON = creativeWrapperJSON[@"creative"];
+
+    STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"]];
+    ad.advertiser = creativeJSON[@"advertiser"];
+    ad.title = creativeJSON[@"title"];
+    ad.adDescription = creativeJSON[@"description"];
+    ad.creativeKey = creativeJSON[@"creative_key"];
+    ad.variantKey = creativeJSON[@"variant_key"];
+    ad.mediaURL = [NSURL URLWithString:creativeJSON[@"media_url"]];
+    ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
+    ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
+    ad.placementKey = placementKey;
+    ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
+    ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
+    ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
+    ad.action = creativeJSON[@"action"];
+    ad.signature = creativeWrapperJSON[@"signature"];
+    ad.auctionPrice = creativeWrapperJSON[@"price"];
+    ad.auctionType = creativeWrapperJSON[@"priceType"];
+    ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
+
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]];
+    [[self.networkClient get:imageRequest] then:^id(NSData *data) {
+        ad.thumbnailImage = [UIImage imageWithData:data];
+        return data;
+    } error:^id(NSError *error) {
+        return error;
+    }];
+
+    return ad;
+}
+
+- (void)createPlacementInfiniteScrollExtrasFromJSON:(NSDictionary *)placementJSON forPlacementKey:(NSString *)placementKey {
+    if ([placementJSON[@"layout"] isEqualToString:@"multiple"] &&
+        [self.adCache getInfiniteScrollFieldsForPlacement:placementKey] == nil) {
+        
+        STRAdPlacementInfiniteScrollFields *extras = [STRAdPlacementInfiniteScrollFields new];
+        extras.placementKey = placementKey;
+        extras.articlesBeforeFirstAd = [placementJSON[@"articlesBeforeFirstAd"] unsignedIntegerValue];
+        extras.articlesBetweenAds = [placementJSON[@"articlesBetweenAds"] unsignedIntegerValue];
+        extras.creativeArrayIndex = 0;
+        [self.adCache saveInfiniteScrollFields:extras];
+    }
 }
 
 @end

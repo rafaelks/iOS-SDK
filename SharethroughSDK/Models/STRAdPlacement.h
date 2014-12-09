@@ -32,3 +32,12 @@
 @property (strong, nonatomic) STRDeferred *DFPDeferred;
 
 @end
+
+@interface STRAdPlacementInfiniteScrollFields : NSObject
+
+@property (strong, nonatomic) NSString *placementKey;
+@property (assign, nonatomic) NSUInteger creativeArrayIndex;
+@property (assign, nonatomic) NSUInteger articlesBeforeFirstAd;
+@property (assign, nonatomic) NSUInteger articlesBetweenAds;
+
+@end
