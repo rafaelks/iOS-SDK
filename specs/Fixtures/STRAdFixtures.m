@@ -94,7 +94,7 @@
 
 + (STRAdClickout *)privacyInformationAd {
     STRAdClickout *disclosureAd = [STRAdClickout new];
-    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com/privacy-policy/"];
+    disclosureAd.mediaURL = [NSURL URLWithString:@"http://native.sharethrough.com/privacy-policy.html"];
     disclosureAd.title = @"Privacy Information";
     disclosureAd.action = STRClickoutAd;
 
