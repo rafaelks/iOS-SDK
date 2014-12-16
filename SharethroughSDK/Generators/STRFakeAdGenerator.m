@@ -21,6 +21,8 @@
 @property (nonatomic, strong) STRAdvertisement *advertisement;
 @property (nonatomic, strong) STRInjector *injector;
 @property (nonatomic, strong) UIViewController *presentingViewController;
+@property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic, weak) UITapGestureRecognizer *disclosureTapRecognizer;
 @end
 
 @implementation STRFakeAdGenerator
@@ -84,6 +86,10 @@ presentingViewController:placement.presentingViewController
 presentingViewController:(UIViewController *)presentingViewController
              delegate:(id<STRAdViewDelegate>)delegate {
 
+    [self prepareForNewAd:view];
+
+    objc_setAssociatedObject(view, @"FakeRenderer", self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
     view.adTitle.text = self.advertisement.title;
     view.adSponsoredBy.text = self.advertisement.sponsoredBy;
     view.adThumbnail.image = [self.advertisement displayableThumbnail];
@@ -99,20 +105,22 @@ presentingViewController:(UIViewController *)presentingViewController
     if (view.disclosureButton.buttonType != 2) {
         [NSException raise:@"STRDiscloseButtonType" format:@"The disclosure button provided by the STRAdView is not of type UIButtonTypeDetailDisclosure"];
     }
-    UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
+    UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFakeDisclosureBtn)];
     [view.disclosureButton addGestureRecognizer:disclosureRecognizer];
+    self.disclosureTapRecognizer = disclosureRecognizer;
 
     self.presentingViewController = presentingViewController;
     [view setNeedsLayout];
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFakeAd:)];
     [view addGestureRecognizer:tapRecognizer];
-    
+    self.tapRecognizer = tapRecognizer;
+
     if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
         [delegate adView:view didFetchAdForPlacementKey:placementKey];
     }
 }
 
-- (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
+- (void)tappedFakeAd:(UITapGestureRecognizer *)tapRecognizer {
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:self.advertisement
                                                                                                device:[UIDevice currentDevice]
                                                                                         beaconService:nil
@@ -121,7 +129,7 @@ presentingViewController:(UIViewController *)presentingViewController
     [self.presentingViewController presentViewController:adController animated:YES completion:nil];
 }
 
-- (IBAction)tappedDisclosureBtn:(id)sender
+- (IBAction)tappedFakeDisclosureBtn
 {
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
                                                                                                device:[UIDevice currentDevice]
@@ -139,5 +147,11 @@ presentingViewController:(UIViewController *)presentingViewController
     STRDeferred *deferred = [STRDeferred defer];
     [deferred resolveWithValue:nil];
     return deferred.promise;
+}
+
+- (void)prepareForNewAd:(UIView<STRAdView> *)view {
+    STRFakeAdGenerator *oldGenerator = objc_getAssociatedObject(view, @"FakeRenderer");
+    [view removeGestureRecognizer:oldGenerator.tapRecognizer];
+    [view.disclosureButton removeGestureRecognizer:oldGenerator.disclosureTapRecognizer];
 }
 @end
