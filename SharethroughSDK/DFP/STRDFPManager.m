@@ -43,25 +43,31 @@
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     STRPromise *promise;
 
-    if (adPlacement.DFPDeferred != nil) {
-        promise = [generator prefetchCreative:creativeKey forPlacement:adPlacement];
-    } else {
-        promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
-    }
-
-    [promise then:^id(id value) {
-        if (adPlacement.DFPDeferred != nil) {
-            [adPlacement.DFPDeferred resolveWithValue:nil];
-        }
-        [deferred resolveWithValue:adPlacement.adView];
-        return value;
-    } error:^id(NSError *error) {
-        if (adPlacement.DFPDeferred != nil) {
-            [adPlacement.DFPDeferred rejectWithError:error];
-        }
+    if (creativeKey == nil || [creativeKey length] == 0 || adPlacement.placementKey == nil || [adPlacement.placementKey length] == 0) {
+        NSLog(@"Invalid creativeKey %@ or placementKey %@. Not reaching out to Sharethrough for Ad.");
+        NSError *error = [NSError errorWithDomain:@"Sharethrough invalid params" code:-1 userInfo:nil];
         [deferred rejectWithError:error];
-        return error;
-    }];
+    } else {
+        if (adPlacement.DFPDeferred != nil) {
+            promise = [generator prefetchCreative:creativeKey forPlacement:adPlacement];
+        } else {
+            promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
+        }
+
+        [promise then:^id(id value) {
+            if (adPlacement.DFPDeferred != nil) {
+                [adPlacement.DFPDeferred resolveWithValue:nil];
+            }
+            [deferred resolveWithValue:adPlacement.adView];
+            return value;
+        } error:^id(NSError *error) {
+            if (adPlacement.DFPDeferred != nil) {
+                [adPlacement.DFPDeferred rejectWithError:error];
+            }
+            [deferred rejectWithError:error];
+            return error;
+        }];
+    }
 
     return deferred.promise;
 }
