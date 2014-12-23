@@ -190,15 +190,16 @@ const NSInteger kRequestInProgress = 202;
     return ad;
 }
 
-- (void)createPlacementInfiniteScrollExtrasFromJSON:(NSDictionary *)placementJSON forPlacementKey:(NSString *)placementKey {
+- (void)createPlacementInfiniteScrollExtrasFromJSON:(NSDictionary *)placementJSON
+                                    forPlacementKey:(NSString *)placementKey {
+    
     if ([placementJSON[@"layout"] isEqualToString:@"multiple"] &&
         [self.adCache getInfiniteScrollFieldsForPlacement:placementKey] == nil) {
-        
+
         STRAdPlacementInfiniteScrollFields *extras = [STRAdPlacementInfiniteScrollFields new];
         extras.placementKey = placementKey;
         extras.articlesBeforeFirstAd = [placementJSON[@"articlesBeforeFirstAd"] unsignedIntegerValue];
         extras.articlesBetweenAds = [placementJSON[@"articlesBetweenAds"] unsignedIntegerValue];
-        extras.creativeArrayIndex = 0;
         [self.adCache saveInfiniteScrollFields:extras];
     }
 }

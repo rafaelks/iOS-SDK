@@ -37,7 +37,6 @@
         self.STRPlacementAdCacheTimeoutInSeconds = 10;
 
         self.cachedCreatives = [[NSCache alloc] init];
-        self.cachedCreatives.countLimit = 10;
         self.cachedCreatives.delegate = self;
 
         self.pendingRequestPlacementKeys = [NSMutableSet set];
@@ -135,14 +134,7 @@
 }
 
 - (STRAdPlacementInfiniteScrollFields *)getInfiniteScrollFieldsForPlacement:(NSString *)placementKey {
-    STRAdPlacementInfiniteScrollFields *fields = self.cachedPlacementInfiniteScrollFields[placementKey];
-    if (fields == nil) {
-        fields = [[STRAdPlacementInfiniteScrollFields alloc] init];
-        fields.placementKey = placementKey;
-        fields.creativeArrayIndex = 0;
-        [self saveInfiniteScrollFields:fields];
-    }
-    return fields;
+    return self.cachedPlacementInfiniteScrollFields[placementKey];
 }
 
 - (void)saveInfiniteScrollFields:(STRAdPlacementInfiniteScrollFields *)fields {
