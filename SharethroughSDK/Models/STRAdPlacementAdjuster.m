@@ -16,14 +16,26 @@
 
 @implementation STRAdPlacementAdjuster
 
-+ (instancetype)adjusterWithInitialAdIndexPath:(NSIndexPath *)adIndexPath {
++ (instancetype)adjusterInSection:(NSInteger)section
+            articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
+               articlesBetweenAds:(NSUInteger)articlesBetweenAds; {
     STRAdPlacementAdjuster *adjuster = [self new];
-    adjuster.adIndexPath = adIndexPath;
+    adjuster.adSection = section;
+    adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
+    adjuster.articlesBetweenAds = articlesBetweenAds;
     return adjuster;
 }
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath {
-    return [indexPath isEqual:self.adIndexPath] && self.adLoaded;
+    if (self.adLoaded && indexPath.section == self.adSection) {
+        if (indexPath.row == self.articlesBeforeFirstAd){
+            return YES;
+        }
+        if ((indexPath.row - (self.articlesBeforeFirstAd + 1)) % (self.articlesBetweenAds + 1) == self.articlesBetweenAds ) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section {
@@ -38,7 +50,7 @@
         return nil;
     }
 
-    if (indexPath.section != self.adIndexPath.section || !self.adLoaded) {
+    if (indexPath.section != self.adSection || !self.adLoaded) {
         return indexPath;
     }
 

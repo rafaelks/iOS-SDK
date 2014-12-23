@@ -12,8 +12,13 @@
 
 @property (nonatomic, strong, readonly) NSIndexPath *adIndexPath;
 @property (nonatomic) BOOL adLoaded;
+@property (nonatomic) NSInteger adSection;
+@property (nonatomic) NSUInteger articlesBeforeFirstAd;
+@property (nonatomic) NSUInteger articlesBetweenAds;
 
-+ (instancetype)adjusterWithInitialAdIndexPath:(NSIndexPath *)adIndexPath;
++ (instancetype)adjusterInSection:(NSInteger)section
+            articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
+               articlesBetweenAds:(NSUInteger)articlesBetweenAds;
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath;

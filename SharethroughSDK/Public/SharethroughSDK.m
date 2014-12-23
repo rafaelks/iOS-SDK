@@ -73,7 +73,9 @@ presentingViewController:(UIViewController *)presentingViewController
               placementKey:(NSString *)placementKey
   presentingViewController:(UIViewController *)presentingViewController
                   adHeight:(CGFloat)adHeight
-        adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
+     articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
+        articlesBetweenAds:(NSUInteger)articlesBetweenAds
+                 adSection:(NSInteger)adSection {
 
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     STRGridlikeViewDataSourceProxy *dataSourceProxy =
@@ -88,7 +90,9 @@ presentingViewController:(UIViewController *)presentingViewController
                                       placementKey:placementKey
                           presentingViewController:presentingViewController
                                             adSize:CGSizeMake(0, adHeight)
-                                adInitialIndexPath:adInitialIndexPath];
+                             articlesBeforeFirstAd:articlesBeforeFirstAd
+                                articlesBetweenAds:articlesBetweenAds
+                                         adSection:adSection];
 }
 
 - (void)placeAdInCollectionView:(UICollectionView *)collectionView
@@ -96,10 +100,17 @@ presentingViewController:(UIViewController *)presentingViewController
                    placementKey:(NSString *)placementKey
        presentingViewController:(UIViewController *)presentingViewController
                          adSize:(CGSize)adSize
-             adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
+          articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
+             articlesBetweenAds:(NSUInteger)articlesBetweenAds
+                      adSection:(NSInteger)adSection {
 
-    STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
-    STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+    STRGridlikeViewAdGenerator *gridlikeViewAdGenerator =
+        [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
+    STRGridlikeViewDataSourceProxy *dataSourceProxy =
+        [[STRGridlikeViewDataSourceProxy alloc]initWithAdCellReuseIdentifier:adCellReuseIdentifier
+                                                                placementKey:placementKey
+                                                    presentingViewController:presentingViewController
+                                                                    injector:self.injector];
 
     [gridlikeViewAdGenerator placeAdInGridlikeView:collectionView
                                    dataSourceProxy:dataSourceProxy
@@ -107,7 +118,9 @@ presentingViewController:(UIViewController *)presentingViewController
                                       placementKey:placementKey
                           presentingViewController:presentingViewController
                                             adSize:adSize
-                                adInitialIndexPath:adInitialIndexPath];
+                             articlesBeforeFirstAd:articlesBeforeFirstAd
+                                articlesBetweenAds:articlesBetweenAds
+                                         adSection:adSection];
 }
 
 - (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds {
