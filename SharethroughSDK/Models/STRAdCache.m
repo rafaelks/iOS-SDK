@@ -11,6 +11,8 @@
 #import "STRDateProvider.h"
 #import "STRAdPlacement.h"
 
+#import "NSMutableArray+Queue.h"
+
 @interface STRAdCache ()
 
 @property (nonatomic, strong) STRDateProvider     *dateProvider;
@@ -32,7 +34,7 @@
     self = [super init];
     if (self) {
         self.dateProvider = dateProvider;
-        self.STRPlacementAdCacheTimeoutInSeconds = 120;
+        self.STRPlacementAdCacheTimeoutInSeconds = 10;
 
         self.cachedCreatives = [[NSCache alloc] init];
         self.cachedCreatives.countLimit = 10;
@@ -53,13 +55,8 @@
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey {
-    NSArray *creatives = [self.cachedCreatives objectForKey:placementKey];
-    NSUInteger index = 0;
-    if ([self getInfiniteScrollFieldsForPlacement:placementKey] != nil) {
-        STRAdPlacementInfiniteScrollFields *fields = [self getInfiniteScrollFieldsForPlacement:placementKey];
-        index = fields.creativeArrayIndex;
-    }
-    return creatives[index];
+    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
+    return [creatives peek];
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey {
@@ -74,24 +71,50 @@
 }
 
 - (void)saveAds:(NSMutableArray *)creatives forPlacementKey:(NSString *)placementKey {
-    [self.cachedCreatives setObject:creatives forKey:placementKey];
+    NSMutableArray *cachedCreativesQueue = [self.cachedCreatives objectForKey:placementKey];
+    if (cachedCreativesQueue == nil) {
+        [self.cachedCreatives setObject:creatives forKey:placementKey];
+    } else {
+        for (int i = 0; i < [creatives count]; ++i) {
+            [cachedCreativesQueue enqueue:creatives[i]];
+        }
+        [self.cachedCreatives setObject:cachedCreativesQueue forKey:placementKey];
+    }
     [self clearPendingAdRequestForPlacement:placementKey];
 }
 
-- (BOOL)isAdStaleForPlacement:(NSString *)placementKey atIndex:(NSUInteger)index {
-    NSArray *creatives = [self.cachedCreatives objectForKey:placementKey];
-    STRAdvertisement *ad = creatives[index];
+- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey {
+    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
+    STRAdvertisement *ad = [creatives peek];
     if (ad == nil) {
-        return YES;
-    }
-    
-    if (!ad.visibleImpressionTime) {
+        NSLog(@"Ad nil");
         return NO;
+    }
+    if (!ad.visibleImpressionTime) {
+        NSLog(@"Ad not seen yet");
+        return YES;
     }
     NSDate *now = [self.dateProvider now];
     NSTimeInterval timeInterval = [now timeIntervalSinceDate:ad.visibleImpressionTime];
 
     if (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds) {
+        NSLog(@"Past time stamp");
+        [creatives dequeue];
+        if ([creatives peek] == nil) {
+            NSLog(@"No more creatives");
+            return NO;
+        } else {
+            return YES;
+        }
+    }
+    NSLog(@"Ad seen but not for long enough");
+    return YES;
+}
+
+- (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey {
+    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
+    if ([creatives count] <= 1 && ![self pendingAdRequestInProgressForPlacement:placementKey]) {
+        NSLog(@"Should start fetching because count is %ld", (long)[creatives count]);
         return YES;
     }
     return NO;
@@ -112,7 +135,14 @@
 }
 
 - (STRAdPlacementInfiniteScrollFields *)getInfiniteScrollFieldsForPlacement:(NSString *)placementKey {
-    return self.cachedPlacementInfiniteScrollFields[placementKey];
+    STRAdPlacementInfiniteScrollFields *fields = self.cachedPlacementInfiniteScrollFields[placementKey];
+    if (fields == nil) {
+        fields = [[STRAdPlacementInfiniteScrollFields alloc] init];
+        fields.placementKey = placementKey;
+        fields.creativeArrayIndex = 0;
+        [self saveInfiniteScrollFields:fields];
+    }
+    return fields;
 }
 
 - (void)saveInfiniteScrollFields:(STRAdPlacementInfiniteScrollFields *)fields {

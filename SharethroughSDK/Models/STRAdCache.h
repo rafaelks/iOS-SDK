@@ -18,8 +18,9 @@
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey;
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey;
-- (BOOL)isAdStaleForPlacement:(NSString *)placementKey atIndex:(NSUInteger)index;
-//- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey;
+
+- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey;
+- (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey;
 
 - (BOOL)pendingAdRequestInProgressForPlacement:(NSString *)placementKey;
 - (void)clearPendingAdRequestForPlacement:(NSString *)placementKey;

@@ -59,7 +59,6 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 }
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement {
-
     if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
         //DFPDeferred is used for UITableView and UICollectionView APIs to prefetch ads
         if (placement.DFPDeferred != nil) {

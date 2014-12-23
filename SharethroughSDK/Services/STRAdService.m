@@ -50,57 +50,49 @@ const NSInteger kRequestInProgress = 202;
 
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey {
 
-    if (![self.adCache isAdStaleForPlacement:placementKey atIndex:0]) {
+    if ([self.adCache isAdAvailableForPlacement:placementKey]) {
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
         [deferred resolveWithValue:cachedAd];
+        if ([self.adCache shouldBeginFetchForPlacement:placementKey]) {
+            [self beginFetchForPlacementKey:placementKey];
+        }
         return deferred.promise;
     }
-    
+
     if ([self.adCache pendingAdRequestInProgressForPlacement:placementKey]) {
         return [self requestInProgressError];
     }
 
-    [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
-    return [self fetchAdWithParameters:@{@"placement_key": placementKey} forPlacementKey:placementKey];
+    return [self beginFetchForPlacementKey:placementKey];
 }
 
 - (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey creativeKey:(NSString *)creativeKey {
-    
+
     STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey CreativeKey:creativeKey];
     if (cachedAd) {
         STRDeferred *deferred = [STRDeferred defer];
         [deferred resolveWithValue:cachedAd];
         return deferred.promise;
     }
-    
+
     if ([self.adCache pendingAdRequestInProgressForPlacement:placementKey]) {
         return [self requestInProgressError];
     }
 
     [self.beaconService fireImpressionRequestForPlacementKey:placementKey CreativeKey:creativeKey];
-    
     return [self fetchAdWithParameters:@{@"placement_key": placementKey, @"creative_key": creativeKey} forPlacementKey:placementKey];
 }
 
 - (BOOL)isAdCachedForPlacementKey:(NSString *)placementKey {
-    return ![self.adCache isAdStaleForPlacement:placementKey atIndex:0];
+    return [self.adCache isAdAvailableForPlacement:placementKey];
 }
 
 #pragma mark - Private
 
-- (STRAdvertisement *)adForAction:(NSString *)action {
-    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
-                                       @"vine": [STRAdVine class],
-                                       @"clickout": [STRAdClickout class],
-                                       @"pinterest": [STRAdPinterest class],
-                                       @"instagram": [STRAdInstagram class]
-                                       };
-    Class adClass = actionsToClasses[action];
-    if (!adClass) {
-        adClass = [STRAdvertisement class];
-    }
-    return [adClass new];
+- (STRPromise *)beginFetchForPlacementKey:(NSString *)placementKey {
+    [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
+    return [self fetchAdWithParameters:@{@"placement_key": placementKey} forPlacementKey:placementKey];
 }
 
 - (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacementKey:(NSString *)placementKey{
@@ -149,6 +141,20 @@ const NSInteger kRequestInProgress = 202;
         sanitizedURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", urlString]];
     }
     return sanitizedURL;
+}
+
+- (STRAdvertisement *)adForAction:(NSString *)action {
+    NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
+                                       @"vine": [STRAdVine class],
+                                       @"clickout": [STRAdClickout class],
+                                       @"pinterest": [STRAdPinterest class],
+                                       @"instagram": [STRAdInstagram class]
+                                       };
+    Class adClass = actionsToClasses[action];
+    if (!adClass) {
+        adClass = [STRAdvertisement class];
+    }
+    return [adClass new];
 }
 
 - (STRAdvertisement *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(NSString *)placementKey {

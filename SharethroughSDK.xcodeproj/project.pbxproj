@@ -180,6 +180,9 @@
 		B229F0A51A2E5B420094A8B3 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; };
 		B229F0A61A2E5B420094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; };
 		B229F0A71A2E5B420094A8B3 /* instagram_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */; };
+		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
+		B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
+		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B2B466401A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466411A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466421A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
@@ -547,6 +550,8 @@
 		B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdInstagram.h; sourceTree = "<group>"; };
 		B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdInstagram.m; sourceTree = "<group>"; };
 		B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = instagram_sample_thumbnail.c; sourceTree = "<group>"; };
+		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
+		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
 		E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.release.xcconfig"; sourceTree = "<group>"; };
 		E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementSpec.mm; sourceTree = "<group>"; };
@@ -882,6 +887,8 @@
 				AE3FF40318AAA078006061C2 /* STRImages.m */,
 				AEB4EF4418AAB03E00B69CAC /* STRYouTubeEmbedPage.h */,
 				AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */,
+				B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */,
+				B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */,
 			);
 			path = "Extension Helpers";
 			sourceTree = "<group>";
@@ -1592,6 +1599,7 @@
 				AE6C44A018A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm in Sources */,
 				AE3FF3FF18AA9F5A006061C2 /* vine-logo.c in Sources */,
 				AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */,
+				B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */,
 				AE3FF40718AAA078006061C2 /* STRImages.m in Sources */,
 				AED281B518ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm in Sources */,
 				AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */,
@@ -1650,6 +1658,7 @@
 				AEA0EC7618AC50D700B4286A /* youtube_sample_thumbnail.c in Sources */,
 				AEFBC49F18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */,
 				AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
+				B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */,
 				AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C80811899861E008FD848 /* STRInjector.m in Sources */,
 				E8EE49B3191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */,
@@ -1684,6 +1693,7 @@
 				E83128EE19B936D9007C2FAB /* STRDFPAppModule.m in Sources */,
 				E8703E0819B9092600D3FA50 /* STRVideoController.m in Sources */,
 				E8703E0919B9092600D3FA50 /* STRSingletonBlockWrapper.m in Sources */,
+				B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */,
 				E8703E0A19B9092600D3FA50 /* STRInteractiveAdViewController.m in Sources */,
 				E8703E0B19B9092600D3FA50 /* STRAdPlacement.m in Sources */,
 				E8703E0C19B9092600D3FA50 /* STRAdCache.m in Sources */,
