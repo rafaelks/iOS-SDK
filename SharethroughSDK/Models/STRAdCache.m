@@ -103,7 +103,6 @@
     NSMutableArray *creatives = [self.cachedCreatives objectForKey:placement.placementKey];
     STRAdvertisement *ad = [indexToCreativeMap objectForKey:[NSNumber numberWithLong:placement.adIndex]];
     if (ad == nil) {
-        NSLog(@"Pointer returned nil");
         if ([creatives peek] == nil) {
             NSLog(@"No creatives left in the array");
             return NO;

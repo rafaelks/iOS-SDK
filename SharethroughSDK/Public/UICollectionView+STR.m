@@ -49,9 +49,9 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 }
 
 - (NSInteger)str_numberOfItemsInSection:(NSInteger)section {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-
-    return [self numberOfItemsInSection:section] - [adjuster numberOfAdsInSection:section];
+    NSInteger numberOfContentRows = [self numberOfItemsInSection:section];
+#warning this might be off because numberOfItems might take into account ads already, might need fancier math
+    return numberOfContentRows - [[self str_ensureAdjuster] numberOfAdsInSection:section givenNumberOfRows:numberOfContentRows];
 }
 
 - (NSArray *)str_visibleCellsWithoutAds {

@@ -13,19 +13,19 @@
 @property (nonatomic, strong, readonly) NSIndexPath *adIndexPath;
 @property (nonatomic) BOOL adLoaded;
 @property (nonatomic) NSInteger adSection;
-@property (nonatomic) NSUInteger articlesBeforeFirstAd;
-@property (nonatomic) NSUInteger articlesBetweenAds;
+@property (nonatomic) NSInteger articlesBeforeFirstAd;
+@property (nonatomic) NSInteger articlesBetweenAds;
 
 + (instancetype)adjusterInSection:(NSInteger)section
-            articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
-               articlesBetweenAds:(NSUInteger)articlesBetweenAds;
+            articlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd
+               articlesBetweenAds:(NSInteger)articlesBetweenAds;
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath;
 - (NSArray *)externalIndexPaths:(NSArray *)indexPaths;
 - (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath;
 - (NSArray *)trueIndexPaths:(NSArray *)indexPaths;
-- (NSInteger)numberOfAdsInSection:(NSInteger)section;
+- (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows;
 
 - (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths;
 - (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths;

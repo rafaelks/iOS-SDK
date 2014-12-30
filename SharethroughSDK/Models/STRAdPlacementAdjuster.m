@@ -17,8 +17,8 @@
 @implementation STRAdPlacementAdjuster
 
 + (instancetype)adjusterInSection:(NSInteger)section
-            articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
-               articlesBetweenAds:(NSUInteger)articlesBetweenAds; {
+            articlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd
+               articlesBetweenAds:(NSInteger)articlesBetweenAds; {
     STRAdPlacementAdjuster *adjuster = [self new];
     adjuster.adSection = section;
     adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
@@ -38,9 +38,15 @@
     return NO;
 }
 
-- (NSInteger)numberOfAdsInSection:(NSInteger)section {
+- (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows {
     if (section == self.adIndexPath.section && self.adLoaded) {
-        return 1;
+        if (contentRows < self.articlesBeforeFirstAd) {
+            return 0;
+        } else {
+            NSInteger adRows = 1 + (contentRows - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
+            NSLog(@"Ads In Section based on %ld content rows: %u", (long)contentRows, adRows);
+            return adRows;
+        }
     }
     return 0;
 }
@@ -53,8 +59,10 @@
     if (indexPath.section != self.adSection || !self.adLoaded) {
         return indexPath;
     }
-
-    NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
+    NSInteger adjustment = 0;
+    if ((indexPath.row - self.articlesBeforeFirstAd) > 0) {
+       adjustment = 1 + (indexPath.row - self.articlesBeforeFirstAd) / (self.articlesBetweenAds + 1);
+    }
     return [NSIndexPath indexPathForRow:indexPath.row - adjustment inSection:indexPath.section];
 }
 
@@ -78,7 +86,10 @@
     if (indexPath.section != self.adIndexPath.section || !self.adLoaded) {
         return indexPath;
     }
-    NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
+    NSInteger adjustment = 0;
+    if ((indexPath.row - self.articlesBeforeFirstAd) >= 0) {
+        adjustment = 1 + (indexPath.row - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
+    }
     return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];
 }
 

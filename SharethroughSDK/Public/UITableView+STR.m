@@ -125,7 +125,8 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 - (NSInteger)str_numberOfRowsInSection:(NSInteger)section {
-    return [self numberOfRowsInSection:section] - [[self str_ensureAdjuster] numberOfAdsInSection:section];
+    NSInteger numberOfContentRows = [self numberOfRowsInSection:section];
+    return numberOfContentRows - [[self str_ensureAdjuster] numberOfAdsInSection:section givenNumberOfRows:numberOfContentRows];
 }
 
 - (NSIndexPath *)str_indexPathForSelectedRow {

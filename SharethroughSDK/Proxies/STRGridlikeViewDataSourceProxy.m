@@ -61,18 +61,16 @@
 
 - (void)prefetchAdForGridLikeView:(id)gridlikeView {
     self.gridlikeView = gridlikeView;
-    if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
-        STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-        STRPromise *adPromise = [adGenerator prefetchAdForPlacementKey:self.placementKey];
-        [adPromise then:^id(id value) {
-            self.adjuster.adLoaded = YES;   
-            [self.gridlikeView reloadData];
-            return self.adjuster;
-        } error:^id(NSError *error) {
-            self.adjuster.adLoaded = NO;
-            return self.adjuster;
-        }];
-    }
+    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+    STRPromise *adPromise = [adGenerator prefetchAdForPlacementKey:self.placementKey];
+    [adPromise then:^id(id value) {
+        self.adjuster.adLoaded = YES;
+        [self.gridlikeView reloadData];
+        return self.adjuster;
+    } error:^id(NSError *error) {
+        self.adjuster.adLoaded = NO;
+        return self.adjuster;
+    }];
 }
 
 - (void)setOriginalDataSource:(id)originalDataSource {
@@ -82,7 +80,8 @@
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section] + [self.adjuster numberOfAdsInSection:section];
+    NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
+    return  numberofContentRows + [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -96,7 +95,10 @@
 
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section] + [self.adjuster numberOfAdsInSection:section];
+    NSInteger numberOfContetRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
+    NSInteger totalRows = numberOfContetRows + [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberOfContetRows];
+    NSLog(@"Total rows in collection view: %ld", (long)totalRows);
+    return totalRows;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
