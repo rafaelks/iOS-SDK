@@ -26,6 +26,7 @@
 - (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath;
 - (NSArray *)trueIndexPaths:(NSArray *)indexPaths;
 - (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows;
+- (NSInteger)getLastCalculatedNumberOfAdsInSection:(NSInteger)section;
 
 - (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths;
 - (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths;

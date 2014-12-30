@@ -11,6 +11,7 @@
 @interface STRAdPlacementAdjuster ()
 
 @property (nonatomic, strong) NSIndexPath *adIndexPath;
+@property (nonatomic) NSInteger numAdsCalculated;
 
 @end
 
@@ -39,12 +40,14 @@
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows {
+    self.numAdsCalculated = 0;
     if (section == self.adIndexPath.section && self.adLoaded) {
         if (contentRows < self.articlesBeforeFirstAd) {
             return 0;
         } else {
             NSInteger adRows = 1 + (contentRows - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
-            NSLog(@"Ads In Section based on %ld content rows: %u", (long)contentRows, adRows);
+            NSLog(@"Ads In Section based on %ld content rows: %ld", (long)contentRows, (long)adRows);
+            self.numAdsCalculated = adRows;
             return adRows;
         }
     }
@@ -103,6 +106,8 @@
 }
 
 - (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths {
+    /*
+     //Before infinite scroll this would adjust the ad row if you inserted rows before where the ad was. This should no longer be necessary
     NSArray *sortedIndexPaths = [indexPaths sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
         return [obj1 compare:obj2];
     }];
@@ -113,11 +118,13 @@
                                                   inSection:self.adIndexPath.section];
         }
     }
-
+*/
     return [self trueIndexPaths:indexPaths];
 }
 
 - (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths {
+    /*
+     //Before infinite scroll this would shift up the ad row, this should no longer be necessary
     NSInteger numberOfRowsBeforeAd = 0;
     for (NSIndexPath *path in indexPaths) {
         if (path.row < self.adIndexPath.row && path.section == self.adIndexPath.section) {
@@ -129,6 +136,8 @@
     self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + numberOfRowsBeforeAd)
                                           inSection:self.adIndexPath.section];
     return preDeletionTrueIndexPaths;
+     */
+    return [self trueIndexPath:indexPaths];
 }
 
 - (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath {
@@ -147,7 +156,7 @@
     if ([sections containsIndex:self.adIndexPath.section]) {
         self.adIndexPath = [NSIndexPath indexPathForRow:-1 inSection:-1];
         return;
-    }
+    }   
 
     NSInteger section = self.adIndexPath.section - [self numberOfSectionsChangingWithAdSection:sections];
     self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:section];
@@ -165,6 +174,13 @@
 
 - (void)willReloadAdIndexPathTo:(NSIndexPath *)indexPath {
     self.adIndexPath = indexPath;
+}
+
+- (NSInteger)getLastCalculatedNumberOfAdsInSection:(NSInteger)section {
+    if (section == self.adIndexPath.section) {
+        return self.numAdsCalculated;
+    }
+    return 0;
 }
 
 #pragma mark - Private

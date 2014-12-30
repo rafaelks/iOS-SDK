@@ -97,7 +97,6 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger numberOfContetRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
     NSInteger totalRows = numberOfContetRows + [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberOfContetRows];
-    NSLog(@"Total rows in collection view: %ld", (long)totalRows);
     return totalRows;
 }
 
