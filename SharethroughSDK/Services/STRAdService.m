@@ -48,54 +48,64 @@ const NSInteger kRequestInProgress = 202;
     return self;
 }
 
-- (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey {
-
-    if ([self.adCache isAdAvailableForPlacement:placementKey]) {
-        STRDeferred *deferred = [STRDeferred defer];
-        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
-        [deferred resolveWithValue:cachedAd];
-        if ([self.adCache shouldBeginFetchForPlacement:placementKey]) {
-            [self beginFetchForPlacementKey:placementKey];
-        }
-        return deferred.promise;
-    }
-
+- (STRPromise *)prefetchAdsForPlacementKey:(NSString *)placementKey {
     if ([self.adCache pendingAdRequestInProgressForPlacement:placementKey]) {
         return [self requestInProgressError];
     }
 
-    return [self beginFetchForPlacementKey:placementKey];
+    STRAdPlacement *placement = [[STRAdPlacement alloc] init];
+    placement.placementKey = placementKey;
+    
+    return [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
 }
 
-- (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey creativeKey:(NSString *)creativeKey {
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement {
+    if ([self.adCache isAdAvailableForPlacement:placement]) {
+        STRDeferred *deferred = [STRDeferred defer];
+        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
+        [deferred resolveWithValue:cachedAd];
+        if ([self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
+            [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
+        }
+        return deferred.promise;
+    }
 
-    STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey CreativeKey:creativeKey];
+    if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
+        return [self requestInProgressError];
+    }
+
+    return [self beginFetchForPlacement:placement andInitializeAtIndex:YES];
+}
+
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement creativeKey:(NSString *)creativeKey {
+
+    STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placement.placementKey CreativeKey:creativeKey];
     if (cachedAd) {
         STRDeferred *deferred = [STRDeferred defer];
         [deferred resolveWithValue:cachedAd];
         return deferred.promise;
     }
 
-    if ([self.adCache pendingAdRequestInProgressForPlacement:placementKey]) {
+    if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
         return [self requestInProgressError];
     }
 
-    [self.beaconService fireImpressionRequestForPlacementKey:placementKey CreativeKey:creativeKey];
-    return [self fetchAdWithParameters:@{@"placement_key": placementKey, @"creative_key": creativeKey} forPlacementKey:placementKey];
+    [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey CreativeKey:creativeKey];
+    return [self fetchAdWithParameters:@{@"placement_key": placement.placementKey, @"creative_key": creativeKey} forPlacement:placement andInitializeAtIndex:YES];
 }
 
-- (BOOL)isAdCachedForPlacementKey:(NSString *)placementKey {
-    return [self.adCache isAdAvailableForPlacement:placementKey];
+- (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement {
+    return [self.adCache isAdAvailableForPlacement:placement];
 }
 
 #pragma mark - Private
 
-- (STRPromise *)beginFetchForPlacementKey:(NSString *)placementKey {
-    [self.beaconService fireImpressionRequestForPlacementKey:placementKey];
-    return [self fetchAdWithParameters:@{@"placement_key": placementKey} forPlacementKey:placementKey];
+- (STRPromise *)beginFetchForPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeAtIndex{
+    [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey];
+    return [self fetchAdWithParameters:@{@"placement_key": placement.placementKey} forPlacement:placement andInitializeAtIndex:initializeAtIndex];
 }
 
-- (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacementKey:(NSString *)placementKey{
+- (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeAtIndex {
     STRDeferred *deferred = [STRDeferred defer];
 
     STRPromise *adPromise = [self.restClient getWithParameters: parameters];
@@ -104,20 +114,20 @@ const NSInteger kRequestInProgress = 202;
 
         NSMutableArray *creativesArray = [NSMutableArray arrayWithCapacity:[creativesJSON count]];
 
-        for (int i = 0; i < [creativesJSON count]; i++) {
-            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placementKey]];
+        for (int i = 0; i < [creativesJSON count]; ++i) {
+            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placement.placementKey]];
         }
 
-        [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacementKey:placementKey];
-        [self.adCache saveAds:creativesArray forPlacementKey:placementKey];
+        [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacementKey:placement.placementKey];
+        [self.adCache saveAds:creativesArray forPlacement:placement andInitializeAtIndex:initializeAtIndex];
 
-        [deferred resolveWithValue:creativesArray[0]];
+        [deferred resolveWithValue:[self.adCache fetchCachedAdForPlacement:placement]];
 
         return nil;
     } error:^id(NSError *error) {
-        [self.adCache clearPendingAdRequestForPlacement:placementKey];
+        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
 
-        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placementKey];
+        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
         if (cachedAd != nil) {
             [deferred resolveWithValue:cachedAd];
         } else {

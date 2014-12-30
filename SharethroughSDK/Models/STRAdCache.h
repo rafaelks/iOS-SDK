@@ -7,19 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-@class STRAdvertisement, STRDateProvider, STRAdPlacementInfiniteScrollFields;
+@class STRAdvertisement, STRDateProvider, STRAdPlacement, STRAdPlacementInfiniteScrollFields;
 
 @interface STRAdCache : NSObject <NSCacheDelegate>
 
 - (instancetype)initWithDateProvider:(STRDateProvider *)dateProvider;
 - (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds;
 
-- (void)saveAds:(NSMutableArray *)creatives forPlacementKey:(NSString *)placementKey;
+- (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeIndex;
 
-- (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey;
+- (STRAdvertisement *)fetchCachedAdForPlacement:(STRAdPlacement *)placement;
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey;
 
-- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey;
+- (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement;
 - (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey;
 
 - (BOOL)pendingAdRequestInProgressForPlacement:(NSString *)placementKey;

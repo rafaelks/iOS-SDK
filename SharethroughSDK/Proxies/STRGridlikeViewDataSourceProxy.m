@@ -87,7 +87,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        return [self adCellForTableView:tableView];
+        return [self adCellForTableView:tableView atIndexPath:indexPath];
     }
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
@@ -125,7 +125,7 @@
 
 #pragma mark - Private
 
-- (UITableViewCell *)adCellForTableView:(UITableView *)tableView {
+- (UITableViewCell *)adCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];
     if (!adCell) {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib before providing to SharethroughSDK.", self.adCellReuseIdentifier];
@@ -140,6 +140,7 @@
                                                             PlacementKey:self.placementKey
                                                 presentingViewController:self.presentingViewController
                                                                 delegate:nil
+                                                                 adIndex:indexPath.row
                                                                  DFPPath:nil
                                                              DFPDeferred:nil];
     [adGenerator placeAdInPlacement:adPlacement];
@@ -159,6 +160,7 @@
                                                             PlacementKey:self.placementKey
                                                 presentingViewController:self.presentingViewController
                                                                 delegate:nil
+                                                                 adIndex:indexPath.row
                                                                  DFPPath:nil
                                                              DFPDeferred:nil];
 

@@ -87,8 +87,9 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
     [self str_ensureAdjuster];
 
     if (!adIndexPath) {
-        STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
-        adIndexPath = [adGenerator initialIndexPathForAd:self preferredStartingIndexPath:nil];
+#warning Fix this
+        //STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
+        //adIndexPath = [adGenerator initialIndexPathForAd:self preferredStartingIndexPath:nil];
     }
 
     [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];

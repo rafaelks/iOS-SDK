@@ -54,6 +54,7 @@ presentingViewController:(UIViewController *)presentingViewController
                                                             PlacementKey:placementKey
                                                 presentingViewController:presentingViewController
                                                                 delegate:delegate
+                                                                 adIndex:0
                                                                  DFPPath:dfpPath
                                                              DFPDeferred:nil];
 

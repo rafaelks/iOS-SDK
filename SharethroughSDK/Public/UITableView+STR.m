@@ -48,7 +48,8 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 
 - (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
     if (adIndexPath == nil) {
-        adIndexPath = [[self str_ensureGenerator] initialIndexPathForAd:self preferredStartingIndexPath:nil];
+#warning Fix this
+        //adIndexPath = [[self str_ensureGenerator] initialIndexPathForAd:self preferredStartingIndexPath:nil];
     }
 
     [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];

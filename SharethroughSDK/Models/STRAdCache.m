@@ -18,6 +18,7 @@
 @property (nonatomic, strong) STRDateProvider     *dateProvider;
 @property (nonatomic, assign) NSUInteger          STRPlacementAdCacheTimeoutInSeconds;
 @property (nonatomic, strong) NSCache             *cachedCreatives;
+@property (nonatomic, strong) NSCache             *cachedIndexToCreativeMaps;
 @property (nonatomic, strong) NSMutableSet        *pendingRequestPlacementKeys;
 
 @property (nonatomic, strong) NSMutableDictionary *cachedPlacementInfiniteScrollFields;
@@ -39,6 +40,9 @@
         self.cachedCreatives = [[NSCache alloc] init];
         self.cachedCreatives.delegate = self;
 
+        self.cachedIndexToCreativeMaps = [[NSCache alloc] init];
+        self.cachedIndexToCreativeMaps.delegate = self;
+
         self.pendingRequestPlacementKeys = [NSMutableSet set];
         self.cachedPlacementInfiniteScrollFields = [NSMutableDictionary dictionary];
     }
@@ -53,9 +57,9 @@
     return self.STRPlacementAdCacheTimeoutInSeconds;
 }
 
-- (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey {
-    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
-    return [creatives peek];
+- (STRAdvertisement *)fetchCachedAdForPlacement:(STRAdPlacement *)placement {
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
+    return [indexToCreativeMap objectForKey:[NSNumber numberWithLong:placement.adIndex]];
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey {
@@ -69,25 +73,44 @@
     return nil;
 }
 
-- (void)saveAds:(NSMutableArray *)creatives forPlacementKey:(NSString *)placementKey {
-    NSMutableArray *cachedCreativesQueue = [self.cachedCreatives objectForKey:placementKey];
+- (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeIndex {
+    NSMutableArray *cachedCreativesQueue = [self.cachedCreatives objectForKey:placement.placementKey];
     if (cachedCreativesQueue == nil) {
-        [self.cachedCreatives setObject:creatives forKey:placementKey];
+        cachedCreativesQueue = creatives;
+        [self.cachedCreatives setObject:creatives forKey:placement.placementKey];
     } else {
         for (int i = 0; i < [creatives count]; ++i) {
             [cachedCreativesQueue enqueue:creatives[i]];
         }
-        [self.cachedCreatives setObject:cachedCreativesQueue forKey:placementKey];
+        [self.cachedCreatives setObject:cachedCreativesQueue forKey:placement.placementKey];
     }
-    [self clearPendingAdRequestForPlacement:placementKey];
+    if (initializeIndex) {
+        NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
+        STRAdvertisement *ad = [cachedCreativesQueue dequeue];
+        [indexToCreativeMap setObject:ad forKey:[NSNumber numberWithLong:placement.adIndex]];
+    }
+    [self clearPendingAdRequestForPlacement:placement.placementKey];
 }
 
-- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey {
-    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
-    STRAdvertisement *ad = [creatives peek];
-    if (ad == nil) {
-        NSLog(@"Ad nil");
+- (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement {
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
+    if (indexToCreativeMap == nil) {
+        indexToCreativeMap = [[NSMutableDictionary alloc] init];
+        [self.cachedIndexToCreativeMaps setObject:indexToCreativeMap forKey:placement.placementKey];
         return NO;
+    }
+
+    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placement.placementKey];
+    STRAdvertisement *ad = [indexToCreativeMap objectForKey:[NSNumber numberWithLong:placement.adIndex]];
+    if (ad == nil) {
+        NSLog(@"Pointer returned nil");
+        if ([creatives peek] == nil) {
+            NSLog(@"No creatives left in the array");
+            return NO;
+        } else {
+            [indexToCreativeMap setObject:[creatives dequeue] forKey:[NSNumber numberWithLong:placement.adIndex]];
+            return YES;
+        }
     }
     if (!ad.visibleImpressionTime) {
         NSLog(@"Ad not seen yet");
@@ -98,15 +121,15 @@
 
     if (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds) {
         NSLog(@"Past time stamp");
-        [creatives dequeue];
         if ([creatives peek] == nil) {
             NSLog(@"No more creatives");
             return NO;
         } else {
+            [indexToCreativeMap setObject:[creatives dequeue] forKey:[NSNumber numberWithLong:placement.adIndex]];
             return YES;
         }
     }
-    NSLog(@"Ad seen but not for long enough");
+    NSLog(@"Ad seen but not for long enough. %f", timeInterval);
     return YES;
 }
 

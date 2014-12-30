@@ -55,12 +55,14 @@
 - (void)placeAdInView:(UIView<STRAdView> *)view
          placementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController
+                index:(NSInteger)index
              delegate:(id<STRAdViewDelegate>)delegate {
 
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:view
                                                             PlacementKey:placementKey
                                                 presentingViewController:presentingViewController
                                                                 delegate:delegate
+                                                                 adIndex:index
                                                                  DFPPath:nil
                                                              DFPDeferred:nil];
 

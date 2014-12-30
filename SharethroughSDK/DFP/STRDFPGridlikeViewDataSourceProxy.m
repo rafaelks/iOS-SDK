@@ -43,6 +43,7 @@
                                                                 PlacementKey:self.placementKey
                                                     presentingViewController:self.gridlikeView
                                                                     delegate:nil
+                                                                     adIndex:0
                                                                      DFPPath:nil
                                                                  DFPDeferred:deferred];
 

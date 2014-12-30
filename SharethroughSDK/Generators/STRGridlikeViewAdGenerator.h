@@ -34,6 +34,4 @@
 - (void)setOriginalDataSource:(id)newOriginalDataSource
                  gridlikeView:(id)gridlikeView;
 
-- (NSIndexPath *)initialIndexPathForAd:(id)gridlikeView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath;
-
 @end

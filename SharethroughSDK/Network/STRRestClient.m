@@ -59,10 +59,10 @@
 
 - (STRPromise *)getDFPPathForPlacement:(NSString *)placementKey {
     STRDeferred *deferred = [STRDeferred defer];
-    
+
     NSString *urlString = [NSString stringWithFormat:self.dfpPathUrlFormat, placementKey];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    
+
     [[self.networkClient get:request] then:^id(NSData *data) {
         NSError *jsonParseError;
         NSDictionary *parsedObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
