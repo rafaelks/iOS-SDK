@@ -187,9 +187,13 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     view.adTitle.text = @"";
     view.adSponsoredBy.text = @"";
     view.adThumbnail.image = nil;
+    for (UIView *subView in view.adThumbnail.subviews)
+    {
+        [subView removeFromSuperview];
+    }
     [self setDescriptionText:@"" onView:view];
     if ([view respondsToSelector:@selector(adBrandLogo)]) {
-        view.adThumbnail.image = nil;
+        view.adBrandLogo.image = nil;
     }
 }
 
