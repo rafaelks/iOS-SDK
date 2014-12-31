@@ -46,7 +46,6 @@
             return 0;
         } else {
             NSInteger adRows = 1 + (contentRows - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
-            NSLog(@"Ads In Section based on %ld content rows: %ld", (long)contentRows, (long)adRows);
             self.numAdsCalculated = adRows;
             return adRows;
         }

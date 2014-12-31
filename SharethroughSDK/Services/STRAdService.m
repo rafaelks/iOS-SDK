@@ -189,6 +189,9 @@ const NSInteger kRequestInProgress = 202;
     ad.auctionType = creativeWrapperJSON[@"priceType"];
     ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
 
+#warning Need to figure out which thread this is being done on. Might be safe to do this synchronous call, but not sure
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]]];
+    /*
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]];
     [[self.networkClient get:imageRequest] then:^id(NSData *data) {
         ad.thumbnailImage = [UIImage imageWithData:data];
@@ -196,7 +199,7 @@ const NSInteger kRequestInProgress = 202;
     } error:^id(NSError *error) {
         return error;
     }];
-
+     */
     return ad;
 }
 
