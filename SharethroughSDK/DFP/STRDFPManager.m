@@ -44,7 +44,7 @@
     STRPromise *promise;
 
     if (creativeKey == nil || [creativeKey length] == 0 || adPlacement.placementKey == nil || [adPlacement.placementKey length] == 0) {
-        NSLog(@"Invalid creativeKey %@ or placementKey %@. Not reaching out to Sharethrough for Ad.");
+        NSLog(@"Invalid creativeKey %@ or placementKey %@. Not reaching out to Sharethrough for Ad.", creativeKey, adPlacement.placementKey);
         NSError *error = [NSError errorWithDomain:@"Sharethrough invalid params" code:-1 userInfo:nil];
         [deferred rejectWithError:error];
     } else {
