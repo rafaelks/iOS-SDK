@@ -87,15 +87,17 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     [placement.adView addGestureRecognizer:tapRecognizer];
     self.tapRecognizer = tapRecognizer;
 
-    NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
-                                             target:self
-                                           selector:@selector(checkIfAdIsVisible:)
-                                           userInfo:[@{@"view": placement.adView} mutableCopy]
-                                            repeats:YES];
-    timer.tolerance = timer.timeInterval * 0.1;
-    [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
+    if (self.ad.visibleImpressionTime == nil) {
+        NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
+                                                 target:self
+                                               selector:@selector(checkIfAdIsVisible:)
+                                               userInfo:[@{@"view": placement.adView} mutableCopy]
+                                                repeats:YES];
+        timer.tolerance = timer.timeInterval * 0.1;
+        [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
-    self.adVisibleTimer = timer;
+        self.adVisibleTimer = timer;
+    }
 
     if ([placement.delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
         [placement.delegate adView:placement.adView didFetchAdForPlacementKey:placement.placementKey];

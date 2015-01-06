@@ -104,7 +104,6 @@
     STRAdvertisement *ad = [indexToCreativeMap objectForKey:[NSNumber numberWithLong:placement.adIndex]];
     if (ad == nil) {
         if ([creatives peek] == nil) {
-            NSLog(@"No creatives left in the array");
             return NO;
         } else {
             [indexToCreativeMap setObject:[creatives dequeue] forKey:[NSNumber numberWithLong:placement.adIndex]];
@@ -112,30 +111,25 @@
         }
     }
     if (!ad.visibleImpressionTime) {
-        NSLog(@"Ad not seen yet");
         return YES;
     }
     NSDate *now = [self.dateProvider now];
     NSTimeInterval timeInterval = [now timeIntervalSinceDate:ad.visibleImpressionTime];
 
     if (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds) {
-        NSLog(@"Past time stamp");
         if ([creatives peek] == nil) {
-            NSLog(@"No more creatives");
             return NO;
         } else {
             [indexToCreativeMap setObject:[creatives dequeue] forKey:[NSNumber numberWithLong:placement.adIndex]];
             return YES;
         }
     }
-    NSLog(@"Ad seen but not for long enough. %f", timeInterval);
     return YES;
 }
 
 - (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey {
     NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
     if ([creatives count] <= 1 && ![self pendingAdRequestInProgressForPlacement:placementKey]) {
-        NSLog(@"Should start fetching because count is %ld", (long)[creatives count]);
         return YES;
     }
     return NO;
