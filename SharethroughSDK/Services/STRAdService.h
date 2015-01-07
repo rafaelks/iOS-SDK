@@ -20,6 +20,7 @@ extern const NSInteger kRequestInProgress;
                  adCache:(STRAdCache *)adCache
            beaconService:(STRBeaconService *)beaconService;
 - (STRPromise *)prefetchAdsForPlacementKey:(NSString *)placementKey;
+- (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement creativeKey:(NSString *)creativeKey;
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement;

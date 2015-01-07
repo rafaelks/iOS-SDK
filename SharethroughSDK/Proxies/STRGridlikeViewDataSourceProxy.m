@@ -62,7 +62,10 @@
 - (void)prefetchAdForGridLikeView:(id)gridlikeView {
     self.gridlikeView = gridlikeView;
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    STRPromise *adPromise = [adGenerator prefetchAdForPlacementKey:self.placementKey];
+    STRAdPlacement *placement = [[STRAdPlacement alloc] init];
+    placement.placementKey = self.placementKey;
+    placement.delegate = self;
+    STRPromise *adPromise = [adGenerator prefetchAdForPlacement:placement];
     [adPromise then:^id(id value) {
         self.adjuster.adLoaded = YES;
         [self.gridlikeView reloadData];
@@ -107,6 +110,12 @@
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
     return [self.originalCVDataSource collectionView:collectionView cellForItemAtIndexPath:externalIndexPath];
+}
+
+#pragma mark - STRAdViewDelegate
+- (void)adView:(id<STRAdView>)adView didFetchArticlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd andArticlesBetweenAds:(NSInteger)articlesBetweenAds forPlacementKey:(NSString *)placementKey {
+    self.adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
+    self.adjuster.articlesBetweenAds = articlesBetweenAds;
 }
 
 #pragma mark - Forwarding

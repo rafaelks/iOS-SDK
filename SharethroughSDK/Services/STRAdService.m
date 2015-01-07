@@ -55,7 +55,15 @@ const NSInteger kRequestInProgress = 202;
 
     STRAdPlacement *placement = [[STRAdPlacement alloc] init];
     placement.placementKey = placementKey;
-    
+
+    return [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
+}
+
+- (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement {
+    if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
+        return [self requestInProgressError];
+    }
+
     return [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
 }
 
@@ -118,7 +126,7 @@ const NSInteger kRequestInProgress = 202;
             [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placement.placementKey]];
         }
 
-        [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacementKey:placement.placementKey];
+        [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacement:placement];
         [self.adCache saveAds:creativesArray forPlacement:placement andInitializeAtIndex:initializeAtIndex];
 
         [deferred resolveWithValue:[self.adCache fetchCachedAdForPlacement:placement]];
@@ -190,8 +198,7 @@ const NSInteger kRequestInProgress = 202;
     ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
 
 #warning Need to figure out which thread this is being done on. Might be safe to do this synchronous call, but not sure
-    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]]];
-    /*
+//    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]]];
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]];
     [[self.networkClient get:imageRequest] then:^id(NSData *data) {
         ad.thumbnailImage = [UIImage imageWithData:data];
@@ -199,21 +206,24 @@ const NSInteger kRequestInProgress = 202;
     } error:^id(NSError *error) {
         return error;
     }];
-     */
     return ad;
 }
 
 - (void)createPlacementInfiniteScrollExtrasFromJSON:(NSDictionary *)placementJSON
-                                    forPlacementKey:(NSString *)placementKey {
+                                    forPlacement:(STRAdPlacement *)placement {
     
     if ([placementJSON[@"layout"] isEqualToString:@"multiple"] &&
-        [self.adCache getInfiniteScrollFieldsForPlacement:placementKey] == nil) {
+        [self.adCache getInfiniteScrollFieldsForPlacement:placement.placementKey] == nil) {
 
         STRAdPlacementInfiniteScrollFields *extras = [STRAdPlacementInfiniteScrollFields new];
-        extras.placementKey = placementKey;
+        extras.placementKey = placement.placementKey;
         extras.articlesBeforeFirstAd = [placementJSON[@"articlesBeforeFirstAd"] unsignedIntegerValue];
         extras.articlesBetweenAds = [placementJSON[@"articlesBetweenAds"] unsignedIntegerValue];
         [self.adCache saveInfiniteScrollFields:extras];
+
+        if ([placement.delegate respondsToSelector:@selector(adView:didFetchArticlesBeforeFirstAd:andArticlesBetweenAds:forPlacementKey:)]) {
+            [placement.delegate adView:placement.adView didFetchArticlesBeforeFirstAd:extras.articlesBeforeFirstAd andArticlesBetweenAds:extras.articlesBetweenAds forPlacementKey:placement.placementKey];
+        }
     }
 }
 

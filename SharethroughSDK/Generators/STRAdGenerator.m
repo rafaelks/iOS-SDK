@@ -83,6 +83,10 @@
     return [self.adService prefetchAdsForPlacementKey:placementKey];
 }
 
+- (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement {
+    return [self.adService prefetchAdsForPlacement:placement];
+}
+
 - (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement {
     return [self.adService fetchAdForPlacement:placement creativeKey:creativeKey];
 }
