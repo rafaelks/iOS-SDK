@@ -127,9 +127,24 @@ const NSInteger kRequestInProgress = 202;
         }
 
         [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacement:placement];
-        [self.adCache saveAds:creativesArray forPlacement:placement andInitializeAtIndex:initializeAtIndex];
+        STRPromise *creativeImagesPromise = [STRPromise when:creativesArray];
+        [creativeImagesPromise then:^id(NSMutableArray *creatives) {
+            [self.adCache saveAds:creatives forPlacement:placement andInitializeAtIndex:initializeAtIndex];
 
-        [deferred resolveWithValue:[self.adCache fetchCachedAdForPlacement:placement]];
+            [deferred resolveWithValue:[self.adCache fetchCachedAdForPlacement:placement]];
+
+            return nil;
+        } error:^id(NSError *error) {
+            [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
+
+            STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
+            if (cachedAd != nil) {
+                [deferred resolveWithValue:cachedAd];
+            } else {
+                [deferred rejectWithError:error];
+            }
+            return error;
+        }];
 
         return nil;
     } error:^id(NSError *error) {
@@ -175,38 +190,40 @@ const NSInteger kRequestInProgress = 202;
     return [adClass new];
 }
 
-- (STRAdvertisement *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(NSString *)placementKey {
+- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(NSString *)placementKey {
+    STRDeferred *deferred = [STRDeferred defer];
+
     NSDictionary *creativeJSON = creativeWrapperJSON[@"creative"];
 
-    STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"]];
-    ad.advertiser = creativeJSON[@"advertiser"];
-    ad.title = creativeJSON[@"title"];
-    ad.adDescription = creativeJSON[@"description"];
-    ad.creativeKey = creativeJSON[@"creative_key"];
-    ad.variantKey = creativeJSON[@"variant_key"];
-    ad.mediaURL = [NSURL URLWithString:creativeJSON[@"media_url"]];
-    ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
-    ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
-    ad.placementKey = placementKey;
-    ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
-    ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
-    ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
-    ad.action = creativeJSON[@"action"];
-    ad.signature = creativeWrapperJSON[@"signature"];
-    ad.auctionPrice = creativeWrapperJSON[@"price"];
-    ad.auctionType = creativeWrapperJSON[@"priceType"];
-    ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
-
-#warning Need to figure out which thread this is being done on. Might be safe to do this synchronous call, but not sure
-//    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]]];
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]];
     [[self.networkClient get:imageRequest] then:^id(NSData *data) {
+        STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"]];
         ad.thumbnailImage = [UIImage imageWithData:data];
-        return data;
+        ad.advertiser = creativeJSON[@"advertiser"];
+        ad.title = creativeJSON[@"title"];
+        ad.adDescription = creativeJSON[@"description"];
+        ad.creativeKey = creativeJSON[@"creative_key"];
+        ad.variantKey = creativeJSON[@"variant_key"];
+        ad.mediaURL = [NSURL URLWithString:creativeJSON[@"media_url"]];
+        ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
+        ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
+        ad.placementKey = placementKey;
+        ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
+        ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
+        ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
+        ad.action = creativeJSON[@"action"];
+        ad.signature = creativeWrapperJSON[@"signature"];
+        ad.auctionPrice = creativeWrapperJSON[@"price"];
+        ad.auctionType = creativeWrapperJSON[@"priceType"];
+        ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
+
+        [deferred resolveWithValue:ad];
+
+        return ad;
     } error:^id(NSError *error) {
         return error;
     }];
-    return ad;
+    return deferred.promise;
 }
 
 - (void)createPlacementInfiniteScrollExtrasFromJSON:(NSDictionary *)placementJSON
