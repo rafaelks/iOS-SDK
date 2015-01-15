@@ -28,11 +28,11 @@
 
 + (STRAdYouTube *)youTubeAd {
     STRAdYouTube *ad = [STRAdYouTube new];
-    ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=YSVL4FvFhvw"];
-    ad.title = @"Go Sip for Sip with Josh Duhamel";
+    ad.mediaURL = [NSURL URLWithString:@"http://www.youtube.com/watch?v=YCOgaWSfxxs"];
+    ad.title = @"Beats By Dre Presents: LeBron James";
     ad.shareURL = [NSURL URLWithString:@"http://bit.ly/23kljr"];
-    ad.adDescription = @"Grab a Diet Pepsi and share a delicious moment with Josh Duhamel";
-    ad.advertiser = @"Pepsi";
+    ad.adDescription = @"RE_ESTABLISHED 2014 - Powerbeats2 Wireless";
+    ad.advertiser = @"Beats by Dre";
     ad.action = STRYouTubeAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRYoutubeThumbnail.bytes length:kSTRYoutubeThumbnail.length]];
 
@@ -94,7 +94,7 @@
 
 + (STRAdClickout *)privacyInformationAd {
     STRAdClickout *disclosureAd = [STRAdClickout new];
-    disclosureAd.mediaURL = [NSURL URLWithString:@"http://www.sharethrough.com/privacy-policy/"];
+    disclosureAd.mediaURL = [NSURL URLWithString:@"http://native.sharethrough.com/privacy-policy.html"];
     disclosureAd.title = @"Privacy Information";
     disclosureAd.action = STRClickoutAd;
 

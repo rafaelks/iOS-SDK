@@ -181,13 +181,17 @@
     if (!ploc) {
         ploc = @"";
     }
+    NSString *idfa = @"";
+    if ([self.identifierManager isAdvertisingTrackingEnabled]) {
+        idfa = [[self.identifierManager advertisingIdentifier] UUIDString];
+    }
 
     return [@{@"bwidth" : [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
               @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
               @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
               @"ploc"   : ploc,
               @"session": [STRSession sessionToken],
-              @"uid"    : [[self.identifierManager advertisingIdentifier] UUIDString],
+              @"uid"    : idfa,
               @"ua"     : [self.restClient getUserAgent]} mutableCopy];
 }
 

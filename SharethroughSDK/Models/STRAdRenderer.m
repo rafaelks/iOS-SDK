@@ -35,6 +35,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 @property (nonatomic, strong) STRAdvertisement *ad;
 @property (nonatomic, strong) STRAdPlacement *placement;
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic, weak) UITapGestureRecognizer *disclosureTapRecognizer;
 @property (nonatomic, weak) NSTimer *adVisibleTimer;
 
 @end
@@ -70,6 +71,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     }
     UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
     [placement.adView.disclosureButton addGestureRecognizer:disclosureRecognizer];
+    self.disclosureTapRecognizer = disclosureRecognizer;
 
     self.presentingViewController = placement.presentingViewController;
     [self.beaconService fireImpressionForAd:ad adSize:placement.adView.frame.size];
@@ -181,6 +183,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     STRAdRenderer *oldRenderer = objc_getAssociatedObject(view, STRAdRendererKey);
     [oldRenderer.adVisibleTimer invalidate];
     [view removeGestureRecognizer:oldRenderer.tapRecognizer];
+    [view.disclosureButton removeGestureRecognizer:oldRenderer.disclosureTapRecognizer];
 
     [self clearTextFromView:view];
 }

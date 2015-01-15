@@ -12,7 +12,7 @@
 
 @class STRInjector;
 
-@interface STRFakeAdGenerator : STRAdGenerator
+@interface STRFakeAdGenerator : STRAdGenerator <UIGestureRecognizerDelegate>
 
 - (id)initWithAdType:(STRFakeAdType)adType withInjector:(STRInjector *)injector;
 
