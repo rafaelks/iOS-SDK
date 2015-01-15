@@ -46,13 +46,7 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
     [self moveSection:section toSection:newSection];
 }
 
-- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
-    if (adIndexPath == nil) {
-#warning Fix this
-        //adIndexPath = [[self str_ensureGenerator] initialIndexPathForAd:self preferredStartingIndexPath:nil];
-    }
-
-    [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];
+- (void)str_reloadData {
     [self reloadData];
 }
 
@@ -61,13 +55,6 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 - (void)str_reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSIndexPath *adIndexPath = adjuster.adIndexPath;
-    NSInteger newNumberOfRowsInAdSection = [self.dataSource tableView:self numberOfRowsInSection:adIndexPath.section];
-    newNumberOfRowsInAdSection = MIN(newNumberOfRowsInAdSection - 1, adIndexPath.row);
-
-    [adjuster willReloadAdIndexPathTo:[NSIndexPath indexPathForRow:newNumberOfRowsInAdSection inSection:adIndexPath.section]];
-
     [self reloadSections:sections withRowAnimation:animation];
 }
 
@@ -125,8 +112,7 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 - (NSInteger)str_numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfContentRows = [self numberOfRowsInSection:section];
-    return numberOfContentRows - [[self str_ensureAdjuster] numberOfAdsInSection:section givenNumberOfRows:numberOfContentRows];
+    return  [self numberOfRowsInSection:section] - [[self str_ensureAdjuster] getLastCalculatedNumberOfAdsInSection:section];
 }
 
 - (NSIndexPath *)str_indexPathForSelectedRow {

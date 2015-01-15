@@ -56,7 +56,13 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
 
     NSMutableArray *visibleCells = [[self visibleCells] mutableCopy];
-    [visibleCells removeObject:[self cellForItemAtIndexPath:adjuster.adIndexPath]];
+    NSArray *visibleCellsIdexPaths = [self indexPathsForVisibleItems];
+    for (NSUInteger i = 0; i < [visibleCellsIdexPaths count]; ++i) {
+        NSIndexPath *indexPath = visibleCellsIdexPaths[i];
+        if ([adjuster isAdAtIndexPath:indexPath]) {
+            [visibleCells removeObjectAtIndex:i];
+        }
+    }
 
     return [visibleCells copy];
 }
@@ -81,28 +87,11 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
     return [[self str_ensureAdjuster] externalIndexPath:trueIndexPath];
 }
 
-- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
-    [self str_ensureAdjuster];
-
-    if (!adIndexPath) {
-#warning Fix this
-        //STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
-        //adIndexPath = [adGenerator initialIndexPathForAd:self preferredStartingIndexPath:nil];
-    }
-
-    [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];
+- (void)str_reloadData {
     [self reloadData];
 }
 
 - (void)str_reloadSections:(NSIndexSet *)sections {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSIndexPath *adIndexPath = adjuster.adIndexPath;
-    NSInteger newNumberOfItemsInAdSection = [self.dataSource collectionView:self numberOfItemsInSection:adIndexPath.section];
-
-    newNumberOfItemsInAdSection = MIN(newNumberOfItemsInAdSection - 1, adIndexPath.row);
-
-    [adjuster willReloadAdIndexPathTo:[NSIndexPath indexPathForRow:newNumberOfItemsInAdSection inSection:adIndexPath.section]];
-
     [self reloadSections:sections];
 }
 

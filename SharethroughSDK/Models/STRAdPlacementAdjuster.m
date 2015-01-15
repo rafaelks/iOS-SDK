@@ -105,38 +105,11 @@
 }
 
 - (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths {
-    /*
-     //Before infinite scroll this would adjust the ad row if you inserted rows before where the ad was. This should no longer be necessary
-    NSArray *sortedIndexPaths = [indexPaths sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
-        return [obj1 compare:obj2];
-    }];
-
-    for (NSIndexPath *path in sortedIndexPaths) {
-        if (path.row <= self.adIndexPath.row && path.section == self.adIndexPath.section) {
-            self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + 1)
-                                                  inSection:self.adIndexPath.section];
-        }
-    }
-*/
     return [self trueIndexPaths:indexPaths];
 }
 
 - (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths {
-    /*
-     //Before infinite scroll this would shift up the ad row, this should no longer be necessary
-    NSInteger numberOfRowsBeforeAd = 0;
-    for (NSIndexPath *path in indexPaths) {
-        if (path.row < self.adIndexPath.row && path.section == self.adIndexPath.section) {
-            numberOfRowsBeforeAd--;
-        }
-    }
-
-    NSArray *preDeletionTrueIndexPaths = [self trueIndexPaths:indexPaths];
-    self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + numberOfRowsBeforeAd)
-                                          inSection:self.adIndexPath.section];
-    return preDeletionTrueIndexPaths;
-     */
-    return [self trueIndexPath:indexPaths];
+    return [self trueIndexPaths:indexPaths];
 }
 
 - (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath {
@@ -169,10 +142,6 @@
 
     [self willDeleteSections:[NSIndexSet indexSetWithIndex:section]];
     [self willInsertSections:[NSIndexSet indexSetWithIndex:newSection]];
-}
-
-- (void)willReloadAdIndexPathTo:(NSIndexPath *)indexPath {
-    self.adIndexPath = indexPath;
 }
 
 - (NSInteger)getLastCalculatedNumberOfAdsInSection:(NSInteger)section {

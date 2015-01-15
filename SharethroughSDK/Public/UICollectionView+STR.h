@@ -59,7 +59,7 @@
 
  @param adIndexPath The index path to place an ad in. This index path represents where the ad will reside in the collection view. Pass nil to let the SharethroughSDK choose a default location.
  */
-- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath;
+- (void)str_reloadData;
 
 /**
  Reloads the specified sections disregarding ad(s) provided by Sharethrough. If an ad's location is now invalid (because the section has fewer rows), the ad will be placed at the bottom of its previous section. Alternate to UICollectionView's built-in -reloadSections:

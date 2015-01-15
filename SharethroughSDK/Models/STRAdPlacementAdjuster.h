@@ -35,6 +35,5 @@
 - (void)willInsertSections:(NSIndexSet *)sections;
 - (void)willDeleteSections:(NSIndexSet *)sections;
 - (void)willMoveSection:(NSInteger)section toSection:(NSInteger)newSection;
-- (void)willReloadAdIndexPathTo:(NSIndexPath *)indexPath;
 
 @end
