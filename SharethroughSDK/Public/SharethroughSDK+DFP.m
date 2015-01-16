@@ -90,7 +90,7 @@ presentingViewController:(UIViewController *)presentingViewController
              adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
 
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
-    STRDFPGridlikeViewDataSourceProxy *dataSourceProxy = [[STRDFPGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
+STRDFPGridlikeViewDataSourceProxy *dataSourceProxy = [[STRDFPGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
 /*
     [gridlikeViewAdGenerator placeAdInGridlikeView:collectionView
                                    dataSourceProxy:dataSourceProxy

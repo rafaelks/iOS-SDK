@@ -35,7 +35,7 @@
     self = [super init];
     if (self) {
         self.dateProvider = dateProvider;
-        self.STRPlacementAdCacheTimeoutInSeconds = 10;
+        self.STRPlacementAdCacheTimeoutInSeconds = 20;
 
         self.cachedCreatives = [[NSCache alloc] init];
         self.cachedCreatives.delegate = self;
@@ -125,6 +125,11 @@
         }
     }
     return YES;
+}
+
+- (NSUInteger)numberOfAdsAvailableForPlacement:(STRAdPlacement *)placement {
+    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placement.placementKey];
+    return [creatives count];
 }
 
 - (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey {

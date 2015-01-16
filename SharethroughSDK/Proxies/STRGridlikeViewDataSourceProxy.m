@@ -24,6 +24,8 @@
 @property (weak, nonatomic) UIViewController *presentingViewController;
 @property (weak, nonatomic) STRInjector *injector;
 
+@property (strong, nonatomic) STRAdPlacement *placement;
+
 @property (weak, nonatomic) id gridlikeView;
 @end
 
@@ -43,6 +45,9 @@
         self.placementKey = placementKey;
         self.presentingViewController = presentingViewController;
         self.injector = injector;
+        self.placement = [[STRAdPlacement alloc] init];
+        self.placement.placementKey = self.placementKey;
+        self.placement.delegate = self;
     }
 
     return self;
@@ -62,10 +67,7 @@
 - (void)prefetchAdForGridLikeView:(id)gridlikeView {
     self.gridlikeView = gridlikeView;
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-    STRAdPlacement *placement = [[STRAdPlacement alloc] init];
-    placement.placementKey = self.placementKey;
-    placement.delegate = self;
-    STRPromise *adPromise = [adGenerator prefetchAdForPlacement:placement];
+    STRPromise *adPromise = [adGenerator prefetchAdForPlacement:self.placement];
     [adPromise then:^id(id value) {
         self.adjuster.adLoaded = YES;
         [self.gridlikeView reloadData];
@@ -83,8 +85,11 @@
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
-    return  numberofContentRows + [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
+
+    NSInteger numberofAds = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
+    return  numberofContentRows + numberofAds;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -98,9 +103,11 @@
 
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSInteger numberOfContetRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
-    NSInteger totalRows = numberOfContetRows + [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberOfContetRows];
-    return totalRows;
+    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+    NSInteger numberofContentRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
+
+    NSInteger numberofAds = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
+    return  numberofContentRows + numberofAds;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
