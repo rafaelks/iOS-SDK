@@ -10,7 +10,7 @@ describe(@"STRAdPlacementAdjuster", ^{
     
     describe(@"When an ad is loaded", ^{
         beforeEach(^{
-            adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             adjuster.adLoaded = YES;
         });
         
@@ -151,7 +151,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             });
             
             sharedExamplesFor(@"moving a row", ^(NSDictionary *sharedContext) {
@@ -264,7 +264,7 @@ describe(@"STRAdPlacementAdjuster", ^{
                         sharedContext[@"externalFinalIndex"] = [NSIndexPath indexPathForRow:0 inSection:0];
                         sharedContext[@"expectedChangeToFinalRow"] = @0;
                         
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
                     });
                     
                     itShouldBehaveLike(@"moving a row");
@@ -356,12 +356,12 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             });
             
             describe(@"when some of the sections around the ad section are being deleted", ^{
                 it(@"moves up the ad section by the appropriate amount", ^{
-                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
                     NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
                     [indices addIndex:0];
                     [indices addIndex:1];
@@ -406,7 +406,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             });
             
             describe(@"when some of the sections around the ad section are being inserting", ^{
@@ -426,13 +426,13 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             });
             
             describe(@"moving a section that is before the ad section", ^{
                 describe(@"to still be before the ad section", ^{
                     beforeEach(^{
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
                     });
                     
                     it(@"does not adjust the ad placement", ^{
@@ -487,19 +487,12 @@ describe(@"STRAdPlacementAdjuster", ^{
                 });
             });
         });
-        
-        describe(@"-willReloadAdIndexPathTo:", ^{
-            it(@"sets the new adIndexPath", ^{
-                NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:13 inSection:12];
-                [adjuster willReloadAdIndexPathTo:newIndexPath];
-                adjuster.adIndexPath should equal(newIndexPath);
-            });
-        });
+
     });
     
     describe(@"When an ad is not loaded", ^{
         beforeEach(^{
-            adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             adjuster.adLoaded = NO;
         });
         
@@ -636,7 +629,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             });
             
             sharedExamplesFor(@"moving a row", ^(NSDictionary *sharedContext) {
@@ -749,7 +742,7 @@ describe(@"STRAdPlacementAdjuster", ^{
                         sharedContext[@"externalFinalIndex"] = [NSIndexPath indexPathForRow:0 inSection:0];
                         sharedContext[@"expectedChangeToFinalRow"] = @0;
                         
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
                     });
                     
                     itShouldBehaveLike(@"moving a row");
@@ -841,12 +834,12 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             });
             
             describe(@"when some of the sections around the ad section are being deleted", ^{
                 it(@"moves up the ad section by the appropriate amount", ^{
-                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
                     NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
                     [indices addIndex:0];
                     [indices addIndex:1];
@@ -891,7 +884,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             });
             
             describe(@"when some of the sections around the ad section are being inserting", ^{
@@ -911,13 +904,13 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
             });
             
             describe(@"moving a section that is before the ad section", ^{
                 describe(@"to still be before the ad section", ^{
                     beforeEach(^{
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
                     });
                     
                     it(@"does not adjust the ad placement", ^{
@@ -970,14 +963,6 @@ describe(@"STRAdPlacementAdjuster", ^{
                     [multiSectionAdjuster willMoveSection:1 toSection:5];
                     multiSectionAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:5]);
                 });
-            });
-        });
-        
-        describe(@"-willReloadAdIndexPathTo:", ^{
-            it(@"sets the new adIndexPath", ^{
-                NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:13 inSection:12];
-                [adjuster willReloadAdIndexPathTo:newIndexPath];
-                adjuster.adIndexPath should equal(newIndexPath);
             });
         });
     });

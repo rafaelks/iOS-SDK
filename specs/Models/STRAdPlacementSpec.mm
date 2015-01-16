@@ -13,6 +13,7 @@ describe(@"STRAdPlacement", ^{
                                                                       PlacementKey:nil
                                                           presentingViewController:nil
                                                                           delegate:nil
+                                                                           adIndex:0
                                                                            DFPPath:nil
                                                                        DFPDeferred:nil];
             }).to(raise_exception);
@@ -24,6 +25,7 @@ describe(@"STRAdPlacement", ^{
                                                                       PlacementKey:@"1234567"
                                                           presentingViewController:nil
                                                                           delegate:nil
+                                                                            adIndex:0
                                                                            DFPPath:nil
                                                                        DFPDeferred:nil];
             }).to(raise_exception);

@@ -19,7 +19,7 @@
                   PlacementKey:(NSString *)placementKey
       presentingViewController:(UIViewController *)presentingViewController
                       delegate:(id<STRAdViewDelegate>)delegate
-                         adIndex:(NSInteger)adIndex
+                       adIndex:(NSInteger)adIndex
                        DFPPath:(NSString *)DFPPath
                    DFPDeferred:(STRDeferred *)deferred;
 

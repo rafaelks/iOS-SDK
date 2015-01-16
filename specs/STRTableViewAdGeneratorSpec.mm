@@ -61,7 +61,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                     adInitialIndexPath:nil];
+                                  articlesBeforeFirstAd:2
+                                     articlesBetweenAds:1
+                                              adSection:0];
 
             [tableView layoutIfNeeded];
         });
@@ -107,7 +109,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                     adInitialIndexPath:nil];
+                                  articlesBeforeFirstAd:2
+                                     articlesBetweenAds:1
+                                              adSection:0];
             [tableView layoutIfNeeded];
         });
 
@@ -148,7 +152,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                     adInitialIndexPath:nil];
+                                  articlesBeforeFirstAd:2
+                                     articlesBetweenAds:1
+                                              adSection:0];
             [tableView layoutIfNeeded];
 
             objc_getAssociatedObject(tableView, STRGridlikeViewAdGeneratorKey) should be_same_instance_as(tableViewAdGenerator);
@@ -173,7 +179,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                     adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+                                  articlesBeforeFirstAd:2
+                                     articlesBetweenAds:1
+                                              adSection:0];
             [tableView numberOfRowsInSection:1] should equal(3);
             [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]] should be_instance_of([STRTableViewCell class]);
         });
@@ -186,7 +194,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                                placementKey:@"placementKey"
                                    presentingViewController:presentingViewController
                                                      adSize:CGSizeZero
-                                         adInitialIndexPath:[NSIndexPath indexPathForRow:5 inSection:1]];
+                                      articlesBeforeFirstAd:2
+                                         articlesBetweenAds:1
+                                                  adSection:0];
                 [tableView numberOfRowsInSection:1] should equal(3);
             });
         });
@@ -199,7 +209,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                                placementKey:@"placementKey"
                                    presentingViewController:presentingViewController
                                                      adSize:CGSizeZero
-                                         adInitialIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+                                      articlesBeforeFirstAd:2
+                                         articlesBetweenAds:1
+                                                  adSection:0];
                 [tableView numberOfRowsInSection:0] should equal(0);
             });
         });
@@ -212,7 +224,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                                placementKey:@"placementKey"
                                    presentingViewController:presentingViewController
                                                      adSize:CGSizeZero
-                                         adInitialIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+                                      articlesBeforeFirstAd:2
+                                         articlesBetweenAds:1
+                                                  adSection:0];
                 [tableView numberOfRowsInSection:1] should equal(3);
                 [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should be_instance_of([STRTableViewCell class]);
             });
@@ -240,7 +254,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                     adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                                  articlesBeforeFirstAd:2
+                                     articlesBetweenAds:1
+                                              adSection:0];
 
             [tableView numberOfRowsInSection:0] should equal(3);
             [tableView numberOfRowsInSection:1] should equal(2);
@@ -255,7 +271,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                     adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+                                 articlesBeforeFirstAd:2
+                                    articlesBetweenAds:1
+                                             adSection:0];
             [tableView numberOfRowsInSection:0] should equal(2);
             [tableView numberOfRowsInSection:1] should equal(3);
         });
@@ -268,7 +286,9 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                           placementKey:@"placementKey"
                               presentingViewController:presentingViewController
                                                 adSize:CGSizeZero
-                                    adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+                                 articlesBeforeFirstAd:2
+                                    articlesBetweenAds:1
+                                             adSection:0];
             [tableView.delegate tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
 
             __autoreleasing NSIndexPath *indexPath;

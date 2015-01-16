@@ -1,6 +1,7 @@
 #import "STRAdCache.h"
 #import "STRAdvertisement.h"
 #import "STRDateProvider.h"
+#import "STRAdPlacement.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -122,9 +123,12 @@ describe(@"STRAdCache", ^{
     describe(@"-isAdStale:", ^{
         __block STRAdvertisement *recentAd;
         __block STRAdvertisement *expiredAd;
+        __block STRAdPlacement *placement;
 
         describe(@"with the default timeout", ^{
             beforeEach(^{
+                placement = [[STRAdPlacement alloc] init];
+                placement.placementKey
                 recentAd = [[STRAdvertisement alloc] init];
                 recentAd.placementKey = @"pkey-recentAd";
                 recentAd.creativeKey = @"ckey-recentAd";
@@ -145,21 +149,26 @@ describe(@"STRAdCache", ^{
 
                     [invocation setReturnValue:&date];
                 });
-
-                [cache saveAd:expiredAd];
-                [cache saveAd:recentAd];
+                
+                [cache saveAds:@[recentAd] mutableCopy forPlacement:placement andInitializeAtIndex:NO];
+                
+                placement.placementKey = @"pkey-expiredAd";
+                [cache saveAds:@[expiredAd] forPlacement:placement andInitializeAtIndex:NO];
             });
 
             it(@"returns YES if no ad has been fetched", ^{
-                [cache isAdStale:@"pkey-nonexistant"] should be_truthy;
+                placement.placementKey = @"pkey-nonexistant";
+                [cache isAdAvailableForPlacement:placement] should be_falsy;
             });
 
             it(@"returns YES if the saved ad was fetched more than 2 minutes ago", ^{
-                [cache isAdStale:@"pkey-expiredAd"] should be_truthy;
+                placement.placementKey = @"pkey-expiredAd";
+                [cache isAdAvailableForPlacement:placement] should be_falsy;
             });
 
             it(@"returns NO if the ad is not older than 120 seconds", ^{
-                [cache isAdStale:@"pkey-recentAd"] should be_falsy;
+                placement.placementKey = @"pkey-recentAd";
+                [cache isAdAvailableForPlacement:placement] should be_truthy;
             });
         });
 

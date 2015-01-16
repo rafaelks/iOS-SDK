@@ -37,6 +37,7 @@ describe(@"STRFakeAdGenerator", ^{
                                                                   PlacementKey:@"fakePlacementKey"
                                                       presentingViewController:presentingViewController
                                                                       delegate:nil
+                                                                       adIndex:0
                                                                        DFPPath:nil
                                                                    DFPDeferred:nil];
 
