@@ -49,19 +49,17 @@ describe(@"DFPAdGenerator", ^{
 
         view = nice_fake_for([STRFullAdView class]);
 
-        adPlacement = [[STRAdPlacement alloc] initWithAdView:view
-                                                PlacementKey:@"placementKey"
-                                    presentingViewController:nil
-                                                    delegate:delegate
-                                                     DFPPath:nil
-                                                 DFPDeferred:nil];
+        adPlacement = [[STRAdPlacement alloc] init];
+        adPlacement.adView = view;
+        adPlacement.placementKey = @"placementKey";
+        adPlacement.delegate = delegate;
 
         generator = [[STRDFPAdGenerator alloc] initWithAdService:adService injector:injector restClient:restClient];
     });
 
     context(@"when there is no ad cached", ^{
         beforeEach(^{
-            adService stub_method(@selector(isAdCachedForPlacementKey:)).and_return(NO);
+            adService stub_method(@selector(isAdCachedForPlacement:)).and_return(NO);
         });
 
         describe(@"when the DFP Path is passed in", ^{

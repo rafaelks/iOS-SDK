@@ -19,7 +19,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
     __block STRAdPlacementAdjuster *adjuster;
 
     beforeEach(^{
-        adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+        adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
 
         injector = [STRInjector injectorForModule:[STRAppModule new]];
         adGenerator = [STRFakeAdGenerator new];

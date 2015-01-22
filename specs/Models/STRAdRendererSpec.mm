@@ -12,6 +12,7 @@
 #import "STRAdPlacement.h"
 #import "STRNetworkClient.h"
 #import "STRAdRenderer.h"
+#import "STRDateProvider.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -25,6 +26,7 @@ describe(@"STRAdRenderer", ^{
     __block NSRunLoop<CedarDouble> *fakeRunLoop;
     __block STRNetworkClient *fakeNetworkClient;
     __block STRAdRenderer *renderer;
+    __block STRDateProvider<CedarDouble> *dateProvider;
     
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -39,8 +41,10 @@ describe(@"STRAdRenderer", ^{
 
         fakeNetworkClient = nice_fake_for([STRNetworkClient class]);
         [injector bind:[STRNetworkClient class] toInstance:fakeNetworkClient];
+        
+        dateProvider = nice_fake_for([STRDateProvider class]);
 
-        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
+        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService dateProvider:dateProvider runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
         [injector bind:[STRAdRenderer class] toInstance:renderer];
 
         ad = [STRAdvertisement new];
@@ -80,6 +84,7 @@ describe(@"STRAdRenderer", ^{
                                                   PlacementKey:@"placementKey"
                                       presentingViewController:presentingViewController
                                                       delegate:delegate
+                                                       adIndex:0
                                                        DFPPath:nil
                                                    DFPDeferred:nil];
         });
@@ -510,12 +515,10 @@ describe(@"STRAdRenderer", ^{
                 view = [STRPlainAdView new];
                 deferred = [STRDeferred defer];
                 
-                placement = [[STRAdPlacement alloc] initWithAdView:view
-                                                                      PlacementKey:@"placementKey"
-                                                          presentingViewController:presentingViewController
-                                                                          delegate:nil
-                                                                           DFPPath:nil
-                                                                       DFPDeferred:nil];
+                placement = [[STRAdPlacement alloc] init];
+                placement.adView = view;
+                placement.placementKey = @"placementKey";
+                placement.presentingViewController = presentingViewController;
             });
             
             it(@"does not try to include an ad description", ^{

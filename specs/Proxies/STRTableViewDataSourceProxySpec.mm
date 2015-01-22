@@ -21,7 +21,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
     
     STRGridlikeViewDataSourceProxy *(^proxyWithDataSource)(id<UITableViewDataSource> dataSource) = ^STRGridlikeViewDataSourceProxy *(id<UITableViewDataSource> dataSource) {
         
-        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
 
         STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
         dataSourceProxy.originalDataSource = dataSource;

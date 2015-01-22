@@ -27,7 +27,9 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                                     placementKey:nil
                         presentingViewController:nil
                                           adSize:CGSizeZero
-                              adInitialIndexPath:nil];
+                           articlesBeforeFirstAd:0
+                              articlesBetweenAds:0
+                                       adSection:0];
             }).to_not(raise_exception);
 
             objc_getAssociatedObject(view, STRGridlikeViewAdGeneratorKey) should be_same_instance_as(generator);
@@ -43,7 +45,9 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                                     placementKey:nil
                         presentingViewController:nil
                                           adSize:CGSizeZero
-                              adInitialIndexPath:nil];
+                           articlesBeforeFirstAd:0
+                              articlesBetweenAds:0
+                                       adSection:0];
             }).to_not(raise_exception);
 
             objc_getAssociatedObject(view, STRGridlikeViewAdGeneratorKey) should be_same_instance_as(generator);
@@ -59,7 +63,9 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                                     placementKey:nil
                         presentingViewController:nil
                                           adSize:CGSizeZero
-                              adInitialIndexPath:nil];
+                           articlesBeforeFirstAd:0
+                              articlesBetweenAds:0
+                                       adSection:0];
             }).to(raise_exception);
 
             objc_getAssociatedObject(view, STRGridlikeViewAdGeneratorKey) should be_nil;

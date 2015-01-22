@@ -64,7 +64,9 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                                 placementKey:@"placementKey"
                                     presentingViewController:presentingViewController
                                                       adSize:CGSizeZero
-                                          adInitialIndexPath:nil];
+                                       articlesBeforeFirstAd:1
+                                          articlesBetweenAds:100
+                                                   adSection:0];
 
             [collectionView layoutIfNeeded];
         });
@@ -90,7 +92,9 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                                 placementKey:@"placementKey"
                                     presentingViewController:presentingViewController
                                                       adSize:CGSizeZero
-                                          adInitialIndexPath:nil];
+                                       articlesBeforeFirstAd:1
+                                          articlesBetweenAds:100
+                                                   adSection:0];
             [collectionView layoutIfNeeded];
         });
 
@@ -136,7 +140,9 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                                 placementKey:@"placementKey"
                                     presentingViewController:presentingViewController
                                                       adSize:CGSizeZero
-                                          adInitialIndexPath:nil];
+                                       articlesBeforeFirstAd:1
+                                          articlesBetweenAds:100
+                                                   adSection:0];
             [collectionView layoutIfNeeded];
         });
 
@@ -182,7 +188,9 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                                 placementKey:@"placementKey"
                                     presentingViewController:presentingViewController
                                                       adSize:CGSizeZero
-                                          adInitialIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+                                       articlesBeforeFirstAd:1
+                                          articlesBetweenAds:100
+                                                   adSection:0];
             [collectionView layoutIfNeeded];
             [collectionView numberOfItemsInSection:1] should equal(3);
 
@@ -197,8 +205,9 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                                     placementKey:@"placementKey"
                                         presentingViewController:presentingViewController
                                                           adSize:CGSizeZero
-                                              adInitialIndexPath:[NSIndexPath indexPathForRow:5 inSection:1]];
-                [collectionView layoutIfNeeded];
+                                           articlesBeforeFirstAd:5
+                                              articlesBetweenAds:100
+                                                       adSection:0];                [collectionView layoutIfNeeded];
                 [collectionView numberOfItemsInSection:1] should equal(3);
             });
         });
@@ -211,7 +220,9 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                                     placementKey:@"placementKey"
                                         presentingViewController:presentingViewController
                                                           adSize:CGSizeZero
-                                              adInitialIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]];
+                                           articlesBeforeFirstAd:1
+                                              articlesBetweenAds:100
+                                                       adSection:0];
                 [collectionView layoutIfNeeded];
                 [collectionView numberOfItemsInSection:0] should equal(0);
             });
@@ -225,7 +236,9 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
                                                     placementKey:@"placementKey"
                                         presentingViewController:presentingViewController
                                                           adSize:CGSizeZero
-                                              adInitialIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+                                           articlesBeforeFirstAd:1
+                                              articlesBetweenAds:100
+                                                       adSection:0];
                 [collectionView layoutIfNeeded];
                 [collectionView numberOfItemsInSection:1] should equal(3);
                 [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should be_instance_of([STRCollectionViewCell class]);

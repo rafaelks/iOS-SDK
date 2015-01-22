@@ -64,7 +64,7 @@ describe(@"UITableView+STR", ^{
         
         [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCellReuseIdentifier"];
         
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:100];
         spy_on(adPlacementAdjuster);
         
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -72,7 +72,7 @@ describe(@"UITableView+STR", ^{
         [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
         
         spy_on([STRAdPlacementAdjuster class]);
-        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
+        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:)).and_return(adPlacementAdjuster);
         
         dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCellReuseIdentifier"
                                                                                    placementKey:@"placementKey"
@@ -89,7 +89,9 @@ describe(@"UITableView+STR", ^{
                             placementKey:@"placementKey"
                 presentingViewController:nil
                                   adSize:CGSizeZero
-                      adInitialIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
+                              articlesBeforeFirstAd:1
+                                 articlesBetweenAds:100
+                                          adSection:1];
         
         [tableView reloadData];
     });
@@ -293,14 +295,14 @@ describe(@"UITableView+STR", ^{
             });
         });
         
-        describe(@"-str_reloadDataWithAdIndexPath:", ^{
+        describe(@"-str_reloadData", ^{
             itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
-                [noAdTableView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                [noAdTableView str_reloadData];
             });
             
             it(@"reloads the tableview, inserting a row at the new index path", ^{
                 [(id<CedarDouble>)tableView reset_sent_messages];
-                [tableView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                [tableView str_reloadData];
                 
                 tableView should have_received(@selector(reloadData));
                 [tableView layoutIfNeeded]; // ?
@@ -314,9 +316,7 @@ describe(@"UITableView+STR", ^{
             it(@"allows a nil default", ^{
                 spy_on(tableViewAdGenerator);
                 [(id<CedarDouble>)tableView reset_sent_messages];
-                [tableView str_reloadDataWithAdIndexPath:nil];
-                
-                tableViewAdGenerator should have_received(@selector(initialIndexPathForAd:preferredStartingIndexPath:)).with(tableView, nil);
+                [tableView str_reloadData];
                 
                 [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_instance_of([STRTableViewCell class]);
             });
@@ -868,14 +868,14 @@ describe(@"UITableView+STR", ^{
             });
         });
         
-        describe(@"-str_reloadDataWithAdIndexPath:", ^{
+        describe(@"-str_reloadData", ^{
             itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
-                [noAdTableView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                [noAdTableView str_reloadData];
             });
             
             it(@"reloads the tableview, inserting a row at the new index path", ^{
                 [(id<CedarDouble>)tableView reset_sent_messages];
-                [tableView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                [tableView str_reloadData];
                 
                 tableView should have_received(@selector(reloadData));
                 [tableView layoutIfNeeded]; // ?
@@ -889,9 +889,7 @@ describe(@"UITableView+STR", ^{
             it(@"allows a nil default", ^{
                 spy_on(tableViewAdGenerator);
                 [(id<CedarDouble>)tableView reset_sent_messages];
-                [tableView str_reloadDataWithAdIndexPath:nil];
-                
-                tableViewAdGenerator should have_received(@selector(initialIndexPathForAd:preferredStartingIndexPath:)).with(tableView, nil);
+                [tableView str_reloadData];
                 
                 [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_instance_of([UITableViewCell class]);
             });

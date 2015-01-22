@@ -64,12 +64,12 @@ describe(@"UICollectionView+STR", ^{
         [collectionView registerClass:[STRCollectionViewCell class] forCellWithReuseIdentifier:@"adCellReuseIdentifier"];
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
         
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:100];
         spy_on(adPlacementAdjuster);
         
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
         spy_on([STRAdPlacementAdjuster class]);
-        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterWithInitialAdIndexPath:)).and_return(adPlacementAdjuster);
+        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:)).and_return(adPlacementAdjuster);
         
         dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCellReuseIdentifier"
                                                                                    placementKey:@"placementKey"
@@ -85,7 +85,9 @@ describe(@"UICollectionView+STR", ^{
                             placementKey:@"placementKey"
                 presentingViewController:nil
                                   adSize:CGSizeZero
-                      adInitialIndexPath:nil];
+                   articlesBeforeFirstAd:1
+                      articlesBetweenAds:100
+                               adSection:0];
         
         [collectionView reloadData];
         [collectionView layoutIfNeeded];
@@ -383,12 +385,12 @@ describe(@"UICollectionView+STR", ^{
         
         describe(@"-str_reloadDataWithAdIndexPath:", ^{
             itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
-                [noAdCollectionView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+                [noAdCollectionView str_reloadData];
             });
             
             it(@"reloads the collectionview, inserting a row at the new index path", ^{
                 [(id<CedarDouble>)collectionView reset_sent_messages];
-                [collectionView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForItem:2 inSection:0]];
+                [collectionView str_reloadData];
                 
                 collectionView should have_received(@selector(reloadData));
                 [collectionView layoutIfNeeded]; // ?
@@ -402,18 +404,12 @@ describe(@"UICollectionView+STR", ^{
             
             it(@"places the ad at the initialIndexPath", ^{
                 [(id<CedarDouble>)collectionView reset_sent_messages];
-                [collectionView str_reloadDataWithAdIndexPath:nil];
+                [collectionView str_reloadData];
                 collectionView should have_received(@selector(reloadData));
                 [collectionView layoutIfNeeded];
                 
                 STRCollectionViewCell *adCell = (STRCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                 adCell.adTitle.text should equal(@"Generic Ad Title");
-            });
-            
-            it(@"always ensures that index path is valid", ^{
-                spy_on(generator);
-                [collectionView str_reloadDataWithAdIndexPath:nil];
-                generator should have_received(@selector(initialIndexPathForAd:preferredStartingIndexPath:)).with(collectionView, nil);
             });
         });
         
@@ -873,14 +869,14 @@ describe(@"UICollectionView+STR", ^{
             });
         });
         
-        describe(@"-str_reloadDataWithAdIndexPath:", ^{
+        describe(@"-str_reloadData:", ^{
             itThrowsIfCollectionWasntConfigured(^(UICollectionView *noAdCollectionView){
-                [noAdCollectionView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+                [noAdCollectionView str_reloadData];
             });
             
             it(@"reloads the collectionview, inserting a row at the new index path", ^{
                 [(id<CedarDouble>)collectionView reset_sent_messages];
-                [collectionView str_reloadDataWithAdIndexPath:[NSIndexPath indexPathForItem:2 inSection:0]];
+                [collectionView str_reloadData];
                 
                 collectionView should have_received(@selector(reloadData));
                 [collectionView layoutIfNeeded]; // ?
@@ -894,18 +890,12 @@ describe(@"UICollectionView+STR", ^{
             
             it(@"places the ad at the initialIndexPath", ^{
                 [(id<CedarDouble>)collectionView reset_sent_messages];
-                [collectionView str_reloadDataWithAdIndexPath:nil];
+                [collectionView str_reloadData];
                 collectionView should have_received(@selector(reloadData));
                 [collectionView layoutIfNeeded];
                 
                 STRCollectionViewCell *adCell = (STRCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                 adCell.adTitle.text should equal(@"Generic Ad Title");
-            });
-            
-            it(@"always ensures that index path is valid", ^{
-                spy_on(generator);
-                [collectionView str_reloadDataWithAdIndexPath:nil];
-                generator should have_received(@selector(initialIndexPathForAd:preferredStartingIndexPath:)).with(collectionView, nil);
             });
         });
         

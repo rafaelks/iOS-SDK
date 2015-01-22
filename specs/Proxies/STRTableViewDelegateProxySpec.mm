@@ -21,7 +21,7 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
         tableView = nice_fake_for([UITableView class]);
         tableView stub_method(@selector(numberOfRowsInSection:)).with(0).and_return(2);
         
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
         
         proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adSize:CGSizeMake(0, 51.0)];
     });

@@ -23,7 +23,7 @@ using namespace Cedar::Doubles;
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
     
     UILabel *label = [[UILabel alloc] init];
-    label.text = [NSString stringWithFormat:@"item: %ld, section: %d", (long)indexPath.item, indexPath.section];
+    label.text = [NSString stringWithFormat:@"item: %ld, section: %d", (long)indexPath.item, (long)indexPath.section];
     [cell.contentView addSubview:label];
     
     return cell;
@@ -35,7 +35,7 @@ using namespace Cedar::Doubles;
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
     
     UILabel *label = [[UILabel alloc] init];
-    label.text = [NSString stringWithFormat:@"item: %d, section: %d", indexPath.item, indexPath.section];
+    label.text = [NSString stringWithFormat:@"item: %d, section: %d", indexPath.item, (long)indexPath.section];
     [cell.contentView addSubview:label];
     
     return cell;
@@ -54,8 +54,8 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
     __block STRCollectionViewDataSource *originalDataSource;
     
     STRGridlikeViewDataSourceProxy *(^proxyWithDataSource)(id<UICollectionViewDataSource> dataSource) = ^STRGridlikeViewDataSourceProxy *(id<UICollectionViewDataSource> dataSource) {
-        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
-
+        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
+        
         STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
         dataSourceProxy.originalDataSource = dataSource;
         dataSourceProxy.adjuster = adjuster;

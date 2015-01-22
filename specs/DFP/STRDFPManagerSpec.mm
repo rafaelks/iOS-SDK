@@ -32,6 +32,7 @@ describe(@"DFPManager", ^{
                                                 PlacementKey:@"placementKey"
                                     presentingViewController:nil
                                                     delegate:delegate
+                                                     adIndex:0
                                                      DFPPath:@"DFPPath"
                                                  DFPDeferred:nil];
     });

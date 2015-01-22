@@ -12,6 +12,7 @@
 #import "STRAdPinterest.h"
 #import "STRAdInstagram.h"
 #import "STRBeaconService.h"
+#import "STRAdPlacement.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -48,6 +49,7 @@ describe(@"STRAdService", ^{
         __block STRDeferred *restClientDeferred;
         __block STRDeferred *networkClientDeferred;
         __block STRPromise *returnedPromise;
+        __block STRAdPlacement *adPlacement;
 
         beforeEach(^{
             restClientDeferred = [STRDeferred defer];
@@ -55,6 +57,10 @@ describe(@"STRAdService", ^{
 
             networkClientDeferred = [STRDeferred defer];
             networkClient stub_method(@selector(get:)).and_return(networkClientDeferred.promise);
+            
+            
+            adPlacement = [[STRAdPlacement alloc] init];
+            adPlacement.placementKey = @"placementKey";
         });
 
         describe(@"when an ad is retrieved from the cache", ^{
@@ -62,9 +68,10 @@ describe(@"STRAdService", ^{
 
             beforeEach(^{
                 ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey").and_return(ad);
+                adCache stub_method(@selector(fetchAdForPlacement:)).and_return(ad);
 
-                returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
+
+                returnedPromise = [service fetchAdForPlacement:adPlacement];
             });
 
             it(@"does not make a request to the ad server", ^{
@@ -90,10 +97,10 @@ describe(@"STRAdService", ^{
             beforeEach(^{
                 ad = nice_fake_for([STRAdvertisement class]);
 
-                adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey").and_return(ad);
-                adCache stub_method(@selector(isAdStale:)).with(@"placementKey").and_return(YES);
+                adCache stub_method(@selector(fetchAdForPlacement:)).and_return(ad);
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
 
-                returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
+                returnedPromise = [service fetchAdForPlacement:adPlacement];
             });
 
             it(@"makes a request to the ad server", ^{
@@ -120,11 +127,11 @@ describe(@"STRAdService", ^{
 
         describe(@"when there is a pending ad request", ^{
             beforeEach(^{
-                adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey");
-                adCache stub_method(@selector(isAdStale:)).with(@"placementKey").and_return(YES);
-                adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).with(@"placementKey").and_return(YES);
+                adCache stub_method(@selector(fetchAdForPlacement:));
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).and_return(YES);
 
-                returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
+                returnedPromise = [service fetchAdForPlacement:adPlacement];
             });
 
             it(@"returns a pendingRequestInProgress error", ^{
@@ -136,10 +143,10 @@ describe(@"STRAdService", ^{
 
         describe(@"when no ad is cached for the given placement key", ^{
             beforeEach(^{
-                adCache stub_method(@selector(fetchCachedAdForPlacementKey:)).with(@"placementKey");
-                adCache stub_method(@selector(isAdStale:)).with(@"placementKey").and_return(YES);
+                adCache stub_method(@selector(fetchAdForPlacement:));
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
 
-                returnedPromise = [service fetchAdForPlacementKey:@"placementKey"];
+                returnedPromise = [service fetchAdForPlacement:adPlacement];
             });
 
             it(@"makes a request to the ad server", ^{
@@ -174,7 +181,7 @@ describe(@"STRAdService", ^{
                         });
 
                         it(@"saves the ad in the cache", ^{
-                            adCache should have_received(@selector(saveAd:)).with(returnedPromise.value);
+                            adCache should have_received(@selector(saveAds:forPlacement:andInitializeAtIndex:)).with(returnedPromise.value);
                         });
 
                         it(@"resolves the returned promise with an advertisement", ^{
