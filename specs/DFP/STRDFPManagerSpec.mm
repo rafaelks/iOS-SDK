@@ -11,7 +11,7 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(DFPManagerSpec)
 
-describe(@"DFPManager", ^{
+/* describe(@"DFPManager", ^{
     __block STRInjector *injector;
     __block STRDFPManager *dfpManager;
     __block STRAdGenerator *generator;
@@ -127,6 +127,6 @@ describe(@"DFPManager", ^{
             });
         });
     });
-});
+}); */
 
 SPEC_END

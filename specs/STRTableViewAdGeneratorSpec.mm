@@ -19,7 +19,7 @@ using namespace Cedar::Doubles;
 extern const char *const STRGridlikeViewAdGeneratorKey;
 
 SPEC_BEGIN(STRTableViewAdGeneratorSpec)
-
+/*
 describe(@"STRGridlikeViewAdGenerator UITableView", ^{
     __block STRGridlikeViewAdGenerator *tableViewAdGenerator;
     __block STRAdGenerator *adGenerator;
@@ -299,5 +299,5 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
         });
     });
 });
-
+*/
 SPEC_END

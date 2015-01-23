@@ -42,7 +42,7 @@ void(^itThrowsIfTableWasntConfigured)(TriggerBlock) = ^(TriggerBlock trigger){
         });
     });
 };
-
+/*
 describe(@"UITableView+STR", ^{
     __block UITableView *tableView;
     __block STRTableViewDelegate *delegate;
@@ -1238,5 +1238,5 @@ describe(@"UITableView+STR", ^{
         });
     });
 });
-
+*/
 SPEC_END

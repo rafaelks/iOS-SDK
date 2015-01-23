@@ -7,7 +7,7 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRAdCacheSpec)
-
+/*
 describe(@"STRAdCache", ^{
     __block STRAdCache *cache;
     __block STRDateProvider<CedarDouble> *dateProvider;
@@ -273,5 +273,5 @@ describe(@"STRAdCache", ^{
         });
     });
 });
-
+*/
 SPEC_END

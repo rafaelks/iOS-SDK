@@ -11,7 +11,7 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(DFPGridlikeDataSourceProxy)
 
-describe(@"DFPManager", ^{
+/* describe(@"DFPManager", ^{
     __block STRInjector *injector;
     __block STRDFPAdGenerator *generator;
     __block STRDFPGridlikeViewDataSourceProxy *dataSourceProxy;
@@ -96,6 +96,6 @@ describe(@"DFPManager", ^{
             });
         });
     });
-});
+}); */
 
 SPEC_END

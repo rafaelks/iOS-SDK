@@ -19,7 +19,7 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRDFPAdGeneratorSpec)
 
-describe(@"DFPAdGenerator", ^{
+/* describe(@"DFPAdGenerator", ^{
     __block STRDFPAdGenerator *generator;
     __block STRAdService *adService;
     __block STRInjector *injector;
@@ -209,6 +209,6 @@ describe(@"DFPAdGenerator", ^{
             });
         });
     });
-});
+}); */
 
 SPEC_END

@@ -10,7 +10,7 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRTableViewDataSourceProxySpec)
-
+/*
 describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
     __block STRGridlikeViewDataSourceProxy *proxy;
     __block STRAdGenerator *adGenerator;
@@ -143,5 +143,5 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
         });
     });
 });
-
+*/
 SPEC_END

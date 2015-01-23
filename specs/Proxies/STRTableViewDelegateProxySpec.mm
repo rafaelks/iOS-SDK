@@ -8,7 +8,7 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRTableViewDelegateProxySpec)
-
+/*
 describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
     __block STRIndexPathDelegateProxy *proxy;
     __block STRFullTableViewDelegate *originalDelegate;
@@ -831,5 +831,5 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
 
     });
 });
-
+*/
 SPEC_END

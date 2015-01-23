@@ -36,6 +36,7 @@ describe(@"STRBeaconService", ^{
         ASIdentifierManager *fakeManager = nice_fake_for([ASIdentifierManager class]);
         spy_on([ASIdentifierManager class]);
         [injector bind:[ASIdentifierManager class] toInstance:fakeManager];
+        fakeManager stub_method(@selector(isAdvertisingTrackingEnabled)).and_return(YES);
 
         NSUUID *fakeId = nice_fake_for([NSUUID class]);
         fakeId stub_method(@selector(UUIDString)).and_return(@"fakeUUID");

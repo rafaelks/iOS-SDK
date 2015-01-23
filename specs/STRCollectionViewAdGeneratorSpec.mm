@@ -18,7 +18,7 @@ using namespace Cedar::Doubles;
 extern const char *const STRGridlikeViewAdGeneratorKey;
 
 SPEC_BEGIN(STRCollectionViewAdGeneratorSpec)
-
+/*
 describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
     __block STRGridlikeViewAdGenerator *collectionViewAdGenerator;
     __block STRAdGenerator *adGenerator;
@@ -247,5 +247,5 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
     });
 
 });
-
+*/
 SPEC_END

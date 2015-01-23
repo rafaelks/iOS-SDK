@@ -4,7 +4,7 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRAdPlacementAdjusterSpec)
-
+/*
 describe(@"STRAdPlacementAdjuster", ^{
     __block STRAdPlacementAdjuster *adjuster;
     
@@ -967,5 +967,5 @@ describe(@"STRAdPlacementAdjuster", ^{
         });
     });
 });
-
+*/
 SPEC_END
