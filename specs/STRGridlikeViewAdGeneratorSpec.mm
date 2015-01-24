@@ -7,7 +7,7 @@ using namespace Cedar::Doubles;
 extern const char *const STRGridlikeViewAdGeneratorKey;
 
 SPEC_BEGIN(STRGridlikeViewAdGeneratorSpec)
-/*
+
 describe(@"STRGridlikeViewAdGenerator", ^{
     __block STRGridlikeViewAdGenerator *generator;
     __block UIView *view;
@@ -72,5 +72,5 @@ describe(@"STRGridlikeViewAdGenerator", ^{
         });
     });
 });
-*/
+
 SPEC_END

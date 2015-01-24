@@ -18,7 +18,7 @@ using namespace Cedar::Doubles;
 extern const char *const STRGridlikeViewAdGeneratorKey;
 
 SPEC_BEGIN(STRCollectionViewAdGeneratorSpec)
-/*
+
 describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
     __block STRGridlikeViewAdGenerator *collectionViewAdGenerator;
     __block STRAdGenerator *adGenerator;
@@ -171,81 +171,6 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
         });
     });
 
-    describe(@"placing ad with a custom index path", ^{
-        __block STRFullCollectionViewDataSource *dataSource;
-
-        beforeEach(^{
-            dataSource = [STRFullCollectionViewDataSource new];
-            collectionView.dataSource = dataSource;
-            dataSource.itemsForEachSection = @[@0, @2];
-            dataSourceProxy.originalDataSource = dataSource;
-        });
-
-        it(@"puts the ad there", ^{
-            [collectionViewAdGenerator placeAdInGridlikeView:collectionView
-                                             dataSourceProxy:dataSourceProxy
-                                       adCellReuseIdentifier:@"adCell"
-                                                placementKey:@"placementKey"
-                                    presentingViewController:presentingViewController
-                                                      adSize:CGSizeZero
-                                       articlesBeforeFirstAd:1
-                                          articlesBetweenAds:100
-                                                   adSection:0];
-            [collectionView layoutIfNeeded];
-            [collectionView numberOfItemsInSection:1] should equal(3);
-
-            [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]] should be_instance_of([STRCollectionViewCell class]);
-        });
-
-        context(@"and the index path is out of bounds", ^{
-            it(@"places it in the last position", ^{
-                [collectionViewAdGenerator placeAdInGridlikeView:collectionView
-                                                 dataSourceProxy:dataSourceProxy
-                                           adCellReuseIdentifier:@"adCell"
-                                                    placementKey:@"placementKey"
-                                        presentingViewController:presentingViewController
-                                                          adSize:CGSizeZero
-                                           articlesBeforeFirstAd:5
-                                              articlesBetweenAds:100
-                                                       adSection:0];                [collectionView layoutIfNeeded];
-                [collectionView numberOfItemsInSection:1] should equal(3);
-            });
-        });
-
-        context(@"and there are no items in the seciton", ^{
-            it(@"doesn't place an ad in the section", ^{
-                [collectionViewAdGenerator placeAdInGridlikeView:collectionView
-                                                 dataSourceProxy:dataSourceProxy
-                                           adCellReuseIdentifier:@"adCell"
-                                                    placementKey:@"placementKey"
-                                        presentingViewController:presentingViewController
-                                                          adSize:CGSizeZero
-                                           articlesBeforeFirstAd:1
-                                              articlesBetweenAds:100
-                                                       adSection:0];
-                [collectionView layoutIfNeeded];
-                [collectionView numberOfItemsInSection:0] should equal(0);
-            });
-        });
-
-        context(@"and then index path would be valid when the ad is inserted", ^{
-            it(@"is still able to place the ad there", ^{
-                [collectionViewAdGenerator placeAdInGridlikeView:collectionView
-                                                 dataSourceProxy:dataSourceProxy
-                                           adCellReuseIdentifier:@"adCell"
-                                                    placementKey:@"placementKey"
-                                        presentingViewController:presentingViewController
-                                                          adSize:CGSizeZero
-                                           articlesBeforeFirstAd:1
-                                              articlesBetweenAds:100
-                                                       adSection:0];
-                [collectionView layoutIfNeeded];
-                [collectionView numberOfItemsInSection:1] should equal(3);
-                [collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should be_instance_of([STRCollectionViewCell class]);
-            });
-        });
-    });
-
 });
-*/
+
 SPEC_END

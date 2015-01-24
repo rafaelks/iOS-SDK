@@ -63,6 +63,13 @@
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey {
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
+    for (id key in indexToCreativeMap) {
+        STRAdvertisement *ad = [indexToCreativeMap objectForKey:key];
+        if ([ad.creativeKey isEqualToString:creativeKey]) {
+            return ad;
+        }
+    }
     NSArray *creatives = [self.cachedCreatives objectForKey:placementKey];
     for (int i = 0; i < [creatives count]; ++i) {
         STRAdvertisement *ad = creatives[i];
@@ -86,6 +93,10 @@
     }
     if (initializeIndex) {
         NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
+        if (indexToCreativeMap == nil) {
+            indexToCreativeMap = [[NSMutableDictionary alloc] init];
+            [self.cachedIndexToCreativeMaps setObject:indexToCreativeMap forKey:placement.placementKey];
+        }
         STRAdvertisement *ad = [cachedCreativesQueue dequeue];
         [indexToCreativeMap setObject:ad forKey:[NSNumber numberWithLong:placement.adIndex]];
     }
@@ -165,6 +176,5 @@
 #pragma mark - NSCacheDelegate
 - (void)cache:(NSCache *)cache willEvictObject:(id)obj {
     //TODO: Consider clearing the pKey -> cKey pointer and render timestamp
-    NSLog(@"Evicting object %@",obj);
 }
 @end

@@ -7,7 +7,7 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRAdCacheSpec)
-/*
+
 describe(@"STRAdCache", ^{
     __block STRAdCache *cache;
     __block STRDateProvider<CedarDouble> *dateProvider;
@@ -60,14 +60,14 @@ describe(@"STRAdCache", ^{
                 } else if (dateProvider.sent_messages.count == 2) {
                     date = [NSDate dateWithTimeIntervalSince1970:10000];
                 } else {
-                    date = [NSDate dateWithTimeIntervalSince1970:10119];
+                    date = [NSDate dateWithTimeIntervalSince1970:10019];
                 }
 
                 [invocation setReturnValue:&date];
             });
             
-            [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:NO];
-            [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:NO];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:YES];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:YES];
         });
 
         it(@"returns nil if no ad exists", ^{
@@ -111,7 +111,7 @@ describe(@"STRAdCache", ^{
                 } else if (dateProvider.sent_messages.count == 2) {
                     date = [NSDate dateWithTimeIntervalSince1970:10000];
                 } else {
-                    date = [NSDate dateWithTimeIntervalSince1970:10119];
+                    date = [NSDate dateWithTimeIntervalSince1970:10019];
                 }
                 
                 [invocation setReturnValue:&date];
@@ -130,7 +130,7 @@ describe(@"STRAdCache", ^{
         });
         
         it(@"returns the ad when it exists", ^{
-            [cache fetchCachedAdForPlacementKey:recentPlacement.placementKey CreativeKey:@"ckey-expiredAd"] should equal(recentAd);
+            [cache fetchCachedAdForPlacementKey:recentPlacement.placementKey CreativeKey:@"ckey-recentAd"] should equal(recentAd);
         });
     });
 
@@ -151,6 +151,7 @@ describe(@"STRAdCache", ^{
                 expiredAd = [[STRAdvertisement alloc] init];
                 expiredAd.placementKey = @"pkey-expiredAd";
                 expiredAd.creativeKey = @"ckey-expiredAd";
+                expiredAd.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:100];
                 expiredPlacement = [[STRAdPlacement alloc] init];
                 expiredPlacement.placementKey = @"pkey-expiredAd";
 
@@ -167,21 +168,21 @@ describe(@"STRAdCache", ^{
                     [invocation setReturnValue:&date];
                 });
                 
-                [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:NO];
-                [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:NO];
+                [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:YES];
+                [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:YES];
             });
 
-            it(@"returns YES if no ad has been fetched", ^{
+            it(@"returns NO if no ad has been fetched", ^{
                 STRAdPlacement *nonExistantPlacement = [[STRAdPlacement alloc] init];
                 nonExistantPlacement.placementKey = @"pkey-nonexistant";
                 [cache isAdAvailableForPlacement:nonExistantPlacement] should be_falsy;
             });
 
-            it(@"returns YES if the saved ad was fetched more than 2 minutes ago", ^{
+            it(@"returns NO if the saved ad was fetched more than 2 minutes ago", ^{
                 [cache isAdAvailableForPlacement:expiredPlacement] should be_falsy;
             });
 
-            it(@"returns NO if the ad is not older than 120 seconds", ^{
+            it(@"returns YES if the ad is not older than 120 seconds", ^{
                 [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
             });
         });
@@ -213,7 +214,7 @@ describe(@"STRAdCache", ^{
                     [invocation setReturnValue:&date];
                 });
                 
-                [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:NO];
+                [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:YES];
                 [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:NO];
                 
                 [cache setAdCacheTimeoutInSeconds:20];
@@ -273,5 +274,5 @@ describe(@"STRAdCache", ^{
         });
     });
 });
-*/
+
 SPEC_END

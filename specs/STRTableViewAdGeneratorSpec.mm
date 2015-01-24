@@ -19,7 +19,7 @@ using namespace Cedar::Doubles;
 extern const char *const STRGridlikeViewAdGeneratorKey;
 
 SPEC_BEGIN(STRTableViewAdGeneratorSpec)
-/*
+
 describe(@"STRGridlikeViewAdGenerator UITableView", ^{
     __block STRGridlikeViewAdGenerator *tableViewAdGenerator;
     __block STRAdGenerator *adGenerator;
@@ -161,78 +161,6 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
         });
     });
 
-    describe(@"placing ad with a custom index path", ^{
-        __block STRFullTableViewDataSource *dataSource;
-
-        beforeEach(^{
-            [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
-
-            dataSource = [STRFullTableViewDataSource new];
-            tableView.dataSource = dataSource;
-            dataSource.rowsForEachSection = @[@0, @2];
-        });
-
-        it(@"puts the ad there", ^{
-            [tableViewAdGenerator placeAdInGridlikeView:tableView
-                                        dataSourceProxy:dataSourceProxy
-                                  adCellReuseIdentifier:@"adCell"
-                                           placementKey:@"placementKey"
-                               presentingViewController:presentingViewController
-                                                 adSize:CGSizeZero
-                                  articlesBeforeFirstAd:2
-                                     articlesBetweenAds:1
-                                              adSection:0];
-            [tableView numberOfRowsInSection:1] should equal(3);
-            [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]] should be_instance_of([STRTableViewCell class]);
-        });
-
-        context(@"and the index path is out of bounds", ^{
-            it(@"places it in the last position", ^{
-                [tableViewAdGenerator placeAdInGridlikeView:tableView
-                                            dataSourceProxy:dataSourceProxy
-                                      adCellReuseIdentifier:@"adCell"
-                                               placementKey:@"placementKey"
-                                   presentingViewController:presentingViewController
-                                                     adSize:CGSizeZero
-                                      articlesBeforeFirstAd:2
-                                         articlesBetweenAds:1
-                                                  adSection:0];
-                [tableView numberOfRowsInSection:1] should equal(3);
-            });
-        });
-
-        context(@"and there are no items in the section", ^{
-            it(@"doesn't place an ad in the section", ^{
-                [tableViewAdGenerator placeAdInGridlikeView:tableView
-                                            dataSourceProxy:dataSourceProxy
-                                      adCellReuseIdentifier:@"adCell"
-                                               placementKey:@"placementKey"
-                                   presentingViewController:presentingViewController
-                                                     adSize:CGSizeZero
-                                      articlesBeforeFirstAd:2
-                                         articlesBetweenAds:1
-                                                  adSection:0];
-                [tableView numberOfRowsInSection:0] should equal(0);
-            });
-        });
-
-        context(@"and then index path would be valid when the ad is inserted", ^{
-            it(@"is still able to place the ad there", ^{
-                [tableViewAdGenerator placeAdInGridlikeView:tableView
-                                            dataSourceProxy:dataSourceProxy
-                                      adCellReuseIdentifier:@"adCell"
-                                               placementKey:@"placementKey"
-                                   presentingViewController:presentingViewController
-                                                     adSize:CGSizeZero
-                                      articlesBeforeFirstAd:2
-                                         articlesBetweenAds:1
-                                                  adSection:0];
-                [tableView numberOfRowsInSection:1] should equal(3);
-                [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should be_instance_of([STRTableViewCell class]);
-            });
-        });
-    });
-
     describe(@"place an ad in the table view twice", ^{
         __block STRFullTableViewDataSource *dataSource;
         __block id<UITableViewDelegate, CedarDouble> delegate;
@@ -258,7 +186,7 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                      articlesBetweenAds:1
                                               adSection:0];
 
-            [tableView numberOfRowsInSection:0] should equal(3);
+            [tableView numberOfRowsInSection:0] should equal(2);
             [tableView numberOfRowsInSection:1] should equal(2);
         });
 
@@ -275,7 +203,7 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                     articlesBetweenAds:1
                                              adSection:0];
             [tableView numberOfRowsInSection:0] should equal(2);
-            [tableView numberOfRowsInSection:1] should equal(3);
+            [tableView numberOfRowsInSection:1] should equal(2);
         });
 
         it(@"points delegate delegateProxy to original delegate", ^{
@@ -299,5 +227,5 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
         });
     });
 });
-*/
+
 SPEC_END

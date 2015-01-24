@@ -23,6 +23,9 @@
 }
 
 - (id)peek {
+    if ([self count] == 0) {
+        return nil;
+    }
     id headObject = [self objectAtIndex:0];
     return headObject;
 }
