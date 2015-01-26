@@ -9,7 +9,7 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRGridlikeViewDataSourceProxySpec)
-/*
+
 describe(@"STRGridlikeViewDataSourceProxy", ^{
     __block STRGridlikeViewDataSourceProxy *proxy;
     __block UIViewController *presentingViewController;
@@ -64,8 +64,8 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
 
         it(@"allows a data source that conforms to UITableView and UICollectionView's protocols", ^{
             id dataSource = nice_fake_for(@protocol(UITableViewDataSource), @protocol(UICollectionViewDataSource));
-            dataSource stub_method(@selector(tableView:numberOfRowsInSection:)).and_return(1);
-            dataSource stub_method(@selector(collectionView:numberOfItemsInSection:)).and_return(2);
+            dataSource stub_method(@selector(tableView:numberOfRowsInSection:)).and_return((long)1);
+            dataSource stub_method(@selector(collectionView:numberOfItemsInSection:)).and_return((long)2);
 
             expect(^{
                 proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil
@@ -151,5 +151,5 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
     });
 
 });
-*/
+
 SPEC_END
