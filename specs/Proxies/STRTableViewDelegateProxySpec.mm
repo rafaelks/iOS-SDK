@@ -8,7 +8,7 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRTableViewDelegateProxySpec)
-/*
+
 describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
     __block STRIndexPathDelegateProxy *proxy;
     __block STRFullTableViewDelegate *originalDelegate;
@@ -19,7 +19,7 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
         originalDelegate = [STRFullTableViewDelegate new];
         spy_on(originalDelegate);
         tableView = nice_fake_for([UITableView class]);
-        tableView stub_method(@selector(numberOfRowsInSection:)).with(0).and_return(2);
+        tableView stub_method(@selector(numberOfRowsInSection:)).with(0).and_return((long)2);
         
         adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
         
@@ -831,5 +831,5 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
 
     });
 });
-*/
+
 SPEC_END
