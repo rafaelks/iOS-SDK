@@ -44,7 +44,7 @@ using namespace Cedar::Doubles;
 
 
 SPEC_BEGIN(STRCollectionViewDataSourceProxySpec)
-/*
+
 describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
     __block STRGridlikeViewDataSourceProxy *proxy;
     __block STRInjector *injector;
@@ -176,5 +176,5 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
         });
     });
 });
-*/
+
 SPEC_END
