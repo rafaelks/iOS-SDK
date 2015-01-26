@@ -31,7 +31,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 
 - (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSArray *trueIndexPaths = [adjuster willInsertRowsAtExternalIndexPaths:indexPaths];
+    NSArray *trueIndexPaths = [adjuster trueIndexPaths:indexPaths];
     [self insertItemsAtIndexPaths:trueIndexPaths];
 }
 
@@ -44,7 +44,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 - (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
 
-    NSArray *trueIndexPaths = [adjuster willDeleteRowsAtExternalIndexPaths:indexPaths];
+    NSArray *trueIndexPaths = [adjuster trueIndexPaths:indexPaths];
     [self deleteItemsAtIndexPaths:trueIndexPaths];
 }
 

@@ -16,13 +16,13 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 @implementation UITableView (STR)
 
 - (void)str_insertRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
-    NSArray *indexPathsForInsertion = [[self str_ensureAdjuster] willInsertRowsAtExternalIndexPaths:indexPaths];
+    NSArray *indexPathsForInsertion = [[self str_ensureAdjuster] trueIndexPaths:indexPaths];
     [self insertRowsAtIndexPaths:indexPathsForInsertion withRowAnimation:rowAnimation];
 }
 
 
 - (void)str_deleteRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
-    NSArray *indexPathsForDeletion = [[self str_ensureAdjuster] willDeleteRowsAtExternalIndexPaths:indexPaths];
+    NSArray *indexPathsForDeletion = [[self str_ensureAdjuster] trueIndexPaths:indexPaths];
     [self deleteRowsAtIndexPaths:indexPathsForDeletion withRowAnimation:rowAnimation];
 }
 

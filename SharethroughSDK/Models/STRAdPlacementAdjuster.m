@@ -24,6 +24,7 @@
     adjuster.adSection = section;
     adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
     adjuster.articlesBetweenAds = articlesBetweenAds;
+    adjuster.adIndexPath = [NSIndexPath indexPathForItem:articlesBeforeFirstAd inSection:section];
     return adjuster;
 }
 
@@ -104,17 +105,9 @@
     return trueIndexPaths;
 }
 
-- (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths {
-    return [self trueIndexPaths:indexPaths];
-}
-
-- (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths {
-    return [self trueIndexPaths:indexPaths];
-}
-
 - (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath {
-    NSArray *deleteIndexPaths = [self willDeleteRowsAtExternalIndexPaths:@[indexPath]];
-    NSArray *insertIndexPaths = [self willInsertRowsAtExternalIndexPaths:@[newIndexPath]];
+    NSArray *deleteIndexPaths = [self trueIndexPaths:@[indexPath]];
+    NSArray *insertIndexPaths = [self trueIndexPaths:@[newIndexPath]];
 
     return @[[deleteIndexPaths firstObject], [insertIndexPaths firstObject]];
 }
