@@ -6,7 +6,7 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(SharethroughSDKSpec)
-/*
+
 describe(@"SharethroughSDK", ^{
     describe(@"+sharedInstance", ^{
         it(@"returns the same instance each time", ^{
@@ -28,9 +28,9 @@ describe(@"SharethroughSDK", ^{
                                                                                                  index:0
                                                                                               delegate:nil];
 
-                adView.adTitle.text should equal(@"Go Sip for Sip with Josh Duhamel");
-                adView.adDescription.text should equal(@"Grab a Diet Pepsi and share a delicious moment with Josh Duhamel");
-                adView.adSponsoredBy.text should equal(@"Promoted by Pepsi");
+                adView.adTitle.text should equal(@"Beats By Dre Presents: LeBron James");
+                adView.adDescription.text should equal(@"RE_ESTABLISHED 2014 - Powerbeats2 Wireless");
+                adView.adSponsoredBy.text should equal(@"Promoted by Beats by Dre");
             });
         });
 
@@ -97,5 +97,5 @@ describe(@"SharethroughSDK", ^{
         
     });
 });
-*/
+
 SPEC_END
