@@ -33,7 +33,7 @@
     return copy;
 }
 
-- (void)prefetchAdForGridLikeView:(id)gridlikeView {
+- (void)prefetchAdForGridLikeView:(id)gridlikeView atIndex:(NSInteger)index {
     self.gridlikeView = gridlikeView;
     if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
 
@@ -43,7 +43,7 @@
                                                                 PlacementKey:self.placementKey
                                                     presentingViewController:self.gridlikeView
                                                                     delegate:nil
-                                                                     adIndex:0
+                                                                     adIndex:index
                                                                      DFPPath:nil
                                                                  DFPDeferred:deferred];
 

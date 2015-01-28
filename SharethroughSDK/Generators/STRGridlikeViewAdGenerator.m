@@ -65,7 +65,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     self.dataSourceProxy.adjuster = adjuster;
     self.dataSourceProxy.originalDataSource = originalDataSource;
     
-    [self.dataSourceProxy prefetchAdForGridLikeView:gridlikeView];
+    [self.dataSourceProxy prefetchAdForGridLikeView:gridlikeView atIndex:articlesBeforeFirstAd];
     
     self.delegateProxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:adSize];
 
