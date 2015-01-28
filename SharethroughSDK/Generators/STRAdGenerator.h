@@ -18,7 +18,6 @@
 - (void)placeAdInPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement;
 
-- (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey;
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement;
 

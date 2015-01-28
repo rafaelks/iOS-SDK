@@ -48,17 +48,6 @@ const NSInteger kRequestInProgress = 202;
     return self;
 }
 
-- (STRPromise *)prefetchAdsForPlacementKey:(NSString *)placementKey {
-    if ([self.adCache pendingAdRequestInProgressForPlacement:placementKey]) {
-        return [self requestInProgressError];
-    }
-
-    STRAdPlacement *placement = [[STRAdPlacement alloc] init];
-    placement.placementKey = placementKey;
-
-    return [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
-}
-
 - (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement {
     if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
         return [self requestInProgressError];

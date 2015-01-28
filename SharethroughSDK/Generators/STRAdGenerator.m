@@ -79,10 +79,6 @@
     return deferred.promise;
 }
 
-- (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey {
-    return [self.adService prefetchAdsForPlacementKey:placementKey];
-}
-
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement {
     return [self.adService prefetchAdsForPlacement:placement];
 }
