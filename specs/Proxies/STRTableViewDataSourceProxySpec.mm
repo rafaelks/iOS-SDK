@@ -70,7 +70,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
         
         describe(@"when an ad is loaded", ^{
             beforeEach(^{
-                [proxy prefetchAdForGridLikeView:tableView];
+                [proxy prefetchAdForGridLikeView:tableView atIndex:1];
             });
             
             it(@"inserts an extra row in the first section", ^{
@@ -113,7 +113,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
         describe(@"and the original data source reports there is more than one section", ^{
             beforeEach(^{
                 [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
-                [proxy prefetchAdForGridLikeView:tableView];
+                [proxy prefetchAdForGridLikeView:tableView atIndex:1];
                 [tableView layoutIfNeeded];
             });
             
@@ -128,7 +128,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
     describe(@"placing an ad in the table view when the reuse identifier was badly registered", ^{
         it(@"throws an exception if the sdk user does not register the identifier", ^{
             expect(^{
-                [proxy prefetchAdForGridLikeView:tableView];
+                [proxy prefetchAdForGridLikeView:tableView atIndex:1];
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
         });
@@ -137,7 +137,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"adCell"];
             
             expect(^{
-                [proxy prefetchAdForGridLikeView:tableView];
+                [proxy prefetchAdForGridLikeView:tableView atIndex:1];
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
         });

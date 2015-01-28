@@ -19,7 +19,7 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(STRDFPAdGeneratorSpec)
 
-/* describe(@"DFPAdGenerator", ^{
+describe(@"DFPAdGenerator", ^{
     __block STRDFPAdGenerator *generator;
     __block STRAdService *adService;
     __block STRInjector *injector;
@@ -148,7 +148,7 @@ SPEC_BEGIN(STRDFPAdGeneratorSpec)
 
     context(@"when there is an ad cached", ^{
         beforeEach(^{
-            adService stub_method(@selector(isAdCachedForPlacementKey:)).and_return(YES);
+            adService stub_method(@selector(isAdCachedForPlacement:)).and_return(YES);
         });
 
         describe(@"when the placement deferred is set", ^{
@@ -169,12 +169,12 @@ SPEC_BEGIN(STRDFPAdGeneratorSpec)
 
             beforeEach(^{
                 adServiceDeferred = [STRDeferred defer];
-                adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(adServiceDeferred.promise);
+                adService stub_method(@selector(fetchAdForPlacement:)).and_return(adServiceDeferred.promise);
                 [generator placeAdInPlacement:adPlacement];
             });
 
             it(@"calls the ad service to fetch the ad", ^{
-                adService should have_received(@selector(fetchAdForPlacementKey:)).with(adPlacement.placementKey);
+                adService should have_received(@selector(fetchAdForPlacement:)).with(adPlacement);
             });
 
             it(@"calls the renderer to render the ad", ^{
@@ -209,6 +209,6 @@ SPEC_BEGIN(STRDFPAdGeneratorSpec)
             });
         });
     });
-}); */
+});
 
 SPEC_END

@@ -1802,6 +1802,7 @@
 					"$(inherited)",
 					"/Users/engineer/workspace/iOS-SDK/ThirdParty/GoogleMobileAdsSdkiOS",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1830,6 +1831,7 @@
 					"$(inherited)",
 					"/Users/engineer/workspace/iOS-SDK/ThirdParty/GoogleMobileAdsSdkiOS",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"$(inherited)",
@@ -1903,6 +1905,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
