@@ -133,10 +133,6 @@ describe(@"UITableView+STR", ^{
                     tableView should have_received(@selector(insertRowsAtIndexPaths:withRowAnimation:));//.with(trueIndexPaths, UITableViewRowAnimationAutomatic);
                     tableView.visibleCells.count should equal(originalRowCount + 3);
                 });
-                
-                it(@"updates the index path of the adPlacementAdjuster", ^{
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
-                });
             });
         });
 
@@ -168,10 +164,6 @@ describe(@"UITableView+STR", ^{
                 it(@"tells the tableview to delete the correct rows", ^{
                     tableView should have_received(@selector(deleteRowsAtIndexPaths:withRowAnimation:)).with(trueIndexPaths, Arguments::anything);
                     tableView.visibleCells.count should equal(originalRowCount - 2);
-                });
-                
-                it(@"updates the index path of the adPlacementAdjuster", ^{
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
                 });
             });
         });
@@ -205,8 +197,6 @@ describe(@"UITableView+STR", ^{
                 
                 it(@"updates the index path of the adPlacementAdjuster", ^{
                     adPlacementAdjuster should have_received(@selector(willMoveRowAtExternalIndexPath:toExternalIndexPath:)).with(externalStartIndexPath, externalEndIndexPath);
-                    
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
                 });
             });
         });
@@ -235,8 +225,6 @@ describe(@"UITableView+STR", ^{
                 
                 it(@"updates the ad's index path if necessary", ^{
                     adPlacementAdjuster should have_received(@selector(willInsertSections:)).with(sectionsToInsert);
-                    
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:2]);
                 });
             });
         });
@@ -264,8 +252,7 @@ describe(@"UITableView+STR", ^{
                 
                 it(@"updates the ad's index path if necessary", ^{
                     adPlacementAdjuster should have_received(@selector(willDeleteSections:)).with(sectionsToDelete);
-                    
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+                    adPlacementAdjuster.adSection should equal(0);
                 });
             });
         });
@@ -286,8 +273,7 @@ describe(@"UITableView+STR", ^{
                 
                 it(@"updates the ad's index path if necessary", ^{
                     adPlacementAdjuster should have_received(@selector(willMoveSection:toSection:)).with(1, 0);
-                    
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+                    adPlacementAdjuster.adSection should equal(0);
                 });
             });
         });
@@ -691,11 +677,6 @@ describe(@"UITableView+STR", ^{
                     
                     tableView.visibleCells.count should equal(originalRowCount + 3);
                 });
-                
-                it(@"updates the index path of the adPlacementAdjuster", ^{
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
-                });
-                
             });
            
         });
@@ -729,10 +710,6 @@ describe(@"UITableView+STR", ^{
                     tableView should have_received(@selector(deleteRowsAtIndexPaths:withRowAnimation:)).with(trueIndexPaths, Arguments::anything);
                     tableView.visibleCells.count should equal(originalRowCount - 2);
                 });
-                
-                it(@"updates the index path of the adPlacementAdjuster", ^{
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
-                });
             });
         });
         
@@ -765,8 +742,7 @@ describe(@"UITableView+STR", ^{
                 
                 it(@"updates the index path of the adPlacementAdjuster", ^{
                     adPlacementAdjuster should have_received(@selector(willMoveRowAtExternalIndexPath:toExternalIndexPath:)).with(externalStartIndexPath, externalEndIndexPath);
-                    
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:1]);
+                    adPlacementAdjuster.adSection should equal(1);
                 });
             });
         });
@@ -795,8 +771,7 @@ describe(@"UITableView+STR", ^{
                 
                 it(@"updates the ad's index path if necessary", ^{
                     adPlacementAdjuster should have_received(@selector(willInsertSections:)).with(sectionsToInsert);
-                    
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:2]);
+                    adPlacementAdjuster.adSection should equal(2);
                 });
             });
         });
@@ -824,8 +799,7 @@ describe(@"UITableView+STR", ^{
                 
                 it(@"updates the ad's index path if necessary", ^{
                     adPlacementAdjuster should have_received(@selector(willDeleteSections:)).with(sectionsToDelete);
-                    
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+                    adPlacementAdjuster.adSection should equal(0);
                 });
             });
         });
@@ -846,8 +820,7 @@ describe(@"UITableView+STR", ^{
                 
                 it(@"updates the ad's index path if necessary", ^{
                     adPlacementAdjuster should have_received(@selector(willMoveSection:toSection:)).with(1, 0);
-                    
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+                    adPlacementAdjuster.adSection should equal(0);
                 });
             });
         });

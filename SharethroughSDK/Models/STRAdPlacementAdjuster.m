@@ -10,7 +10,6 @@
 
 @interface STRAdPlacementAdjuster ()
 
-@property (nonatomic, strong) NSIndexPath *adIndexPath;
 @property (nonatomic) NSInteger numAdsCalculated;
 
 @end
@@ -30,7 +29,6 @@
         [NSException raise:@"Articles Between Ads Must Be Greater than 0" format:@""];
     }
     adjuster.articlesBetweenAds = articlesBetweenAds;
-    adjuster.adIndexPath = [NSIndexPath indexPathForItem:articlesBeforeFirstAd inSection:section];
     return adjuster;
 }
 
@@ -47,7 +45,7 @@
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows {
-    if (section == self.adIndexPath.section && self.adLoaded) {
+    if (section == self.adSection && self.adLoaded) {
         self.numAdsCalculated = 0;
         if (contentRows < self.articlesBeforeFirstAd) {
             return 0;
@@ -92,7 +90,7 @@
         return nil;
     }
 
-    if (indexPath.section != self.adIndexPath.section || !self.adLoaded) {
+    if (indexPath.section != self.adSection || !self.adLoaded) {
         return indexPath;
     }
     NSInteger adjustment = 0;
@@ -119,23 +117,21 @@
 }
 
 - (void)willInsertSections:(NSIndexSet *)sections {
-    NSInteger section = self.adIndexPath.section + [self numberOfSectionsChangingWithAdSection:sections];
-    self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:section];
+    self.adSection += [self numberOfSectionsChangingWithAdSection:sections];
 }
 
 - (void)willDeleteSections:(NSIndexSet *)sections {
-    if ([sections containsIndex:self.adIndexPath.section]) {
-        self.adIndexPath = [NSIndexPath indexPathForRow:-1 inSection:-1];
+    if ([sections containsIndex:self.adSection]) {
+        self.adSection = -1;
         return;
     }   
 
-    NSInteger section = self.adIndexPath.section - [self numberOfSectionsChangingWithAdSection:sections];
-    self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:section];
+    self.adSection -= [self numberOfSectionsChangingWithAdSection:sections];
 }
 
 - (void)willMoveSection:(NSInteger)section toSection:(NSInteger)newSection {
-    if (section == self.adIndexPath.section) {
-        self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:newSection];
+    if (section == self.adSection) {
+        self.adSection = newSection;
         return;
     }
 
@@ -144,7 +140,7 @@
 }
 
 - (NSInteger)getLastCalculatedNumberOfAdsInSection:(NSInteger)section {
-    if (section == self.adIndexPath.section) {
+    if (section == self.adSection) {
         return self.numAdsCalculated;
     }
     return 0;
@@ -153,11 +149,11 @@
 #pragma mark - Private
 
 - (NSInteger)numberOfSectionsChangingWithAdSection:(NSIndexSet *)sections {
-    if (self.adIndexPath.section == -1) {
+    if (self.adSection == -1) {
         return 0;
     }
 
-    NSRange sectionsBeforeAd = NSMakeRange(0, self.adIndexPath.section + 1);
+    NSRange sectionsBeforeAd = NSMakeRange(0, self.adSection + 1);
     return [sections countOfIndexesInRange:sectionsBeforeAd];
 }
 

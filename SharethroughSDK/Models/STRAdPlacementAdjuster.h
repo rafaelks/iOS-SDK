@@ -10,7 +10,6 @@
 
 @interface STRAdPlacementAdjuster : NSObject
 
-@property (nonatomic, strong, readonly) NSIndexPath *adIndexPath;
 @property (nonatomic) BOOL adLoaded;
 @property (nonatomic) NSInteger adSection;
 @property (nonatomic) NSInteger articlesBeforeFirstAd;

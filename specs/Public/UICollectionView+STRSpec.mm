@@ -674,10 +674,6 @@ describe(@"UICollectionView+STR", ^{
                     
                     collectionView.visibleCells.count should equal(originalItemCount + 3);
                 });
-                
-                it(@"updates the index path of the adPlacementAdjuster", ^{
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForItem:1 inSection:1]);
-                });
             });
         });
 
@@ -698,24 +694,20 @@ describe(@"UICollectionView+STR", ^{
             
             describe(@"deleting items in a collectionView with an ad", ^{
                 __block NSInteger originalRowCount;
-                
+
                 beforeEach(^{
                     originalRowCount = collectionView.visibleCells.count;
                     dataSource.itemsForEachSection = @[@3, @1];
                     [collectionView str_deleteItemsAtIndexPaths:externalIndexPaths];
                 });
-                
+
                 it(@"tells the collection to delete the correct items", ^{
                     collectionView should have_received(@selector(deleteItemsAtIndexPaths:)).with(trueIndexPaths);
                     collectionView.visibleCells.count should equal(originalRowCount - 2);
                 });
-                
-                it(@"updates the index path of the adPlacementAdjuster", ^{
-                    adPlacementAdjuster.adIndexPath should equal([NSIndexPath indexPathForItem:1 inSection:1]);
-                });
             });
         });
-        
+
         describe(@"-str_moveItemAtIndexPath:toIndexPath:", ^{
             __block NSIndexPath *externalStartIndexPath;
             __block NSIndexPath *externalEndIndexPath;

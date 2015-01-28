@@ -28,7 +28,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                         presentingViewController:nil
                                           adSize:CGSizeZero
                            articlesBeforeFirstAd:0
-                              articlesBetweenAds:0
+                              articlesBetweenAds:1
                                        adSection:0];
             }).to_not(raise_exception);
 
@@ -46,7 +46,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                         presentingViewController:nil
                                           adSize:CGSizeZero
                            articlesBeforeFirstAd:0
-                              articlesBetweenAds:0
+                              articlesBetweenAds:1
                                        adSection:0];
             }).to_not(raise_exception);
 
@@ -64,7 +64,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                         presentingViewController:nil
                                           adSize:CGSizeZero
                            articlesBeforeFirstAd:0
-                              articlesBetweenAds:0
+                              articlesBetweenAds:1
                                        adSection:0];
             }).to(raise_exception);
 
