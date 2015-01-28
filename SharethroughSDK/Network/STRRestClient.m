@@ -27,7 +27,7 @@
     if (self) {
         self.adServerHostName = @"http://btlr.sharethrough.com/v3";
         self.beaconServerHostName = @"http://b.sharethrough.com/butler";
-        self.dfpPathUrlFormat = @"https://native.sharethrough.com/placements/%@/sdk.json";
+        self.dfpPathUrlFormat = @"https://platform-cdn.sharethrough.com/placements/%@/sdk.json";
         self.networkClient = networkClient;
     }
     return self;
