@@ -28,12 +28,19 @@ describe(@"STRAdPlacementAdjuster", ^{
             });
         });
 
-        xdescribe(@"-isAdAtIndexPath:", ^{
-            it(@"returns YES if indexPaths match", ^{
+        describe(@"-isAdAtIndexPath:", ^{
+            it(@"returns YES if it's the index path of the first ad", ^{
                 [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]] should be_truthy;
             });
-            
-            it(@"returns NO if indexPaths match", ^{
+
+            it(@"returns YES if it's a subsequet ad position", ^{
+                [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:11 inSection:0]] should be_truthy;
+                [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:17 inSection:0]] should be_truthy;
+                [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:23 inSection:0]] should be_truthy;
+
+            });
+
+            it(@"returns NO if it's not in the ad section", ^{
                 [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]] should be_falsy;
             });
         });
