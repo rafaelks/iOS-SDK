@@ -22,7 +22,13 @@
                articlesBetweenAds:(NSInteger)articlesBetweenAds; {
     STRAdPlacementAdjuster *adjuster = [self new];
     adjuster.adSection = section;
+    if (articlesBeforeFirstAd < 0) {
+        [NSException raise:@"Articles Before First Ad Must Be Greather or Equal to 0" format:@""];
+    }
     adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
+    if(articlesBetweenAds <= 0) {
+        [NSException raise:@"Articles Between Ads Must Be Greater than 0" format:@""];
+    }
     adjuster.articlesBetweenAds = articlesBetweenAds;
     adjuster.adIndexPath = [NSIndexPath indexPathForItem:articlesBeforeFirstAd inSection:section];
     return adjuster;

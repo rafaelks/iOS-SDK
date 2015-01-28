@@ -14,7 +14,21 @@ describe(@"STRAdPlacementAdjuster", ^{
             adjuster.adLoaded = YES;
         });
         
-        describe(@"-isAdAtIndexPath:", ^{
+        describe(@"+adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:", ^{
+            it(@"throws an exception if articles between ads is less than or equal to 0", ^{
+                expect(^{
+                    [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:0];
+                }).to(raise_exception);
+            });
+
+            it(@"throws an exception if articles before first ad is less than 0", ^{
+                expect(^{
+                    [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:-1 articlesBetweenAds:0];
+                }).to(raise_exception);
+            });
+        });
+
+        xdescribe(@"-isAdAtIndexPath:", ^{
             it(@"returns YES if indexPaths match", ^{
                 [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]] should be_truthy;
             });
@@ -105,6 +119,22 @@ describe(@"STRAdPlacementAdjuster", ^{
                 [adjuster numberOfAdsInSection:0 givenNumberOfRows:9] should equal(1);
                 [adjuster numberOfAdsInSection:0 givenNumberOfRows:10] should equal(2);
                 [adjuster numberOfAdsInSection:0 givenNumberOfRows:11] should equal(2);
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:12] should equal(2);
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:13] should equal(2);
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:14] should equal(2);
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:15] should equal(3);
+            });
+
+            it(@"handles edge cases", ^{
+                STRAdPlacementAdjuster *everyOtherAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:1];
+                everyOtherAdjuster.adLoaded = YES;
+
+                [everyOtherAdjuster numberOfAdsInSection:0 givenNumberOfRows:3] should equal(4);
+
+                STRAdPlacementAdjuster *onlyOneAd = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:NSIntegerMax];
+                onlyOneAd.adLoaded = YES;
+
+                [onlyOneAd numberOfAdsInSection:0 givenNumberOfRows:10000] should equal(1);
             });
         });
         
