@@ -41,8 +41,8 @@
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows {
-    self.numAdsCalculated = 0;
     if (section == self.adIndexPath.section && self.adLoaded) {
+        self.numAdsCalculated = 0;
         if (contentRows < self.articlesBeforeFirstAd) {
             return 0;
         } else {

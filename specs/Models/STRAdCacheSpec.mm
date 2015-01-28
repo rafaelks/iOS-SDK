@@ -17,7 +17,7 @@ describe(@"STRAdCache", ^{
 
         cache = [[STRAdCache alloc] initWithDateProvider:dateProvider];
     });
-    
+
     describe(@"-setAdCacheTimeoutInSeconds", ^{
         describe(@"when the value is >= 20", ^{
             it(@"returns the set value", ^{
@@ -33,9 +33,8 @@ describe(@"STRAdCache", ^{
             });
         });
     });
-    
+
     xdescribe(@"-saveAds:forPlacement:andInitializeAtIndex:", ^{
-        
     });
 
     describe(@"-fetchCachedAdForPlacement:", ^{
@@ -88,7 +87,7 @@ describe(@"STRAdCache", ^{
             [cache fetchCachedAdForPlacement:recentPlacement] should equal(recentAd);
         });
     });
-    
+
     describe(@"-fetchCachedAdForPlacementKey:CreativeKey:", ^{
         __block STRAdvertisement *recentAd;
         __block STRAdvertisement *expiredAd;
@@ -239,7 +238,7 @@ describe(@"STRAdCache", ^{
             });
         });
     });
-    
+
     describe(@"-numberOfAdsAvailableForPlacement:", ^{
         __block STRAdPlacement *adPlacement;
         
@@ -256,7 +255,7 @@ describe(@"STRAdCache", ^{
             [cache numberOfAdsAvailableForPlacement:adPlacement] should equal(3);
         });
     });
-    
+
     describe(@"-shouldBeginFetchForPlacement:", ^{
         __block STRAdPlacement *placement;
         beforeEach(^{
@@ -305,7 +304,7 @@ describe(@"STRAdCache", ^{
             [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
         });
     });
-    
+
     /*
      MMM - Not much value in testing getters and setters
     xdescribe(@"-clearPendingAdRequestForPlacement:", ^{

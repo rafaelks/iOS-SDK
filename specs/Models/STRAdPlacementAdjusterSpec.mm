@@ -91,6 +91,28 @@ describe(@"STRAdPlacementAdjuster", ^{
                                                                             [NSIndexPath indexPathForRow:7 inSection:0]]);
             });
         });
+        
+        describe(@"-numberOfAdsInSection:gienNumberOfRows:", ^{
+            it(@"returns 0 if not the ad section", ^{
+                [adjuster numberOfAdsInSection:1 givenNumberOfRows:100] should equal(0);
+            });
+            
+            it(@"returns 0 if there are less articles than the number before an ad should be shown", ^{
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:4] should equal(0);
+            });
+            
+            it(@"correctly calculates the number of ads based on the number of ads in the section", ^{
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:9] should equal(1);
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:10] should equal(2);
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:11] should equal(2);
+            });
+        });
+        
+        describe(@"-getLastCalculatedNumberOfAdsInSection:", ^{
+            it(@"returns 0 if not already calculated", ^{
+                [adjuster getLastCalculatedNumberOfAdsInSection:0] should equal(0);
+            });
+        });
   
         describe(@"-willMoveRowAtExternalIndexPath:toExternalIndexPath:", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
@@ -495,6 +517,20 @@ describe(@"STRAdPlacementAdjuster", ^{
                 [adjuster trueIndexPaths:externalIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
                                                                             [NSIndexPath indexPathForRow:1 inSection:0],
                                                                             [NSIndexPath indexPathForRow:2 inSection:0]]);
+            });
+        });
+        
+        describe(@"-numberOfAdsInSection:gienNumberOfRows:", ^{
+            it(@"returns 0 ads", ^{
+                [adjuster numberOfAdsInSection:0 givenNumberOfRows:100] should equal(0);
+            });
+        });
+        
+        describe(@"-getLastCalculatedNumberOfAdsInSection:", ^{
+            it(@"returns 0 ads for all sections", ^{
+                [adjuster getLastCalculatedNumberOfAdsInSection:0] should equal(0);
+                [adjuster getLastCalculatedNumberOfAdsInSection:1] should equal(0);
+                [adjuster getLastCalculatedNumberOfAdsInSection:10] should equal(0);
             });
         });
 
