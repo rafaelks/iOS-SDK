@@ -33,6 +33,10 @@ describe(@"STRAdCache", ^{
             });
         });
     });
+    
+    xdescribe(@"-saveAds:forPlacement:andInitializeAtIndex:", ^{
+        
+    });
 
     describe(@"-fetchCachedAdForPlacement:", ^{
         __block STRAdvertisement *recentAd;
@@ -253,8 +257,36 @@ describe(@"STRAdCache", ^{
         });
     });
     
-    xdescribe(@"-shouldBeginFetchForPlacement:", ^{
-        
+    describe(@"-shouldBeginFetchForPlacement:", ^{
+        __block STRAdPlacement *placement;
+        beforeEach(^{
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"fakePlacementKey";
+        });
+
+        it(@"returns YES if there are no ads cached", ^{
+            [cache shouldBeginFetchForPlacement:placement.placementKey] should be_truthy;
+        });
+
+        it(@"returns YES if there is only one ad cached", ^{
+            [cache saveAds:[NSMutableArray arrayWithArray:@[[NSObject new]]] forPlacement:placement andInitializeAtIndex:NO];
+
+            [cache shouldBeginFetchForPlacement:placement.placementKey] should be_truthy;
+        });
+
+        it(@"returns NO if there are more than 1 ad available", ^{
+            [cache saveAds:[NSMutableArray arrayWithArray:@[[NSObject new], [NSObject new], [NSObject new]]] forPlacement:placement andInitializeAtIndex:NO];
+ 
+            [cache shouldBeginFetchForPlacement:placement.placementKey] should be_falsy;
+        });
+
+        it(@"returns NO if there is a pending ad request", ^{
+            [cache pendingAdRequestInProgressForPlacement:placement.placementKey];
+
+            [cache shouldBeginFetchForPlacement:placement.placementKey] should be_falsy;
+
+            [cache clearPendingAdRequestForPlacement:placement.placementKey];
+        });
     });
 
     describe(@"-pendingAdRequestInProgressforPlacement:", ^{
@@ -273,6 +305,18 @@ describe(@"STRAdCache", ^{
             [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
         });
     });
+    
+    /*
+     MMM - Not much value in testing getters and setters
+    xdescribe(@"-clearPendingAdRequestForPlacement:", ^{
+    });
+
+    xdescribe(@"-getInfiniteScrollFieldsForPlacement:", ^{
+    });
+
+    xdescribe(@"-saveInfiniteScrollFields:", ^{
+    });
+     */
 });
 
 SPEC_END

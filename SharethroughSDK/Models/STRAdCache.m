@@ -57,29 +57,6 @@
     return self.STRPlacementAdCacheTimeoutInSeconds;
 }
 
-- (STRAdvertisement *)fetchCachedAdForPlacement:(STRAdPlacement *)placement {
-    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
-    return [indexToCreativeMap objectForKey:[NSNumber numberWithLong:placement.adIndex]];
-}
-
-- (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey {
-    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
-    for (id key in indexToCreativeMap) {
-        STRAdvertisement *ad = [indexToCreativeMap objectForKey:key];
-        if ([ad.creativeKey isEqualToString:creativeKey]) {
-            return ad;
-        }
-    }
-    NSArray *creatives = [self.cachedCreatives objectForKey:placementKey];
-    for (int i = 0; i < [creatives count]; ++i) {
-        STRAdvertisement *ad = creatives[i];
-        if ([ad.creativeKey isEqualToString:creativeKey]) {
-            return ad;
-        }
-    }
-    return nil;
-}
-
 - (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeIndex {
     NSMutableArray *cachedCreativesQueue = [self.cachedCreatives objectForKey:placement.placementKey];
     if (cachedCreativesQueue == nil) {
@@ -101,6 +78,29 @@
         [indexToCreativeMap setObject:ad forKey:[NSNumber numberWithLong:placement.adIndex]];
     }
     [self clearPendingAdRequestForPlacement:placement.placementKey];
+}
+
+- (STRAdvertisement *)fetchCachedAdForPlacement:(STRAdPlacement *)placement {
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
+    return [indexToCreativeMap objectForKey:[NSNumber numberWithLong:placement.adIndex]];
+}
+
+- (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey {
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
+    for (id key in indexToCreativeMap) {
+        STRAdvertisement *ad = [indexToCreativeMap objectForKey:key];
+        if ([ad.creativeKey isEqualToString:creativeKey]) {
+            return ad;
+        }
+    }
+    NSArray *creatives = [self.cachedCreatives objectForKey:placementKey];
+    for (int i = 0; i < [creatives count]; ++i) {
+        STRAdvertisement *ad = creatives[i];
+        if ([ad.creativeKey isEqualToString:creativeKey]) {
+            return ad;
+        }
+    }
+    return nil;
 }
 
 - (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement {
