@@ -11,6 +11,7 @@
 @interface STRAdPlacementAdjuster ()
 
 @property (nonatomic) NSInteger numAdsCalculated;
+@property (nonatomic) BOOL adLoaded;
 
 @end
 
@@ -42,6 +43,13 @@
         }
     }
     return NO;
+}
+
+- (void)setAdLoaded:(BOOL)adLoaded {
+    if (!adLoaded) {
+        self.numAdsCalculated = 0;
+    }
+    _adLoaded = adLoaded;
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows {

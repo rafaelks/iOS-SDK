@@ -15,7 +15,6 @@ using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 extern const char *const STRGridlikeViewAdGeneratorKey;
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 SPEC_BEGIN(UITableViewSpec)
 
@@ -118,20 +117,20 @@ describe(@"UITableView+STR", ^{
             itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
                 [noAdTableView str_insertRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
             });
-            
+
             describe(@"inserting rows in a table with an ad", ^{
                 __block NSInteger originalRowCount;
-                
+
                 beforeEach(^{
                     spy_on(tableView);
                     dataSource.rowsForEachSection = @[@3, @6];
-                    originalRowCount = tableView.visibleCells.count;
+                    originalRowCount = [tableView numberOfRowsInSection:1];
                     [tableView str_insertRowsAtIndexPaths:externalIndexPaths withAnimation:UITableViewRowAnimationAutomatic];
                 });
-                
+
                 it(@"tells the table view to insert the rows at the correct index paths", ^{
                     tableView should have_received(@selector(insertRowsAtIndexPaths:withRowAnimation:));//.with(trueIndexPaths, UITableViewRowAnimationAutomatic);
-                    tableView.visibleCells.count should equal(originalRowCount + 3);
+                    [tableView numberOfRowsInSection:1] should equal(originalRowCount + 3);
                 });
             });
         });
@@ -139,7 +138,7 @@ describe(@"UITableView+STR", ^{
         describe(@"-str_deleteRowsAtIndexPaths:withRowAnimation:", ^{
             __block NSArray *externalIndexPaths;
             __block NSArray *trueIndexPaths;
-            
+
             beforeEach(^{
                 externalIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:1],
                                        [NSIndexPath indexPathForRow:1 inSection:1]];
@@ -1066,7 +1065,6 @@ describe(@"UITableView+STR", ^{
                 });
             });
         });
-        
         
         describe(@"-str_indexPathForSelectedRow", ^{
             itThrowsIfTableWasntConfigured(^(UITableView *noAdTableView) {
