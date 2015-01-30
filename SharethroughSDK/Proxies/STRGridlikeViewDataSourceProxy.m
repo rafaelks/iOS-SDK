@@ -24,6 +24,8 @@
 @property (weak, nonatomic) UIViewController *presentingViewController;
 @property (weak, nonatomic) STRInjector *injector;
 
+@property (strong, nonatomic) STRAdPlacement *placement;
+
 @property (weak, nonatomic) id gridlikeView;
 @end
 
@@ -43,6 +45,9 @@
         self.placementKey = placementKey;
         self.presentingViewController = presentingViewController;
         self.injector = injector;
+        self.placement = [[STRAdPlacement alloc] init];
+        self.placement.placementKey = self.placementKey;
+        self.placement.delegate = self;
     }
 
     return self;
@@ -58,21 +63,18 @@
     return copy;
 }
 
-
-- (void)prefetchAdForGridLikeView:(id)gridlikeView {
+- (void)prefetchAdForGridLikeView:(id)gridlikeView atIndex:(NSInteger)index {
     self.gridlikeView = gridlikeView;
-    if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
-        STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-        STRPromise *adPromise = [adGenerator prefetchAdForPlacementKey:self.placementKey];
-        [adPromise then:^id(id value) {
-            self.adjuster.adLoaded = YES;   
-            [self.gridlikeView reloadData];
-            return self.adjuster;
-        } error:^id(NSError *error) {
-            self.adjuster.adLoaded = NO;
-            return self.adjuster;
-        }];
-    }
+    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+    STRPromise *adPromise = [adGenerator prefetchAdForPlacement:self.placement];
+    [adPromise then:^id(id value) {
+        self.adjuster.adLoaded = YES;
+        [self.gridlikeView reloadData];
+        return self.adjuster;
+    } error:^id(NSError *error) {
+        self.adjuster.adLoaded = NO;
+        return self.adjuster;
+    }];
 }
 
 - (void)setOriginalDataSource:(id)originalDataSource {
@@ -82,12 +84,16 @@
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section] + [self.adjuster numberOfAdsInSection:section];
+    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+    NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
+
+    NSInteger numberofAds = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
+    return  numberofContentRows + numberofAds;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        return [self adCellForTableView:tableView];
+        return [self adCellForTableView:tableView atIndexPath:indexPath];
     }
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
@@ -96,7 +102,11 @@
 
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section] + [self.adjuster numberOfAdsInSection:section];
+    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+    NSInteger numberofContentRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
+
+    NSInteger numberofAds = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
+    return  numberofContentRows + numberofAds;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -106,6 +116,12 @@
 
     NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
     return [self.originalCVDataSource collectionView:collectionView cellForItemAtIndexPath:externalIndexPath];
+}
+
+#pragma mark - STRAdViewDelegate
+- (void)adView:(id<STRAdView>)adView didFetchArticlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd andArticlesBetweenAds:(NSInteger)articlesBetweenAds forPlacementKey:(NSString *)placementKey {
+    self.adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
+    self.adjuster.articlesBetweenAds = articlesBetweenAds;
 }
 
 #pragma mark - Forwarding
@@ -125,7 +141,7 @@
 
 #pragma mark - Private
 
-- (UITableViewCell *)adCellForTableView:(UITableView *)tableView {
+- (UITableViewCell *)adCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];
     if (!adCell) {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib before providing to SharethroughSDK.", self.adCellReuseIdentifier];
@@ -140,6 +156,7 @@
                                                             PlacementKey:self.placementKey
                                                 presentingViewController:self.presentingViewController
                                                                 delegate:nil
+                                                                 adIndex:indexPath.row
                                                                  DFPPath:nil
                                                              DFPDeferred:nil];
     [adGenerator placeAdInPlacement:adPlacement];
@@ -159,6 +176,7 @@
                                                             PlacementKey:self.placementKey
                                                 presentingViewController:self.presentingViewController
                                                                 delegate:nil
+                                                                 adIndex:indexPath.row
                                                                  DFPPath:nil
                                                              DFPDeferred:nil];
 

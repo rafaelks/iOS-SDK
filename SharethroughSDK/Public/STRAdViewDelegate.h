@@ -35,6 +35,16 @@
 - (void)adView:(id<STRAdView>)adView didFailToFetchAdForPlacementKey:(NSString *)placementKey;
 
 /**
+ *  Delegate is notified of successfully fetching the number of articles before the first ad and number of articles between subsequent ads. 
+ *  These fields are used for infinite scroll.
+ *  @param adView                   View in which the ad was placed.
+ *  @param articlesBeforeFirstAd    The number of articles before the first ad should be displayed if available
+ *  @param articlesBetweenAds       The number of articles between subsequent ads after the first ad is displayed
+ *  @param placementKey             Placement key used to fetch this ad.
+ */
+- (void)adView:(id<STRAdView>)adView didFetchArticlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd andArticlesBetweenAds:(NSInteger)articlesBetweenAds forPlacementKey:(NSString *)placementKey;
+
+/**
  *  Delegate is notified of a user engaging with an ad.
  *  A modal view will also be presented at this time
  *

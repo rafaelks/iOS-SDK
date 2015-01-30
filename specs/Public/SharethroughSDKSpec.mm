@@ -23,15 +23,15 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an ad about Pepsi", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeYoutube] placeAdInView:adView
-                                                                                    placementKey:@"fakePlacementKey"
-                                                                        presentingViewController:nil
-                                                                                        delegate:nil];
+                                                                                          placementKey:@"fakePlacementKey"
+                                                                              presentingViewController:nil
+                                                                                                 index:0
+                                                                                              delegate:nil];
 
-                adView.adTitle.text should equal(@"Go Sip for Sip with Josh Duhamel");
-                adView.adDescription.text should equal(@"Grab a Diet Pepsi and share a delicious moment with Josh Duhamel");
-                adView.adSponsoredBy.text should equal(@"Promoted by Pepsi");
+                adView.adTitle.text should equal(@"Beats By Dre Presents: LeBron James");
+                adView.adDescription.text should equal(@"RE_ESTABLISHED 2014 - Powerbeats2 Wireless");
+                adView.adSponsoredBy.text should equal(@"Promoted by Beats by Dre");
             });
-
         });
 
         describe(@"when ad type is vine", ^{
@@ -40,6 +40,7 @@ describe(@"SharethroughSDK", ^{
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeVine] placeAdInView:adView
                                                                                     placementKey:@"fakePlacementKey"
                                                                         presentingViewController:nil
+                                                                                            index:0
                                                                                         delegate:nil];
 
                 adView.adTitle.text should equal(@"Meet A 15-year-old Cancer Researcher");
@@ -52,9 +53,10 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an ad about almond milk", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeHostedVideo] placeAdInView:adView
-                                                                                   placementKey:@"fakePlacementKey"
-                                                                       presentingViewController:nil
-                                                                                       delegate:nil];
+                                                                                              placementKey:@"fakePlacementKey"
+                                                                                  presentingViewController:nil
+                                                                                                     index:0
+                                                                                                  delegate:nil];
 
                 adView.adTitle.text should equal(@"Avoid the morning MOO");
                 adView.adDescription.text should equal(@"Avoid the taste of the dreaded MOO and make your morning taste better with Silk Almond Milk");
@@ -67,9 +69,10 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an ad about 22 gameday gifs ", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypeClickout] placeAdInView:adView
-                                                                                     placementKey:@"fakePlacementKey"
-                                                                         presentingViewController:nil
-                                                                                         delegate:nil];
+                                                                                           placementKey:@"fakePlacementKey"
+                                                                               presentingViewController:nil
+                                                                                                  index:0
+                                                                                               delegate:nil];
 
                 adView.adTitle.text should equal(@"22 Game Day Gifs That Will Pump You Up For Anything");
                 adView.adDescription.text should equal(@"Get in the zone and check out these GIFs before your next big challenge to ensure victory. Then taste the winning kick of McDonald's® Mighty Wings® , now available nationwide.");
@@ -81,9 +84,10 @@ describe(@"SharethroughSDK", ^{
             it(@"displays an ad about Sephora top picks", ^{
                 UIView<STRAdView> *adView = [[STRFullAdView alloc] initWithFrame:CGRectZero];
                 [[SharethroughSDK sharedTestSafeInstanceWithAdType:STRFakeAdTypePinterest] placeAdInView:adView
-                                                                                           placementKey:@"fakePlacementKey"
-                                                                               presentingViewController:nil
-                                                                                               delegate:nil];
+                                                                                            placementKey:@"fakePlacementKey"
+                                                                                presentingViewController:nil
+                                                                                                   index:0
+                                                                                                delegate:nil];
                 
                 adView.adTitle.text should equal(@"My Top Picks at Sephora.com");
                 adView.adDescription.text should equal(@"Erin F., Marketing Manager, Social Media, shares her favorite items on sephora.com");

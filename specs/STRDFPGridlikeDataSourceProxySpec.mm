@@ -11,7 +11,7 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(DFPGridlikeDataSourceProxy)
 
-describe(@"DFPManager", ^{
+describe(@"DFPGridlikeDataSourceProxy", ^{
     __block STRInjector *injector;
     __block STRDFPAdGenerator *generator;
     __block STRDFPGridlikeViewDataSourceProxy *dataSourceProxy;
@@ -41,7 +41,7 @@ describe(@"DFPManager", ^{
             });
 
             it(@"calls the generator to place the ad in placement", ^{
-                [dataSourceProxy prefetchAdForGridLikeView:gridlikeview];
+                [dataSourceProxy prefetchAdForGridLikeView:gridlikeview atIndex:1];
                 generator should have_received(@selector(placeAdInPlacement:));
             });
         });
@@ -52,7 +52,7 @@ describe(@"DFPManager", ^{
             });
 
             it(@"calls the generator to place the ad in placement", ^{
-                [dataSourceProxy prefetchAdForGridLikeView:gridlikeview];
+                [dataSourceProxy prefetchAdForGridLikeView:gridlikeview atIndex:1];
                 generator should have_received(@selector(placeAdInPlacement:));
             });
 
@@ -91,7 +91,7 @@ describe(@"DFPManager", ^{
             });
 
             it(@"does not call the generator to place the ad in placement", ^{
-                [dataSourceProxy prefetchAdForGridLikeView:gridlikeview];
+                [dataSourceProxy prefetchAdForGridLikeView:gridlikeview atIndex:1];
                 generator should_not have_received(@selector(placeAdInPlacement:));
             });
         });

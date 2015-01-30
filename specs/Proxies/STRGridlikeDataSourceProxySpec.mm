@@ -19,7 +19,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
     __block STRAdPlacementAdjuster *adjuster;
 
     beforeEach(^{
-        adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+        adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
 
         injector = [STRInjector injectorForModule:[STRAppModule new]];
         adGenerator = [STRFakeAdGenerator new];
@@ -64,8 +64,8 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
 
         it(@"allows a data source that conforms to UITableView and UICollectionView's protocols", ^{
             id dataSource = nice_fake_for(@protocol(UITableViewDataSource), @protocol(UICollectionViewDataSource));
-            dataSource stub_method(@selector(tableView:numberOfRowsInSection:)).and_return(1);
-            dataSource stub_method(@selector(collectionView:numberOfItemsInSection:)).and_return(2);
+            dataSource stub_method(@selector(tableView:numberOfRowsInSection:)).and_return((long)1);
+            dataSource stub_method(@selector(collectionView:numberOfItemsInSection:)).and_return((long)2);
 
             expect(^{
                 proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil

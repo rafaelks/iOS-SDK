@@ -10,25 +10,58 @@
 
 @interface STRAdPlacementAdjuster ()
 
-@property (nonatomic, strong) NSIndexPath *adIndexPath;
+@property (nonatomic) NSInteger numAdsCalculated;
+@property (nonatomic) BOOL adLoaded;
 
 @end
 
 @implementation STRAdPlacementAdjuster
 
-+ (instancetype)adjusterWithInitialAdIndexPath:(NSIndexPath *)adIndexPath {
++ (instancetype)adjusterInSection:(NSInteger)section
+            articlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd
+               articlesBetweenAds:(NSInteger)articlesBetweenAds; {
     STRAdPlacementAdjuster *adjuster = [self new];
-    adjuster.adIndexPath = adIndexPath;
+    adjuster.adSection = section;
+    if (articlesBeforeFirstAd < 0) {
+        [NSException raise:@"Articles Before First Ad Must Be Greather or Equal to 0" format:@""];
+    }
+    adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
+    if(articlesBetweenAds <= 0) {
+        [NSException raise:@"Articles Between Ads Must Be Greater than 0" format:@""];
+    }
+    adjuster.articlesBetweenAds = articlesBetweenAds;
     return adjuster;
 }
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath {
-    return [indexPath isEqual:self.adIndexPath] && self.adLoaded;
+    if (self.adLoaded && indexPath.section == self.adSection) {
+        if (indexPath.row == self.articlesBeforeFirstAd){
+            return YES;
+        }
+        if ((indexPath.row - (self.articlesBeforeFirstAd + 1)) % (self.articlesBetweenAds + 1) == self.articlesBetweenAds ) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
-- (NSInteger)numberOfAdsInSection:(NSInteger)section {
-    if (section == self.adIndexPath.section && self.adLoaded) {
-        return 1;
+- (void)setAdLoaded:(BOOL)adLoaded {
+    if (!adLoaded) {
+        self.numAdsCalculated = 0;
+    }
+    _adLoaded = adLoaded;
+}
+
+- (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows {
+    if (section == self.adSection && self.adLoaded) {
+        self.numAdsCalculated = 0;
+        if (contentRows < self.articlesBeforeFirstAd) {
+            return 0;
+        } else {
+            NSInteger adRows = 1 + (contentRows - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
+            self.numAdsCalculated = adRows;
+            return adRows;
+        }
     }
     return 0;
 }
@@ -38,11 +71,13 @@
         return nil;
     }
 
-    if (indexPath.section != self.adIndexPath.section || !self.adLoaded) {
+    if (indexPath.section != self.adSection || !self.adLoaded) {
         return indexPath;
     }
-
-    NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
+    NSInteger adjustment = 0;
+    if ((indexPath.row - self.articlesBeforeFirstAd) > 0) {
+       adjustment = 1 + (indexPath.row - self.articlesBeforeFirstAd) / (self.articlesBetweenAds + 1);
+    }
     return [NSIndexPath indexPathForRow:indexPath.row - adjustment inSection:indexPath.section];
 }
 
@@ -63,10 +98,13 @@
         return nil;
     }
 
-    if (indexPath.section != self.adIndexPath.section || !self.adLoaded) {
+    if (indexPath.section != self.adSection || !self.adLoaded) {
         return indexPath;
     }
-    NSInteger adjustment = indexPath.row < self.adIndexPath.row ? 0 : 1;
+    NSInteger adjustment = 0;
+    if ((indexPath.row - self.articlesBeforeFirstAd) >= 0) {
+        adjustment = 1 + (indexPath.row - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
+    }
     return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];
 }
 
@@ -79,60 +117,29 @@
     return trueIndexPaths;
 }
 
-- (NSArray *)willInsertRowsAtExternalIndexPaths:(NSArray *)indexPaths {
-    NSArray *sortedIndexPaths = [indexPaths sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
-        return [obj1 compare:obj2];
-    }];
-
-    for (NSIndexPath *path in sortedIndexPaths) {
-        if (path.row <= self.adIndexPath.row && path.section == self.adIndexPath.section) {
-            self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + 1)
-                                                  inSection:self.adIndexPath.section];
-        }
-    }
-
-    return [self trueIndexPaths:indexPaths];
-}
-
-- (NSArray *)willDeleteRowsAtExternalIndexPaths:(NSArray *)indexPaths {
-    NSInteger numberOfRowsBeforeAd = 0;
-    for (NSIndexPath *path in indexPaths) {
-        if (path.row < self.adIndexPath.row && path.section == self.adIndexPath.section) {
-            numberOfRowsBeforeAd--;
-        }
-    }
-
-    NSArray *preDeletionTrueIndexPaths = [self trueIndexPaths:indexPaths];
-    self.adIndexPath = [NSIndexPath indexPathForRow:(self.adIndexPath.row + numberOfRowsBeforeAd)
-                                          inSection:self.adIndexPath.section];
-    return preDeletionTrueIndexPaths;
-}
-
 - (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath {
-    NSArray *deleteIndexPaths = [self willDeleteRowsAtExternalIndexPaths:@[indexPath]];
-    NSArray *insertIndexPaths = [self willInsertRowsAtExternalIndexPaths:@[newIndexPath]];
+    NSArray *deleteIndexPaths = [self trueIndexPaths:@[indexPath]];
+    NSArray *insertIndexPaths = [self trueIndexPaths:@[newIndexPath]];
 
     return @[[deleteIndexPaths firstObject], [insertIndexPaths firstObject]];
 }
 
 - (void)willInsertSections:(NSIndexSet *)sections {
-    NSInteger section = self.adIndexPath.section + [self numberOfSectionsChangingWithAdSection:sections];
-    self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:section];
+    self.adSection += [self numberOfSectionsChangingWithAdSection:sections];
 }
 
 - (void)willDeleteSections:(NSIndexSet *)sections {
-    if ([sections containsIndex:self.adIndexPath.section]) {
-        self.adIndexPath = [NSIndexPath indexPathForRow:-1 inSection:-1];
+    if ([sections containsIndex:self.adSection]) {
+        self.adSection = -1;
         return;
-    }
+    }   
 
-    NSInteger section = self.adIndexPath.section - [self numberOfSectionsChangingWithAdSection:sections];
-    self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:section];
+    self.adSection -= [self numberOfSectionsChangingWithAdSection:sections];
 }
 
 - (void)willMoveSection:(NSInteger)section toSection:(NSInteger)newSection {
-    if (section == self.adIndexPath.section) {
-        self.adIndexPath = [NSIndexPath indexPathForRow:self.adIndexPath.row inSection:newSection];
+    if (section == self.adSection) {
+        self.adSection = newSection;
         return;
     }
 
@@ -140,18 +147,21 @@
     [self willInsertSections:[NSIndexSet indexSetWithIndex:newSection]];
 }
 
-- (void)willReloadAdIndexPathTo:(NSIndexPath *)indexPath {
-    self.adIndexPath = indexPath;
+- (NSInteger)getLastCalculatedNumberOfAdsInSection:(NSInteger)section {
+    if (section == self.adSection) {
+        return self.numAdsCalculated;
+    }
+    return 0;
 }
 
 #pragma mark - Private
 
 - (NSInteger)numberOfSectionsChangingWithAdSection:(NSIndexSet *)sections {
-    if (self.adIndexPath.section == -1) {
+    if (self.adSection == -1) {
         return 0;
     }
 
-    NSRange sectionsBeforeAd = NSMakeRange(0, self.adIndexPath.section + 1);
+    NSRange sectionsBeforeAd = NSMakeRange(0, self.adSection + 1);
     return [sections countOfIndexesInRange:sectionsBeforeAd];
 }
 

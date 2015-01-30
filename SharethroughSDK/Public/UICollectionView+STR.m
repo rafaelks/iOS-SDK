@@ -24,14 +24,14 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 
         return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:trueIndexPath];
     } else {
-        NSLog(@"WARNING: Called %@ on a collectionview that was not setup through SharethroughSDK %@. Did you intend to place an ad in this UICollectionView? If not, use UICollectionView's built-in -dequeueReusableCellWithReuseIdentifier: method", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:dataSourceProxy:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:)));
+        NSLog(@"WARNING: Called %@ on a collectionview that was not setup through SharethroughSDK %@. Did you intend to place an ad in this UICollectionView? If not, use UICollectionView's built-in -dequeueReusableCellWithReuseIdentifier: method", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:dataSourceProxy:adCellReuseIdentifier:placementKey:presentingViewController:adSize:articlesBeforeFirstAd:articlesBetweenAds:adSection:)));
         return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     }
 }
 
 - (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSArray *trueIndexPaths = [adjuster willInsertRowsAtExternalIndexPaths:indexPaths];
+    NSArray *trueIndexPaths = [adjuster trueIndexPaths:indexPaths];
     [self insertItemsAtIndexPaths:trueIndexPaths];
 }
 
@@ -44,21 +44,25 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 - (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
 
-    NSArray *trueIndexPaths = [adjuster willDeleteRowsAtExternalIndexPaths:indexPaths];
+    NSArray *trueIndexPaths = [adjuster trueIndexPaths:indexPaths];
     [self deleteItemsAtIndexPaths:trueIndexPaths];
 }
 
 - (NSInteger)str_numberOfItemsInSection:(NSInteger)section {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-
-    return [self numberOfItemsInSection:section] - [adjuster numberOfAdsInSection:section];
+    return  [self numberOfItemsInSection:section] - [[self str_ensureAdjuster] getLastCalculatedNumberOfAdsInSection:section];
 }
 
 - (NSArray *)str_visibleCellsWithoutAds {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
 
     NSMutableArray *visibleCells = [[self visibleCells] mutableCopy];
-    [visibleCells removeObject:[self cellForItemAtIndexPath:adjuster.adIndexPath]];
+    NSArray *visibleCellsIdexPaths = [self indexPathsForVisibleItems];
+    for (NSUInteger i = 0; i < [visibleCellsIdexPaths count]; ++i) {
+        NSIndexPath *indexPath = visibleCellsIdexPaths[i];
+        if ([adjuster isAdAtIndexPath:indexPath]) {
+            [visibleCells removeObjectAtIndex:i];
+        }
+    }
 
     return [visibleCells copy];
 }
@@ -83,27 +87,11 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
     return [[self str_ensureAdjuster] externalIndexPath:trueIndexPath];
 }
 
-- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
-    [self str_ensureAdjuster];
-
-    if (!adIndexPath) {
-        STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
-        adIndexPath = [adGenerator initialIndexPathForAd:self preferredStartingIndexPath:nil];
-    }
-
-    [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];
+- (void)str_reloadData {
     [self reloadData];
 }
 
 - (void)str_reloadSections:(NSIndexSet *)sections {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSIndexPath *adIndexPath = adjuster.adIndexPath;
-    NSInteger newNumberOfItemsInAdSection = [self.dataSource collectionView:self numberOfItemsInSection:adIndexPath.section];
-
-    newNumberOfItemsInAdSection = MIN(newNumberOfItemsInAdSection - 1, adIndexPath.row);
-
-    [adjuster willReloadAdIndexPathTo:[NSIndexPath indexPathForRow:newNumberOfItemsInAdSection inSection:adIndexPath.section]];
-
     [self reloadSections:sections];
 }
 
@@ -151,7 +139,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 - (STRGridlikeViewAdGenerator *)str_ensureGenerator {
     STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:))];
+        [NSException raise:@"STRCollectionViewApiImproperSetup" format:@"Called %@ on a collectionview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInCollectionView:adCellReuseIdentifier:placementKey:presentingViewController:adSize:articlesBeforeFirstAd:articlesBetweenAds:adSection:))];
     }
     return adGenerator;
 }

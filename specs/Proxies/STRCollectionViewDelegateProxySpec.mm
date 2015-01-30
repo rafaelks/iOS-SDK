@@ -21,14 +21,14 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
         originalDelegate = [STRFullCollectionViewDelegate new];
         spy_on(originalDelegate);
         collectionView = nice_fake_for([UICollectionView class]);
-        collectionView stub_method(@selector(numberOfItemsInSection:)).with(0).and_return(2);
+        collectionView stub_method(@selector(numberOfItemsInSection:)).with(0).and_return((long)2);
         
-        adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
         spy_on(adjuster);
         
         proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:CGSizeZero];
     });
-    
+
     describe(@"when an ad is loaded", ^{
         beforeEach(^{
             adjuster.adLoaded = YES;
@@ -367,7 +367,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
             });
         });
     });
-    
+
     describe(@"when an ad is not loaded", ^{
         beforeEach(^{
             adIndexPath = [NSIndexPath indexPathForItem:1 inSection:0];
@@ -380,7 +380,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                 [proxy respondsToSelector:@selector(collectionView:didDeselectItemAtIndexPath:)] should be_truthy;
             });
         });
-        
+
         context(@"when using an empty/incomplete delegate", ^{
             __block STRCollectionViewDelegate *emptyDelegate;
             beforeEach(^{
@@ -572,6 +572,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
                 });
             });
         });
+
     });
 });
 

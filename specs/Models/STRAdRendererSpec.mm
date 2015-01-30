@@ -12,6 +12,7 @@
 #import "STRAdPlacement.h"
 #import "STRNetworkClient.h"
 #import "STRAdRenderer.h"
+#import "STRDateProvider.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -25,6 +26,7 @@ describe(@"STRAdRenderer", ^{
     __block NSRunLoop<CedarDouble> *fakeRunLoop;
     __block STRNetworkClient *fakeNetworkClient;
     __block STRAdRenderer *renderer;
+    __block STRDateProvider<CedarDouble> *dateProvider;
     
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -39,8 +41,10 @@ describe(@"STRAdRenderer", ^{
 
         fakeNetworkClient = nice_fake_for([STRNetworkClient class]);
         [injector bind:[STRNetworkClient class] toInstance:fakeNetworkClient];
+        
+        dateProvider = nice_fake_for([STRDateProvider class]);
 
-        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
+        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService dateProvider:dateProvider runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
         [injector bind:[STRAdRenderer class] toInstance:renderer];
 
         ad = [STRAdvertisement new];
@@ -80,6 +84,7 @@ describe(@"STRAdRenderer", ^{
                                                   PlacementKey:@"placementKey"
                                       presentingViewController:presentingViewController
                                                       delegate:delegate
+                                                       adIndex:0
                                                        DFPPath:nil
                                                    DFPDeferred:nil];
         });
@@ -144,124 +149,124 @@ describe(@"STRAdRenderer", ^{
                 [view.gestureRecognizers count] should equal(1);
                 [view.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
             });
-            /*
-            describe(@"view position timer", ^{
-                __block NSTimer *timer;
-                
-                beforeEach(^{
-                    UIView *superView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-                    [window addSubview:superView];
-                    [superView addSubview:view];
-                    
-                    [[fakeRunLoop.sent_messages firstObject] getArgument:&timer atIndex:2];
-                });
-                
-                subjectAction(^{
-                    [timer fire];
-                });
-                
-                context(@"when ad is >= 50% visible", ^{
-                    beforeEach(^{
-                        view.frame = CGRectMake(0, 0, 100, 100);
-                    });
-                    
-                    it(@"increments seconds visible", ^{
-                        [timer.userInfo[@"secondsVisible"] floatValue] should be_greater_than(0.0);
-                    });
-                    
-                    it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
-                    });
-                    
-                    it(@"does not invalidates timer", ^{
-                        timer.isValid should be_truthy;
-                    });
-                    
-                    context(@"and one second has passed", ^{
-                        beforeEach(^{
-                            timer.userInfo[@"secondsVisible"] = @1.0;
-                        });
-                        
-                        it(@"sends a beacon", ^{
-                            beaconService should have_received(@selector(fireVisibleImpressionForAd:adSize:))
-                            .with(ad, CGSizeMake(100, 100));
-                        });
-                        
-                        it(@"fires a third party beacon", ^{
-                            beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//google.com?fakeParam=[timestamp]"]);
-                        });
-                        
-                        it(@"invalidates its timer", ^{
-                            timer.isValid should be_falsy;
-                        });
-                    });
-                    
-                    describe(@"when the ad goes off screen before 1 second has passed", ^{
-                        beforeEach(^{
-                            timer.userInfo[@"secondsVisible"] = @0.5;
-                            
-                            view.frame = CGRectMake(1000, 1000, 100, 100);
-                        });
-                        
-                        it(@"resets the secondsVisible", ^{
-                            timer.userInfo[@"secondsVisible"] should be_nil;
-                        });
-                    });
-                });
-                
-                context(@"when the ad is 25% visible", ^{
-                    beforeEach(^{
-                        view.frame = CGRectMake(0, 360, 320, 480);
-                    });
-                    
-                    it(@"does not set secondsVisible", ^{
-                        timer.userInfo[@"secondsVisible"] should be_nil;
-                    });
-                    
-                    it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
-                    });
-                    
-                    it(@"does not invalidates timer", ^{
-                        timer.isValid should be_truthy;
-                    });
-                    
-                });
-                
-                context(@"when ad is 0% visible", ^{
-                    beforeEach(^{
-                        view.frame = CGRectMake(0, 481, 320, 500);
-                    });
-                    
-                    it(@"does not set secondsVisible", ^{
-                        timer.userInfo[@"secondsVisible"] should be_nil;
-                    });
-                    
-                    it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
-                    });
-                    
-                    it(@"does not invalidates timer", ^{
-                        timer.isValid should be_truthy;
-                    });
-                });
-                
-                context(@"after the ad is removed from its superview", ^{
-                    beforeEach(^{
-                        view.frame = CGRectMake(0, 481, 320, 500);
-                        [view removeFromSuperview];
-                    });
-                    
-                    it(@"invalidates its timer", ^{
-                        timer.isValid should be_falsy;
-                    });
-                    
-                    it(@"does not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
-                    });
-                });
-            });
-            */
+
+//            describe(@"view position timer", ^{
+//                __block NSTimer *timer;
+//                
+//                beforeEach(^{
+//                    UIView *superView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+//                    [window addSubview:superView];
+//                    [superView addSubview:view];
+//                    
+//                    [[fakeRunLoop.sent_messages firstObject] getArgument:&timer atIndex:2];
+//                });
+//                
+//                subjectAction(^{
+//                    [timer fire];
+//                });
+//                
+//                context(@"when ad is >= 50% visible", ^{
+//                    beforeEach(^{
+//                        view.frame = CGRectMake(0, 0, 100, 100);
+//                    });
+//                    
+//                    it(@"increments seconds visible", ^{
+//                        [timer.userInfo[@"secondsVisible"] floatValue] should be_greater_than(0.0);
+//                    });
+//                    
+//                    it(@"should not send a beacon", ^{
+//                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
+//                    });
+//                    
+//                    it(@"does not invalidates timer", ^{
+//                        timer.isValid should be_truthy;
+//                    });
+//                    
+//                    context(@"and one second has passed", ^{
+//                        beforeEach(^{
+//                            timer.userInfo[@"secondsVisible"] = @1.0;
+//                        });
+//                        
+//                        it(@"sends a beacon", ^{
+//                            beaconService should have_received(@selector(fireVisibleImpressionForAd:adSize:))
+//                            .with(ad, CGSizeMake(100, 100));
+//                        });
+//                        
+//                        it(@"fires a third party beacon", ^{
+//                            beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//google.com?fakeParam=[timestamp]"]);
+//                        });
+//                        
+//                        it(@"invalidates its timer", ^{
+//                            timer.isValid should be_falsy;
+//                        });
+//                    });
+//                    
+//                    describe(@"when the ad goes off screen before 1 second has passed", ^{
+//                        beforeEach(^{
+//                            timer.userInfo[@"secondsVisible"] = @0.5;
+//                            
+//                            view.frame = CGRectMake(1000, 1000, 100, 100);
+//                        });
+//                        
+//                        it(@"resets the secondsVisible", ^{
+//                            timer.userInfo[@"secondsVisible"] should be_nil;
+//                        });
+//                    });
+//                });
+//                
+//                context(@"when the ad is 25% visible", ^{
+//                    beforeEach(^{
+//                        view.frame = CGRectMake(0, 360, 320, 480);
+//                    });
+//                    
+//                    it(@"does not set secondsVisible", ^{
+//                        timer.userInfo[@"secondsVisible"] should be_nil;
+//                    });
+//                    
+//                    it(@"should not send a beacon", ^{
+//                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
+//                    });
+//                    
+//                    it(@"does not invalidates timer", ^{
+//                        timer.isValid should be_truthy;
+//                    });
+//                    
+//                });
+//                
+//                context(@"when ad is 0% visible", ^{
+//                    beforeEach(^{
+//                        view.frame = CGRectMake(0, 481, 320, 500);
+//                    });
+//                    
+//                    it(@"does not set secondsVisible", ^{
+//                        timer.userInfo[@"secondsVisible"] should be_nil;
+//                    });
+//                    
+//                    it(@"should not send a beacon", ^{
+//                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
+//                    });
+//                    
+//                    it(@"does not invalidates timer", ^{
+//                        timer.isValid should be_truthy;
+//                    });
+//                });
+//                
+//                context(@"after the ad is removed from its superview", ^{
+//                    beforeEach(^{
+//                        view.frame = CGRectMake(0, 481, 320, 500);
+//                        [view removeFromSuperview];
+//                    });
+//                    
+//                    it(@"invalidates its timer", ^{
+//                        timer.isValid should be_falsy;
+//                    });
+//                    
+//                    it(@"does not send a beacon", ^{
+//                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
+//                    });
+//                });
+//            });
+
             describe(@"when the ad is tapped on", ^{
                 __block STRInteractiveAdViewController *interactiveAdController;
                 
@@ -309,40 +314,40 @@ describe(@"STRAdRenderer", ^{
                     delegate should_not have_received(@selector(adView:userDidEngageAdForPlacementKey:));
                 });
             });
-            /*
-            describe(@"when the view has already had an ad placed within it", ^{
-                __block STRAdRenderer *secondRenderer;
-                __block NSTimer *oldTimer;
-                
-                beforeEach(^{
-                    [[fakeRunLoop.sent_messages firstObject] getArgument:&oldTimer atIndex:2];
-                    
-                    STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
-                                                                         PlacementKey:@"placementKey"
-                                                             presentingViewController:presentingViewController
-                                                                             delegate:nil
-                                                                              DFPPath:nil
-                                                                          DFPDeferred:nil];
 
-                    secondRenderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
-                    
-                    [secondRenderer renderAd:ad inPlacement:placement];
-                });
-                
-                it(@"should have cleaned up old tap gesture recognizers", ^{
-                    [view.gestureRecognizers count] should equal(1);
-                });
-                
-                it(@"invalidates the old ad's timer", ^{
-                    oldTimer.isValid should be_falsy;
-                    
-                    __autoreleasing NSTimer *newTimer;
-                    [[fakeRunLoop.sent_messages lastObject] getArgument:&newTimer atIndex:2];
-                    
-                    newTimer should_not be_same_instance_as(oldTimer);
-                });
-            });
-            */
+//            describe(@"when the view has already had an ad placed within it", ^{
+//                __block STRAdRenderer *secondRenderer;
+//                __block NSTimer *oldTimer;
+//                
+//                beforeEach(^{
+//                    [[fakeRunLoop.sent_messages firstObject] getArgument:&oldTimer atIndex:2];
+//                    
+//                    STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
+//                                                                         PlacementKey:@"placementKey"
+//                                                             presentingViewController:presentingViewController
+//                                                                             delegate:nil
+//                                                                              DFPPath:nil
+//                                                                          DFPDeferred:nil];
+//
+//                    secondRenderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
+//                    
+//                    [secondRenderer renderAd:ad inPlacement:placement];
+//                });
+//                
+//                it(@"should have cleaned up old tap gesture recognizers", ^{
+//                    [view.gestureRecognizers count] should equal(1);
+//                });
+//                
+//                it(@"invalidates the old ad's timer", ^{
+//                    oldTimer.isValid should be_falsy;
+//                    
+//                    __autoreleasing NSTimer *newTimer;
+//                    [[fakeRunLoop.sent_messages lastObject] getArgument:&newTimer atIndex:2];
+//                    
+//                    newTimer should_not be_same_instance_as(oldTimer);
+//                });
+//            });
+
             context(@"when the ad is a clickout", ^{
                 beforeEach(^{
                     ad.action = STRClickoutAd;
@@ -510,12 +515,10 @@ describe(@"STRAdRenderer", ^{
                 view = [STRPlainAdView new];
                 deferred = [STRDeferred defer];
                 
-                placement = [[STRAdPlacement alloc] initWithAdView:view
-                                                                      PlacementKey:@"placementKey"
-                                                          presentingViewController:presentingViewController
-                                                                          delegate:nil
-                                                                           DFPPath:nil
-                                                                       DFPDeferred:nil];
+                placement = [[STRAdPlacement alloc] init];
+                placement.adView = view;
+                placement.placementKey = @"placementKey";
+                placement.presentingViewController = presentingViewController;
             });
             
             it(@"does not try to include an ad description", ^{

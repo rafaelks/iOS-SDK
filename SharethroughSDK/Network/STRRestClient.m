@@ -25,9 +25,9 @@
 - (id)initWithNetworkClient:(STRNetworkClient *)networkClient {
     self = [super init];
     if (self) {
-        self.adServerHostName = @"http://btlr.sharethrough.com";
+        self.adServerHostName = @"http://btlr.sharethrough.com/v3";
         self.beaconServerHostName = @"http://b.sharethrough.com/butler";
-        self.dfpPathUrlFormat = @"https://native.sharethrough.com/placements/%@/sdk.json";
+        self.dfpPathUrlFormat = @"https://platform-cdn.sharethrough.com/placements/%@/sdk.json";
         self.networkClient = networkClient;
     }
     return self;
@@ -59,10 +59,10 @@
 
 - (STRPromise *)getDFPPathForPlacement:(NSString *)placementKey {
     STRDeferred *deferred = [STRDeferred defer];
-    
+
     NSString *urlString = [NSString stringWithFormat:self.dfpPathUrlFormat, placementKey];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    
+
     [[self.networkClient get:request] then:^id(NSData *data) {
         NSError *jsonParseError;
         NSDictionary *parsedObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];

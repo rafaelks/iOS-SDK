@@ -143,10 +143,14 @@ presentingViewController:(UIViewController *)presentingViewController
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey {
+- (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement {
     STRDeferred *deferred = [STRDeferred defer];
     [deferred resolveWithValue:nil];
     return deferred.promise;
+}
+
+- (NSUInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement{
+    return 1;
 }
 
 - (void)prepareForNewAd:(UIView<STRAdView> *)view {

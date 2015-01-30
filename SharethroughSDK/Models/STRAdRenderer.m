@@ -19,12 +19,14 @@
 #import "STRAdViewDelegate.h"
 #import "STRPromise.h"
 #import "STRAdFixtures.h"
+#import "STRDateProvider.h"
 
 char const * const STRAdRendererKey = "STRAdRendererKey";
 
 @interface STRAdRenderer ()<STRInteractiveAdViewControllerDelegate>
 
 @property (nonatomic, strong) STRBeaconService *beaconService;
+@property (nonatomic, strong) STRDateProvider *dateProvider;
 @property (nonatomic, weak) NSRunLoop *timerRunLoop;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, weak) STRInjector *injector;
@@ -41,6 +43,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 @implementation STRAdRenderer
 
 - (id)initWithBeaconService:(STRBeaconService *)beaconService
+               dateProvider:(STRDateProvider *)dateProvider
                     runLoop:(NSRunLoop *)timerRunLoop
               networkClient:(STRNetworkClient *)networkClient
                    injector:(STRInjector *)injector;
@@ -48,6 +51,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     self = [super init];
     if (self) {
         self.beaconService = beaconService;
+        self.dateProvider = dateProvider;
         self.timerRunLoop = timerRunLoop;
         self.networkClient = networkClient;
         self.injector = injector;
@@ -85,15 +89,17 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     [placement.adView addGestureRecognizer:tapRecognizer];
     self.tapRecognizer = tapRecognizer;
 
-    NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
-                                             target:self
-                                           selector:@selector(checkIfAdIsVisible:)
-                                           userInfo:[@{@"view": placement.adView} mutableCopy]
-                                            repeats:YES];
-    timer.tolerance = timer.timeInterval * 0.1;
-    [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
+    if (self.ad.visibleImpressionTime == nil) {
+        NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
+                                                 target:self
+                                               selector:@selector(checkIfAdIsVisible:)
+                                               userInfo:[@{@"view": placement.adView} mutableCopy]
+                                                repeats:YES];
+        timer.tolerance = timer.timeInterval * 0.1;
+        [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
-    self.adVisibleTimer = timer;
+        self.adVisibleTimer = timer;
+    }
 
     if ([placement.delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:)]) {
         [placement.delegate adView:placement.adView didFetchAdForPlacementKey:placement.placementKey];
@@ -123,6 +129,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
         [self.beaconService fireVisibleImpressionForAd:self.ad
                                                 adSize:view.frame.size];
         [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility];
+        self.ad.visibleImpressionTime = [self.dateProvider now];
         [timer invalidate];
     } else {
         [timer.userInfo removeObjectForKey:@"secondsVisible"];
@@ -185,9 +192,13 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     view.adTitle.text = @"";
     view.adSponsoredBy.text = @"";
     view.adThumbnail.image = nil;
+    for (UIView *subView in view.adThumbnail.subviews)
+    {
+        [subView removeFromSuperview];
+    }
     [self setDescriptionText:@"" onView:view];
     if ([view respondsToSelector:@selector(adBrandLogo)]) {
-        view.adThumbnail.image = nil;
+        view.adBrandLogo.image = nil;
     }
 }
 

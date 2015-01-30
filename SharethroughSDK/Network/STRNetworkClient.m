@@ -31,7 +31,7 @@
 
     return deferred.promise;
 }
-    
+
 - (NSString *)userAgent {
     if (userAgentString) {
         return userAgentString;

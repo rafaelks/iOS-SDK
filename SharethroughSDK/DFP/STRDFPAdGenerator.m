@@ -59,13 +59,12 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 }
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement {
-
-    if ([self.adService isAdCachedForPlacementKey:placement.placementKey]) {
+    if ([self.adService isAdCachedForPlacement:placement]) {
         //DFPDeferred is used for UITableView and UICollectionView APIs to prefetch ads
         if (placement.DFPDeferred != nil) {
             [placement.DFPDeferred resolveWithValue:nil];
         } else {
-            STRPromise *adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
+            STRPromise *adPromise = [self.adService fetchAdForPlacement:placement];
             [adPromise then:^id(STRAdvertisement *ad) {
 
                 STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];

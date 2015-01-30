@@ -19,6 +19,7 @@
                   PlacementKey:(NSString *)placementKey
       presentingViewController:(UIViewController *)presentingViewController
                       delegate:(id<STRAdViewDelegate>)delegate
+                       adIndex:(NSInteger)adIndex
                        DFPPath:(NSString *)DFPPath
                    DFPDeferred:(STRDeferred *)deferred;
 
@@ -26,9 +27,18 @@
 @property (strong, nonatomic) NSString *placementKey;
 @property (strong, nonatomic) UIViewController *presentingViewController;
 @property (strong, nonatomic) id<STRAdViewDelegate> delegate;
+@property (nonatomic) NSInteger adIndex;
 
 //Optional DFP related properties
 @property (strong, nonatomic) NSString *DFPPath;
 @property (strong, nonatomic) STRDeferred *DFPDeferred;
+
+@end
+
+@interface STRAdPlacementInfiniteScrollFields : NSObject
+
+@property (strong, nonatomic) NSString *placementKey;
+@property (assign, nonatomic) NSUInteger articlesBeforeFirstAd;
+@property (assign, nonatomic) NSUInteger articlesBetweenAds;
 
 @end

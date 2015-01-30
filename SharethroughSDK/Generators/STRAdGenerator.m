@@ -52,9 +52,9 @@
 
     STRPromise *adPromise;
     if ([creativeKey length] > 0){
-        adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
+        adPromise = [self.adService fetchAdForPlacement:placement creativeKey:creativeKey];
     } else {
-        adPromise = [self.adService fetchAdForPlacementKey:placement.placementKey];
+        adPromise = [self.adService fetchAdForPlacement:placement];
     }
 
     [adPromise then:^id(STRAdvertisement *ad) {
@@ -79,12 +79,16 @@
     return deferred.promise;
 }
 
-- (STRPromise *)prefetchAdForPlacementKey:(NSString *)placementKey {
-    return [self.adService fetchAdForPlacementKey:placementKey];
+- (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement {
+    return [self.adService prefetchAdsForPlacement:placement];
 }
 
 - (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement {
-    return [self.adService fetchAdForPlacementKey:placement.placementKey creativeKey:creativeKey];
+    return [self.adService fetchAdForPlacement:placement creativeKey:creativeKey];
+}
+
+- (NSUInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement {
+    return [self.adService numberOfAdsForPlacement:placement];
 }
 
 #pragma mark - Private

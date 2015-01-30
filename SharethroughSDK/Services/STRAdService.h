@@ -11,7 +11,7 @@
 
 extern const NSInteger kRequestInProgress;
 
-@class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService;
+@class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService, STRAdPlacement;
 
 @interface STRAdService : NSObject
 
@@ -19,8 +19,11 @@ extern const NSInteger kRequestInProgress;
            networkClient:(STRNetworkClient *)networkClient
                  adCache:(STRAdCache *)adCache
            beaconService:(STRBeaconService *)beaconService;
-- (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey;
-- (STRPromise *)fetchAdForPlacementKey:(NSString *)placementKey creativeKey:(NSString *)creativeKey;
-- (BOOL)isAdCachedForPlacementKey:(NSString *)placementKey;
+
+- (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement;
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement;
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement creativeKey:(NSString *)creativeKey;
+- (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement;
+- (NSUInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement;
 
 @end

@@ -22,7 +22,9 @@
                  placementKey:(NSString *)placementKey
      presentingViewController:(UIViewController *)presentingViewController
                        adSize:(CGSize)adSize
-           adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
+        articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
+           articlesBetweenAds:(NSUInteger)articlesBetweenAds
+                    adSection:(NSInteger)adSection;
 
 - (id)originalDelegate;
 - (void)setOriginalDelegate:(id)newOriginalDelegate
@@ -31,7 +33,5 @@
 - (id)originalDataSource;
 - (void)setOriginalDataSource:(id)newOriginalDataSource
                  gridlikeView:(id)gridlikeView;
-
-- (NSIndexPath *)initialIndexPathForAd:(id)gridlikeView preferredStartingIndexPath:(NSIndexPath *)adStartingIndexPath;
 
 @end

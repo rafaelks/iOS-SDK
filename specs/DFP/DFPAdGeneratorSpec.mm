@@ -49,19 +49,17 @@ describe(@"DFPAdGenerator", ^{
 
         view = nice_fake_for([STRFullAdView class]);
 
-        adPlacement = [[STRAdPlacement alloc] initWithAdView:view
-                                                PlacementKey:@"placementKey"
-                                    presentingViewController:nil
-                                                    delegate:delegate
-                                                     DFPPath:nil
-                                                 DFPDeferred:nil];
+        adPlacement = [[STRAdPlacement alloc] init];
+        adPlacement.adView = view;
+        adPlacement.placementKey = @"placementKey";
+        adPlacement.delegate = delegate;
 
         generator = [[STRDFPAdGenerator alloc] initWithAdService:adService injector:injector restClient:restClient];
     });
 
     context(@"when there is no ad cached", ^{
         beforeEach(^{
-            adService stub_method(@selector(isAdCachedForPlacementKey:)).and_return(NO);
+            adService stub_method(@selector(isAdCachedForPlacement:)).and_return(NO);
         });
 
         describe(@"when the DFP Path is passed in", ^{
@@ -150,7 +148,7 @@ describe(@"DFPAdGenerator", ^{
 
     context(@"when there is an ad cached", ^{
         beforeEach(^{
-            adService stub_method(@selector(isAdCachedForPlacementKey:)).and_return(YES);
+            adService stub_method(@selector(isAdCachedForPlacement:)).and_return(YES);
         });
 
         describe(@"when the placement deferred is set", ^{
@@ -171,12 +169,12 @@ describe(@"DFPAdGenerator", ^{
 
             beforeEach(^{
                 adServiceDeferred = [STRDeferred defer];
-                adService stub_method(@selector(fetchAdForPlacementKey:)).and_return(adServiceDeferred.promise);
+                adService stub_method(@selector(fetchAdForPlacement:)).and_return(adServiceDeferred.promise);
                 [generator placeAdInPlacement:adPlacement];
             });
 
             it(@"calls the ad service to fetch the ad", ^{
-                adService should have_received(@selector(fetchAdForPlacementKey:)).with(adPlacement.placementKey);
+                adService should have_received(@selector(fetchAdForPlacement:)).with(adPlacement);
             });
 
             it(@"calls the renderer to render the ad", ^{

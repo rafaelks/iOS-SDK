@@ -23,7 +23,7 @@ using namespace Cedar::Doubles;
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
     
     UILabel *label = [[UILabel alloc] init];
-    label.text = [NSString stringWithFormat:@"item: %ld, section: %d", (long)indexPath.item, indexPath.section];
+    label.text = [NSString stringWithFormat:@"item: %ld, section: %ld", (long)indexPath.item, (long)indexPath.section];
     [cell.contentView addSubview:label];
     
     return cell;
@@ -35,7 +35,7 @@ using namespace Cedar::Doubles;
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"contentCell" forIndexPath:indexPath];
     
     UILabel *label = [[UILabel alloc] init];
-    label.text = [NSString stringWithFormat:@"item: %d, section: %d", indexPath.item, indexPath.section];
+    label.text = [NSString stringWithFormat:@"item: %ld, section: %ld", (long)indexPath.item, (long)indexPath.section];
     [cell.contentView addSubview:label];
     
     return cell;
@@ -54,8 +54,8 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
     __block STRCollectionViewDataSource *originalDataSource;
     
     STRGridlikeViewDataSourceProxy *(^proxyWithDataSource)(id<UICollectionViewDataSource> dataSource) = ^STRGridlikeViewDataSourceProxy *(id<UICollectionViewDataSource> dataSource) {
-        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterWithInitialAdIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
-
+        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
+        
         STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
         dataSourceProxy.originalDataSource = dataSource;
         dataSourceProxy.adjuster = adjuster;
@@ -104,7 +104,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
         
         describe(@"when an ad is loaded", ^{
             beforeEach(^{
-                [proxy prefetchAdForGridLikeView:collectionView];
+                [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
             });
             
             it(@"inserts a row into the first section", ^{
@@ -134,7 +134,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
             proxy = proxyWithDataSource(dataSource);
             collectionView.dataSource = proxy;
             
-            [proxy prefetchAdForGridLikeView:collectionView];
+            [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
             
             [collectionView layoutIfNeeded];
         });
@@ -161,7 +161,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
     describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
         it(@"throws Apple's exception if the sdk user does not register the identifier", ^{
             expect(^{
-                [proxy prefetchAdForGridLikeView:collectionView];
+                [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
                 [collectionView layoutIfNeeded];
             }).to(raise_exception());
         });
@@ -170,7 +170,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
             [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
             
             expect(^{
-                [proxy prefetchAdForGridLikeView:collectionView];
+                [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
                 [collectionView layoutIfNeeded];
             }).to(raise_exception());
         });

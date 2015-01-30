@@ -16,13 +16,13 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 @implementation UITableView (STR)
 
 - (void)str_insertRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
-    NSArray *indexPathsForInsertion = [[self str_ensureAdjuster] willInsertRowsAtExternalIndexPaths:indexPaths];
+    NSArray *indexPathsForInsertion = [[self str_ensureAdjuster] trueIndexPaths:indexPaths];
     [self insertRowsAtIndexPaths:indexPathsForInsertion withRowAnimation:rowAnimation];
 }
 
 
 - (void)str_deleteRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
-    NSArray *indexPathsForDeletion = [[self str_ensureAdjuster] willDeleteRowsAtExternalIndexPaths:indexPaths];
+    NSArray *indexPathsForDeletion = [[self str_ensureAdjuster] trueIndexPaths:indexPaths];
     [self deleteRowsAtIndexPaths:indexPathsForDeletion withRowAnimation:rowAnimation];
 }
 
@@ -46,12 +46,7 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
     [self moveSection:section toSection:newSection];
 }
 
-- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath {
-    if (adIndexPath == nil) {
-        adIndexPath = [[self str_ensureGenerator] initialIndexPathForAd:self preferredStartingIndexPath:nil];
-    }
-
-    [[self str_ensureAdjuster] willReloadAdIndexPathTo:adIndexPath];
+- (void)str_reloadData {
     [self reloadData];
 }
 
@@ -60,13 +55,6 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 - (void)str_reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSIndexPath *adIndexPath = adjuster.adIndexPath;
-    NSInteger newNumberOfRowsInAdSection = [self.dataSource tableView:self numberOfRowsInSection:adIndexPath.section];
-    newNumberOfRowsInAdSection = MIN(newNumberOfRowsInAdSection - 1, adIndexPath.row);
-
-    [adjuster willReloadAdIndexPathTo:[NSIndexPath indexPathForRow:newNumberOfRowsInAdSection inSection:adIndexPath.section]];
-
     [self reloadSections:sections withRowAnimation:animation];
 }
 
@@ -124,7 +112,7 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 - (NSInteger)str_numberOfRowsInSection:(NSInteger)section {
-    return [self numberOfRowsInSection:section] - [[self str_ensureAdjuster] numberOfAdsInSection:section];
+    return  [self numberOfRowsInSection:section] - [[self str_ensureAdjuster] getLastCalculatedNumberOfAdsInSection:section];
 }
 
 - (NSIndexPath *)str_indexPathForSelectedRow {
@@ -156,7 +144,7 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 - (STRGridlikeViewAdGenerator *)str_ensureGenerator {
     STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (!adGenerator) {
-        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:dataSourceProxy:adCellReuseIdentifier:placementKey:presentingViewController:adSize:adInitialIndexPath:))];
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Called %@ on a tableview that was not setup through SharethroughSDK %@", NSStringFromSelector(_cmd), NSStringFromSelector(@selector(placeAdInGridlikeView:dataSourceProxy:adCellReuseIdentifier:placementKey:presentingViewController:adSize:articlesBeforeFirstAd:articlesBetweenAds:adSection:))];
     }
     return adGenerator;
 }

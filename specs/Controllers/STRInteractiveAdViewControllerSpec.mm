@@ -45,7 +45,7 @@ describe(@"STRInteractiveAdViewController", ^{
         ad = [STRAdFixtures youTubeAd];
         setUpController();
 
-        controller.adInfoHeader.text should equal(@"Go Sip for Sip with Josh Duhamel Promoted by Pepsi");
+        controller.adInfoHeader.text should equal(@"Beats By Dre Presents: LeBron James Promoted by Beats by Dre");
     });
 
     describe(@"when the ad is a youtube ad", ^{

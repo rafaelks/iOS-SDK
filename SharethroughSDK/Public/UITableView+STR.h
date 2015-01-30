@@ -74,7 +74,7 @@
  
  @param adIndexPath The index path to place an ad in. This index path should represent where the ad is, including the ad within the table view. Pass nil to let the SharethroughSDK choose a default location.
  */
-- (void)str_reloadDataWithAdIndexPath:(NSIndexPath *)adIndexPath;
+- (void)str_reloadData;
 
 /**
  Reloads the specified rows using a certain animation effect disregarding ad(s) provided by Sharethrough. Alternate to UITableView's built-in -reloadRowsAtIndexPaths:withRowAnimation:

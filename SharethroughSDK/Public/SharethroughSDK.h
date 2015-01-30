@@ -27,10 +27,11 @@
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
+ @param index The index of the ad if there are multiple ads shown using a single placementKey, i.e. infinite scroll. If only ad is shown for the placementKey, pass 0 every time.
  @param delegate Delegate for handling completion. This can be nil if you do not wish to customize success or failure behavior.
  @warning If you are placing the ad in a view returned by UITableView/UICollectionView's dequeue method (or any similar reuse mechanism), it is important that you register separate reuse identifier than your normal content cells. Using the same reuse identifier will result in artifacts left behind on content cells (such as ad interactivity behavior).
   */
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController delegate:(id<STRAdViewDelegate>)delegate;
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController index:(NSInteger)index delegate:(id<STRAdViewDelegate>)delegate;
 
 /**
  If your app is using a basic UITableView that you want to present ads within, you may alternately use the following method to insert an ad. It is required that the reuse identifier be registered with the UITableView to return a UITableViewCell (or subclass) that conforms to the STRAdView protocol. This reuse identifier should be separate from the reuse identifier used for your content cells, even if they are registered with the same class or xib. A good place to call this function would be -viewDidLoad. Calling this method on the same table view will remove previously existing ad(s) and place an ad at the place specified by adStartingIndexPath.
@@ -43,7 +44,7 @@
  
  @discussion The UITableView's dataSource methods of –tableView:commitEditingStyle:forRowAtIndexPath:, –tableView:canEditRowAtIndexPath:, –tableView:canMoveRowAtIndexPath:, –tableView:moveRowAtIndexPath:toIndexPath: are curerently not supported. Apps that wish to use these should instead use the more generic -placeAdInView:placementKey:presentingViewController:delegate:
  */
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd articlesBetweenAds:(NSUInteger)articlesBetweenAds adSection:(NSInteger)adSection;
 
 /**
  If your app is using a basic UICollectionView that you want to present ads within, you may alternately use the following method to insert an ad. It is required that the reuse identifier be registered with the UIColectionView to return a UICollectionViewCell (or subclass) that conforms to the STRAdView protocol. This reuse identifier should be separate from the reuse identifier used for your content cells, even if they are registered with the same class or xib. A good place to call this function would be -viewDidLoad.
@@ -59,7 +60,7 @@
  
     This is the only time the index path is computed taking into account the ad position. Future calls to the collection view should use STR's provided category methods (instead of UICollectionView's corresponding built-in methods). In using these category methods, index paths do not need to account for the extra ad cell.
  */
-- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adSize:(CGSize)adSize adInitialIndexPath:(NSIndexPath *)adInitialIndexPath;
+- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adSize:(CGSize)adSize articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd articlesBetweenAds:(NSUInteger)articlesBetweenAds adSection:(NSInteger)adSection;
 
 /*
  This allows the app to configure the amount of time an ad is cached before a request for a new ad is made to the server. This defaults to 120 seconds and can be set as low as 20 seconds.
