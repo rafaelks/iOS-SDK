@@ -155,7 +155,8 @@
 
 - (NSMutableDictionary *)impressionParametersForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
     NSMutableDictionary *params = [@{@"pwidth": [NSString stringWithFormat:@"%g", adSize.width],
-                                     @"pheight": [NSString stringWithFormat:@"%g", adSize.height]}
+                                     @"pheight": [NSString stringWithFormat:@"%g", adSize.height],
+                                     @"placementIndex": [NSString stringWithFormat:@"%ld", (long)ad.placementIndex]}
                                    mutableCopy];
     [params addEntriesFromDictionary:[self commonParametersWithAd:ad]];
 

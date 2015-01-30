@@ -61,6 +61,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (void)renderAd:(STRAdvertisement *)ad inPlacement:(STRAdPlacement *)placement {
     self.ad = ad;
+    self.ad.placementIndex = placement.adIndex;
     self.placement = placement;
     [self prepareForNewAd:placement.adView];
 
