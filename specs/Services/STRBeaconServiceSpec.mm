@@ -178,6 +178,7 @@ describe(@"STRBeaconService", ^{
                                                                                          @"pwidth": @"200",
                                                                                          @"pheight": @"100",
                                                                                          @"ploc": @"specs",
+                                                                                         @"placementIndex": @"0",
                                                                                          @"as": @"sig",
                                                                                          @"at": @"type",
                                                                                          @"ap": @"price"});
@@ -214,6 +215,7 @@ describe(@"STRBeaconService", ^{
                                                                                          @"pwidth": @"200",
                                                                                          @"pheight": @"100",
                                                                                          @"ploc": @"specs",
+                                                                                         @"placementIndex": @"0",
                                                                                          @"as": @"sig",
                                                                                          @"at": @"type",
                                                                                          @"ap": @"price"});
@@ -252,6 +254,7 @@ describe(@"STRBeaconService", ^{
               @"pwidth": @"200",
               @"pheight": @"100",
               @"ploc": @"specs",
+              @"placementIndex": @"0",
               @"as": @"sig",
               @"at": @"type",
                            @"ap": @"price"};
@@ -401,6 +404,7 @@ describe(@"STRBeaconService", ^{
                            @"pwidth": @"200",
                            @"pheight": @"100",
                            @"ploc": @"specs",
+                           @"placementIndex": @"0",
                            @"as": @"sig",
                            @"at": @"type",
                            @"ap": @"price"};
