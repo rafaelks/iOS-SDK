@@ -75,8 +75,8 @@
 - (void)updateDelegateWithNoAdShownforPlacement:(NSString *)DFPPath {
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:DFPPath];
 
-    if ([adPlacement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
-        [adPlacement.delegate adView:adPlacement.adView didFailToFetchAdForPlacementKey:adPlacement.placementKey];
+    if ([adPlacement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+        [adPlacement.delegate adView:adPlacement.adView didFailToFetchAdForPlacementKey:adPlacement.placementKey atIndex:0];
     }
 }
 

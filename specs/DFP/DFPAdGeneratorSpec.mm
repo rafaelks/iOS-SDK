@@ -95,17 +95,17 @@ describe(@"DFPAdGenerator", ^{
 
             it(@"notified the delegate that an ad could not be placed", ^{
                 [deferred resolveWithValue:@""];
-                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
             });
 
             context(@"when the delegate does not have an error callback", ^{
                 beforeEach(^{
-                    delegate reject_method(@selector(adView:didFailToFetchAdForPlacementKey:));
+                    delegate reject_method(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
                 });
 
                 it(@"does not try to call the delegate", ^{
                     [deferred resolveWithValue:@""];
-                    delegate should_not have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+                    delegate should_not have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
                 });
             });
         });
@@ -117,17 +117,17 @@ describe(@"DFPAdGenerator", ^{
 
             it(@"notified the delegate that an ad could not be placed", ^{
                 [deferred rejectWithError:nil];
-                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
             });
 
             context(@"when the delegate does not have an error callback", ^{
                 beforeEach(^{
-                    delegate reject_method(@selector(adView:didFailToFetchAdForPlacementKey:));
+                    delegate reject_method(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
                 });
 
                 it(@"does not try to call the delegate", ^{
                     [deferred rejectWithError:nil];
-                    delegate should_not have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+                    delegate should_not have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
                 });
             });
         });
@@ -184,7 +184,7 @@ describe(@"DFPAdGenerator", ^{
 
             it(@"informs the delegate if it fails", ^{
                 [adServiceDeferred rejectWithError:nil];
-                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
             });
         });
     });
@@ -205,7 +205,7 @@ describe(@"DFPAdGenerator", ^{
         describe(@"when the DFP request fails", ^{
             it(@"calls the DFP Manager to infrom the delegate", ^{
                 [generator adView:gBannerView didFailToReceiveAdWithError:nil];
-                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+                delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
             });
         });
     });

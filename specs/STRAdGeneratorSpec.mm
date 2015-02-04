@@ -90,6 +90,7 @@ describe(@"STRAdGenerator", ^{
             placement.placementKey = @"placementKey";
             placement.presentingViewController = presentingViewController;
             placement.delegate = delegate;
+            placement.adIndex = 0;
 
             [generator placeAdInPlacement:placement];
 
@@ -118,18 +119,18 @@ describe(@"STRAdGenerator", ^{
 
                 context(@"when the delegate has a success callback", ^{
                     it(@"tells the delegate", ^{
-                        delegate should have_received(@selector(adView:didFetchAdForPlacementKey:))
-                        .with(view, @"placementKey");
+                        delegate should have_received(@selector(adView:didFetchAdForPlacementKey:atIndex:))
+                        .with(view, @"placementKey", 0);
                     });
                 });
 
                 context(@"when the delegate does not have a success callback", ^{
                     beforeEach(^{
-                        delegate reject_method(@selector(adView:didFetchAdForPlacementKey:));
+                        delegate reject_method(@selector(adView:didFetchAdForPlacementKey:atIndex:));
                     });
 
                     it(@"does not try to tell the delegate", ^{
-                        delegate should_not have_received(@selector(adView:didFetchAdForPlacementKey:));
+                        delegate should_not have_received(@selector(adView:didFetchAdForPlacementKey:atIndex:));
                     });
                 });
             });
@@ -141,18 +142,18 @@ describe(@"STRAdGenerator", ^{
 
                 context(@"when the delegate has an error callback", ^{
                     it(@"tells the delegate about the error", ^{
-                        delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:))
-                        .with(view, @"placementKey");
+                        delegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:))
+                        .with(view, @"placementKey", 0);
                     });
                 });
 
                 context(@"when the delegate does not have an error callback", ^{
                     beforeEach(^{
-                        delegate reject_method(@selector(adView:didFailToFetchAdForPlacementKey:));
+                        delegate reject_method(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
                     });
 
                     it(@"does not try to call the delegate", ^{
-                        delegate should_not have_received(@selector(adView:didFailToFetchAdForPlacementKey:));
+                        delegate should_not have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
                     });
                 });
             });

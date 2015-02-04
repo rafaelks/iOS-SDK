@@ -72,8 +72,8 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
                 return ad;
             } error:^id(NSError *error) {
-                if (error.code != kRequestInProgress && [placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
-                    [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+                if (error.code != kRequestInProgress && [placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+                    [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey atIndex:placement.adIndex];
                 }
                 return error;
             }];
@@ -87,14 +87,14 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
                 placement.DFPPath = value;
                 [self initializeDFPRrequesForPlacement:placement];
             } else {
-                if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
-                    [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+                if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+                    [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey atIndex:placement.adIndex];
                 }
             }
             return value;
         } error:^id(NSError *error) {
-            if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
-                [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+            if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+                [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey atIndex:placement.adIndex];
             }
             return error;
         }];

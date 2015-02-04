@@ -22,7 +22,7 @@
  *  @param adView       View in which the ad was placed.
  *  @param placementKey Placement key used to fetch this ad.
  */
-- (void)adView:(id<STRAdView>)adView didFetchAdForPlacementKey:(NSString *)placementKey;
+- (void)adView:(id<STRAdView>)adView didFetchAdForPlacementKey:(NSString *)placementKey atIndex:(NSInteger)adIndex;
 
 /**
  *  Delegate is notified of unsuccessful ad fetch and display.
@@ -32,7 +32,7 @@
  *  @param adView       View in which the ad was placed.
  *  @param placementKey Placement key used to fetch this ad.
  */
-- (void)adView:(id<STRAdView>)adView didFailToFetchAdForPlacementKey:(NSString *)placementKey;
+- (void)adView:(id<STRAdView>)adView didFailToFetchAdForPlacementKey:(NSString *)placementKey atIndex:(NSInteger)adIndex;
 
 /**
  *  Delegate is notified of successfully fetching the number of articles before the first ad and number of articles between subsequent ads. 

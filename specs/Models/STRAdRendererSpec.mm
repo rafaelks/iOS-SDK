@@ -94,20 +94,20 @@ describe(@"STRAdRenderer", ^{
                 it(@"tells the delegate", ^{
                     [renderer renderAd:ad inPlacement:placement];
                     
-                    delegate should have_received(@selector(adView:didFetchAdForPlacementKey:))
-                    .with(view, @"placementKey");
+                    delegate should have_received(@selector(adView:didFetchAdForPlacementKey:atIndex:))
+                    .with(view, @"placementKey", 0);
                 });
             });
             
             context(@"when the delegate does not have a success callback", ^{
                 beforeEach(^{
-                    delegate reject_method(@selector(adView:didFetchAdForPlacementKey:));
+                    delegate reject_method(@selector(adView:didFetchAdForPlacementKey:atIndex:));
                 });
                 
                 it(@"does not try to tell the delegate", ^{
                     [renderer renderAd:ad inPlacement:placement];
-                    
-                    delegate should_not have_received(@selector(adView:didFetchAdForPlacementKey:));
+
+                    delegate should_not have_received(@selector(adView:didFetchAdForPlacementKey:atIndex:));
                 });
             });
         });

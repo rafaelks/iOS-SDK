@@ -69,8 +69,8 @@
         [self.spinner removeFromSuperview];
         [placement.adView setNeedsLayout];
 
-        if (error.code != kRequestInProgress && [placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:)]) {
-            [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey];
+        if (error.code != kRequestInProgress && [placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+            [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey atIndex:placement.adIndex];
         }
         [deferred rejectWithError:error];
         return error;
