@@ -18,6 +18,7 @@
 #import "STRAdService.h"
 #import "STRAdCache.h"
 #import "STRTestSafeModule.h"
+#import "STRAdViewDelegate.h"
 
 @interface SharethroughSDK ()
 
@@ -58,7 +59,18 @@
     adPlacement.delegate = delegate;
 
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-    [generator prefetchAdForPlacement:adPlacement];
+    STRPromise *adPromise = [generator prefetchAdForPlacement:adPlacement];
+    [adPromise then:^id(id value) {
+        if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
+            [delegate adView:nil didFetchAdForPlacementKey:placementKey atIndex:0];
+        }
+        return nil;
+    } error:^id(NSError *error) {
+        if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+            [delegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
+        }
+        return nil;
+    }];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view
