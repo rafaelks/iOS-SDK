@@ -23,6 +23,13 @@
 + (instancetype)sharedInstance;
 
 /**
+ This method allows prefetching of ads for a particular placement key
+ @param placementKey The unique identifier for the ad slot
+ @param delegate Delegate for handling completion. This can be nil if you do not wish to customize success or failure behavior.
+ */
+- (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate;
+
+/**
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot

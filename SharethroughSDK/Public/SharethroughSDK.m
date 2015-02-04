@@ -52,6 +52,15 @@
     return testSafeSharedObject;
 }
 
+- (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate {
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] init];
+    adPlacement.placementKey = placementKey;
+    adPlacement.delegate = delegate;
+
+    STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
+    [generator prefetchAdForPlacement:adPlacement];
+}
+
 - (void)placeAdInView:(UIView<STRAdView> *)view
          placementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController
