@@ -41,8 +41,8 @@
     return self;
 }
 
-- (void)placeAdInPlacement:(STRAdPlacement *)placement {
-    [self placeCreative:@"" inPlacement:placement];
+- (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement {
+    return [self placeCreative:@"" inPlacement:placement];
 }
 
 - (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement {

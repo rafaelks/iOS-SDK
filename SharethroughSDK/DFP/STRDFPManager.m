@@ -12,6 +12,8 @@
 #import "STRAppModule.h"
 #import "STRDeferred.h"
 
+static NSString *const stxMonetize = @"STX_MONETIZE";
+
 @interface STRDFPManager ()
 
 @property (nonatomic, strong) NSMutableDictionary *adPlacementCache;
@@ -40,18 +42,27 @@
     STRDeferred *deferred = [STRDeferred defer];
 
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:DFPPath];
-    STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-    STRPromise *promise;
 
     if (creativeKey == nil || [creativeKey length] == 0 || adPlacement.placementKey == nil || [adPlacement.placementKey length] == 0) {
         NSLog(@"Invalid creativeKey %@ or placementKey %@. Not reaching out to Sharethrough for Ad.", creativeKey, adPlacement.placementKey);
         NSError *error = [NSError errorWithDomain:@"Sharethrough invalid params" code:-1 userInfo:nil];
         [deferred rejectWithError:error];
     } else {
-        if (adPlacement.DFPDeferred != nil) {
-            promise = [generator prefetchCreative:creativeKey forPlacement:adPlacement];
+        STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
+        STRPromise *promise;
+
+        if ([creativeKey isEqualToString:stxMonetize]) {
+            if (adPlacement.DFPDeferred != nil) {
+                promise = [generator prefetchAdForPlacement:adPlacement];
+            } else {
+                promise = [generator placeAdInPlacement:adPlacement];
+            }
         } else {
-            promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
+            if (adPlacement.DFPDeferred != nil) {
+                promise = [generator prefetchCreative:creativeKey forPlacement:adPlacement];
+            } else {
+                promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
+            }
         }
 
         [promise then:^id(id value) {
