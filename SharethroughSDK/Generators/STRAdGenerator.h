@@ -15,7 +15,7 @@
 
 - (id)initWithAdService:(STRAdService *)adService injector:(STRInjector *)injector;
 
-- (void)placeAdInPlacement:(STRAdPlacement *)placement;
+- (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement;
 
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement;
