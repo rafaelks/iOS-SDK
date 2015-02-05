@@ -88,7 +88,9 @@ const NSInteger kRequestInProgress = 202;
     }
 
     [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey CreativeKey:creativeKey];
-    return [self fetchAdWithParameters:@{@"placement_key": placement.placementKey, @"creative_key": creativeKey} forPlacement:placement andInitializeAtIndex:YES];
+    return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{ @"creative_key": creativeKey }]
+                          forPlacement:placement
+                  andInitializeAtIndex:YES];
 }
 
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement {
@@ -103,7 +105,7 @@ const NSInteger kRequestInProgress = 202;
 
 - (STRPromise *)beginFetchForPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeAtIndex{
     [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey];
-    return [self fetchAdWithParameters:@{@"placement_key": placement.placementKey} forPlacement:placement andInitializeAtIndex:initializeAtIndex];
+    return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{}] forPlacement:placement andInitializeAtIndex:initializeAtIndex];
 }
 
 - (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeAtIndex {
@@ -235,6 +237,20 @@ const NSInteger kRequestInProgress = 202;
             [placement.delegate adView:placement.adView didFetchArticlesBeforeFirstAd:extras.articlesBeforeFirstAd andArticlesBetweenAds:extras.articlesBetweenAds forPlacementKey:placement.placementKey];
         }
     }
+}
+
+- (NSDictionary *)createAdRequestParamsForPlacement:(STRAdPlacement *)placement withOtherParams:(NSDictionary *)otherParams {
+    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    if (!appName) {
+        appName = @"";
+    }
+    NSString *bundleId = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+    if (!bundleId) {
+        bundleId = @"";
+    }
+    NSMutableDictionary *returnValue = [NSMutableDictionary dictionaryWithDictionary:otherParams];
+    [returnValue addEntriesFromDictionary:@{@"placement_key": placement.placementKey, @"appName": appName, @"appId": bundleId }];
+    return returnValue;
 }
 
 @end

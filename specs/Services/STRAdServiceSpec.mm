@@ -57,8 +57,7 @@ describe(@"STRAdService", ^{
 
             networkClientDeferred = [STRDeferred defer];
             networkClient stub_method(@selector(get:)).and_return(networkClientDeferred.promise);
-            
-            
+
             adPlacement = [[STRAdPlacement alloc] init];
             adPlacement.placementKey = @"placementKey";
         });
@@ -134,7 +133,25 @@ describe(@"STRAdService", ^{
             });
 
             it(@"makes a request to the ad server", ^{
-                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey"});
+                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs"});
+            });
+
+            describe(@"when the appName and bundle id are nil", ^{
+                __block NSBundle *fakeBundle;
+                beforeEach(^{
+                    fakeBundle = nice_fake_for([NSBundle class]);
+                    fakeBundle stub_method(@selector(objectForInfoDictionaryKey:)).and_return(nil);
+
+                    spy_on([NSBundle class]);
+                    [NSBundle class] stub_method(@selector(mainBundle)).and_return(fakeBundle);
+                });
+
+                it(@"makes a request to the ad server", ^{
+                    [(id<CedarDouble>)restClient reset_sent_messages];
+                    returnedPromise = [service fetchAdForPlacement:adPlacement];
+
+                    restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"", @"appId": @""});
+                });
             });
 
             it(@"fires an impression request beacon", ^{
@@ -180,7 +197,7 @@ describe(@"STRAdService", ^{
             });
 
             it(@"makes a request to the ad server", ^{
-                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey"});
+                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs"});
             });
 
             it(@"fires an impression request beacon", ^{
@@ -347,6 +364,307 @@ describe(@"STRAdService", ^{
             });
         });
 
+    });
+
+    describe(@"fetching a specific creative", ^{
+        __block STRDeferred *restClientDeferred;
+        __block STRDeferred *networkClientDeferred;
+        __block STRPromise *returnedPromise;
+        __block STRAdPlacement *adPlacement;
+
+        beforeEach(^{
+            restClientDeferred = [STRDeferred defer];
+            restClient stub_method(@selector(getWithParameters:)).and_return(restClientDeferred.promise);
+
+            networkClientDeferred = [STRDeferred defer];
+            networkClient stub_method(@selector(get:)).and_return(networkClientDeferred.promise);
+
+            adPlacement = [[STRAdPlacement alloc] init];
+            adPlacement.placementKey = @"placementKey";
+        });
+
+        xdescribe(@"when an ad is retrieved from the cache", ^{
+            __block STRAdvertisement *ad;
+
+            beforeEach(^{
+                ad = nice_fake_for([STRAdvertisement class]);
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
+                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(NO);
+
+                returnedPromise = [service fetchAdForPlacement:adPlacement creativeKey:@"creativeKey"];
+            });
+
+            it(@"does not make a request to the ad server", ^{
+                restClient should_not have_received(@selector(getWithParameters:));
+            });
+
+            it(@"does not fire an impression request", ^{
+                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
+            });
+
+            it(@"does not make a request to the image server", ^{
+                networkClient should_not have_received(@selector(get:));
+            });
+
+            it(@"returns a promise that is resolved with the cached ad", ^{
+                returnedPromise.value should equal(ad);
+            });
+        });
+
+        //        describe(@"when an ad is retrieved from the cache, but there are no more ads in the queue", ^{
+        //            __block STRAdvertisement *ad;
+        //
+        //            beforeEach(^{
+        //                ad = nice_fake_for([STRAdvertisement class]);
+        //                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+        //                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
+        //                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
+        //
+        //                returnedPromise = [service fetchAdForPlacement:adPlacement];
+        //            });
+        //
+        //            it(@"does not make a request to the ad server", ^{
+        //                restClient should_not have_received(@selector(getWithParameters:));
+        //            });
+        //
+        //            it(@"does not fire an impression request", ^{
+        //                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
+        //            });
+        //
+        //            it(@"does not make a request to the image server", ^{
+        //                networkClient should_not have_received(@selector(get:));
+        //            });
+        //
+        //            it(@"returns a promise that is resolved with the cached ad", ^{
+        //                returnedPromise.value should equal(ad);
+        //            });
+        //        });
+
+        describe(@"when an ad is cached for longer than the timeout", ^{
+            __block STRAdvertisement *ad;
+
+            beforeEach(^{
+                ad = nice_fake_for([STRAdvertisement class]);
+
+                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+
+                returnedPromise = [service fetchAdForPlacement:adPlacement creativeKey:@"creativeKey"];
+            });
+
+            it(@"makes a request to the ad server", ^{
+                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs", @"creative_key": @"creativeKey" });
+            });
+
+            it(@"fires an impression request beacon", ^{
+                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:CreativeKey:)).with(@"placementKey", @"creativeKey");
+            });
+
+            it(@"returns an unresolved promise", ^{
+                returnedPromise should_not be_nil;
+                returnedPromise.value should be_nil;
+            });
+
+            describe(@"when the ad server unsuccessfully responds", ^{
+                it(@"returns the cached ad", ^{
+                    [restClientDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
+
+                    returnedPromise.value should equal(ad);
+                });
+            });
+        });
+
+        xdescribe(@"when there is a pending ad request", ^{
+            beforeEach(^{
+                adCache stub_method(@selector(fetchCachedAdForPlacement:));
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).and_return(YES);
+
+                returnedPromise = [service fetchAdForPlacement:adPlacement];
+            });
+
+            it(@"returns a pendingRequestInProgress error", ^{
+                returnedPromise should_not be_nil;
+                returnedPromise.error should_not be_nil;
+                returnedPromise.error.code should equal(kRequestInProgress);
+            });
+        });
+
+        xdescribe(@"when no ad is cached for the given placement key", ^{
+            beforeEach(^{
+                adCache stub_method(@selector(fetchCachedAdForPlacement:));
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+
+                returnedPromise = [service fetchAdForPlacement:adPlacement];
+            });
+
+            it(@"makes a request to the ad server", ^{
+                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs"});
+            });
+
+            it(@"fires an impression request beacon", ^{
+                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:)).with(@"placementKey");
+            });
+
+            it(@"returns an unresolved promise", ^{
+                returnedPromise should_not be_nil;
+                returnedPromise.value should be_nil;
+            });
+
+            describe(@"when the ad server responds with an ad", ^{
+                void(^afterSuccessfulAdFetchedSpecs)(Class expectedAdClass, NSString *expectedAction) = ^(Class expectedAdClass, NSString *expectedAction) {
+
+                    it(@"makes a request for the thumbnail image", ^{
+                        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"]];
+                        networkClient should have_received(@selector(get:)).with(request);
+                    });
+
+                    it(@"still has the returned promise as unresolved", ^{
+                        returnedPromise should_not be_nil;
+                        returnedPromise.value should be_nil;
+                    });
+
+                    describe(@"when the image is loaded successfully", ^{
+                        beforeEach(^{
+                            [networkClientDeferred resolveWithValue:UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"])];
+                        });
+
+                        it(@"saves the ad in the cache", ^{
+                            adCache should have_received(@selector(saveAds:forPlacement:andInitializeAtIndex:));
+                        });
+
+                        it(@"resolves the returned promise with an advertisement from the cache", ^{
+                            adCache should have_received(@selector(fetchCachedAdForPlacement:));
+                            //                            returnedPromise.value should_not be_nil;
+                            //                            returnedPromise.value should be_instance_of(expectedAdClass);
+                            //
+                            //                            STRAdvertisement *ad = (STRAdvertisement *) returnedPromise.value;
+                            //                            ad.advertiser should equal(@"Brand X");
+                            //                            ad.title should equal(@"Meet Porter. He's a Dog.");
+                            //                            ad.adDescription should equal(@"Dogs this smart deserve a home.");
+                            //                            [ad.mediaURL absoluteString] should equal(@"http://www.google.com");
+                            //                            [ad.shareURL absoluteString] should equal(@"http://bit.ly/14hfvXG");
+                            //                            ad.creativeKey should equal(@"imagination");
+                            //                            ad.variantKey should equal(@"variation");
+                            //                            ad.placementKey should equal(@"placementKey");
+                            //                            ad.signature should equal(@"fakeSignature");
+                            //                            ad.auctionType should equal(@"type");
+                            //                            ad.auctionPrice should equal(@"1.0");
+                            //                            ad.action should equal(expectedAction);
+                            //
+                            //                            ad.thirdPartyBeaconsForVisibility should equal(@[@"//reddit.com/ad?time=[timestamp]"]);
+                            //                            ad.thirdPartyBeaconsForClick should equal(@[@"//yahoo.com/dance?danced_at=[timestamp]"]);
+                            //                            ad.thirdPartyBeaconsForPlay should equal(@[@"//cupcakes.com/yum?allgone=[timestamp]"]);
+                            //
+                            //                            UIImagePNGRepresentation(ad.thumbnailImage) should equal(UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]));
+                        });
+                    });
+
+                    //                    describe(@"when the image can't be loaded", ^{
+                    //                        it(@"rejects the returned promise", ^{
+                    //                            [networkClientDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
+                    //
+                    //                            returnedPromise.error should_not be_nil;
+                    //                        });
+                    //                    });
+                };
+
+                __block NSDictionary *responseData;
+
+                beforeEach(^{
+                    responseData = @{
+                                     @"creatives": @[[@{ @"signature": @"fakeSignature",
+                                                         @"price": @"1.0",
+                                                         @"priceType": @"type",
+                                                         @"creative": [@{
+                                                                         @"description": @"Dogs this smart deserve a home.",
+                                                                         @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
+                                                                         @"title": @"Meet Porter. He's a Dog.",
+                                                                         @"advertiser": @"Brand X",
+                                                                         @"media_url": @"http://www.google.com",
+                                                                         @"share_url": @"http://bit.ly/14hfvXG",
+                                                                         @"creative_key": @"imagination",
+                                                                         @"variant_key": @"variation",
+                                                                         @"beacons": @{@"visible": @[@"//reddit.com/ad?time=[timestamp]"],
+                                                                                       @"click": @[@"//yahoo.com/dance?danced_at=[timestamp]"],
+                                                                                       @"play": @[@"//cupcakes.com/yum?allgone=[timestamp]"]},
+                                                                         } mutableCopy]
+                                                         } mutableCopy]
+                                                     ]
+                                     };
+                });
+
+                describe(@"when the ad server responds with a Vine ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"vine";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRAdVine class], @"vine");
+                });
+
+                describe(@"when the ad server successfully responds with a YouTube ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"video";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRAdYouTube class], @"video");
+                });
+
+                describe(@"when the ad server successfully responds with a clickout ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"clickout";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRAdClickout class], @"clickout");
+                });
+
+                describe(@"when the ad server successfully responds with a pinterest ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"pinterest";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRAdPinterest class], @"pinterest");
+                });
+
+                describe(@"when the ad server successfully responds with a instagram ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"instagram";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRAdInstagram class], @"instagram");
+                });
+            });
+
+            describe(@"when the ad server responds without a protocol", ^{
+                beforeEach(^{
+                    [restClientDeferred resolveWithValue:@{ @"creatives": @[
+                                                                    @{@"creative":
+                                                                          @{@"thumbnail_url": @"//i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"},
+                                                                      }
+                                                                    ]
+                                                            }];
+                });
+
+                it(@"makes a request for the thumbnail image and inserts the protocol", ^{
+                    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"]];
+                    networkClient should have_received(@selector(get:)).with(request);
+                });
+            });
+
+            describe(@"when the ad server unsuccessfully responds", ^{
+                it(@"rejects the returned promise", ^{
+                    [restClientDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
+
+                    returnedPromise.error should_not be_nil;
+                });
+            });
+        });
     });
 });
 
