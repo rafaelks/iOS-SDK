@@ -42,87 +42,176 @@ describe(@"DFPManager", ^{
             [dfpManager cacheAdPlacement:adPlacement];
         });
 
-        describe(@"when the placement deferred is not set", ^{
-            __block STRDeferred *generatorDeferred;
-            __block STRPromise *managerPromise;
-            
-            beforeEach(^{
-                generatorDeferred = [STRDeferred defer];
-                generator stub_method(@selector(placeCreative:inPlacement:)).and_return(generatorDeferred.promise);
-                managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"DFPPath"];
+        context(@"when the creative key is for monetize", ^{
+            describe(@"when the placement deferred is not set", ^{
+                __block STRDeferred *generatorDeferred;
+                __block STRPromise *managerPromise;
+
+                beforeEach(^{
+                    generatorDeferred = [STRDeferred defer];
+                    generator stub_method(@selector(placeAdInPlacement:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderCreative:@"STX_MONETIZE" inPlacement:@"DFPPath"];
+                });
+
+                it(@"calls placeCreative:inPlacement in the generator", ^{
+                    generator should have_received(@selector(placeAdInPlacement:));
+                });
+
+                describe(@"when the promise resolves successfully", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred resolveWithValue:nil];
+                    });
+
+                    it(@"resolves its promise", ^{
+                        managerPromise should have_received(@selector(resolveWithValue:));
+                    });
+                });
+
+                describe(@"when the promise is rejected", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred rejectWithError:nil];
+                    });
+
+                    it(@"rejects its promise", ^{
+                        managerPromise should have_received(@selector(rejectWithError:));
+                    });
+                });
             });
 
-            it(@"calls placeCreative:inPlacement in the generator", ^{
-                generator should have_received(@selector(placeCreative:inPlacement:));
-            });
-            
-            describe(@"when the promise resolves successfully", ^{
+            describe(@"when the placement deferred is set", ^{
+                __block STRDeferred *generatorDeferred;
+                __block STRPromise *managerPromise;
+                __block STRDeferred *adDeferred;
+
                 beforeEach(^{
-                    spy_on(managerPromise);
-                    [generatorDeferred resolveWithValue:nil];
+                    adDeferred = nice_fake_for([STRDeferred class]);
+                    adPlacement.DFPDeferred = adDeferred;
+                    generatorDeferred = [STRDeferred defer];
+                    generator stub_method(@selector(prefetchAdForPlacement:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderCreative:@"STX_MONETIZE" inPlacement:@"DFPPath"];
+                });
+
+                it(@"calls placeCreative:inPlacement in the generator", ^{
+                    generator should have_received(@selector(prefetchAdForPlacement:));
+                });
+
+                describe(@"when the promise resolves successfully", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred resolveWithValue:nil];
+                    });
+
+                    it(@"resolves the placements deferred", ^{
+                        adDeferred should have_received(@selector(resolveWithValue:));
+                    });
+
+                    it(@"resolves its promise", ^{
+                        managerPromise should have_received(@selector(resolveWithValue:));
+                    });
                 });
                 
-                it(@"resolves its promise", ^{
-                    managerPromise should have_received(@selector(resolveWithValue:));
-                });
-            });
-            
-            describe(@"when the promise is rejected", ^{
-                beforeEach(^{
-                    spy_on(managerPromise);
-                    [generatorDeferred rejectWithError:nil];
-                });
-                
-                it(@"rejects its promise", ^{
-                    managerPromise should have_received(@selector(rejectWithError:));
+                describe(@"when the promise is rejected", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred rejectWithError:nil];
+                    });
+
+                    it(@"rejects the placements deferred", ^{
+                        adDeferred should have_received(@selector(rejectWithError:));
+                    });
+
+                    it(@"rejects its promise", ^{
+                        managerPromise should have_received(@selector(rejectWithError:));
+                    });
                 });
             });
         });
 
-        describe(@"when the placement deferred is set", ^{
-            __block STRDeferred *generatorDeferred;
-            __block STRPromise *managerPromise;
-            __block STRDeferred *adDeferred;
-            
-            beforeEach(^{
-                adDeferred = nice_fake_for([STRDeferred class]);
-                adPlacement.DFPDeferred = adDeferred;
-                generatorDeferred = [STRDeferred defer];
-                generator stub_method(@selector(prefetchCreative:forPlacement:)).and_return(generatorDeferred.promise);
-                managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"DFPPath"];
+        context(@"when the creative key is for a specific creative", ^{
+            describe(@"when the placement deferred is not set", ^{
+                __block STRDeferred *generatorDeferred;
+                __block STRPromise *managerPromise;
+
+                beforeEach(^{
+                    generatorDeferred = [STRDeferred defer];
+                    generator stub_method(@selector(placeCreative:inPlacement:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"DFPPath"];
+                });
+
+                it(@"calls placeCreative:inPlacement in the generator", ^{
+                    generator should have_received(@selector(placeCreative:inPlacement:));
+                });
+
+                describe(@"when the promise resolves successfully", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred resolveWithValue:nil];
+                    });
+
+                    it(@"resolves its promise", ^{
+                        managerPromise should have_received(@selector(resolveWithValue:));
+                    });
+                });
+
+                describe(@"when the promise is rejected", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred rejectWithError:nil];
+                    });
+
+                    it(@"rejects its promise", ^{
+                        managerPromise should have_received(@selector(rejectWithError:));
+                    });
+                });
             });
 
-            it(@"calls placeCreative:inPlacement in the generator", ^{
-                generator should have_received(@selector(prefetchCreative:forPlacement:));
-            });
-            
-            describe(@"when the promise resolves successfully", ^{
+            describe(@"when the placement deferred is set", ^{
+                __block STRDeferred *generatorDeferred;
+                __block STRPromise *managerPromise;
+                __block STRDeferred *adDeferred;
+
                 beforeEach(^{
-                    spy_on(managerPromise);
-                    [generatorDeferred resolveWithValue:nil];
+                    adDeferred = nice_fake_for([STRDeferred class]);
+                    adPlacement.DFPDeferred = adDeferred;
+                    generatorDeferred = [STRDeferred defer];
+                    generator stub_method(@selector(prefetchCreative:forPlacement:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"DFPPath"];
                 });
-                
-                it(@"resolves the placements deferred", ^{
-                    adDeferred should have_received(@selector(resolveWithValue:));
+
+                it(@"calls placeCreative:inPlacement in the generator", ^{
+                    generator should have_received(@selector(prefetchCreative:forPlacement:));
                 });
-                
-                it(@"resolves its promise", ^{
-                    managerPromise should have_received(@selector(resolveWithValue:));
+
+                describe(@"when the promise resolves successfully", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred resolveWithValue:nil];
+                    });
+
+                    it(@"resolves the placements deferred", ^{
+                        adDeferred should have_received(@selector(resolveWithValue:));
+                    });
+
+                    it(@"resolves its promise", ^{
+                        managerPromise should have_received(@selector(resolveWithValue:));
+                    });
                 });
-            });
-            
-            describe(@"when the promise is rejected", ^{
-                beforeEach(^{
-                    spy_on(managerPromise);
-                    [generatorDeferred rejectWithError:nil];
-                });
-                
-                it(@"rejects the placements deferred", ^{
-                    adDeferred should have_received(@selector(rejectWithError:));
-                });
-                
-                it(@"rejects its promise", ^{
-                    managerPromise should have_received(@selector(rejectWithError:));
+
+                describe(@"when the promise is rejected", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred rejectWithError:nil];
+                    });
+
+                    it(@"rejects the placements deferred", ^{
+                        adDeferred should have_received(@selector(rejectWithError:));
+                    });
+
+                    it(@"rejects its promise", ^{
+                        managerPromise should have_received(@selector(rejectWithError:));
+                    });
                 });
             });
         });
