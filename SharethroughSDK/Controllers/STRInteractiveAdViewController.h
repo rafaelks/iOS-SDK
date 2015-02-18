@@ -19,11 +19,12 @@
 @property (weak, nonatomic) UIView *contentView;
 @property (weak, nonatomic) UIBarButtonItem *doneButton;
 @property (weak, nonatomic) UIBarButtonItem *shareButton;
+@property (weak, nonatomic) UIBarButtonItem *customButton;
 @property (weak, nonatomic) UILabel *adInfoHeader;
 
 @property (strong, nonatomic, readonly) UIPopoverController *sharePopoverController;
 
-- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService injector:(STRInjector *)injector;
+- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device application:(UIApplication *)application beaconService:(STRBeaconService *)beaconService injector:(STRInjector *)injector;
 - (void)doneButtonPressed:(id)sender;
 - (void)shareButtonPressed:(id)sender;
 

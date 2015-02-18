@@ -35,6 +35,8 @@
     ad.advertiser = @"Beats by Dre";
     ad.action = STRYouTubeAd;
     ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRYoutubeThumbnail.bytes length:kSTRYoutubeThumbnail.length]];
+    ad.customEngagementLabel = @"Hear More";
+    ad.customEngagemnetURL = [NSURL URLWithString:@"http://www.beatsbydre.com/"];
 
     return ad;
 }

@@ -23,29 +23,46 @@ describe(@"STRInteractiveAdViewController", ^{
     __block STRInteractiveAdViewController *controller;
     __block STRAdvertisement *ad;
     __block UIDevice *device;
+    __block UIApplication *application;
     __block STRBeaconService *beaconService;
     __block STRInjector *injector;
 
     void(^setUpController)(void) = ^{
-        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad device:device beaconService:beaconService injector:injector];
+        controller = [[STRInteractiveAdViewController alloc] initWithAd:ad
+                                                                 device:device
+                                                            application:application
+                                                          beaconService:beaconService
+                                                               injector:injector];
         UIWindow *window = [UIWindow new];
         [window addSubview:controller.view];
         [controller.view layoutIfNeeded];
     };
-    
+
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
         beaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:beaconService];
 
         device = [UIDevice currentDevice];
+        application = [UIApplication sharedApplication];
     });
 
-    it(@"inserts the ad title and promoted by information", ^{
-        ad = [STRAdFixtures youTubeAd];
-        setUpController();
+    describe(@"when the ad does not have a custom button", ^{
+        it(@"inserts the ad title and promoted by information", ^{
+            ad = [STRAdFixtures vineAd];
+            setUpController();
 
-        controller.adInfoHeader.text should equal(@"Beats By Dre Presents: LeBron James Promoted by Beats by Dre");
+            controller.adInfoHeader.text should equal(@"Meet A 15-year-old Cancer Researcher Promoted by Intel");
+        });
+    });
+
+    describe(@"when the ad has a custom button", ^{
+        it(@"inserts the custom button", ^{
+            ad = [STRAdFixtures youTubeAd];
+            setUpController();
+
+            controller.customButton.title should equal(@"Hear More");
+        });
     });
 
     describe(@"when the ad is a youtube ad", ^{
@@ -291,6 +308,20 @@ describe(@"STRInteractiveAdViewController", ^{
             [controller.shareButton tap];
             controller.sharePopoverController should be_same_instance_as(existingPopoverController);
             controller.sharePopoverController.isPopoverVisible should be_truthy;
+        });
+    });
+
+    describe(@"when the user taps on the custom button", ^{
+        beforeEach(^{
+            ad = [STRAdFixtures youTubeAd];
+            setUpController();
+            spy_on(application);
+            application stub_method(@selector(openURL:));
+            [controller.customButton tap];
+        });
+
+        it(@"calls open url", ^{
+            application should have_received(@selector(openURL:));
         });
     });
 });

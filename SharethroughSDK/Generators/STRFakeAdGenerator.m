@@ -123,6 +123,7 @@ presentingViewController:(UIViewController *)presentingViewController
 - (void)tappedFakeAd:(UITapGestureRecognizer *)tapRecognizer {
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:self.advertisement
                                                                                                device:[UIDevice currentDevice]
+                                                                                          application:[UIApplication sharedApplication]
                                                                                         beaconService:nil
                                                                                              injector:self.injector];
     adController.delegate = self;
@@ -133,6 +134,7 @@ presentingViewController:(UIViewController *)presentingViewController
 {
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
                                                                                                device:[UIDevice currentDevice]
+                                                                                          application:[UIApplication sharedApplication]
                                                                                         beaconService:nil
                                                                                              injector:self.injector];
     adController.delegate = self;

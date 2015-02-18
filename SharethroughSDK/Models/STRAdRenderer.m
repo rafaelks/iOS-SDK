@@ -155,7 +155,11 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
         [self.placement.delegate adView:self.placement.adView userDidEngageAdForPlacementKey:self.placement.placementKey];
     }
 
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad device:[UIDevice currentDevice] beaconService:self.beaconService injector:self.injector];
+    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad
+                                                                                                          device:[UIDevice currentDevice]
+                                                                                                     application:[UIApplication sharedApplication]
+                                                                                                   beaconService:self.beaconService
+                                                                                                        injector:self.injector];
     interactiveAdController.delegate = self;
     [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
 }
@@ -164,7 +168,8 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 {
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
                                                                                                device:[UIDevice currentDevice]
-                                                                                        beaconService:nil
+                                                                                          application:[UIApplication sharedApplication]
+                                                                                        beaconService:self.beaconService
                                                                                              injector:self.injector];
     adController.delegate = self;
     [self.presentingViewController presentViewController:adController animated:YES completion:nil];

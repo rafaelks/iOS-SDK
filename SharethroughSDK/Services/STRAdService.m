@@ -214,6 +214,8 @@ const NSInteger kRequestInProgress = 202;
         ad.adserverRequestId = creativeWrapperJSON[@"adserverRequestId"];
         ad.auctionWinId = creativeWrapperJSON[@"auctionWinId"];
         ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
+        ad.customEngagementLabel = creativeJSON[@"custom_engagement_label"];
+        ad.customEngagemnetURL = [self URLFromSanitizedString:creativeJSON[@"custom_engagement_url"]];
 
         [deferred resolveWithValue:ad];
 

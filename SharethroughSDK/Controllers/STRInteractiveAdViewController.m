@@ -24,17 +24,19 @@
 @property (weak, nonatomic) STRBeaconService *beaconService;
 @property (weak, nonatomic) STRInjector *injector;
 @property (weak, nonatomic) UIDevice *device;
+@property (weak, nonatomic) UIApplication *application;
 @property (strong, nonatomic, readwrite) UIPopoverController *sharePopoverController;
 
 @end
 
 @implementation STRInteractiveAdViewController
 
-- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device beaconService:(STRBeaconService *)beaconService injector:(STRInjector *)injector {
+- (id)initWithAd:(STRAdvertisement *)ad device:(UIDevice *)device application:(UIApplication *)application beaconService:(STRBeaconService *)beaconService injector:(STRInjector *)injector {
     self = [super init];
     if (self) {
         self.ad = ad;
         self.device = device;
+        self.application = application;
         self.beaconService = beaconService;
         self.injector = injector;
     }
@@ -116,6 +118,10 @@
     }
 }
 
+- (void)customEngagementButtonPressed:(id)sender {
+    [self.application openURL:self.ad.customEngagemnetURL];
+}
+
 #pragma mark - Private
 
 - (UIView *)headerView {
@@ -124,33 +130,54 @@
     headerView.backgroundColor = [UIColor blackColor];
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
 
-    UILabel *adInfoHeader = [UILabel new];
-    
-    NSString *adInfoText;
-    if ([self.ad.advertiser length] > 0) {
-        adInfoText = [NSString stringWithFormat:@"%@ %@", self.ad.title, self.ad.sponsoredBy];
-    } else {
-        adInfoText = [NSString stringWithFormat:@"%@", self.ad.title];
-    }
-    
-    UIFont *lightFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:adInfoHeader.font.pointSize];
-    NSMutableAttributedString *attributedAdInfoText = [[NSMutableAttributedString alloc] initWithString:adInfoText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName: lightFont}];
-    UIFont *boldFont = [UIFont boldSystemFontOfSize:adInfoHeader.font.pointSize];
-
-    [attributedAdInfoText setAttributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName: boldFont} range:NSMakeRange(0, [self.ad.title length])];
-
-    adInfoHeader.attributedText = attributedAdInfoText;
-    adInfoHeader.translatesAutoresizingMaskIntoConstraints = NO;
-    self.adInfoHeader = adInfoHeader;
-    [headerView addSubview:adInfoHeader];
-
     UIToolbar *toolbar = [self toolbar];
     [headerView addSubview:toolbar];
     NSNumber *toolbarWidth = @(121.0);
-    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[adInfoHeader]-[toolbar(==toolbarWidth)]|"
-                                                                       options:NSLayoutFormatAlignAllCenterY
-                                                                       metrics:NSDictionaryOfVariableBindings(toolbarWidth)
-                                                                         views:NSDictionaryOfVariableBindings(adInfoHeader, toolbar)]];
+
+    if ([[self.ad.customEngagemnetURL absoluteString] length] > 0 && [self.ad.customEngagementLabel length] > 0) {
+        UIToolbar *customToolbar = [UIToolbar new];
+        customToolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        UIBarButtonItem *customButton = [[UIBarButtonItem alloc] initWithTitle:self.ad.customEngagementLabel
+                                                                         style:UIBarButtonItemStylePlain
+                                                                        target:self
+                                                                        action:@selector(customEngagementButtonPressed:)];
+        self.customButton = customButton;
+        customToolbar.items = @[customButton];
+        customToolbar.barTintColor = [UIColor clearColor];
+        customToolbar.translucent = NO;
+        customToolbar.tintColor = [UIColor lightGrayColor];
+
+        [headerView addSubview:customToolbar];
+        [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[customToolbar]-[toolbar(==toolbarWidth)]|"
+                                                                           options:NSLayoutFormatAlignAllCenterY
+                                                                           metrics:NSDictionaryOfVariableBindings(toolbarWidth)
+                                                                             views:NSDictionaryOfVariableBindings(customToolbar, toolbar)]];
+    } else {
+        UILabel *adInfoHeader = [UILabel new];
+
+        NSString *adInfoText;
+        if ([self.ad.advertiser length] > 0) {
+            adInfoText = [NSString stringWithFormat:@"%@ %@", self.ad.title, self.ad.sponsoredBy];
+        } else {
+            adInfoText = [NSString stringWithFormat:@"%@", self.ad.title];
+        }
+
+        UIFont *lightFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:adInfoHeader.font.pointSize];
+        NSMutableAttributedString *attributedAdInfoText = [[NSMutableAttributedString alloc] initWithString:adInfoText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName: lightFont}];
+        UIFont *boldFont = [UIFont boldSystemFontOfSize:adInfoHeader.font.pointSize];
+
+        [attributedAdInfoText setAttributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName: boldFont} range:NSMakeRange(0, [self.ad.title length])];
+
+        adInfoHeader.attributedText = attributedAdInfoText;
+        adInfoHeader.translatesAutoresizingMaskIntoConstraints = NO;
+        self.adInfoHeader = adInfoHeader;
+        [headerView addSubview:adInfoHeader];
+        [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[adInfoHeader]-[toolbar(==toolbarWidth)]|"
+                                                                           options:NSLayoutFormatAlignAllCenterY
+                                                                           metrics:NSDictionaryOfVariableBindings(toolbarWidth)
+                                                                             views:NSDictionaryOfVariableBindings(adInfoHeader, toolbar)]];
+    }
+
     [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[toolbar]|"
                                                                        options:0
                                                                        metrics:nil
