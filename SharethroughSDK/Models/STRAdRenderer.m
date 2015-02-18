@@ -76,6 +76,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
     self.presentingViewController = placement.presentingViewController;
     [self.beaconService fireImpressionForAd:ad adSize:placement.adView.frame.size];
+    [self.beaconService fireThirdPartyBeacons:ad.thirdPartyBeaconsForImpression];
 
     placement.adView.adTitle.text = ad.title;
     placement.adView.adSponsoredBy.text = [ad sponsoredBy];

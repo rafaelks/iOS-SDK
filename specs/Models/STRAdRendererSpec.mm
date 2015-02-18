@@ -52,6 +52,7 @@ describe(@"STRAdRenderer", ^{
         ad.title = @"Meet Porter. He's a Dog.";
         ad.advertiser = @"Brand X";
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
+        ad.thirdPartyBeaconsForImpression = @[@"//google.com?fakeParam=[timestamp]"];
         ad.thirdPartyBeaconsForVisibility = @[@"//google.com?fakeParam=[timestamp]"];
         ad.thirdPartyBeaconsForClick = @[@"//click.com?fakeParam=[timestamp]"];
         ad.thirdPartyBeaconsForPlay = @[@"//play.com?fakeParam=[timestamp]"];
@@ -77,6 +78,7 @@ describe(@"STRAdRenderer", ^{
             [window makeKeyAndVisible];
             
             beaconService stub_method(@selector(fireImpressionRequestForPlacementKey:));
+            beaconService stub_method(@selector(fireThirdPartyBeacons:));
             
             delegate = nice_fake_for(@protocol(STRAdViewDelegate));
             
@@ -120,6 +122,10 @@ describe(@"STRAdRenderer", ^{
             
             it(@"fires an impression kept beacon", ^{
                 beaconService should have_received(@selector(fireImpressionForAd:adSize:)).with(ad, CGSizeMake(100, 100));
+            });
+
+            it(@"fires third party impression beacons", ^{
+                beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(ad.thirdPartyBeaconsForImpression);
             });
             
             it(@"fills out the ads' the title, description, and sponsored by", ^{

@@ -203,6 +203,7 @@ const NSInteger kRequestInProgress = 202;
         ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
         ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
         ad.placementKey = placementKey;
+        ad.thirdPartyBeaconsForImpression = creativeJSON[@"beacons"][@"impression"];
         ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
         ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
         ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];

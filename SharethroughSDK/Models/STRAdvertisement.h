@@ -36,6 +36,7 @@ extern NSString *STRInstagramAd;
 @property (nonatomic, strong) UIImage *brandLogoImage;
 @property (nonatomic) NSInteger placementIndex;
 
+@property (nonatomic, copy) NSArray *thirdPartyBeaconsForImpression;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForClick;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForPlay;
