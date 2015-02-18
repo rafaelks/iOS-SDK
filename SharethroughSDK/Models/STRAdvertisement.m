@@ -18,6 +18,14 @@ NSString *STRInstagramAd = @"instagram";
 
 @implementation STRAdvertisement
 
+- (id)init {
+    if (self = [super init]){
+        self.adserverRequestId = @"";
+        self.auctionWinId = @"";
+    }
+    return self;
+}
+
 - (NSString *)sponsoredBy {
     return [NSString stringWithFormat:@"Promoted by %@", self.advertiser];
 }

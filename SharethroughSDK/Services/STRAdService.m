@@ -210,6 +210,8 @@ const NSInteger kRequestInProgress = 202;
         ad.signature = creativeWrapperJSON[@"signature"];
         ad.auctionPrice = creativeWrapperJSON[@"price"];
         ad.auctionType = creativeWrapperJSON[@"priceType"];
+        ad.adserverRequestId = creativeWrapperJSON[@"adserverRequestId"];
+        ad.auctionWinId = creativeWrapperJSON[@"auctionWinId"];
         ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
 
         [deferred resolveWithValue:ad];

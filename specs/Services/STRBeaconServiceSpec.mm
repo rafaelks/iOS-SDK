@@ -56,6 +56,8 @@ describe(@"STRBeaconService", ^{
         ad.signature = @"sig";
         ad.auctionType = @"type";
         ad.auctionPrice = @"price";
+        ad.adserverRequestId = @"fake-arid";
+        ad.auctionWinId = @"fake-awid";
     });
 
     describe(@"-fireImpressionRequestForPlacementKey:", ^{
@@ -181,7 +183,9 @@ describe(@"STRBeaconService", ^{
                                                                                          @"placementIndex": @"0",
                                                                                          @"as": @"sig",
                                                                                          @"at": @"type",
-                                                                                         @"ap": @"price"});
+                                                                                         @"ap": @"price",
+                                                                                         @"arid": @"fake-arid",
+                                                                                         @"awid": @"fake-awid"});
         });
 
         describe(@"firing the impression again on the same ad", ^{
@@ -218,7 +222,9 @@ describe(@"STRBeaconService", ^{
                                                                                          @"placementIndex": @"0",
                                                                                          @"as": @"sig",
                                                                                          @"at": @"type",
-                                                                                         @"ap": @"price"});
+                                                                                         @"ap": @"price",
+                                                                                         @"arid": @"fake-arid",
+                                                                                         @"awid": @"fake-awid"});
         });
 
         describe(@"firing the visible impression again on the same ad", ^{
@@ -231,7 +237,6 @@ describe(@"STRBeaconService", ^{
                 restClient should_not have_received(@selector(sendBeaconWithParameters:));
             });
         });
-
     });
 
     describe(@"-fireVideoPlayEvent:adSize:", ^{
@@ -257,7 +262,9 @@ describe(@"STRBeaconService", ^{
               @"placementIndex": @"0",
               @"as": @"sig",
               @"at": @"type",
-                           @"ap": @"price"};
+              @"ap": @"price",
+                           @"arid": @"fake-arid",
+                           @"awid": @"fake-awid"};
             [service fireVideoPlayEvent:ad adSize:CGSizeMake(200, 100)];
 
 
@@ -337,7 +344,9 @@ describe(@"STRBeaconService", ^{
                              @"ploc": @"specs",
                              @"as": @"sig",
                              @"at": @"type",
-                             @"ap": @"price"};
+                             @"ap": @"price",
+                             @"arid": @"fake-arid",
+                             @"awid": @"fake-awid"};
         });
 
         describe(@"when the share type is email", ^{
@@ -407,7 +416,9 @@ describe(@"STRBeaconService", ^{
                            @"placementIndex": @"0",
                            @"as": @"sig",
                            @"at": @"type",
-                           @"ap": @"price"};
+                           @"ap": @"price",
+                           @"arid": @"fake-arid",
+                           @"awid": @"fake-awid"};
             [service fireClickForAd:ad adSize:CGSizeMake(200, 100)];
         });
 

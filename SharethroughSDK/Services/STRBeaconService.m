@@ -169,7 +169,9 @@
                                @"ckey": ad.creativeKey,
                                @"as": ad.signature,
                                @"at": ad.auctionType,
-                               @"ap": ad.auctionPrice};
+                               @"ap": ad.auctionPrice,
+                               @"arid": ad.adserverRequestId,
+                               @"awid": ad.auctionWinId };
     NSMutableDictionary *commonParams = [self commonParameters];
     [commonParams addEntriesFromDictionary:adParams];
 
