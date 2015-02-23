@@ -15,5 +15,7 @@
 + (UIImage *)pinterestImage;
 + (UIImage *)youtubeImage;
 + (UIImage *)instagramImage;
++ (UIImage *)closeImage;
++ (UIImage *)linkImage;
 
 @end

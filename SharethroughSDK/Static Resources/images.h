@@ -23,3 +23,5 @@ extern STRImage kSTRPinterestThumbnail;
 extern STRImage kSTRIntelLogo;
 extern STRImage kSTRInstagramLogo;
 extern STRImage kSTRInstagramThumbnail;
+extern STRImage kSTRCloseBtn;
+extern STRImage kSTRLinkThumbnail;

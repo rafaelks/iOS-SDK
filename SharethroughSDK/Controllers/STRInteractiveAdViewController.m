@@ -17,6 +17,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "STRInjector.h"
 #import "STRClickoutViewController.h"
+#import "STRImages.h"
 
 @interface STRInteractiveAdViewController () 
 
@@ -132,7 +133,7 @@
 
     UIToolbar *toolbar = [self toolbar];
     [headerView addSubview:toolbar];
-    NSNumber *toolbarWidth = @(121.0);
+    NSNumber *toolbarWidth = @(85);
 
     if ([[self.ad.customEngagemnetURL absoluteString] length] > 0 && [self.ad.customEngagementLabel length] > 0) {
         UIToolbar *customToolbar = [UIToolbar new];
@@ -141,14 +142,15 @@
                                                                          style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(customEngagementButtonPressed:)];
+        UIBarButtonItem *linkItem = [[UIBarButtonItem alloc] initWithImage:[STRImages linkImage] style:UIBarButtonItemStylePlain target:self action:@selector(customEngagementButtonPressed:)];
         self.customButton = customButton;
-        customToolbar.items = @[customButton];
+        customToolbar.items = @[linkItem, customButton];
         customToolbar.barTintColor = [UIColor clearColor];
         customToolbar.translucent = NO;
         customToolbar.tintColor = [UIColor lightGrayColor];
 
         [headerView addSubview:customToolbar];
-        [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[customToolbar]-[toolbar(==toolbarWidth)]|"
+        [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[customToolbar]-[toolbar(==toolbarWidth)]|"
                                                                            options:NSLayoutFormatAlignAllCenterY
                                                                            metrics:NSDictionaryOfVariableBindings(toolbarWidth)
                                                                              views:NSDictionaryOfVariableBindings(customToolbar, toolbar)]];
@@ -191,7 +193,7 @@
     toolbar.translatesAutoresizingMaskIntoConstraints = NO;
 
 
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[STRImages closeImage] style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
     UIBarButtonItem *buttonSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)];
 
@@ -199,7 +201,7 @@
     self.shareButton = shareButton;
     
     if ([[self.ad.shareURL absoluteString] length] > 0) {
-        buttonSpacer.width = 15.0;
+        buttonSpacer.width = 8;
         toolbar.items = @[shareButton, buttonSpacer, doneButton];
     } else {
         buttonSpacer.width = 44.0;

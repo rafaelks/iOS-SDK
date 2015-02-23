@@ -186,6 +186,12 @@
 		B2B466401A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466411A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466421A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
+		B2F29E681A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
+		B2F29E691A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
+		B2F29E6A1A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
+		B2F29E6C1A98086600313C61 /* link_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E6B1A98086600313C61 /* link_thumbnail.c */; };
+		B2F29E6D1A98086600313C61 /* link_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E6B1A98086600313C61 /* link_thumbnail.c */; };
+		B2F29E6E1A98086600313C61 /* link_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E6B1A98086600313C61 /* link_thumbnail.c */; };
 		E81FA0481A1E7B4400BCB289 /* STRAdPlacementSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */; };
 		E83128D019B914CA007C2FAB /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		E83128D519B914DB007C2FAB /* STRAdView.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
@@ -553,6 +559,8 @@
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
+		B2F29E671A9807C000313C61 /* close-btn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "close-btn.c"; sourceTree = "<group>"; };
+		B2F29E6B1A98086600313C61 /* link_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = link_thumbnail.c; sourceTree = "<group>"; };
 		E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.release.xcconfig"; sourceTree = "<group>"; };
 		E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementSpec.mm; sourceTree = "<group>"; };
 		E83128E119B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRDFPGridlikeViewDataSourceProxy.h; path = DFP/STRDFPGridlikeViewDataSourceProxy.h; sourceTree = "<group>"; };
@@ -1073,6 +1081,8 @@
 				E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */,
 				B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */,
 				B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */,
+				B2F29E671A9807C000313C61 /* close-btn.c */,
+				B2F29E6B1A98086600313C61 /* link_thumbnail.c */,
 			);
 			path = "Static Resources";
 			sourceTree = "<group>";
@@ -1530,6 +1540,7 @@
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
 				AE39F8D318AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */,
 				AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */,
+				B2F29E6E1A98086600313C61 /* link_thumbnail.c in Sources */,
 				AE8AF506189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
 				AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */,
@@ -1598,6 +1609,7 @@
 				AEBAEDCE189839DE00F02C5A /* STRDateProvider.m in Sources */,
 				AE6C44A018A2CAD900298166 /* STRCollectionViewAdGeneratorSpec.mm in Sources */,
 				AE3FF3FF18AA9F5A006061C2 /* vine-logo.c in Sources */,
+				B2F29E6A1A9807C000313C61 /* close-btn.c in Sources */,
 				AE9C462F189C53D3001B407A /* STRYouTubeViewControllerSpec.mm in Sources */,
 				B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */,
 				AE3FF40718AAA078006061C2 /* STRImages.m in Sources */,
@@ -1639,6 +1651,7 @@
 				B229F0A21A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c in Sources */,
 				AE39F8C718AD56DC00969C30 /* STRClickoutViewController.m in Sources */,
 				AE9C461C189C2538001B407A /* STRAdYouTube.m in Sources */,
+				B2F29E6C1A98086600313C61 /* link_thumbnail.c in Sources */,
 				AE52FD7718A41AB2009F69BD /* STRGridlikeViewAdGenerator.m in Sources */,
 				AE39F8D218AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */,
 				AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */,
@@ -1651,6 +1664,7 @@
 				AEBAEDC21898227200F02C5A /* STRBeaconService.m in Sources */,
 				AE3120DD1889E71900297F01 /* STRDeferred.m in Sources */,
 				AE52FD7118A41AB2009F69BD /* STRAdGenerator.m in Sources */,
+				B2F29E681A9807C000313C61 /* close-btn.c in Sources */,
 				AE46CE6C189844AB0096BDE9 /* STRSession.m in Sources */,
 				AE52FD7518A41AB2009F69BD /* STRFakeAdGenerator.m in Sources */,
 				AEA0EC7318AC4DBB00B4286A /* STRAdFixtures.m in Sources */,
@@ -1679,6 +1693,7 @@
 				E8703DFC19B9092600D3FA50 /* STRAdRenderer.m in Sources */,
 				E8703DFD19B9092600D3FA50 /* STRAdVine.m in Sources */,
 				E8703DFE19B9092600D3FA50 /* hosted_sample_thumbnail.c in Sources */,
+				B2F29E691A9807C000313C61 /* close-btn.c in Sources */,
 				B229F0991A2E219A0094A8B3 /* yt-logo.c in Sources */,
 				E8703DFF19B9092600D3FA50 /* UICollectionView+STR.m in Sources */,
 				E83128F019B936D9007C2FAB /* STRDFPMediator.m in Sources */,
@@ -1703,6 +1718,7 @@
 				E8703E1119B9092600D3FA50 /* STRAdYouTube.m in Sources */,
 				E8703E1219B9092600D3FA50 /* STRGridlikeViewAdGenerator.m in Sources */,
 				E8703E1319B9092600D3FA50 /* clickout_sample_thumbnail.c in Sources */,
+				B2F29E6D1A98086600313C61 /* link_thumbnail.c in Sources */,
 				E83128EF19B936D9007C2FAB /* STRDFPManager.m in Sources */,
 				E8703E1419B9092600D3FA50 /* vine-logo.c in Sources */,
 				E8703E1519B9092600D3FA50 /* STRIndexPathDelegateProxy.m in Sources */,
