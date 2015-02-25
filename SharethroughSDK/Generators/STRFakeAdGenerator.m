@@ -74,11 +74,14 @@
     return self;
 }
 
-- (void)placeAdInPlacement:(STRAdPlacement *)placement {
+- (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement {
+    STRDeferred *deferred = [STRDeferred defer];
+    [deferred resolveWithValue:nil];
     [self placeAdInView:placement.adView
            placementKey:placement.placementKey
 presentingViewController:placement.presentingViewController
                delegate:placement.delegate];
+    return deferred.promise;
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view
