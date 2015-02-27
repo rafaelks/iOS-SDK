@@ -18,6 +18,7 @@
 #import "STRAdInstagram.h"
 #import "STRBeaconService.h"
 #import "STRAdPlacement.h"
+#import <AdSupport/AdSupport.h>
 
 const NSInteger kRequestInProgress = 202;
 
@@ -27,6 +28,7 @@ const NSInteger kRequestInProgress = 202;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, strong) STRAdCache *adCache;
 @property (nonatomic, strong) STRBeaconService *beaconService;
+@property (weak, nonatomic) ASIdentifierManager *identifierManager;
 
 @end
 
@@ -36,6 +38,7 @@ const NSInteger kRequestInProgress = 202;
            networkClient:(STRNetworkClient *)networkClient
                  adCache:(STRAdCache *)adCache
            beaconService:(STRBeaconService *)beaconService
+     asIdentifierManager:(ASIdentifierManager *)identifierManager
 {
     self = [super init];
     if (self) {
@@ -43,6 +46,7 @@ const NSInteger kRequestInProgress = 202;
         self.networkClient = networkClient;
         self.adCache = adCache;
         self.beaconService = beaconService;
+        self.identifierManager = identifierManager;
     }
 
     return self;
@@ -253,8 +257,12 @@ const NSInteger kRequestInProgress = 202;
     if (!bundleId) {
         bundleId = @"";
     }
+    NSString *idfa = @"";
+    if ([self.identifierManager isAdvertisingTrackingEnabled]) {
+        idfa = [[self.identifierManager advertisingIdentifier] UUIDString];
+    }
     NSMutableDictionary *returnValue = [NSMutableDictionary dictionaryWithDictionary:otherParams];
-    [returnValue addEntriesFromDictionary:@{@"placement_key": placement.placementKey, @"appName": appName, @"appId": bundleId }];
+    [returnValue addEntriesFromDictionary:@{@"placement_key": placement.placementKey, @"appName": appName, @"appId": bundleId, @"uid": idfa }];
     return returnValue;
 }
 

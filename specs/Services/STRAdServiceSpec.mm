@@ -13,6 +13,7 @@
 #import "STRAdInstagram.h"
 #import "STRBeaconService.h"
 #import "STRAdPlacement.h"
+#import <AdSupport/AdSupport.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -41,6 +42,15 @@ describe(@"STRAdService", ^{
 
         beaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:beaconService];
+
+        ASIdentifierManager *fakeManager = nice_fake_for([ASIdentifierManager class]);
+        spy_on([ASIdentifierManager class]);
+        [injector bind:[ASIdentifierManager class] toInstance:fakeManager];
+        fakeManager stub_method(@selector(isAdvertisingTrackingEnabled)).and_return(YES);
+
+        NSUUID *fakeId = nice_fake_for([NSUUID class]);
+        fakeId stub_method(@selector(UUIDString)).and_return(@"fakeUUID");
+        fakeManager stub_method(@selector(advertisingIdentifier)).and_return(fakeId);
 
         service = [injector getInstance:[STRAdService class]];
     });
@@ -133,7 +143,7 @@ describe(@"STRAdService", ^{
             });
 
             it(@"makes a request to the ad server", ^{
-                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs"});
+                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs", @"uid" : @"fakeUUID" });
             });
 
             describe(@"when the appName and bundle id are nil", ^{
@@ -150,7 +160,7 @@ describe(@"STRAdService", ^{
                     [(id<CedarDouble>)restClient reset_sent_messages];
                     returnedPromise = [service fetchAdForPlacement:adPlacement];
 
-                    restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"", @"appId": @""});
+                    restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"", @"appId": @"", @"uid" : @"fakeUUID" });
                 });
             });
 
@@ -197,7 +207,7 @@ describe(@"STRAdService", ^{
             });
 
             it(@"makes a request to the ad server", ^{
-                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs"});
+                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs", @"uid" : @"fakeUUID" });
             });
 
             it(@"fires an impression request beacon", ^{
@@ -454,7 +464,7 @@ describe(@"STRAdService", ^{
             });
 
             it(@"makes a request to the ad server", ^{
-                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs", @"creative_key": @"creativeKey" });
+                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs", @"creative_key": @"creativeKey", @"uid" : @"fakeUUID" });
             });
 
             it(@"fires an impression request beacon", ^{

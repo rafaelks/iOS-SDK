@@ -23,7 +23,9 @@
 
 @implementation STRBeaconService
 
-- (id)initWithRestClient:(STRRestClient *)restClient dateProvider:(STRDateProvider *)dateProvider asIdentifierManager:(ASIdentifierManager *)identifierManager {
+- (id)initWithRestClient:(STRRestClient *)restClient
+            dateProvider:(STRDateProvider *)dateProvider
+     asIdentifierManager:(ASIdentifierManager *)identifierManager {
     self = [super init];
     if (self) {
         self.restClient = restClient;

@@ -46,7 +46,8 @@
         return [[STRAdService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
                                           networkClient:[injector getInstance:[STRNetworkClient class]]
                                                 adCache:[injector getInstance:[STRAdCache class]]
-                                          beaconService:[injector getInstance:[STRBeaconService class]]];
+                                          beaconService:[injector getInstance:[STRBeaconService class]]
+                                    asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]];
     }];
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
