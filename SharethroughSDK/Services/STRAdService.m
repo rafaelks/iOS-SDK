@@ -119,6 +119,12 @@ const NSInteger kRequestInProgress = 202;
     [adPromise then:^id(NSDictionary *fullJSON) {
         NSArray *creativesJSON = fullJSON[@"creatives"];
 
+        if ([creativesJSON count] == 0) {
+            NSError *noCreativesError = [NSError errorWithDomain:@"No creatives returned" code:404 userInfo:nil];
+            [deferred rejectWithError:noCreativesError];
+            return noCreativesError;
+        }
+
         NSMutableArray *creativesArray = [NSMutableArray arrayWithCapacity:[creativesJSON count]];
 
         for (int i = 0; i < [creativesJSON count]; ++i) {

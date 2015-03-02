@@ -364,6 +364,16 @@ describe(@"STRAdService", ^{
                     networkClient should have_received(@selector(get:)).with(request);
                 });
             });
+
+            describe(@"when the ad server respinds with no creatives", ^{
+                it(@"rejects the returned promise", ^{
+                    [restClientDeferred resolveWithValue:@{
+                                                           @"creatives": @[]
+                                                           }];
+
+                    returnedPromise.error should_not be_nil;
+                });
+            });
             
             describe(@"when the ad server unsuccessfully responds", ^{
                 it(@"rejects the returned promise", ^{
