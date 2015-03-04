@@ -95,7 +95,7 @@
 - (void)sendBeaconWithURL:(NSURL *)url{
     [self.networkClient get:[NSURLRequest requestWithURL:url]];
 }
-    
+
 - (NSString *)getUserAgent {
     return [self.networkClient userAgent];
 }

@@ -51,6 +51,7 @@ describe(@"STRAdRenderer", ^{
         ad.adDescription = @"Dogs this smart deserve a home.";
         ad.title = @"Meet Porter. He's a Dog.";
         ad.advertiser = @"Brand X";
+        ad.placementStatus = @"live";
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
         ad.thirdPartyBeaconsForImpression = @[@"//google.com?fakeParam=[timestamp]"];
         ad.thirdPartyBeaconsForVisibility = @[@"//google.com?fakeParam=[timestamp]"];
@@ -78,7 +79,7 @@ describe(@"STRAdRenderer", ^{
             [window makeKeyAndVisible];
             
             beaconService stub_method(@selector(fireImpressionRequestForPlacementKey:));
-            beaconService stub_method(@selector(fireThirdPartyBeacons:));
+            beaconService stub_method(@selector(fireThirdPartyBeacons:forPlacementWithStatus:));
             
             delegate = nice_fake_for(@protocol(STRAdViewDelegate));
             
@@ -125,7 +126,7 @@ describe(@"STRAdRenderer", ^{
             });
 
             it(@"fires third party impression beacons", ^{
-                beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(ad.thirdPartyBeaconsForImpression);
+                beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(ad.thirdPartyBeaconsForImpression, ad.placementStatus);
             });
             
             it(@"fills out the ads' the title, description, and sponsored by", ^{
@@ -299,8 +300,8 @@ describe(@"STRAdRenderer", ^{
                 });
                 
                 it(@"fires off the third party beacons for click and for play", ^{
-                    beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//click.com?fakeParam=[timestamp]"]);
-                    beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//play.com?fakeParam=[timestamp]"]);
+                    beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//click.com?fakeParam=[timestamp]"], @"live");
+                    beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//play.com?fakeParam=[timestamp]"], @"live");
                 });
 
                 describe(@"when the delegate has adView:userDidEngageAdForPlacementKey defined", ^{
@@ -407,7 +408,7 @@ describe(@"STRAdRenderer", ^{
                     });
                     
                     it(@"fires off the third party beacons for click", ^{
-                        beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//click.com?fakeParam=[timestamp]"]);
+                        beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//click.com?fakeParam=[timestamp]"], @"live");
                     });
                 });
             });

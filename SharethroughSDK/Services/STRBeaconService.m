@@ -13,6 +13,9 @@
 #import <AdSupport/AdSupport.h>
 #import "STRAdvertisement.h"
 
+NSString *kLivePlacementStatus = @"live";
+NSString *kPreLivePlacementStatus = @"pre-live";
+
 @interface STRBeaconService ()
 
 @property (strong, nonatomic) STRRestClient *restClient;
@@ -87,16 +90,18 @@
     }
 }
 
-- (void)fireThirdPartyBeacons:(NSArray *)beaconPaths {
-    NSString *timeStamp = [NSString stringWithFormat:@"%lli", [self.dateProvider millisecondsSince1970]];
-    for (NSString *urlStub in beaconPaths) {
-        NSMutableString *urlString = [urlStub mutableCopy];
-        NSRange timeStampRange = [urlString rangeOfString:@"[timestamp]"];
-        if (timeStampRange.location != NSNotFound ) {
-            [urlString replaceCharactersInRange:timeStampRange withString:timeStamp];
+- (void)fireThirdPartyBeacons:(NSArray *)beaconPaths forPlacementWithStatus:(NSString *)placementStatus {
+    if ([placementStatus isEqualToString:kLivePlacementStatus]) {
+        NSString *timeStamp = [NSString stringWithFormat:@"%lli", [self.dateProvider millisecondsSince1970]];
+        for (NSString *urlStub in beaconPaths) {
+            NSMutableString *urlString = [urlStub mutableCopy];
+            NSRange timeStampRange = [urlString rangeOfString:@"[timestamp]"];
+            if (timeStampRange.location != NSNotFound ) {
+                [urlString replaceCharactersInRange:timeStampRange withString:timeStamp];
+            }
+            [urlString insertString:@"http:" atIndex:0];
+            [self.restClient sendBeaconWithURL:[NSURL URLWithString:urlString]];
         }
-        [urlString insertString:@"http:" atIndex:0];
-        [self.restClient sendBeaconWithURL:[NSURL URLWithString:urlString]];
     }
 }
 

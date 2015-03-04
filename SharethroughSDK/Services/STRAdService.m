@@ -118,6 +118,7 @@ const NSInteger kRequestInProgress = 202;
     STRPromise *adPromise = [self.restClient getWithParameters: parameters];
     [adPromise then:^id(NSDictionary *fullJSON) {
         NSArray *creativesJSON = fullJSON[@"creatives"];
+        NSDictionary *placementJSON = fullJSON[@"placement"];
 
         if ([creativesJSON count] == 0) {
             NSError *noCreativesError = [NSError errorWithDomain:@"No creatives returned" code:404 userInfo:nil];
@@ -128,7 +129,7 @@ const NSInteger kRequestInProgress = 202;
         NSMutableArray *creativesArray = [NSMutableArray arrayWithCapacity:[creativesJSON count]];
 
         for (int i = 0; i < [creativesJSON count]; ++i) {
-            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placement.placementKey]];
+            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placement.placementKey withStatus:placementJSON[@"status"]]];
         }
 
         [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacement:placement];
@@ -195,7 +196,7 @@ const NSInteger kRequestInProgress = 202;
     return [adClass new];
 }
 
-- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(NSString *)placementKey {
+- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(NSString *)placementKey withStatus:(NSString *)placementStatus {
     STRDeferred *deferred = [STRDeferred defer];
 
     NSDictionary *creativeJSON = creativeWrapperJSON[@"creative"];
@@ -213,6 +214,7 @@ const NSInteger kRequestInProgress = 202;
         ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
         ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
         ad.placementKey = placementKey;
+        ad.placementStatus = placementStatus;
         ad.thirdPartyBeaconsForImpression = creativeJSON[@"beacons"][@"impression"];
         ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
         ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];

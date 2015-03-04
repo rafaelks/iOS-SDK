@@ -60,6 +60,7 @@ describe(@"STRAdGenerator", ^{
         ad.thirdPartyBeaconsForVisibility = @[@"//google.com?fakeParam=[timestamp]"];
         ad.thirdPartyBeaconsForClick = @[@"//click.com?fakeParam=[timestamp]"];
         ad.thirdPartyBeaconsForPlay = @[@"//play.com?fakeParam=[timestamp]"];
+        ad.placementStatus = @"live";
     });
 
     describe(@"placing an ad in the view", ^{
@@ -247,7 +248,7 @@ describe(@"STRAdGenerator", ^{
                         });
 
                         it(@"fires a third party beacon", ^{
-                            beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//google.com?fakeParam=[timestamp]"]);
+                            beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//google.com?fakeParam=[timestamp]"], @"live");
                         });
 
                         it(@"invalidates its timer", ^{
@@ -347,8 +348,8 @@ describe(@"STRAdGenerator", ^{
                 });
 
                 it(@"fires off the third party beacons for click and for play", ^{
-                    beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//click.com?fakeParam=[timestamp]"]);
-                    beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//play.com?fakeParam=[timestamp]"]);
+                    beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//click.com?fakeParam=[timestamp]"], @"live");
+                    beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//play.com?fakeParam=[timestamp]"], @"live");
                 });
             });
 
@@ -457,7 +458,7 @@ describe(@"STRAdGenerator", ^{
                 });
 
                 it(@"fires off the third party beacons for click", ^{
-                    beaconService should have_received(@selector(fireThirdPartyBeacons:)).with(@[@"//click.com?fakeParam=[timestamp]"]);
+                    beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//click.com?fakeParam=[timestamp]"], @"live");
                 });
             });
         });

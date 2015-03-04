@@ -16,7 +16,7 @@
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey;
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey;
 - (void)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
-- (void)fireThirdPartyBeacons:(NSArray *)beaconPaths;
+- (void)fireThirdPartyBeacons:(NSArray *)beaconPaths forPlacementWithStatus:(NSString *)placementStatus;
 - (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireVideoPlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size;
 - (void)fireVideoCompletionForAd:(STRAdvertisement *)ad completionPercent:(NSNumber *)completionPercent;

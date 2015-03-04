@@ -308,17 +308,28 @@ describe(@"STRBeaconService", ^{
     describe(@"-fireThirdPartyBeacons:", ^{
         context(@"when beacons are not present", ^{
             it(@"should not call the rest client", ^{
-                [service fireThirdPartyBeacons:nil];
+                [service fireThirdPartyBeacons:nil forPlacementWithStatus:nil];
                 restClient should_not have_received(@selector(sendBeaconWithURL:));
             });
         });
 
         context(@"when beacons are present", ^{
-            it(@"calls rest client with subsituted timestamp and full url", ^{
-                [service fireThirdPartyBeacons:@[@"//yahoo.com/beacon?=[timestamp]"]];
+            context(@"when the placement is live", ^{
+                it(@"calls rest client with subsituted timestamp and full url", ^{
+                    [service fireThirdPartyBeacons:@[@"//yahoo.com/beacon?=[timestamp]"] forPlacementWithStatus:@"live"];
 
-                NSURL *targetURL = [NSURL URLWithString:@"http://yahoo.com/beacon?=10"];
-                restClient should have_received(@selector(sendBeaconWithURL:)).with(targetURL);
+                    NSURL *targetURL = [NSURL URLWithString:@"http://yahoo.com/beacon?=10"];
+                    restClient should have_received(@selector(sendBeaconWithURL:)).with(targetURL);
+                });
+            });
+
+            context(@"when the placement is pre-live", ^{
+                it(@"calls rest client with subsituted timestamp and full url", ^{
+                    [service fireThirdPartyBeacons:@[@"//yahoo.com/beacon?=[timestamp]"] forPlacementWithStatus:@"pre-live"];
+
+                    NSURL *targetURL = [NSURL URLWithString:@"http://yahoo.com/beacon?=10"];
+                    restClient should_not have_received(@selector(sendBeaconWithURL:)).with(targetURL);
+                });
             });
         });
     });

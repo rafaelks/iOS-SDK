@@ -76,7 +76,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
     self.presentingViewController = placement.presentingViewController;
     [self.beaconService fireImpressionForAd:ad adSize:placement.adView.frame.size];
-    [self.beaconService fireThirdPartyBeacons:ad.thirdPartyBeaconsForImpression];
+    [self.beaconService fireThirdPartyBeacons:ad.thirdPartyBeaconsForImpression forPlacementWithStatus:ad.placementStatus];
 
     placement.adView.adTitle.text = ad.title;
     placement.adView.adSponsoredBy.text = [ad sponsoredBy];
@@ -130,7 +130,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
         [self.beaconService fireVisibleImpressionForAd:self.ad
                                                 adSize:view.frame.size];
-        [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility];
+        [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility  forPlacementWithStatus:self.ad.placementStatus];
         self.ad.visibleImpressionTime = [self.dateProvider now];
         [timer invalidate];
     } else {
@@ -148,8 +148,8 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     } else {
         [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];
     }
-    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay];
-    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick];
+    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay  forPlacementWithStatus:self.ad.placementStatus];
+    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick  forPlacementWithStatus:self.ad.placementStatus];
 
     if ([self.placement.delegate respondsToSelector:@selector(adView:userDidEngageAdForPlacementKey:)]) {
         [self.placement.delegate adView:self.placement.adView userDidEngageAdForPlacementKey:self.placement.placementKey];
