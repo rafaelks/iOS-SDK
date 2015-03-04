@@ -12,7 +12,7 @@
 #import "GADBannerViewDelegate.h"
 
 @protocol STRAdView, STRAdViewDelegate;
-@class STRAdService, STRBeaconService, STRInjector, STRPromise, STRRestClient;
+@class STRAdService, STRBeaconService, STRInjector, STRPromise, STRRestClient, GADBannerView;
 
 extern char const * const STRDFPAdGeneratorKey;
 
@@ -20,7 +20,8 @@ extern char const * const STRDFPAdGeneratorKey;
 
 - (id)initWithAdService:(STRAdService *)adService
                injector:(STRInjector *)injector
-             restClient:(STRRestClient *)restClient;
+             restClient:(STRRestClient *)restClient
+             bannerView:(GADBannerView *)bannerView;
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement;
 

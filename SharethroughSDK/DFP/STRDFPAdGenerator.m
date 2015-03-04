@@ -43,7 +43,8 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 @implementation STRDFPAdGenerator
 - (id)initWithAdService:(STRAdService *)adService
                injector:(STRInjector *)injector
-             restClient:(STRRestClient *)restClient {
+             restClient:(STRRestClient *)restClient
+             bannerView:(GADBannerView *)bannerView{
     self = [super init];
     if (self) {
         self.adService = adService;
@@ -51,7 +52,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         self.restClient = restClient;
 
         self.DFPPathCache = [NSMutableDictionary dictionary];
-        self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
+        self.bannerView = bannerView;
         self.extras = [[GADCustomEventExtras alloc] init];
         self.bannerView.delegate = self;
     }

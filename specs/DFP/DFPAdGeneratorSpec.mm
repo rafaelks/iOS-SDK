@@ -29,6 +29,8 @@ describe(@"DFPAdGenerator", ^{
     __block STRDeferred *deferred;
     __block id<STRAdViewDelegate> delegate;
     __block STRFullAdView *view;
+    __block GADBannerView *fakeBannerView;
+    __block GADRequest *fakeGAdRequest;
 
     beforeEach(^{
         deferred = [STRDeferred defer];
@@ -49,12 +51,19 @@ describe(@"DFPAdGenerator", ^{
 
         view = nice_fake_for([STRFullAdView class]);
 
+        fakeBannerView = nice_fake_for([GADBannerView class]);
+        [injector bind:[GADBannerView class] toInstance:fakeBannerView];
+
+        fakeGAdRequest = nice_fake_for([GADRequest class]);
+        spy_on([GADRequest class]);
+        [GADRequest class] stub_method(@selector(request)).and_return(fakeGAdRequest);
+
         adPlacement = [[STRAdPlacement alloc] init];
         adPlacement.adView = view;
         adPlacement.placementKey = @"placementKey";
         adPlacement.delegate = delegate;
 
-        generator = [[STRDFPAdGenerator alloc] initWithAdService:adService injector:injector restClient:restClient];
+        generator = [[STRDFPAdGenerator alloc] initWithAdService:adService injector:injector restClient:restClient bannerView:fakeBannerView];
     });
 
     context(@"when there is no ad cached", ^{

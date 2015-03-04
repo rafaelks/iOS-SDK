@@ -12,16 +12,20 @@
 #import "STRDFPAdGenerator.h"
 #import "STRRestClient.h"
 
-
+#import "GADBannerView.h"
 
 @implementation STRDFPAppModule
 
 - (void)configureWithInjector:(STRInjector *)injector {
     [super configureWithInjector:injector];
 
-    [injector bind:[STRDFPAdGenerator class] toInstance:[[STRDFPAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
-                                                                                            injector:injector
-                                                                                          restClient:[injector getInstance:[STRRestClient class]]]];
+    [injector bind:[GADBannerView class] toInstance:[[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait]];
+
+    [injector bind:[STRDFPAdGenerator class]
+        toInstance:[[STRDFPAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
+                                                       injector:injector
+                                                     restClient:[injector getInstance:[STRRestClient class]]
+                                                     bannerView:[injector getInstance:[GADBannerView class]]]];
 }
 
 @end
