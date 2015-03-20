@@ -198,6 +198,44 @@ describe(@"STRBeaconService", ^{
                 restClient should_not have_received(@selector(sendBeaconWithParameters:));
             });
         });
+
+        describe(@"when the ad is missing fields", ^{
+            beforeEach(^{
+                [(id<CedarDouble>)restClient reset_sent_messages];
+                ad.placementKey = nil;
+                ad.variantKey = nil;
+                ad.creativeKey = nil;
+                ad.signature = nil;
+                ad.auctionType = nil;
+                ad.auctionPrice = nil;
+                ad.adserverRequestId = nil;
+                ad.auctionWinId = nil;
+                ad.impressionBeaconFired = NO;
+                [service fireImpressionForAd:ad adSize:CGSizeMake(200, 100)];
+            });
+
+            it(@"does not send another beacon to the tracking servers", ^{
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"",
+                                                                                             @"ckey": @"",
+                                                                                             @"vkey": @"",
+                                                                                             @"type": @"impression",
+                                                                                             @"bwidth": @"200",
+                                                                                             @"bheight": @"400",
+                                                                                             @"umtime": @"10",
+                                                                                             @"session": @"AAAA",
+                                                                                             @"uid": @"fakeUUID",
+                                                                                             @"ua": @"User Agent",
+                                                                                             @"pwidth": @"200",
+                                                                                             @"pheight": @"100",
+                                                                                             @"ploc": @"specs",
+                                                                                             @"placementIndex": @"0",
+                                                                                             @"as": @"",
+                                                                                             @"at": @"",
+                                                                                             @"ap": @"",
+                                                                                             @"arid": @"",
+                                                                                             @"awid": @""});
+            });
+        });
     });
 
     describe(@"-fireVisibleImpressionForAd:adSize:", ^{

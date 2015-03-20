@@ -170,15 +170,20 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     return params;
 }
 
+static id valueOrEmpty(id object)
+{
+    return object ?: @"";
+}
+
 - (NSMutableDictionary *)commonParametersWithAd:(STRAdvertisement *)ad {
-    NSDictionary *adParams = @{@"pkey": ad.placementKey,
-                               @"vkey": ad.variantKey,
-                               @"ckey": ad.creativeKey,
-                               @"as": ad.signature,
-                               @"at": ad.auctionType,
-                               @"ap": ad.auctionPrice,
-                               @"arid": ad.adserverRequestId,
-                               @"awid": ad.auctionWinId };
+    NSDictionary *adParams = @{@"pkey": valueOrEmpty(ad.placementKey),
+                               @"vkey": valueOrEmpty(ad.variantKey),
+                               @"ckey": valueOrEmpty(ad.creativeKey),
+                               @"as": valueOrEmpty(ad.signature),
+                               @"at": valueOrEmpty(ad.auctionType),
+                               @"ap": valueOrEmpty(ad.auctionPrice),
+                               @"arid": valueOrEmpty(ad.adserverRequestId),
+                               @"awid": valueOrEmpty(ad.auctionWinId) };
     NSMutableDictionary *commonParams = [self commonParameters];
     [commonParams addEntriesFromDictionary:adParams];
 
