@@ -35,13 +35,46 @@
     static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
-        sharedObject.injector = [STRInjector injectorForModule:[STRDFPAppModule new]];
-        [sharedObject.injector getInstance:[STRDFPAdGenerator class]];
-        STRDFPManager *dfpManager = [STRDFPManager sharedInstance];
-        dfpManager.injector = sharedObject.injector;
     });
 
     return sharedObject;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.injector = [STRInjector injectorForModule:[STRDFPAppModule new]];
+        [self.injector getInstance:[STRDFPAdGenerator class]];
+        STRDFPManager *dfpManager = [STRDFPManager sharedInstance];
+        dfpManager.injector = self.injector;
+    }
+    return self;
+}
+
+- (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate {
+
+    STRDeferred *deferred = [STRDeferred defer];
+
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] init];
+    adPlacement.presentingViewController = [UIViewController new];
+    adPlacement.placementKey = placementKey;
+    adPlacement.delegate = delegate;
+    adPlacement.DFPDeferred = deferred;
+
+    [deferred.promise then:^id(id value) {
+        if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
+            [delegate adView:nil didFetchAdForPlacementKey:placementKey atIndex:0];
+        }
+        return value;
+    } error:^id(NSError *error) {
+        if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+            [delegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
+        }
+        return error;
+    }];
+
+    STRDFPAdGenerator *adGenerator = [self.injector getInstance:[STRDFPAdGenerator class]];
+    [adGenerator placeAdInPlacement:adPlacement];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view

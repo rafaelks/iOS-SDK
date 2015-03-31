@@ -113,6 +113,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     CGRect viewFrame = [view convertRect:view.bounds toView:nil];
 
     if (!view.superview) {
+        NSLog(@"Warning: The ad view is not in a super view. No visibility tracking will occur.");
         [timer invalidate];
         return;
     }

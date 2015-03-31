@@ -24,8 +24,6 @@
 #import "GADBannerView.h"
 #import "GADCustomEventExtras.h"
 
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
 char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
 @interface STRDFPAdGenerator ()

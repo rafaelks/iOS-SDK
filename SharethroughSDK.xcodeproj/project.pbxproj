@@ -180,6 +180,8 @@
 		B229F0A51A2E5B420094A8B3 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; };
 		B229F0A61A2E5B420094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; };
 		B229F0A71A2E5B420094A8B3 /* instagram_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */; };
+		B245C3BE1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */; };
+		B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
 		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
@@ -556,6 +558,7 @@
 		B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdInstagram.h; sourceTree = "<group>"; };
 		B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdInstagram.m; sourceTree = "<group>"; };
 		B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = instagram_sample_thumbnail.c; sourceTree = "<group>"; };
+		B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKDFPSpec.mm; sourceTree = "<group>"; };
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
@@ -753,6 +756,7 @@
 				AE022DF8188E01D200D02568 /* SharethroughSDKSpec.mm */,
 				AEEE6CBB18A0131C00AA7EC9 /* UITableView+STRSpec.mm */,
 				AE58228118A2F19100672653 /* UICollectionView+STRSpec.mm */,
+				B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -1510,6 +1514,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */,
 				B229F0A51A2E5B420094A8B3 /* instagram-logo.c in Sources */,
 				B229F0A61A2E5B420094A8B3 /* yt-logo.c in Sources */,
 				B229F0A71A2E5B420094A8B3 /* instagram_sample_thumbnail.c in Sources */,
@@ -1519,6 +1524,7 @@
 				E84FB59B19BFAD3C0034A41E /* STRDFPGridlikeViewDataSourceProxy.m in Sources */,
 				E84FB59319BFAD1D0034A41E /* STRDFPAdGenerator.m in Sources */,
 				E84FB59419BFAD1D0034A41E /* STRDFPAppModule.m in Sources */,
+				B245C3BE1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm in Sources */,
 				E831290119BE4A7E007C2FAB /* STRAdPlacement.m in Sources */,
 				E81FA0481A1E7B4400BCB289 /* STRAdPlacementSpec.mm in Sources */,
 				E831290219BE4A7E007C2FAB /* STRAdRenderer.m in Sources */,
@@ -1796,6 +1802,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3A35B15AF3966D155B47BFB7 /* Pods-specs.debug.xcconfig */;
 			buildSettings = {
+				CLANG_MODULES_AUTOLINK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1829,6 +1836,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */;
 			buildSettings = {
+				CLANG_MODULES_AUTOLINK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
