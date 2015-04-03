@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "GADCustomEventBanner.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 @interface STRDFPMediator : NSObject <GADCustomEventBanner>
 

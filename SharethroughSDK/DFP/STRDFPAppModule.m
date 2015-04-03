@@ -12,7 +12,7 @@
 #import "STRDFPAdGenerator.h"
 #import "STRRestClient.h"
 
-#import "GADBannerView.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 @implementation STRDFPAppModule
 

@@ -21,8 +21,7 @@
 #import "STRInjector.h"
 #import "STRRestClient.h"
 
-#import "GADBannerView.h"
-#import "GADCustomEventExtras.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 

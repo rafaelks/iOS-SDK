@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "STRAdPlacement.h"
 
-#import "GADBannerViewDelegate.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 @protocol STRAdView, STRAdViewDelegate;
 @class STRAdService, STRBeaconService, STRInjector, STRPromise, STRRestClient, GADBannerView;
