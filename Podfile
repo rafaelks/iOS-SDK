@@ -18,6 +18,6 @@ target 'specs' do
   pod 'PivotalCoreKit', '~> 0.1'
   pod 'PivotalCoreKit/UIKit/SpecHelper'
   pod 'PivotalCoreKit/Foundation/SpecHelper/Fakes'
-  pod 'Google-Mobile-Ads-SDK', '~> 6.12'
+  pod 'Google-Mobile-Ads-SDK', '~> 7.0'
 end
 

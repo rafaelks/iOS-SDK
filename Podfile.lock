@@ -1,6 +1,6 @@
 PODS:
   - Cedar (0.11.1)
-  - Google-Mobile-Ads-SDK (6.12.2)
+  - Google-Mobile-Ads-SDK (7.1.0)
   - PivotalCoreKit (0.1.1):
     - PivotalCoreKit/Core (= 0.1.1)
   - PivotalCoreKit/Core (0.1.1):
@@ -27,14 +27,14 @@ PODS:
 
 DEPENDENCIES:
   - Cedar (~> 0.11)
-  - Google-Mobile-Ads-SDK (~> 6.12)
+  - Google-Mobile-Ads-SDK (~> 7.0)
   - PivotalCoreKit (~> 0.1)
   - PivotalCoreKit/Foundation/SpecHelper/Fakes
   - PivotalCoreKit/UIKit/SpecHelper
 
 SPEC CHECKSUMS:
-  Cedar: 16fce41646511e08a488bac8f196f97f54184ed7
-  Google-Mobile-Ads-SDK: 9761186eb5dc5e1493e71dcce2b525159f763d42
-  PivotalCoreKit: c3cdedda73a2e3f22af2f0df5c575882f78035f7
+  Cedar: 95007bec7e0339ea6c21b1a4858a45c25cbe8f09
+  Google-Mobile-Ads-SDK: 9b7c22345f13de4164e9e6d90ad49cce42124c3c
+  PivotalCoreKit: 017a8cd6de35079082478b64b498265b9ad788a0
 
 COCOAPODS: 0.35.0

@@ -12,7 +12,7 @@
 #import "STRFullAdView.h"
 #import "STRDFPManager.h"
 
-#import "GADBannerView.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
