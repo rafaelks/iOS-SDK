@@ -20,6 +20,7 @@
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
 @property (nonatomic, strong) STRInjector *injector;
+@property (nonatomic, strong) STRAdPlacement *placement;
 @property (nonatomic, strong) UIViewController *presentingViewController;
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, weak) UITapGestureRecognizer *disclosureTapRecognizer;
@@ -76,6 +77,7 @@
 
 - (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement {
     STRDeferred *deferred = [STRDeferred defer];
+    self.placement = placement;
     [deferred resolveWithValue:nil];
     [self placeAdInView:placement.adView
            placementKey:placement.placementKey
@@ -129,6 +131,9 @@ presentingViewController:(UIViewController *)presentingViewController
                                                                                           application:[UIApplication sharedApplication]
                                                                                         beaconService:nil
                                                                                              injector:self.injector];
+    if ([self.placement.delegate respondsToSelector:@selector(adView:userDidEngageAdForPlacementKey:)]) {
+        [self.placement.delegate adView:self.placement.adView userDidEngageAdForPlacementKey:self.placement.placementKey];
+    }
     adController.delegate = self;
     [self.presentingViewController presentViewController:adController animated:YES completion:nil];
 }
