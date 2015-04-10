@@ -121,6 +121,7 @@ const NSInteger kRequestInProgress = 202;
         NSDictionary *placementJSON = fullJSON[@"placement"];
 
         if ([creativesJSON count] == 0) {
+            [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
             NSError *noCreativesError = [NSError errorWithDomain:@"No creatives returned" code:404 userInfo:nil];
             [deferred rejectWithError:noCreativesError];
             return noCreativesError;

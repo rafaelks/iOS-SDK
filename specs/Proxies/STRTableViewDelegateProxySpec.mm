@@ -2,7 +2,6 @@
 #import "STRFullTableViewDelegate.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRTableViewDelegate.h"
-#import <objc/objc-runtime.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;

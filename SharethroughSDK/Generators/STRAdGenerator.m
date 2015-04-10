@@ -123,6 +123,7 @@
     view.adTitle.text = @"";
     view.adSponsoredBy.text = @"";
     [self setDescriptionText:@"" onView:view];
+    view.adThumbnail.image = nil;
 }
 
 - (void)setDescriptionText:(NSString *)text onView:(UIView<STRAdView> *)view {

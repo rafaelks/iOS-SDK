@@ -365,13 +365,20 @@ describe(@"STRAdService", ^{
                 });
             });
 
-            describe(@"when the ad server respinds with no creatives", ^{
+            describe(@"when the ad server responds with no creatives", ^{
                 it(@"rejects the returned promise", ^{
                     [restClientDeferred resolveWithValue:@{
                                                            @"creatives": @[]
                                                            }];
 
                     returnedPromise.error should_not be_nil;
+                });
+
+                it(@"resets the pending ad request", ^{
+                    [restClientDeferred resolveWithValue:@{
+                                                           @"creatives": @[]
+                                                           }];
+                    adCache should have_received(@selector(clearPendingAdRequestForPlacement:)).with(adPlacement.placementKey);
                 });
             });
             
