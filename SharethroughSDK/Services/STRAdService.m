@@ -65,7 +65,7 @@ const NSInteger kRequestInProgress = 202;
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
         [deferred resolveWithValue:cachedAd];
-        if ([self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
+        if (!placement.isDirectSold && [self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
             [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
         }
         return deferred.promise;

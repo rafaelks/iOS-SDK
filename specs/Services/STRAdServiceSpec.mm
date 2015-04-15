@@ -439,34 +439,35 @@ describe(@"STRAdService", ^{
             });
         });
 
-        //        describe(@"when an ad is retrieved from the cache, but there are no more ads in the queue", ^{
-        //            __block STRAdvertisement *ad;
-        //
-        //            beforeEach(^{
-        //                ad = nice_fake_for([STRAdvertisement class]);
-        //                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
-        //                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-        //                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
-        //
-        //                returnedPromise = [service fetchAdForPlacement:adPlacement];
-        //            });
-        //
-        //            it(@"does not make a request to the ad server", ^{
-        //                restClient should_not have_received(@selector(getWithParameters:));
-        //            });
-        //
-        //            it(@"does not fire an impression request", ^{
-        //                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
-        //            });
-        //
-        //            it(@"does not make a request to the image server", ^{
-        //                networkClient should_not have_received(@selector(get:));
-        //            });
-        //
-        //            it(@"returns a promise that is resolved with the cached ad", ^{
-        //                returnedPromise.value should equal(ad);
-        //            });
-        //        });
+        describe(@"when an ad is retrieved from the cache, but there are no more ads in the queue", ^{
+            __block STRAdvertisement *ad;
+
+            beforeEach(^{
+                ad = nice_fake_for([STRAdvertisement class]);
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
+                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
+
+                adPlacement.isDirectSold = YES;
+                returnedPromise = [service fetchAdForPlacement:adPlacement];
+            });
+
+            it(@"does not make a request to the ad server", ^{
+                restClient should_not have_received(@selector(getWithParameters:));
+            });
+
+            it(@"does not fire an impression request", ^{
+                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
+            });
+
+            it(@"does not make a request to the image server", ^{
+                networkClient should_not have_received(@selector(get:));
+            });
+
+            it(@"returns a promise that is resolved with the cached ad", ^{
+                returnedPromise.value should equal(ad);
+            });
+        });
 
         describe(@"when an ad is cached for longer than the timeout", ^{
             __block STRAdvertisement *ad;

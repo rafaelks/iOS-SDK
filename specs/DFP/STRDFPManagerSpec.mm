@@ -33,6 +33,7 @@ describe(@"DFPManager", ^{
                                     presentingViewController:nil
                                                     delegate:delegate
                                                      adIndex:0
+                                                isDirectSold:YES
                                                      DFPPath:@"DFPPath"
                                                  DFPDeferred:nil];
     });

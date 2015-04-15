@@ -44,6 +44,7 @@
                                                     presentingViewController:self.gridlikeView
                                                                     delegate:nil
                                                                      adIndex:index
+                                                                isDirectSold:YES
                                                                      DFPPath:nil
                                                                  DFPDeferred:deferred];
 

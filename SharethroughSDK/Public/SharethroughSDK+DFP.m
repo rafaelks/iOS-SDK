@@ -88,6 +88,7 @@ presentingViewController:(UIViewController *)presentingViewController
                                                 presentingViewController:presentingViewController
                                                                 delegate:delegate
                                                                  adIndex:0
+                                                            isDirectSold:YES
                                                                  DFPPath:dfpPath
                                                              DFPDeferred:nil];
 

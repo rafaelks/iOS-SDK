@@ -38,6 +38,7 @@ describe(@"STRFakeAdGenerator", ^{
                                                       presentingViewController:presentingViewController
                                                                       delegate:nil
                                                                        adIndex:0
+                                                                  isDirectSold:NO
                                                                        DFPPath:nil
                                                                    DFPDeferred:nil];
 

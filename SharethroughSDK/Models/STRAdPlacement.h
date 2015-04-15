@@ -20,6 +20,7 @@
       presentingViewController:(UIViewController *)presentingViewController
                       delegate:(id<STRAdViewDelegate>)delegate
                        adIndex:(NSInteger)adIndex
+                  isDirectSold:(BOOL)directSold
                        DFPPath:(NSString *)DFPPath
                    DFPDeferred:(STRDeferred *)deferred;
 
@@ -27,11 +28,12 @@
 @property (strong, nonatomic) NSString *placementKey;
 @property (strong, nonatomic) UIViewController *presentingViewController;
 @property (strong, nonatomic) id<STRAdViewDelegate> delegate;
-@property (nonatomic) NSInteger adIndex;
+@property (nonatomic, assign) NSInteger adIndex;
 
 //Optional DFP related properties
 @property (strong, nonatomic) NSString *DFPPath;
 @property (strong, nonatomic) STRDeferred *DFPDeferred;
+@property (nonatomic, assign) BOOL isDirectSold;
 
 @end
 

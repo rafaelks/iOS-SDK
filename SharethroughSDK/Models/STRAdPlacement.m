@@ -20,6 +20,7 @@
 presentingViewController:(UIViewController *)presentingViewController
             delegate:(id<STRAdViewDelegate>)delegate
              adIndex:(NSInteger)adIndex
+        isDirectSold:(BOOL)directSold
              DFPPath:(NSString *)DFPPath
          DFPDeferred:(STRDeferred *)deferred
 {
@@ -29,10 +30,11 @@ presentingViewController:(UIViewController *)presentingViewController
 
     _adView = adView;
     _placementKey = placementKey;
-    _DFPPath = DFPPath;
     _presentingViewController = presentingViewController;
     _adIndex = adIndex;
     _delegate = delegate;
+    _isDirectSold = directSold;
+    _DFPPath = DFPPath;
     _DFPDeferred = deferred;
     
     return self;

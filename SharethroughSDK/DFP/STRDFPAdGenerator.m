@@ -138,6 +138,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
 #pragma mark GAdBannerViewDelegate
 - (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"%@", error);
     [[STRDFPManager sharedInstance] updateDelegateWithNoAdShownforPlacement:view.adUnitID];
 }
 

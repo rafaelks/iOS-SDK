@@ -157,6 +157,7 @@
                                                 presentingViewController:self.presentingViewController
                                                                 delegate:nil
                                                                  adIndex:indexPath.row
+                                                            isDirectSold:NO
                                                                  DFPPath:nil
                                                              DFPDeferred:nil];
     [adGenerator placeAdInPlacement:adPlacement];
@@ -177,6 +178,7 @@
                                                 presentingViewController:self.presentingViewController
                                                                 delegate:nil
                                                                  adIndex:indexPath.row
+                                                            isDirectSold:NO
                                                                  DFPPath:nil
                                                              DFPDeferred:nil];
 
