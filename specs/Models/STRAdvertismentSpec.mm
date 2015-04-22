@@ -14,8 +14,22 @@ describe(@"STRAdvertisement", ^{
         ad.advertiser = @"ginny minis";
     });
 
-    it(@"has a sponsored by method that prefixes the 'Promoted by' string", ^{
-        [ad sponsoredBy] should equal(@"Promoted by ginny minis");
+    describe(@"-sponsoredBy", ^{
+        describe(@"when there is no promoted by text", ^{
+            it(@"has a sponsored by method that prefixes the 'Promoted by' string", ^{
+                [ad sponsoredBy] should equal(@"Promoted by ginny minis");
+            });
+        });
+
+        describe(@"when there is promoted by text", ^{
+            beforeEach(^{
+                ad.promotedByText = @"Sponsored by";
+            });
+
+            it(@"has a sponsored by method that prefixes the 'Promoted by' string", ^{
+                [ad sponsoredBy] should equal(@"Sponsored by ginny minis");
+            });
+        });
     });
 
     describe(@"-platformLogoForWidth", ^{

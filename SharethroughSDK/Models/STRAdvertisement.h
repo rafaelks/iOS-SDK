@@ -31,6 +31,7 @@ extern NSString *STRInstagramAd;
 @property (nonatomic, copy) NSString *adserverRequestId;
 @property (nonatomic, copy) NSString *auctionWinId;
 @property (nonatomic, copy) NSString *customEngagementLabel;
+@property (nonatomic, copy) NSString *promotedByText;
 @property (nonatomic, copy) NSURL *customEngagemnetURL;
 @property (nonatomic, copy) NSURL *mediaURL;
 @property (nonatomic, copy) NSURL *shareURL;

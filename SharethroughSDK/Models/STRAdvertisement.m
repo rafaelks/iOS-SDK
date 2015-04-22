@@ -27,7 +27,11 @@ NSString *STRInstagramAd = @"instagram";
 }
 
 - (NSString *)sponsoredBy {
-    return [NSString stringWithFormat:@"Promoted by %@", self.advertiser];
+    if ([self.promotedByText length] > 0) {
+        return [NSString stringWithFormat:@"%@ %@", self.promotedByText, self.advertiser];
+    } else {
+        return [NSString stringWithFormat:@"Promoted by %@", self.advertiser];
+    }
 }
 
 - (UIImage *)displayableThumbnail {

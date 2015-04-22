@@ -130,7 +130,7 @@ const NSInteger kRequestInProgress = 202;
         NSMutableArray *creativesArray = [NSMutableArray arrayWithCapacity:[creativesJSON count]];
 
         for (int i = 0; i < [creativesJSON count]; ++i) {
-            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placement.placementKey withStatus:placementJSON[@"status"]]];
+            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacementKey:placement.placementKey withPlacementJSON:placementJSON]];
         }
 
         [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacement:placement];
@@ -197,7 +197,7 @@ const NSInteger kRequestInProgress = 202;
     return [adClass new];
 }
 
-- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(NSString *)placementKey withStatus:(NSString *)placementStatus {
+- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacementKey:(NSString *)placementKey withPlacementJSON:(NSDictionary *)placementJSON {
     STRDeferred *deferred = [STRDeferred defer];
 
     NSDictionary *creativeJSON = creativeWrapperJSON[@"creative"];
@@ -215,7 +215,8 @@ const NSInteger kRequestInProgress = 202;
         ad.shareURL = [NSURL URLWithString:creativeJSON[@"share_url"]];
         ad.brandLogoURL = [NSURL URLWithString:creativeJSON[@"brand_logo_url"]];
         ad.placementKey = placementKey;
-        ad.placementStatus = placementStatus;
+        ad.placementStatus = placementJSON[@"status"];
+        ad.promotedByText = placementJSON[@"promoted_by_text"];
         ad.thirdPartyBeaconsForImpression = creativeJSON[@"beacons"][@"impression"];
         ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
         ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
