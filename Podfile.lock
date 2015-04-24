@@ -1,40 +1,43 @@
 PODS:
-  - Cedar (0.11.1)
+  - Cedar (0.11.2)
   - Google-Mobile-Ads-SDK (7.1.0)
-  - PivotalCoreKit (0.1.1):
-    - PivotalCoreKit/Core (= 0.1.1)
-  - PivotalCoreKit/Core (0.1.1):
+  - PivotalCoreKit (0.3.0):
+    - PivotalCoreKit/Core (= 0.3.0)
+  - PivotalCoreKit/Core (0.3.0):
     - PivotalCoreKit/Foundation/Core
     - PivotalCoreKit/UIKit/Core
-  - PivotalCoreKit/Foundation/Core (0.1.1)
-  - PivotalCoreKit/Foundation/SpecHelper/Fakes (0.1.1):
+  - PivotalCoreKit/Foundation/Core (0.3.0)
+  - PivotalCoreKit/Foundation/SpecHelper/Fakes (0.3.0):
     - PivotalCoreKit/Foundation/SpecHelper/Fixtures
-  - PivotalCoreKit/Foundation/SpecHelper/Fixtures (0.1.1)
-  - PivotalCoreKit/UIKit/Core (0.1.1):
-    - PivotalCoreKit/UIKit/Core/Core-arc (= 0.1.1)
-  - PivotalCoreKit/UIKit/Core/Core-arc (0.1.1)
-  - PivotalCoreKit/UIKit/SpecHelper (0.1.1):
-    - PivotalCoreKit/UIKit/SpecHelper/Extensions (= 0.1.1)
-    - PivotalCoreKit/UIKit/SpecHelper/Helpers (= 0.1.1)
-    - PivotalCoreKit/UIKit/SpecHelper/Matchers (= 0.1.1)
-    - PivotalCoreKit/UIKit/SpecHelper/Stubs (= 0.1.1)
-  - PivotalCoreKit/UIKit/SpecHelper/Extensions (0.1.1):
-    - PivotalCoreKit/UIKit/SpecHelper/Helpers
-  - PivotalCoreKit/UIKit/SpecHelper/Helpers (0.1.1)
-  - PivotalCoreKit/UIKit/SpecHelper/Matchers (0.1.1)
-  - PivotalCoreKit/UIKit/SpecHelper/Stubs (0.1.1):
-    - PivotalCoreKit/UIKit/SpecHelper/Helpers
+  - PivotalCoreKit/Foundation/SpecHelper/Fixtures (0.3.0)
+  - PivotalCoreKit/UIKit/Core (0.3.0):
+    - PivotalCoreKit/UIKit/Core/Core-arc (= 0.3.0)
+  - PivotalCoreKit/UIKit/Core/Core-arc (0.3.0)
+  - PivotalCoreKit/UIKit/SpecHelper (0.3.0):
+    - PivotalCoreKit/UIKit/SpecHelper/Extensions (= 0.3.0)
+    - PivotalCoreKit/UIKit/SpecHelper/Matchers (= 0.3.0)
+    - PivotalCoreKit/UIKit/SpecHelper/Stubs (= 0.3.0)
+    - PivotalCoreKit/UIKit/SpecHelper/Support (= 0.3.0)
+  - PivotalCoreKit/UIKit/SpecHelper/Extensions (0.3.0):
+    - PivotalCoreKit/UIKit/SpecHelper/Support
+  - PivotalCoreKit/UIKit/SpecHelper/Matchers (0.3.0)
+  - PivotalCoreKit/UIKit/SpecHelper/Stubs (0.3.0):
+    - PivotalCoreKit/UIKit/SpecHelper/Stubs/Stubs-noarc (= 0.3.0)
+    - PivotalCoreKit/UIKit/SpecHelper/Support
+  - PivotalCoreKit/UIKit/SpecHelper/Stubs/Stubs-noarc (0.3.0):
+    - PivotalCoreKit/UIKit/SpecHelper/Support
+  - PivotalCoreKit/UIKit/SpecHelper/Support (0.3.0)
 
 DEPENDENCIES:
-  - Cedar (~> 0.11)
+  - Cedar (~> 0.11.2)
   - Google-Mobile-Ads-SDK (~> 7.0)
-  - PivotalCoreKit (~> 0.1)
+  - PivotalCoreKit (~> 0.2)
   - PivotalCoreKit/Foundation/SpecHelper/Fakes
   - PivotalCoreKit/UIKit/SpecHelper
 
 SPEC CHECKSUMS:
-  Cedar: 95007bec7e0339ea6c21b1a4858a45c25cbe8f09
+  Cedar: 5fc651dc12640d5045393d2d51309e91c2abcbff
   Google-Mobile-Ads-SDK: 9b7c22345f13de4164e9e6d90ad49cce42124c3c
-  PivotalCoreKit: 017a8cd6de35079082478b64b498265b9ad788a0
+  PivotalCoreKit: 3dab7cf9bff77eb49ce7ffc7a84e57fa8591f033
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.36.3

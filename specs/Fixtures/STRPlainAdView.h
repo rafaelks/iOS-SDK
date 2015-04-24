@@ -16,4 +16,6 @@
 @property (weak, nonatomic) UIImageView *adThumbnail;
 @property (weak, nonatomic) UIButton *disclosureButton;
 
+- (CGFloat)percentVisible;
+
 @end

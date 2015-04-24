@@ -35,4 +35,8 @@
     return self;
 }
 
+- (CGFloat)percentVisible {
+    return 0.0f;
+}
+
 @end

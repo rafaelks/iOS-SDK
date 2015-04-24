@@ -2,6 +2,7 @@
 #import "STRAdvertisement.h"
 #import "STRDateProvider.h"
 #import "STRAdPlacement.h"
+#import "STRFullAdView.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -148,8 +149,11 @@ describe(@"STRAdCache", ^{
                 recentAd = [[STRAdvertisement alloc] init];
                 recentAd.placementKey = @"pkey-recentAd";
                 recentAd.creativeKey = @"ckey-recentAd";
+                recentAd.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:999];
                 recentPlacement = [[STRAdPlacement alloc] init];
                 recentPlacement.placementKey = @"pkey-recentAd";
+                recentPlacement.adView = nice_fake_for([STRFullAdView class]);
+                recentPlacement.adView stub_method(@selector(percentVisible)).and_return(0.50);
 
                 expiredAd = [[STRAdvertisement alloc] init];
                 expiredAd.placementKey = @"pkey-expiredAd";
@@ -165,7 +169,7 @@ describe(@"STRAdCache", ^{
                     } else if (dateProvider.sent_messages.count == 2) {
                         date = [NSDate dateWithTimeIntervalSince1970:10000];
                     } else {
-                        date = [NSDate dateWithTimeIntervalSince1970:10119];
+                        date = [NSDate dateWithTimeIntervalSince1970:10019];
                     }
 
                     [invocation setReturnValue:&date];
@@ -185,55 +189,12 @@ describe(@"STRAdCache", ^{
                 [cache isAdAvailableForPlacement:expiredPlacement] should be_falsy;
             });
 
-            it(@"returns YES if the ad is not older than 120 seconds", ^{
+            it(@"returns YES if the ad is currently on screen", ^{
                 [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
             });
-        });
 
-        describe(@"with a custom timeout", ^{
-            beforeEach(^{
-                recentAd = [[STRAdvertisement alloc] init];
-                recentAd.placementKey = @"pkey-recentAd";
-                recentAd.creativeKey = @"ckey-recentAd";
-                recentPlacement = [[STRAdPlacement alloc] init];
-                recentPlacement.placementKey = @"pkey-recentAd";
-                
-                expiredAd = [[STRAdvertisement alloc] init];
-                expiredAd.placementKey = @"pkey-expiredAd";
-                expiredAd.creativeKey = @"ckey-expiredAd";
-                expiredPlacement = [[STRAdPlacement alloc] init];
-                expiredPlacement.placementKey = @"pkey-expiredAd";
-                
-                dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
-                    NSDate *date;
-                    if (dateProvider.sent_messages.count == 1) {
-                        date = [NSDate dateWithTimeIntervalSince1970:1000];
-                    } else if (dateProvider.sent_messages.count == 2) {
-                        date = [NSDate dateWithTimeIntervalSince1970:10000];
-                    } else {
-                        date = [NSDate dateWithTimeIntervalSince1970:10119];
-                    }
-                    
-                    [invocation setReturnValue:&date];
-                });
-                
-                [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:YES];
-                [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:NO];
-                
-                [cache setAdCacheTimeoutInSeconds:20];
-            });
-            
-            it(@"returns YES if no ad has been fetched", ^{
-                STRAdPlacement *nonExistantPlacement = [[STRAdPlacement alloc] init];
-                nonExistantPlacement.placementKey = @"pkey-nonexistant";
-                [cache isAdAvailableForPlacement:nonExistantPlacement] should be_falsy;
-            });
-            
-            it(@"returns YES if the saved ad was fetched more than 2 minutes ago", ^{
-                [cache isAdAvailableForPlacement:expiredPlacement] should be_falsy;
-            });
-            
-            it(@"returns NO if the ad is not older than 120 seconds", ^{
+            it(@"returns YES if the ad is not older than 120 seconds", ^{
+                recentPlacement.adView stub_method(@selector(percentVisible)).again().and_return(0.0);
                 [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
             });
         });

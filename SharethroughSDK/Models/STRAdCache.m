@@ -12,6 +12,7 @@
 #import "STRAdPlacement.h"
 
 #import "NSMutableArray+Queue.h"
+#import "UIView+Visible.h"
 
 @interface STRAdCache ()
 
@@ -127,7 +128,7 @@
     NSDate *now = [self.dateProvider now];
     NSTimeInterval timeInterval = [now timeIntervalSinceDate:ad.visibleImpressionTime];
 
-    if (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds) {
+    if ([placement.adView percentVisible] < 0.1f && (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds)) {
         if ([creatives peek] == nil) {
             return NO;
         } else {

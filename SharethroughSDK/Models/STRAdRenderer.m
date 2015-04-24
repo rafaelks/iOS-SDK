@@ -20,6 +20,7 @@
 #import "STRPromise.h"
 #import "STRAdFixtures.h"
 #import "STRDateProvider.h"
+#import "UIView+Visible.h"
 
 char const * const STRAdRendererKey = "STRAdRendererKey";
 
@@ -110,7 +111,6 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (void)checkIfAdIsVisible:(NSTimer *)timer {
     UIView *view = timer.userInfo[@"view"];
-    CGRect viewFrame = [view convertRect:view.bounds toView:nil];
 
     if (!view.superview) {
         NSLog(@"Warning: The ad view is not in a super view. No visibility tracking will occur.");
@@ -118,11 +118,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
         return;
     }
 
-    CGRect intersection = CGRectIntersection(viewFrame, view.window.frame);
-
-    CGFloat intersectionArea = intersection.size.width * intersection.size.height;
-    CGFloat viewArea = view.frame.size.width * view.frame.size.height;
-    CGFloat percentVisible = intersectionArea/viewArea;
+    CGFloat percentVisible = [view percentVisible];
 
     CGFloat secondsVisible = [timer.userInfo[@"secondsVisible"] floatValue];
 

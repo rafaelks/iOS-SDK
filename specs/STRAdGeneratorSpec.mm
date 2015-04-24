@@ -13,6 +13,7 @@
 #import "STRAdPlacement.h"
 #import "STRAdRenderer.h"
 #import "STRDateProvider.h"
+#import "UIView+Visible.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -222,7 +223,7 @@ describe(@"STRAdGenerator", ^{
 
                 context(@"when ad is >= 50% visible", ^{
                     beforeEach(^{
-                        view.frame = CGRectMake(0, 0, 100, 100);
+                        view stub_method(@selector(percentVisible)).and_return(.50);
                     });
 
                     it(@"increments seconds visible", ^{
@@ -260,7 +261,7 @@ describe(@"STRAdGenerator", ^{
                         beforeEach(^{
                             timer.userInfo[@"secondsVisible"] = @0.5;
 
-                            view.frame = CGRectMake(1000, 1000, 100, 100);
+                            view stub_method(@selector(percentVisible)).again().and_return(0.0);
                         });
 
                         it(@"resets the secondsVisible", ^{
@@ -271,7 +272,7 @@ describe(@"STRAdGenerator", ^{
 
                 context(@"when the ad is 25% visible", ^{
                     beforeEach(^{
-                        view.frame = CGRectMake(0, 360, 320, 480);
+                        view stub_method(@selector(percentVisible)).and_return(0.25);
                     });
 
                     it(@"does not set secondsVisible", ^{
@@ -290,7 +291,7 @@ describe(@"STRAdGenerator", ^{
 
                 context(@"when ad is 0% visible", ^{
                     beforeEach(^{
-                        view.frame = CGRectMake(0, 481, 320, 500);
+                        view stub_method(@selector(percentVisible)).and_return(0.0);
                     });
 
                     it(@"does not set secondsVisible", ^{
@@ -308,7 +309,7 @@ describe(@"STRAdGenerator", ^{
 
                 context(@"after the ad is removed from its superview", ^{
                     beforeEach(^{
-                        view.frame = CGRectMake(0, 481, 320, 500);
+                        view stub_method(@selector(percentVisible)).and_return(25.0);
                         [view removeFromSuperview];
                     });
 
