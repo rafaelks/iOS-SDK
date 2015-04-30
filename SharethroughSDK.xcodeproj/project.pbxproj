@@ -182,8 +182,6 @@
 		B229F0A71A2E5B420094A8B3 /* instagram_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */; };
 		B245C3BE1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */; };
 		B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
-		B262B0061AE8009F00E4C72E /* Sharethrough_SDK_Integration.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B262B0051AE8009F00E4C72E /* Sharethrough_SDK_Integration.h */; };
-		B262B0081AE8009F00E4C72E /* Sharethrough_SDK_Integration.m in Sources */ = {isa = PBXBuildFile; fileRef = B262B0071AE8009F00E4C72E /* Sharethrough_SDK_Integration.m */; };
 		B26D22E81ACF3A210072ACDD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */; };
 		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
@@ -361,7 +359,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				B262B0061AE8009F00E4C72E /* Sharethrough_SDK_Integration.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,9 +572,6 @@
 		B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = instagram_sample_thumbnail.c; sourceTree = "<group>"; };
 		B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKDFPSpec.mm; sourceTree = "<group>"; };
 		B262B0031AE8009F00E4C72E /* libSharethrough-SDK-Integration.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK-Integration.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B262B0051AE8009F00E4C72E /* Sharethrough_SDK_Integration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sharethrough_SDK_Integration.h; sourceTree = "<group>"; };
-		B262B0071AE8009F00E4C72E /* Sharethrough_SDK_Integration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sharethrough_SDK_Integration.m; sourceTree = "<group>"; };
-		B262B0131AE8009F00E4C72E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ThirdParty/GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
@@ -976,8 +970,6 @@
 				AE022DAB188DBB1400D02568 /* Default-568h@2x.png */,
 				AE8ED3E81885ADF00004AB32 /* SharethroughSDK */,
 				AE2246871886138F00626A29 /* specs */,
-				B262B0041AE8009F00E4C72E /* Sharethrough-SDK-Integration */,
-				B262B0111AE8009F00E4C72E /* Sharethrough-SDK-IntegrationTests */,
 				AE8ED3E51885ADF00004AB32 /* Frameworks */,
 				AE8ED3E41885ADF00004AB32 /* Products */,
 				1AB46447E4FA9408D9F6C96D /* Pods */,
@@ -1095,31 +1087,6 @@
 				B2F29E6B1A98086600313C61 /* link_thumbnail.c */,
 			);
 			path = "Static Resources";
-			sourceTree = "<group>";
-		};
-		B262B0041AE8009F00E4C72E /* Sharethrough-SDK-Integration */ = {
-			isa = PBXGroup;
-			children = (
-				B262B0051AE8009F00E4C72E /* Sharethrough_SDK_Integration.h */,
-				B262B0071AE8009F00E4C72E /* Sharethrough_SDK_Integration.m */,
-			);
-			path = "Sharethrough-SDK-Integration";
-			sourceTree = "<group>";
-		};
-		B262B0111AE8009F00E4C72E /* Sharethrough-SDK-IntegrationTests */ = {
-			isa = PBXGroup;
-			children = (
-				B262B0121AE8009F00E4C72E /* Supporting Files */,
-			);
-			path = "Sharethrough-SDK-IntegrationTests";
-			sourceTree = "<group>";
-		};
-		B262B0121AE8009F00E4C72E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B262B0131AE8009F00E4C72E /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		E84FB58619BF76EF0034A41E /* DFP */ = {
@@ -1676,7 +1643,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B262B0081AE8009F00E4C72E /* Sharethrough_SDK_Integration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

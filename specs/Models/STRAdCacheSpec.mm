@@ -35,7 +35,48 @@ describe(@"STRAdCache", ^{
         });
     });
 
-    xdescribe(@"-saveAds:forPlacement:andInitializeAtIndex:", ^{
+    describe(@"-saveAds:forPlacement:andInitializeAtIndex:", ^{
+        __block NSMutableArray *creatives;
+        __block STRAdvertisement *creative;
+        __block STRAdPlacement *placement;
+
+        beforeEach(^{
+            creative = [[STRAdvertisement alloc] init];
+            creative.creativeKey = @"ckey-fake";
+            creative.placementKey = @"pkey-fake";
+
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"pkey-fake";
+            placement.adIndex = 0;
+
+            creatives = [[NSMutableArray alloc] initWithArray:@[creative]];
+        });
+
+        describe(@"when initializing at the placement index", ^{
+            it(@"has an ad ready for the placement index that cached it", ^{
+                [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:YES];
+                [cache isAdAvailableForPlacement:placement] should be_truthy;
+            });
+
+            it(@"does not have an ad for a different placement index", ^{
+                [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:YES];
+                placement.adIndex = 2;
+                [cache isAdAvailableForPlacement:placement] should be_falsy;
+            });
+        });
+
+        describe(@"when not initializing at the placement index", ^{
+            it(@"has an ad ready for the placement index that cached it", ^{
+                [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:NO];
+                [cache isAdAvailableForPlacement:placement] should be_truthy;
+            });
+
+            it(@"has an ad for a different placement index", ^{
+                [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:NO];
+                placement.adIndex = 2;
+                [cache isAdAvailableForPlacement:placement] should be_truthy;
+            });
+        });
     });
 
     describe(@"-fetchCachedAdForPlacement:", ^{

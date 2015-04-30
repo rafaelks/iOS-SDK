@@ -69,12 +69,12 @@
         }
         [self.cachedCreatives setObject:cachedCreativesQueue forKey:placement.placementKey];
     }
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
+    if (indexToCreativeMap == nil) {
+        indexToCreativeMap = [[NSMutableDictionary alloc] init];
+        [self.cachedIndexToCreativeMaps setObject:indexToCreativeMap forKey:placement.placementKey];
+    }
     if (initializeIndex) {
-        NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
-        if (indexToCreativeMap == nil) {
-            indexToCreativeMap = [[NSMutableDictionary alloc] init];
-            [self.cachedIndexToCreativeMaps setObject:indexToCreativeMap forKey:placement.placementKey];
-        }
         STRAdvertisement *ad = [cachedCreativesQueue dequeue];
         [indexToCreativeMap setObject:ad forKey:[NSNumber numberWithLong:placement.adIndex]];
     }
