@@ -137,13 +137,13 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
     UIView *view = tapRecognizer.view;
-    if ([self.ad.action isEqualToString:STRClickoutAd] ||
-        [self.ad.action isEqualToString:STRInstagramAd] ||
-        [self.ad.action isEqualToString:STRPinterestAd]) {
-
-        [self.beaconService fireClickForAd:self.ad adSize:view.frame.size];
-    } else {
+    if ([self.ad.action isEqualToString:STRYouTubeAd] ||
+        [self.ad.action isEqualToString:STRHostedVideoAd] ||
+        [self.ad.action isEqualToString:STRVineAd])
+    {
         [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];
+    } else {
+        [self.beaconService fireClickForAd:self.ad adSize:view.frame.size];
     }
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay  forPlacementWithStatus:self.ad.placementStatus];
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick  forPlacementWithStatus:self.ad.placementStatus];

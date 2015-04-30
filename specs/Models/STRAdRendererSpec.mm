@@ -52,6 +52,7 @@ describe(@"STRAdRenderer", ^{
         ad.title = @"Meet Porter. He's a Dog.";
         ad.advertiser = @"Brand X";
         ad.placementStatus = @"live";
+        ad.action = STRYouTubeAd;
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
         ad.thirdPartyBeaconsForImpression = @[@"//google.com?fakeParam=[timestamp]"];
         ad.thirdPartyBeaconsForVisibility = @[@"//google.com?fakeParam=[timestamp]"];
