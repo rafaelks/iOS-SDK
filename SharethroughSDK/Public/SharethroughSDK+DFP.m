@@ -47,6 +47,10 @@
         [self.injector getInstance:[STRDFPAdGenerator class]];
         STRDFPManager *dfpManager = [STRDFPManager sharedInstance];
         dfpManager.injector = self.injector;
+        NSString *model = [[UIDevice currentDevice] model];
+        if ([model hasSuffix:@"Simulator"]) {
+            NSLog(@"WARNING using %@ is not supported for DFP because only test ads are available", model);
+        }
     }
     return self;
 }
