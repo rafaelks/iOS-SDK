@@ -33,6 +33,7 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
 
         adGenerator = [STRFakeAdGenerator new];
         spy_on(adGenerator);
+        adGenerator stub_method(@selector(numberOfAdsForPlacement:)).and_return((long)1);
         [injector bind:[STRAdGenerator class] toInstance:adGenerator];
 
         collectionViewAdGenerator = [injector getInstance:[STRGridlikeViewAdGenerator class]];

@@ -97,6 +97,12 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     [gridlikeView setDataSource:self.dataSourceProxy];
 }
 
+#pragma mark - State Information
+- (NSInteger)numberOfAdsInGridLikeView {
+    return self.dataSourceProxy.numAdsInView;
+}
+
+
 #pragma mark - private
 
 - (void)validateGridlikeView:(id)gridlikeView {

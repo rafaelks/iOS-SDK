@@ -19,6 +19,7 @@
 
 @property (copy, nonatomic, readonly) NSString *adCellReuseIdentifier;
 @property (copy, nonatomic, readonly) NSString *placementKey;
+@property (assign, nonatomic) NSInteger numAdsInView;
 @property (weak, nonatomic, readonly) UIViewController *presentingViewController;
 @property (weak, nonatomic, readonly) STRInjector *injector;
 

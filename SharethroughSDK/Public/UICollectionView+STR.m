@@ -20,7 +20,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
     STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (adGenerator) {
         STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-        NSIndexPath *trueIndexPath = [adjuster trueIndexPath:indexPath];
+        NSIndexPath *trueIndexPath = [adjuster trueIndexPath:indexPath givenNumberOfAds:[adGenerator numberOfAdsInGridLikeView]];
 
         return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:trueIndexPath];
     } else {

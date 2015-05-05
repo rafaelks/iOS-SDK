@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../Times Reader/Times Reader.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:../iOS-Sample-App/Sharethrough-Sample-App.xcodeproj">
    </FileRef>
    <FileRef

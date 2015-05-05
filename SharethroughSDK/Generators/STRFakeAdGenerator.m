@@ -159,7 +159,7 @@ presentingViewController:(UIViewController *)presentingViewController
     return deferred.promise;
 }
 
-- (NSUInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement{
+- (NSInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement{
     return 1;
 }
 

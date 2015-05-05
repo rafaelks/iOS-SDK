@@ -106,20 +106,19 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
             beforeEach(^{
                 [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
             });
-            
+
             it(@"inserts a row into the first section", ^{
                 [collectionView numberOfItemsInSection:0] should equal(2);
                 [collectionView numberOfItemsInSection:1] should equal(1);
             });
         });
-        
+
         describe(@"when an ad is not loaded", ^{
             it(@"doesn't insert any rows in any sections", ^{
                 [collectionView numberOfItemsInSection:0] should equal(1);
                 [collectionView numberOfItemsInSection:1] should equal(1);
             });
         });
-        
     });
     
     describe(@"when the data source only implements required methods", ^{

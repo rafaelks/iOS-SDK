@@ -40,7 +40,7 @@
         if (placementKey == nil || [placementKey length] < 8) {
             [NSException raise:@"Invalid placementKey" format:@"placementKey of %@ is invalid. Must not be nil or less than 8 characters.", placementKey];
         }
-
+        self.numAdsInView = 0;
         self.adCellReuseIdentifier = adCellReuseIdentifier;
         self.placementKey = placementKey;
         self.presentingViewController = presentingViewController;
@@ -87,16 +87,19 @@
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
 
-    NSInteger numberofAds = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
-    return  numberofContentRows + numberofAds;
+    self.numAdsInView = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
+    return  numberofContentRows + self.numAdsInView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        return [self adCellForTableView:tableView atIndexPath:indexPath];
+        STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
+        if ([adGenerator numberOfAdsForPlacement:self.placement] > 0) {
+            return [self adCellForTableView:tableView atIndexPath:indexPath];
+        }
     }
 
-    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
+    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath givenNumberOfAds:self.numAdsInView];
     return [self.originalTVDataSource tableView:tableView cellForRowAtIndexPath:externalIndexPath];
 }
 
@@ -105,8 +108,8 @@
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     NSInteger numberofContentRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
 
-    NSInteger numberofAds = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
-    return  numberofContentRows + numberofAds;
+    self.numAdsInView = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
+    return  numberofContentRows + self.numAdsInView;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -114,7 +117,7 @@
         return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
     }
 
-    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath];
+    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath givenNumberOfAds:self.numAdsInView];
     return [self.originalCVDataSource collectionView:collectionView cellForItemAtIndexPath:externalIndexPath];
 }
 

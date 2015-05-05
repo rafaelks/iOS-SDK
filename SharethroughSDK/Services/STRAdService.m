@@ -101,7 +101,7 @@ const NSInteger kRequestInProgress = 202;
     return [self.adCache isAdAvailableForPlacement:placement];
 }
 
-- (NSUInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement {
+- (NSInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement {
     return [self.adCache numberOfAdsAvailableForPlacement:placement];
 }
 

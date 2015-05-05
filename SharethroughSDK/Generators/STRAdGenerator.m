@@ -87,7 +87,7 @@
     return [self.adService fetchAdForPlacement:placement creativeKey:creativeKey];
 }
 
-- (NSUInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement {
+- (NSInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement {
     return [self.adService numberOfAdsForPlacement:placement];
 }
 

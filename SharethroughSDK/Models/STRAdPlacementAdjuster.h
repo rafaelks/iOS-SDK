@@ -23,8 +23,10 @@
 - (void)setAdLoaded:(BOOL)adLoaded;
 
 - (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath givenNumberOfAds:(NSInteger)numberOfAds;
 - (NSArray *)externalIndexPaths:(NSArray *)indexPaths;
 - (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath givenNumberOfAds:(NSInteger)numberOfAds;
 - (NSArray *)trueIndexPaths:(NSArray *)indexPaths;
 - (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows;
 - (NSInteger)getLastCalculatedNumberOfAdsInSection:(NSInteger)section;

@@ -81,6 +81,23 @@
     return [NSIndexPath indexPathForRow:indexPath.row - adjustment inSection:indexPath.section];
 }
 
+- (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath givenNumberOfAds:(NSInteger)numberOfAds {
+    if (indexPath == nil){
+        return nil;
+    }
+
+    if (indexPath.section != self.adSection || !self.adLoaded) {
+        return indexPath;
+    }
+    NSInteger adjustment = 0;
+    if ((indexPath.row - self.articlesBeforeFirstAd) > 0) {
+        NSInteger numberOfAdsPossiblyAhead = 1 + (indexPath.row - self.articlesBeforeFirstAd) / (self.articlesBetweenAds + 1);
+        adjustment = MIN(numberOfAdsPossiblyAhead, numberOfAds);
+    }
+    return [NSIndexPath indexPathForRow:indexPath.row - adjustment inSection:indexPath.section];
+}
+
+
 - (NSArray *)externalIndexPaths:(NSArray *)indexPaths {
     NSMutableArray *externalIndexPaths = [NSMutableArray arrayWithCapacity:[indexPaths count]];
     for (NSIndexPath *indexPath in indexPaths) {
@@ -104,6 +121,22 @@
     NSInteger adjustment = 0;
     if ((indexPath.row - self.articlesBeforeFirstAd) >= 0) {
         adjustment = 1 + (indexPath.row - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
+    }
+    return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];
+}
+
+- (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath givenNumberOfAds:(NSInteger)numberOfAds{
+    if (indexPath == nil) {
+        return nil;
+    }
+
+    if (indexPath.section != self.adSection || !self.adLoaded) {
+        return indexPath;
+    }
+    NSInteger adjustment = 0;
+    if ((indexPath.row - self.articlesBeforeFirstAd) >= 0) {
+        NSInteger numberOfAdsPossiblyAhead = 1 + (indexPath.row - self.articlesBeforeFirstAd) / (self.articlesBetweenAds + 1);
+        adjustment = MIN(numberOfAdsPossiblyAhead, numberOfAds);
     }
     return [NSIndexPath indexPathForRow:indexPath.row + adjustment inSection:indexPath.section];
 }
