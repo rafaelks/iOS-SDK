@@ -49,11 +49,9 @@
                                                                  DFPDeferred:deferred];
 
         [deferred.promise then:^id(id value) {
-            self.adjuster.adLoaded = YES;
             [self.gridlikeView reloadData];
             return self.adjuster;
         } error:^id(NSError *error) {
-            self.adjuster.adLoaded = NO;
             return self.adjuster;
         }];
 

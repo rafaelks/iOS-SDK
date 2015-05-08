@@ -10,6 +10,7 @@
 #import "STRTableViewCell.h"
 #import "STRFakeAdGenerator.h"
 #import "STRGridlikeViewDataSourceProxy.h"
+#import "STRAdCache.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -50,7 +51,9 @@ describe(@"UITableView+STR", ^{
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
     __block STRGridlikeViewAdGenerator *tableViewAdGenerator;
     __block STRGridlikeViewDataSourceProxy *dataSourceProxy;
-    
+    __block NSString *fakePlacementKey;
+    __block STRAdCache *fakeAdCache;
+
     beforeEach(^{
         tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
         spy_on(tableView);
@@ -63,8 +66,10 @@ describe(@"UITableView+STR", ^{
         tableView.delegate = delegate;
         
         [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCellReuseIdentifier"];
-        
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:100];
+
+        fakePlacementKey = @"fake-placement-key";
+        fakeAdCache = nice_fake_for([STRAdCache class]);
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
         spy_on(adPlacementAdjuster);
         
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -72,7 +77,7 @@ describe(@"UITableView+STR", ^{
         [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
         
         spy_on([STRAdPlacementAdjuster class]);
-        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:)).and_return(adPlacementAdjuster);
+        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:placementKey:adCache:)).and_return(adPlacementAdjuster);
         
         dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCellReuseIdentifier"
                                                                                    placementKey:@"placementKey"
@@ -98,7 +103,10 @@ describe(@"UITableView+STR", ^{
     
     describe(@"when an ad is loaded", ^{
         beforeEach(^{
-            adPlacementAdjuster.adLoaded = YES;
+            fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
+            fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
+            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+            [tableView reloadData];
         });
         
         describe(@"-str_insertRowsAtIndexPaths:withAnimation:", ^{
@@ -640,7 +648,6 @@ describe(@"UITableView+STR", ^{
     describe(@"when an ad is not loaded", ^{
         
         beforeEach(^{
-            adPlacementAdjuster.adLoaded = NO;
             [tableView reloadData];
         });
         

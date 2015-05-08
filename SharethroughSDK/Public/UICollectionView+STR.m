@@ -20,7 +20,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
     STRGridlikeViewAdGenerator *adGenerator = objc_getAssociatedObject(self, STRGridlikeViewAdGeneratorKey);
     if (adGenerator) {
         STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-        NSIndexPath *trueIndexPath = [adjuster trueIndexPath:indexPath givenNumberOfAds:[adGenerator numberOfAdsInGridLikeView]];
+        NSIndexPath *trueIndexPath = [adjuster indexPathIncludingAds:indexPath];
 
         return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:trueIndexPath];
     } else {
@@ -31,7 +31,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 
 - (void)str_insertItemsAtIndexPaths:(NSArray *)indexPaths {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSArray *trueIndexPaths = [adjuster trueIndexPaths:indexPaths];
+    NSArray *trueIndexPaths = [adjuster indexPathsIncludingAds:indexPaths];
     [self insertItemsAtIndexPaths:trueIndexPaths];
 }
 
@@ -44,7 +44,7 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 - (void)str_deleteItemsAtIndexPaths:(NSArray *)indexPaths {
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
 
-    NSArray *trueIndexPaths = [adjuster trueIndexPaths:indexPaths];
+    NSArray *trueIndexPaths = [adjuster indexPathsIncludingAds:indexPaths];
     [self deleteItemsAtIndexPaths:trueIndexPaths];
 }
 
@@ -69,22 +69,21 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 
 - (UICollectionViewCell *)str_cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    NSIndexPath *trueIndexPath = [adjuster trueIndexPath:indexPath];
+    NSIndexPath *trueIndexPath = [adjuster indexPathIncludingAds:indexPath];
     return [self cellForItemAtIndexPath:trueIndexPath];
 }
 
 - (NSArray *)str_indexPathsForVisibleItems {
-    STRAdPlacementAdjuster *adjuster = [self str_ensureAdjuster];
-    return [adjuster externalIndexPaths:[self indexPathsForVisibleItems]];
+    return [[self str_ensureAdjuster] indexPathsWithoutAds:[self indexPathsForVisibleItems]];
 }
 
 - (NSIndexPath *)str_indexPathForCell:(UICollectionViewCell *)cell {
-    return [[self str_ensureAdjuster] externalIndexPath:[self indexPathForCell:cell]];
+    return [[self str_ensureAdjuster] indexPathWithoutAds:[self indexPathForCell:cell]];
 }
 
 - (NSIndexPath *)str_indexPathForItemAtPoint:(CGPoint)point {
     NSIndexPath *trueIndexPath = [self indexPathForItemAtPoint:point];
-    return [[self str_ensureAdjuster] externalIndexPath:trueIndexPath];
+    return [[self str_ensureAdjuster] indexPathWithoutAds:trueIndexPath];
 }
 
 - (void)str_reloadData {
@@ -96,26 +95,26 @@ extern const char * const STRGridlikeViewAdGeneratorKey;
 }
 
 - (void)str_reloadItemsAtIndexPaths:(NSArray *)indexPaths {
-    [self reloadItemsAtIndexPaths:[[self str_ensureAdjuster] trueIndexPaths:indexPaths]];
+    [self reloadItemsAtIndexPaths:[[self str_ensureAdjuster] indexPathsIncludingAds:indexPaths]];
 
 }
 
 - (void)str_scrollToItemAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated {
-    [self scrollToItemAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] atScrollPosition:scrollPosition animated:animated];
+    [self scrollToItemAtIndexPath:[[self str_ensureAdjuster] indexPathIncludingAds:indexPath] atScrollPosition:scrollPosition animated:animated];
 }
 
 - (NSArray *)str_indexPathsForSelectedItems {
-    return [[self str_ensureAdjuster] externalIndexPaths:[self indexPathsForSelectedItems]];
+    return [[self str_ensureAdjuster] indexPathsWithoutAds:[self indexPathsForSelectedItems]];
 }
 
 - (void)str_selectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UICollectionViewScrollPosition)scrollPosition {
-    NSIndexPath *adjustedIndexPath = [[self str_ensureAdjuster] trueIndexPath:indexPath];
+    NSIndexPath *adjustedIndexPath = [[self str_ensureAdjuster] indexPathIncludingAds:indexPath];
 
     [self selectItemAtIndexPath:adjustedIndexPath animated:animated scrollPosition:scrollPosition];
 }
 
 -(void)str_deselectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
-    [self deselectItemAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] animated:animated];
+    [self deselectItemAtIndexPath:[[self str_ensureAdjuster] indexPathIncludingAds:indexPath] animated:animated];
 }
 
 - (void)str_setDataSource:(id<UICollectionViewDataSource>)dataSource {

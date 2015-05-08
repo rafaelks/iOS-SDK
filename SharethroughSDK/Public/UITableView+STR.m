@@ -16,13 +16,13 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 @implementation UITableView (STR)
 
 - (void)str_insertRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
-    NSArray *indexPathsForInsertion = [[self str_ensureAdjuster] trueIndexPaths:indexPaths];
+    NSArray *indexPathsForInsertion = [[self str_ensureAdjuster] indexPathsIncludingAds:indexPaths];
     [self insertRowsAtIndexPaths:indexPathsForInsertion withRowAnimation:rowAnimation];
 }
 
 
 - (void)str_deleteRowsAtIndexPaths:(NSArray *)indexPaths withAnimation:(UITableViewRowAnimation)rowAnimation {
-    NSArray *indexPathsForDeletion = [[self str_ensureAdjuster] trueIndexPaths:indexPaths];
+    NSArray *indexPathsForDeletion = [[self str_ensureAdjuster] indexPathsIncludingAds:indexPaths];
     [self deleteRowsAtIndexPaths:indexPathsForDeletion withRowAnimation:rowAnimation];
 }
 
@@ -51,7 +51,7 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 -(void)str_reloadRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
-    [self reloadRowsAtIndexPaths:[[self str_ensureAdjuster] trueIndexPaths:indexPaths] withRowAnimation:animation];
+    [self reloadRowsAtIndexPaths:[[self str_ensureAdjuster] indexPathsIncludingAds:indexPaths] withRowAnimation:animation];
 }
 
 - (void)str_reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation {
@@ -75,19 +75,19 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 - (UITableViewCell *)str_cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self cellForRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath]];
+    return [self cellForRowAtIndexPath:[[self str_ensureAdjuster] indexPathIncludingAds:indexPath]];
 }
 
 - (NSIndexPath *)str_indexPathForCell:(UITableViewCell *)cell {
-    return [[self str_ensureAdjuster] externalIndexPath:[self indexPathForCell:cell]];
+    return [[self str_ensureAdjuster] indexPathWithoutAds:[self indexPathForCell:cell]];
 }
 
 - (NSIndexPath *)str_indexPathForRowAtPoint:(CGPoint)point {
-    return [[self str_ensureAdjuster] externalIndexPath:[self indexPathForRowAtPoint:point]];
+    return [[self str_ensureAdjuster] indexPathWithoutAds:[self indexPathForRowAtPoint:point]];
 }
 
 - (NSArray *)str_indexPathsForRowsInRect:(CGRect)rect {
-    return [[self str_ensureAdjuster] externalIndexPaths:[self indexPathsForRowsInRect:rect]];
+    return [[self str_ensureAdjuster] indexPathsWithoutAds:[self indexPathsForRowsInRect:rect]];
 }
 
 - (NSArray *)str_visibleCellsWithoutAds {
@@ -104,11 +104,11 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 - (NSArray *)str_indexPathsForVisibleRows {
-    return [[self str_ensureAdjuster] externalIndexPaths:[self indexPathsForVisibleRows]];
+    return [[self str_ensureAdjuster] indexPathsWithoutAds:[self indexPathsForVisibleRows]];
 }
 
 - (CGRect)str_rectForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self rectForRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath]];
+    return [self rectForRowAtIndexPath:[[self str_ensureAdjuster] indexPathIncludingAds:indexPath]];
 }
 
 - (NSInteger)str_numberOfRowsInSection:(NSInteger)section {
@@ -116,23 +116,23 @@ extern const char *const STRGridlikeViewAdGeneratorKey;
 }
 
 - (NSIndexPath *)str_indexPathForSelectedRow {
-    return [[self str_ensureAdjuster] externalIndexPath:[self indexPathForSelectedRow]];
+    return [[self str_ensureAdjuster] indexPathWithoutAds:[self indexPathForSelectedRow]];
 }
 
 - (NSArray *)str_indexPathsForSelectedRows {
-    return [[self str_ensureAdjuster] externalIndexPaths:[self indexPathsForSelectedRows]];
+    return [[self str_ensureAdjuster] indexPathsWithoutAds:[self indexPathsForSelectedRows]];
 }
 
 - (void)str_selectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UITableViewScrollPosition)scrollPosition {
-    [self selectRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] animated:animated scrollPosition:scrollPosition];
+    [self selectRowAtIndexPath:[[self str_ensureAdjuster] indexPathIncludingAds:indexPath] animated:animated scrollPosition:scrollPosition];
 }
 
 -(void)str_deselectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
-    [self deselectRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] animated:animated];
+    [self deselectRowAtIndexPath:[[self str_ensureAdjuster] indexPathIncludingAds:indexPath] animated:animated];
 }
 
 - (void)str_scrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated {
-    [self scrollToRowAtIndexPath:[[self str_ensureAdjuster] trueIndexPath:indexPath] atScrollPosition:scrollPosition animated:animated];
+    [self scrollToRowAtIndexPath:[[self str_ensureAdjuster] indexPathIncludingAds:indexPath] atScrollPosition:scrollPosition animated:animated];
 }
 
 #pragma mark - Private

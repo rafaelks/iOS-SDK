@@ -68,11 +68,9 @@
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     STRPromise *adPromise = [adGenerator prefetchAdForPlacement:self.placement];
     [adPromise then:^id(id value) {
-        self.adjuster.adLoaded = YES;
         [self.gridlikeView reloadData];
         return self.adjuster;
     } error:^id(NSError *error) {
-        self.adjuster.adLoaded = NO;
         return self.adjuster;
     }];
 }
@@ -84,31 +82,26 @@
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
 
-    self.numAdsInView = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
+    self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
     return  numberofContentRows + self.numAdsInView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
-        STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
-        if ([adGenerator numberOfAdsForPlacement:self.placement] > 0) {
-            return [self adCellForTableView:tableView atIndexPath:indexPath];
-        }
+        return [self adCellForTableView:tableView atIndexPath:indexPath];
     }
 
-    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath givenNumberOfAds:self.numAdsInView];
+    NSIndexPath *externalIndexPath = [self.adjuster indexPathWithoutAds:indexPath];
     return [self.originalTVDataSource tableView:tableView cellForRowAtIndexPath:externalIndexPath];
 }
 
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     NSInteger numberofContentRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
 
-    self.numAdsInView = MIN([self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows], [adGenerator numberOfAdsForPlacement:self.placement]);
+    self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
     return  numberofContentRows + self.numAdsInView;
 }
 
@@ -117,7 +110,7 @@
         return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
     }
 
-    NSIndexPath *externalIndexPath = [self.adjuster externalIndexPath:indexPath givenNumberOfAds:self.numAdsInView];
+    NSIndexPath *externalIndexPath = [self.adjuster indexPathWithoutAds:indexPath];
     return [self.originalCVDataSource collectionView:collectionView cellForItemAtIndexPath:externalIndexPath];
 }
 

@@ -25,6 +25,4 @@ extern const NSInteger kRequestInProgress;
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement creativeKey:(NSString *)creativeKey;
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement;
-- (NSInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement;
-
 @end

@@ -8,27 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
+@class STRAdCache;
+
 @interface STRAdPlacementAdjuster : NSObject
 
-@property (nonatomic, readonly) BOOL adLoaded;
 @property (nonatomic) NSInteger adSection;
 @property (nonatomic) NSInteger articlesBeforeFirstAd;
 @property (nonatomic) NSInteger articlesBetweenAds;
+@property (nonatomic, strong) NSString *placementKey;
 
 + (instancetype)adjusterInSection:(NSInteger)section
             articlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd
-               articlesBetweenAds:(NSInteger)articlesBetweenAds;
+               articlesBetweenAds:(NSInteger)articlesBetweenAds
+                     placementKey:(NSString *)placementKey
+                          adCache:(STRAdCache *)adCache;
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
-- (void)setAdLoaded:(BOOL)adLoaded;
-
-- (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)externalIndexPath:(NSIndexPath *)indexPath givenNumberOfAds:(NSInteger)numberOfAds;
-- (NSArray *)externalIndexPaths:(NSArray *)indexPaths;
-- (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)trueIndexPath:(NSIndexPath *)indexPath givenNumberOfAds:(NSInteger)numberOfAds;
-- (NSArray *)trueIndexPaths:(NSArray *)indexPaths;
 - (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows;
+
+- (NSIndexPath *)indexPathWithoutAds:(NSIndexPath *)indexPath;
+- (NSArray *)indexPathsWithoutAds:(NSArray *)indexPaths;
+- (NSIndexPath *)indexPathIncludingAds:(NSIndexPath *)indexPath;
+- (NSArray *)indexPathsIncludingAds:(NSArray *)indexPaths;
 - (NSInteger)getLastCalculatedNumberOfAdsInSection:(NSInteger)section;
 
 - (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath;

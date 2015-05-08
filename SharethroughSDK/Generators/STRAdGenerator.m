@@ -87,10 +87,6 @@
     return [self.adService fetchAdForPlacement:placement creativeKey:creativeKey];
 }
 
-- (NSInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement {
-    return [self.adService numberOfAdsForPlacement:placement];
-}
-
 #pragma mark - Private
 
 - (void)addSpinnerToView:(UIView *)view {

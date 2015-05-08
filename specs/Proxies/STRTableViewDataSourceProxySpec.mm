@@ -5,6 +5,7 @@
 #import "STRFakeAdGenerator.h"
 #import "STRFullTableViewDataSource.h"
 #import "STRTableViewCell.h"
+#import "STRAdCache.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -18,10 +19,14 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
     __block UIViewController *presentingViewController;
     __block STRInjector *injector;
     __block id<UITableViewDataSource> originalDataSource;
+    __block NSString *fakePlacementKey;
+    __block STRAdCache *fakeAdCache;
     
     STRGridlikeViewDataSourceProxy *(^proxyWithDataSource)(id<UITableViewDataSource> dataSource) = ^STRGridlikeViewDataSourceProxy *(id<UITableViewDataSource> dataSource) {
-        
-        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
+
+        fakePlacementKey = @"fake-placement-key";
+        fakeAdCache = nice_fake_for([STRAdCache class]);
+        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
 
         STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
         dataSourceProxy.originalDataSource = dataSource;
@@ -70,6 +75,9 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
         
         describe(@"when an ad is loaded", ^{
             beforeEach(^{
+                fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
+                fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
+                fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
                 [proxy prefetchAdForGridLikeView:tableView atIndex:1];
             });
             
@@ -113,6 +121,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
         describe(@"and the original data source reports there is more than one section", ^{
             beforeEach(^{
                 [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
+                fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
                 [proxy prefetchAdForGridLikeView:tableView atIndex:1];
                 [tableView layoutIfNeeded];
             });
@@ -128,6 +137,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
     describe(@"placing an ad in the table view when the reuse identifier was badly registered", ^{
         it(@"throws an exception if the sdk user does not register the identifier", ^{
             expect(^{
+                fakeAdCache stub_method(@selector(isAdAtIndexPath:)).and_return(YES);
                 [proxy prefetchAdForGridLikeView:tableView atIndex:1];
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
@@ -137,6 +147,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"adCell"];
             
             expect(^{
+                fakeAdCache stub_method(@selector(isAdAtIndexPath:)).and_return(YES);
                 [proxy prefetchAdForGridLikeView:tableView atIndex:1];
                 [tableView layoutIfNeeded];
             }).to(raise_exception());

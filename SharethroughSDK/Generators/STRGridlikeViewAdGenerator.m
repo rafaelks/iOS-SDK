@@ -10,6 +10,7 @@
 #import "SharethroughSDK.h"
 #import "STRInjector.h"
 #import "STRAdGenerator.h"
+#import "STRAdCache.h"
 #import <objc/runtime.h>
 #import "STRIndexPathDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
@@ -58,7 +59,11 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
         originalDelegate = oldGenerator.delegateProxy.originalDelegate;
     }
 
-    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:adSection articlesBeforeFirstAd:articlesBeforeFirstAd articlesBetweenAds:articlesBetweenAds];
+    STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:adSection
+                                                           articlesBeforeFirstAd:articlesBeforeFirstAd
+                                                              articlesBetweenAds:articlesBetweenAds
+                                                                    placementKey:placementKey
+                                                                         adCache:[self.injector getInstance:[STRAdCache class]]];
     self.adjuster = adjuster;
 
     self.dataSourceProxy = dataSourceProxy;

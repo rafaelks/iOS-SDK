@@ -2,7 +2,7 @@
 #import "STRFullTableViewDelegate.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRTableViewDelegate.h"
-
+#import "STRAdCache.h"
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
@@ -13,21 +13,27 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
     __block STRFullTableViewDelegate *originalDelegate;
     __block UITableView *tableView;
     __block STRAdPlacementAdjuster *adPlacementAdjuster;
-    
+    __block NSString *fakePlacementKey;
+    __block STRAdCache *fakeAdCache;
+
     beforeEach(^{
         originalDelegate = [STRFullTableViewDelegate new];
         spy_on(originalDelegate);
         tableView = nice_fake_for([UITableView class]);
         tableView stub_method(@selector(numberOfRowsInSection:)).with(0).and_return((long)2);
-        
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
+
+        fakePlacementKey = @"fake-placement-key";
+        fakeAdCache = nice_fake_for([STRAdCache class]);
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
         
         proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adSize:CGSizeMake(0, 51.0)];
     });
     
     describe(@"when an ad is loaded", ^{
         beforeEach(^{
-            adPlacementAdjuster.adLoaded = YES;
+            fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
+            fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
+            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
         });
         
         context(@"when using a complete delegate", ^{
@@ -128,49 +134,49 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
             context(@"when the index path is not the ad cell", ^{
                 it(@"passes through tableView:accessoryButtonTappedForRowWithIndexPath: ", ^{
                     [proxy tableView:tableView accessoryButtonTappedForRowWithIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didSelectRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didSelectRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didDeselectRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didDeselectRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:willBeginEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView willBeginEditingRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:willBeginEditingRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didEndEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didEndEditingRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didEndEditingRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didHighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didHighlightRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didHighlightRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didUnhighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didUnhighlightRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didUnhighlightRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
@@ -180,49 +186,49 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 it(@"prevents original delegate from receiving tableView:accessoryButtonTappedForRowWithIndexPath: ", ^{
                     [proxy tableView:tableView accessoryButtonTappedForRowWithIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:));
                 });
                 
                 it(@"prevents original delegate from receiving -tableView:didSelectRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:didSelectRowAtIndexPath:));
                 });
                 
                 it(@"prevents original delegate from receiving -tableView:didDeselectRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:didDeselectRowAtIndexPath:));
                 });
                 
                 it(@"prevents original delegate from receiving -tableView:willBeginEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView willBeginEditingRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:willBeginEditingRowAtIndexPath:));
                 });
                 
                 it(@"prevents original delegate from receiving -tableView:didEndEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didEndEditingRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:didEndEditingRowAtIndexPath:));
                 });
                 
                 it(@"prevents original delegate from receiving -tableView:didHighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didHighlightRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:didHighlightRowAtIndexPath:));
                 });
                 
                 it(@"prevents original delegate from receiving -tableView:didUnhighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didUnhighlightRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:didUnhighlightRowAtIndexPath:));
                 });
             });
@@ -239,21 +245,21 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
             context(@"when the index path is not the ad cell", ^{
                 it(@"passes through -tableView:willDisplayCell:forRowAtIndexPath: ", ^{
                     [proxy tableView:tableView willDisplayCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:willDisplayCell:forRowAtIndexPath:))
                     .with(tableView, tableCell, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didEndDisplayingCell:forRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didEndDisplayingCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:))
                     .with(tableView, tableCell, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:performAction:forRowAtIndexPath:withSender: ", ^{
                     [proxy tableView:tableView performAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withSender:@[]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:performAction:forRowAtIndexPath:withSender:))
                     .with(tableView, @selector(count), [NSIndexPath indexPathForRow:1 inSection:0], @[]);
                 });
@@ -263,14 +269,14 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 it(@"prevents original delegate from receiving -tableView:willDisplayCell:forRowAtIndexPath: ", ^{
                     [proxy tableView:tableView willDisplayCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:willDisplayCell:forRowAtIndexPath:));
                 });
                 
                 it(@"prevents original delegate from receiving -tableView:didEndDisplayingCell:forRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didEndDisplayingCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:));
                 });
                 
@@ -278,7 +284,7 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 it(@"prevents original delegate from receiving -tableView:performAction:forRowAtIndexPath:withSender: ", ^{
                     [proxy tableView:tableView performAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] withSender:@[]];
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:performAction:forRowAtIndexPath:withSender:));
                 });
             });
@@ -334,7 +340,7 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
             context(@"when the index path is not the ad cell", ^{
                 it(@"offsets the index path and calls the original delegate", ^{
                     [proxy tableView:tableView canPerformAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withSender:@[]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:canPerformAction:forRowAtIndexPath:withSender:))
                     .with(tableView, @selector(count), [NSIndexPath indexPathForRow:1 inSection:0], @[]);
                 });
@@ -357,14 +363,14 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 describe(@"return value is an index path", ^{
                     it(@"passes through tableView:willSelectRowAtIndexPath: ", ^{
                         [proxy tableView:tableView willSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                        adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                        adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                         originalDelegate should have_received(@selector(tableView:willSelectRowAtIndexPath:))
                         .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                     });
                     
                     it(@"passes through -tableView:willDeselectRowAtIndexPath: ", ^{
                         [proxy tableView:tableView willDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                        adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                        adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                         originalDelegate should have_received(@selector(tableView:willDeselectRowAtIndexPath:))
                         .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                     });
@@ -377,28 +383,28 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 
                 it(@"passes through -tableView:shouldIndentWhileEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldIndentWhileEditingRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:shouldIndentWhileEditingRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:shouldShowMenuForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldShowMenuForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:shouldShowMenuForRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:shouldHighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldHighlightRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:shouldHighlightRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:editingStyleForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView editingStyleForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:editingStyleForRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
@@ -408,21 +414,21 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
                     [proxy tableView:tableView accessoryTypeForRowWithIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
 #pragma clang diagnostic pop
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:accessoryTypeForRowWithIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:", ^{
                     [proxy tableView:tableView titleForDeleteConfirmationButtonForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:indentationLevelForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:indentationLevelForRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:1 inSection:0]);
                 });
@@ -433,42 +439,42 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 it(@"returns own value instead of original delegate for -tableView:willSelectRowAtIndexPath: ", ^{
                     [proxy tableView:tableView willSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_nil;
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:willSelectRowAtIndexPath:));
                 });
                 
                 it(@"returns own value instead of original delegate for -tableView:willDeselectRowAtIndexPath: ", ^{
                     [proxy tableView:tableView willDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_nil;
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:willDeselectRowAtIndexPath:));
                 });
                 
                 it(@"returns own value instead of original delegate for -tableView:shouldIndentWhileEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldIndentWhileEditingRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(NO);
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:shouldIndentWhileEditingRowAtIndexPath:));
                 });
                 
                 it(@"returns own value instead of original delegate for -tableView:shouldShowMenuForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldShowMenuForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(NO);
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:shouldShowMenuForRowAtIndexPath:));
                 });
                 
                 it(@"returns own value instead of original delegate for -tableView:shouldHighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldHighlightRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(NO);
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:shouldHighlightRowAtIndexPath:));
                 });
                 
                 it(@"returns own value instead of original delegate for -tableView:editingStyleForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView editingStyleForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(NO);
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:editingStyleForRowAtIndexPath:));
                 });
                 
@@ -478,21 +484,21 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                     [proxy tableView:tableView accessoryTypeForRowWithIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(NO);
 #pragma clang diagnostic pop
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:accessoryTypeForRowWithIndexPath:));
                 });
                 
                 it(@"returns own value instead of original delegate for -tableView:titleForDeleteConfirmationButtonForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView titleForDeleteConfirmationButtonForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should be_nil;
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:));
                 });
                 
                 it(@"returns own value instead of original delegate for -tableView:indentationLevelForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal(0);
                     adPlacementAdjuster should have_received(@selector(isAdAtIndexPath:));
-                    adPlacementAdjuster should_not have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should_not have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should_not have_received(@selector(tableView:indentationLevelForRowAtIndexPath:));
                 });
             });
@@ -599,49 +605,49 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
             context(@"when the index path is not the ad cell", ^{
                 it(@"passes through tableView:accessoryButtonTappedForRowWithIndexPath: ", ^{
                     [proxy tableView:tableView accessoryButtonTappedForRowWithIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:accessoryButtonTappedForRowWithIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didSelectRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didSelectRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didDeselectRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didDeselectRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:willBeginEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView willBeginEditingRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:willBeginEditingRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didEndEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didEndEditingRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didEndEditingRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didHighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didHighlightRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didHighlightRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didUnhighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didUnhighlightRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didUnhighlightRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
@@ -659,21 +665,21 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
             context(@"when the index path is not the ad cell", ^{
                 it(@"passes through -tableView:willDisplayCell:forRowAtIndexPath: ", ^{
                     [proxy tableView:tableView willDisplayCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:willDisplayCell:forRowAtIndexPath:))
                     .with(tableView, tableCell, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:didEndDisplayingCell:forRowAtIndexPath: ", ^{
                     [proxy tableView:tableView didEndDisplayingCell:tableCell forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:didEndDisplayingCell:forRowAtIndexPath:))
                     .with(tableView, tableCell, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:performAction:forRowAtIndexPath:withSender: ", ^{
                     [proxy tableView:tableView performAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withSender:@[]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:performAction:forRowAtIndexPath:withSender:))
                     .with(tableView, @selector(count), [NSIndexPath indexPathForRow:2 inSection:0], @[]);
                 });
@@ -730,7 +736,7 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
             context(@"when the index path is not the ad cell", ^{
                 it(@"offsets the index path and calls the original delegate", ^{
                     [proxy tableView:tableView canPerformAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withSender:@[]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:canPerformAction:forRowAtIndexPath:withSender:))
                     .with(tableView, @selector(count), [NSIndexPath indexPathForRow:2 inSection:0], @[]);
                 });
@@ -739,7 +745,7 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
             context(@"when the index path points to an ad index path", ^{
                 it(@"returns own value instead of original delegate", ^{
                     [proxy tableView:tableView canPerformAction:@selector(count) forRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] withSender:@[]] should be_truthy;
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:canPerformAction:forRowAtIndexPath:withSender:))
                     .with(tableView, @selector(count), [NSIndexPath indexPathForRow:1 inSection:0], @[]);
                 });
@@ -755,14 +761,14 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 describe(@"return value is an index path", ^{
                     it(@"passes through tableView:willSelectRowAtIndexPath: ", ^{
                         [proxy tableView:tableView willSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                        adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                        adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                         originalDelegate should have_received(@selector(tableView:willSelectRowAtIndexPath:))
                         .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                     });
                     
                     it(@"passes through -tableView:willDeselectRowAtIndexPath: ", ^{
                         [proxy tableView:tableView willDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                        adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                        adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                         originalDelegate should have_received(@selector(tableView:willDeselectRowAtIndexPath:))
                         .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                     });
@@ -775,28 +781,28 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
                 
                 it(@"passes through -tableView:shouldIndentWhileEditingRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldIndentWhileEditingRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:shouldIndentWhileEditingRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:shouldShowMenuForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldShowMenuForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:shouldShowMenuForRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:shouldHighlightRowAtIndexPath: ", ^{
                     [proxy tableView:tableView shouldHighlightRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:shouldHighlightRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:editingStyleForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView editingStyleForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:editingStyleForRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
@@ -806,21 +812,21 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
                     [proxy tableView:tableView accessoryTypeForRowWithIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
 #pragma clang diagnostic pop
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:accessoryTypeForRowWithIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:", ^{
                     [proxy tableView:tableView titleForDeleteConfirmationButtonForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });
                 
                 it(@"passes through -tableView:indentationLevelForRowAtIndexPath: ", ^{
                     [proxy tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                    adPlacementAdjuster should have_received(@selector(externalIndexPath:));
+                    adPlacementAdjuster should have_received(@selector(indexPathWithoutAds:));
                     originalDelegate should have_received(@selector(tableView:indentationLevelForRowAtIndexPath:))
                     .with(tableView, [NSIndexPath indexPathForRow:2 inSection:0]);
                 });

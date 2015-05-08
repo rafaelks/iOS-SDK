@@ -159,10 +159,6 @@ presentingViewController:(UIViewController *)presentingViewController
     return deferred.promise;
 }
 
-- (NSInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement{
-    return 1;
-}
-
 - (void)prepareForNewAd:(UIView<STRAdView> *)view {
     STRFakeAdGenerator *oldGenerator = objc_getAssociatedObject(view, @"FakeRenderer");
     [view removeGestureRecognizer:oldGenerator.tapRecognizer];

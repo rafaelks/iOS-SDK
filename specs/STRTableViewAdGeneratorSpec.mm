@@ -12,6 +12,7 @@
 #import "STRTableViewDelegate.h"
 #import "STRFullTableViewDelegate.h"
 #import "STRGridlikeViewDataSourceProxy.h"
+#import "STRAdCache.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -27,9 +28,14 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
     __block UIViewController *presentingViewController;
     __block STRInjector *injector;
     __block STRGridlikeViewDataSourceProxy *dataSourceProxy;
+    __block STRAdCache *fakeAdCache;
 
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
+
+        fakeAdCache = nice_fake_for([STRAdCache class]);
+        fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
+        [injector bind:[STRAdCache class] toInstance:fakeAdCache];
 
         adGenerator = [STRFakeAdGenerator new];
         [injector bind:[STRAdGenerator class] toInstance:adGenerator];

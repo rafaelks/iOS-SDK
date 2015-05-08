@@ -78,7 +78,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
         return;
     }
 
-    __autoreleasing NSIndexPath *externalIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
+    __autoreleasing NSIndexPath *externalIndexPath = [self.adPlacementAdjuster indexPathWithoutAds:indexPath];
     [invocation setArgument:&externalIndexPath atIndex:indexPathIndex];
     [invocation invokeWithTarget:self.originalDelegate];
 
@@ -86,7 +86,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
         __autoreleasing NSIndexPath *indexPath;
         [invocation getReturnValue:&indexPath];
         if (indexPath) {
-            NSIndexPath *trueIndexPath = [self.adPlacementAdjuster trueIndexPath:indexPath];
+            NSIndexPath *trueIndexPath = [self.adPlacementAdjuster indexPathIncludingAds:indexPath];
             [invocation setReturnValue:&trueIndexPath];
         }
     }
@@ -114,7 +114,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
         CGFloat height = self.adSize.height;
         [invocation setReturnValue:&height];
     } else {
-        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
+        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster indexPathWithoutAds:indexPath];
         [invocation setArgument:&newIndexPath atIndex:3];
         [invocation invokeWithTarget:self.originalDelegate];
     }
@@ -128,7 +128,7 @@ static NSArray *strSelectorsWhichReturnIndexPaths;
         CGSize adSize = self.adSize;
         [invocation setReturnValue:&adSize];
     } else {
-        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster externalIndexPath:indexPath];
+        __autoreleasing NSIndexPath *newIndexPath = [self.adPlacementAdjuster indexPathWithoutAds:indexPath];
         [invocation setArgument:&newIndexPath atIndex:4];
 
         [invocation invokeWithTarget:self.originalDelegate];

@@ -21,6 +21,9 @@
 
 - (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement;
 - (NSUInteger)numberOfAdsAvailableForPlacement:(STRAdPlacement *)placement;
+- (NSInteger)numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:(NSString *)placementKey;
+- (NSArray *)assignedAdIndixesForPlacementKey:(NSString *)placementKey;
+
 - (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey;
 
 - (BOOL)pendingAdRequestInProgressForPlacement:(NSString *)placementKey;

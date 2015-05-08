@@ -1,4 +1,5 @@
 #import "STRAdPlacementAdjuster.h"
+#import "STRAdCache.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -7,23 +8,36 @@ SPEC_BEGIN(STRAdPlacementAdjusterSpec)
 
 describe(@"STRAdPlacementAdjuster", ^{
     __block STRAdPlacementAdjuster *adjuster;
+    __block STRAdCache *fakeAdCache;
+    __block NSString *fakePlacementKey;
+
+    beforeEach(^{
+        fakeAdCache = nice_fake_for([STRAdCache class]);
+        fakePlacementKey = @"fake-placement-key";
+    });
     
     describe(@"When an ad is loaded", ^{
         beforeEach(^{
-            adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
-            adjuster.adLoaded = YES;
+            fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)5);
+            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+
+            adjuster = [STRAdPlacementAdjuster adjusterInSection:0
+                                           articlesBeforeFirstAd:5
+                                              articlesBetweenAds:5
+                                                    placementKey:fakePlacementKey
+                                                         adCache:fakeAdCache];
         });
         
         describe(@"+adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:", ^{
             it(@"throws an exception if articles between ads is less than or equal to 0", ^{
                 expect(^{
-                    [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:0];
+                    [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:0 placementKey:fakePlacementKey adCache:fakeAdCache];
                 }).to(raise_exception);
             });
 
             it(@"throws an exception if articles before first ad is less than 0", ^{
                 expect(^{
-                    [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:-1 articlesBetweenAds:0];
+                    [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:-1 articlesBetweenAds:0 placementKey:fakePlacementKey adCache:fakeAdCache];
                 }).to(raise_exception);
             });
         });
@@ -37,7 +51,6 @@ describe(@"STRAdPlacementAdjuster", ^{
                 [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:11 inSection:0]] should be_truthy;
                 [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:17 inSection:0]] should be_truthy;
                 [adjuster isAdAtIndexPath:[NSIndexPath indexPathForRow:23 inSection:0]] should be_truthy;
-
             });
 
             it(@"returns NO if it's not in the ad section", ^{
@@ -45,69 +58,77 @@ describe(@"STRAdPlacementAdjuster", ^{
             });
         });
         
-        describe(@"-externalIndexPath:", ^{
+        describe(@"-indexPathWithoutAds:", ^{
             it(@"leaves indexPath unchanged if it's not an ad slot", ^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
             });
             
             it(@"returns nil if the index path is equal to an adIndexPath", ^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]] should be_nil;
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:5 inSection:0]] should be_nil;
             });
             
             it(@"subtracts indexPath for cells after ad row in same section", ^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:6 inSection:0]] should equal([NSIndexPath indexPathForRow:5 inSection:0]);
+                fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:5]]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:6 inSection:0]] should equal([NSIndexPath indexPathForRow:5 inSection:0]);
             });
             
             it(@"leaves indexPath unchanged for cells in different section", ^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
             });
             
             it(@"returns nil if passed in a nil index path", ^{
-                [adjuster externalIndexPath:nil] should be_nil;
+                [adjuster indexPathWithoutAds:nil] should be_nil;
             });
         });
         
-        describe(@"-externalIndexPaths", ^{
+        describe(@"-indexPathsWithoutAds", ^{
             it(@"adjusts all of the index paths", ^{
                 NSArray *trueIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
                                             [NSIndexPath indexPathForRow:1 inSection:0],
                                             [NSIndexPath indexPathForRow:5 inSection:0]];
                 
-                [adjuster externalIndexPaths:trueIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
+                [adjuster indexPathsWithoutAds:trueIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
                                                                             [NSIndexPath indexPathForRow:1 inSection:0]]);
                 
             });
         });
 
-        describe(@"-trueIndexPath:", ^{
+        describe(@"-indexPathIncludingAds:", ^{
+            beforeEach(^{
+                fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:5]]);
+            });
+
             it(@"leaves indexPath unchanged if it's above adIndexPath", ^{
-                [adjuster trueIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+                [adjuster indexPathIncludingAds:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
             });
             
             it(@"increments indexPath if it's equal to adIndexPath", ^{
-                [adjuster trueIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]] should equal([NSIndexPath indexPathForRow:6 inSection:0]);
+                [adjuster indexPathIncludingAds:[NSIndexPath indexPathForRow:5 inSection:0]] should equal([NSIndexPath indexPathForRow:6 inSection:0]);
             });
             
             it(@"increments indexPath for cells after ad row in same section", ^{
-                [adjuster trueIndexPath:[NSIndexPath indexPathForRow:6 inSection:0]] should equal([NSIndexPath indexPathForRow:7 inSection:0]);
+                [adjuster indexPathIncludingAds:[NSIndexPath indexPathForRow:6 inSection:0]] should equal([NSIndexPath indexPathForRow:7 inSection:0]);
             });
             
             it(@"leaves indexPath unchanged for cells in different section", ^{
-                [adjuster trueIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+                [adjuster indexPathIncludingAds:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
             });
             
             it(@"returns nil if passed in a nil indexPath", ^{
-                [adjuster trueIndexPath:nil] should be_nil;
+                [adjuster indexPathIncludingAds:nil] should be_nil;
             });
         });
 
-        describe(@"-trueIndexPaths", ^{
+        describe(@"-indexPathsIncludingAds", ^{
+            beforeEach(^{
+                fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:5]]);
+            });
             it(@"adjusts all of the index paths", ^{
                 NSArray *externalIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
                                                 [NSIndexPath indexPathForRow:5 inSection:0],
                                                 [NSIndexPath indexPathForRow:6 inSection:0]];
                 
-                [adjuster trueIndexPaths:externalIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
+                [adjuster indexPathsIncludingAds:externalIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
                                                                             [NSIndexPath indexPathForRow:6 inSection:0],
                                                                             [NSIndexPath indexPathForRow:7 inSection:0]]);
             });
@@ -133,13 +154,11 @@ describe(@"STRAdPlacementAdjuster", ^{
             });
 
             it(@"handles edge cases", ^{
-                STRAdPlacementAdjuster *everyOtherAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:1];
-                everyOtherAdjuster.adLoaded = YES;
+                STRAdPlacementAdjuster *everyOtherAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:1 placementKey:fakePlacementKey adCache:fakeAdCache];
 
                 [everyOtherAdjuster numberOfAdsInSection:0 givenNumberOfRows:3] should equal(4);
 
-                STRAdPlacementAdjuster *onlyOneAd = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:NSIntegerMax];
-                onlyOneAd.adLoaded = YES;
+                STRAdPlacementAdjuster *onlyOneAd = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:NSIntegerMax placementKey:fakePlacementKey adCache:fakeAdCache];
 
                 [onlyOneAd numberOfAdsInSection:0 givenNumberOfRows:10000] should equal(1);
             });
@@ -155,7 +174,8 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
             });
             
             sharedExamplesFor(@"moving a row", ^(NSDictionary *sharedContext) {
@@ -166,7 +186,6 @@ describe(@"STRAdPlacementAdjuster", ^{
                 beforeEach(^{
                     externalStartIndex = sharedContext[@"externalStartIndex"];
                     externalFinalIndex = sharedContext[@"externalFinalIndex"];
-                    multiSectionAdjuster.adLoaded = YES;
                     trueIndexPaths = [multiSectionAdjuster willMoveRowAtExternalIndexPath:externalStartIndex
                                                                       toExternalIndexPath:externalFinalIndex];
                 });
@@ -253,7 +272,7 @@ describe(@"STRAdPlacementAdjuster", ^{
                         sharedContext[@"externalFinalIndex"] = [NSIndexPath indexPathForRow:0 inSection:0];
                         sharedContext[@"expectedChangeToFinalRow"] = @0;
                         
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
                     });
                     
                     itShouldBehaveLike(@"moving a row");
@@ -340,13 +359,12 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5];
-                multiSectionAdjuster.adLoaded = YES;
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
             });
             
             describe(@"when some of the sections around the ad section are being deleted", ^{
                 it(@"moves up the ad section by the appropriate amount", ^{
-                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
                     NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
                     [indices addIndex:0];
                     [indices addIndex:1];
@@ -391,7 +409,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
             });
             
             describe(@"when some of the sections around the ad section are being inserting", ^{
@@ -411,13 +429,13 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
             });
             
             describe(@"moving a section that is before the ad section", ^{
                 describe(@"to still be before the ad section", ^{
                     beforeEach(^{
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
                     });
                     
                     it(@"does not adjust the ad placement", ^{
@@ -476,8 +494,7 @@ describe(@"STRAdPlacementAdjuster", ^{
     
     describe(@"When an ad is not loaded", ^{
         beforeEach(^{
-            adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
-            adjuster.adLoaded = NO;
+            adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
         });
         
         describe(@"-isAdAtIndexPath:", ^{
@@ -486,70 +503,70 @@ describe(@"STRAdPlacementAdjuster", ^{
             });
         });
 
-        describe(@"-externalIndexPath:", ^{
+        describe(@"-indexPathWithoutAds:", ^{
             it(@"leaves indexPath unchanged if it's above adIndexPath", ^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
             });
             
             it(@"returns the original index path if the index path is equal to adIndexPath", ^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:1 inSection:0]] should equal([NSIndexPath indexPathForRow:1 inSection:0]);
             });
             
             it(@"returns the original index path for cells after ad row in same section", ^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
             });
             
             it(@"leaves indexPath unchanged for cells in different section", ^{
-                [adjuster externalIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
             });
             
             it(@"returns nil if passed in a nil index path", ^{
-                [adjuster externalIndexPath:nil] should be_nil;
+                [adjuster indexPathWithoutAds:nil] should be_nil;
             });
         });
 
-        describe(@"-externalIndexPaths", ^{
+        describe(@"-indexPathsWithoutAds", ^{
             it(@"adjusts all of the index paths", ^{
                 NSArray *trueIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
                                             [NSIndexPath indexPathForRow:1 inSection:0],
                                             [NSIndexPath indexPathForRow:2 inSection:0]];
                 
-                [adjuster externalIndexPaths:trueIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
+                [adjuster indexPathsWithoutAds:trueIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
                                                                             [NSIndexPath indexPathForRow:1 inSection:0],
                                                                             [NSIndexPath indexPathForRow:2 inSection:0]]);
                 
             });
         });
 
-        describe(@"-trueIndexPath:", ^{
+        describe(@"-indexPathIncludingAds:", ^{
             it(@"leaves indexPath unchanged if it's above adIndexPath", ^{
-                [adjuster trueIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
+                [adjuster indexPathIncludingAds:[NSIndexPath indexPathForRow:0 inSection:0]] should equal([NSIndexPath indexPathForRow:0 inSection:0]);
             });
             
             it(@"returns the original indexPath if it's equal to adIndexPath", ^{
-                [adjuster trueIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]] should equal([NSIndexPath indexPathForRow:1 inSection:0]);
+                [adjuster indexPathIncludingAds:[NSIndexPath indexPathForRow:1 inSection:0]] should equal([NSIndexPath indexPathForRow:1 inSection:0]);
             });
             
             it(@"returns the original indexPath for cells after ad row in same section", ^{
-                [adjuster trueIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+                [adjuster indexPathIncludingAds:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
             });
             
             it(@"leaves indexPath unchanged for cells in different section", ^{
-                [adjuster trueIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
+                [adjuster indexPathIncludingAds:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
             });
             
             it(@"returns nil if passed in a nil indexPath", ^{
-                [adjuster trueIndexPath:nil] should be_nil;
+                [adjuster indexPathIncludingAds:nil] should be_nil;
             });
         });
 
-        describe(@"-trueIndexPaths", ^{
+        describe(@"-indexPathsIncludingAds", ^{
             it(@"adjusts all of the index paths", ^{
                 NSArray *externalIndexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0],
                                                 [NSIndexPath indexPathForRow:1 inSection:0],
                                                 [NSIndexPath indexPathForRow:2 inSection:0]];
                 
-                [adjuster trueIndexPaths:externalIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
+                [adjuster indexPathsIncludingAds:externalIndexPaths] should equal(@[[NSIndexPath indexPathForRow:0 inSection:0],
                                                                             [NSIndexPath indexPathForRow:1 inSection:0],
                                                                             [NSIndexPath indexPathForRow:2 inSection:0]]);
             });
@@ -573,7 +590,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
             });
             
             sharedExamplesFor(@"moving a row", ^(NSDictionary *sharedContext) {
@@ -584,7 +601,6 @@ describe(@"STRAdPlacementAdjuster", ^{
                 beforeEach(^{
                     externalStartIndex = sharedContext[@"externalStartIndex"];
                     externalFinalIndex = sharedContext[@"externalFinalIndex"];
-                    multiSectionAdjuster.adLoaded = YES;
                     trueIndexPaths = [multiSectionAdjuster willMoveRowAtExternalIndexPath:externalStartIndex
                                                                       toExternalIndexPath:externalFinalIndex];
                 });
@@ -672,7 +688,7 @@ describe(@"STRAdPlacementAdjuster", ^{
                         sharedContext[@"externalFinalIndex"] = [NSIndexPath indexPathForRow:0 inSection:0];
                         sharedContext[@"expectedChangeToFinalRow"] = @0;
                         
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
                     });
                     
                     itShouldBehaveLike(@"moving a row");
@@ -761,12 +777,12 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
             });
             
             describe(@"when some of the sections around the ad section are being deleted", ^{
                 it(@"moves up the ad section by the appropriate amount", ^{
-                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
                     NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
                     [indices addIndex:0];
                     [indices addIndex:1];
@@ -811,7 +827,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
             });
             
             describe(@"when some of the sections around the ad section are being inserting", ^{
@@ -831,13 +847,13 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
             });
             
             describe(@"moving a section that is before the ad section", ^{
                 describe(@"to still be before the ad section", ^{
                     beforeEach(^{
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
                     });
                     
                     it(@"does not adjust the ad placement", ^{

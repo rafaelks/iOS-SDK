@@ -144,6 +144,17 @@
     return [creatives count];
 }
 
+- (NSInteger)numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:(NSString *)placementKey {
+    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
+    return [creatives count] + [indexToCreativeMap count];
+}
+
+- (NSArray *)assignedAdIndixesForPlacementKey:(NSString *)placementKey {
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
+    return [indexToCreativeMap allKeys];
+}
+
 - (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey {
     NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
     if ([creatives count] <= 1 && ![self pendingAdRequestInProgressForPlacement:placementKey]) {

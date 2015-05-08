@@ -10,7 +10,6 @@
 
 #import "STRAdView.h"
 #import "STRAdViewDelegate.h"
-#import "STRAdPlacementAdjuster.h"
 #import "STRDeferred.h"
 
 @interface STRAdPlacement : NSObject

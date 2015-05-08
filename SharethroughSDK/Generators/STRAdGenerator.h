@@ -20,6 +20,4 @@
 
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement;
-
-- (NSInteger)numberOfAdsForPlacement:(STRAdPlacement *)placement;
 @end

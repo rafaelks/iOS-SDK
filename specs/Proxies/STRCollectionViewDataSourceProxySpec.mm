@@ -6,6 +6,7 @@
 #import "STRFullCollectionViewDataSource.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRCollectionViewCell.h"
+#import "STRAdCache.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -52,9 +53,13 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
     __block UIViewController *presentingViewController;
     __block UICollectionView *collectionView;
     __block STRCollectionViewDataSource *originalDataSource;
-    
+    __block NSString *fakePlacementKey;
+    __block STRAdCache *fakeAdCache;
+
     STRGridlikeViewDataSourceProxy *(^proxyWithDataSource)(id<UICollectionViewDataSource> dataSource) = ^STRGridlikeViewDataSourceProxy *(id<UICollectionViewDataSource> dataSource) {
-        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100];
+        fakePlacementKey = @"fake-placement-key";
+        fakeAdCache = nice_fake_for([STRAdCache class]);
+        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
         
         STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
         dataSourceProxy.originalDataSource = dataSource;
@@ -104,6 +109,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
         
         describe(@"when an ad is loaded", ^{
             beforeEach(^{
+                fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
                 [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
             });
 
@@ -132,7 +138,11 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
             
             proxy = proxyWithDataSource(dataSource);
             collectionView.dataSource = proxy;
-            
+
+            fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
+            fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
+            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+
             [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
             
             [collectionView layoutIfNeeded];
@@ -160,6 +170,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
     describe(@"placing an ad in the collection view when the reuse identifier was badly registered", ^{
         it(@"throws Apple's exception if the sdk user does not register the identifier", ^{
             expect(^{
+                fakeAdCache stub_method(@selector(isAdAtIndexPath:)).and_return(YES);
                 [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
                 [collectionView layoutIfNeeded];
             }).to(raise_exception());
@@ -169,6 +180,7 @@ describe(@"STRGridlikeViewDataSourceProxy UICollectionViewDataSource", ^{
             [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"adCell"];
             
             expect(^{
+                fakeAdCache stub_method(@selector(isAdAtIndexPath:)).and_return(YES);
                 [proxy prefetchAdForGridLikeView:collectionView atIndex:1];
                 [collectionView layoutIfNeeded];
             }).to(raise_exception());
