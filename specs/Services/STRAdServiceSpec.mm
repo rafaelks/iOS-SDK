@@ -101,34 +101,34 @@ describe(@"STRAdService", ^{
             });
         });
         
-//        describe(@"when an ad is retrieved from the cache, but there are no more ads in the queue", ^{
-//            __block STRAdvertisement *ad;
-//            
-//            beforeEach(^{
-//                ad = nice_fake_for([STRAdvertisement class]);
-//                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
-//                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-//                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
-//                
-//                returnedPromise = [service fetchAdForPlacement:adPlacement];
-//            });
-//            
-//            it(@"does not make a request to the ad server", ^{
-//                restClient should_not have_received(@selector(getWithParameters:));
-//            });
-//            
-//            it(@"does not fire an impression request", ^{
-//                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
-//            });
-//            
-//            it(@"does not make a request to the image server", ^{
-//                networkClient should_not have_received(@selector(get:));
-//            });
-//            
-//            it(@"returns a promise that is resolved with the cached ad", ^{
-//                returnedPromise.value should equal(ad);
-//            });
-//        });
+        xdescribe(@"when an ad is retrieved from the cache, but there are no more ads in the queue", ^{
+            __block STRAdvertisement *ad;
+            
+            beforeEach(^{
+                ad = nice_fake_for([STRAdvertisement class]);
+                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
+                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
+                
+                returnedPromise = [service fetchAdForPlacement:adPlacement];
+            });
+            
+            it(@"does not make a request to the ad server", ^{
+                restClient should_not have_received(@selector(getWithParameters:));
+            });
+            
+            it(@"does not fire an impression request", ^{
+                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
+            });
+            
+            it(@"does not make a request to the image server", ^{
+                networkClient should_not have_received(@selector(get:));
+            });
+            
+            it(@"returns a promise that is resolved with the cached ad", ^{
+                returnedPromise.value should equal(ad);
+            });
+        });
 
         describe(@"when an ad is cached for longer than the timeout", ^{
             __block STRAdvertisement *ad;
@@ -393,7 +393,7 @@ describe(@"STRAdService", ^{
 
     });
 
-    describe(@"fetching a specific creative", ^{
+    describe(@"fetching a specific creative or campaign", ^{
         __block STRDeferred *restClientDeferred;
         __block STRDeferred *networkClientDeferred;
         __block STRPromise *returnedPromise;
@@ -410,16 +410,14 @@ describe(@"STRAdService", ^{
             adPlacement.placementKey = @"placementKey";
         });
 
-        xdescribe(@"when an ad is retrieved from the cache", ^{
+        describe(@"when an ad is retrieved from the cache", ^{
             __block STRAdvertisement *ad;
 
             beforeEach(^{
                 ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
-                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(fetchCachedAdForPlacementKey:CreativeKey:)).and_return(ad);
 
-                returnedPromise = [service fetchAdForPlacement:adPlacement creativeKey:@"creativeKey"];
+                returnedPromise = [service fetchAdForPlacement:adPlacement auctionParameterKey:@"creative_key" auctionParameterValue:@"creativeKey"];
             });
 
             it(@"does not make a request to the ad server", ^{
@@ -436,6 +434,13 @@ describe(@"STRAdService", ^{
 
             it(@"returns a promise that is resolved with the cached ad", ^{
                 returnedPromise.value should equal(ad);
+            });
+        });
+
+        describe(@"when it's not a creative key", ^{
+            it(@"does not call to the ad cache", ^{
+                returnedPromise = [service fetchAdForPlacement:adPlacement auctionParameterKey:@"campaign_key" auctionParameterValue:@"campaignKey"];
+                adCache should_not have_received(@selector(fetchCachedAdForPlacementKey:CreativeKey:));
             });
         });
 
@@ -478,7 +483,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
                 adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
 
-                returnedPromise = [service fetchAdForPlacement:adPlacement creativeKey:@"creativeKey"];
+                returnedPromise = [service fetchAdForPlacement:adPlacement auctionParameterKey:@"creative_key" auctionParameterValue:@"creativeKey"];
             });
 
             it(@"makes a request to the ad server", ^{
@@ -486,7 +491,7 @@ describe(@"STRAdService", ^{
             });
 
             it(@"fires an impression request beacon", ^{
-                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:CreativeKey:)).with(@"placementKey", @"creativeKey");
+                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:auctionParameterKey:auctionParameterValue:)).with(@"placementKey", @"creative_key", @"creativeKey");
             });
 
             it(@"returns an unresolved promise", ^{

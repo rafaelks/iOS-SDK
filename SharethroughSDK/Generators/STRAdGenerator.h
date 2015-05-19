@@ -16,8 +16,8 @@
 - (id)initWithAdService:(STRAdService *)adService injector:(STRInjector *)injector;
 
 - (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement;
-- (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement;
+- (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
 
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement;
-- (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement;
+- (STRPromise *)prefetchForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
 @end

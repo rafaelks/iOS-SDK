@@ -92,9 +92,9 @@ describe(@"STRBeaconService", ^{
         });
     });
 
-    describe(@"-fireImpressionRequestForPlacementKey:CreativeKey:", ^{
+    describe(@"-fireImpressionRequestForPlacementKey:auctionParameterKey:auctionParameterValue:(NSString *)apValue", ^{
         it(@"sends a beacon to the tracking servers", ^{
-            [service fireImpressionRequestForPlacementKey:@"placementKey" CreativeKey:@"creativeKey"];
+            [service fireImpressionRequestForPlacementKey:@"placementKey" auctionParameterKey:@"ckey" auctionParameterValue:@"creativeKey"];
 
             restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
                                                                                          @"ckey": @"creativeKey",
@@ -110,7 +110,7 @@ describe(@"STRBeaconService", ^{
 
         context(@"when placementKey is nil", ^{
             it(@"sends a beacon to the tracking servers with a blank pkey", ^{
-                [service fireImpressionRequestForPlacementKey:nil CreativeKey:@"creativeKey"];
+                [service fireImpressionRequestForPlacementKey:nil auctionParameterKey:@"ckey" auctionParameterValue:@"creativeKey"];
 
                 restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"",
                                                                                              @"ckey": @"creativeKey",
@@ -125,9 +125,25 @@ describe(@"STRBeaconService", ^{
             });
         });
 
-        context(@"when creativeKey is nil", ^{
+        context(@"when auctionParameterKey is nil", ^{
             it(@"sends a beacon to the tracking servers with a blank pkey", ^{
-                [service fireImpressionRequestForPlacementKey:@"placementKey" CreativeKey:nil];
+                [service fireImpressionRequestForPlacementKey:@"placementKey" auctionParameterKey:nil auctionParameterValue:@"creativeKey"];
+
+                restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
+                                                                                             @"type": @"impressionRequest",
+                                                                                             @"bwidth": @"200",
+                                                                                             @"bheight": @"400",
+                                                                                             @"umtime": @"10",
+                                                                                             @"session": @"AAAA",
+                                                                                             @"uid": @"fakeUUID",
+                                                                                             @"ua": @"User Agent",
+                                                                                             @"ploc": @"specs"});
+            });
+        });
+
+        context(@"when creativeKey is nil", ^{
+            it(@"sends a beacon to the tracking servers with a blank ckey", ^{
+                [service fireImpressionRequestForPlacementKey:@"placementKey" auctionParameterKey:@"ckey" auctionParameterValue:nil];
 
                 restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
                                                                                              @"ckey": @"",
@@ -143,8 +159,8 @@ describe(@"STRBeaconService", ^{
         });
 
         context(@"when placementKey and creativeKey are nil", ^{
-            it(@"sends a beacon to the tracking servers with a blank pkey", ^{
-                [service fireImpressionRequestForPlacementKey:nil CreativeKey:nil];
+            it(@"sends a beacon to the tracking servers with a blank pkey and ckey", ^{
+                [service fireImpressionRequestForPlacementKey:nil auctionParameterKey:@"ckey" auctionParameterValue:nil];
 
                 restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"",
                                                                                              @"ckey": @"",
@@ -158,7 +174,6 @@ describe(@"STRBeaconService", ^{
                                                                                              @"ploc": @"specs"});
             });
         });
-
     });
 
     describe(@"-fireImpressionForAd:adSize:", ^{

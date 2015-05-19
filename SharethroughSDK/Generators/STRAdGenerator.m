@@ -42,17 +42,17 @@
 }
 
 - (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement {
-    return [self placeCreative:@"" inPlacement:placement];
+    return [self placeAdInPlacement:placement auctionParameterKey:nil auctionParameterValue:nil];
 }
 
-- (STRPromise *)placeCreative:(NSString *)creativeKey inPlacement:(STRAdPlacement *)placement {
+- (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue {
     STRDeferred *deferred = [STRDeferred defer];
     [self addSpinnerToView:placement.adView];
     [self clearTextFromView:placement.adView];
 
     STRPromise *adPromise;
-    if ([creativeKey length] > 0){
-        adPromise = [self.adService fetchAdForPlacement:placement creativeKey:creativeKey];
+    if (apKey && apValue && apKey.length > 0 && apValue.length > 0){
+        adPromise = [self.adService fetchAdForPlacement:placement auctionParameterKey:apKey auctionParameterValue:apValue];
     } else {
         adPromise = [self.adService fetchAdForPlacement:placement];
     }
@@ -83,8 +83,8 @@
     return [self.adService prefetchAdsForPlacement:placement];
 }
 
-- (STRPromise *)prefetchCreative:(NSString *)creativeKey forPlacement:(STRAdPlacement *)placement {
-    return [self.adService fetchAdForPlacement:placement creativeKey:creativeKey];
+- (STRPromise *)prefetchForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue {
+    return [self.adService fetchAdForPlacement:placement auctionParameterKey:apKey auctionParameterValue:apValue];
 }
 
 #pragma mark - Private

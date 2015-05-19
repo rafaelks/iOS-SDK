@@ -22,7 +22,7 @@
 
 - (void)cacheAdPlacement:(STRAdPlacement *)adPlacement;
 
-- (STRPromise *)renderCreative:(NSString *)creativeKey inPlacement:(NSString *)DFPPath;
+- (STRPromise *)renderAdForParameter:(NSString *)parameter inPlacement:(NSString *)DFPPath;
 
 - (void)updateDelegateWithNoAdShownforPlacement:(NSString *)DFPPath;
 @end

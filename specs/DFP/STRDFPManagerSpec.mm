@@ -38,7 +38,7 @@ describe(@"DFPManager", ^{
                                                  DFPDeferred:nil];
     });
 
-    context(@"-renderCreative:inPlacement", ^{
+    context(@"-renderAdForParameter", ^{
         beforeEach(^{
             [dfpManager cacheAdPlacement:adPlacement];
         });
@@ -51,7 +51,7 @@ describe(@"DFPManager", ^{
                 beforeEach(^{
                     generatorDeferred = [STRDeferred defer];
                     generator stub_method(@selector(placeAdInPlacement:)).and_return(generatorDeferred.promise);
-                    managerPromise = [dfpManager renderCreative:@"STX_MONETIZE" inPlacement:@"DFPPath"];
+                    managerPromise = [dfpManager renderAdForParameter:@"STX_MONETIZE" inPlacement:@"DFPPath"];
                 });
 
                 it(@"calls placeCreative:inPlacement in the generator", ^{
@@ -91,7 +91,7 @@ describe(@"DFPManager", ^{
                     adPlacement.DFPDeferred = adDeferred;
                     generatorDeferred = [STRDeferred defer];
                     generator stub_method(@selector(prefetchAdForPlacement:)).and_return(generatorDeferred.promise);
-                    managerPromise = [dfpManager renderCreative:@"STX_MONETIZE" inPlacement:@"DFPPath"];
+                    managerPromise = [dfpManager renderAdForParameter:@"STX_MONETIZE" inPlacement:@"DFPPath"];
                 });
 
                 it(@"calls placeCreative:inPlacement in the generator", ^{
@@ -137,12 +137,12 @@ describe(@"DFPManager", ^{
 
                 beforeEach(^{
                     generatorDeferred = [STRDeferred defer];
-                    generator stub_method(@selector(placeCreative:inPlacement:)).and_return(generatorDeferred.promise);
-                    managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"DFPPath"];
+                    generator stub_method(@selector(placeAdInPlacement:auctionParameterKey:auctionParameterValue:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderAdForParameter:@"creative_key=12345678" inPlacement:@"DFPPath"];
                 });
 
-                it(@"calls placeCreative:inPlacement in the generator", ^{
-                    generator should have_received(@selector(placeCreative:inPlacement:));
+                it(@"calls placeAdInPlacement:auctionParameterKey in the generator", ^{
+                    generator should have_received(@selector(placeAdInPlacement:auctionParameterKey:auctionParameterValue:)).with(adPlacement, @"creative_key", @"12345678");;
                 });
 
                 describe(@"when the promise resolves successfully", ^{
@@ -177,12 +177,12 @@ describe(@"DFPManager", ^{
                     adDeferred = nice_fake_for([STRDeferred class]);
                     adPlacement.DFPDeferred = adDeferred;
                     generatorDeferred = [STRDeferred defer];
-                    generator stub_method(@selector(prefetchCreative:forPlacement:)).and_return(generatorDeferred.promise);
-                    managerPromise = [dfpManager renderCreative:@"creativeKey" inPlacement:@"DFPPath"];
+                    generator stub_method(@selector(prefetchForPlacement:auctionParameterKey:auctionParameterValue:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderAdForParameter:@"creative_key=12345678" inPlacement:@"DFPPath"];
                 });
 
                 it(@"calls placeCreative:inPlacement in the generator", ^{
-                    generator should have_received(@selector(prefetchCreative:forPlacement:));
+                    generator should have_received(@selector(prefetchForPlacement:auctionParameterKey:auctionParameterValue:)).with(adPlacement, @"creative_key", @"12345678");;
                 });
 
                 describe(@"when the promise resolves successfully", ^{
@@ -210,6 +210,180 @@ describe(@"DFPManager", ^{
                         adDeferred should have_received(@selector(rejectWithError:));
                     });
 
+                    it(@"rejects its promise", ^{
+                        managerPromise should have_received(@selector(rejectWithError:));
+                    });
+                });
+            });
+        });
+
+        context(@"when the campaign key is for a specific campaign", ^{
+            describe(@"when the placement deferred is not set", ^{
+                __block STRDeferred *generatorDeferred;
+                __block STRPromise *managerPromise;
+
+                beforeEach(^{
+                    generatorDeferred = [STRDeferred defer];
+                    generator stub_method(@selector(placeAdInPlacement:auctionParameterKey:auctionParameterValue:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderAdForParameter:@"campaign_key=12345678" inPlacement:@"DFPPath"];
+                });
+
+                it(@"calls placeAdInPlacement:auctionParameterKey in the generator", ^{
+                    generator should have_received(@selector(placeAdInPlacement:auctionParameterKey:auctionParameterValue:)).with(adPlacement, @"campaign_key", @"12345678");
+                });
+
+                describe(@"when the promise resolves successfully", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred resolveWithValue:nil];
+                    });
+
+                    it(@"resolves its promise", ^{
+                        managerPromise should have_received(@selector(resolveWithValue:));
+                    });
+                });
+
+                describe(@"when the promise is rejected", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred rejectWithError:nil];
+                    });
+
+                    it(@"rejects its promise", ^{
+                        managerPromise should have_received(@selector(rejectWithError:));
+                    });
+                });
+            });
+
+            describe(@"when the placement deferred is set", ^{
+                __block STRDeferred *generatorDeferred;
+                __block STRPromise *managerPromise;
+                __block STRDeferred *adDeferred;
+
+                beforeEach(^{
+                    adDeferred = nice_fake_for([STRDeferred class]);
+                    adPlacement.DFPDeferred = adDeferred;
+                    generatorDeferred = [STRDeferred defer];
+                    generator stub_method(@selector(prefetchForPlacement:auctionParameterKey:auctionParameterValue:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderAdForParameter:@"campaign_key=12345678" inPlacement:@"DFPPath"];
+                });
+
+                it(@"calls placeCreative:inPlacement in the generator", ^{
+                    generator should have_received(@selector(prefetchForPlacement:auctionParameterKey:auctionParameterValue:)).with(adPlacement, @"campaign_key", @"12345678");
+                });
+
+                describe(@"when the promise resolves successfully", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred resolveWithValue:nil];
+                    });
+
+                    it(@"resolves the placements deferred", ^{
+                        adDeferred should have_received(@selector(resolveWithValue:));
+                    });
+
+                    it(@"resolves its promise", ^{
+                        managerPromise should have_received(@selector(resolveWithValue:));
+                    });
+                });
+
+                describe(@"when the promise is rejected", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred rejectWithError:nil];
+                    });
+
+                    it(@"rejects the placements deferred", ^{
+                        adDeferred should have_received(@selector(rejectWithError:));
+                    });
+                    
+                    it(@"rejects its promise", ^{
+                        managerPromise should have_received(@selector(rejectWithError:));
+                    });
+                });
+            });
+        });
+
+        context(@"when it's the old style of creative key", ^{
+            describe(@"when the placement deferred is not set", ^{
+                __block STRDeferred *generatorDeferred;
+                __block STRPromise *managerPromise;
+
+                beforeEach(^{
+                    generatorDeferred = [STRDeferred defer];
+                    generator stub_method(@selector(placeAdInPlacement:auctionParameterKey:auctionParameterValue:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderAdForParameter:@"12345678" inPlacement:@"DFPPath"];
+                });
+
+                it(@"calls placeAdInPlacement:auctionParameterKey in the generator", ^{
+                    generator should have_received(@selector(placeAdInPlacement:auctionParameterKey:auctionParameterValue:)).with(adPlacement, @"creative_key", @"12345678");
+                });
+
+                describe(@"when the promise resolves successfully", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred resolveWithValue:nil];
+                    });
+
+                    it(@"resolves its promise", ^{
+                        managerPromise should have_received(@selector(resolveWithValue:));
+                    });
+                });
+
+                describe(@"when the promise is rejected", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred rejectWithError:nil];
+                    });
+
+                    it(@"rejects its promise", ^{
+                        managerPromise should have_received(@selector(rejectWithError:));
+                    });
+                });
+            });
+
+            describe(@"when the placement deferred is set", ^{
+                __block STRDeferred *generatorDeferred;
+                __block STRPromise *managerPromise;
+                __block STRDeferred *adDeferred;
+
+                beforeEach(^{
+                    adDeferred = nice_fake_for([STRDeferred class]);
+                    adPlacement.DFPDeferred = adDeferred;
+                    generatorDeferred = [STRDeferred defer];
+                    generator stub_method(@selector(prefetchForPlacement:auctionParameterKey:auctionParameterValue:)).and_return(generatorDeferred.promise);
+                    managerPromise = [dfpManager renderAdForParameter:@"12345678" inPlacement:@"DFPPath"];
+                });
+
+                it(@"calls placeCreative:inPlacement in the generator", ^{
+                    generator should have_received(@selector(prefetchForPlacement:auctionParameterKey:auctionParameterValue:)).with(adPlacement, @"creative_key", @"12345678");
+                });
+
+                describe(@"when the promise resolves successfully", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred resolveWithValue:nil];
+                    });
+
+                    it(@"resolves the placements deferred", ^{
+                        adDeferred should have_received(@selector(resolveWithValue:));
+                    });
+
+                    it(@"resolves its promise", ^{
+                        managerPromise should have_received(@selector(resolveWithValue:));
+                    });
+                });
+
+                describe(@"when the promise is rejected", ^{
+                    beforeEach(^{
+                        spy_on(managerPromise);
+                        [generatorDeferred rejectWithError:nil];
+                    });
+
+                    it(@"rejects the placements deferred", ^{
+                        adDeferred should have_received(@selector(rejectWithError:));
+                    });
+                    
                     it(@"rejects its promise", ^{
                         managerPromise should have_received(@selector(rejectWithError:));
                     });

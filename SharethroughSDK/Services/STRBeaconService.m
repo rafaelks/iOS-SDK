@@ -39,10 +39,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 }
 
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey {
-    if (!placementKey) {
-        placementKey = @"";
-    }
-    NSDictionary *uniqueParameters = @{@"pkey": placementKey,
+    NSDictionary *uniqueParameters = @{@"pkey": valueOrEmpty(placementKey),
                                        @"type": @"impressionRequest"};
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
@@ -50,16 +47,15 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
-- (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey {
-    if (!placementKey) {
-        placementKey = @"";
+- (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey
+                         auctionParameterKey:(NSString *)apKey
+                       auctionParameterValue:(NSString *)apValue
+{
+    NSMutableDictionary *uniqueParameters =  [@{@"pkey": valueOrEmpty(placementKey),
+                                                @"type": @"impressionRequest"} mutableCopy];
+    if (apKey && apKey.length > 0) {
+        [uniqueParameters setObject:valueOrEmpty(apValue) forKey:apKey];
     }
-    if (!creativeKey) {
-        creativeKey = @"";
-    }
-    NSDictionary *uniqueParameters = @{@"pkey": placementKey,
-                                       @"ckey": creativeKey,
-                                       @"type": @"impressionRequest"};
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
 
@@ -190,12 +186,9 @@ static id valueOrEmpty(id object)
     return commonParams;
 }
 
-- (NSMutableDictionary *)commonParameters{
+- (NSMutableDictionary *)commonParameters {
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     NSString *ploc = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
-    if (!ploc) {
-        ploc = @"";
-    }
     NSString *idfa = @"";
     if ([self.identifierManager isAdvertisingTrackingEnabled]) {
         idfa = [[self.identifierManager advertisingIdentifier] UUIDString];
@@ -204,7 +197,7 @@ static id valueOrEmpty(id object)
     return [@{@"bwidth" : [NSString stringWithFormat:@"%g", CGRectGetWidth(screenFrame)],
               @"bheight": [NSString stringWithFormat:@"%g", CGRectGetHeight(screenFrame)],
               @"umtime" : [NSString stringWithFormat:@"%lli", self.dateProvider.millisecondsSince1970],
-              @"ploc"   : ploc,
+              @"ploc"   : valueOrEmpty(ploc),
               @"session": [STRSession sessionToken],
               @"uid"    : idfa,
               @"ua"     : [self.restClient getUserAgent]} mutableCopy];

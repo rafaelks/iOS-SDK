@@ -21,6 +21,7 @@
 #import <AdSupport/AdSupport.h>
 
 const NSInteger kRequestInProgress = 202;
+static NSString *const kDFPCreativeKey = @"creative_key";
 
 @interface STRAdService ()
 
@@ -78,21 +79,25 @@ const NSInteger kRequestInProgress = 202;
     return [self beginFetchForPlacement:placement andInitializeAtIndex:YES];
 }
 
-- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement creativeKey:(NSString *)creativeKey {
-
-    STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placement.placementKey CreativeKey:creativeKey];
-    if (cachedAd) {
-        STRDeferred *deferred = [STRDeferred defer];
-        [deferred resolveWithValue:cachedAd];
-        return deferred.promise;
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement
+                auctionParameterKey:(NSString *)apKey
+              auctionParameterValue:(NSString *)apValue
+{
+    if ([apKey isEqualToString:kDFPCreativeKey]) {
+        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placement.placementKey CreativeKey:apValue];
+        if (cachedAd) {
+            STRDeferred *deferred = [STRDeferred defer];
+            [deferred resolveWithValue:cachedAd];
+            return deferred.promise;
+        }
     }
 
     if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
         return [self requestInProgressError];
     }
 
-    [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey CreativeKey:creativeKey];
-    return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{ @"creative_key": creativeKey }]
+    [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey auctionParameterKey:apKey auctionParameterValue:apValue];
+    return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{ apKey : apValue }]
                           forPlacement:placement
                   andInitializeAtIndex:YES];
 }

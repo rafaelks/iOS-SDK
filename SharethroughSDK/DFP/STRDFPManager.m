@@ -13,6 +13,9 @@
 #import "STRDeferred.h"
 
 static NSString *const stxMonetize = @"STX_MONETIZE";
+static NSString *const dfpCreativeKey = @"creative_key";
+static NSString *const dfpCampaignKey = @"campaign_key";
+
 
 @interface STRDFPManager ()
 
@@ -38,30 +41,45 @@ static NSString *const stxMonetize = @"STX_MONETIZE";
     [self.adPlacementCache setObject:adPlacement forKey:adPlacement.DFPPath];
 }
 
-- (STRPromise *)renderCreative:(NSString *)creativeKey inPlacement:(NSString *)DFPPath {
+- (STRPromise *)renderAdForParameter:(NSString *)parameter inPlacement:(NSString *)DFPPath {
     STRDeferred *deferred = [STRDeferred defer];
 
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:DFPPath];
 
-    if (creativeKey == nil || [creativeKey length] == 0 || adPlacement.placementKey == nil || [adPlacement.placementKey length] == 0) {
-        NSLog(@"Invalid creativeKey %@ or placementKey %@. Not reaching out to Sharethrough for Ad.", creativeKey, adPlacement.placementKey);
+    if (parameter == nil || [parameter length] == 0 || adPlacement.placementKey == nil || [adPlacement.placementKey length] == 0) {
+        NSLog(@"Invalid parameter %@ or placementKey %@. Not reaching out to Sharethrough for Ad.", parameter, adPlacement.placementKey);
         NSError *error = [NSError errorWithDomain:@"Sharethrough invalid params" code:-1 userInfo:nil];
         [deferred rejectWithError:error];
     } else {
         STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
         STRPromise *promise;
 
-        if ([creativeKey isEqualToString:stxMonetize]) {
+        if ([parameter isEqualToString:stxMonetize]) {
             if (adPlacement.DFPDeferred != nil) {
                 promise = [generator prefetchAdForPlacement:adPlacement];
             } else {
                 promise = [generator placeAdInPlacement:adPlacement];
             }
-        } else {
-            if (adPlacement.DFPDeferred != nil) {
-                promise = [generator prefetchCreative:creativeKey forPlacement:adPlacement];
+        } else if ([parameter rangeOfString:dfpCreativeKey options:NSCaseInsensitiveSearch].location != NSNotFound ||
+                   [parameter rangeOfString:dfpCampaignKey options:NSCaseInsensitiveSearch].location != NSNotFound)
+        {
+            NSArray *parameterParts = [parameter componentsSeparatedByString:@"="];
+            if (parameterParts.count != 2) {
+                NSLog(@"Invalid parameter %@, is not correctly formatted with %@=<key> or %@=<key>", parameter, dfpCampaignKey, dfpCreativeKey);
+                NSError *error = [NSError errorWithDomain:@"Sharethrough invalid params" code:-1 userInfo:nil];
+                [deferred rejectWithError:error];
             } else {
-                promise = [generator placeCreative:creativeKey inPlacement:adPlacement];
+                if (adPlacement.DFPDeferred != nil) {
+                    promise = [generator prefetchForPlacement:adPlacement auctionParameterKey:parameterParts[0] auctionParameterValue:parameterParts[1]];
+                } else {
+                    promise = [generator placeAdInPlacement:adPlacement auctionParameterKey:parameterParts[0] auctionParameterValue:parameterParts[1]];
+                }
+            }
+        } else { //fall back support for older params
+            if (adPlacement.DFPDeferred != nil) {
+                promise = [generator prefetchForPlacement:adPlacement auctionParameterKey:dfpCreativeKey auctionParameterValue:parameter];
+            } else {
+                promise = [generator placeAdInPlacement:adPlacement auctionParameterKey:dfpCreativeKey auctionParameterValue:parameter];
             }
         }
 
