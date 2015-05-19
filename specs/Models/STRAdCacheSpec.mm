@@ -3,6 +3,7 @@
 #import "STRDateProvider.h"
 #import "STRAdPlacement.h"
 #import "STRFullAdView.h"
+#import "UIView+Visible.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -236,6 +237,12 @@ describe(@"STRAdCache", ^{
 
             it(@"returns YES if the ad is not older than 120 seconds", ^{
                 recentPlacement.adView stub_method(@selector(percentVisible)).again().and_return(0.0);
+                [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
+            });
+
+            it(@"doesn't blow up if the adView is nil", ^{
+                recentPlacement.adView = nil;
+                NSLog(@"Percent visible %f", [recentPlacement.adView percentVisible]);
                 [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
             });
         });
