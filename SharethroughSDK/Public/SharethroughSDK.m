@@ -73,6 +73,14 @@
     }];
 }
 
+- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey atIndex:(NSInteger)index {
+    STRAdPlacement *placement = [[STRAdPlacement alloc] init];
+    placement.placementKey = placementKey;
+    placement.adIndex = index;
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache isAdAvailableForPlacement:placement];
+}
+
 - (void)placeAdInView:(UIView<STRAdView> *)view
          placementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController
