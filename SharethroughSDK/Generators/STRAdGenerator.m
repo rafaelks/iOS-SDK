@@ -18,6 +18,7 @@
 #import "STRDeferred.h"
 #import "STRInjector.h"
 #import "STRPromise.h"
+#import "STRLogging.h"
 
 @interface STRAdGenerator ()
 
@@ -42,10 +43,12 @@
 }
 
 - (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement {
+    TLog(@"pkey:%@",placement.placementKey);
     return [self placeAdInPlacement:placement auctionParameterKey:nil auctionParameterValue:nil];
 }
 
 - (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue {
+    TLog(@"pkey:%@ apKey:%@, apValue%@",placement.placementKey, apKey, apValue);
     STRDeferred *deferred = [STRDeferred defer];
     [self addSpinnerToView:placement.adView];
     [self clearTextFromView:placement.adView];
@@ -58,6 +61,7 @@
     }
 
     [adPromise then:^id(STRAdvertisement *ad) {
+        TLog(@"Generator received ckey:%@", ad.creativeKey);
         [self.spinner removeFromSuperview];
 
         STRAdRenderer *renderer = [self.injector getInstance:[STRAdRenderer class]];
@@ -66,6 +70,7 @@
         [deferred resolveWithValue:nil];
         return ad;
     } error:^id(NSError *error) {
+        TLog(@"Genreator did not receive ad");
         [self.spinner removeFromSuperview];
         [placement.adView setNeedsLayout];
 
@@ -80,10 +85,12 @@
 }
 
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement {
+    TLog(@"pkey:%@",placement.placementKey);
     return [self.adService prefetchAdsForPlacement:placement];
 }
 
 - (STRPromise *)prefetchForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue {
+    TLog(@"pkey:%@ apKey:%@, apValue%@",placement.placementKey, apKey, apValue);
     return [self.adService fetchAdForPlacement:placement auctionParameterKey:apKey auctionParameterValue:apValue];
 }
 

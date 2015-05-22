@@ -7,6 +7,7 @@
 //
 
 #import <objc/runtime.h>
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 #import "STRDFPAdGenerator.h"
 
@@ -20,8 +21,7 @@
 #import "STRDFPManager.h"
 #import "STRInjector.h"
 #import "STRRestClient.h"
-
-#import <GoogleMobileAds/GoogleMobileAds.h>
+#import "STRLogging.h"
 
 char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
@@ -57,11 +57,15 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 }
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement {
+    TLog(@"pkey:%@",placement.placementKey);
     if ([self.adService isAdCachedForPlacement:placement]) {
+        TLog(@"DFP Ad Cached");
         //DFPDeferred is used for UITableView and UICollectionView APIs to prefetch ads
         if (placement.DFPDeferred != nil) {
+            TLog(@"DFP Deferred being resolved");
             [placement.DFPDeferred resolveWithValue:nil];
         } else {
+            TLog(@"Fetching cached DFP Ad");
             STRPromise *adPromise = [self.adService fetchAdForPlacement:placement];
             [adPromise then:^id(STRAdvertisement *ad) {
 
@@ -77,11 +81,14 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
             }];
         }
     } else if (placement.DFPPath && [placement.DFPPath length] > 0) {
+        TLog(@"Make Request to DFP. DFPPath:%@", placement.DFPPath);
         [self initializeDFPRrequesForPlacement:placement];
     } else {
+        TLog(@"Request DFP Path");
         STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
         [DFPPathPromise then:^id(NSString *value) {
             if ([value length] > 0) {
+                TLog(@"DFPPath received:%@", value);
                 placement.DFPPath = value;
                 [self initializeDFPRrequesForPlacement:placement];
             } else {
@@ -102,6 +109,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 #pragma mark private
 
 - (STRPromise *)fetchDFPPathForPlacementKey:(NSString *)placementKey {
+    TLog(@"pkey:%@", placementKey);
     STRDeferred *deferred = [STRDeferred defer];
     
     NSString *DFPPath = self.DFPPathCache[placementKey];
@@ -122,6 +130,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 }
 
 - (void)initializeDFPRrequesForPlacement:(STRAdPlacement *)placement {
+    TLog(@"");
     self.bannerView.adUnitID = placement.DFPPath;
     self.bannerView.rootViewController = placement.presentingViewController;
 
@@ -138,7 +147,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 
 #pragma mark GAdBannerViewDelegate
 - (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSLog(@"%@", error);
+    ALog(@"%@", error);
     [[STRDFPManager sharedInstance] updateDelegateWithNoAdShownforPlacement:view.adUnitID];
 }
 

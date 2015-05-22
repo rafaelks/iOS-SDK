@@ -13,6 +13,7 @@
 #import "STRInjector.h"
 #import "STRAdPlacement.h"
 #import "STRPromise.h"
+#import "STRLogging.h"
 
 @interface STRGridlikeViewDataSourceProxy ()
 
@@ -54,6 +55,7 @@
 }
 
 - (instancetype)copyWithNewDataSource:(id)newDataSource {
+    TLog(@"");
     STRGridlikeViewDataSourceProxy *copy = [[[self class] alloc] initWithAdCellReuseIdentifier:self.adCellReuseIdentifier
                                                                                      placementKey:self.placementKey
                                                                          presentingViewController:self.presentingViewController
@@ -64,13 +66,16 @@
 }
 
 - (void)prefetchAdForGridLikeView:(id)gridlikeView atIndex:(NSInteger)index {
+    TLog(@"");
     self.gridlikeView = gridlikeView;
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     STRPromise *adPromise = [adGenerator prefetchAdForPlacement:self.placement];
     [adPromise then:^id(id value) {
+        TLog(@"Prefetch succeeded");
         [self.gridlikeView reloadData];
         return self.adjuster;
     } error:^id(NSError *error) {
+        TLog(@"Prefetch failed");
         return self.adjuster;
     }];
 }
@@ -82,6 +87,7 @@
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    TLog(@"");
     NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
@@ -89,6 +95,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TLog(@"");
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
         return [self adCellForTableView:tableView atIndexPath:indexPath];
     }
@@ -99,6 +106,7 @@
 
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    TLog(@"");
     NSInteger numberofContentRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
@@ -106,6 +114,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    TLog(@"");
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
         return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
     }
@@ -116,6 +125,7 @@
 
 #pragma mark - STRAdViewDelegate
 - (void)adView:(id<STRAdView>)adView didFetchArticlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd andArticlesBetweenAds:(NSInteger)articlesBetweenAds forPlacementKey:(NSString *)placementKey {
+    TLog(@"");
     self.adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
     self.adjuster.articlesBetweenAds = articlesBetweenAds;
 }
@@ -138,6 +148,7 @@
 #pragma mark - Private
 
 - (UITableViewCell *)adCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+    TLog(@"");
     UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];
     if (!adCell) {
         [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib before providing to SharethroughSDK.", self.adCellReuseIdentifier];
@@ -162,6 +173,7 @@
 }
 
 - (UICollectionViewCell *)adCellForCollectionView:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
+    TLog(@"");
     UICollectionViewCell<STRAdView> *adCell = [collectionView dequeueReusableCellWithReuseIdentifier:self.adCellReuseIdentifier forIndexPath:indexPath];
 
     if (![adCell conformsToProtocol:@protocol(STRAdView)]) {

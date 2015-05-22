@@ -29,6 +29,28 @@
 			name = SharethroughSDK;
 			productName = "Build Framework";
 		};
+		B2B963541B0F9E8600404578 /* SharethroughSDK+Integration */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B2B9636E1B0F9E8600404578 /* Build configuration list for PBXAggregateTarget "SharethroughSDK+Integration" */;
+			buildPhases = (
+				B2B963551B0F9E8600404578 /* Run Version Update Script */,
+				B2B963561B0F9E8600404578 /* Build static library */,
+				B2B963571B0F9E8600404578 /* Build Framework Structure with Fat Binary */,
+				B2B963581B0F9E8600404578 /* Copy Header Files */,
+				B2B9635E1B0F9E8600404578 /* Copy Resource Files */,
+				B2B963601B0F9E8600404578 /* Copy built framework to /built-framework directory within project */,
+				B2B963611B0F9E8600404578 /* Build static library + DFP */,
+				B2B963621B0F9E8600404578 /* Build DFP Framework Structure with Fat Binary */,
+				B2B963631B0F9E8600404578 /* Copy DFP Header Files */,
+				B2B9636A1B0F9E8600404578 /* Copy DFP Resource Files */,
+				B2B9636C1B0F9E8600404578 /* Copy built DFP framework to /built-framework directory within project */,
+				B2B9636D1B0F9E8600404578 /* Copy podspec */,
+			);
+			dependencies = (
+			);
+			name = "SharethroughSDK+Integration";
+			productName = "Build Framework";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -191,6 +213,140 @@
 		B2B466401A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466411A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466421A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
+		B2B962CC1B0F9AFD00404578 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
+		B2B962CD1B0F9AFD00404578 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
+		B2B962CE1B0F9AFD00404578 /* STRDFPGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E219B9367F007C2FAB /* STRDFPGridlikeViewDataSourceProxy.m */; };
+		B2B962CF1B0F9AFD00404578 /* STRAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DEB188E00C100D02568 /* STRAdvertisement.m */; };
+		B2B962D01B0F9AFD00404578 /* play-btn-300x.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40818AAA242006061C2 /* play-btn-300x.c */; };
+		B2B962D11B0F9AFD00404578 /* STRYouTubeEmbedPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */; };
+		B2B962D21B0F9AFD00404578 /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
+		B2B962D31B0F9AFD00404578 /* STRAdVine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4625189C29B0001B407A /* STRAdVine.m */; };
+		B2B962D41B0F9AFD00404578 /* hosted_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */; };
+		B2B962D51B0F9AFD00404578 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
+		B2B962D61B0F9AFD00404578 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; };
+		B2B962D71B0F9AFD00404578 /* UICollectionView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AE58227818A2F04F00672653 /* UICollectionView+STR.m */; };
+		B2B962D81B0F9AFD00404578 /* STRDFPMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128EB19B936D9007C2FAB /* STRDFPMediator.m */; };
+		B2B962D91B0F9AFD00404578 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF0188E011100D02568 /* SharethroughSDK.m */; };
+		B2B962DA1B0F9AFD00404578 /* instagram_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */; };
+		B2B962DB1B0F9AFD00404578 /* STRAdPinterest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */; };
+		B2B962DC1B0F9AFD00404578 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
+		B2B962DD1B0F9AFD00404578 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDF188E004900D02568 /* STRRestClient.m */; };
+		B2B962DE1B0F9AFD00404578 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
+		B2B962DF1B0F9AFD00404578 /* STRAdClickout.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8CE18AD831200969C30 /* STRAdClickout.m */; };
+		B2B962E01B0F9AFD00404578 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
+		B2B962E11B0F9AFD00404578 /* STRDFPAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E719B936D9007C2FAB /* STRDFPAppModule.m */; };
+		B2B962E21B0F9AFD00404578 /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
+		B2B962E31B0F9AFD00404578 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
+		B2B962E41B0F9AFD00404578 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
+		B2B962E51B0F9AFD00404578 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
+		B2B962E61B0F9AFD00404578 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
+		B2B962E71B0F9AFD00404578 /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
+		B2B962E81B0F9AFD00404578 /* STRBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807C1899861E008FD848 /* STRBlockWrapper.m */; };
+		B2B962E91B0F9AFD00404578 /* STRNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDD188E004900D02568 /* STRNetworkClient.m */; };
+		B2B962EA1B0F9AFD00404578 /* STRClickoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C618AD56DC00969C30 /* STRClickoutViewController.m */; };
+		B2B962EB1B0F9AFD00404578 /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
+		B2B962EC1B0F9AFD00404578 /* STRGridlikeViewAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD7018A41AB2009F69BD /* STRGridlikeViewAdGenerator.m */; };
+		B2B962ED1B0F9AFD00404578 /* clickout_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */; };
+		B2B962EE1B0F9AFD00404578 /* link_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E6B1A98086600313C61 /* link_thumbnail.c */; };
+		B2B962EF1B0F9AFD00404578 /* STRDFPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E919B936D9007C2FAB /* STRDFPManager.m */; };
+		B2B962F01B0F9AFD00404578 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
+		B2B962F11B0F9AFD00404578 /* STRIndexPathDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRIndexPathDelegateProxy.m */; };
+		B2B962F21B0F9AFD00404578 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
+		B2B962F31B0F9AFD00404578 /* STRTestSafeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AEECC9C318AEAAB600E28C51 /* STRTestSafeModule.m */; };
+		B2B962F41B0F9AFD00404578 /* vine_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC7818AC589E00B4286A /* vine_sample_thumbnail.c */; };
+		B2B962F51B0F9AFD00404578 /* STRImages.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40318AAA078006061C2 /* STRImages.m */; };
+		B2B962F61B0F9AFD00404578 /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
+		B2B962F71B0F9AFD00404578 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
+		B2B962F81B0F9AFD00404578 /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */; };
+		B2B962F91B0F9AFD00404578 /* STRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46CE6B189844AB0096BDE9 /* STRSession.m */; };
+		B2B962FA1B0F9AFD00404578 /* STRFakeAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6E18A41AB2009F69BD /* STRFakeAdGenerator.m */; };
+		B2B962FB1B0F9AFD00404578 /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
+		B2B962FC1B0F9AFD00404578 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; };
+		B2B962FD1B0F9AFD00404578 /* STRYouTubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4629189C5288001B407A /* STRYouTubeViewController.m */; };
+		B2B962FE1B0F9AFD00404578 /* youtube_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */; };
+		B2B962FF1B0F9AFD00404578 /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
+		B2B963001B0F9AFD00404578 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
+		B2B963011B0F9AFD00404578 /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
+		B2B963021B0F9AFD00404578 /* STRInjector.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807E1899861E008FD848 /* STRInjector.m */; };
+		B2B963031B0F9AFD00404578 /* STRDFPAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = E83128E619B936D9007C2FAB /* STRDFPAdGenerator.m */; };
+		B2B963041B0F9AFD00404578 /* pinterest_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */; };
+		B2B963051B0F9AFD00404578 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; };
+		B2B963061B0F9AFD00404578 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
+		B2B963071B0F9AFD00404578 /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
+		B2B963081B0F9AFD00404578 /* STRAdInstagram.m in Sources */ = {isa = PBXBuildFile; fileRef = B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */; };
+		B2B9630A1B0F9AFD00404578 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */; };
+		B2B9630B1B0F9AFD00404578 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
+		B2B9630C1B0F9AFD00404578 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
+		B2B963151B0F9D0B00404578 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
+		B2B963161B0F9D0B00404578 /* STRAdInstagram.m in Sources */ = {isa = PBXBuildFile; fileRef = B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */; };
+		B2B963171B0F9D0B00404578 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; };
+		B2B963181B0F9D0B00404578 /* STRAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DEB188E00C100D02568 /* STRAdvertisement.m */; };
+		B2B963191B0F9D0B00404578 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
+		B2B9631A1B0F9D0B00404578 /* play-btn-300x.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40818AAA242006061C2 /* play-btn-300x.c */; };
+		B2B9631B1B0F9D0B00404578 /* STRYouTubeEmbedPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */; };
+		B2B9631C1B0F9D0B00404578 /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
+		B2B9631D1B0F9D0B00404578 /* STRAdVine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4625189C29B0001B407A /* STRAdVine.m */; };
+		B2B9631E1B0F9D0B00404578 /* hosted_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C218AD39CB00969C30 /* hosted_sample_thumbnail.c */; };
+		B2B9631F1B0F9D0B00404578 /* UICollectionView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AE58227818A2F04F00672653 /* UICollectionView+STR.m */; };
+		B2B963201B0F9D0B00404578 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF0188E011100D02568 /* SharethroughSDK.m */; };
+		B2B963211B0F9D0B00404578 /* STRAdPinterest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */; };
+		B2B963221B0F9D0B00404578 /* STRVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E880767819A29DED006F33B2 /* STRVersion.m */; };
+		B2B963231B0F9D0B00404578 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDF188E004900D02568 /* STRRestClient.m */; };
+		B2B963241B0F9D0B00404578 /* STRAdClickout.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8CE18AD831200969C30 /* STRAdClickout.m */; };
+		B2B963251B0F9D0B00404578 /* STRPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120E11889E76F00297F01 /* STRPromise.m */; };
+		B2B963261B0F9D0B00404578 /* STRVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4633189C72B9001B407A /* STRVideoController.m */; };
+		B2B963271B0F9D0B00404578 /* STRSingletonBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808E1899923E008FD848 /* STRSingletonBlockWrapper.m */; };
+		B2B963281B0F9D0B00404578 /* STRInteractiveAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52B848188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m */; };
+		B2B963291B0F9D0B00404578 /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
+		B2B9632A1B0F9D0B00404578 /* STRAdCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4609189B181B001B407A /* STRAdCache.m */; };
+		B2B9632B1B0F9D0B00404578 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; };
+		B2B9632C1B0F9D0B00404578 /* STRBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807C1899861E008FD848 /* STRBlockWrapper.m */; };
+		B2B9632D1B0F9D0B00404578 /* STRNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDD188E004900D02568 /* STRNetworkClient.m */; };
+		B2B9632E1B0F9D0B00404578 /* instagram_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */; };
+		B2B9632F1B0F9D0B00404578 /* STRClickoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8C618AD56DC00969C30 /* STRClickoutViewController.m */; };
+		B2B963301B0F9D0B00404578 /* STRAdYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C461B189C2538001B407A /* STRAdYouTube.m */; };
+		B2B963311B0F9D0B00404578 /* link_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E6B1A98086600313C61 /* link_thumbnail.c */; };
+		B2B963321B0F9D0B00404578 /* STRGridlikeViewAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD7018A41AB2009F69BD /* STRGridlikeViewAdGenerator.m */; };
+		B2B963331B0F9D0B00404578 /* clickout_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AE39F8D118AD8DB600969C30 /* clickout_sample_thumbnail.c */; };
+		B2B963341B0F9D0B00404578 /* vine-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF3FC18AA9F5A006061C2 /* vine-logo.c */; };
+		B2B963351B0F9D0B00404578 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; };
+		B2B963361B0F9D0B00404578 /* STRIndexPathDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF504189B0B5900A65B27 /* STRIndexPathDelegateProxy.m */; };
+		B2B963371B0F9D0B00404578 /* STRAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C808A1899873B008FD848 /* STRAppModule.m */; };
+		B2B963381B0F9D0B00404578 /* STRTestSafeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AEECC9C318AEAAB600E28C51 /* STRTestSafeModule.m */; };
+		B2B963391B0F9D0B00404578 /* vine_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC7818AC589E00B4286A /* vine_sample_thumbnail.c */; };
+		B2B9633A1B0F9D0B00404578 /* STRImages.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3FF40318AAA078006061C2 /* STRImages.m */; };
+		B2B9633B1B0F9D0B00404578 /* STRBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDC11898227200F02C5A /* STRBeaconService.m */; };
+		B2B9633C1B0F9D0B00404578 /* STRDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3120DC1889E71900297F01 /* STRDeferred.m */; };
+		B2B9633D1B0F9D0B00404578 /* STRAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6A18A41AB2009F69BD /* STRAdGenerator.m */; };
+		B2B9633E1B0F9D0B00404578 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
+		B2B9633F1B0F9D0B00404578 /* STRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46CE6B189844AB0096BDE9 /* STRSession.m */; };
+		B2B963401B0F9D0B00404578 /* STRFakeAdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE52FD6E18A41AB2009F69BD /* STRFakeAdGenerator.m */; };
+		B2B963411B0F9D0B00404578 /* STRAdFixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C463A189C74B0001B407A /* STRAdFixtures.m */; };
+		B2B963421B0F9D0B00404578 /* STRYouTubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9C4629189C5288001B407A /* STRYouTubeViewController.m */; };
+		B2B963431B0F9D0B00404578 /* youtube_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = AEA0EC7518AC50D700B4286A /* youtube_sample_thumbnail.c */; };
+		B2B963441B0F9D0B00404578 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; };
+		B2B963451B0F9D0B00404578 /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
+		B2B963461B0F9D0B00404578 /* STRAdPlacementAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */; };
+		B2B963471B0F9D0B00404578 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
+		B2B963481B0F9D0B00404578 /* STRDateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */; };
+		B2B963491B0F9D0B00404578 /* STRInjector.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C807E1899861E008FD848 /* STRInjector.m */; };
+		B2B9634A1B0F9D0B00404578 /* pinterest_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = E8EE49AB191BF97D00D0B9B6 /* pinterest_sample_thumbnail.c */; };
+		B2B9634B1B0F9D0B00404578 /* pinterest-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B9759018EA052C0054F35F /* pinterest-logo.c */; };
+		B2B9634D1B0F9D0B00404578 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46CE6E189849B00096BDE9 /* AdSupport.framework */; };
+		B2B9634E1B0F9D0B00404578 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8ED3E61885ADF00004AB32 /* Foundation.framework */; };
+		B2B963591B0F9E8600404578 /* SharethroughSDK.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
+		B2B9635A1B0F9E8600404578 /* UITableView+STR.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */; };
+		B2B9635B1B0F9E8600404578 /* STRAdViewDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */; };
+		B2B9635C1B0F9E8600404578 /* STRAdView.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
+		B2B9635D1B0F9E8600404578 /* UICollectionView+STR.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE58227718A2F04F00672653 /* UICollectionView+STR.h */; };
+		B2B9635F1B0F9E8600404578 /* SharethroughSDK-Info.plist in Copy Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
+		B2B963641B0F9E8600404578 /* STRAdView.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
+		B2B963651B0F9E8600404578 /* STRAdViewDelegate.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */; };
+		B2B963661B0F9E8600404578 /* UICollectionView+STR.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE58227718A2F04F00672653 /* UICollectionView+STR.h */; };
+		B2B963671B0F9E8600404578 /* UITableView+STR.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */; };
+		B2B963681B0F9E8600404578 /* SharethroughSDK+DFP.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = E8703DC319B9031700D3FA50 /* SharethroughSDK+DFP.h */; };
+		B2B963691B0F9E8600404578 /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
+		B2B9636B1B0F9E8600404578 /* SharethroughSDK-Info.plist in Copy DFP Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		B2F29E681A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
 		B2F29E691A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
 		B2F29E6A1A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
@@ -353,13 +509,75 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B262B0011AE8009F00E4C72E /* CopyFiles */ = {
+		B2B9630D1B0F9AFD00404578 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B9634F1B0F9D0B00404578 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B963581B0F9E8600404578 /* Copy Header Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
+			dstSubfolderSpec = 0;
+			files = (
+				B2B963591B0F9E8600404578 /* SharethroughSDK.h in Copy Header Files */,
+				B2B9635A1B0F9E8600404578 /* UITableView+STR.h in Copy Header Files */,
+				B2B9635B1B0F9E8600404578 /* STRAdViewDelegate.h in Copy Header Files */,
+				B2B9635C1B0F9E8600404578 /* STRAdView.h in Copy Header Files */,
+				B2B9635D1B0F9E8600404578 /* UICollectionView+STR.h in Copy Header Files */,
+			);
+			name = "Copy Header Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B9635E1B0F9E8600404578 /* Copy Resource Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Resources";
+			dstSubfolderSpec = 0;
+			files = (
+				B2B9635F1B0F9E8600404578 /* SharethroughSDK-Info.plist in Copy Resource Files */,
+			);
+			name = "Copy Resource Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B963631B0F9E8600404578 /* Copy DFP Header Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}+DFP.framework/Versions/A/Headers";
+			dstSubfolderSpec = 0;
+			files = (
+				B2B963641B0F9E8600404578 /* STRAdView.h in Copy DFP Header Files */,
+				B2B963651B0F9E8600404578 /* STRAdViewDelegate.h in Copy DFP Header Files */,
+				B2B963661B0F9E8600404578 /* UICollectionView+STR.h in Copy DFP Header Files */,
+				B2B963671B0F9E8600404578 /* UITableView+STR.h in Copy DFP Header Files */,
+				B2B963681B0F9E8600404578 /* SharethroughSDK+DFP.h in Copy DFP Header Files */,
+				B2B963691B0F9E8600404578 /* SharethroughSDK.h in Copy DFP Header Files */,
+			);
+			name = "Copy DFP Header Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B9636A1B0F9E8600404578 /* Copy DFP Resource Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}+DFP.framework/Versions/A/Resources";
+			dstSubfolderSpec = 0;
+			files = (
+				B2B9636B1B0F9E8600404578 /* SharethroughSDK-Info.plist in Copy DFP Resource Files */,
+			);
+			name = "Copy DFP Resource Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E83128DA19B91500007C2FAB /* Copy DFP Resource Files */ = {
@@ -571,13 +789,15 @@
 		B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdInstagram.m; sourceTree = "<group>"; };
 		B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = instagram_sample_thumbnail.c; sourceTree = "<group>"; };
 		B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKDFPSpec.mm; sourceTree = "<group>"; };
-		B262B0031AE8009F00E4C72E /* libSharethrough-SDK-Integration.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK-Integration.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ThirdParty/GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2867A351AEA9F0700BAF148 /* UIView+Visible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Visible.h"; sourceTree = "<group>"; };
 		B2867A361AEA9F0700BAF148 /* UIView+Visible.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Visible.m"; sourceTree = "<group>"; };
 		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
+		B2B962C81B0F97E200404578 /* STRLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRLogging.h; sourceTree = "<group>"; };
+		B2B963121B0F9AFD00404578 /* libSharethrough-SDK+DFP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK+DFP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2B963531B0F9D0B00404578 /* libSharethrough-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2F29E671A9807C000313C61 /* close-btn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "close-btn.c"; sourceTree = "<group>"; };
 		B2F29E6B1A98086600313C61 /* link_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = link_thumbnail.c; sourceTree = "<group>"; };
 		E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.release.xcconfig"; sourceTree = "<group>"; };
@@ -633,10 +853,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B262B0001AE8009F00E4C72E /* Frameworks */ = {
+		B2B963091B0F9AFD00404578 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B9630A1B0F9AFD00404578 /* GoogleMobileAds.framework in Frameworks */,
+				B2B9630B1B0F9AFD00404578 /* AdSupport.framework in Frameworks */,
+				B2B9630C1B0F9AFD00404578 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B9634C1B0F9D0B00404578 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2B9634D1B0F9D0B00404578 /* AdSupport.framework in Frameworks */,
+				B2B9634E1B0F9D0B00404578 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -892,6 +1124,7 @@
 				AEBAEDCC189839DE00F02C5A /* STRDateProvider.m */,
 				AE3FF40218AAA078006061C2 /* STRImages.h */,
 				AE3FF40318AAA078006061C2 /* STRImages.m */,
+				B2B962C81B0F97E200404578 /* STRLogging.h */,
 				AEB4EF4418AAB03E00B69CAC /* STRYouTubeEmbedPage.h */,
 				AEB4EF4518AAB03E00B69CAC /* STRYouTubeEmbedPage.m */,
 				B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */,
@@ -982,7 +1215,8 @@
 				AE8ED3E31885ADF00004AB32 /* libSharethrough-SDK.a */,
 				AE2246821886138F00626A29 /* specs.app */,
 				E8703E3219B9092600D3FA50 /* libSharethrough-SDK+DFP.a */,
-				B262B0031AE8009F00E4C72E /* libSharethrough-SDK-Integration.a */,
+				B2B963121B0F9AFD00404578 /* libSharethrough-SDK+DFP.a */,
+				B2B963531B0F9D0B00404578 /* libSharethrough-SDK.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1165,21 +1399,40 @@
 			productReference = AE8ED3E31885ADF00004AB32 /* libSharethrough-SDK.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B262B0021AE8009F00E4C72E /* Sharethrough-SDK-Integration */ = {
+		B2B962C91B0F9AFD00404578 /* Sharethrough-SDK+DFP+Integration */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B262B0181AE8009F00E4C72E /* Build configuration list for PBXNativeTarget "Sharethrough-SDK-Integration" */;
+			buildConfigurationList = B2B9630F1B0F9AFD00404578 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK+DFP+Integration" */;
 			buildPhases = (
-				B262AFFF1AE8009F00E4C72E /* Sources */,
-				B262B0001AE8009F00E4C72E /* Frameworks */,
-				B262B0011AE8009F00E4C72E /* CopyFiles */,
+				B2B962CA1B0F9AFD00404578 /* Check Pods Manifest.lock */,
+				B2B962CB1B0F9AFD00404578 /* Sources */,
+				B2B963091B0F9AFD00404578 /* Frameworks */,
+				B2B9630D1B0F9AFD00404578 /* CopyFiles */,
+				B2B9630E1B0F9AFD00404578 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Sharethrough-SDK-Integration";
-			productName = "Sharethrough-SDK-Integration";
-			productReference = B262B0031AE8009F00E4C72E /* libSharethrough-SDK-Integration.a */;
+			name = "Sharethrough-SDK+DFP+Integration";
+			productName = SharethroughSDK;
+			productReference = B2B963121B0F9AFD00404578 /* libSharethrough-SDK+DFP.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B2B963131B0F9D0B00404578 /* Sharethrough-SDK+Integration */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2B963501B0F9D0B00404578 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK+Integration" */;
+			buildPhases = (
+				B2B963141B0F9D0B00404578 /* Sources */,
+				B2B9634C1B0F9D0B00404578 /* Frameworks */,
+				B2B9634F1B0F9D0B00404578 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Sharethrough-SDK+Integration";
+			productName = SharethroughSDK;
+			productReference = B2B963531B0F9D0B00404578 /* libSharethrough-SDK.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E8703DF519B9092600D3FA50 /* Sharethrough-SDK+DFP */ = {
@@ -1209,11 +1462,6 @@
 			attributes = {
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Sharethrough;
-				TargetAttributes = {
-					B262B0021AE8009F00E4C72E = {
-						CreatedOnToolsVersion = 6.3.1;
-					};
-				};
 			};
 			buildConfigurationList = AE8ED3DE1885ADF00004AB32 /* Build configuration list for PBXProject "SharethroughSDK" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1233,10 +1481,12 @@
 			);
 			projectRoot = "";
 			targets = (
+				AE22466C1885FD8100626A29 /* SharethroughSDK */,
 				AE8ED3E21885ADF00004AB32 /* Sharethrough-SDK */,
 				E8703DF519B9092600D3FA50 /* Sharethrough-SDK+DFP */,
-				B262B0021AE8009F00E4C72E /* Sharethrough-SDK-Integration */,
-				AE22466C1885FD8100626A29 /* SharethroughSDK */,
+				B2B963541B0F9E8600404578 /* SharethroughSDK+Integration */,
+				B2B963131B0F9D0B00404578 /* Sharethrough-SDK+Integration */,
+				B2B962C91B0F9AFD00404578 /* Sharethrough-SDK+DFP+Integration */,
 				AE2246811886138F00626A29 /* specs */,
 			);
 		};
@@ -1358,6 +1608,148 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
+		};
+		B2B962CA1B0F9AFD00404578 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\n#if [[ $? != 0 ]] ; then\n#    cat << EOM\n#error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\n#EOM\n#    exit 1\n#fi\n";
+			showEnvVarsInLog = 0;
+		};
+		B2B9630E1B0F9AFD00404578 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#\"${SRCROOT}/Pods/Target Support Files/Pods-Sharethrough-SDK+DFP/Pods-Sharethrough-SDK+DFP-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2B963551B0F9E8600404578 /* Run Version Update Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Version Update Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#############################################################################################\n#\n# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project. Add the contents to a\n# \"Run Script\" build phase for your application target.\n#\n# This script assumes you are tagging your git repo like so `v0.0`\n#\n#   git tag -a v0.0 -m \"First tag\"\n#   git push origin v0.0\n# Add the contents to a \"Run Script\" build phase for your application target.\n#\n#############################################################################################\n\nset -o errexit\nset -o nounset\n\nINFO_PLIST=\"${PROJECT_DIR}/${PROJECT}/SharethroughSDK-Info\"\necho \"Info.plist: ${INFO_PLIST}\"\n\n# Get git tag and hash in the FullVersion\nFULL_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe | sed -e 's/^v//' -e 's/g//')\n\n# Use the latest tag for short version (You'll have to make sure that all your tags are of the format 0.0.0,\n# this is to satisfy Apple's rule that short version be three integers separated by dots)\nSHORT_VERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" describe --abbrev=0 | sed -e 's/^v//' -e 's/g//')\n\n# Increasing integer, so use the number of commits on the master branch.\nVERSION=$(git --git-dir=\"${PROJECT_DIR}/.git\" --work-tree=\"${PROJECT_DIR}/\" rev-list master | wc -l)\n\n# Print to build log\necho \"VERSION: ${VERSION}\"\necho \"SHORT VERSION: ${SHORT_VERSION}\"\necho \"FULL VERSION: ${FULL_VERSION}\"\n\n#############################################################################################\n#\n# Update -Info.plist in the build direcotry\n#\n#############################################################################################\ndefaults write $INFO_PLIST CFBundleShortVersionString $SHORT_VERSION\ndefaults write $INFO_PLIST CFBundleVersion $VERSION\ndefaults write $INFO_PLIST FullVersion $FULL_VERSION\n\n\n#############################################################################################\n#\n# Update -Version.m file the build direcotry\n#\n#############################################################################################\nsed -i.bak '16s/.*/    return @\"'${FULL_VERSION}'\";/' ${PROJECT_DIR}/${PROJECT}/STRVersion.m\nrm  ${PROJECT_DIR}/${PROJECT}/STRVersion.m.bak";
+		};
+		B2B963561B0F9E8600404578 /* Build static library */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build static library";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK+Integration\" &&\nRESOURCE_BUNDLE_TARGET=\"STRResources\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PROJECT_NAME}\" &&\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos";
+		};
+		B2B963571B0F9E8600404578 /* Build Framework Structure with Fat Binary */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Framework Structure with Fat Binary";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK\" &&\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${STATIC_LIB_TARGET}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${STATIC_LIB_TARGET}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
+		};
+		B2B963601B0F9E8600404578 /* Copy built framework to /built-framework directory within project */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy built framework to /built-framework directory within project";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\nrm -rf \"${BUILT_FRAMEWORK_DIR}\"\nmkdir -p \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${PRODUCT_NAME}.framework\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"";
+		};
+		B2B963611B0F9E8600404578 /* Build static library + DFP */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build static library + DFP";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK+DFP+Integration\" &&\nRESOURCE_BUNDLE_TARGET=\"STRResources\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PROJECT_NAME}\" &&\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target \"${STATIC_LIB_TARGET}\" -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos";
+		};
+		B2B963621B0F9E8600404578 /* Build DFP Framework Structure with Fat Binary */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build DFP Framework Structure with Fat Binary";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK+DFP\" &&\nDFP_PRODUCT_NAME=\"${PRODUCT_NAME}+DFP\" &&\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${STATIC_LIB_TARGET}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${STATIC_LIB_TARGET}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${DFP_PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${DFP_PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${DFP_PRODUCT_NAME}\" \"${FRAMEWORK}/${DFP_PRODUCT_NAME}\"";
+		};
+		B2B9636C1B0F9E8600404578 /* Copy built DFP framework to /built-framework directory within project */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy built DFP framework to /built-framework directory within project";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "UNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nSRC_FRAMEWORK=\"${PRODUCT_NAME}+DFP.framework\" &&\n\nBUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework\"\nFRAMEWORK_CPIO_FOR_SYMLINKS=\"framework_cpio_for_symlinks.cpio\"\n\ncd \"${UNIVERSAL_LIBRARY_DIR}\"\nfind \"${SRC_FRAMEWORK}\" -depth -print | cpio -amod > \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nmv \"framework_cpio_for_symlinks.cpio\" \"${BUILT_FRAMEWORK_DIR}\"\ncd \"${BUILT_FRAMEWORK_DIR}\"\ncpio -idv < \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\nrm \"${FRAMEWORK_CPIO_FOR_SYMLINKS}\"\n\nTHIRD_PARTY_LIB_DIR=\"${PROJECT_DIR}/ThirdParty\"\ncp -r \"${THIRD_PARTY_LIB_DIR}\" \"${BUILT_FRAMEWORK_DIR}\"";
+		};
+		B2B9636D1B0F9E8600404578 /* Copy podspec */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy podspec";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "BUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework/\"\nPODSPEC=\"${PROJECT_DIR}/Podspec/SharethroughSDK.podspec\"\ncp \"${PODSPEC}\" \"${BUILT_FRAMEWORK_DIR}\"\n";
 		};
 		B853E9BE0C0A99730977EA5C /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1639,10 +2031,133 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B262AFFF1AE8009F00E4C72E /* Sources */ = {
+		B2B962CB1B0F9AFD00404578 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B962CC1B0F9AFD00404578 /* STRAdService.m in Sources */,
+				B2B962CD1B0F9AFD00404578 /* UITableView+STR.m in Sources */,
+				B2B962CE1B0F9AFD00404578 /* STRDFPGridlikeViewDataSourceProxy.m in Sources */,
+				B2B962CF1B0F9AFD00404578 /* STRAdvertisement.m in Sources */,
+				B2B962D01B0F9AFD00404578 /* play-btn-300x.c in Sources */,
+				B2B962D11B0F9AFD00404578 /* STRYouTubeEmbedPage.m in Sources */,
+				B2B962D21B0F9AFD00404578 /* STRAdRenderer.m in Sources */,
+				B2B962D31B0F9AFD00404578 /* STRAdVine.m in Sources */,
+				B2B962D41B0F9AFD00404578 /* hosted_sample_thumbnail.c in Sources */,
+				B2B962D51B0F9AFD00404578 /* close-btn.c in Sources */,
+				B2B962D61B0F9AFD00404578 /* yt-logo.c in Sources */,
+				B2B962D71B0F9AFD00404578 /* UICollectionView+STR.m in Sources */,
+				B2B962D81B0F9AFD00404578 /* STRDFPMediator.m in Sources */,
+				B2B962D91B0F9AFD00404578 /* SharethroughSDK.m in Sources */,
+				B2B962DA1B0F9AFD00404578 /* instagram_sample_thumbnail.c in Sources */,
+				B2B962DB1B0F9AFD00404578 /* STRAdPinterest.m in Sources */,
+				B2B962DC1B0F9AFD00404578 /* STRVersion.m in Sources */,
+				B2B962DD1B0F9AFD00404578 /* STRRestClient.m in Sources */,
+				B2B962DE1B0F9AFD00404578 /* intel_sample_logo.c in Sources */,
+				B2B962DF1B0F9AFD00404578 /* STRAdClickout.m in Sources */,
+				B2B962E01B0F9AFD00404578 /* STRPromise.m in Sources */,
+				B2B962E11B0F9AFD00404578 /* STRDFPAppModule.m in Sources */,
+				B2B962E21B0F9AFD00404578 /* STRVideoController.m in Sources */,
+				B2B962E31B0F9AFD00404578 /* STRSingletonBlockWrapper.m in Sources */,
+				B2B962E41B0F9AFD00404578 /* NSMutableArray+Queue.m in Sources */,
+				B2B962E51B0F9AFD00404578 /* STRInteractiveAdViewController.m in Sources */,
+				B2B962E61B0F9AFD00404578 /* STRAdPlacement.m in Sources */,
+				B2B962E71B0F9AFD00404578 /* STRAdCache.m in Sources */,
+				B2B962E81B0F9AFD00404578 /* STRBlockWrapper.m in Sources */,
+				B2B962E91B0F9AFD00404578 /* STRNetworkClient.m in Sources */,
+				B2B962EA1B0F9AFD00404578 /* STRClickoutViewController.m in Sources */,
+				B2B962EB1B0F9AFD00404578 /* STRAdYouTube.m in Sources */,
+				B2B962EC1B0F9AFD00404578 /* STRGridlikeViewAdGenerator.m in Sources */,
+				B2B962ED1B0F9AFD00404578 /* clickout_sample_thumbnail.c in Sources */,
+				B2B962EE1B0F9AFD00404578 /* link_thumbnail.c in Sources */,
+				B2B962EF1B0F9AFD00404578 /* STRDFPManager.m in Sources */,
+				B2B962F01B0F9AFD00404578 /* vine-logo.c in Sources */,
+				B2B962F11B0F9AFD00404578 /* STRIndexPathDelegateProxy.m in Sources */,
+				B2B962F21B0F9AFD00404578 /* STRAppModule.m in Sources */,
+				B2B962F31B0F9AFD00404578 /* STRTestSafeModule.m in Sources */,
+				B2B962F41B0F9AFD00404578 /* vine_sample_thumbnail.c in Sources */,
+				B2B962F51B0F9AFD00404578 /* STRImages.m in Sources */,
+				B2B962F61B0F9AFD00404578 /* STRBeaconService.m in Sources */,
+				B2B962F71B0F9AFD00404578 /* STRDeferred.m in Sources */,
+				B2B962F81B0F9AFD00404578 /* STRAdGenerator.m in Sources */,
+				B2B962F91B0F9AFD00404578 /* STRSession.m in Sources */,
+				B2B962FA1B0F9AFD00404578 /* STRFakeAdGenerator.m in Sources */,
+				B2B962FB1B0F9AFD00404578 /* STRAdFixtures.m in Sources */,
+				B2B962FC1B0F9AFD00404578 /* UIView+Visible.m in Sources */,
+				B2B962FD1B0F9AFD00404578 /* STRYouTubeViewController.m in Sources */,
+				B2B962FE1B0F9AFD00404578 /* youtube_sample_thumbnail.c in Sources */,
+				B2B962FF1B0F9AFD00404578 /* STRGridlikeViewDataSourceProxy.m in Sources */,
+				B2B963001B0F9AFD00404578 /* STRAdPlacementAdjuster.m in Sources */,
+				B2B963011B0F9AFD00404578 /* STRDateProvider.m in Sources */,
+				B2B963021B0F9AFD00404578 /* STRInjector.m in Sources */,
+				B2B963031B0F9AFD00404578 /* STRDFPAdGenerator.m in Sources */,
+				B2B963041B0F9AFD00404578 /* pinterest_sample_thumbnail.c in Sources */,
+				B2B963051B0F9AFD00404578 /* instagram-logo.c in Sources */,
+				B2B963061B0F9AFD00404578 /* SharethroughSDK+DFP.m in Sources */,
+				B2B963071B0F9AFD00404578 /* pinterest-logo.c in Sources */,
+				B2B963081B0F9AFD00404578 /* STRAdInstagram.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B963141B0F9D0B00404578 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2B963151B0F9D0B00404578 /* STRAdService.m in Sources */,
+				B2B963161B0F9D0B00404578 /* STRAdInstagram.m in Sources */,
+				B2B963171B0F9D0B00404578 /* UITableView+STR.m in Sources */,
+				B2B963181B0F9D0B00404578 /* STRAdvertisement.m in Sources */,
+				B2B963191B0F9D0B00404578 /* intel_sample_logo.c in Sources */,
+				B2B9631A1B0F9D0B00404578 /* play-btn-300x.c in Sources */,
+				B2B9631B1B0F9D0B00404578 /* STRYouTubeEmbedPage.m in Sources */,
+				B2B9631C1B0F9D0B00404578 /* STRAdRenderer.m in Sources */,
+				B2B9631D1B0F9D0B00404578 /* STRAdVine.m in Sources */,
+				B2B9631E1B0F9D0B00404578 /* hosted_sample_thumbnail.c in Sources */,
+				B2B9631F1B0F9D0B00404578 /* UICollectionView+STR.m in Sources */,
+				B2B963201B0F9D0B00404578 /* SharethroughSDK.m in Sources */,
+				B2B963211B0F9D0B00404578 /* STRAdPinterest.m in Sources */,
+				B2B963221B0F9D0B00404578 /* STRVersion.m in Sources */,
+				B2B963231B0F9D0B00404578 /* STRRestClient.m in Sources */,
+				B2B963241B0F9D0B00404578 /* STRAdClickout.m in Sources */,
+				B2B963251B0F9D0B00404578 /* STRPromise.m in Sources */,
+				B2B963261B0F9D0B00404578 /* STRVideoController.m in Sources */,
+				B2B963271B0F9D0B00404578 /* STRSingletonBlockWrapper.m in Sources */,
+				B2B963281B0F9D0B00404578 /* STRInteractiveAdViewController.m in Sources */,
+				B2B963291B0F9D0B00404578 /* STRAdPlacement.m in Sources */,
+				B2B9632A1B0F9D0B00404578 /* STRAdCache.m in Sources */,
+				B2B9632B1B0F9D0B00404578 /* yt-logo.c in Sources */,
+				B2B9632C1B0F9D0B00404578 /* STRBlockWrapper.m in Sources */,
+				B2B9632D1B0F9D0B00404578 /* STRNetworkClient.m in Sources */,
+				B2B9632E1B0F9D0B00404578 /* instagram_sample_thumbnail.c in Sources */,
+				B2B9632F1B0F9D0B00404578 /* STRClickoutViewController.m in Sources */,
+				B2B963301B0F9D0B00404578 /* STRAdYouTube.m in Sources */,
+				B2B963311B0F9D0B00404578 /* link_thumbnail.c in Sources */,
+				B2B963321B0F9D0B00404578 /* STRGridlikeViewAdGenerator.m in Sources */,
+				B2B963331B0F9D0B00404578 /* clickout_sample_thumbnail.c in Sources */,
+				B2B963341B0F9D0B00404578 /* vine-logo.c in Sources */,
+				B2B963351B0F9D0B00404578 /* instagram-logo.c in Sources */,
+				B2B963361B0F9D0B00404578 /* STRIndexPathDelegateProxy.m in Sources */,
+				B2B963371B0F9D0B00404578 /* STRAppModule.m in Sources */,
+				B2B963381B0F9D0B00404578 /* STRTestSafeModule.m in Sources */,
+				B2B963391B0F9D0B00404578 /* vine_sample_thumbnail.c in Sources */,
+				B2B9633A1B0F9D0B00404578 /* STRImages.m in Sources */,
+				B2B9633B1B0F9D0B00404578 /* STRBeaconService.m in Sources */,
+				B2B9633C1B0F9D0B00404578 /* STRDeferred.m in Sources */,
+				B2B9633D1B0F9D0B00404578 /* STRAdGenerator.m in Sources */,
+				B2B9633E1B0F9D0B00404578 /* close-btn.c in Sources */,
+				B2B9633F1B0F9D0B00404578 /* STRSession.m in Sources */,
+				B2B963401B0F9D0B00404578 /* STRFakeAdGenerator.m in Sources */,
+				B2B963411B0F9D0B00404578 /* STRAdFixtures.m in Sources */,
+				B2B963421B0F9D0B00404578 /* STRYouTubeViewController.m in Sources */,
+				B2B963431B0F9D0B00404578 /* youtube_sample_thumbnail.c in Sources */,
+				B2B963441B0F9D0B00404578 /* UIView+Visible.m in Sources */,
+				B2B963451B0F9D0B00404578 /* STRGridlikeViewDataSourceProxy.m in Sources */,
+				B2B963461B0F9D0B00404578 /* STRAdPlacementAdjuster.m in Sources */,
+				B2B963471B0F9D0B00404578 /* NSMutableArray+Queue.m in Sources */,
+				B2B963481B0F9D0B00404578 /* STRDateProvider.m in Sources */,
+				B2B963491B0F9D0B00404578 /* STRInjector.m in Sources */,
+				B2B9634A1B0F9D0B00404578 /* pinterest_sample_thumbnail.c in Sources */,
+				B2B9634B1B0F9D0B00404578 /* pinterest-logo.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1848,10 +2363,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1885,6 +2397,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1936,41 +2449,122 @@
 			};
 			name = Release;
 		};
-		B262B0141AE8009F00E4C72E /* Debug */ = {
+		B2B963101B0F9AFD00404578 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DSTROOT = /tmp/SharethroughSDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
+					"$(PROJECT_DIR)/ThirdParty",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
+					"TRACE=1",
 				);
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_CFLAGS = "";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_NAME = "Sharethrough-SDK+DFP";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		B262B0151AE8009F00E4C72E /* Release */ = {
+		B2B963111B0F9AFD00404578 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DSTROOT = /tmp/SharethroughSDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
+					"$(PROJECT_DIR)/ThirdParty",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "TRACE=1";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_CFLAGS = "";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_NAME = "Sharethrough-SDK+DFP";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		B2B963511B0F9D0B00404578 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DSTROOT = /tmp/SharethroughSDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"TRACE=1",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "Sharethrough-SDK";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B2B963521B0F9D0B00404578 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DSTROOT = /tmp/SharethroughSDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "TRACE=1";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "Sharethrough-SDK";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		B2B9636F1B0F9E8600404578 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TRACE=1",
+					"DEBUG=1",
+				);
+				PRODUCT_NAME = SharethroughSDK;
+			};
+			name = Debug;
+		};
+		B2B963701B0F9E8600404578 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
+				GCC_PREPROCESSOR_DEFINITIONS = "TRACE=1";
+				PRODUCT_NAME = SharethroughSDK;
 			};
 			name = Release;
 		};
@@ -2055,11 +2649,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B262B0181AE8009F00E4C72E /* Build configuration list for PBXNativeTarget "Sharethrough-SDK-Integration" */ = {
+		B2B9630F1B0F9AFD00404578 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK+DFP+Integration" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B262B0141AE8009F00E4C72E /* Debug */,
-				B262B0151AE8009F00E4C72E /* Release */,
+				B2B963101B0F9AFD00404578 /* Debug */,
+				B2B963111B0F9AFD00404578 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2B963501B0F9D0B00404578 /* Build configuration list for PBXNativeTarget "Sharethrough-SDK+Integration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2B963511B0F9D0B00404578 /* Debug */,
+				B2B963521B0F9D0B00404578 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2B9636E1B0F9E8600404578 /* Build configuration list for PBXAggregateTarget "SharethroughSDK+Integration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2B9636F1B0F9E8600404578 /* Debug */,
+				B2B963701B0F9E8600404578 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

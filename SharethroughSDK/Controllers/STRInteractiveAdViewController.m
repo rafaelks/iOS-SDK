@@ -18,6 +18,7 @@
 #import "STRInjector.h"
 #import "STRClickoutViewController.h"
 #import "STRImages.h"
+#import "STRLogging.h"
 
 @interface STRInteractiveAdViewController () 
 
@@ -48,6 +49,7 @@
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
+    TLog(@"");
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor blackColor];
@@ -84,11 +86,13 @@
 #pragma mark - Actions
 
 - (void)doneButtonPressed:(id)sender {
+    TLog(@"");
     [self.sharePopoverController dismissPopoverAnimated:NO];
     [self.delegate closedInteractiveAdView:self];
 }
 
 - (void)shareButtonPressed:(id)sender {
+    TLog(@"");
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[self.ad.title, [self.ad.shareURL absoluteString]] applicationActivities:nil];
     activityController.excludedActivityTypes = @[
                                                  UIActivityTypePostToWeibo,
@@ -120,6 +124,7 @@
 }
 
 - (void)customEngagementButtonPressed:(id)sender {
+    TLog(@"");
     [self.application openURL:self.ad.customEngagemnetURL];
 }
 

@@ -13,7 +13,7 @@
 #import "STRAdvertisement.h"
 #import "STRAdVine.h"
 #import "STRBeaconService.h"
-
+#import "STRLogging.h"
 
 @interface STRVideoController ()
 
@@ -49,6 +49,7 @@
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
+    TLog(@"");
     [super viewDidLoad];
 
     [self attachMoviePlayerView];
@@ -56,6 +57,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    TLog(@"");
     [super viewWillAppear:animated];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerIsReady:) name:MPMoviePlayerReadyForDisplayDidChangeNotification object:self.moviePlayerController];
@@ -63,6 +65,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    TLog(@"");
     [super viewWillDisappear:animated];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerReadyForDisplayDidChangeNotification object:self.moviePlayerController];

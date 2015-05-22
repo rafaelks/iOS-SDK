@@ -9,6 +9,7 @@
 #import "STRRestClient.h"
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
+#import "STRLogging.h"
 
 
 @interface STRRestClient ()
@@ -35,6 +36,7 @@
 
 
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters {
+    TLog(@"params:%@",parameters);
     STRDeferred *deferred = [STRDeferred defer];
 
     NSString *urlString = [self.adServerHostName stringByAppendingString:[self encodedQueryParams:parameters]];
@@ -58,6 +60,7 @@
 }
 
 - (STRPromise *)getDFPPathForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey:%@",placementKey);
     STRDeferred *deferred = [STRDeferred defer];
 
     NSString *urlString = [NSString stringWithFormat:self.dfpPathUrlFormat, placementKey];
@@ -86,6 +89,7 @@
 }
 
 - (void)sendBeaconWithParameters:(NSDictionary *)parameters {
+    TLog(@"params:%@",parameters);
     NSString *urlString = [self.beaconServerHostName stringByAppendingString:[self encodedQueryParams:parameters]];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 
@@ -93,14 +97,17 @@
 }
 
 - (void)sendBeaconWithURL:(NSURL *)url{
+    TLog(@"url:%@",url);
     [self.networkClient get:[NSURLRequest requestWithURL:url]];
 }
 
 - (NSString *)getUserAgent {
+    TLog(@"");
     return [self.networkClient userAgent];
 }
 
 - (NSString*)encodedQueryParams:(NSDictionary *)params {
+    TLog(@"");
     NSMutableArray *parts = [NSMutableArray array];
     for (id key in params) {
         id value = params[key];

@@ -8,6 +8,7 @@
 
 #import "STRClickoutViewController.h"
 #import "STRAdvertisement.h"
+#import "STRLogging.h"
 
 @interface STRClickoutViewController ()
 
@@ -27,6 +28,7 @@
 }
 
 - (void)viewDidLoad {
+    TLog(@"");
     UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     self.webview = webView;
     self.webview.scalesPageToFit = YES;

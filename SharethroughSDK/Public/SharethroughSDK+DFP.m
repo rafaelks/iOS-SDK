@@ -20,6 +20,7 @@
 #import "STRDFPAppModule.h"
 #import "STRAdCache.h"
 #import "STRDFPManager.h"
+#import "STRLogging.h"
 
 @interface SharethroughSDKDFP ()
 
@@ -35,6 +36,7 @@
     static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
+        TLog(@"WARNING: This version of the SDK was built with trace logging for debugging and integration purposes and should not be used in production.");
     });
 
     return sharedObject;
@@ -47,6 +49,7 @@
         [self.injector getInstance:[STRDFPAdGenerator class]];
         STRDFPManager *dfpManager = [STRDFPManager sharedInstance];
         dfpManager.injector = self.injector;
+
         NSString *model = [[UIDevice currentDevice] model];
         if ([model hasSuffix:@"Simulator"]) {
             NSLog(@"WARNING using %@ is not supported for DFP because only test ads are available", model);
@@ -56,6 +59,7 @@
 }
 
 - (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate {
+    TLog(@"placementKey:%@",placementKey);
 
     STRDeferred *deferred = [STRDeferred defer];
 
@@ -66,11 +70,13 @@
     adPlacement.DFPDeferred = deferred;
 
     [deferred.promise then:^id(id value) {
+        TLog(@"Prefetch succeeded.");
         if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
             [delegate adView:nil didFetchAdForPlacementKey:placementKey atIndex:0];
         }
         return value;
     } error:^id(NSError *error) {
+        TLog(@"Prefetch failed.");
         if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
             [delegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
         }
@@ -82,6 +88,7 @@
 }
 
 - (BOOL)isAdAvailableForPlacement:(NSString *)placementKey atIndex:(NSInteger)index {
+    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
     STRAdPlacement *placement = [[STRAdPlacement alloc] init];
     placement.placementKey = placementKey;
     placement.adIndex = index;
@@ -94,7 +101,7 @@
               dfpPath:(NSString *)dfpPath
 presentingViewController:(UIViewController *)presentingViewController
              delegate:(id<STRAdViewDelegate>)delegate {
-
+    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:view
                                                             PlacementKey:placementKey
                                                 presentingViewController:presentingViewController
@@ -114,7 +121,7 @@ presentingViewController:(UIViewController *)presentingViewController
   presentingViewController:(UIViewController *)presentingViewController
                   adHeight:(CGFloat)adHeight
         adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
-
+    TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     STRDFPGridlikeViewDataSourceProxy *dataSourceProxy = [[STRDFPGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier placementKey:placementKey presentingViewController:presentingViewController injector:self.injector];
 
@@ -135,7 +142,7 @@ presentingViewController:(UIViewController *)presentingViewController
        presentingViewController:(UIViewController *)presentingViewController
                          adSize:(CGSize)adSize
              adInitialIndexPath:(NSIndexPath *)adInitialIndexPath {
-
+    TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     STRDFPGridlikeViewDataSourceProxy *dataSourceProxy = [[STRDFPGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier
                                                                                                                      placementKey:placementKey
@@ -154,6 +161,7 @@ presentingViewController:(UIViewController *)presentingViewController
 }
 
 - (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds {
+    TLog(@"");
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
     return [adCache setAdCacheTimeoutInSeconds:seconds];
 }

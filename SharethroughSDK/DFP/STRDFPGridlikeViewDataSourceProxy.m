@@ -14,6 +14,7 @@
 #import "STRInjector.h"
 #import "STRAdPlacement.h"
 #import "STRPromise.h"
+#import "STRLogging.h"
 
 @interface STRDFPGridlikeViewDataSourceProxy ()
 
@@ -34,6 +35,7 @@
 }
 
 - (void)prefetchAdForGridLikeView:(id)gridlikeView atIndex:(NSInteger)index {
+    TLog(@"");
     self.gridlikeView = gridlikeView;
     if ([gridlikeView isKindOfClass:[UITableView class]] || [gridlikeView isKindOfClass:[UICollectionView class]]) {
 

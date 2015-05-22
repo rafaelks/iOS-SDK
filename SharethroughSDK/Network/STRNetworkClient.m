@@ -9,12 +9,14 @@
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
 #import "STRVersion.h"
+#import "STRLogging.h"
 
 @implementation STRNetworkClient {
     NSMutableString *userAgentString;
 }
 
 - (STRPromise *)get:(NSURLRequest *)request {
+    TLog(@"request:%@",request);
 
     STRDeferred *deferred = [STRDeferred defer];
 
@@ -34,6 +36,7 @@
 
 - (NSString *)userAgent {
     if (userAgentString) {
+        TLog(@"userAgent:%@",userAgentString);
         return userAgentString;
     }
     
@@ -51,7 +54,8 @@
     [userAgentString appendFormat:@"; iOS %@", [[UIDevice currentDevice] systemVersion]];
     [userAgentString appendFormat:@"; %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]];
     [userAgentString appendFormat:@"; STR %@", [STRVersion current]];
-    
+
+    TLog(@"userAgent:%@",userAgentString);
     return  userAgentString;
 }
 

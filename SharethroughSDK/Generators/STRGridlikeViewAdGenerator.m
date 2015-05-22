@@ -15,6 +15,7 @@
 #import "STRIndexPathDelegateProxy.h"
 #import "STRAdPlacementAdjuster.h"
 #import "STRGridlikeViewDataSourceProxy.h"
+#import "STRLogging.h"
 
 const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey";
 
@@ -47,7 +48,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
         articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
            articlesBetweenAds:(NSUInteger)articlesBetweenAds
                     adSection:(NSInteger)adSection {
-
+    TLog(@"pkey:%@", placementKey);
     [self validateGridlikeView:gridlikeView];
 
     STRGridlikeViewAdGenerator *oldGenerator = objc_getAssociatedObject(gridlikeView, STRGridlikeViewAdGeneratorKey);
@@ -101,12 +102,6 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     self.dataSourceProxy = [self.dataSourceProxy copyWithNewDataSource:newOriginalDataSource];
     [gridlikeView setDataSource:self.dataSourceProxy];
 }
-
-#pragma mark - State Information
-- (NSInteger)numberOfAdsInGridLikeView {
-    return self.dataSourceProxy.numAdsInView;
-}
-
 
 #pragma mark - private
 

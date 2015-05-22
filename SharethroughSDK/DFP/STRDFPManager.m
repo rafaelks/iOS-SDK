@@ -11,6 +11,7 @@
 #import "STRAdGenerator.h"
 #import "STRAppModule.h"
 #import "STRDeferred.h"
+#import "STRLogging.h"
 
 static NSString *const stxMonetize = @"STX_MONETIZE";
 static NSString *const dfpCreativeKey = @"creative_key";
@@ -38,10 +39,12 @@ static NSString *const dfpCampaignKey = @"campaign_key";
 }
 
 - (void)cacheAdPlacement:(STRAdPlacement *)adPlacement {
+    TLog(@"pkey:%@", adPlacement.placementKey);
     [self.adPlacementCache setObject:adPlacement forKey:adPlacement.DFPPath];
 }
 
 - (STRPromise *)renderAdForParameter:(NSString *)parameter inPlacement:(NSString *)DFPPath {
+    TLog(@"param:%@ dfpPath:%@", parameter, DFPPath);
     STRDeferred *deferred = [STRDeferred defer];
 
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:DFPPath];
@@ -55,6 +58,7 @@ static NSString *const dfpCampaignKey = @"campaign_key";
         STRPromise *promise;
 
         if ([parameter isEqualToString:stxMonetize]) {
+            TLog(@"Fetching monetize ads");
             if (adPlacement.DFPDeferred != nil) {
                 promise = [generator prefetchAdForPlacement:adPlacement];
             } else {
@@ -63,6 +67,7 @@ static NSString *const dfpCampaignKey = @"campaign_key";
         } else if ([parameter rangeOfString:dfpCreativeKey options:NSCaseInsensitiveSearch].location != NSNotFound ||
                    [parameter rangeOfString:dfpCampaignKey options:NSCaseInsensitiveSearch].location != NSNotFound)
         {
+            TLog(@"Fetching creative_key or campaign_key");
             NSArray *parameterParts = [parameter componentsSeparatedByString:@"="];
             if (parameterParts.count != 2) {
                 NSLog(@"Invalid parameter %@, is not correctly formatted with %@=<key> or %@=<key>", parameter, dfpCampaignKey, dfpCreativeKey);
@@ -76,6 +81,7 @@ static NSString *const dfpCampaignKey = @"campaign_key";
                 }
             }
         } else { //fall back support for older params
+            TLog(@"Falling back for old style creative_key");
             if (adPlacement.DFPDeferred != nil) {
                 promise = [generator prefetchForPlacement:adPlacement auctionParameterKey:dfpCreativeKey auctionParameterValue:parameter];
             } else {
@@ -84,12 +90,14 @@ static NSString *const dfpCampaignKey = @"campaign_key";
         }
 
         [promise then:^id(id value) {
+            TLog(@"DFP Ad fetched from STX");
             if (adPlacement.DFPDeferred != nil) {
                 [adPlacement.DFPDeferred resolveWithValue:nil];
             }
             [deferred resolveWithValue:adPlacement.adView];
             return value;
         } error:^id(NSError *error) {
+            TLog(@"DFP Ad fetch from STX failed");
             if (adPlacement.DFPDeferred != nil) {
                 [adPlacement.DFPDeferred rejectWithError:error];
             }
@@ -102,6 +110,7 @@ static NSString *const dfpCampaignKey = @"campaign_key";
 }
 
 - (void)updateDelegateWithNoAdShownforPlacement:(NSString *)DFPPath {
+    TLog(@"");
     STRAdPlacement *adPlacement = [self.adPlacementCache objectForKey:DFPPath];
 
     if ([adPlacement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {

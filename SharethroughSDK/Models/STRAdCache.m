@@ -10,6 +10,7 @@
 #import "STRAdvertisement.h"
 #import "STRDateProvider.h"
 #import "STRAdPlacement.h"
+#import "STRLogging.h"
 
 #import "NSMutableArray+Queue.h"
 #import "UIView+Visible.h"
@@ -51,6 +52,7 @@
 }
 
 - (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds {
+    TLog(@"seconds:%tu", seconds);
     if (seconds < 20) {
         seconds = 20;
     }
@@ -59,6 +61,7 @@
 }
 
 - (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeIndex {
+    TLog(@"placementKey:%@, initialize:%@", placement.placementKey, initializeIndex ? @"YES" : @"NO");
     NSMutableArray *cachedCreativesQueue = [self.cachedCreatives objectForKey:placement.placementKey];
     if (cachedCreativesQueue == nil) {
         cachedCreativesQueue = creatives;
@@ -82,11 +85,13 @@
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacement:(STRAdPlacement *)placement {
+    TLog(@"pkey:%@",placement.placementKey);
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
     return [indexToCreativeMap objectForKey:[NSNumber numberWithLong:placement.adIndex]];
 }
 
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey {
+    TLog(@"pkey:%@ ckey:%@", placementKey, creativeKey);
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
     for (id key in indexToCreativeMap) {
         STRAdvertisement *ad = [indexToCreativeMap objectForKey:key];
@@ -105,6 +110,7 @@
 }
 
 - (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement {
+    TLog(@"pkey:%@",placement.placementKey);
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
     if (indexToCreativeMap == nil) {
         indexToCreativeMap = [[NSMutableDictionary alloc] init];
@@ -141,25 +147,32 @@
 
 - (NSUInteger)numberOfAdsAvailableForPlacement:(STRAdPlacement *)placement {
     NSMutableArray *creatives = [self.cachedCreatives objectForKey:placement.placementKey];
+    TLog(@"pkey:%@ creativeCount:%tu",placement.placementKey, [creatives count]);
     return [creatives count];
 }
 
 - (NSInteger)numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:(NSString *)placementKey {
     NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
-    return [creatives count] + [indexToCreativeMap count];
+    NSUInteger count =  [creatives count] + [indexToCreativeMap count];
+    TLog(@"pkey:%@ assignedAndQueued:%tu", placementKey, count);
+    return count;
 }
 
 - (NSArray *)assignedAdIndixesForPlacementKey:(NSString *)placementKey {
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
-    return [indexToCreativeMap allKeys];
+    NSArray *assignedKeys = [indexToCreativeMap allKeys];
+    TLog(@"pkey:%@ assignedKeys:%@",placementKey, assignedKeys);
+    return assignedKeys;
 }
 
 - (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey {
     NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
     if ([creatives count] <= 1 && ![self pendingAdRequestInProgressForPlacement:placementKey]) {
+        TLog(@"Should actually begin for pkey:%@",placementKey);
         return YES;
     }
+    TLog(@"Should NOT begin fetch for pkey:%@",placementKey);
     return NO;
 }
 
@@ -167,21 +180,26 @@
     NSString *existingPlacementKey = [self.pendingRequestPlacementKeys member:placementKey];
     if (existingPlacementKey == nil) { //not currently being requested
         [self.pendingRequestPlacementKeys addObject:placementKey];
+        TLog(@"No request in progress for pkey:%@",placementKey);
         return NO;
     } else {
+        TLog(@"Request in progress for pkey:%@",placementKey);
         return YES;
     }
 }
 
 - (void)clearPendingAdRequestForPlacement:(NSString *)placementKey {
+    TLog(@"pkey:%@",placementKey);
     [self.pendingRequestPlacementKeys removeObject:placementKey];
 }
 
 - (STRAdPlacementInfiniteScrollFields *)getInfiniteScrollFieldsForPlacement:(NSString *)placementKey {
+    TLog(@"pkey:%@",placementKey);
     return self.cachedPlacementInfiniteScrollFields[placementKey];
 }
 
 - (void)saveInfiniteScrollFields:(STRAdPlacementInfiniteScrollFields *)fields {
+    TLog(@"");
     self.cachedPlacementInfiniteScrollFields[fields.placementKey] = fields;
 }
 

@@ -11,6 +11,7 @@
 #import "STRAdYouTube.h"
 #import "STRBeaconService.h"
 #import "STRYouTubeEmbedPage.h"
+#import "STRLogging.h"
 
 @interface STRYouTubeViewController ()<UIWebViewDelegate>
 
@@ -36,6 +37,7 @@
 }
 
 - (void)loadView {
+    TLog(@"");
     UIView *view = [[UIView alloc] initWithFrame:(CGRect){.size.width = 320, .size.height = 568}];
     UIWebView *webview = [[UIWebView alloc] initWithFrame:view.bounds];
     [view addSubview:webview];
@@ -81,6 +83,7 @@
 }
 
 - (void)viewDidLoad {
+    TLog(@"");
     [super viewDidLoad];
     [self.spinner startAnimating];
 

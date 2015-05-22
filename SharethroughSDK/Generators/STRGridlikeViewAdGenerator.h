@@ -34,6 +34,4 @@
 - (void)setOriginalDataSource:(id)newOriginalDataSource
                  gridlikeView:(id)gridlikeView;
 
-- (NSInteger)numberOfAdsInGridLikeView;
-
 @end

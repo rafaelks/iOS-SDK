@@ -21,6 +21,7 @@
 #import "STRAdFixtures.h"
 #import "STRDateProvider.h"
 #import "UIView+Visible.h"
+#import "STRLogging.h"
 
 char const * const STRAdRendererKey = "STRAdRendererKey";
 
@@ -61,6 +62,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 }
 
 - (void)renderAd:(STRAdvertisement *)ad inPlacement:(STRAdPlacement *)placement {
+    TLog(@"pkey:%@ ckey:%@",placement.placementKey, ad.creativeKey);
     self.ad = ad;
     self.ad.placementIndex = placement.adIndex;
     self.placement = placement;
@@ -136,6 +138,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 }
 
 - (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
+    TLog(@"pkey:%@ ckey:%@",self.placement.placementKey, self.ad.creativeKey);
     UIView *view = tapRecognizer.view;
     if ([self.ad.action isEqualToString:STRYouTubeAd] ||
         [self.ad.action isEqualToString:STRHostedVideoAd] ||
@@ -163,6 +166,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (IBAction)tappedDisclosureBtn:(id)sender
 {
+    TLog(@"pkey:%@ ckey:%@",self.placement.placementKey, self.ad.creativeKey);
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
                                                                                                device:[UIDevice currentDevice]
                                                                                           application:[UIApplication sharedApplication]
@@ -175,6 +179,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 #pragma mark - <STRInteractiveAdViewControllerDelegate>
 
 - (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
+    TLog(@"pkey:%@ ckey:%@",self.placement.placementKey, self.ad.creativeKey);
     if ([self.placement.delegate respondsToSelector:@selector(adView:willDismissModalForPlacementKey:)]) {
         [self.placement.delegate adView:self.placement.adView willDismissModalForPlacementKey:self.placement.placementKey];
     }

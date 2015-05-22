@@ -12,6 +12,7 @@
 #import "STRSession.h"
 #import <AdSupport/AdSupport.h>
 #import "STRAdvertisement.h"
+#import "STRLogging.h"
 
 NSString *kLivePlacementStatus = @"live";
 NSString *kPreLivePlacementStatus = @"pre-live";
@@ -39,6 +40,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 }
 
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey {
+    TLog(@"");
     NSDictionary *uniqueParameters = @{@"pkey": valueOrEmpty(placementKey),
                                        @"type": @"impressionRequest"};
     NSMutableDictionary *parameters = [self commonParameters];
@@ -51,6 +53,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
                          auctionParameterKey:(NSString *)apKey
                        auctionParameterValue:(NSString *)apValue
 {
+    TLog(@"");
     NSMutableDictionary *uniqueParameters =  [@{@"pkey": valueOrEmpty(placementKey),
                                                 @"type": @"impressionRequest"} mutableCopy];
     if (apKey && apKey.length > 0) {
@@ -63,6 +66,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 }
 
 - (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+    TLog(@"");
     if (!ad.visibleImpressionBeaconFired) {
         ad.visibleImpressionBeaconFired = YES;
         NSDictionary *uniqueParameters = @{@"type": @"visible"};
@@ -75,6 +79,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 }
 
 - (void)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+    TLog(@"");
     if (!ad.impressionBeaconFired) {
         ad.impressionBeaconFired = YES;
         NSDictionary *uniqueParameters = @{@"type": @"impression"};
@@ -88,6 +93,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 
 - (void)fireThirdPartyBeacons:(NSArray *)beaconPaths forPlacementWithStatus:(NSString *)placementStatus {
     if ([placementStatus isEqualToString:kLivePlacementStatus]) {
+        TLog(@"");
         NSString *timeStamp = [NSString stringWithFormat:@"%lli", [self.dateProvider millisecondsSince1970]];
         for (NSString *urlStub in beaconPaths) {
             NSMutableString *urlString = [urlStub mutableCopy];
@@ -102,6 +108,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 }
 
 - (void)fireVideoPlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size {
+    TLog(@"");
     NSString *userEvent = @"videoPlay";
     if ([ad.action isEqualToString:STRYouTubeAd]) {
         userEvent = @"youtubePlay";
@@ -119,6 +126,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 }
 
 - (void)fireVideoCompletionForAd:(STRAdvertisement *)ad completionPercent:(NSNumber *)completionPercent {
+    TLog(@"");
     NSDictionary *uniqueParameters = @{@"type": @"completionPercent",
                                        @"value": completionPercent};
 
@@ -128,6 +136,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 }
 
 - (void)fireShareForAd:(STRAdvertisement *)ad shareType:(NSString *)uiActivityType {
+    TLog(@"");
     NSDictionary *knownShareTypes = @{UIActivityTypeMail: @"email",
                                            UIActivityTypePostToFacebook: @"facebook",
                                            UIActivityTypePostToTwitter: @"twitter"};
@@ -145,6 +154,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 }
 
 - (void)fireClickForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+    TLog(@"");
     NSDictionary *uniqueParameters = @{@"type": @"userEvent",
                                        @"userEvent": @"clickout",
                                        @"engagement": @"true"};
@@ -157,6 +167,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 #pragma mark - Private
 
 - (NSMutableDictionary *)impressionParametersForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+    TLog(@"");
     NSMutableDictionary *params = [@{@"pwidth": [NSString stringWithFormat:@"%g", adSize.width],
                                      @"pheight": [NSString stringWithFormat:@"%g", adSize.height],
                                      @"placementIndex": [NSString stringWithFormat:@"%ld", (long)ad.placementIndex]}
@@ -183,10 +194,12 @@ static id valueOrEmpty(id object)
     NSMutableDictionary *commonParams = [self commonParameters];
     [commonParams addEntriesFromDictionary:adParams];
 
+    TLog(@"commonParams:%@",commonParams);
     return commonParams;
 }
 
 - (NSMutableDictionary *)commonParameters {
+    TLog(@"");
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     NSString *ploc = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
     NSString *idfa = @"";

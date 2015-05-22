@@ -19,6 +19,7 @@
 #import "STRAdCache.h"
 #import "STRTestSafeModule.h"
 #import "STRAdViewDelegate.h"
+#import "STRLogging.h"
 
 @interface SharethroughSDK ()
 
@@ -35,6 +36,7 @@
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
         sharedObject.injector = [STRInjector injectorForModule:[STRAppModule new]];
+        TLog(@"WARNING: This version of the SDK was built with trace logging for debugging and integration purposes and should not be used in production.");
     });
 
     return sharedObject;
@@ -54,6 +56,7 @@
 }
 
 - (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate {
+    TLog(@"placementKey:%@",placementKey);
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] init];
     adPlacement.placementKey = placementKey;
     adPlacement.delegate = delegate;
@@ -61,11 +64,13 @@
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     STRPromise *adPromise = [generator prefetchAdForPlacement:adPlacement];
     [adPromise then:^id(id value) {
+        TLog(@"Prefetch succeeded.");
         if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
             [delegate adView:nil didFetchAdForPlacementKey:placementKey atIndex:0];
         }
         return nil;
     } error:^id(NSError *error) {
+        TLog(@"Prefetch failed.");
         if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
             [delegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
         }
@@ -74,6 +79,7 @@
 }
 
 - (BOOL)isAdAvailableForPlacement:(NSString *)placementKey atIndex:(NSInteger)index {
+    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
     STRAdPlacement *placement = [[STRAdPlacement alloc] init];
     placement.placementKey = placementKey;
     placement.adIndex = index;
@@ -86,7 +92,7 @@
 presentingViewController:(UIViewController *)presentingViewController
                 index:(NSInteger)index
              delegate:(id<STRAdViewDelegate>)delegate {
-
+    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:view
                                                             PlacementKey:placementKey
                                                 presentingViewController:presentingViewController
@@ -108,7 +114,7 @@ presentingViewController:(UIViewController *)presentingViewController
      articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
         articlesBetweenAds:(NSUInteger)articlesBetweenAds
                  adSection:(NSInteger)adSection {
-
+    TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     STRGridlikeViewDataSourceProxy *dataSourceProxy =
         [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier
@@ -135,7 +141,7 @@ presentingViewController:(UIViewController *)presentingViewController
           articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
              articlesBetweenAds:(NSUInteger)articlesBetweenAds
                       adSection:(NSInteger)adSection {
-
+    TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator =
         [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
     STRGridlikeViewDataSourceProxy *dataSourceProxy =
@@ -156,6 +162,7 @@ presentingViewController:(UIViewController *)presentingViewController
 }
 
 - (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds {
+    TLog(@"");
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
     return [adCache setAdCacheTimeoutInSeconds:seconds];
 }

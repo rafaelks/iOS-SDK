@@ -19,6 +19,7 @@
 #import "STRBeaconService.h"
 #import "STRAdPlacement.h"
 #import <AdSupport/AdSupport.h>
+#import "STRLogging.h"
 
 const NSInteger kRequestInProgress = 202;
 static NSString *const kDFPCreativeKey = @"creative_key";
@@ -54,6 +55,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 }
 
 - (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement {
+    TLog(@"");
     if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
         return [self requestInProgressError];
     }
@@ -62,6 +64,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 }
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement {
+    TLog(@"");
     if ([self.adCache isAdAvailableForPlacement:placement]) {
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
@@ -83,6 +86,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
                 auctionParameterKey:(NSString *)apKey
               auctionParameterValue:(NSString *)apValue
 {
+    TLog(@"");
     if ([apKey isEqualToString:kDFPCreativeKey]) {
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placement.placementKey CreativeKey:apValue];
         if (cachedAd) {
@@ -103,17 +107,20 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 }
 
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement {
+    TLog(@"");
     return [self.adCache isAdAvailableForPlacement:placement];
 }
 
 #pragma mark - Private
 
 - (STRPromise *)beginFetchForPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeAtIndex{
+    TLog(@"");
     [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey];
     return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{}] forPlacement:placement andInitializeAtIndex:initializeAtIndex];
 }
 
 - (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeAtIndex {
+    TLog(@"");
     STRDeferred *deferred = [STRDeferred defer];
 
     STRPromise *adPromise = [self.restClient getWithParameters: parameters];
@@ -122,6 +129,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         NSDictionary *placementJSON = fullJSON[@"placement"];
 
         if ([creativesJSON count] == 0) {
+            TLog(@"No creatives received");
             [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
             NSError *noCreativesError = [NSError errorWithDomain:@"No creatives returned" code:404 userInfo:nil];
             [deferred rejectWithError:noCreativesError];
@@ -171,6 +179,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 }
 
 - (STRPromise *)requestInProgressError {
+    TLog(@"");
     STRDeferred *deferred = [STRDeferred defer];
     [deferred rejectWithError:[NSError errorWithDomain:@"STR Request in Progress" code:kRequestInProgress userInfo:nil]];
     return deferred.promise;
@@ -185,6 +194,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 }
 
 - (STRAdvertisement *)adForAction:(NSString *)action {
+    TLog(@"action:%@",action);
     NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
                                        @"vine": [STRAdVine class],
                                        @"clickout": [STRAdClickout class],
@@ -199,6 +209,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 }
 
 - (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacementKey:(NSString *)placementKey withPlacementJSON:(NSDictionary *)placementJSON {
+    TLog(@"");
     STRDeferred *deferred = [STRDeferred defer];
 
     NSDictionary *creativeJSON = creativeWrapperJSON[@"creative"];
@@ -243,7 +254,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 - (void)createPlacementInfiniteScrollExtrasFromJSON:(NSDictionary *)placementJSON
                                     forPlacement:(STRAdPlacement *)placement {
-    
+    TLog(@"");
     if ([placementJSON[@"layout"] isEqualToString:@"multiple"] &&
         [self.adCache getInfiniteScrollFieldsForPlacement:placement.placementKey] == nil) {
 
@@ -274,6 +285,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     }
     NSMutableDictionary *returnValue = [NSMutableDictionary dictionaryWithDictionary:otherParams];
     [returnValue addEntriesFromDictionary:@{@"placement_key": placement.placementKey, @"appName": appName, @"appId": bundleId, @"uid": idfa }];
+    TLog(@"adRequestParams:%@",returnValue);
     return returnValue;
 }
 

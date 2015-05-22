@@ -9,6 +9,7 @@
 #import "STRAdPlacementAdjuster.h"
 #import "STRAdCache.h"
 #import "STRAdPlacement.h"
+#import "STRLogging.h"
 
 @interface STRAdPlacementAdjuster ()
 
@@ -42,6 +43,7 @@
 }
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath {
+    TLog(@"indexPath:%@",indexPath);
     if ([self shouldAdBeAtIndexPath:indexPath]) {
         STRAdPlacement *placement = [STRAdPlacement new];
         placement.placementKey = self.placementKey;
@@ -52,6 +54,7 @@
 }
 
 - (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows {
+    TLog(@"section:%zd numberOfRows:%zd", section, contentRows);
     NSInteger nAdsAssignedAndAvailable = [self.adCache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:self.placementKey];
     if (section == self.adSection && nAdsAssignedAndAvailable > 0) {
         self.numberOfAdSpotsAvailable = 0;
@@ -67,10 +70,12 @@
 }
 
 - (NSIndexPath *)indexPathWithoutAds:(NSIndexPath *)indexPath {
+    TLog(@"indexPath:%@",indexPath);
     return [self adjustedIndexPath:indexPath includingAds:NO];
 }
 
 - (NSArray *)indexPathsWithoutAds:(NSArray *)indexPaths {
+    TLog(@"indexPath:%@",indexPaths);
     NSMutableArray *externalIndexPaths = [NSMutableArray arrayWithCapacity:[indexPaths count]];
     for (NSIndexPath *indexPath in indexPaths) {
         NSIndexPath *externalIndexPath = [self indexPathWithoutAds:indexPath];
@@ -83,10 +88,12 @@
 }
 
 - (NSIndexPath *)indexPathIncludingAds:(NSIndexPath *)indexPath {
+    TLog(@"indexPath:%@",indexPath);
     return [self adjustedIndexPath:indexPath includingAds:YES];
 }
 
 - (NSArray *)indexPathsIncludingAds:(NSArray *)indexPaths {
+    TLog(@"indexPath:%@",indexPaths);
     NSMutableArray *trueIndexPaths = [NSMutableArray arrayWithCapacity:[indexPaths count]];
     for (NSIndexPath *indexPath in indexPaths) {
         [trueIndexPaths addObject:[self indexPathIncludingAds:indexPath]];
@@ -96,6 +103,7 @@
 }
 
 - (NSArray *)willMoveRowAtExternalIndexPath:(NSIndexPath *)indexPath toExternalIndexPath:(NSIndexPath *)newIndexPath {
+    TLog(@"indexPath:%@",indexPath);
     NSArray *deleteIndexPaths = [self indexPathsIncludingAds:@[indexPath]];
     NSArray *insertIndexPaths = [self indexPathsIncludingAds:@[newIndexPath]];
 
@@ -103,10 +111,12 @@
 }
 
 - (void)willInsertSections:(NSIndexSet *)sections {
+    TLog(@"section: %@", sections);
     self.adSection += [self numberOfSectionsChangingWithAdSection:sections];
 }
 
 - (void)willDeleteSections:(NSIndexSet *)sections {
+    TLog(@"section: %@", sections);
     if ([sections containsIndex:self.adSection]) {
         self.adSection = -1;
         return;
@@ -116,6 +126,7 @@
 }
 
 - (void)willMoveSection:(NSInteger)section toSection:(NSInteger)newSection {
+    TLog(@"section: %zd toSection:%zd", section, newSection);
     if (section == self.adSection) {
         self.adSection = newSection;
         return;
@@ -126,6 +137,7 @@
 }
 
 - (NSInteger)getLastCalculatedNumberOfAdsInSection:(NSInteger)section {
+    TLog(@"section: %zd", section);
     if (section == self.adSection) {
         return self.numberOfAdsInSection;
     }
@@ -144,6 +156,7 @@
 }
 
 - (BOOL)shouldAdBeAtIndexPath:(NSIndexPath *)indexPath {
+    TLog(@"indexPath:%@",indexPath);
     if (indexPath.section == self.adSection) {
         if (indexPath.row == self.articlesBeforeFirstAd){
             return YES;
@@ -176,6 +189,7 @@
         }
     }
     NSInteger adjustedRow = includeAds ? indexPath.row + adjustment : indexPath.row - adjustment;
+    TLog(@"indexPath:%@ includeAds:%@ adjustedRow:%zd",indexPath, includeAds ? @"YES" : @"NO", adjustedRow);
     return [NSIndexPath indexPathForRow:adjustedRow inSection:indexPath.section];
 }
 
