@@ -87,15 +87,15 @@
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    TLog(@"");
     NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
+    TLog(@"pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.placementKey, section, numberofContentRows, self.numAdsInView);
     return  numberofContentRows + self.numAdsInView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TLog(@"");
+    TLog(@"pkey: %@, indexPath:%@", self.placementKey, indexPath);
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
         return [self adCellForTableView:tableView atIndexPath:indexPath];
     }
@@ -106,15 +106,15 @@
 
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    TLog(@"");
     NSInteger numberofContentRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
+    TLog(@"pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.placementKey, section, numberofContentRows, self.numAdsInView);
     return  numberofContentRows + self.numAdsInView;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    TLog(@"");
+    TLog(@"pkey: %@, indexPath:%@", self.placementKey, indexPath);
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
         return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
     }
