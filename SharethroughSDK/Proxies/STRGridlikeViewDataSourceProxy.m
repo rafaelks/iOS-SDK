@@ -90,12 +90,12 @@
     NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
-    TLog(@"pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.placementKey, section, numberofContentRows, self.numAdsInView);
+    TLog(@"originalDS: %@, pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.originalTVDataSource, self.placementKey, section, numberofContentRows, self.numAdsInView);
     return  numberofContentRows + self.numAdsInView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TLog(@"pkey: %@, indexPath:%@", self.placementKey, indexPath);
+    TLog(@"originalDS: %@, pkey: %@, indexPath:%@",self.originalTVDataSource, self.placementKey, indexPath);
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
         return [self adCellForTableView:tableView atIndexPath:indexPath];
     }
@@ -109,12 +109,12 @@
     NSInteger numberofContentRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
-    TLog(@"pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.placementKey, section, numberofContentRows, self.numAdsInView);
+    TLog(@"originalDS: %@, pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.originalCVDataSource, self.placementKey, section, numberofContentRows, self.numAdsInView);
     return  numberofContentRows + self.numAdsInView;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    TLog(@"pkey: %@, indexPath:%@", self.placementKey, indexPath);
+    TLog(@"originalDS: %@, pkey: %@, indexPath:%@", self.originalCVDataSource, self.placementKey, indexPath);
     if ([self.adjuster isAdAtIndexPath:indexPath]) {
         return [self adCellForCollectionView:collectionView atIndexPath:indexPath];
     }
@@ -133,11 +133,13 @@
 #pragma mark - Forwarding
 
 - (BOOL)respondsToSelector:(SEL)aSelector {
+    TLog(@"");
     return [[self class] instancesRespondToSelector:aSelector]
     || [self.originalDataSource respondsToSelector:aSelector];
 }
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
+    TLog(@"");
     if ([self.originalDataSource respondsToSelector:aSelector]) {
         return self.originalDataSource;
     }
@@ -195,6 +197,7 @@
 }
 
 - (id)validateAndSetDataSource:(id)originalDataSource {
+    TLog(@"originalDS: %@", originalDataSource);
     if (originalDataSource) {
         if ([originalDataSource conformsToProtocol:@protocol(UITableViewDataSource)]
             && [originalDataSource conformsToProtocol:@protocol(UICollectionViewDataSource)]) {

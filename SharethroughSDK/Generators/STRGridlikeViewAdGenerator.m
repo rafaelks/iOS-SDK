@@ -55,9 +55,15 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
 
     id originalDataSource = [gridlikeView dataSource];
     id originalDelegate = [gridlikeView delegate];
+    TLog(@"pkey:%@, oldGenerator: %@, originalDS: %@, originalDelegate:%@", placementKey, oldGenerator, originalDataSource, originalDelegate);
     if (oldGenerator) {
-        originalDataSource = oldGenerator.dataSourceProxy.originalDataSource;
-        originalDelegate = oldGenerator.delegateProxy.originalDelegate;
+        if (oldGenerator.dataSourceProxy && oldGenerator.dataSourceProxy.originalDataSource) {
+            originalDataSource = oldGenerator.dataSourceProxy.originalDataSource;
+        }
+        if (oldGenerator.delegateProxy && oldGenerator.delegateProxy.originalDelegate) {
+            originalDelegate = oldGenerator.delegateProxy.originalDelegate;
+        }
+        TLog(@"pley:%@ oldGenerator:%@ dataSource:%@, delegate:%@", placementKey, oldGenerator, originalDataSource, originalDelegate);
     }
 
     STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:adSection
@@ -70,9 +76,9 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     self.dataSourceProxy = dataSourceProxy;
     self.dataSourceProxy.adjuster = adjuster;
     self.dataSourceProxy.originalDataSource = originalDataSource;
-    
+
     [self.dataSourceProxy prefetchAdForGridLikeView:gridlikeView atIndex:articlesBeforeFirstAd];
-    
+
     self.delegateProxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:adSize];
 
     [gridlikeView setDataSource:self.dataSourceProxy];
@@ -81,6 +87,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     [gridlikeView reloadData];
 
     objc_setAssociatedObject(gridlikeView, STRGridlikeViewAdGeneratorKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    TLog(@"Finished setting objc assocition for pkey:%@", placementKey);
 }
 
 #pragma mark - Properties

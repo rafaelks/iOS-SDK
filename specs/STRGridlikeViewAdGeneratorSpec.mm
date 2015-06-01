@@ -1,4 +1,5 @@
 #import "STRGridlikeViewAdGenerator.h"
+#import "STRGridlikeViewDataSourceProxy.h"
 #import <objc/runtime.h>
 
 using namespace Cedar::Matchers;
@@ -69,6 +70,35 @@ describe(@"STRGridlikeViewAdGenerator", ^{
             }).to(raise_exception);
 
             objc_getAssociatedObject(view, STRGridlikeViewAdGeneratorKey) should be_nil;
+        });
+
+        it(@"does not assign an invalid data source or delegate", ^{
+            STRGridlikeViewAdGenerator *oldGenerator = [[STRGridlikeViewAdGenerator alloc] initWithInjector:nil];
+            UITableView *tableView = [UITableView new];
+            id<UITableViewDataSource> fakeFataSource = nice_fake_for(@protocol(UITableViewDataSource));
+            tableView.dataSource = fakeFataSource;
+
+            objc_setAssociatedObject(view, STRGridlikeViewAdGeneratorKey, oldGenerator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+            STRGridlikeViewDataSourceProxy *dataSourceProxy =
+            [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"fakeAdCell"
+                                                                     placementKey:@"fake-placement-key"
+                                                         presentingViewController:nil
+                                                                         injector:nil];
+            expect(^{
+                [generator placeAdInGridlikeView:tableView
+                                 dataSourceProxy:dataSourceProxy
+                           adCellReuseIdentifier:nil
+                                    placementKey:nil
+                        presentingViewController:nil
+                                          adSize:CGSizeZero
+                           articlesBeforeFirstAd:0
+                              articlesBetweenAds:1
+                                       adSection:0];
+            }).to_not(raise_exception);
+
+            generator.originalDataSource should equal(fakeFataSource);
+            dataSourceProxy should equal(([tableView dataSource]));
         });
     });
 });
