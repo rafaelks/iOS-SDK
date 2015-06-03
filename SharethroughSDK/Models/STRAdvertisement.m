@@ -15,6 +15,7 @@ NSString *STRClickoutAd = @"clickout";
 NSString *STRHostedVideoAd = @"hosted-video";
 NSString *STRPinterestAd = @"pinterest";
 NSString *STRInstagramAd = @"instagram";
+NSString *STRArticleAd = @"article";
 
 @implementation STRAdvertisement
 

@@ -347,6 +347,23 @@ describe(@"STRAdService", ^{
                     afterSuccessfulAdFetchedSpecs([STRAdInstagram class], @"instagram");
                 });
 
+                describe(@"when the ad server successfully responds with an article ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"article";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRClickoutAd class], @"article");
+                });
+
+                describe(@"when the ad server successfully responds with an article ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"unknown";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRAdvertisement class], @"unknown");
+                });
             });
 
             describe(@"when the ad server responds without a protocol", ^{
@@ -671,6 +688,24 @@ describe(@"STRAdService", ^{
                     });
 
                     afterSuccessfulAdFetchedSpecs([STRAdInstagram class], @"instagram");
+                });
+
+                describe(@"when the ad server successfully responds with an article ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"article";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRClickoutAd class], @"article");
+                });
+
+                describe(@"when the ad server successfully responds with an article ad", ^{
+                    beforeEach(^{
+                        responseData[@"creatives"][0][@"creative"][@"action"] = @"unknown";
+                        [restClientDeferred resolveWithValue:responseData];
+                    });
+
+                    afterSuccessfulAdFetchedSpecs([STRClickoutAd class], @"unknown");
                 });
             });
 

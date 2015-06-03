@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class STRAdvertisement, STRDateProvider, STRAdPlacement, STRAdPlacementInfiniteScrollFields;
 
-@interface STRAdCache : NSObject <NSCacheDelegate>
+@interface STRAdCache : NSObject
 
 - (instancetype)initWithDateProvider:(STRDateProvider *)dateProvider;
 - (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds;

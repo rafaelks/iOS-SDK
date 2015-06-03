@@ -19,8 +19,8 @@
 
 @property (nonatomic, strong) STRDateProvider     *dateProvider;
 @property (nonatomic, assign) NSUInteger          STRPlacementAdCacheTimeoutInSeconds;
-@property (nonatomic, strong) NSCache             *cachedCreatives;
-@property (nonatomic, strong) NSCache             *cachedIndexToCreativeMaps;
+@property (nonatomic, strong) NSMutableDictionary *cachedCreatives;
+@property (nonatomic, strong) NSMutableDictionary *cachedIndexToCreativeMaps;
 @property (nonatomic, strong) NSMutableSet        *pendingRequestPlacementKeys;
 
 @property (nonatomic, strong) NSMutableDictionary *cachedPlacementInfiniteScrollFields;
@@ -39,11 +39,9 @@
         self.dateProvider = dateProvider;
         self.STRPlacementAdCacheTimeoutInSeconds = 20;
 
-        self.cachedCreatives = [[NSCache alloc] init];
-        self.cachedCreatives.delegate = self;
+        self.cachedCreatives = [[NSMutableDictionary alloc] init];
 
-        self.cachedIndexToCreativeMaps = [[NSCache alloc] init];
-        self.cachedIndexToCreativeMaps.delegate = self;
+        self.cachedIndexToCreativeMaps = [[NSMutableDictionary alloc] init];
 
         self.pendingRequestPlacementKeys = [NSMutableSet set];
         self.cachedPlacementInfiniteScrollFields = [NSMutableDictionary dictionary];
@@ -136,7 +134,7 @@
 
     if ([placement.adView percentVisible] < 0.1f && (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds)) {
         if ([creatives peek] == nil) {
-            return NO;
+            return YES; //reuse the old ad
         } else {
             [indexToCreativeMap setObject:[creatives dequeue] forKey:[NSNumber numberWithLong:placement.adIndex]];
             return YES;
@@ -203,8 +201,4 @@
     self.cachedPlacementInfiniteScrollFields[fields.placementKey] = fields;
 }
 
-#pragma mark - NSCacheDelegate
-- (void)cache:(NSCache *)cache willEvictObject:(id)obj {
-    //TODO: Consider clearing the pKey -> cKey pointer and render timestamp
-}
 @end

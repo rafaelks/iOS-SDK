@@ -227,8 +227,8 @@ describe(@"STRAdCache", ^{
                 [cache isAdAvailableForPlacement:nonExistantPlacement] should be_falsy;
             });
 
-            it(@"returns NO if the saved ad was fetched more than 2 minutes ago", ^{
-                [cache isAdAvailableForPlacement:expiredPlacement] should be_falsy;
+            it(@"returns YES if the saved ad was fetched more than 2 minutes ago", ^{
+                [cache isAdAvailableForPlacement:expiredPlacement] should be_truthy;
             });
 
             it(@"returns YES if the ad is currently on screen", ^{

@@ -14,6 +14,7 @@ extern NSString *STRClickoutAd;
 extern NSString *STRHostedVideoAd;
 extern NSString *STRPinterestAd;
 extern NSString *STRInstagramAd;
+extern NSString *STRArticleAd;
 
 @interface STRAdvertisement : NSObject
 

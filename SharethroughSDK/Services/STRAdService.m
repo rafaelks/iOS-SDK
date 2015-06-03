@@ -198,6 +198,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
                                        @"vine": [STRAdVine class],
                                        @"clickout": [STRAdClickout class],
+                                       @"article": [STRAdClickout class],
                                        @"pinterest": [STRAdPinterest class],
                                        @"instagram": [STRAdInstagram class]
                                        };
