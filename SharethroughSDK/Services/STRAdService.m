@@ -30,7 +30,8 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 @property (nonatomic, strong) STRAdCache *adCache;
 @property (nonatomic, strong) STRBeaconService *beaconService;
-@property (weak, nonatomic) ASIdentifierManager *identifierManager;
+@property (nonatomic, weak) ASIdentifierManager *identifierManager;
+@property (nonatomic, weak) STRInjector *injector;
 
 @end
 
@@ -41,6 +42,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
                  adCache:(STRAdCache *)adCache
            beaconService:(STRBeaconService *)beaconService
      asIdentifierManager:(ASIdentifierManager *)identifierManager
+                injector:(STRInjector *)injector
 {
     self = [super init];
     if (self) {
@@ -49,6 +51,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         self.adCache = adCache;
         self.beaconService = beaconService;
         self.identifierManager = identifierManager;
+        self.injector = injector;
     }
 
     return self;
@@ -56,6 +59,15 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 - (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
+    if ([self.adCache isAdAvailableForPlacement:placement]) {
+        STRDeferred *deferred = [STRDeferred defer];
+        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
+        [deferred resolveWithValue:cachedAd];
+        if (!placement.isDirectSold && [self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
+            [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
+        }
+        return deferred.promise;
+    }
     if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
         return [self requestInProgressError];
     }
@@ -147,7 +159,11 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         [creativeImagesPromise then:^id(NSMutableArray *creatives) {
             [self.adCache saveAds:creatives forPlacement:placement andInitializeAtIndex:initializeAtIndex];
 
-            [deferred resolveWithValue:[self.adCache fetchCachedAdForPlacement:placement]];
+            if (initializeAtIndex) {
+                [deferred resolveWithValue:[self.adCache fetchCachedAdForPlacement:placement]];
+            } else {
+                [deferred resolveWithValue:creatives[0]];
+            }
 
             return nil;
         } error:^id(NSError *error) {
@@ -241,8 +257,10 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         ad.adserverRequestId = creativeWrapperJSON[@"adserverRequestId"];
         ad.auctionWinId = creativeWrapperJSON[@"auctionWinId"];
         ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
+        ad.thumbnailURL = [self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]];
         ad.customEngagementLabel = creativeJSON[@"custom_engagement_label"];
         ad.customEngagemnetURL = [self URLFromSanitizedString:creativeJSON[@"custom_engagement_url"]];
+        ad.injector = self.injector;
 
         [deferred resolveWithValue:ad];
 

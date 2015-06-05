@@ -6,7 +6,10 @@
 //  Copyright (c) 2014 Sharethrough. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import UIKit;
+
+@class STRInjector;
+@protocol STRAdvertisementDelegate;
 
 extern NSString *STRYouTubeAd;
 extern NSString *STRVineAd;
@@ -37,6 +40,7 @@ extern NSString *STRArticleAd;
 @property (nonatomic, copy) NSURL *mediaURL;
 @property (nonatomic, copy) NSURL *shareURL;
 @property (nonatomic, copy) NSURL *brandLogoURL;
+@property (nonatomic, copy) NSURL *thumbnailURL;
 @property (nonatomic, strong) UIImage *thumbnailImage;
 @property (nonatomic, strong) UIImage *brandLogoImage;
 @property (nonatomic) NSInteger placementIndex;
@@ -49,8 +53,14 @@ extern NSString *STRArticleAd;
 @property (nonatomic, assign) BOOL   visibleImpressionBeaconFired;
 @property (nonatomic, copy) NSDate  *visibleImpressionTime;
 
+@property (nonatomic, weak) STRInjector *injector;
+@property (nonatomic, weak) id<STRAdvertisementDelegate> delegate;
+
 - (NSString *)sponsoredBy;
 - (UIImage *)displayableThumbnail;
 - (UIImageView *)platformLogoForWidth:(CGFloat)width;
+
+- (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController;
+- (void)unregisterView:(UIView *)view;
 
 @end

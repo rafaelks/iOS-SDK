@@ -22,6 +22,7 @@
 #import "STRDateProvider.h"
 #import "UIView+Visible.h"
 #import "STRLogging.h"
+#import "STRViewTracker.h"
 
 char const * const STRAdRendererKey = "STRAdRendererKey";
 
@@ -38,7 +39,6 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 @property (nonatomic, strong) STRAdPlacement *placement;
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, weak) UITapGestureRecognizer *disclosureTapRecognizer;
-@property (nonatomic, weak) NSTimer *adVisibleTimer;
 
 @end
 
@@ -90,83 +90,17 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
     [placement.adView setNeedsLayout];
 
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedAd:)];
-    [placement.adView addGestureRecognizer:tapRecognizer];
-    self.tapRecognizer = tapRecognizer;
-
-    if (self.ad.visibleImpressionTime == nil) {
-        NSTimer *timer = [NSTimer timerWithTimeInterval:0.1
-                                                 target:self
-                                               selector:@selector(checkIfAdIsVisible:)
-                                               userInfo:[@{@"view": placement.adView} mutableCopy]
-                                                repeats:YES];
-        timer.tolerance = timer.timeInterval * 0.1;
-        [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
-
-        self.adVisibleTimer = timer;
-    }
+    STRViewTracker *viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
+    [viewTracker trackAd:ad inView:placement.adView withViewContorller:placement.presentingViewController];
 
     if ([placement.delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
         [placement.delegate adView:placement.adView didFetchAdForPlacementKey:placement.placementKey atIndex:placement.adIndex];
     }
 }
 
-- (void)checkIfAdIsVisible:(NSTimer *)timer {
-    UIView *view = timer.userInfo[@"view"];
-
-    if (!view.superview) {
-        NSLog(@"Warning: The ad view is not in a super view. No visibility tracking will occur.");
-        [timer invalidate];
-        return;
-    }
-
-    CGFloat percentVisible = [view percentVisible];
-
-    CGFloat secondsVisible = [timer.userInfo[@"secondsVisible"] floatValue];
-
-    if (percentVisible >= 0.5 && secondsVisible < 1.0) {
-        timer.userInfo[@"secondsVisible"] = @(secondsVisible + timer.timeInterval);
-    } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
-        [self.beaconService fireVisibleImpressionForAd:self.ad
-                                                adSize:view.frame.size];
-        [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility  forPlacementWithStatus:self.ad.placementStatus];
-        self.ad.visibleImpressionTime = [self.dateProvider now];
-        [timer invalidate];
-    } else {
-        [timer.userInfo removeObjectForKey:@"secondsVisible"];
-    }
-}
-
-- (void)tappedAd:(UITapGestureRecognizer *)tapRecognizer {
-    TLog(@"pkey:%@ ckey:%@",self.placement.placementKey, self.ad.creativeKey);
-    UIView *view = tapRecognizer.view;
-    if ([self.ad.action isEqualToString:STRYouTubeAd] ||
-        [self.ad.action isEqualToString:STRHostedVideoAd] ||
-        [self.ad.action isEqualToString:STRVineAd])
-    {
-        [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];
-    } else {
-        [self.beaconService fireClickForAd:self.ad adSize:view.frame.size];
-    }
-    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay  forPlacementWithStatus:self.ad.placementStatus];
-    [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick  forPlacementWithStatus:self.ad.placementStatus];
-
-    if ([self.placement.delegate respondsToSelector:@selector(adView:userDidEngageAdForPlacementKey:)]) {
-        [self.placement.delegate adView:self.placement.adView userDidEngageAdForPlacementKey:self.placement.placementKey];
-    }
-
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad
-                                                                                                          device:[UIDevice currentDevice]
-                                                                                                     application:[UIApplication sharedApplication]
-                                                                                                   beaconService:self.beaconService
-                                                                                                        injector:self.injector];
-    interactiveAdController.delegate = self;
-    [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
-}
-
 - (IBAction)tappedDisclosureBtn:(id)sender
 {
-    TLog(@"pkey:%@ ckey:%@",self.placement.placementKey, self.ad.creativeKey);
+    TLog(@"pkey:%@ ckey:%@",self.ad.placementKey, self.ad.creativeKey);
     STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
                                                                                                device:[UIDevice currentDevice]
                                                                                           application:[UIApplication sharedApplication]
@@ -190,9 +124,8 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
 - (void)prepareForNewAd:(UIView<STRAdView> *)view {
     STRAdRenderer *oldRenderer = objc_getAssociatedObject(view, STRAdRendererKey);
-    [oldRenderer.adVisibleTimer invalidate];
-    [view removeGestureRecognizer:oldRenderer.tapRecognizer];
     [view.disclosureButton removeGestureRecognizer:oldRenderer.disclosureTapRecognizer];
+    [STRViewTracker unregisterView:view];
 
     [self clearTextFromView:view];
 }

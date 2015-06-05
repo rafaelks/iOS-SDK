@@ -11,7 +11,7 @@
 
 extern const NSInteger kRequestInProgress;
 
-@class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService, STRAdPlacement, ASIdentifierManager;
+@class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService, STRAdPlacement, STRInjector, ASIdentifierManager;
 
 @interface STRAdService : NSObject
 
@@ -19,7 +19,8 @@ extern const NSInteger kRequestInProgress;
            networkClient:(STRNetworkClient *)networkClient
                  adCache:(STRAdCache *)adCache
            beaconService:(STRBeaconService *)beaconService
-     asIdentifierManager:(ASIdentifierManager *)identifierManager;
+     asIdentifierManager:(ASIdentifierManager *)identifierManager
+                injector:(STRInjector *)injector;
 
 - (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement;

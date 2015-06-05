@@ -202,6 +202,11 @@
 		B229F0A51A2E5B420094A8B3 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; };
 		B229F0A61A2E5B420094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; };
 		B229F0A71A2E5B420094A8B3 /* instagram_sample_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */; };
+		B238F6431B1FB60900847C50 /* STRAdvertisement.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
+		B238F6461B20E62400847C50 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
+		B238F6471B20E62400847C50 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
+		B238F6481B20E62400847C50 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
+		B238F6491B20E62400847C50 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
 		B245C3BE1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */; };
 		B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
 		B26D22E81ACF3A210072ACDD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */; };
@@ -210,6 +215,11 @@
 		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B2867A371AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; };
 		B2867A381AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; };
+		B2A6CC811B2244440088928F /* STRAdvertisementDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
+		B2A6CC821B2244520088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
+		B2A6CC831B2244640088928F /* STRAdvertisement.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
+		B2A6CC841B2244640088928F /* STRAdvertisementDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
+		B2A6CC851B2244750088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
 		B2B466401A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466411A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
 		B2B466421A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
@@ -491,6 +501,8 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				B2A6CC811B2244440088928F /* STRAdvertisementDelegate.h in Copy Header Files */,
+				B238F6431B1FB60900847C50 /* STRAdvertisement.h in Copy Header Files */,
 				AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */,
 				AEEE6CBD18A04DD300AA7EC9 /* UITableView+STR.h in Copy Header Files */,
 				AEB2F43C18A2B25600F415EE /* STRAdViewDelegate.h in Copy Header Files */,
@@ -533,6 +545,8 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				B2A6CC831B2244640088928F /* STRAdvertisement.h in Copy Header Files */,
+				B2A6CC841B2244640088928F /* STRAdvertisementDelegate.h in Copy Header Files */,
 				B2B963591B0F9E8600404578 /* SharethroughSDK.h in Copy Header Files */,
 				B2B9635A1B0F9E8600404578 /* UITableView+STR.h in Copy Header Files */,
 				B2B9635B1B0F9E8600404578 /* STRAdViewDelegate.h in Copy Header Files */,
@@ -559,6 +573,7 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}+DFP.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				B2A6CC851B2244750088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */,
 				B2B963641B0F9E8600404578 /* STRAdView.h in Copy DFP Header Files */,
 				B2B963651B0F9E8600404578 /* STRAdViewDelegate.h in Copy DFP Header Files */,
 				B2B963661B0F9E8600404578 /* UICollectionView+STR.h in Copy DFP Header Files */,
@@ -617,6 +632,7 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}+DFP.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				B2A6CC821B2244520088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */,
 				E83128D519B914DB007C2FAB /* STRAdView.h in Copy DFP Header Files */,
 				E83128D619B914DB007C2FAB /* STRAdViewDelegate.h in Copy DFP Header Files */,
 				E83128D719B914DB007C2FAB /* UICollectionView+STR.h in Copy DFP Header Files */,
@@ -643,8 +659,8 @@
 		AE022DDF188E004900D02568 /* STRRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRRestClient.m; sourceTree = "<group>"; };
 		AE022DE5188E008000D02568 /* STRAdService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdService.h; sourceTree = "<group>"; };
 		AE022DE6188E008000D02568 /* STRAdService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdService.m; sourceTree = "<group>"; };
-		AE022DEA188E00C100D02568 /* STRAdvertisement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdvertisement.h; sourceTree = "<group>"; };
-		AE022DEB188E00C100D02568 /* STRAdvertisement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdvertisement.m; sourceTree = "<group>"; };
+		AE022DEA188E00C100D02568 /* STRAdvertisement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRAdvertisement.h; path = ../Models/STRAdvertisement.h; sourceTree = "<group>"; };
+		AE022DEB188E00C100D02568 /* STRAdvertisement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRAdvertisement.m; path = ../Models/STRAdvertisement.m; sourceTree = "<group>"; };
 		AE022DEF188E011100D02568 /* SharethroughSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharethroughSDK.h; sourceTree = "<group>"; };
 		AE022DF0188E011100D02568 /* SharethroughSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharethroughSDK.m; sourceTree = "<group>"; };
 		AE022DF1188E011100D02568 /* STRAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdView.h; sourceTree = "<group>"; };
@@ -788,6 +804,9 @@
 		B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdInstagram.h; sourceTree = "<group>"; };
 		B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdInstagram.m; sourceTree = "<group>"; };
 		B229F0A11A2E4C8D0094A8B3 /* instagram_sample_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = instagram_sample_thumbnail.c; sourceTree = "<group>"; };
+		B238F6441B20E62400847C50 /* STRViewTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRViewTracker.h; sourceTree = "<group>"; };
+		B238F6451B20E62400847C50 /* STRViewTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRViewTracker.m; sourceTree = "<group>"; };
+		B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdvertisementDelegate.h; sourceTree = "<group>"; };
 		B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKDFPSpec.mm; sourceTree = "<group>"; };
 		B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ThirdParty/GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
@@ -935,14 +954,14 @@
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
 				E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */,
 				E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */,
-				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
-				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
 				AE9C4624189C29B0001B407A /* STRAdVine.h */,
 				AE9C4625189C29B0001B407A /* STRAdVine.m */,
 				AE9C461A189C2538001B407A /* STRAdYouTube.h */,
 				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
 				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
 				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
+				B238F6441B20E62400847C50 /* STRViewTracker.h */,
+				B238F6451B20E62400847C50 /* STRViewTracker.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -952,14 +971,17 @@
 			children = (
 				AE022DEF188E011100D02568 /* SharethroughSDK.h */,
 				AE022DF0188E011100D02568 /* SharethroughSDK.m */,
+				E8703DC319B9031700D3FA50 /* SharethroughSDK+DFP.h */,
+				E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */,
+				AE022DEA188E00C100D02568 /* STRAdvertisement.h */,
+				AE022DEB188E00C100D02568 /* STRAdvertisement.m */,
+				B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */,
 				AE022DF1188E011100D02568 /* STRAdView.h */,
 				AEB2F43B18A2B25600F415EE /* STRAdViewDelegate.h */,
 				AE58227718A2F04F00672653 /* UICollectionView+STR.h */,
 				AE58227818A2F04F00672653 /* UICollectionView+STR.m */,
 				AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */,
 				AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */,
-				E8703DC319B9031700D3FA50 /* SharethroughSDK+DFP.h */,
-				E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -1992,6 +2014,7 @@
 				AE3120E21889E76F00297F01 /* STRPromise.m in Sources */,
 				AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
+				B238F6461B20E62400847C50 /* STRViewTracker.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
@@ -2096,6 +2119,7 @@
 				B2B963061B0F9AFD00404578 /* SharethroughSDK+DFP.m in Sources */,
 				B2B963071B0F9AFD00404578 /* pinterest-logo.c in Sources */,
 				B2B963081B0F9AFD00404578 /* STRAdInstagram.m in Sources */,
+				B238F6491B20E62400847C50 /* STRViewTracker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2122,6 +2146,7 @@
 				B2B963251B0F9D0B00404578 /* STRPromise.m in Sources */,
 				B2B963261B0F9D0B00404578 /* STRVideoController.m in Sources */,
 				B2B963271B0F9D0B00404578 /* STRSingletonBlockWrapper.m in Sources */,
+				B238F6481B20E62400847C50 /* STRViewTracker.m in Sources */,
 				B2B963281B0F9D0B00404578 /* STRInteractiveAdViewController.m in Sources */,
 				B2B963291B0F9D0B00404578 /* STRAdPlacement.m in Sources */,
 				B2B9632A1B0F9D0B00404578 /* STRAdCache.m in Sources */,
@@ -2226,6 +2251,7 @@
 				E8703E2719B9092600D3FA50 /* SharethroughSDK+DFP.m in Sources */,
 				E8703E2919B9092600D3FA50 /* pinterest-logo.c in Sources */,
 				B229F0A01A2E486A0094A8B3 /* STRAdInstagram.m in Sources */,
+				B238F6471B20E62400847C50 /* STRViewTracker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

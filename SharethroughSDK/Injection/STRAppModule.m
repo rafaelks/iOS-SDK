@@ -47,7 +47,8 @@
                                           networkClient:[injector getInstance:[STRNetworkClient class]]
                                                 adCache:[injector getInstance:[STRAdCache class]]
                                           beaconService:[injector getInstance:[STRBeaconService class]]
-                                    asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]];
+                                    asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]
+                                               injector:injector];
     }];
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {

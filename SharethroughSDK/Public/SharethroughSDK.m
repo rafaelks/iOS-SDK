@@ -65,14 +65,14 @@
     STRPromise *adPromise = [generator prefetchAdForPlacement:adPlacement];
     [adPromise then:^id(id value) {
         TLog(@"Prefetch succeeded.");
-        if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
-            [delegate adView:nil didFetchAdForPlacementKey:placementKey atIndex:0];
+        if ([delegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
+            [delegate didPrefetchAdvertisement:(STRAdvertisement *)value];
         }
         return nil;
     } error:^id(NSError *error) {
         TLog(@"Prefetch failed.");
-        if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
-            [delegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
+        if ([delegate respondsToSelector:@selector(didFailToPrefetchForPlacementKey:)]) {
+            [delegate didFailToPrefetchForPlacementKey:placementKey];
         }
         return nil;
     }];

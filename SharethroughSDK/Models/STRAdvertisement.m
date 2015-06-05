@@ -8,6 +8,7 @@
 
 #import "STRAdvertisement.h"
 #import "STRImages.h"
+#import "STRViewTracker.h"
 
 NSString *STRYouTubeAd = @"video";
 NSString *STRVineAd = @"vine";
@@ -51,6 +52,17 @@ NSString *STRArticleAd = @"article";
     platformLogoView.frame = CGRectMake(0, 0, size, size);
 
     return platformLogoView;
+}
+
+#pragma mark - View Tracker
+
+- (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController {
+    STRViewTracker *viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
+    [viewTracker trackAd:self inView:view withViewContorller:viewController];
+}
+
+- (void)unregisterView:(UIView *)view {
+    [STRViewTracker unregisterView:view];
 }
 
 @end
