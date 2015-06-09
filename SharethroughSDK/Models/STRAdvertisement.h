@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Sharethrough. All rights reserved.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @class STRInjector;
 @protocol STRAdvertisementDelegate;

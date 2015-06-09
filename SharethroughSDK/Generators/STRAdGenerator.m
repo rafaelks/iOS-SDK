@@ -91,7 +91,12 @@
 
 - (STRPromise *)prefetchForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue {
     TLog(@"pkey:%@ apKey:%@, apValue%@",placement.placementKey, apKey, apValue);
-    return [self.adService fetchAdForPlacement:placement auctionParameterKey:apKey auctionParameterValue:apValue];
+    if (apKey && apValue && apKey.length > 0 && apValue.length > 0) {
+        return [self.adService fetchAdForPlacement:placement auctionParameterKey:apKey auctionParameterValue:apValue];
+    } else {
+        NSLog(@"Invalid parameter for STX, %@=%@ is not valid. Fetching a monetize creative.", apKey, apValue);
+        return [self.adService prefetchAdsForPlacement:placement];
+    }
 }
 
 #pragma mark - Private
