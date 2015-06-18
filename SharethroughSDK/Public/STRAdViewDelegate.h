@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+
+@class STRAdvertisement;
 @protocol STRAdView;
 
 /**
@@ -70,4 +72,17 @@
  */
 - (void)adView:(id<STRAdView>)adView willLeaveApplicationForPlacementKey:(NSString *)placementKey;
 
+/**
+ * Delegate is notified of a successful prefetch with the ad
+ *
+ * @param strAd     The advertisement received during the prefetch, or the first ad if there are multiple ads.
+ */
+- (void)didPrefetchAdvertisement:(STRAdvertisement *)strAd;
+
+/**
+ * Delegate is notified of a failed prefetch
+ *
+ * @param placementKey  Placement key used to fetch this ad.
+ */
+- (void)didFailToPrefetchForPlacementKey:(NSString *)placementKey;
 @end

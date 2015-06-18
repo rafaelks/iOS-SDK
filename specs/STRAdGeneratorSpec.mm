@@ -5,7 +5,6 @@
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 #include "UIGestureRecognizer+Spec.h"
-#import "STRBeaconService.h"
 #import <objc/runtime.h>
 #import "STRInjector.h"
 #import "STRAppModule.h"
@@ -23,31 +22,22 @@ SPEC_BEGIN(STRAdGeneratorSpec)
 describe(@"STRAdGenerator", ^{
     __block STRAdGenerator *generator;
     __block STRAdService *adService;
-    __block STRBeaconService *beaconService;
     __block STRAdvertisement *ad;
-    __block STRNetworkClient *fakeNetworkClient;
     __block STRInjector *injector;
-    __block NSRunLoop<CedarDouble> *fakeRunLoop;
     __block STRAdRenderer *renderer;
-    __block STRDateProvider<CedarDouble> *dateProvider;
+    __block STRFullAdView *view;
+    __block id<STRAdViewDelegate> delegate;
+    __block UIViewController *presentingViewController;
+    __block UIWindow *window;
+    __block STRAdPlacement *placement;
 
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
 
-        //[UIGestureRecognizer whitelistClassForGestureSnooping:[STRAdRenderer class]];
-
         adService = nice_fake_for([STRAdService class]);
         [injector bind:[STRAdService class] toInstance:adService];
 
-        beaconService = nice_fake_for([STRBeaconService class]);
-        [injector bind:[STRBeaconService class] toInstance:beaconService];
-
-        fakeRunLoop = nice_fake_for([NSRunLoop class]);
-        [injector bind:[NSRunLoop class] toInstance:fakeRunLoop];
-        
-        dateProvider = nice_fake_for([STRDateProvider class]);
-
-        renderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService dateProvider:dateProvider runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
+        renderer = nice_fake_for([STRAdRenderer class]);
         
         [injector bind:[STRAdRenderer class] toInstance:renderer];
 
@@ -63,37 +53,33 @@ describe(@"STRAdGenerator", ^{
         ad.thirdPartyBeaconsForClick = @[@"//click.com?fakeParam=[timestamp]"];
         ad.thirdPartyBeaconsForPlay = @[@"//play.com?fakeParam=[timestamp]"];
         ad.placementStatus = @"live";
+
+        view = [STRFullAdView new];
+
+        delegate = nice_fake_for(@protocol(STRAdViewDelegate));
+
+        presentingViewController = [UIViewController new];
+        window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        window.rootViewController = presentingViewController;
+        [window makeKeyAndVisible];
+
+        placement = [[STRAdPlacement alloc] init];
+        placement.adView = view;
+        placement.placementKey = @"placementKey";
+        placement.presentingViewController = presentingViewController;
+        placement.delegate = delegate;
+        placement.adIndex = 0;
+
     });
 
-    describe(@"placing an ad in the view", ^{
-        __block STRFullAdView *view;
+    describe(@"-placeAdInPlacement", ^{
         __block STRDeferred *deferred;
         __block UIActivityIndicatorView *spinner;
-        __block UIViewController *presentingViewController;
-        __block UIWindow *window;
-        __block id<STRAdViewDelegate> delegate;
-        __block STRAdPlacement *placement;
 
         beforeEach(^{
-            view = [STRFullAdView new];
             deferred = [STRDeferred defer];
 
-            presentingViewController = [UIViewController new];
-            window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-            window.rootViewController = presentingViewController;
-            [window makeKeyAndVisible];
-
             adService stub_method(@selector(fetchAdForPlacement:)).and_return(deferred.promise);
-            beaconService stub_method(@selector(fireImpressionRequestForPlacementKey:));
-
-            delegate = nice_fake_for(@protocol(STRAdViewDelegate));
-
-            placement = [[STRAdPlacement alloc] init];
-            placement.adView = view;
-            placement.placementKey = @"placementKey";
-            placement.presentingViewController = presentingViewController;
-            placement.delegate = delegate;
-            placement.adIndex = 0;
 
             [generator placeAdInPlacement:placement];
 
@@ -110,34 +96,30 @@ describe(@"STRAdGenerator", ^{
             view.adSponsoredBy.text should equal(@"");
         });
 
-        it(@"makes a network request", ^{
+        it(@"makes a request to the ad service", ^{
             adService should have_received(@selector(fetchAdForPlacement:)).with(placement);
         });
 
-        describe(@"follows up with its delegate", ^{
-            describe(@"on success", ^{
-                subjectAction(^{
-                    [deferred resolveWithValue:ad];
-                });
-
-                context(@"when the delegate has a success callback", ^{
-                    it(@"tells the delegate", ^{
-                        delegate should have_received(@selector(adView:didFetchAdForPlacementKey:atIndex:))
-                        .with(view, @"placementKey", 0);
-                    });
-                });
-
-                context(@"when the delegate does not have a success callback", ^{
-                    beforeEach(^{
-                        delegate reject_method(@selector(adView:didFetchAdForPlacementKey:atIndex:));
-                    });
-
-                    it(@"does not try to tell the delegate", ^{
-                        delegate should_not have_received(@selector(adView:didFetchAdForPlacementKey:atIndex:));
-                    });
-                });
+        describe(@"when there is an auction parameter and value", ^{
+            it(@"passes the parameter to the ad service", ^{
+                [generator placeAdInPlacement:placement auctionParameterKey:@"ckey" auctionParameterValue:@"abc123"];
+                adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:)).with(placement, @"ckey", @"abc123");
             });
 
+            it(@"avoids passing empty strings", ^{
+                [(id<CedarDouble>)adService reset_sent_messages];
+                [generator placeAdInPlacement:placement auctionParameterKey:@"" auctionParameterValue:@""];
+                adService should have_received(@selector(fetchAdForPlacement:)).with(placement);
+            });
+
+            it(@"avoids passing nil values", ^{
+                [(id<CedarDouble>)adService reset_sent_messages];
+                [generator placeAdInPlacement:placement auctionParameterKey:nil auctionParameterValue:nil];
+                adService should have_received(@selector(fetchAdForPlacement:)).with(placement);
+            });
+        });
+
+        describe(@"follows up with its delegate", ^{
             describe(@"on failure", ^{
                 subjectAction(^{
                     [deferred rejectWithError:nil];
@@ -174,205 +156,8 @@ describe(@"STRAdGenerator", ^{
                 spinner.superview should be_nil;
             });
 
-            it(@"fires an impression kept beacon", ^{
-                beaconService should have_received(@selector(fireImpressionForAd:adSize:)).with(ad, CGSizeMake(100, 100));
-            });
-
-            it(@"fills out the ads' the title, description, and sponsored by", ^{
-                view.adTitle.text should equal(@"Meet Porter. He's a Dog.");
-                view.adDescription.text should equal(@"Dogs this smart deserve a home.");
-                view.adSponsoredBy.text should equal(@"Promoted by Brand X");
-            });
-
-            it(@"adds the ad's image", ^{
-                char imageData[100];
-                [UIImagePNGRepresentation(view.adThumbnail.image) getBytes:&imageData length:100];
-
-                char expectedData[100];
-                [UIImagePNGRepresentation([UIImage imageNamed:@"fixture_image.png"]) getBytes:&expectedData length:100];
-                imageData should equal(expectedData);
-            });
-
-            it(@"relayouts view because tableviewcells need to have content in subviews to determine dimensions", ^{
-                view should have_received(@selector(setNeedsLayout));
-            });
-
-            it(@"adds a gesture recognizer for taps", ^{
-                [view.gestureRecognizers count] should equal(1);
-                [view.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
-            });
-
-            it(@"adds a gesture recognizer to the disclosure button", ^{
-                [view.disclosureButton.gestureRecognizers count] should equal(1);
-                [view.disclosureButton.gestureRecognizers lastObject] should be_instance_of([UITapGestureRecognizer class]);
-            });
-
-            describe(@"view position timer", ^{
-                __block NSTimer *timer;
-
-                beforeEach(^{
-                    UIView *superView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-                    [window addSubview:superView];
-                    [superView addSubview:view];
-
-                    [[fakeRunLoop.sent_messages firstObject] getArgument:&timer atIndex:2];
-                });
-
-                subjectAction(^{
-                    [timer fire];
-                });
-
-                context(@"when ad is >= 50% visible", ^{
-                    beforeEach(^{
-                        view stub_method(@selector(percentVisible)).and_return(.50);
-                    });
-
-                    it(@"increments seconds visible", ^{
-                        [timer.userInfo[@"secondsVisible"] floatValue] should be_greater_than(0.0);
-                    });
-
-                    it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
-                    });
-
-                    it(@"does not invalidates timer", ^{
-                        timer.isValid should be_truthy;
-                    });
-
-                    context(@"and one second has passed", ^{
-                        beforeEach(^{
-                            timer.userInfo[@"secondsVisible"] = @1.0;
-                        });
-
-                        it(@"sends a beacon", ^{
-                            beaconService should have_received(@selector(fireVisibleImpressionForAd:adSize:))
-                            .with(ad, CGSizeMake(100, 100));
-                        });
-
-                        it(@"fires a third party beacon", ^{
-                            beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//google.com?fakeParam=[timestamp]"], @"live");
-                        });
-
-                        it(@"invalidates its timer", ^{
-                            timer.isValid should be_falsy;
-                        });
-                    });
-
-                    describe(@"when the ad goes off screen before 1 second has passed", ^{
-                        beforeEach(^{
-                            timer.userInfo[@"secondsVisible"] = @0.5;
-
-                            view stub_method(@selector(percentVisible)).again().and_return(0.0);
-                        });
-
-                        it(@"resets the secondsVisible", ^{
-                            timer.userInfo[@"secondsVisible"] should be_nil;
-                        });
-                    });
-                });
-
-                context(@"when the ad is 25% visible", ^{
-                    beforeEach(^{
-                        view stub_method(@selector(percentVisible)).and_return(0.25);
-                    });
-
-                    it(@"does not set secondsVisible", ^{
-                        timer.userInfo[@"secondsVisible"] should be_nil;
-                    });
-
-                    it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
-                    });
-
-                    it(@"does not invalidates timer", ^{
-                        timer.isValid should be_truthy;
-                    });
-
-                });
-
-                context(@"when ad is 0% visible", ^{
-                    beforeEach(^{
-                        view stub_method(@selector(percentVisible)).and_return(0.0);
-                    });
-
-                    it(@"does not set secondsVisible", ^{
-                        timer.userInfo[@"secondsVisible"] should be_nil;
-                    });
-
-                    it(@"should not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
-                    });
-
-                    it(@"does not invalidates timer", ^{
-                        timer.isValid should be_truthy;
-                    });
-                });
-
-                context(@"after the ad is removed from its superview", ^{
-                    beforeEach(^{
-                        view stub_method(@selector(percentVisible)).and_return(25.0);
-                        [view removeFromSuperview];
-                    });
-
-                    it(@"invalidates its timer", ^{
-                        timer.isValid should be_falsy;
-                    });
-
-                    it(@"does not send a beacon", ^{
-                        beaconService should_not have_received(@selector(fireVisibleImpressionForAd:adSize:));
-                    });
-                });
-            });
-
-            describe(@"when the ad is tapped on", ^{
-                __block STRInteractiveAdViewController *interactiveAdController;
-
-                beforeEach(^{
-                    [[view.gestureRecognizers lastObject] recognize];
-                    interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
-
-                });
-
-                it(@"presents the STRInteractiveAdViewController", ^{
-                    interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
-                    interactiveAdController.ad should be_same_instance_as(ad);
-                    interactiveAdController.delegate should be_same_instance_as(renderer);
-                });
-
-                it(@"dismisses the interactive ad controller when told", ^{
-                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                    presentingViewController.presentedViewController should be_nil;
-                });
-
-                it(@"fires off a youtube play beacon", ^{
-                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
-                });
-
-                it(@"fires off the third party beacons for click and for play", ^{
-                    beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//click.com?fakeParam=[timestamp]"], @"live");
-                    beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//play.com?fakeParam=[timestamp]"], @"live");
-                });
-            });
-
-            describe(@"when the disclosure button is tapped", ^{
-                __block STRInteractiveAdViewController *interactiveAdController;
-
-                beforeEach(^{
-                    [[view.disclosureButton.gestureRecognizers lastObject] recognize];
-                    interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
-                });
-
-                it(@"presents the STRInteractiveAdViewController", ^{
-                    interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
-                    interactiveAdController.ad should_not be_same_instance_as(ad);
-                });
-
-                it(@"dismisses the interactive ad controller when told", ^{
-                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-                    presentingViewController.presentedViewController should be_nil;
-                });
-
+            it(@"calls the renderer to place the ad in the view", ^{
+                renderer should have_received(@selector(renderAd:inPlacement:)).with(ad, placement);
             });
         });
 
@@ -385,207 +170,40 @@ describe(@"STRAdGenerator", ^{
                 spinner.superview should be_nil;
             });
         });
+    });
 
-/* EXC_I386_GPFLT Exception when running these tests
+    describe(@"-prefetchAdForPlacement", ^{
+        it(@"asks the ad service to prefetch", ^{
+            [generator prefetchAdForPlacement:placement];
 
-        describe(@"when the view has already had an ad placed within it", ^{
-            __block STRAdGenerator *secondGenerator;
-            __block NSTimer *oldTimer;
-
-            beforeEach(^{
-                [deferred resolveWithValue:ad];
-
-                [[fakeRunLoop.sent_messages firstObject] getArgument:&oldTimer atIndex:2];
-
-                STRDeferred *newDeferred = [STRDeferred defer];
-                
-                STRAdService *newAdService = nice_fake_for([STRAdService class]);
-                newAdService stub_method(@selector(fetchAdForPlacement:)).and_return(newDeferred.promise);
-
-                secondGenerator = [[STRAdGenerator alloc] initWithAdService:newAdService injector:injector];
-
-                [secondGenerator placeAdInPlacement:placement];
-
-                [newDeferred resolveWithValue:ad];
-            });
-
-            it(@"should have cleaned up old tap gesture recognizers", ^{
-                [view.gestureRecognizers count] should equal(1);
-                [view.disclosureButton.gestureRecognizers count] should equal(1);
-            });
-
-            it(@"invalidates the old ad's timer", ^{
-                oldTimer.isValid should be_falsy;
-
-                __autoreleasing NSTimer *newTimer;
-                [[fakeRunLoop.sent_messages lastObject] getArgument:&newTimer atIndex:2];
-
-                newTimer should_not be_same_instance_as(oldTimer);
-            });
-
-        });
-*/
-
-        context(@"when the ad is a clickout", ^{
-            beforeEach(^{
-                ad.action = STRClickoutAd;
-
-                view.frame = CGRectMake(0, 0, 100, 100);
-                [deferred resolveWithValue:ad];
-            });
-
-            describe(@"the view is tapped on", ^{
-                __block STRInteractiveAdViewController *interactiveAdController;
-
-                beforeEach(^{
-                    [(id<CedarDouble>)beaconService reset_sent_messages];
-                    [[view.gestureRecognizers lastObject] recognize];
-                    interactiveAdController = (STRInteractiveAdViewController *)presentingViewController.presentedViewController;
-                });
-
-                it(@"presents the STRInteractiveAdViewController", ^{
-                    interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
-                    interactiveAdController.ad should be_same_instance_as(ad);
-                    interactiveAdController.delegate should be_same_instance_as(renderer);
-                });
-
-                it(@"dismisses the interactive ad controller when told", ^{
-                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                    presentingViewController.presentedViewController should be_nil;
-                });
-
-                it(@"fires off a clickout click beacon", ^{
-                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
-                });
-
-                it(@"fires off the third party beacons for click", ^{
-                    beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//click.com?fakeParam=[timestamp]"], @"live");
-                });
-            });
-        });
-
-        context(@"when the ad is a pinterest", ^{
-            beforeEach(^{
-                ad.action = STRPinterestAd;
-
-                view.frame = CGRectMake(0, 0, 100, 100);
-                [deferred resolveWithValue:ad];
-            });
-
-            describe(@"the view is tapped on", ^{
-                beforeEach(^{
-                    [(id<CedarDouble>)beaconService reset_sent_messages];
-                    [[view.gestureRecognizers lastObject] recognize];
-                });
-
-                it(@"fires off a clickout click beacon", ^{
-                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
-                });
-            });
-        });
-
-        context(@"when the ad is an instagram", ^{
-            beforeEach(^{
-                ad.action = STRInstagramAd;
-
-                view.frame = CGRectMake(0, 0, 100, 100);
-                [deferred resolveWithValue:ad];
-            });
-
-            describe(@"the view is tapped on", ^{
-                beforeEach(^{
-                    [(id<CedarDouble>)beaconService reset_sent_messages];
-                    [[view.gestureRecognizers lastObject] recognize];
-                });
-
-                it(@"fires off a clickout click beacon", ^{
-                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
-                });
-            });
-        });
-
-        context(@"when the ad is a hosted video", ^{
-            beforeEach(^{
-                ad.action = STRHostedVideoAd;
-
-                view.frame = CGRectMake(0, 0, 100, 100);
-                [deferred resolveWithValue:ad];
-            });
-
-            describe(@"the view is tapped on", ^{
-                beforeEach(^{
-                    [(id<CedarDouble>)beaconService reset_sent_messages];
-                    [[view.gestureRecognizers lastObject] recognize];
-                });
-
-                it(@"fires off a video play beacon", ^{
-                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
-                });
-            });
-        });
-
-        context(@"when the ad is a youtube video", ^{
-            beforeEach(^{
-                ad.action = STRYouTubeAd;
-
-                view.frame = CGRectMake(0, 0, 100, 100);
-                [deferred resolveWithValue:ad];
-            });
-
-            describe(@"the view is tapped on", ^{
-                beforeEach(^{
-                    [(id<CedarDouble>)beaconService reset_sent_messages];
-                    [[view.gestureRecognizers lastObject] recognize];
-                });
-
-                it(@"fires off a video play beacon", ^{
-                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
-                });
-            });
-        });
-
-        context(@"when the ad is a vine", ^{
-            beforeEach(^{
-                ad.action = STRVineAd;
-
-                view.frame = CGRectMake(0, 0, 100, 100);
-                [deferred resolveWithValue:ad];
-            });
-
-            describe(@"the view is tapped on", ^{
-                beforeEach(^{
-                    [(id<CedarDouble>)beaconService reset_sent_messages];
-                    [[view.gestureRecognizers lastObject] recognize];
-                });
-
-                it(@"fires off a video play beacon", ^{
-                    beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
-                });
-            });
-        });
-
-        context(@"when the ad is unknown", ^{
-            beforeEach(^{
-                ad.action = @"fakeAdType";
-
-                view.frame = CGRectMake(0, 0, 100, 100);
-                [deferred resolveWithValue:ad];
-            });
-
-            describe(@"the view is tapped on", ^{
-                beforeEach(^{
-                    [(id<CedarDouble>)beaconService reset_sent_messages];
-                    [[view.gestureRecognizers lastObject] recognize];
-                });
-
-                it(@"fires off a video play beacon", ^{
-                    beaconService should have_received(@selector(fireClickForAd:adSize:)).with(ad, CGSizeMake(100, 100));
-                });
-            });
+            adService should have_received(@selector(prefetchAdsForPlacement:)).with(placement);
         });
     });
- 
+
+    describe(@"-prefetchForPlacement:auctionParameterKey:auctionParameterValue", ^{
+        describe(@"when the auctionParams are nil", ^{
+            it(@"fetches a monetize creative", ^{
+                [generator prefetchForPlacement:placement auctionParameterKey:nil auctionParameterValue:nil];
+
+                adService should have_received(@selector(prefetchAdsForPlacement:)).with(placement);
+            });
+        });
+
+        describe(@"when the auctionParams are empty", ^{
+            it(@"fetches a monetize creative", ^{
+                [generator prefetchForPlacement:placement auctionParameterKey:@"" auctionParameterValue:@""];
+
+                adService should have_received(@selector(prefetchAdsForPlacement:)).with(placement);
+            });
+        });
+
+        it(@"calls into the ad service with the parameters", ^{
+            [generator prefetchForPlacement:placement auctionParameterKey:@"ckey" auctionParameterValue:@"abc123"];
+
+            adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:)).with(placement, @"ckey", @"abc123");
+        });
+    });
+
     describe(@"place an ad in a view without an ad description", ^{
         __block STRPlainAdView *view;
         __block STRDeferred *deferred;
