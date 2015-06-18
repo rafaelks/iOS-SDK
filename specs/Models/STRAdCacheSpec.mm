@@ -242,7 +242,6 @@ describe(@"STRAdCache", ^{
 
             it(@"doesn't blow up if the adView is nil", ^{
                 recentPlacement.adView = nil;
-                NSLog(@"Percent visible %f", [recentPlacement.adView percentVisible]);
                 [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
             });
         });
