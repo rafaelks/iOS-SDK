@@ -226,7 +226,7 @@
     } else if ([self.ad.action isEqualToString:STRHostedVideoAd] || [self.ad.action isEqualToString:STRVineAd]) {
         childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]] beaconService:self.beaconService];
     } else {
-        childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad];
+        childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad beaconService:self.beaconService];
     }
 
     [self addChildViewController:childViewController];

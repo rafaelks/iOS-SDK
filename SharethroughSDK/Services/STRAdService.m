@@ -10,6 +10,7 @@
 #import "STRRestClient.h"
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
+#import "STRAdArticle.h"
 #import "STRAdCache.h"
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
@@ -214,7 +215,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
                                        @"vine": [STRAdVine class],
                                        @"clickout": [STRAdClickout class],
-                                       @"article": [STRAdClickout class],
+                                       @"article": [STRAdArticle class],
                                        @"pinterest": [STRAdPinterest class],
                                        @"instagram": [STRAdInstagram class]
                                        };

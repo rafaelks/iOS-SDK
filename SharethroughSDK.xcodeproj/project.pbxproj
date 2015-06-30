@@ -359,6 +359,11 @@
 		B2B963691B0F9E8600404578 /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		B2B9636B1B0F9E8600404578 /* SharethroughSDK-Info.plist in Copy DFP Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		B2BCDAF01B2749A900BF50D2 /* STRViewTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */; };
+		B2D5CDC31B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
+		B2D5CDC41B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
+		B2D5CDC51B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
+		B2D5CDC61B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
+		B2D5CDC71B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
 		B2F29E681A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
 		B2F29E691A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
 		B2F29E6A1A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
@@ -820,6 +825,8 @@
 		B2B963121B0F9AFD00404578 /* libSharethrough-SDK+DFP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK+DFP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B963531B0F9D0B00404578 /* libSharethrough-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRViewTracker.mm; sourceTree = "<group>"; };
+		B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdArticle.h; sourceTree = "<group>"; };
+		B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdArticle.m; sourceTree = "<group>"; };
 		B2F29E671A9807C000313C61 /* close-btn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "close-btn.c"; sourceTree = "<group>"; };
 		B2F29E6B1A98086600313C61 /* link_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = link_thumbnail.c; sourceTree = "<group>"; };
 		E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.release.xcconfig"; sourceTree = "<group>"; };
@@ -943,6 +950,8 @@
 		AE022DE9188E008800D02568 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */,
+				B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */,
 				AE9C4608189B181B001B407A /* STRAdCache.h */,
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
 				AE39F8CD18AD831200969C30 /* STRAdClickout.h */,
@@ -1947,6 +1956,7 @@
 				AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */,
 				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
 				AE39F8C418AD39CB00969C30 /* hosted_sample_thumbnail.c in Sources */,
+				B2D5CDC71B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
 				AE58228218A2F19100672653 /* UICollectionView+STRSpec.mm in Sources */,
 				E84FB59F19BFCD750034A41E /* STRDFPManagerSpec.mm in Sources */,
 				AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */,
@@ -2037,6 +2047,7 @@
 				B229F09B1A2E47CA0094A8B3 /* instagram-logo.c in Sources */,
 				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
+				B2D5CDC31B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
 				AEECC9C418AEAAB600E28C51 /* STRTestSafeModule.m in Sources */,
 				AEA0EC7918AC589E00B4286A /* vine_sample_thumbnail.c in Sources */,
 				AE3FF40518AAA078006061C2 /* STRImages.m in Sources */,
@@ -2091,6 +2102,7 @@
 				B2B962E41B0F9AFD00404578 /* NSMutableArray+Queue.m in Sources */,
 				B2B962E51B0F9AFD00404578 /* STRInteractiveAdViewController.m in Sources */,
 				B2B962E61B0F9AFD00404578 /* STRAdPlacement.m in Sources */,
+				B2D5CDC61B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
 				B2B962E71B0F9AFD00404578 /* STRAdCache.m in Sources */,
 				B2B962E81B0F9AFD00404578 /* STRBlockWrapper.m in Sources */,
 				B2B962E91B0F9AFD00404578 /* STRNetworkClient.m in Sources */,
@@ -2169,6 +2181,7 @@
 				B2B963351B0F9D0B00404578 /* instagram-logo.c in Sources */,
 				B2B963361B0F9D0B00404578 /* STRIndexPathDelegateProxy.m in Sources */,
 				B2B963371B0F9D0B00404578 /* STRAppModule.m in Sources */,
+				B2D5CDC51B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
 				B2B963381B0F9D0B00404578 /* STRTestSafeModule.m in Sources */,
 				B2B963391B0F9D0B00404578 /* vine_sample_thumbnail.c in Sources */,
 				B2B9633A1B0F9D0B00404578 /* STRImages.m in Sources */,
@@ -2223,6 +2236,7 @@
 				B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */,
 				E8703E0A19B9092600D3FA50 /* STRInteractiveAdViewController.m in Sources */,
 				E8703E0B19B9092600D3FA50 /* STRAdPlacement.m in Sources */,
+				B2D5CDC41B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
 				E8703E0C19B9092600D3FA50 /* STRAdCache.m in Sources */,
 				E8703E0D19B9092600D3FA50 /* STRBlockWrapper.m in Sources */,
 				E8703E0F19B9092600D3FA50 /* STRNetworkClient.m in Sources */,
