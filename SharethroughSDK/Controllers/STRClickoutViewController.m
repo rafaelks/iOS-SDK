@@ -62,7 +62,7 @@
 #pragma Mark - UIWebViewDelegate
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    if (![webView.request.URL.host isEqualToString:@"platform-cdn.sharethrough.com"]) {
+    if (![webView.request.URL.host isEqualToString:self.ad.mediaURL.host]) {
         [self fireArticleViewDuration];
     }
 }

@@ -83,7 +83,7 @@ describe(@"STRClickoutViewController", ^{
                 beaconService should_not have_received(@selector(fireArticleDurationForAd:withDuration:));
             });
 
-            it(@"does not fire an articleViewDuration beacon if the domain is platform-cdn.sharethrough.com", ^{
+            it(@"does not fire an articleViewDuration beacon if the domain is the same as the article's media url domain", ^{
                 NSURL *url = [NSURL URLWithString:@"https://platform-cdn.sharethrough.com/blah"];
                 [controller.webview loadRequest:[NSURLRequest requestWithURL:url]];
                 beaconService should_not have_received(@selector(fireArticleDurationForAd:withDuration:));
