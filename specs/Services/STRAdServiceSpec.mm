@@ -5,6 +5,7 @@
 #import "STRAdvertisement.h"
 #import "STRInjector.h"
 #import "STRAppModule.h"
+#import "STRAdArticle.h"
 #import "STRAdCache.h"
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
@@ -353,7 +354,7 @@ describe(@"STRAdService", ^{
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
-                    afterSuccessfulAdFetchedSpecs([STRClickoutAd class], @"article");
+                    afterSuccessfulAdFetchedSpecs([STRAdArticle class], @"article");
                 });
 
                 describe(@"when the ad server successfully responds with an article ad", ^{

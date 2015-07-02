@@ -14,6 +14,7 @@
 #import "STRAdClickout.h"
 #import "STRAdPinterest.h"
 #import "STRAdInstagram.h"
+#import "STRAdArticle.h"
 
 @implementation STRAdFixtures
 
@@ -116,4 +117,16 @@
     return ad;
 }
 
++ (STRAdArticle *)articleAd {
+    STRAdArticle *ad = [STRAdArticle new];
+    ad.mediaURL = [NSURL URLWithString:@"https://platform-cdn.sharethrough.com/creatives/90b7d12a/article_content"];
+    ad.title = @"Teva + Bonnaroo";
+    ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];
+    ad.adDescription = @"Teva and 4 music-lovin' bloggers teamed up to hit the road to Bonnaroo. Check out their road-trip journey.";
+    ad.action = STRArticleAd;
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRClickoutThumbnail.bytes length:kSTRClickoutThumbnail.length]];
+    ad.advertiser = @"Teva";
+
+    return ad;
+}
 @end
