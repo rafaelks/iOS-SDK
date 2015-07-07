@@ -11,6 +11,8 @@ addons:
 script:
 #  - "rake specs"
   - "echo $ARTIFACTS_BUCKET"
+  - "echo $ARTIFACTS_KEY"
+  - "echo $ARTIFACTS_SECRET"
   - "xcodebuild -project SharethroughSDK.xcodeproj -target SharethroughSDK -configuration Release build"
   - "FULL_VERSION=$(git --git-dir='.git' --work-tree='/' describe | sed -e 's/^v//' -e 's/g//')"
   - "tar -C 'built-framework' -c -f built-framework/SharethroughSDK.framework.${FULL_VERSION}.tar SharethroughSDK.framework"
