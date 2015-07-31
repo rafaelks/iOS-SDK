@@ -125,7 +125,7 @@
 
 - (void)customEngagementButtonPressed:(id)sender {
     TLog(@"");
-    [self.application openURL:self.ad.customEngagemnetURL];
+    [self.application openURL:self.ad.customEngagementURL];
 }
 
 #pragma mark - Private
@@ -140,7 +140,7 @@
     [headerView addSubview:toolbar];
     NSNumber *toolbarWidth = @(85);
 
-    if ([[self.ad.customEngagemnetURL absoluteString] length] > 0 && [self.ad.customEngagementLabel length] > 0) {
+    if ([[self.ad.customEngagementURL absoluteString] length] > 0 && [self.ad.customEngagementLabel length] > 0) {
         UIToolbar *customToolbar = [UIToolbar new];
         customToolbar.translatesAutoresizingMaskIntoConstraints = NO;
         UIBarButtonItem *customButton = [[UIBarButtonItem alloc] initWithTitle:self.ad.customEngagementLabel
