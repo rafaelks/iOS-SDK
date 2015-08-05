@@ -44,6 +44,7 @@ extern NSString *STRArticleAd;
 @property (nonatomic, strong) UIImage *thumbnailImage;
 @property (nonatomic, strong) UIImage *brandLogoImage;
 @property (nonatomic) NSInteger placementIndex;
+@property (nonatomic, copy) NSString *dealId;
 
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForImpression;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;

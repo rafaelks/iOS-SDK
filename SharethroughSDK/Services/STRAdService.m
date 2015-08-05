@@ -261,6 +261,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         ad.thumbnailURL = [self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]];
         ad.customEngagementLabel = creativeJSON[@"custom_engagement_label"];
         ad.customEngagementURL = [self URLFromSanitizedString:creativeJSON[@"custom_engagement_url"]];
+        ad.dealId = creativeWrapperJSON[@"deal_id"];
         ad.injector = self.injector;
 
         [deferred resolveWithValue:ad];
