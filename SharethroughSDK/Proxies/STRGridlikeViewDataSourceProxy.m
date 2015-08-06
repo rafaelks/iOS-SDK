@@ -88,6 +88,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberofContentRows = [self.originalTVDataSource tableView:tableView numberOfRowsInSection:section];
+    if (numberofContentRows == 0) {
+        return 0;
+    }
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
     TLog(@"originalDS: %@, pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.originalTVDataSource, self.placementKey, section, numberofContentRows, self.numAdsInView);
@@ -107,6 +110,9 @@
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger numberofContentRows =  [self.originalCVDataSource collectionView:collectionView numberOfItemsInSection:section];
+    if (numberofContentRows == 0) {
+        return 0;
+    }
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section givenNumberOfRows:numberofContentRows];
     TLog(@"originalDS: %@, pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.originalCVDataSource, self.placementKey, section, numberofContentRows, self.numAdsInView);
