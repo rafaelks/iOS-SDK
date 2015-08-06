@@ -58,6 +58,7 @@ describe(@"STRBeaconService", ^{
         ad.auctionPrice = @"price";
         ad.adserverRequestId = @"fake-arid";
         ad.auctionWinId = @"fake-awid";
+        ad.dealId = @"fake-dealId";
     });
 
     describe(@"-fireImpressionRequestForPlacementKey:", ^{
@@ -200,7 +201,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"at": @"type",
                                                                                          @"ap": @"price",
                                                                                          @"arid": @"fake-arid",
-                                                                                         @"awid": @"fake-awid"});
+                                                                                         @"awid": @"fake-awid",
+                                                                                         @"deal_id": @"fake-dealId"});
         });
 
         describe(@"firing the impression again on the same ad", ^{
@@ -226,6 +228,7 @@ describe(@"STRBeaconService", ^{
                 ad.adserverRequestId = nil;
                 ad.auctionWinId = nil;
                 ad.impressionBeaconFired = NO;
+                ad.dealId = nil;
                 [service fireImpressionForAd:ad adSize:CGSizeMake(200, 100)];
             });
 
@@ -277,7 +280,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"at": @"type",
                                                                                          @"ap": @"price",
                                                                                          @"arid": @"fake-arid",
-                                                                                         @"awid": @"fake-awid"});
+                                                                                         @"awid": @"fake-awid",
+                                                                                         @"deal_id": @"fake-dealId"});
         });
 
         describe(@"firing the visible impression again on the same ad", ^{
@@ -298,26 +302,27 @@ describe(@"STRBeaconService", ^{
 
         subjectAction(^{
             parameters = @{@"pkey": @"placementKey",
-              @"ckey": @"creativeKey",
-              @"vkey": @"variantKey",
-              @"type": @"userEvent",
-              @"engagement": @"true",
-              @"userEvent": expectedUserEvent,
-              @"bwidth": @"200",
-              @"bheight": @"400",
-              @"umtime": @"10",
-              @"session": @"AAAA",
-              @"uid": @"fakeUUID",
-              @"ua": @"User Agent",
-              @"pwidth": @"200",
-              @"pheight": @"100",
-              @"ploc": @"specs",
-              @"placementIndex": @"0",
-              @"as": @"sig",
-              @"at": @"type",
-              @"ap": @"price",
+                           @"ckey": @"creativeKey",
+                           @"vkey": @"variantKey",
+                           @"type": @"userEvent",
+                           @"engagement": @"true",
+                           @"userEvent": expectedUserEvent,
+                           @"bwidth": @"200",
+                           @"bheight": @"400",
+                           @"umtime": @"10",
+                           @"session": @"AAAA",
+                           @"uid": @"fakeUUID",
+                           @"ua": @"User Agent",
+                           @"pwidth": @"200",
+                           @"pheight": @"100",
+                           @"ploc": @"specs",
+                           @"placementIndex": @"0",
+                           @"as": @"sig",
+                           @"at": @"type",
+                           @"ap": @"price",
                            @"arid": @"fake-arid",
-                           @"awid": @"fake-awid"};
+                           @"awid": @"fake-awid",
+                           @"deal_id": @"fake-dealId"};
             [service fireVideoPlayEvent:ad adSize:CGSizeMake(200, 100)];
 
 
@@ -410,7 +415,8 @@ describe(@"STRBeaconService", ^{
                              @"at": @"type",
                              @"ap": @"price",
                              @"arid": @"fake-arid",
-                             @"awid": @"fake-awid"};
+                             @"awid": @"fake-awid",
+                             @"deal_id": @"fake-dealId"};
         });
 
         describe(@"when the share type is email", ^{
@@ -482,7 +488,8 @@ describe(@"STRBeaconService", ^{
                            @"at": @"type",
                            @"ap": @"price",
                            @"arid": @"fake-arid",
-                           @"awid": @"fake-awid"};
+                           @"awid": @"fake-awid",
+                           @"deal_id": @"fake-dealId"};
             [service fireClickForAd:ad adSize:CGSizeMake(200, 100)];
         });
 

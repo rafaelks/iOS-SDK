@@ -36,7 +36,7 @@ extern NSString *STRArticleAd;
 @property (nonatomic, copy) NSString *auctionWinId;
 @property (nonatomic, copy) NSString *customEngagementLabel;
 @property (nonatomic, copy) NSString *promotedByText;
-@property (nonatomic, copy) NSURL *customEngagemnetURL;
+@property (nonatomic, copy) NSURL *customEngagementURL;
 @property (nonatomic, copy) NSURL *mediaURL;
 @property (nonatomic, copy) NSURL *shareURL;
 @property (nonatomic, copy) NSURL *brandLogoURL;
@@ -44,6 +44,7 @@ extern NSString *STRArticleAd;
 @property (nonatomic, strong) UIImage *thumbnailImage;
 @property (nonatomic, strong) UIImage *brandLogoImage;
 @property (nonatomic) NSInteger placementIndex;
+@property (nonatomic, copy) NSString *dealId;
 
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForImpression;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;

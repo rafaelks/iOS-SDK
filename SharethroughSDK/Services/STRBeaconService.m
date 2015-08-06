@@ -215,6 +215,9 @@ static id valueOrEmpty(id object)
                                @"awid": valueOrEmpty(ad.auctionWinId) };
     NSMutableDictionary *commonParams = [self commonParameters];
     [commonParams addEntriesFromDictionary:adParams];
+    if (ad.dealId && ad.dealId.length > 0) {
+        [commonParams setObject:ad.dealId forKey:@"deal_id"];
+    }
 
     TLog(@"commonParams:%@",commonParams);
     return commonParams;
