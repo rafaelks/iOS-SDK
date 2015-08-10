@@ -1,5 +1,7 @@
 # Sharethrough iOS-SDK #
 
+![Build Status](https://travis-ci.org/sharethrough/iOS-SDK.svg?branch=master)
+
 ## Documentation ##
 Our documentation with instructions for how to install and integrate Sharethrough ads into your app can be found at [developers.sharethrough.com][sdk-docs]
 
