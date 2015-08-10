@@ -23,7 +23,7 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 * [View SDK Documentation][sdk-docs]
 
 [changelog-wiki]: https://github.com/sharethrough/iOS-SDK/wiki/Releases
-[support-email]: mailto:solutions@sharethrough.com
+[support-email]: mailto:Pubsupport@sharethrough.com
 [sdk]: http://s3.amazonaws.com/iOS-SDK/SharethroughSDK.framework.tar
 [stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video
 [sample-app]: https://github.com/sharethrough/iOS-Sample-App
