@@ -207,6 +207,8 @@
 		B238F6471B20E62400847C50 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
 		B238F6481B20E62400847C50 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
 		B238F6491B20E62400847C50 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
+		B23E6EB21B7A4CC600CF2013 /* STRAdvertisement.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
+		B23E6EB61B7A4DD100CF2013 /* STRAdvertisement.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
 		B245C3BE1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */; };
 		B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
 		B26D22E81ACF3A210072ACDD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */; };
@@ -580,6 +582,7 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}+DFP.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				B23E6EB61B7A4DD100CF2013 /* STRAdvertisement.h in Copy DFP Header Files */,
 				B2A6CC851B2244750088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */,
 				B2B963641B0F9E8600404578 /* STRAdView.h in Copy DFP Header Files */,
 				B2B963651B0F9E8600404578 /* STRAdViewDelegate.h in Copy DFP Header Files */,
@@ -639,6 +642,7 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}+DFP.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				B23E6EB21B7A4CC600CF2013 /* STRAdvertisement.h in Copy DFP Header Files */,
 				B2A6CC821B2244520088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */,
 				E83128D519B914DB007C2FAB /* STRAdView.h in Copy DFP Header Files */,
 				E83128D619B914DB007C2FAB /* STRAdViewDelegate.h in Copy DFP Header Files */,
