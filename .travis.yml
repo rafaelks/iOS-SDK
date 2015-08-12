@@ -1,18 +1,7 @@
 notifications:
   email: false
 language: "objective-c"
-addons:
-  artifacts:
-    debug: true
-    paths:
-      - built-framework/SharethroughSDK.framework.${FULL_VERSION}.tar
-      - built-framework/SharethroughSDK.framework.${FULL_VERSION}.zip
-      - built-framework/SharethroughSDK+DFP.framework.${FULL_VERSION}.tar
 script:
 #  - "rake specs"
   - "echo $ARTIFACTS_BUCKET"
   - "xcodebuild -project SharethroughSDK.xcodeproj -target SharethroughSDK -configuration Release build"
-  - "FULL_VERSION=$(git --git-dir='.git' --work-tree='/' describe | sed -e 's/^v//' -e 's/g//')"
-  - "tar -C 'built-framework' -c -f built-framework/SharethroughSDK.framework.${FULL_VERSION}.tar SharethroughSDK.framework"
-  - "cd built-framework/ && zip -r SharethroughSDK.framework.${FULL_VERSION}.zip SharethroughSDK.framework/ && cd .."
-  - "tar -C 'built-framework' -c -f built-framework/SharethroughSDK+DFP.framework.${FULL_VERSION}.tar SharethroughSDK+DFP.framework"
