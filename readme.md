@@ -18,7 +18,7 @@ iOS 7.0 & up
 If you're running your iOS app on a physical iPad while connected to a computer and play a Youtube video from an ad, error messages will be displayed in the Xcode console. This is a known iPad on iOS7 issue, but do not affect your app's functionality. More information can be found [here][stack-overflow]
 
 ## Quick Links ##
-* [Download SDK][sdk] The latest version of the SDK.
+* [Download][releases-link] The latest version of the SDK from our releases page.
 * [Sample App][sample-app] Sample iOS app which utilizes the SDK.
 * [View SDK Documentation][sdk-docs]
 
