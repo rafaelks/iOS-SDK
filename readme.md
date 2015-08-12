@@ -6,7 +6,7 @@
 Our documentation with instructions for how to install and integrate Sharethrough ads into your app can be found at [developers.sharethrough.com][sdk-docs]
 
 ## What's New? ##
-Check out the [changelog][changelog-wiki] for details and the various versions.
+Check out the [releases][releases-link] for details and the various versions.
 
 ## Need Help? ##
 [Email us][support-email] and we'll get back to you as soon as possible. 
@@ -22,7 +22,7 @@ If you're running your iOS app on a physical iPad while connected to a computer 
 * [Sample App][sample-app] Sample iOS app which utilizes the SDK.
 * [View SDK Documentation][sdk-docs]
 
-[changelog-wiki]: https://github.com/sharethrough/iOS-SDK/wiki/Releases
+[releases-link]: https://github.com/sharethrough/iOS-SDK/releases
 [support-email]: mailto:Pubsupport@sharethrough.com
 [sdk]: http://s3.amazonaws.com/iOS-SDK/SharethroughSDK.framework.tar
 [stack-overflow]: http://stackoverflow.com/questions/19034954/ios7-uiwebview-youtube-video
