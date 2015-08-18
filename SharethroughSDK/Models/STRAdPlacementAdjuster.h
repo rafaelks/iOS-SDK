@@ -15,6 +15,7 @@
 @property (nonatomic) NSInteger adSection;
 @property (nonatomic) NSInteger articlesBeforeFirstAd;
 @property (nonatomic) NSInteger articlesBetweenAds;
+@property (nonatomic) NSInteger numContentRows;
 @property (nonatomic, strong) NSString *placementKey;
 
 + (instancetype)adjusterInSection:(NSInteger)section
@@ -24,7 +25,7 @@
                           adCache:(STRAdCache *)adCache;
 
 - (BOOL)isAdAtIndexPath:(NSIndexPath *)indexPath;
-- (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows;
+- (NSInteger)numberOfAdsInSection:(NSInteger)section;
 
 - (NSIndexPath *)indexPathWithoutAds:(NSIndexPath *)indexPath;
 - (NSArray *)indexPathsWithoutAds:(NSArray *)indexPaths;

@@ -29,6 +29,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
         fakePlacementKey = @"fake-placement-key";
         fakeAdCache = nice_fake_for([STRAdCache class]);
         adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
+        adjuster.numContentRows = 2;
         spy_on(adjuster);
         
         proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:CGSizeZero];

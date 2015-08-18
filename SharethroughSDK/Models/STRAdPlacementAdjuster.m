@@ -53,15 +53,15 @@
     return NO;
 }
 
-- (NSInteger)numberOfAdsInSection:(NSInteger)section givenNumberOfRows:(NSInteger)contentRows {
-    TLog(@"section:%zd numberOfRows:%zd", section, contentRows);
+- (NSInteger)numberOfAdsInSection:(NSInteger)section {
+    TLog(@"section:%zd numberOfRows:%zd", section, self.numContentRows);
     NSInteger nAdsAssignedAndAvailable = [self.adCache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:self.placementKey];
     if (section == self.adSection && nAdsAssignedAndAvailable > 0) {
         self.numberOfAdSpotsAvailable = 0;
-        if (contentRows < self.articlesBeforeFirstAd) {
+        if (self.numContentRows < self.articlesBeforeFirstAd) {
             return 0;
         } else {
-            self.numberOfAdSpotsAvailable = 1 + (contentRows - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
+            self.numberOfAdSpotsAvailable = 1 + (self.numContentRows - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
             self.numberOfAdsInSection = MIN(self.numberOfAdSpotsAvailable, nAdsAssignedAndAvailable);
             return self.numberOfAdsInSection;
         }
@@ -71,7 +71,14 @@
 
 - (NSIndexPath *)indexPathWithoutAds:(NSIndexPath *)indexPath {
     TLog(@"indexPath:%@",indexPath);
-    return [self adjustedIndexPath:indexPath includingAds:NO];
+    if (indexPath.section != self.adSection) {
+        return indexPath;
+    }
+    NSIndexPath *indexPathWithOutAds = [self adjustedIndexPath:indexPath includingAds:NO];
+    if (indexPathWithOutAds.row >= self.numContentRows) {
+        indexPathWithOutAds = [NSIndexPath indexPathForRow:self.numContentRows - 1 inSection:indexPath.section];
+    }
+    return indexPathWithOutAds;
 }
 
 - (NSArray *)indexPathsWithoutAds:(NSArray *)indexPaths {
@@ -89,6 +96,9 @@
 
 - (NSIndexPath *)indexPathIncludingAds:(NSIndexPath *)indexPath {
     TLog(@"indexPath:%@",indexPath);
+    if (indexPath.section != self.adSection){
+        return indexPath;
+    }
     return [self adjustedIndexPath:indexPath includingAds:YES];
 }
 
@@ -174,13 +184,8 @@
         return nil;
     }
 
-    if (indexPath.section != self.adSection){// || !self.adLoaded) { //Consider adding this back in as an optimization
-        return indexPath;
-    }
-
     NSInteger adjustment = 0;
     if ((indexPath.row - self.articlesBeforeFirstAd) >= 0) {
-//        adjustment = 1 + (indexPath.row - self.articlesBeforeFirstAd) / (self.articlesBetweenAds);
         NSArray *assignedIndices = [self.adCache assignedAdIndixesForPlacementKey:self.placementKey];
         for (NSNumber *index in assignedIndices) {
             if ([index integerValue] <= indexPath.row) {
