@@ -247,20 +247,107 @@ describe(@"STRAdCache", ^{
         });
     });
 
-    describe(@"-numberOfAdsAvailableForPlacement:", ^{
-        __block STRAdPlacement *adPlacement;
-        
+    describe(@"-isAdExpired", ^{
+        __block STRAdvertisement *recentAd;
+        __block STRAdvertisement *expiredAd;
+
         beforeEach(^{
-            adPlacement = [[STRAdPlacement alloc] init];
-            adPlacement.placementKey = @"pkey-fake";
+            recentAd = [[STRAdvertisement alloc] init];
+            recentAd.placementKey = @"pkey-recentAd";
+            recentAd.creativeKey = @"ckey-recentAd";
+            recentAd.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:999];
+
+            expiredAd = [[STRAdvertisement alloc] init];
+            expiredAd.placementKey = @"pkey-expiredAd";
+            expiredAd.creativeKey = @"ckey-expiredAd";
+            expiredAd.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:100];
+
+            dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
+                NSDate *date;
+                if (dateProvider.sent_messages.count == 1) {
+                    date = [NSDate dateWithTimeIntervalSince1970:1000];
+                } else if (dateProvider.sent_messages.count == 2) {
+                    date = [NSDate dateWithTimeIntervalSince1970:10000];
+                } else {
+                    date = [NSDate dateWithTimeIntervalSince1970:10019];
+                }
+
+                [invocation setReturnValue:&date];
+            });
         });
-        
-        it(@"returns the number of ads that have not been assigned", ^{
-            STRAdvertisement *firstAd = [[STRAdvertisement alloc] init];
-            STRAdvertisement *secondAd = [[STRAdvertisement alloc] init];
-            STRAdvertisement *thirdAd = [[STRAdvertisement alloc] init];
-            [cache saveAds:[NSMutableArray arrayWithArray:@[firstAd, secondAd, thirdAd]] forPlacement:adPlacement andInitializeAtIndex:NO];
-            [cache numberOfAdsAvailableForPlacement:adPlacement] should equal(3);
+
+        it(@"returns NO if the saved as was not yet visible", ^{
+            STRAdvertisement *unseenAd = [[STRAdvertisement alloc] init];
+            [cache isAdExpired:unseenAd] should be_falsy;
+        });
+
+        it(@"returns YES if the saved ad was visible more than the timeout ago", ^{
+            [cache isAdExpired:expiredAd] should be_truthy;
+        });
+
+        it(@"returns NO if the saved as was visible less than the timeout ago", ^{
+            [cache isAdExpired:recentAd] should be_falsy;
+        });
+    });
+
+    describe(@"-numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey", ^{
+        __block STRAdPlacement *placement;
+        __block STRAdvertisement *cachedAd1, *cachedAd2, *assignedAd1, *assignedAd2;
+
+        beforeEach(^{
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"fakePlacementKey";
+            cachedAd1 = [[STRAdvertisement alloc] init];
+            cachedAd2 = [[STRAdvertisement alloc] init];
+            assignedAd1 = [[STRAdvertisement alloc] init];
+            assignedAd2 = [[STRAdvertisement alloc] init];
+
+            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andInitializeAtIndex:NO];
+        });
+
+        describe(@"when no ads are assigned", ^{
+            it(@"returns the count of the cached ads", ^{
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:@"fakePlacementKey"] should equal(4);
+            });
+        });
+
+        describe(@"when ads are assigned", ^{
+            beforeEach(^{
+                placement.adIndex = 0;
+                [cache isAdAvailableForPlacement:placement] should be_truthy;
+            });
+
+            context(@"when no ads are expired", ^{
+                it(@"returns the sum of assigned and queued", ^{
+                    [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:@"fakePlacementKey"] should equal(4);
+                });
+            });
+
+            context(@"when an ad is expired", ^{
+                beforeEach(^{
+                    placement.adIndex = 1;
+                    [cache isAdAvailableForPlacement:placement] should be_truthy;
+
+                    assignedAd1.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:100];
+
+                    dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
+                        NSDate *date;
+                        if (dateProvider.sent_messages.count == 1) {
+                            date = [NSDate dateWithTimeIntervalSince1970:1000];
+                        } else if (dateProvider.sent_messages.count == 2) {
+                            date = [NSDate dateWithTimeIntervalSince1970:10000];
+                        } else {
+                            date = [NSDate dateWithTimeIntervalSince1970:10019];
+                        }
+
+                        [invocation setReturnValue:&date];
+                    });
+                });
+
+                it(@"subtracts the number of expired ads from the queued ads", ^{
+                    [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:@"fakePlacementKey"] should equal(3);
+                });
+            });
         });
     });
 

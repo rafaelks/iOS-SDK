@@ -20,7 +20,9 @@
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey;
 
 - (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement;
-- (NSUInteger)numberOfAdsAvailableForPlacement:(STRAdPlacement *)placement;
+
+- (BOOL)isAdExpired:(STRAdvertisement *)ad;
+
 - (NSInteger)numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:(NSString *)placementKey;
 - (NSArray *)assignedAdIndixesForPlacementKey:(NSString *)placementKey;
 

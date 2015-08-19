@@ -126,13 +126,11 @@
             return YES;
         }
     }
-    if (!ad.visibleImpressionTime) {
+
+    if (![self isAdExpired:ad]) {
         return YES;
     }
-    NSDate *now = [self.dateProvider now];
-    NSTimeInterval timeInterval = [now timeIntervalSinceDate:ad.visibleImpressionTime];
-
-    if ([placement.adView percentVisible] < 0.1f && (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds)) {
+    if ([placement.adView percentVisible] < 0.1f) {
         if ([creatives peek] == nil) {
             return YES; //reuse the old ad
         } else {
@@ -143,18 +141,40 @@
     return YES;
 }
 
-- (NSUInteger)numberOfAdsAvailableForPlacement:(STRAdPlacement *)placement {
-    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placement.placementKey];
-    TLog(@"pkey:%@ creativeCount:%tu",placement.placementKey, [creatives count]);
-    return [creatives count];
+- (BOOL)isAdExpired:(STRAdvertisement *)ad {
+    if (!ad.visibleImpressionTime) { //haven't started the timer yet
+        return NO;
+    }
+    NSDate *now = [self.dateProvider now];
+    NSTimeInterval timeInterval = [now timeIntervalSinceDate:ad.visibleImpressionTime];
+    if (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds) {
+        return YES;
+    }
+    return NO;
 }
 
 - (NSInteger)numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:(NSString *)placementKey {
-    NSMutableArray *creatives = [self.cachedCreatives objectForKey:placementKey];
+    NSMutableArray *queuedCreatives = [self.cachedCreatives objectForKey:placementKey];
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
-    NSUInteger count =  [creatives count] + [indexToCreativeMap count];
-    TLog(@"pkey:%@ assignedAndQueued:%tu", placementKey, count);
-    return count;
+
+    __block NSUInteger expiredAdsCount = 0;
+    [indexToCreativeMap enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        STRAdvertisement *ad = (STRAdvertisement *)obj;
+        if ([self isAdExpired:ad]) {
+            ++expiredAdsCount;
+        }
+    }];
+
+    NSUInteger queuedCount = [queuedCreatives count];
+    NSUInteger assignedAdsCount = [indexToCreativeMap count];
+    NSUInteger effectiveCount;
+    if (expiredAdsCount >= queuedCount) {
+        effectiveCount = assignedAdsCount;
+    } else {
+        effectiveCount = assignedAdsCount + queuedCount - expiredAdsCount;
+    }
+    TLog(@"pkey:%@ assignedCount:%tu, expiredCount:%tu, queuedCount:%tu, effectiveCount:%tu", placementKey, assignedAdsCount, expiredAds, queuedCount, effectiveCount);
+    return effectiveCount;
 }
 
 - (NSArray *)assignedAdIndixesForPlacementKey:(NSString *)placementKey {

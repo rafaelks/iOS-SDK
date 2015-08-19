@@ -26,6 +26,7 @@ describe(@"STRAdPlacementAdjuster", ^{
                                               articlesBetweenAds:5
                                                     placementKey:fakePlacementKey
                                                          adCache:fakeAdCache];
+            adjuster.numContentRows = 10;
         });
         
         describe(@"+adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:", ^{
@@ -70,6 +71,12 @@ describe(@"STRAdPlacementAdjuster", ^{
             it(@"subtracts indexPath for cells after ad row in same section", ^{
                 fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:5]]);
                 [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:6 inSection:0]] should equal([NSIndexPath indexPathForRow:5 inSection:0]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:10 inSection:0]] should equal([NSIndexPath indexPathForRow:9 inSection:0]);
+            });
+
+            it(@"does not exceed the number of rows in the underlying content", ^{
+                fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).again().and_return(NO);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:11 inSection:0]] should equal([NSIndexPath indexPathForRow:9 inSection:0]);
             });
             
             it(@"leaves indexPath unchanged for cells in different section", ^{
@@ -136,31 +143,41 @@ describe(@"STRAdPlacementAdjuster", ^{
         
         describe(@"-numberOfAdsInSection:gienNumberOfRows:", ^{
             it(@"returns 0 if not the ad section", ^{
-                [adjuster numberOfAdsInSection:1 givenNumberOfRows:100] should equal(0);
+                adjuster.numContentRows = 100;
+                [adjuster numberOfAdsInSection:1] should equal(0);
             });
             
             it(@"returns 0 if there are less articles than the number before an ad should be shown", ^{
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:4] should equal(0);
+                adjuster.numContentRows = 4;
+                [adjuster numberOfAdsInSection:0] should equal(0);
             });
             
             it(@"correctly calculates the number of ads based on the number of ads in the section", ^{
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:9] should equal(1);
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:10] should equal(2);
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:11] should equal(2);
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:12] should equal(2);
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:13] should equal(2);
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:14] should equal(2);
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:15] should equal(3);
+                adjuster.numContentRows = 9;
+                [adjuster numberOfAdsInSection:0] should equal(1);
+                adjuster.numContentRows = 10;
+                [adjuster numberOfAdsInSection:0] should equal(2);
+                adjuster.numContentRows = 11;
+                [adjuster numberOfAdsInSection:0] should equal(2);
+                adjuster.numContentRows = 12;
+                [adjuster numberOfAdsInSection:0] should equal(2);
+                adjuster.numContentRows = 13;
+                [adjuster numberOfAdsInSection:0] should equal(2);
+                adjuster.numContentRows = 14;
+                [adjuster numberOfAdsInSection:0] should equal(2);
+                adjuster.numContentRows = 15;
+                [adjuster numberOfAdsInSection:0] should equal(3);
             });
 
             it(@"handles edge cases", ^{
                 STRAdPlacementAdjuster *everyOtherAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:1 placementKey:fakePlacementKey adCache:fakeAdCache];
-
-                [everyOtherAdjuster numberOfAdsInSection:0 givenNumberOfRows:3] should equal(4);
+                everyOtherAdjuster.numContentRows = 3;
+                [everyOtherAdjuster numberOfAdsInSection:0] should equal(4);
 
                 STRAdPlacementAdjuster *onlyOneAd = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:NSIntegerMax placementKey:fakePlacementKey adCache:fakeAdCache];
 
-                [onlyOneAd numberOfAdsInSection:0 givenNumberOfRows:10000] should equal(1);
+                onlyOneAd.numContentRows = 10000;
+                [onlyOneAd numberOfAdsInSection:0] should equal(1);
             });
         });
         
@@ -495,6 +512,7 @@ describe(@"STRAdPlacementAdjuster", ^{
     describe(@"When an ad is not loaded", ^{
         beforeEach(^{
             adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+            adjuster.numContentRows = 10;
         });
         
         describe(@"-isAdAtIndexPath:", ^{
@@ -514,6 +532,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             
             it(@"returns the original index path for cells after ad row in same section", ^{
                 [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:2 inSection:0]] should equal([NSIndexPath indexPathForRow:2 inSection:0]);
+                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:9 inSection:0]] should equal([NSIndexPath indexPathForRow:9 inSection:0]);
             });
             
             it(@"leaves indexPath unchanged for cells in different section", ^{
@@ -574,7 +593,8 @@ describe(@"STRAdPlacementAdjuster", ^{
         
         describe(@"-numberOfAdsInSection:gienNumberOfRows:", ^{
             it(@"returns 0 ads", ^{
-                [adjuster numberOfAdsInSection:0 givenNumberOfRows:100] should equal(0);
+                adjuster.numContentRows = 100;
+                [adjuster numberOfAdsInSection:0] should equal(0);
             });
         });
         
