@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STRIneractiveChild.h"
 
 @class STRAdvertisement, STRBeaconService, MPMoviePlayerController;
 
-@interface STRVideoController : UIViewController
+@interface STRVideoController : UIViewController<STRIneractiveChild>
 
 @property (strong, nonatomic, readonly) STRAdvertisement *ad;
 @property (strong, nonatomic, readonly) MPMoviePlayerController *moviePlayerController;

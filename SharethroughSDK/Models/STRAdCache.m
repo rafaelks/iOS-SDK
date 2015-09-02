@@ -173,7 +173,7 @@
     } else {
         effectiveCount = assignedAdsCount + queuedCount - expiredAdsCount;
     }
-    TLog(@"pkey:%@ assignedCount:%tu, expiredCount:%tu, queuedCount:%tu, effectiveCount:%tu", placementKey, assignedAdsCount, expiredAds, queuedCount, effectiveCount);
+    TLog(@"pkey:%@ assignedCount:%tu, expiredCount:%tu, queuedCount:%tu, effectiveCount:%tu", placementKey, assignedAdsCount, expiredAdsCount, queuedCount, effectiveCount);
     return effectiveCount;
 }
 

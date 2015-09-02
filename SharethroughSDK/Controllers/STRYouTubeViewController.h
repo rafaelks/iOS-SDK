@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STRIneractiveChild.h"
 
 @class STRAdYouTube, STRBeaconService;
 
-@interface STRYouTubeViewController : UIViewController
+@interface STRYouTubeViewController : UIViewController<STRIneractiveChild>
 
 @property (strong, nonatomic, readonly) STRAdYouTube *ad;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;

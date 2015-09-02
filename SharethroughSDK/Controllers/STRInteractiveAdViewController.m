@@ -19,6 +19,7 @@
 #import "STRClickoutViewController.h"
 #import "STRImages.h"
 #import "STRLogging.h"
+#import "STRIneractiveChild.h"
 
 @interface STRInteractiveAdViewController () 
 
@@ -28,6 +29,7 @@
 @property (weak, nonatomic) UIDevice *device;
 @property (weak, nonatomic) UIApplication *application;
 @property (strong, nonatomic, readwrite) UIPopoverController *sharePopoverController;
+@property (strong, nonatomic, readwrite) UIViewController<STRIneractiveChild> *childViewController;
 
 @end
 
@@ -88,6 +90,7 @@
 - (void)doneButtonPressed:(id)sender {
     TLog(@"");
     [self.sharePopoverController dismissPopoverAnimated:NO];
+    [self.childViewController cleanupResources];
     [self.delegate closedInteractiveAdView:self];
 }
 
@@ -220,19 +223,18 @@
 }
 
 - (void)addAdDisplayChildController:(UIView *)contentView {
-    UIViewController *childViewController;
     if ([self.ad isKindOfClass:[STRAdYouTube class]]) {
-        childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad beaconService:self.beaconService];
+        self.childViewController = [[STRYouTubeViewController alloc] initWithAd:(STRAdYouTube *)self.ad beaconService:self.beaconService];
     } else if ([self.ad.action isEqualToString:STRHostedVideoAd] || [self.ad.action isEqualToString:STRVineAd]) {
-        childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]] beaconService:self.beaconService];
+        self.childViewController = [[STRVideoController alloc] initWithAd:self.ad moviePlayerController:[self.injector getInstance:[MPMoviePlayerController class]] beaconService:self.beaconService];
     } else {
-        childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad beaconService:self.beaconService];
+        self.childViewController = [[STRClickoutViewController alloc] initWithAd:self.ad beaconService:self.beaconService];
     }
 
-    [self addChildViewController:childViewController];
-    [childViewController didMoveToParentViewController:self];
+    [self addChildViewController:self.childViewController];
+    [self.childViewController didMoveToParentViewController:self];
 
-    UIView *childView = childViewController.view;
+    UIView *childView = self.childViewController.view;
     childView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:childView];
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[childView]|"

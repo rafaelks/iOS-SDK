@@ -7,8 +7,10 @@
 //
 
 #import "SharethroughSDK.h"
+#import "STRIneractiveChild.h"
 @class STRAdvertisement, STRBeaconService;
-@interface STRClickoutViewController : UIViewController <UIWebViewDelegate>
+
+@interface STRClickoutViewController : UIViewController <UIWebViewDelegate, STRIneractiveChild>
 
 @property (strong, nonatomic, readonly) STRAdvertisement *ad;
 @property (strong, nonatomic, readonly) UIWebView *webview;

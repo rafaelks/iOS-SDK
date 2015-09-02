@@ -829,6 +829,7 @@
 		B2B963121B0F9AFD00404578 /* libSharethrough-SDK+DFP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK+DFP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B963531B0F9D0B00404578 /* libSharethrough-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRViewTracker.mm; sourceTree = "<group>"; };
+		B2C770571B9745E100906A91 /* STRIneractiveChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRIneractiveChild.h; sourceTree = "<group>"; };
 		B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdArticle.h; sourceTree = "<group>"; };
 		B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdArticle.m; sourceTree = "<group>"; };
 		B2F29E671A9807C000313C61 /* close-btn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "close-btn.c"; sourceTree = "<group>"; };
@@ -1152,6 +1153,7 @@
 				AE9C4633189C72B9001B407A /* STRVideoController.m */,
 				AE9C4628189C5288001B407A /* STRYouTubeViewController.h */,
 				AE9C4629189C5288001B407A /* STRYouTubeViewController.m */,
+				B2C770571B9745E100906A91 /* STRIneractiveChild.h */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

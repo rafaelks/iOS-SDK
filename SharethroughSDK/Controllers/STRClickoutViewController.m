@@ -67,6 +67,11 @@
     }
 }
 
+#pragma mark - STRInteractiveChild
+- (void)cleanupResources {
+    TLog(@"");
+}
+
 #pragma Mark - Private Methods
 
 - (void)initArticleTime {

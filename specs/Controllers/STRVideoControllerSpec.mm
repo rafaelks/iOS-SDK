@@ -43,6 +43,18 @@ describe(@"STRVideoController", ^{
         });
     });
 
+    describe(@"-cleanupResources", ^{
+        beforeEach(^{
+            ad = [STRAdFixtures ad];
+            controller = [[STRVideoController alloc] initWithAd:ad moviePlayerController:moviePlayerController beaconService:beaconService];
+            [controller cleanupResources];
+        });
+
+        it(@"stops the movie", ^{
+            moviePlayerController should have_received(@selector(stop));
+        });
+    });
+
     context(@"when the video is a vine", ^{
         beforeEach(^{
             ad = [STRAdFixtures vineAd];

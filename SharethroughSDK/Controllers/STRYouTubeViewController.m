@@ -12,6 +12,7 @@
 #import "STRBeaconService.h"
 #import "STRYouTubeEmbedPage.h"
 #import "STRLogging.h"
+#import "STRIneractiveChild.h"
 
 @interface STRYouTubeViewController ()<UIWebViewDelegate>
 
@@ -122,6 +123,11 @@
 
     [self.timer invalidate];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fireCompletionBeacon) userInfo:nil repeats:YES];
+}
+
+#pragma mark - STRInteractiveChild
+- (void)cleanupResources {
+    TLog(@"");
 }
 
 #pragma mark - private

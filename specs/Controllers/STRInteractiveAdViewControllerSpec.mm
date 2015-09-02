@@ -209,6 +209,7 @@ describe(@"STRInteractiveAdViewController", ^{
         beforeEach(^{
             ad = [STRAdFixtures youTubeAd];
             setUpController();
+            spy_on(controller.childViewController);
             delegate = nice_fake_for(@protocol(STRInteractiveAdViewControllerDelegate));
             controller.delegate = delegate;
             [controller.doneButton tap];
@@ -216,6 +217,10 @@ describe(@"STRInteractiveAdViewController", ^{
 
         it(@"notifies its delegate", ^{
             delegate should have_received(@selector(closedInteractiveAdView:)).with(controller);
+        });
+
+        it(@"tells the child to cleanup", ^{
+            controller.childViewController should have_received(@selector(cleanupResources));
         });
     });
 

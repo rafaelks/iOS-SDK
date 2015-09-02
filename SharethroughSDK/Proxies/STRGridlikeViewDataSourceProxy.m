@@ -93,7 +93,7 @@
     }
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section];
-    TLog(@"originalDS: %@, pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.originalTVDataSource, self.placementKey, section, self.numContentRows, self.numAdsInView);
+    TLog(@"originalDS: %@, pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.originalTVDataSource, self.placementKey, section, self.adjuster.numContentRows, self.numAdsInView);
     return  self.adjuster.numContentRows + self.numAdsInView;
 }
 
@@ -115,7 +115,7 @@
     }
 
     self.numAdsInView = [self.adjuster numberOfAdsInSection:section];
-    TLog(@"originalDS: %@, pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.originalCVDataSource, self.placementKey, section, self.numContentRows, self.numAdsInView);
+    TLog(@"originalDS: %@, pkey: %@ section:%zd, content rows:%zd, number of ads:%zd", self.originalCVDataSource, self.placementKey, section, self.adjuster.numContentRows, self.numAdsInView);
     return  self.adjuster.numContentRows + self.numAdsInView;
 }
 
