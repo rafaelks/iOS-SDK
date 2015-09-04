@@ -205,7 +205,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 - (NSURL *)URLFromSanitizedString:(NSString*)urlString {
     NSURL *sanitizedURL = [NSURL URLWithString:urlString];
     if (sanitizedURL != nil && ![sanitizedURL scheme]) {
-        sanitizedURL = [NSURL URLWithString:[NSString stringWithFormat:@"http:%@", urlString]];
+        sanitizedURL = [NSURL URLWithString:[NSString stringWithFormat:@"https:%@", urlString]];
     }
     return sanitizedURL;
 }

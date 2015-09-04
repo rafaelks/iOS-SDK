@@ -101,7 +101,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
             if (timeStampRange.location != NSNotFound ) {
                 [urlString replaceCharactersInRange:timeStampRange withString:timeStamp];
             }
-            [urlString insertString:@"http:" atIndex:0];
+            [urlString insertString:@"https:" atIndex:0];
             [self.restClient sendBeaconWithURL:[NSURL URLWithString:urlString]];
         }
     }

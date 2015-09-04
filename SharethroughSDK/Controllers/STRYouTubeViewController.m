@@ -97,7 +97,7 @@
 
     self.webView.delegate = self;
 
-    NSURL *baseUrl = [NSURL URLWithString:@"http://example.com"];
+    NSURL *baseUrl = [NSURL URLWithString:@"https://example.com"];
 
     [self.webView loadHTMLString:htmlString baseURL:baseUrl];
 }
