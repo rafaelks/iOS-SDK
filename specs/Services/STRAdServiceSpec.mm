@@ -378,7 +378,7 @@ describe(@"STRAdService", ^{
                 });
 
                 it(@"makes a request for the thumbnail image and inserts the protocol", ^{
-                    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"]];
+                    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg"]];
                     networkClient should have_received(@selector(get:)).with(request);
                 });
             });

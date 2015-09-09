@@ -92,6 +92,7 @@
     [self.sharePopoverController dismissPopoverAnimated:NO];
     [self.childViewController cleanupResources];
     [self.delegate closedInteractiveAdView:self];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)shareButtonPressed:(id)sender {

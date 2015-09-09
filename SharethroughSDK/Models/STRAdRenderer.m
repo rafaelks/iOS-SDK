@@ -117,7 +117,6 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     if ([self.placement.delegate respondsToSelector:@selector(adView:willDismissModalForPlacementKey:)]) {
         [self.placement.delegate adView:self.placement.adView willDismissModalForPlacementKey:self.placement.placementKey];
     }
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private
