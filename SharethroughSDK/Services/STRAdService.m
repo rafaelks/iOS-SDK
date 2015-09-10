@@ -19,6 +19,7 @@
 #import "STRAdInstagram.h"
 #import "STRBeaconService.h"
 #import "STRAdPlacement.h"
+#import "STRAdHostedVideo.h"
 #import <AdSupport/AdSupport.h>
 #import "STRLogging.h"
 
@@ -213,6 +214,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 - (STRAdvertisement *)adForAction:(NSString *)action {
     TLog(@"action:%@",action);
     NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
+                                       @"hosted-video": [STRAdHostedVideo class],
                                        @"vine": [STRAdVine class],
                                        @"clickout": [STRAdClickout class],
                                        @"article": [STRAdArticle class],

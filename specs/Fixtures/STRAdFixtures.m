@@ -15,6 +15,7 @@
 #import "STRAdPinterest.h"
 #import "STRAdInstagram.h"
 #import "STRAdArticle.h"
+#import "STRAdHostedVideo.h"
 
 @implementation STRAdFixtures
 
@@ -56,8 +57,8 @@
     return ad;
 }
 
-+ (STRAdvertisement *)hostedVideoAd {
-    STRAdvertisement *ad = [STRAdvertisement new];
++ (STRAdHostedVideo *)hostedVideoAd {
+    STRAdHostedVideo *ad = [STRAdHostedVideo new];
     ad.mediaURL = [NSURL URLWithString:@"http://media.sharethrough.com.s3.amazonaws.com/Val/iOS%20SDK%20Stuff/Media/New%20Silk%20ad%20-%20Whaddya%20think_%20Share%20your%20thoughts!.mp4"];
     ad.title = @"Avoid the morning MOO";
     ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];

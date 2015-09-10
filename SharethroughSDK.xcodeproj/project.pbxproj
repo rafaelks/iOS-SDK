@@ -361,6 +361,10 @@
 		B2B963691B0F9E8600404578 /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		B2B9636B1B0F9E8600404578 /* SharethroughSDK-Info.plist in Copy DFP Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		B2BCDAF01B2749A900BF50D2 /* STRViewTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */; };
+		B2CAF24C1BA0B551005D544B /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; };
+		B2CAF24D1BA0B551005D544B /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; };
+		B2CAF24E1BA0B551005D544B /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; };
+		B2CAF24F1BA0B551005D544B /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; };
 		B2D5CDC31B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
 		B2D5CDC41B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
 		B2D5CDC51B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
@@ -830,6 +834,8 @@
 		B2B963531B0F9D0B00404578 /* libSharethrough-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRViewTracker.mm; sourceTree = "<group>"; };
 		B2C770571B9745E100906A91 /* STRIneractiveChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRIneractiveChild.h; sourceTree = "<group>"; };
+		B2CAF24A1BA0B551005D544B /* STRAdHostedVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdHostedVideo.h; sourceTree = "<group>"; };
+		B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdHostedVideo.m; sourceTree = "<group>"; };
 		B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdArticle.h; sourceTree = "<group>"; };
 		B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdArticle.m; sourceTree = "<group>"; };
 		B2F29E671A9807C000313C61 /* close-btn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "close-btn.c"; sourceTree = "<group>"; };
@@ -955,26 +961,15 @@
 		AE022DE9188E008800D02568 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */,
-				B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */,
+				B2CAF2491BA0B50A005D544B /* Advertisements */,
 				AE9C4608189B181B001B407A /* STRAdCache.h */,
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
-				AE39F8CD18AD831200969C30 /* STRAdClickout.h */,
-				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
-				B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */,
-				B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */,
-				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
-				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
 				E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */,
 				E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
 				E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */,
 				E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */,
-				AE9C4624189C29B0001B407A /* STRAdVine.h */,
-				AE9C4625189C29B0001B407A /* STRAdVine.m */,
-				AE9C461A189C2538001B407A /* STRAdYouTube.h */,
-				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
 				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
 				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
 				B238F6441B20E62400847C50 /* STRViewTracker.h */,
@@ -1362,6 +1357,27 @@
 				B2F29E6B1A98086600313C61 /* link_thumbnail.c */,
 			);
 			path = "Static Resources";
+			sourceTree = "<group>";
+		};
+		B2CAF2491BA0B50A005D544B /* Advertisements */ = {
+			isa = PBXGroup;
+			children = (
+				B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */,
+				B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */,
+				AE39F8CD18AD831200969C30 /* STRAdClickout.h */,
+				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
+				B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */,
+				B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */,
+				B2CAF24A1BA0B551005D544B /* STRAdHostedVideo.h */,
+				B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */,
+				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
+				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
+				AE9C4624189C29B0001B407A /* STRAdVine.h */,
+				AE9C4625189C29B0001B407A /* STRAdVine.m */,
+				AE9C461A189C2538001B407A /* STRAdYouTube.h */,
+				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
+			);
+			name = Advertisements;
 			sourceTree = "<group>";
 		};
 		E84FB58619BF76EF0034A41E /* DFP */ = {
@@ -2038,6 +2054,7 @@
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				B238F6461B20E62400847C50 /* STRViewTracker.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
+				B2CAF24C1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				B229F0981A2E219A0094A8B3 /* yt-logo.c in Sources */,
@@ -2122,6 +2139,7 @@
 				B2B962F11B0F9AFD00404578 /* STRIndexPathDelegateProxy.m in Sources */,
 				B2B962F21B0F9AFD00404578 /* STRAppModule.m in Sources */,
 				B2B962F31B0F9AFD00404578 /* STRTestSafeModule.m in Sources */,
+				B2CAF24F1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				B2B962F41B0F9AFD00404578 /* vine_sample_thumbnail.c in Sources */,
 				B2B962F51B0F9AFD00404578 /* STRImages.m in Sources */,
 				B2B962F61B0F9AFD00404578 /* STRBeaconService.m in Sources */,
@@ -2172,6 +2190,7 @@
 				B2B963271B0F9D0B00404578 /* STRSingletonBlockWrapper.m in Sources */,
 				B238F6481B20E62400847C50 /* STRViewTracker.m in Sources */,
 				B2B963281B0F9D0B00404578 /* STRInteractiveAdViewController.m in Sources */,
+				B2CAF24E1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				B2B963291B0F9D0B00404578 /* STRAdPlacement.m in Sources */,
 				B2B9632A1B0F9D0B00404578 /* STRAdCache.m in Sources */,
 				B2B9632B1B0F9D0B00404578 /* yt-logo.c in Sources */,
@@ -2256,6 +2275,7 @@
 				E8703E1519B9092600D3FA50 /* STRIndexPathDelegateProxy.m in Sources */,
 				E8703E1619B9092600D3FA50 /* STRAppModule.m in Sources */,
 				E8703E1719B9092600D3FA50 /* STRTestSafeModule.m in Sources */,
+				B2CAF24D1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				E8703E1819B9092600D3FA50 /* vine_sample_thumbnail.c in Sources */,
 				E8703E1919B9092600D3FA50 /* STRImages.m in Sources */,
 				E8703E1A19B9092600D3FA50 /* STRBeaconService.m in Sources */,

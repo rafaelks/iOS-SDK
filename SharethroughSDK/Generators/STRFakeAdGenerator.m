@@ -97,7 +97,9 @@ presentingViewController:(UIViewController *)presentingViewController
 
     view.adTitle.text = self.advertisement.title;
     view.adSponsoredBy.text = self.advertisement.sponsoredBy;
-    view.adThumbnail.image = [self.advertisement displayableThumbnail];
+
+    [self.advertisement setThumbnailImageInView:view.adThumbnail];
+//    view.adThumbnail.image = [self.advertisement displayableThumbnail];
     [view.adThumbnail addSubview:[self.advertisement platformLogoForWidth:view.adThumbnail.frame.size.width]];
 
     if ([view respondsToSelector:@selector(adDescription)]) {
@@ -126,16 +128,11 @@ presentingViewController:(UIViewController *)presentingViewController
 }
 
 - (void)tappedFakeAd:(UITapGestureRecognizer *)tapRecognizer {
-    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:self.advertisement
-                                                                                               device:[UIDevice currentDevice]
-                                                                                          application:[UIApplication sharedApplication]
-                                                                                        beaconService:nil
-                                                                                             injector:self.injector];
     if ([self.placement.delegate respondsToSelector:@selector(adView:userDidEngageAdForPlacementKey:)]) {
         [self.placement.delegate adView:self.placement.adView userDidEngageAdForPlacementKey:self.placement.placementKey];
     }
-    adController.delegate = self;
-    [self.presentingViewController presentViewController:adController animated:YES completion:nil];
+    UIViewController *engagementViewController = [self.advertisement viewControllerForPresentingOnTapWithInjector:self.injector];
+    [self.presentingViewController presentViewController:engagementViewController animated:YES completion:nil];
 }
 
 - (IBAction)tappedFakeDisclosureBtn

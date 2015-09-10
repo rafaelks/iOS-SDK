@@ -85,7 +85,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     placement.adView.adSponsoredBy.text = [ad sponsoredBy];
     [self setDescriptionText:ad.adDescription onView:placement.adView];
     [self setBrandLogoFromAd:ad onView:placement.adView];
-    placement.adView.adThumbnail.image = [ad displayableThumbnail];
+    [ad setThumbnailImageInView:placement.adView.adThumbnail];
     [placement.adView.adThumbnail addSubview:[ad platformLogoForWidth:placement.adView.adThumbnail.frame.size.width]];
 
     [placement.adView setNeedsLayout];

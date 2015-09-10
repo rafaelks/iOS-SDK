@@ -61,6 +61,8 @@ extern NSString *STRArticleAd;
 - (UIImage *)displayableThumbnail;
 - (UIImageView *)platformLogoForWidth:(CGFloat)width;
 
+- (void)setThumbnailImageInView:(UIImageView *)imageView;
+- (UIViewController*) viewControllerForPresentingOnTapWithInjector:(STRInjector *)injector;
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController;
 - (void)unregisterView:(UIView *)view;
 

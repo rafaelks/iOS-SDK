@@ -20,7 +20,7 @@
 
 char const * const STRViewTrackerKey = "STRViewTrackerKey";
 
-@interface STRViewTracker ()<STRInteractiveAdViewControllerDelegate>
+@interface STRViewTracker ()
 
 @property (nonatomic, strong) STRBeaconService *beaconService;
 @property (nonatomic, strong) STRDateProvider *dateProvider;
@@ -127,19 +127,7 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     if ([self.ad.delegate respondsToSelector:@selector(adDidClick:)]) {
         [self.ad.delegate adDidClick:self.ad];
     }
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad
-                                                                                                          device:[UIDevice currentDevice]
-                                                                                                     application:[UIApplication sharedApplication]
-                                                                                                   beaconService:self.beaconService
-                                                                                                        injector:self.injector];
-    interactiveAdController.delegate = self;
-    [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
-}
-
-#pragma mark - <STRInteractiveAdViewControllerDelegate>
-
-- (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
-    TLog(@"pkey:%@ ckey:%@",self.ad.placementKey, self.ad.creativeKey);
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    UIViewController *engagementViewController = [self.ad viewControllerForPresentingOnTapWithInjector:self.injector];
+    [self.presentingViewController presentViewController:engagementViewController animated:YES completion:nil];
 }
 @end

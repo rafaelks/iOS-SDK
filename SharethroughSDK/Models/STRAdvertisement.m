@@ -9,6 +9,9 @@
 #import "STRAdvertisement.h"
 #import "STRImages.h"
 #import "STRViewTracker.h"
+#import "STRInteractiveAdViewController.h"
+#import "STRInjector.h"
+#import "STRBeaconService.h"
 
 NSString *STRYouTubeAd = @"video";
 NSString *STRVineAd = @"vine";
@@ -39,6 +42,7 @@ NSString *STRArticleAd = @"article";
 - (UIImage *)displayableThumbnail {
     return  self.thumbnailImage;
 }
+
 //The name center image is out of date, but this is the platform logo now
 - (UIImage *)centerImage {
     return [STRImages playBtn];
@@ -53,6 +57,19 @@ NSString *STRArticleAd = @"article";
 
     return platformLogoView;
 }
+
+- (void)setThumbnailImageInView:(UIImageView *)imageView {
+    imageView.image = self.thumbnailImage;
+}
+
+- (UIViewController*) viewControllerForPresentingOnTapWithInjector:(STRInjector *)injector {
+    return [[STRInteractiveAdViewController alloc] initWithAd:self
+                                                       device:[UIDevice currentDevice]
+                                                  application:[UIApplication sharedApplication]
+                                                beaconService:[injector getInstance:[STRBeaconService class]]
+                                                     injector:injector];
+}
+
 
 #pragma mark - View Tracker
 
