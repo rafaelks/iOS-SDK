@@ -38,20 +38,34 @@
 
 @interface STRAdHostedVideo ()
 
-@property (strong, nonatomic) AVPlayer *avPlayer;
+@property (strong, nonatomic) AVQueuePlayer *avPlayer;
 
 @end
 
 @implementation STRAdHostedVideo
+
+- (instancetype)init {
+    NSLog(@"init");
+    self = [super init];
+    if (self) {
+        NSLog(@"got self");
+        self.avPlayer = [AVQueuePlayer new];
+//        self.avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:self.mediaURL options:nil];
+        [asset loadValuesAsynchronouslyForKeys:@[@"duration"] completionHandler:^() {
+            NSLog(@"loaded asset");
+            [self.avPlayer insertItem:[AVPlayerItem playerItemWithAsset:asset] afterItem:nil];
+        }];
+    }
+    return self;
+}
 
 - (UIImage *)centerImage {
     return [STRImages playBtn];
 }
 
 - (void)setThumbnailImageInView:(UIImageView *)imageView {
-    self.avPlayer = [AVPlayer playerWithURL:self.mediaURL];
-    self.avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndNone;
-
     InstantPlayWrapperView *wrapperView = [[InstantPlayWrapperView alloc] initWithFrame:imageView.bounds];
     [wrapperView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [imageView addSubview:wrapperView];
@@ -60,10 +74,13 @@
     layer.videoGravity = AVLayerVideoGravityResize;
     layer.frame = wrapperView.bounds;
     [wrapperView.layer addSublayer: layer];
+
+    //For testing only!
+    imageView.image = self.thumbnailImage;
     imageView.backgroundColor = [UIColor redColor];
     wrapperView.backgroundColor = [UIColor purpleColor];
 
-    self.avPlayer.muted = YES;
+    self.avPlayer.muted = NO;
     [self.avPlayer play];
 }
 
