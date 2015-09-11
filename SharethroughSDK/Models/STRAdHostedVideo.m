@@ -14,7 +14,7 @@
 #import "STRImages.h"
 
 
-@interface InstantPlayWrapperView : UIView
+@interface InstantPlayWrapperView : UIImageView
 
 @property (strong, nonatomic) AVPlayerLayer *avlayer;
 
@@ -25,11 +25,6 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.avlayer.frame = self.bounds;
-    NSLog(@"Layout subviews: layerFrame: %@, layerBounds: %@, selfBounds: %@, selfFrame:%@",
-          NSStringFromCGRect(self.avlayer.frame),
-          NSStringFromCGRect(self.avlayer.bounds),
-          NSStringFromCGRect(self.bounds),
-          NSStringFromCGRect(self.frame));
 }
 
 @end
@@ -45,20 +40,18 @@
 @implementation STRAdHostedVideo
 
 - (instancetype)init {
-    NSLog(@"init");
     self = [super init];
     if (self) {
-        NSLog(@"got self");
         self.avPlayer = [AVQueuePlayer new];
-//        self.avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndNone;
-
-        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:self.mediaURL options:nil];
-        [asset loadValuesAsynchronouslyForKeys:@[@"duration"] completionHandler:^() {
-            NSLog(@"loaded asset");
-            [self.avPlayer insertItem:[AVPlayerItem playerItemWithAsset:asset] afterItem:nil];
-        }];
     }
     return self;
+}
+
+- (void)setMediaURL:(NSURL *)mediaURL {
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:mediaURL options:nil];
+    [asset loadValuesAsynchronouslyForKeys:@[@"playable"] completionHandler:^() {
+        [self.avPlayer insertItem:[AVPlayerItem playerItemWithAsset:asset] afterItem:nil];
+    }];
 }
 
 - (UIImage *)centerImage {
@@ -75,12 +68,10 @@
     layer.frame = wrapperView.bounds;
     [wrapperView.layer addSublayer: layer];
 
-    //For testing only!
-    imageView.image = self.thumbnailImage;
-    imageView.backgroundColor = [UIColor redColor];
-    wrapperView.backgroundColor = [UIColor purpleColor];
+    wrapperView.image = self.thumbnailImage;
+    [wrapperView setNeedsLayout];
 
-    self.avPlayer.muted = NO;
+    self.avPlayer.muted = YES;
     [self.avPlayer play];
 }
 
