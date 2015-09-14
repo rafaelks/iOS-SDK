@@ -68,6 +68,8 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
         [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
         self.adVisibleTimer = timer;
+    } else {
+        [self setUpSimpleVisibilityCheckerInView:view];
     }
 }
 
@@ -105,9 +107,36 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
             [self.ad.delegate adWillLogImpression:self.ad];
         }
         self.ad.visibleImpressionTime = [self.dateProvider now];
+        [self.ad adVisibleInView:view];
         [timer invalidate];
+        [self setUpSimpleVisibilityCheckerInView:view];
     } else {
+        [self.ad adNotVisibleInView:view];
         [timer.userInfo removeObjectForKey:@"secondsVisible"];
+    }
+}
+
+- (void)setUpSimpleVisibilityCheckerInView:(UIView *)view {
+    if ([self.ad.action isEqualToString:STRHostedVideoAd]) {
+        NSTimer *timer = [NSTimer timerWithTimeInterval:0.5
+                                                 target:self
+                                               selector:@selector(simpleCheckIfAdVisible:)
+                                               userInfo:[@{@"view": view} mutableCopy]
+                                                repeats:YES];
+        timer.tolerance = timer.timeInterval * 0.5;
+        [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
+
+        self.adVisibleTimer = timer;
+    }
+}
+
+- (void)simpleCheckIfAdVisible:(NSTimer *)timer {
+    UIView *view = timer.userInfo[@"view"];
+    CGFloat percentVisible = [view percentVisible];
+    if (percentVisible >= 0.5) {
+        [self.ad adVisibleInView:view];
+    } else {
+        [self.ad adNotVisibleInView:view];
     }
 }
 

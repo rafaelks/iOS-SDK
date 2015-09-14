@@ -79,6 +79,7 @@
     [wrapperView.layer addSublayer: layer];
 
     wrapperView.image = self.thumbnailImage;
+    imageView.image = self.thumbnailImage;
     [wrapperView setNeedsLayout];
 
     self.avPlayer.muted = YES;
@@ -88,6 +89,7 @@
 }
 
 - (void)setupSilentPlayTimer {
+    //TODO make sure this isn't being added a second time
     if (self.silentPlayTimer == nil) {
         __block AVQueuePlayer *blockPlayer = self.avPlayer;
         __block STRBeaconService *blockBeconService = [self.injector getInstance:[STRBeaconService class]];
@@ -115,4 +117,11 @@
     return playerViewController;
 }
 
+- (void)adVisibleInView:(UIView *)view {
+    [self.avPlayer play];
+}
+
+- (void)adNotVisibleInView:(UIView *)view {
+    [self.avPlayer pause];
+}
 @end
