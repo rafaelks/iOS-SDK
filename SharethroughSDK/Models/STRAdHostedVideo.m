@@ -12,7 +12,8 @@
 #import <AVKit/AVKit.h>
 
 #import "STRImages.h"
-
+#import "STRBeaconService.h"
+#import "STRInjector.h"
 
 @interface InstantPlayWrapperView : UIImageView
 
@@ -34,10 +35,13 @@
 @interface STRAdHostedVideo ()
 
 @property (strong, nonatomic) AVQueuePlayer *avPlayer;
+@property (strong, nonatomic) id silentPlayTimer;
 
 @end
 
 @implementation STRAdHostedVideo
+
+@synthesize mediaURL = _mediaURL;
 
 - (instancetype)init {
     self = [super init];
@@ -48,14 +52,20 @@
 }
 
 - (void)setMediaURL:(NSURL *)mediaURL {
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:mediaURL options:nil];
-    [asset loadValuesAsynchronouslyForKeys:@[@"playable"] completionHandler:^() {
-        [self.avPlayer insertItem:[AVPlayerItem playerItemWithAsset:asset] afterItem:nil];
-    }];
+    if (self.mediaURL != mediaURL) {
+        _mediaURL = mediaURL;
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:mediaURL options:nil];
+        [asset loadValuesAsynchronouslyForKeys:@[@"playable"] completionHandler:^() {
+            [self.avPlayer insertItem:[AVPlayerItem playerItemWithAsset:asset] afterItem:nil];
+        }];
+    }
 }
 
 - (UIImage *)centerImage {
-    return [STRImages playBtn];
+    if (false) //TODO: this should be determined based on whether can autoplay
+        return [STRImages playBtn];
+    else
+        return nil;
 }
 
 - (void)setThumbnailImageInView:(UIImageView *)imageView {
@@ -73,9 +83,32 @@
 
     self.avPlayer.muted = YES;
     [self.avPlayer play];
+
+    [self setupSilentPlayTimer];
+}
+
+- (void)setupSilentPlayTimer {
+    if (self.silentPlayTimer == nil) {
+        __block AVQueuePlayer *blockPlayer = self.avPlayer;
+        __block STRBeaconService *blockBeconService = [self.injector getInstance:[STRBeaconService class]];
+        __block STRAdHostedVideo *blockSelf = self;
+
+        NSValue *threeSecond = [NSValue valueWithCMTime:CMTimeMake(3, 1)], *tenSecond = [NSValue valueWithCMTime:CMTimeMake(10, 1)];
+
+        self.silentPlayTimer = [self.avPlayer addBoundaryTimeObserverForTimes:@[threeSecond, tenSecond] queue:nil usingBlock:^{
+            CMTime time = [blockPlayer currentTime];
+            [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:(time.value/time.timescale)];
+        }];
+    }
 }
 
 - (UIViewController*) viewControllerForPresentingOnTapWithInjector:(STRInjector *)injector {
+    [self.avPlayer removeTimeObserver:self.silentPlayTimer];
+
+    CMTime time = [self.avPlayer currentTime];
+    STRBeaconService *beaconService = [self.injector getInstance:[STRBeaconService class]];
+    [beaconService fireAutoPlayVideoEngagementForAd:self withDuration:(time.value/time.timescale)];
+
     AVPlayerViewController *playerViewController = [AVPlayerViewController new];
     playerViewController.player = self.avPlayer;
     self.avPlayer.muted = false;
