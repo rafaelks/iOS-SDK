@@ -36,6 +36,7 @@
 
 @property (strong, nonatomic) AVQueuePlayer *avPlayer;
 @property (strong, nonatomic) id silentPlayTimer;
+@property (nonatomic, readwrite) BOOL beforeEngagement;
 
 @end
 
@@ -47,8 +48,14 @@
     self = [super init];
     if (self) {
         self.avPlayer = [AVQueuePlayer new];
+        self.beforeEngagement = YES;
     }
     return self;
+}
+
+- (void)dealloc {
+    [self.avPlayer removeTimeObserver:self.silentPlayTimer];
+    [self.simpleVisibleTimer invalidate];
 }
 
 - (void)setMediaURL:(NSURL *)mediaURL {
@@ -69,27 +76,27 @@
 }
 
 - (void)setThumbnailImageInView:(UIImageView *)imageView {
-    InstantPlayWrapperView *wrapperView = [[InstantPlayWrapperView alloc] initWithFrame:imageView.bounds];
-    [wrapperView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-    [imageView addSubview:wrapperView];
-
-    AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:self.avPlayer];
-    layer.videoGravity = AVLayerVideoGravityResize;
-    layer.frame = wrapperView.bounds;
-    [wrapperView.layer addSublayer: layer];
-
-    wrapperView.image = self.thumbnailImage;
     imageView.image = self.thumbnailImage;
-    [wrapperView setNeedsLayout];
+    if (self.beforeEngagement) {
+        InstantPlayWrapperView *wrapperView = [[InstantPlayWrapperView alloc] initWithFrame:imageView.bounds];
+        [wrapperView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+        [imageView addSubview:wrapperView];
 
-    self.avPlayer.muted = YES;
-    [self.avPlayer play];
+        AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:self.avPlayer];
+        layer.videoGravity = AVLayerVideoGravityResize;
+        layer.frame = wrapperView.bounds;
+        [wrapperView.layer addSublayer: layer];
+        wrapperView.image = self.thumbnailImage;
+        [wrapperView setNeedsLayout];
 
-    [self setupSilentPlayTimer];
+        self.avPlayer.muted = YES;
+        [self.avPlayer play];
+
+        [self setupSilentPlayTimer];
+    }
 }
 
 - (void)setupSilentPlayTimer {
-    //TODO make sure this isn't being added a second time
     if (self.silentPlayTimer == nil) {
         __block AVQueuePlayer *blockPlayer = self.avPlayer;
         __block STRBeaconService *blockBeconService = [self.injector getInstance:[STRBeaconService class]];
@@ -105,11 +112,17 @@
 }
 
 - (UIViewController*) viewControllerForPresentingOnTapWithInjector:(STRInjector *)injector {
-    [self.avPlayer removeTimeObserver:self.silentPlayTimer];
+    if (self.beforeEngagement) {
+        [self.avPlayer removeTimeObserver:self.silentPlayTimer];
 
-    CMTime time = [self.avPlayer currentTime];
-    STRBeaconService *beaconService = [self.injector getInstance:[STRBeaconService class]];
-    [beaconService fireAutoPlayVideoEngagementForAd:self withDuration:(time.value/time.timescale)];
+        CMTime time = [self.avPlayer currentTime];
+        STRBeaconService *beaconService = [self.injector getInstance:[STRBeaconService class]];
+        [beaconService fireAutoPlayVideoEngagementForAd:self withDuration:(time.value/time.timescale)];
+    }
+
+    self.beforeEngagement = NO;
+
+    [self.simpleVisibleTimer invalidate];
 
     AVPlayerViewController *playerViewController = [AVPlayerViewController new];
     playerViewController.player = self.avPlayer;
@@ -118,10 +131,14 @@
 }
 
 - (void)adVisibleInView:(UIView *)view {
-    [self.avPlayer play];
+    if (self.beforeEngagement) {
+        [self.avPlayer play];
+    }
 }
 
 - (void)adNotVisibleInView:(UIView *)view {
-    [self.avPlayer pause];
+    if (self.beforeEngagement) {
+        [self.avPlayer pause];
+    }
 }
 @end

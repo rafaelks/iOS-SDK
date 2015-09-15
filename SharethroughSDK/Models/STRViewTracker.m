@@ -10,6 +10,7 @@
 #import "STRViewTracker.h"
 
 #import "STRAdvertisement.h"
+#import "STRAdHostedVideo.h"
 #import "STRAdvertisementDelegate.h"
 #import "STRBeaconService.h"
 #import "STRDateProvider.h"
@@ -118,15 +119,21 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
 
 - (void)setUpSimpleVisibilityCheckerInView:(UIView *)view {
     if ([self.ad.action isEqualToString:STRHostedVideoAd]) {
-        NSTimer *timer = [NSTimer timerWithTimeInterval:0.5
-                                                 target:self
-                                               selector:@selector(simpleCheckIfAdVisible:)
-                                               userInfo:[@{@"view": view} mutableCopy]
-                                                repeats:YES];
-        timer.tolerance = timer.timeInterval * 0.5;
-        [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
+        STRAdHostedVideo *hostedAd = (STRAdHostedVideo *)self.ad;
+        if (hostedAd.beforeEngagement) {
+            NSLog(@"Setting simple timer");
 
-        self.adVisibleTimer = timer;
+            NSTimer *timer = [NSTimer timerWithTimeInterval:0.5
+                                                     target:self
+                                                   selector:@selector(simpleCheckIfAdVisible:)
+                                                   userInfo:[@{@"view": view} mutableCopy]
+                                                    repeats:YES];
+            timer.tolerance = timer.timeInterval * 0.5;
+            [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
+
+
+            hostedAd.simpleVisibleTimer = timer;
+        }
     }
 }
 
@@ -134,8 +141,10 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     UIView *view = timer.userInfo[@"view"];
     CGFloat percentVisible = [view percentVisible];
     if (percentVisible >= 0.5) {
+        NSLog(@"Visible");
         [self.ad adVisibleInView:view];
     } else {
+        NSLog(@"Not Visible");
         [self.ad adNotVisibleInView:view];
     }
 }
