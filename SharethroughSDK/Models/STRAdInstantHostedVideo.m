@@ -35,8 +35,10 @@
 @interface STRAdInstantHostedVideo ()
 
 @property (strong, nonatomic) AVQueuePlayer *avPlayer;
-@property (strong, nonatomic) id silentPlayTimer;
 @property (nonatomic, readwrite) BOOL beforeEngagement;
+
+@property (strong, nonatomic) id silentPlayTimer;
+@property (strong, nonatomic) id quartileTimer;
 
 @end
 
@@ -55,6 +57,7 @@
 
 - (void)dealloc {
     [self.avPlayer removeTimeObserver:self.silentPlayTimer];
+    [self.avPlayer removeTimeObserver:self.quartileTimer];
 }
 
 - (void)setMediaURL:(NSURL *)mediaURL {
@@ -63,6 +66,8 @@
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:mediaURL options:nil];
         [asset loadValuesAsynchronouslyForKeys:@[@"playable"] completionHandler:^() {
             [self.avPlayer insertItem:[AVPlayerItem playerItemWithAsset:asset] afterItem:nil];
+            [self setupSilentPlayTimer];
+            [self setupQuartileTimer];
         }];
     }
 }
@@ -87,23 +92,6 @@
 
         self.avPlayer.muted = YES;
         [self.avPlayer play];
-
-        [self setupSilentPlayTimer];
-    }
-}
-
-- (void)setupSilentPlayTimer {
-    if (self.silentPlayTimer == nil) {
-        __block AVQueuePlayer *blockPlayer = self.avPlayer;
-        __block STRBeaconService *blockBeconService = [self.injector getInstance:[STRBeaconService class]];
-        __block STRAdInstantHostedVideo *blockSelf = self;
-
-        NSValue *threeSecond = [NSValue valueWithCMTime:CMTimeMake(3, 1)], *tenSecond = [NSValue valueWithCMTime:CMTimeMake(10, 1)];
-
-        self.silentPlayTimer = [self.avPlayer addBoundaryTimeObserverForTimes:@[threeSecond, tenSecond] queue:nil usingBlock:^{
-            CMTime time = [blockPlayer currentTime];
-            [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:(time.value/time.timescale)];
-        }];
     }
 }
 
@@ -138,5 +126,52 @@
         return YES;
     }
     return NO;
+}
+
+#pragma mark - Private
+
+- (void)setupSilentPlayTimer {
+    if (self.silentPlayTimer == nil) {
+        __block AVQueuePlayer *blockPlayer = self.avPlayer;
+        __block STRBeaconService *blockBeconService = [self.injector getInstance:[STRBeaconService class]];
+        __block STRAdInstantHostedVideo *blockSelf = self;
+
+        NSValue *threeSecond = [NSValue valueWithCMTime:CMTimeMake(3, 1)], *tenSecond = [NSValue valueWithCMTime:CMTimeMake(10, 1)];
+
+        self.silentPlayTimer = [self.avPlayer addBoundaryTimeObserverForTimes:@[threeSecond, tenSecond] queue:nil usingBlock:^{
+            CMTime time = [blockPlayer currentTime];
+            [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:CMTimeGetSeconds(time)];
+        }];
+    }
+}
+
+- (void)setupQuartileTimer {
+    if (self.quartileTimer == nil) {
+        __block AVQueuePlayer *blockPlayer = self.avPlayer;
+        __block STRBeaconService *blockBeconService = [self.injector getInstance:[STRBeaconService class]];
+        __block STRAdInstantHostedVideo *blockSelf = self;
+
+        Float64 seconds = CMTimeGetSeconds(self.avPlayer.currentItem.asset.duration);
+        NSValue *TwentyFivePercent = [NSValue valueWithCMTime:CMTimeMake(seconds *.25, 1)],
+                *FiftyPercent = [NSValue valueWithCMTime:CMTimeMake(seconds * .5, 1)],
+                *SeventyFivePercent = [NSValue valueWithCMTime:CMTimeMake(seconds *.75, 1)],
+                *NinteyFivePercent = [NSValue valueWithCMTime:CMTimeMake(seconds * .95, 1)];
+
+        self.quartileTimer = [self.avPlayer addBoundaryTimeObserverForTimes:@[TwentyFivePercent, FiftyPercent, SeventyFivePercent, NinteyFivePercent] queue:nil usingBlock:^{
+            NSNumber *completionPercent;
+            Float64 percent = CMTimeGetSeconds([blockPlayer currentTime]) / seconds;
+            if (percent <= 0.26) {
+                completionPercent = [NSNumber numberWithInt:25];
+            } else if (percent > 0.26 && percent <= 0.51 ) {
+                completionPercent = [NSNumber numberWithInt:50];
+            } else if (percent > 0.51 && percent <= 0.76) {
+                completionPercent = [NSNumber numberWithInt:75];
+            } else {
+                completionPercent = [NSNumber numberWithInt:95];
+            }
+
+            [blockBeconService fireVideoCompletionForAd:blockSelf completionPercent:completionPercent];
+        }];
+    }
 }
 @end
