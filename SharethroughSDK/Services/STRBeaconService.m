@@ -191,7 +191,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     TLog(@"");
     NSDictionary *uniqueParameters = @{@"type": @"userEvent",
                                        @"userEvent": @"silentAutoPlayDuration",
-                                       @"duration": [NSString stringWithFormat:@"%f", duration * 1000], //multiply by 1000 to make ms
+                                       @"duration": [NSString stringWithFormat:@"%d", (int)duration]
                                      };
 
     NSMutableDictionary *parameters = [self commonParametersWithAd:ad];
@@ -203,7 +203,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     TLog(@"");
     NSDictionary *uniqueParameters = @{@"type": @"userEvent",
                                        @"userEvent": @"autoplayVideoEngagement",
-                                       @"videoDuration": [NSString stringWithFormat:@"%f", duration * 1000], //multiply by 1000 to make ms
+                                       @"videoDuration": [NSString stringWithFormat:@"%f", duration],
                                        @"engagement": @"true"};
 
     NSMutableDictionary *parameters = [self commonParametersWithAd:ad];
