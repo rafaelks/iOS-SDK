@@ -20,6 +20,7 @@
 #import "STRBeaconService.h"
 #import "STRAdPlacement.h"
 #import "STRAdHostedVideo.h"
+#import "STRAdInstantHostedVideo.h"
 #import <AdSupport/AdSupport.h>
 #import "STRLogging.h"
 
@@ -211,7 +212,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     return sanitizedURL;
 }
 
-- (STRAdvertisement *)adForAction:(NSString *)action {
+- (STRAdvertisement *)adForAction:(NSString *)action forPlacement:(NSDictionary *)placementJSON {
     TLog(@"action:%@",action);
     NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
                                        @"hosted-video": [STRAdHostedVideo class],
@@ -222,6 +223,9 @@ static NSString *const kDFPCreativeKey = @"creative_key";
                                        @"instagram": [STRAdInstagram class]
                                        };
     Class adClass = actionsToClasses[action];
+    if ([action isEqualToString:@"hosted-video"] && [placementJSON[@"allow_instant_play"] boolValue] == YES) {
+        adClass = [STRAdInstantHostedVideo class];
+    }
     if (!adClass) {
         adClass = [STRAdvertisement class];
     }
@@ -236,7 +240,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]];
     [[self.networkClient get:imageRequest] then:^id(NSData *data) {
-        STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"]];
+        STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"] forPlacement:placementJSON];
         ad.thumbnailImage = [UIImage imageWithData:data];
         ad.advertiser = creativeJSON[@"advertiser"];
         ad.title = creativeJSON[@"title"];

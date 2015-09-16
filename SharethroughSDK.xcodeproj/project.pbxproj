@@ -218,6 +218,10 @@
 		B28137151B264DE800EF3FD0 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
 		B2867A371AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; };
 		B2867A381AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; };
+		B29A4FA91BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; };
+		B29A4FAA1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; };
+		B29A4FAB1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; };
+		B29A4FAC1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; };
 		B2A6CC811B2244440088928F /* STRAdvertisementDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
 		B2A6CC821B2244520088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
 		B2A6CC831B2244640088928F /* STRAdvertisement.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
@@ -828,6 +832,8 @@
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2867A351AEA9F0700BAF148 /* UIView+Visible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Visible.h"; sourceTree = "<group>"; };
 		B2867A361AEA9F0700BAF148 /* UIView+Visible.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Visible.m"; sourceTree = "<group>"; };
+		B29A4FA71BA9F70B00065FE3 /* STRAdInstantHostedVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdInstantHostedVideo.h; sourceTree = "<group>"; };
+		B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdInstantHostedVideo.m; sourceTree = "<group>"; };
 		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
 		B2B962C81B0F97E200404578 /* STRLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRLogging.h; sourceTree = "<group>"; };
 		B2B963121B0F9AFD00404578 /* libSharethrough-SDK+DFP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK+DFP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1370,6 +1376,8 @@
 				B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */,
 				B2CAF24A1BA0B551005D544B /* STRAdHostedVideo.h */,
 				B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */,
+				B29A4FA71BA9F70B00065FE3 /* STRAdInstantHostedVideo.h */,
+				B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */,
 				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
 				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
 				AE9C4624189C29B0001B407A /* STRAdVine.h */,
@@ -2053,6 +2061,7 @@
 				AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				B238F6461B20E62400847C50 /* STRViewTracker.m in Sources */,
+				B29A4FA91BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				B2CAF24C1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */,
@@ -2132,6 +2141,7 @@
 				B2B962EA1B0F9AFD00404578 /* STRClickoutViewController.m in Sources */,
 				B2B962EB1B0F9AFD00404578 /* STRAdYouTube.m in Sources */,
 				B2B962EC1B0F9AFD00404578 /* STRGridlikeViewAdGenerator.m in Sources */,
+				B29A4FAC1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				B2B962ED1B0F9AFD00404578 /* clickout_sample_thumbnail.c in Sources */,
 				B2B962EE1B0F9AFD00404578 /* link_thumbnail.c in Sources */,
 				B2B962EF1B0F9AFD00404578 /* STRDFPManager.m in Sources */,
@@ -2189,6 +2199,7 @@
 				B2B963261B0F9D0B00404578 /* STRVideoController.m in Sources */,
 				B2B963271B0F9D0B00404578 /* STRSingletonBlockWrapper.m in Sources */,
 				B238F6481B20E62400847C50 /* STRViewTracker.m in Sources */,
+				B29A4FAB1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				B2B963281B0F9D0B00404578 /* STRInteractiveAdViewController.m in Sources */,
 				B2CAF24E1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				B2B963291B0F9D0B00404578 /* STRAdPlacement.m in Sources */,
@@ -2268,6 +2279,7 @@
 				E8703E1019B9092600D3FA50 /* STRClickoutViewController.m in Sources */,
 				E8703E1119B9092600D3FA50 /* STRAdYouTube.m in Sources */,
 				E8703E1219B9092600D3FA50 /* STRGridlikeViewAdGenerator.m in Sources */,
+				B29A4FAA1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				E8703E1319B9092600D3FA50 /* clickout_sample_thumbnail.c in Sources */,
 				B2F29E6D1A98086600313C61 /* link_thumbnail.c in Sources */,
 				E83128EF19B936D9007C2FAB /* STRDFPManager.m in Sources */,

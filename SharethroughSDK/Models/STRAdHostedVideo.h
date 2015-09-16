@@ -10,6 +10,4 @@
 
 @interface STRAdHostedVideo : STRAdvertisement
 
-@property (nonatomic, readonly) BOOL beforeEngagement;
-
 @end

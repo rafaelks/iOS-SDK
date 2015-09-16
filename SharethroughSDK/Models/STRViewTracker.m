@@ -10,7 +10,7 @@
 #import "STRViewTracker.h"
 
 #import "STRAdvertisement.h"
-#import "STRAdHostedVideo.h"
+#import "STRAdInstantHostedVideo.h"
 #import "STRAdvertisementDelegate.h"
 #import "STRBeaconService.h"
 #import "STRDateProvider.h"
@@ -119,8 +119,8 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
 
 - (void)setUpSimpleVisibilityCheckerInView:(UIView *)view {
     TLog(@"");
-    if ([self.ad.action isEqualToString:STRHostedVideoAd]) {
-        STRAdHostedVideo *hostedAd = (STRAdHostedVideo *)self.ad;
+    if ([self.ad isKindOfClass:[STRAdInstantHostedVideo class]]) {
+        STRAdInstantHostedVideo *hostedAd = (STRAdInstantHostedVideo *)self.ad;
         if (hostedAd.beforeEngagement) {
             [self.adVisibleTimer invalidate];
             NSTimer *timer = [NSTimer timerWithTimeInterval:0.5
