@@ -118,11 +118,11 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
 }
 
 - (void)setUpSimpleVisibilityCheckerInView:(UIView *)view {
+    TLog(@"");
     if ([self.ad.action isEqualToString:STRHostedVideoAd]) {
         STRAdHostedVideo *hostedAd = (STRAdHostedVideo *)self.ad;
         if (hostedAd.beforeEngagement) {
-            NSLog(@"Setting simple timer");
-
+            [self.adVisibleTimer invalidate];
             NSTimer *timer = [NSTimer timerWithTimeInterval:0.5
                                                      target:self
                                                    selector:@selector(simpleCheckIfAdVisible:)
@@ -131,8 +131,7 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
             timer.tolerance = timer.timeInterval * 0.5;
             [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
-
-            hostedAd.simpleVisibleTimer = timer;
+            self.adVisibleTimer = timer;
         }
     }
 }
@@ -141,11 +140,13 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     UIView *view = timer.userInfo[@"view"];
     CGFloat percentVisible = [view percentVisible];
     if (percentVisible >= 0.5) {
-        NSLog(@"Visible");
-        [self.ad adVisibleInView:view];
+        if (![self.ad adVisibleInView:view]) {
+            [timer invalidate];
+        }
     } else {
-        NSLog(@"Not Visible");
-        [self.ad adNotVisibleInView:view];
+        if (![self.ad adNotVisibleInView:view]) {
+            [timer invalidate];
+        }
     }
 }
 

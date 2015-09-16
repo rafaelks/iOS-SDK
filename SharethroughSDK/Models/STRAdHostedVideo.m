@@ -55,7 +55,6 @@
 
 - (void)dealloc {
     [self.avPlayer removeTimeObserver:self.silentPlayTimer];
-    [self.simpleVisibleTimer invalidate];
 }
 
 - (void)setMediaURL:(NSURL *)mediaURL {
@@ -122,23 +121,25 @@
 
     self.beforeEngagement = NO;
 
-    [self.simpleVisibleTimer invalidate];
-
     AVPlayerViewController *playerViewController = [AVPlayerViewController new];
     playerViewController.player = self.avPlayer;
     self.avPlayer.muted = false;
     return playerViewController;
 }
 
-- (void)adVisibleInView:(UIView *)view {
+- (BOOL)adVisibleInView:(UIView *)view {
     if (self.beforeEngagement) {
         [self.avPlayer play];
+        return YES;
     }
+    return NO;
 }
 
-- (void)adNotVisibleInView:(UIView *)view {
+- (BOOL)adNotVisibleInView:(UIView *)view {
     if (self.beforeEngagement) {
         [self.avPlayer pause];
+        return YES;
     }
+    return NO;
 }
 @end

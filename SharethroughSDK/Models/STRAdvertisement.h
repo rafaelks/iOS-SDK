@@ -68,6 +68,6 @@ extern NSString *STRArticleAd;
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController;
 - (void)unregisterView:(UIView *)view;
 
-- (void)adVisibleInView:(UIView *)view;
-- (void)adNotVisibleInView:(UIView *)view;
+- (BOOL)adVisibleInView:(UIView *)view;
+- (BOOL)adNotVisibleInView:(UIView *)view;
 @end

@@ -82,8 +82,12 @@ NSString *STRArticleAd = @"article";
     [STRViewTracker unregisterView:view];
 }
 
-- (void)adVisibleInView:(UIView *)view {}
+- (BOOL)adVisibleInView:(UIView *)view {
+    return NO;
+}
 
-- (void)adNotVisibleInView:(UIView *)view {}
+- (BOOL)adNotVisibleInView:(UIView *)view {
+    return NO;
+}
 
 @end

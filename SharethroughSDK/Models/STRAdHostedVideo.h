@@ -10,7 +10,6 @@
 
 @interface STRAdHostedVideo : STRAdvertisement
 
-@property (nonatomic, weak) NSTimer *simpleVisibleTimer;
 @property (nonatomic, readonly) BOOL beforeEngagement;
 
 @end
