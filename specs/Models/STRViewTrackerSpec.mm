@@ -233,13 +233,6 @@ describe(@"STRViewTracker", ^{
                 it(@"presents the STRInteractiveAdViewController", ^{
                     interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
                     interactiveAdController.ad should be_same_instance_as(ad);
-                    interactiveAdController.delegate should be_same_instance_as(viewTracker);
-                });
-
-                it(@"dismisses the interactive ad controller when told", ^{
-                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                    presentingViewController.presentedViewController should be_nil;
                 });
 
                 it(@"fires off a youtube play beacon", ^{
@@ -271,13 +264,6 @@ describe(@"STRViewTracker", ^{
                     it(@"presents the STRInteractiveAdViewController", ^{
                         interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
                         interactiveAdController.ad should be_same_instance_as(ad);
-                        interactiveAdController.delegate should be_same_instance_as(viewTracker);
-                    });
-
-                    it(@"dismisses the interactive ad controller when told", ^{
-                        [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                        presentingViewController.presentedViewController should be_nil;
                     });
 
                     it(@"fires off a clickout click beacon", ^{

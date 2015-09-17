@@ -99,7 +99,6 @@ presentingViewController:(UIViewController *)presentingViewController
     view.adSponsoredBy.text = self.advertisement.sponsoredBy;
 
     [self.advertisement setThumbnailImageInView:view.adThumbnail];
-//    view.adThumbnail.image = [self.advertisement displayableThumbnail];
     [view.adThumbnail addSubview:[self.advertisement platformLogoForWidth:view.adThumbnail.frame.size.width]];
 
     if ([view respondsToSelector:@selector(adDescription)]) {
