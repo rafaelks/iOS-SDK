@@ -101,7 +101,8 @@
 
         CMTime time = [self.avPlayer currentTime];
         STRBeaconService *beaconService = [self.injector getInstance:[STRBeaconService class]];
-        [beaconService fireAutoPlayVideoEngagementForAd:self withDuration:(time.value/time.timescale)];
+        CMTimeScale timeScale = time.timescale > 0 ? time.timescale : 1;
+        [beaconService fireAutoPlayVideoEngagementForAd:self withDuration:(time.value/timeScale)];
     }
 
     self.beforeEngagement = NO;
