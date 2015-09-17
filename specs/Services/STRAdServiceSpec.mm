@@ -14,6 +14,8 @@
 #import "STRAdInstagram.h"
 #import "STRBeaconService.h"
 #import "STRAdPlacement.h"
+#import "STRAdHostedVideo.h"
+#import "STRAdInstantHostedVideo.h"
 #import <AdSupport/AdSupport.h>
 
 using namespace Cedar::Matchers;
@@ -282,6 +284,9 @@ describe(@"STRAdService", ^{
 
                 beforeEach(^{
                     responseData = @{
+                                     @"placement": [@{
+                                             @"allow_instant_play": @false
+                                     } mutableCopy],
                                      @"creatives": @[[@{ @"signature": @"fakeSignature",
                                                        @"price": @"1.0",
                                                        @"priceType": @"type",
@@ -357,13 +362,35 @@ describe(@"STRAdService", ^{
                     afterSuccessfulAdFetchedSpecs([STRAdArticle class], @"article");
                 });
 
-                describe(@"when the ad server successfully responds with an article ad", ^{
+                describe(@"when the ad server successfully responds with an unknown ad", ^{
                     beforeEach(^{
                         responseData[@"creatives"][0][@"creative"][@"action"] = @"unknown";
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
                     afterSuccessfulAdFetchedSpecs([STRAdvertisement class], @"unknown");
+                });
+
+                describe(@"when the ad server successfully responds with hosted video ad", ^{
+
+                    describe(@"when the placement is not instant play", ^{
+                        beforeEach(^{
+                            responseData[@"creatives"][0][@"creative"][@"action"] = @"hosted-video";
+                            [restClientDeferred resolveWithValue:responseData];
+                        });
+
+                        afterSuccessfulAdFetchedSpecs([STRAdHostedVideo class], @"hosted-video");
+                    });
+
+                    describe(@"when the placement is instant play", ^{
+                        beforeEach(^{
+                            responseData[@"placement"][@"allow_instant_play"] = @YES;
+                            responseData[@"creatives"][0][@"creative"][@"action"] = @"hosted-video";
+                            [restClientDeferred resolveWithValue:responseData];
+                        });
+
+                        afterSuccessfulAdFetchedSpecs([STRAdHostedVideo class], @"hosted-video");
+                    });
                 });
             });
 
