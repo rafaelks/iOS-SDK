@@ -130,7 +130,7 @@ presentingViewController:(UIViewController *)presentingViewController
     if ([self.placement.delegate respondsToSelector:@selector(adView:userDidEngageAdForPlacementKey:)]) {
         [self.placement.delegate adView:self.placement.adView userDidEngageAdForPlacementKey:self.placement.placementKey];
     }
-    UIViewController *engagementViewController = [self.advertisement viewControllerForPresentingOnTapWithInjector:self.injector];
+    UIViewController *engagementViewController = [self.advertisement viewControllerForPresentingOnTap];
     [self.presentingViewController presentViewController:engagementViewController animated:YES completion:nil];
 }
 

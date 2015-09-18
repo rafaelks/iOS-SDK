@@ -57,13 +57,15 @@ extern NSString *STRArticleAd;
 @property (nonatomic, weak) STRInjector *injector;
 @property (nonatomic, weak) id<STRAdvertisementDelegate> delegate;
 
+- (id)initWithInjector:(STRInjector *)injector;
+
 - (NSString *)sponsoredBy;
 - (UIImage *)displayableThumbnail;
 - (UIImageView *)platformLogoForWidth:(CGFloat)width;
 
 - (void)setThumbnailImageInView:(UIImageView *)imageView;
 
-- (UIViewController*) viewControllerForPresentingOnTapWithInjector:(STRInjector *)injector;
+- (UIViewController*) viewControllerForPresentingOnTap;
 
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController;
 - (void)unregisterView:(UIView *)view;

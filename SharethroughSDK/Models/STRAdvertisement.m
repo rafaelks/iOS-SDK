@@ -31,6 +31,15 @@ NSString *STRArticleAd = @"article";
     return self;
 }
 
+- (id)initWithInjector:(STRInjector *)injector {
+    if (self = [super init]) {
+        self.injector = injector;
+        self.adserverRequestId = @"";
+        self.auctionWinId = @"";
+    }
+    return self;
+}
+
 - (NSString *)sponsoredBy {
     if ([self.promotedByText length] > 0) {
         return [NSString stringWithFormat:@"%@ %@", self.promotedByText, self.advertiser];
@@ -62,12 +71,12 @@ NSString *STRArticleAd = @"article";
     imageView.image = self.thumbnailImage;
 }
 
-- (UIViewController*) viewControllerForPresentingOnTapWithInjector:(STRInjector *)injector {
+- (UIViewController*) viewControllerForPresentingOnTap {
     return [[STRInteractiveAdViewController alloc] initWithAd:self
                                                        device:[UIDevice currentDevice]
                                                   application:[UIApplication sharedApplication]
-                                                beaconService:[injector getInstance:[STRBeaconService class]]
-                                                     injector:injector];
+                                                beaconService:[self.injector getInstance:[STRBeaconService class]]
+                                                     injector:self.injector];
 }
 
 
@@ -82,6 +91,8 @@ NSString *STRArticleAd = @"article";
     [STRViewTracker unregisterView:view];
 }
 
+//These two methods are a side effect of instant play and should not be called on any ad that is not instant play
+//Small compile time trade off instead of reflecting on the class and casting to that class all the time
 - (BOOL)adVisibleInView:(UIView *)view {
     return NO;
 }

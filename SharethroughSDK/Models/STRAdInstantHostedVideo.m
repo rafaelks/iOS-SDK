@@ -46,10 +46,9 @@
 
 @synthesize mediaURL = _mediaURL;
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.avPlayer = [AVQueuePlayer new];
+- (id)initWithInjector:(STRInjector *)injector {
+    if (self = [super initWithInjector:injector]) {
+        self.avPlayer = [self.injector getInstance:[AVQueuePlayer class]];
         self.beforeEngagement = YES;
     }
     return self;
@@ -95,7 +94,7 @@
     }
 }
 
-- (UIViewController*) viewControllerForPresentingOnTapWithInjector:(STRInjector *)injector {
+- (UIViewController*) viewControllerForPresentingOnTap {
     if (self.beforeEngagement) {
         [self.avPlayer removeTimeObserver:self.silentPlayTimer];
 

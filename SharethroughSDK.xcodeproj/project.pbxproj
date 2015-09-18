@@ -213,6 +213,7 @@
 		B23E6EB61B7A4DD100CF2013 /* STRAdvertisement.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
 		B245C3BE1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */; };
 		B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
+		B267F4081BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */; };
 		B26D22E81ACF3A210072ACDD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */; };
 		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
@@ -829,6 +830,7 @@
 		B238F6451B20E62400847C50 /* STRViewTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRViewTracker.m; sourceTree = "<group>"; };
 		B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdvertisementDelegate.h; sourceTree = "<group>"; };
 		B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKDFPSpec.mm; sourceTree = "<group>"; };
+		B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdInstantHostedVideoSpec.mm; sourceTree = "<group>"; };
 		B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ThirdParty/GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
@@ -1010,6 +1012,7 @@
 			isa = PBXGroup;
 			children = (
 				AE022DF5188E019100D02568 /* STRAdvertismentSpec.mm */,
+				B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */,
 				AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */,
 				AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */,
 				AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */,
@@ -2035,6 +2038,7 @@
 				B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */,
 				AE3FF40718AAA078006061C2 /* STRImages.m in Sources */,
 				AED281B518ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm in Sources */,
+				B267F4081BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm in Sources */,
 				AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */,
 				AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */,
 				B2BCDAF01B2749A900BF50D2 /* STRViewTrackerSpec.mm in Sources */,

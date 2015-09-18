@@ -166,7 +166,7 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     if ([self.ad.delegate respondsToSelector:@selector(adDidClick:)]) {
         [self.ad.delegate adDidClick:self.ad];
     }
-    UIViewController *engagementViewController = [self.ad viewControllerForPresentingOnTapWithInjector:self.injector];
+    UIViewController *engagementViewController = [self.ad viewControllerForPresentingOnTap];
     [self.presentingViewController presentViewController:engagementViewController animated:YES completion:nil];
 }
 @end

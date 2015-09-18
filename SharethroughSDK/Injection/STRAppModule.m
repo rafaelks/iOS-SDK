@@ -12,6 +12,8 @@
 
 #import <AdSupport/AdSupport.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 
 @implementation STRAppModule
 
@@ -32,6 +34,10 @@
 
     [injector bind:[MPMoviePlayerController class] toBlock:^id(STRInjector *injector) {
         return [MPMoviePlayerController new];
+    }];
+
+    [injector bind:[AVQueuePlayer class] toBlock:^id(STRInjector *injector) {
+        return [AVQueuePlayer new];
     }];
 
     [injector bind:[STRAdCache class] toInstance:[[STRAdCache alloc] initWithDateProvider:[injector getInstance:[STRDateProvider class]]]];
