@@ -100,8 +100,7 @@
 
         CMTime time = [self.avPlayer currentTime];
         STRBeaconService *beaconService = [self.injector getInstance:[STRBeaconService class]];
-        CMTimeScale timeScale = time.timescale > 0 ? time.timescale : 1;
-        [beaconService fireAutoPlayVideoEngagementForAd:self withDuration:(time.value/timeScale)];
+        [beaconService fireAutoPlayVideoEngagementForAd:self withDuration:CMTimeGetSeconds(time) * 1000];
     }
 
     self.beforeEngagement = NO;
@@ -140,7 +139,7 @@
 
         self.silentPlayTimer = [self.avPlayer addBoundaryTimeObserverForTimes:@[threeSecond, tenSecond] queue:nil usingBlock:^{
             CMTime time = [blockPlayer currentTime];
-            [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:CMTimeGetSeconds(time)];
+            [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:CMTimeGetSeconds(time) * 1000];
         }];
     }
 }

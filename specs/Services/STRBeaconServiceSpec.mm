@@ -602,7 +602,7 @@ describe(@"STRBeaconService", ^{
                            @"type": @"userEvent",
                            @"engagement": @"true",
                            @"userEvent": @"autoplayVideoEngagement",
-                           @"videoDuration" : @"10323.330000",
+                           @"duration" : @"10323.330000",
                            @"bwidth": @"200",
                            @"bheight": @"400",
                            @"umtime": @"10",

@@ -229,7 +229,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     if (!adClass) {
         adClass = [STRAdvertisement class];
     }
-    return [adClass new];
+    return [[adClass alloc] initWithInjector:self.injector];
 }
 
 - (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacementKey:(NSString *)placementKey withPlacementJSON:(NSDictionary *)placementJSON {
