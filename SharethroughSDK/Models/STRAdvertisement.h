@@ -50,6 +50,7 @@ extern NSString *STRArticleAd;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForClick;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForPlay;
+@property (nonatomic, copy) NSArray *thirdPartyBeaconsForView;
 @property (nonatomic, assign) BOOL   impressionBeaconFired;
 @property (nonatomic, assign) BOOL   visibleImpressionBeaconFired;
 @property (nonatomic, copy) NSDate  *visibleImpressionTime;

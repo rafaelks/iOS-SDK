@@ -212,7 +212,8 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     return sanitizedURL;
 }
 
-- (STRAdvertisement *)adForAction:(NSString *)action forPlacement:(NSDictionary *)placementJSON {
+- (STRAdvertisement *)adForCreative:(NSDictionary *)creativeJSON inPlacement:(NSDictionary *)placementJSON {
+    NSString *action = creativeJSON[@"action"];
     TLog(@"action:%@",action);
     NSDictionary *actionsToClasses = @{@"video": [STRAdYouTube class],
                                        @"hosted-video": [STRAdHostedVideo class],
@@ -223,8 +224,13 @@ static NSString *const kDFPCreativeKey = @"creative_key";
                                        @"instagram": [STRAdInstagram class]
                                        };
     Class adClass = actionsToClasses[action];
-    if ([action isEqualToString:@"hosted-video"] && [placementJSON[@"allow_instant_play"] boolValue] == YES) {
-        adClass = [STRAdInstantHostedVideo class];
+    if ([action isEqualToString:@"hosted-video"]) {
+        BOOL force_click_to_play = [creativeJSON[@"force_click_to_play"] boolValue];
+        BOOL allowInstantPlay = [placementJSON[@"allowInstantPlay"] boolValue];
+        TLog(@"Force Click To Play: %@, Allow Instant Play: %@", force_click_to_play ? @"YES" : @"NO", allowInstantPlay ? @"YES" : @"NO")
+        if (!force_click_to_play && allowInstantPlay) {
+            adClass = [STRAdInstantHostedVideo class];
+        }
     }
     if (!adClass) {
         adClass = [STRAdvertisement class];
@@ -240,7 +246,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]]];
     [[self.networkClient get:imageRequest] then:^id(NSData *data) {
-        STRAdvertisement *ad = [self adForAction:creativeJSON[@"action"] forPlacement:placementJSON];
+        STRAdvertisement *ad = [self adForCreative:creativeJSON inPlacement:placementJSON];
         ad.thumbnailImage = [UIImage imageWithData:data];
         ad.advertiser = creativeJSON[@"advertiser"];
         ad.title = creativeJSON[@"title"];
@@ -257,6 +263,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         ad.thirdPartyBeaconsForVisibility = creativeJSON[@"beacons"][@"visible"];
         ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
         ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
+        ad.thirdPartyBeaconsForView = creativeJSON[@"beacons"][@"view"];
         ad.action = creativeJSON[@"action"];
         ad.signature = creativeWrapperJSON[@"signature"];
         ad.auctionPrice = creativeWrapperJSON[@"price"];

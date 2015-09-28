@@ -9,6 +9,7 @@
 #import "STRYouTubeViewController.h"
 #import "STRVideoController.h"
 #import "STRAdVine.h"
+#import "STRAdHostedVideo.h"
 #import "STRAdPinterest.h"
 #import "STRAdFixtures.h"
 #import <MediaPlayer/MediaPlayer.h>

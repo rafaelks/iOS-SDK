@@ -16,6 +16,7 @@
 #import "STRAdPlacement.h"
 #import "STRAdHostedVideo.h"
 #import "STRAdInstantHostedVideo.h"
+#import "STRAdInstantHostedVideo.h"
 #import <AdSupport/AdSupport.h>
 
 using namespace Cedar::Matchers;
@@ -758,6 +759,76 @@ describe(@"STRAdService", ^{
                     [restClientDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
 
                     returnedPromise.error should_not be_nil;
+                });
+            });
+        });
+    });
+
+    describe(@"- (STRAdvertisement *)adForCreative:inPlacement:", ^{
+        __block NSDictionary *creativeJSON, *placementJSON;
+
+        describe(@"when the action is clickout", ^{
+            beforeEach(^{
+                creativeJSON = @{
+                                 @"action": @"clickout"
+                                 };
+            });
+
+            it(@"returns a clickout", ^{
+                STRAdvertisement *ad = [service adForCreative:creativeJSON inPlacement:placementJSON];
+                ad should be_instance_of([STRAdClickout class]);
+            });
+        });
+
+        describe(@"when the action is hoted-video", ^{
+            describe(@"when the placement doesn't allow instant play", ^{
+                beforeEach(^{
+                    creativeJSON = @{
+                                     @"action": @"hosted-video",
+                                     @"force_click_to_play": @NO
+                                     };
+                    placementJSON = @{
+                                      @"allowInstantPlay": @NO
+                                      };
+                });
+
+                it(@"returns a hosted video ad", ^{
+                    STRAdvertisement *ad = [service adForCreative:creativeJSON inPlacement:placementJSON];
+                    ad should be_instance_of([STRAdHostedVideo class]);
+                });
+            });
+
+            describe(@"when the creative forces click to play", ^{
+                beforeEach(^{
+                    creativeJSON = @{
+                                     @"action": @"hosted-video",
+                                     @"force_click_to_play": @YES
+                                     };
+                    placementJSON = @{
+                                      @"allowInstantPlay": @YES
+                                      };
+                });
+
+                it(@"returns a hosted video ad", ^{
+                    STRAdvertisement *ad = [service adForCreative:creativeJSON inPlacement:placementJSON];
+                    ad should be_instance_of([STRAdHostedVideo class]);
+                });
+            });
+
+            describe(@"when the placement allows instant play", ^{
+                beforeEach(^{
+                    creativeJSON = @{
+                                     @"action": @"hosted-video",
+                                     @"force_click_to_play": @NO
+                                     };
+                    placementJSON = @{
+                                      @"allowInstantPlay": @YES
+                                      };
+                });
+
+                it(@"returns a instant video ad", ^{
+                    STRAdvertisement *ad = [service adForCreative:creativeJSON inPlacement:placementJSON];
+                    ad should be_instance_of([STRAdInstantHostedVideo class]);
                 });
             });
         });

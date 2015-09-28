@@ -11,7 +11,7 @@
 
 extern const NSInteger kRequestInProgress;
 
-@class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService, STRAdPlacement, STRInjector, ASIdentifierManager;
+@class STRRestClient, STRNetworkClient, STRAdCache, STRBeaconService, STRAdPlacement, STRAdvertisement, STRInjector, ASIdentifierManager;
 
 @interface STRAdService : NSObject
 
@@ -26,4 +26,7 @@ extern const NSInteger kRequestInProgress;
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement;
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement;
+
+#pragma mark - Methods Exposed only for Testing
+- (STRAdvertisement *)adForCreative:(NSDictionary *)creativeJSON inPlacement:(NSDictionary *)placementJSON;
 @end

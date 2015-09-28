@@ -215,6 +215,11 @@
 		B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
 		B267F4081BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */; };
 		B26D22E81ACF3A210072ACDD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */; };
+		B27A7B971BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B981BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B991BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B9A1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B9B1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
 		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
@@ -832,6 +837,8 @@
 		B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKDFPSpec.mm; sourceTree = "<group>"; };
 		B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdInstantHostedVideoSpec.mm; sourceTree = "<group>"; };
 		B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ThirdParty/GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
+		B27A7B951BB9A4A70012D943 /* STRFakeRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFakeRestClient.h; sourceTree = "<group>"; };
+		B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFakeRestClient.m; sourceTree = "<group>"; };
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2867A351AEA9F0700BAF148 /* UIView+Visible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Visible.h"; sourceTree = "<group>"; };
@@ -953,6 +960,8 @@
 				AE022DDD188E004900D02568 /* STRNetworkClient.m */,
 				AE022DDE188E004900D02568 /* STRRestClient.h */,
 				AE022DDF188E004900D02568 /* STRRestClient.m */,
+				B27A7B951BB9A4A70012D943 /* STRFakeRestClient.h */,
+				B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -2007,6 +2016,7 @@
 				E8EE49A8191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */,
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
 				AE39F8D018AD831200969C30 /* STRAdClickout.m in Sources */,
+				B27A7B9B1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */,
 				AE3FF40A18AAA242006061C2 /* play-btn-300x.c in Sources */,
@@ -2088,6 +2098,7 @@
 				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
 				B2D5CDC31B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
+				B27A7B971BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				AEECC9C418AEAAB600E28C51 /* STRTestSafeModule.m in Sources */,
 				AEA0EC7918AC589E00B4286A /* vine_sample_thumbnail.c in Sources */,
 				AE3FF40518AAA078006061C2 /* STRImages.m in Sources */,
@@ -2166,6 +2177,7 @@
 				B2B962F91B0F9AFD00404578 /* STRSession.m in Sources */,
 				B2B962FA1B0F9AFD00404578 /* STRFakeAdGenerator.m in Sources */,
 				B2B962FB1B0F9AFD00404578 /* STRAdFixtures.m in Sources */,
+				B27A7B9A1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				B2B962FC1B0F9AFD00404578 /* UIView+Visible.m in Sources */,
 				B2B962FD1B0F9AFD00404578 /* STRYouTubeViewController.m in Sources */,
 				B2B962FE1B0F9AFD00404578 /* youtube_sample_thumbnail.c in Sources */,
@@ -2226,6 +2238,7 @@
 				B2B963361B0F9D0B00404578 /* STRIndexPathDelegateProxy.m in Sources */,
 				B2B963371B0F9D0B00404578 /* STRAppModule.m in Sources */,
 				B2D5CDC51B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
+				B27A7B991BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				B2B963381B0F9D0B00404578 /* STRTestSafeModule.m in Sources */,
 				B2B963391B0F9D0B00404578 /* vine_sample_thumbnail.c in Sources */,
 				B2B9633A1B0F9D0B00404578 /* STRImages.m in Sources */,
@@ -2304,6 +2317,7 @@
 				E8703E1D19B9092600D3FA50 /* STRSession.m in Sources */,
 				E8703E1E19B9092600D3FA50 /* STRFakeAdGenerator.m in Sources */,
 				E8703E1F19B9092600D3FA50 /* STRAdFixtures.m in Sources */,
+				B27A7B981BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				B2867A381AEA9F0700BAF148 /* UIView+Visible.m in Sources */,
 				E8703E2019B9092600D3FA50 /* STRYouTubeViewController.m in Sources */,
 				E8703E2119B9092600D3FA50 /* youtube_sample_thumbnail.c in Sources */,

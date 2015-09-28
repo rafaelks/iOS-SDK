@@ -139,7 +139,11 @@
 
         self.silentPlayTimer = [self.avPlayer addBoundaryTimeObserverForTimes:@[threeSecond, tenSecond] queue:nil usingBlock:^{
             CMTime time = [blockPlayer currentTime];
-            [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:CMTimeGetSeconds(time) * 1000];
+            Float64 seconds = CMTimeGetSeconds(time);
+            [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:seconds * 1000];
+            if (floorf(seconds) == 3) {
+                [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForView forPlacementWithStatus:blockSelf.placementStatus];
+            }
         }];
     }
 }

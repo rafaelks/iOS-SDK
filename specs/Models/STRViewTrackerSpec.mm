@@ -146,7 +146,7 @@ describe(@"STRViewTracker", ^{
                         });
 
                         it(@"fires a third party beacon", ^{
-                            beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus::)).with(@[@"//google.com?fakeParam=[timestamp]"], @"live");
+                            beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//google.com?fakeParam=[timestamp]"], @"live");
                         });
 
                         it(@"invalidates its timer", ^{
