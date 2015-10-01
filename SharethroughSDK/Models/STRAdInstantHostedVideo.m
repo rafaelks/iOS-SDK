@@ -142,7 +142,7 @@
             Float64 seconds = CMTimeGetSeconds(time);
             [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:seconds * 1000];
             if (floorf(seconds) == 3) {
-                [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForView forPlacementWithStatus:blockSelf.placementStatus];
+                [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForSilentPlay forPlacementWithStatus:blockSelf.placementStatus];
             }
         }];
     }
