@@ -220,16 +220,16 @@
 		B27A7B991BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
 		B27A7B9A1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
 		B27A7B9B1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
-		B29A4FA91BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		B29A4FAA1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		B29A4FAB1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		B29A4FAC1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B28137151B264DE800EF3FD0 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
 		B2867A371AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2867A381AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B29A4FA91BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B29A4FAA1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B29A4FAB1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B29A4FAC1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2A6CC811B2244440088928F /* STRAdvertisementDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
 		B2A6CC821B2244520088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
 		B2A6CC831B2244640088928F /* STRAdvertisement.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
@@ -1539,7 +1539,7 @@
 		AE8ED3DB1885ADF00004AB32 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Sharethrough;
 			};
 			buildConfigurationList = AE8ED3DE1885ADF00004AB32 /* Build configuration list for PBXProject "SharethroughSDK" */;
@@ -2411,6 +2411,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sharethrough.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2445,6 +2446,7 @@
 					"$(inherited)",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sharethrough.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2468,6 +2470,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2480,7 +2483,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
