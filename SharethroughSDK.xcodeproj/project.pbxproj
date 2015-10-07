@@ -190,6 +190,8 @@
 		AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */; };
 		AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */; };
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
+		B22162E61BAB35A2002F672E /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B22162E71BAB35A9002F672E /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B229F0981A2E219A0094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B229F0991A2E219A0094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B229F09B1A2E47CA0094A8B3 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -211,13 +213,23 @@
 		B23E6EB61B7A4DD100CF2013 /* STRAdvertisement.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
 		B245C3BE1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */; };
 		B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
+		B267F4081BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */; };
 		B26D22E81ACF3A210072ACDD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */; };
+		B27A7B971BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B981BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B991BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B9A1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B9B1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
 		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B28137151B264DE800EF3FD0 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
 		B2867A371AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2867A381AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B29A4FA91BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B29A4FAA1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B29A4FAB1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B29A4FAC1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2A6CC811B2244440088928F /* STRAdvertisementDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
 		B2A6CC821B2244520088928F /* STRAdvertisementDelegate.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
 		B2A6CC831B2244640088928F /* STRAdvertisement.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
@@ -360,7 +372,11 @@
 		B2B963681B0F9E8600404578 /* SharethroughSDK+DFP.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = E8703DC319B9031700D3FA50 /* SharethroughSDK+DFP.h */; };
 		B2B963691B0F9E8600404578 /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		B2B9636B1B0F9E8600404578 /* SharethroughSDK-Info.plist in Copy DFP Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
-		B2BCDAF01B2749A900BF50D2 /* STRViewTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */; };
+		B2BCDAF01B2749A900BF50D2 /* STRViewTrackerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2BCDAEF1B2749A900BF50D2 /* STRViewTrackerSpec.mm */; };
+		B2CAF24C1BA0B551005D544B /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B2CAF24D1BA0B551005D544B /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B2CAF24E1BA0B551005D544B /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B2CAF24F1BA0B551005D544B /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2D5CDC31B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2D5CDC41B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2D5CDC51B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -819,17 +835,24 @@
 		B238F6451B20E62400847C50 /* STRViewTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRViewTracker.m; sourceTree = "<group>"; };
 		B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdvertisementDelegate.h; sourceTree = "<group>"; };
 		B245C3BD1ACB0D7E005FA822 /* SharethroughSDKDFPSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKDFPSpec.mm; sourceTree = "<group>"; };
+		B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdInstantHostedVideoSpec.mm; sourceTree = "<group>"; };
 		B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ThirdParty/GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
+		B27A7B951BB9A4A70012D943 /* STRFakeRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFakeRestClient.h; sourceTree = "<group>"; };
+		B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFakeRestClient.m; sourceTree = "<group>"; };
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2867A351AEA9F0700BAF148 /* UIView+Visible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Visible.h"; sourceTree = "<group>"; };
 		B2867A361AEA9F0700BAF148 /* UIView+Visible.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Visible.m"; sourceTree = "<group>"; };
+		B29A4FA71BA9F70B00065FE3 /* STRAdInstantHostedVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdInstantHostedVideo.h; sourceTree = "<group>"; };
+		B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdInstantHostedVideo.m; sourceTree = "<group>"; };
 		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
 		B2B962C81B0F97E200404578 /* STRLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRLogging.h; sourceTree = "<group>"; };
 		B2B963121B0F9AFD00404578 /* libSharethrough-SDK+DFP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK+DFP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B963531B0F9D0B00404578 /* libSharethrough-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRViewTracker.mm; sourceTree = "<group>"; };
+		B2BCDAEF1B2749A900BF50D2 /* STRViewTrackerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRViewTrackerSpec.mm; sourceTree = "<group>"; };
 		B2C770571B9745E100906A91 /* STRIneractiveChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRIneractiveChild.h; sourceTree = "<group>"; };
+		B2CAF24A1BA0B551005D544B /* STRAdHostedVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdHostedVideo.h; sourceTree = "<group>"; };
+		B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdHostedVideo.m; sourceTree = "<group>"; };
 		B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdArticle.h; sourceTree = "<group>"; };
 		B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdArticle.m; sourceTree = "<group>"; };
 		B2F29E671A9807C000313C61 /* close-btn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "close-btn.c"; sourceTree = "<group>"; };
@@ -937,6 +960,8 @@
 				AE022DDD188E004900D02568 /* STRNetworkClient.m */,
 				AE022DDE188E004900D02568 /* STRRestClient.h */,
 				AE022DDF188E004900D02568 /* STRRestClient.m */,
+				B27A7B951BB9A4A70012D943 /* STRFakeRestClient.h */,
+				B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -955,26 +980,15 @@
 		AE022DE9188E008800D02568 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */,
-				B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */,
+				B2CAF2491BA0B50A005D544B /* Advertisements */,
 				AE9C4608189B181B001B407A /* STRAdCache.h */,
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
-				AE39F8CD18AD831200969C30 /* STRAdClickout.h */,
-				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
-				B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */,
-				B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */,
-				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
-				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
 				E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */,
 				E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
 				AE8AF50B189B0CF100A65B27 /* STRAdPlacementAdjuster.m */,
 				E8703DAF19B12CB000D3FA50 /* STRAdRenderer.h */,
 				E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */,
-				AE9C4624189C29B0001B407A /* STRAdVine.h */,
-				AE9C4625189C29B0001B407A /* STRAdVine.m */,
-				AE9C461A189C2538001B407A /* STRAdYouTube.h */,
-				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
 				AE46CE6A189844AB0096BDE9 /* STRSession.h */,
 				AE46CE6B189844AB0096BDE9 /* STRSession.m */,
 				B238F6441B20E62400847C50 /* STRViewTracker.h */,
@@ -1007,12 +1021,13 @@
 			isa = PBXGroup;
 			children = (
 				AE022DF5188E019100D02568 /* STRAdvertismentSpec.mm */,
+				B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */,
 				AE9C4611189B184B001B407A /* STRAdCacheSpec.mm */,
 				AE9C4622189C25A1001B407A /* STRAdYouTubeSpec.mm */,
 				AE8AF50E189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm */,
 				E84FB57819BE7AB40034A41E /* STRAdRendererSpec.mm */,
 				E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */,
-				B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */,
+				B2BCDAEF1B2749A900BF50D2 /* STRViewTrackerSpec.mm */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1364,6 +1379,29 @@
 			path = "Static Resources";
 			sourceTree = "<group>";
 		};
+		B2CAF2491BA0B50A005D544B /* Advertisements */ = {
+			isa = PBXGroup;
+			children = (
+				B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */,
+				B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */,
+				AE39F8CD18AD831200969C30 /* STRAdClickout.h */,
+				AE39F8CE18AD831200969C30 /* STRAdClickout.m */,
+				B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */,
+				B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */,
+				B2CAF24A1BA0B551005D544B /* STRAdHostedVideo.h */,
+				B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */,
+				B29A4FA71BA9F70B00065FE3 /* STRAdInstantHostedVideo.h */,
+				B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */,
+				E8EE49A2191BE5B600D0B9B6 /* STRAdPinterest.h */,
+				E8EE49A3191BE5B600D0B9B6 /* STRAdPinterest.m */,
+				AE9C4624189C29B0001B407A /* STRAdVine.h */,
+				AE9C4625189C29B0001B407A /* STRAdVine.m */,
+				AE9C461A189C2538001B407A /* STRAdYouTube.h */,
+				AE9C461B189C2538001B407A /* STRAdYouTube.m */,
+			);
+			name = Advertisements;
+			sourceTree = "<group>";
+		};
 		E84FB58619BF76EF0034A41E /* DFP */ = {
 			isa = PBXGroup;
 			children = (
@@ -1501,7 +1539,7 @@
 		AE8ED3DB1885ADF00004AB32 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Sharethrough;
 			};
 			buildConfigurationList = AE8ED3DE1885ADF00004AB32 /* Build configuration list for PBXProject "SharethroughSDK" */;
@@ -1899,6 +1937,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B22162E71BAB35A9002F672E /* STRAdInstantHostedVideo.m in Sources */,
+				B22162E61BAB35A2002F672E /* STRAdHostedVideo.m in Sources */,
 				B28137151B264DE800EF3FD0 /* STRViewTracker.m in Sources */,
 				B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */,
 				B229F0A51A2E5B420094A8B3 /* instagram-logo.c in Sources */,
@@ -1976,6 +2016,7 @@
 				E8EE49A8191BE5C600D0B9B6 /* STRAdPinterest.m in Sources */,
 				AE6C808518998633008FD848 /* STRInjectorSpec.mm in Sources */,
 				AE39F8D018AD831200969C30 /* STRAdClickout.m in Sources */,
+				B27A7B9B1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				AE52B84B188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
 				AEFBC4A618A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm in Sources */,
 				AE3FF40A18AAA242006061C2 /* play-btn-300x.c in Sources */,
@@ -2007,9 +2048,10 @@
 				B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */,
 				AE3FF40718AAA078006061C2 /* STRImages.m in Sources */,
 				AED281B518ABEAD200432D43 /* STRCollectionViewDataSourceProxySpec.mm in Sources */,
+				B267F4081BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm in Sources */,
 				AEEE6C9A189C719D00AA7EC9 /* STRTableViewDelegate.m in Sources */,
 				AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */,
-				B2BCDAF01B2749A900BF50D2 /* STRViewTracker.mm in Sources */,
+				B2BCDAF01B2749A900BF50D2 /* STRViewTrackerSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2037,7 +2079,9 @@
 				AE9C4634189C72B9001B407A /* STRVideoController.m in Sources */,
 				AE6C808F1899923E008FD848 /* STRSingletonBlockWrapper.m in Sources */,
 				B238F6461B20E62400847C50 /* STRViewTracker.m in Sources */,
+				B29A4FA91BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
+				B2CAF24C1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
 				B229F0981A2E219A0094A8B3 /* yt-logo.c in Sources */,
@@ -2054,6 +2098,7 @@
 				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
 				B2D5CDC31B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
+				B27A7B971BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				AEECC9C418AEAAB600E28C51 /* STRTestSafeModule.m in Sources */,
 				AEA0EC7918AC589E00B4286A /* vine_sample_thumbnail.c in Sources */,
 				AE3FF40518AAA078006061C2 /* STRImages.m in Sources */,
@@ -2115,6 +2160,7 @@
 				B2B962EA1B0F9AFD00404578 /* STRClickoutViewController.m in Sources */,
 				B2B962EB1B0F9AFD00404578 /* STRAdYouTube.m in Sources */,
 				B2B962EC1B0F9AFD00404578 /* STRGridlikeViewAdGenerator.m in Sources */,
+				B29A4FAC1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				B2B962ED1B0F9AFD00404578 /* clickout_sample_thumbnail.c in Sources */,
 				B2B962EE1B0F9AFD00404578 /* link_thumbnail.c in Sources */,
 				B2B962EF1B0F9AFD00404578 /* STRDFPManager.m in Sources */,
@@ -2122,6 +2168,7 @@
 				B2B962F11B0F9AFD00404578 /* STRIndexPathDelegateProxy.m in Sources */,
 				B2B962F21B0F9AFD00404578 /* STRAppModule.m in Sources */,
 				B2B962F31B0F9AFD00404578 /* STRTestSafeModule.m in Sources */,
+				B2CAF24F1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				B2B962F41B0F9AFD00404578 /* vine_sample_thumbnail.c in Sources */,
 				B2B962F51B0F9AFD00404578 /* STRImages.m in Sources */,
 				B2B962F61B0F9AFD00404578 /* STRBeaconService.m in Sources */,
@@ -2130,6 +2177,7 @@
 				B2B962F91B0F9AFD00404578 /* STRSession.m in Sources */,
 				B2B962FA1B0F9AFD00404578 /* STRFakeAdGenerator.m in Sources */,
 				B2B962FB1B0F9AFD00404578 /* STRAdFixtures.m in Sources */,
+				B27A7B9A1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				B2B962FC1B0F9AFD00404578 /* UIView+Visible.m in Sources */,
 				B2B962FD1B0F9AFD00404578 /* STRYouTubeViewController.m in Sources */,
 				B2B962FE1B0F9AFD00404578 /* youtube_sample_thumbnail.c in Sources */,
@@ -2171,7 +2219,9 @@
 				B2B963261B0F9D0B00404578 /* STRVideoController.m in Sources */,
 				B2B963271B0F9D0B00404578 /* STRSingletonBlockWrapper.m in Sources */,
 				B238F6481B20E62400847C50 /* STRViewTracker.m in Sources */,
+				B29A4FAB1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				B2B963281B0F9D0B00404578 /* STRInteractiveAdViewController.m in Sources */,
+				B2CAF24E1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				B2B963291B0F9D0B00404578 /* STRAdPlacement.m in Sources */,
 				B2B9632A1B0F9D0B00404578 /* STRAdCache.m in Sources */,
 				B2B9632B1B0F9D0B00404578 /* yt-logo.c in Sources */,
@@ -2188,6 +2238,7 @@
 				B2B963361B0F9D0B00404578 /* STRIndexPathDelegateProxy.m in Sources */,
 				B2B963371B0F9D0B00404578 /* STRAppModule.m in Sources */,
 				B2D5CDC51B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
+				B27A7B991BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				B2B963381B0F9D0B00404578 /* STRTestSafeModule.m in Sources */,
 				B2B963391B0F9D0B00404578 /* vine_sample_thumbnail.c in Sources */,
 				B2B9633A1B0F9D0B00404578 /* STRImages.m in Sources */,
@@ -2249,6 +2300,7 @@
 				E8703E1019B9092600D3FA50 /* STRClickoutViewController.m in Sources */,
 				E8703E1119B9092600D3FA50 /* STRAdYouTube.m in Sources */,
 				E8703E1219B9092600D3FA50 /* STRGridlikeViewAdGenerator.m in Sources */,
+				B29A4FAA1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				E8703E1319B9092600D3FA50 /* clickout_sample_thumbnail.c in Sources */,
 				B2F29E6D1A98086600313C61 /* link_thumbnail.c in Sources */,
 				E83128EF19B936D9007C2FAB /* STRDFPManager.m in Sources */,
@@ -2256,6 +2308,7 @@
 				E8703E1519B9092600D3FA50 /* STRIndexPathDelegateProxy.m in Sources */,
 				E8703E1619B9092600D3FA50 /* STRAppModule.m in Sources */,
 				E8703E1719B9092600D3FA50 /* STRTestSafeModule.m in Sources */,
+				B2CAF24D1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				E8703E1819B9092600D3FA50 /* vine_sample_thumbnail.c in Sources */,
 				E8703E1919B9092600D3FA50 /* STRImages.m in Sources */,
 				E8703E1A19B9092600D3FA50 /* STRBeaconService.m in Sources */,
@@ -2264,6 +2317,7 @@
 				E8703E1D19B9092600D3FA50 /* STRSession.m in Sources */,
 				E8703E1E19B9092600D3FA50 /* STRFakeAdGenerator.m in Sources */,
 				E8703E1F19B9092600D3FA50 /* STRAdFixtures.m in Sources */,
+				B27A7B981BB9A4A70012D943 /* STRFakeRestClient.m in Sources */,
 				B2867A381AEA9F0700BAF148 /* UIView+Visible.m in Sources */,
 				E8703E2019B9092600D3FA50 /* STRYouTubeViewController.m in Sources */,
 				E8703E2119B9092600D3FA50 /* youtube_sample_thumbnail.c in Sources */,
@@ -2357,6 +2411,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sharethrough.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2391,6 +2446,7 @@
 					"$(inherited)",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sharethrough.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2414,6 +2470,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2426,7 +2483,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

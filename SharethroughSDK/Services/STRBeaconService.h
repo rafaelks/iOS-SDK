@@ -22,7 +22,11 @@
 - (void)fireVideoCompletionForAd:(STRAdvertisement *)ad completionPercent:(NSNumber *)completionPercent;
 - (void)fireShareForAd:(STRAdvertisement *)ad shareType:(NSString *)uiActivityType;
 - (void)fireClickForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
+
 - (void)fireArticleViewForAd:(STRAdvertisement *)ad;
 - (void)fireArticleDurationForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration;
+
+- (void)fireSilentAutoPlayDurationForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration;
+- (void)fireAutoPlayVideoEngagementForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration;
 
 @end

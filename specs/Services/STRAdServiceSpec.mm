@@ -14,6 +14,9 @@
 #import "STRAdInstagram.h"
 #import "STRBeaconService.h"
 #import "STRAdPlacement.h"
+#import "STRAdHostedVideo.h"
+#import "STRAdInstantHostedVideo.h"
+#import "STRAdInstantHostedVideo.h"
 #import <AdSupport/AdSupport.h>
 
 using namespace Cedar::Matchers;
@@ -282,6 +285,9 @@ describe(@"STRAdService", ^{
 
                 beforeEach(^{
                     responseData = @{
+                                     @"placement": [@{
+                                             @"allow_instant_play": @false
+                                     } mutableCopy],
                                      @"creatives": @[[@{ @"signature": @"fakeSignature",
                                                        @"price": @"1.0",
                                                        @"priceType": @"type",
@@ -357,13 +363,35 @@ describe(@"STRAdService", ^{
                     afterSuccessfulAdFetchedSpecs([STRAdArticle class], @"article");
                 });
 
-                describe(@"when the ad server successfully responds with an article ad", ^{
+                describe(@"when the ad server successfully responds with an unknown ad", ^{
                     beforeEach(^{
                         responseData[@"creatives"][0][@"creative"][@"action"] = @"unknown";
                         [restClientDeferred resolveWithValue:responseData];
                     });
 
                     afterSuccessfulAdFetchedSpecs([STRAdvertisement class], @"unknown");
+                });
+
+                describe(@"when the ad server successfully responds with hosted video ad", ^{
+
+                    describe(@"when the placement is not instant play", ^{
+                        beforeEach(^{
+                            responseData[@"creatives"][0][@"creative"][@"action"] = @"hosted-video";
+                            [restClientDeferred resolveWithValue:responseData];
+                        });
+
+                        afterSuccessfulAdFetchedSpecs([STRAdHostedVideo class], @"hosted-video");
+                    });
+
+                    describe(@"when the placement is instant play", ^{
+                        beforeEach(^{
+                            responseData[@"placement"][@"allow_instant_play"] = @YES;
+                            responseData[@"creatives"][0][@"creative"][@"action"] = @"hosted-video";
+                            [restClientDeferred resolveWithValue:responseData];
+                        });
+
+                        afterSuccessfulAdFetchedSpecs([STRAdHostedVideo class], @"hosted-video");
+                    });
                 });
             });
 
@@ -731,6 +759,76 @@ describe(@"STRAdService", ^{
                     [restClientDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
 
                     returnedPromise.error should_not be_nil;
+                });
+            });
+        });
+    });
+
+    describe(@"- (STRAdvertisement *)adForCreative:inPlacement:", ^{
+        __block NSDictionary *creativeJSON, *placementJSON;
+
+        describe(@"when the action is clickout", ^{
+            beforeEach(^{
+                creativeJSON = @{
+                                 @"action": @"clickout"
+                                 };
+            });
+
+            it(@"returns a clickout", ^{
+                STRAdvertisement *ad = [service adForCreative:creativeJSON inPlacement:placementJSON];
+                ad should be_instance_of([STRAdClickout class]);
+            });
+        });
+
+        describe(@"when the action is hoted-video", ^{
+            describe(@"when the placement doesn't allow instant play", ^{
+                beforeEach(^{
+                    creativeJSON = @{
+                                     @"action": @"hosted-video",
+                                     @"force_click_to_play": @NO
+                                     };
+                    placementJSON = @{
+                                      @"allowInstantPlay": @NO
+                                      };
+                });
+
+                it(@"returns a hosted video ad", ^{
+                    STRAdvertisement *ad = [service adForCreative:creativeJSON inPlacement:placementJSON];
+                    ad should be_instance_of([STRAdHostedVideo class]);
+                });
+            });
+
+            describe(@"when the creative forces click to play", ^{
+                beforeEach(^{
+                    creativeJSON = @{
+                                     @"action": @"hosted-video",
+                                     @"force_click_to_play": @YES
+                                     };
+                    placementJSON = @{
+                                      @"allowInstantPlay": @YES
+                                      };
+                });
+
+                it(@"returns a hosted video ad", ^{
+                    STRAdvertisement *ad = [service adForCreative:creativeJSON inPlacement:placementJSON];
+                    ad should be_instance_of([STRAdHostedVideo class]);
+                });
+            });
+
+            describe(@"when the placement allows instant play", ^{
+                beforeEach(^{
+                    creativeJSON = @{
+                                     @"action": @"hosted-video",
+                                     @"force_click_to_play": @NO
+                                     };
+                    placementJSON = @{
+                                      @"allowInstantPlay": @YES
+                                      };
+                });
+
+                it(@"returns a instant video ad", ^{
+                    STRAdvertisement *ad = [service adForCreative:creativeJSON inPlacement:placementJSON];
+                    ad should be_instance_of([STRAdInstantHostedVideo class]);
                 });
             });
         });

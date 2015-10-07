@@ -15,6 +15,8 @@
 #import "STRAdPinterest.h"
 #import "STRAdInstagram.h"
 #import "STRAdArticle.h"
+#import "STRAdHostedVideo.h"
+#import "STRAdInstantHostedVideo.h"
 
 @implementation STRAdFixtures
 
@@ -56,8 +58,21 @@
     return ad;
 }
 
-+ (STRAdvertisement *)hostedVideoAd {
-    STRAdvertisement *ad = [STRAdvertisement new];
++ (STRAdHostedVideo *)hostedVideoAd {
+    STRAdHostedVideo *ad = [STRAdHostedVideo new];
+    ad.mediaURL = [NSURL URLWithString:@"http://media.sharethrough.com.s3.amazonaws.com/Val/iOS%20SDK%20Stuff/Media/New%20Silk%20ad%20-%20Whaddya%20think_%20Share%20your%20thoughts!.mp4"];
+    ad.title = @"Avoid the morning MOO";
+    ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];
+    ad.adDescription = @"Avoid the taste of the dreaded MOO and make your morning taste better with Silk Almond Milk";
+    ad.action = STRHostedVideoAd;
+    ad.thumbnailImage = [UIImage imageWithData:[NSData dataWithBytes:kSTRHostedVideoThumbnail.bytes length:kSTRHostedVideoThumbnail.length]];
+    ad.advertiser = @"Silk";
+
+    return ad;
+}
+
++ (STRAdInstantHostedVideo *)instantPlayVideoAdWithInjector:(STRInjector *)inject {
+    STRAdInstantHostedVideo *ad = [[STRAdInstantHostedVideo alloc] initWithInjector:inject];
     ad.mediaURL = [NSURL URLWithString:@"http://media.sharethrough.com.s3.amazonaws.com/Val/iOS%20SDK%20Stuff/Media/New%20Silk%20ad%20-%20Whaddya%20think_%20Share%20your%20thoughts!.mp4"];
     ad.title = @"Avoid the morning MOO";
     ad.shareURL = [NSURL URLWithString:@"http://bit.ly/share"];

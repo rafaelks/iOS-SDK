@@ -10,6 +10,8 @@
 #import "STRFakeAdGenerator.h"
 #import "STRBeaconService.h"
 #import "STRAdService.h"
+#import "STRFakeRestClient.h"
+#import "STRNetworkClient.h"
 
 @interface STRTestSafeModule ()
 
@@ -35,7 +37,9 @@
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRFakeAdGenerator alloc] initWithAdType:type withInjector:injector];
     }];
-    [injector bind:[STRBeaconService class] toInstance:[NSNull null]];
+    [injector bind:[STRRestClient class] toBlockAsSingleton:^id(STRInjector *injector) {
+        return [[STRFakeRestClient alloc] initWithNetworkClient:[injector getInstance:[STRNetworkClient class]]];
+    }];
     [injector bind:[STRAdService class] toInstance:[NSNull null]];
 }
 

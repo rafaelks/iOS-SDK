@@ -497,6 +497,132 @@ describe(@"STRBeaconService", ^{
             restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
         });
     });
+
+    describe(@"-fireArticleViewForAd:", ^{
+        __block NSDictionary *parameters;
+
+        subjectAction(^{
+            parameters = @{@"pkey": @"placementKey",
+                           @"ckey": @"creativeKey",
+                           @"vkey": @"variantKey",
+                           @"type": @"userEvent",
+                           @"engagement": @"true",
+                           @"userEvent": @"articleView",
+                           @"bwidth": @"200",
+                           @"bheight": @"400",
+                           @"umtime": @"10",
+                           @"session": @"AAAA",
+                           @"uid": @"fakeUUID",
+                           @"ua": @"User Agent",
+                           @"ploc": @"specs",
+                           @"as": @"sig",
+                           @"at": @"type",
+                           @"ap": @"price",
+                           @"arid": @"fake-arid",
+                           @"awid": @"fake-awid",
+                           @"deal_id": @"fake-dealId"};
+            [service fireArticleViewForAd:ad];
+        });
+
+        it(@"sends a beacon to the tracking servers", ^{
+            restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+        });
+    });
+
+    describe(@"-fireArticleDurationForAd:withDuration:", ^{
+        __block NSDictionary *parameters;
+
+        subjectAction(^{
+            parameters = @{@"pkey": @"placementKey",
+                           @"ckey": @"creativeKey",
+                           @"vkey": @"variantKey",
+                           @"type": @"userEvent",
+                           @"duration": @"10998.000000",
+                           @"engagement": @"true",
+                           @"userEvent": @"articleViewDuration",
+                           @"bwidth": @"200",
+                           @"bheight": @"400",
+                           @"umtime": @"10",
+                           @"session": @"AAAA",
+                           @"uid": @"fakeUUID",
+                           @"ua": @"User Agent",
+                           @"ploc": @"specs",
+                           @"as": @"sig",
+                           @"at": @"type",
+                           @"ap": @"price",
+                           @"arid": @"fake-arid",
+                           @"awid": @"fake-awid",
+                           @"deal_id": @"fake-dealId"};
+            [service fireArticleDurationForAd:ad withDuration:10.9980];
+        });
+
+        it(@"sends a beacon to the tracking servers", ^{
+            restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+        });
+    });
+
+    describe(@"-fireSilentAutoPlayDurationForAd:withDuration:", ^{
+        __block NSDictionary *parameters;
+
+        subjectAction(^{
+            parameters = @{@"pkey": @"placementKey",
+                           @"ckey": @"creativeKey",
+                           @"vkey": @"variantKey",
+                           @"type": @"userEvent",
+                           @"userEvent": @"silentAutoPlayDuration",
+                           @"duration" : @"3000",
+                           @"bwidth": @"200",
+                           @"bheight": @"400",
+                           @"umtime": @"10",
+                           @"session": @"AAAA",
+                           @"uid": @"fakeUUID",
+                           @"ua": @"User Agent",
+                           @"ploc": @"specs",
+                           @"as": @"sig",
+                           @"at": @"type",
+                           @"ap": @"price",
+                           @"arid": @"fake-arid",
+                           @"awid": @"fake-awid",
+                           @"deal_id": @"fake-dealId"};
+            [service fireSilentAutoPlayDurationForAd:ad withDuration:3000.0];
+        });
+
+        it(@"sends a beacon to the tracking servers", ^{
+            restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+        });
+    });
+
+    describe(@"-fireAutoPlayVideoEngagementForAd:withDuration:", ^{
+        __block NSDictionary *parameters;
+
+        subjectAction(^{
+            parameters = @{@"pkey": @"placementKey",
+                           @"ckey": @"creativeKey",
+                           @"vkey": @"variantKey",
+                           @"type": @"userEvent",
+                           @"engagement": @"true",
+                           @"userEvent": @"autoplayVideoEngagement",
+                           @"duration" : @"10323.330000",
+                           @"bwidth": @"200",
+                           @"bheight": @"400",
+                           @"umtime": @"10",
+                           @"session": @"AAAA",
+                           @"uid": @"fakeUUID",
+                           @"ua": @"User Agent",
+                           @"ploc": @"specs",
+                           @"as": @"sig",
+                           @"at": @"type",
+                           @"ap": @"price",
+                           @"arid": @"fake-arid",
+                           @"awid": @"fake-awid",
+                           @"deal_id": @"fake-dealId"};
+            [service fireAutoPlayVideoEngagementForAd:ad withDuration:10323.33];
+        });
+
+        it(@"sends a beacon to the tracking servers", ^{
+            restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+        });
+    });
 });
 
 SPEC_END

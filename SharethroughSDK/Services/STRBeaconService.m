@@ -186,6 +186,31 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     [parameters addEntriesFromDictionary:uniqueParameters];
     [self.restClient sendBeaconWithParameters:parameters];
 }
+
+- (void)fireSilentAutoPlayDurationForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration {
+    TLog(@"");
+    NSDictionary *uniqueParameters = @{@"type": @"userEvent",
+                                       @"userEvent": @"silentAutoPlayDuration",
+                                       @"duration": [NSString stringWithFormat:@"%d", (int)duration]
+                                     };
+
+    NSMutableDictionary *parameters = [self commonParametersWithAd:ad];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+    [self.restClient sendBeaconWithParameters:parameters];
+}
+
+- (void)fireAutoPlayVideoEngagementForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration {
+    TLog(@"");
+    NSDictionary *uniqueParameters = @{@"type": @"userEvent",
+                                       @"userEvent": @"autoplayVideoEngagement",
+                                       @"duration": [NSString stringWithFormat:@"%f", duration],
+                                       @"engagement": @"true"};
+
+    NSMutableDictionary *parameters = [self commonParametersWithAd:ad];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+    [self.restClient sendBeaconWithParameters:parameters];
+}
+
 #pragma mark - Private
 
 - (NSMutableDictionary *)impressionParametersForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {

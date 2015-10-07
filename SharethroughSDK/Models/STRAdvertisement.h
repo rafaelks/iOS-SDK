@@ -50,6 +50,7 @@ extern NSString *STRArticleAd;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForClick;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForPlay;
+@property (nonatomic, copy) NSArray *thirdPartyBeaconsForSilentPlay;
 @property (nonatomic, assign) BOOL   impressionBeaconFired;
 @property (nonatomic, assign) BOOL   visibleImpressionBeaconFired;
 @property (nonatomic, copy) NSDate  *visibleImpressionTime;
@@ -57,11 +58,19 @@ extern NSString *STRArticleAd;
 @property (nonatomic, weak) STRInjector *injector;
 @property (nonatomic, weak) id<STRAdvertisementDelegate> delegate;
 
+- (id)initWithInjector:(STRInjector *)injector;
+
 - (NSString *)sponsoredBy;
 - (UIImage *)displayableThumbnail;
 - (UIImageView *)platformLogoForWidth:(CGFloat)width;
 
+- (void)setThumbnailImageInView:(UIImageView *)imageView;
+
+- (UIViewController*) viewControllerForPresentingOnTap;
+
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController;
 - (void)unregisterView:(UIView *)view;
 
+- (BOOL)adVisibleInView:(UIView *)view;
+- (BOOL)adNotVisibleInView:(UIView *)view;
 @end

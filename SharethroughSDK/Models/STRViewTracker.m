@@ -10,6 +10,7 @@
 #import "STRViewTracker.h"
 
 #import "STRAdvertisement.h"
+#import "STRAdInstantHostedVideo.h"
 #import "STRAdvertisementDelegate.h"
 #import "STRBeaconService.h"
 #import "STRDateProvider.h"
@@ -20,7 +21,7 @@
 
 char const * const STRViewTrackerKey = "STRViewTrackerKey";
 
-@interface STRViewTracker ()<STRInteractiveAdViewControllerDelegate>
+@interface STRViewTracker ()
 
 @property (nonatomic, strong) STRBeaconService *beaconService;
 @property (nonatomic, strong) STRDateProvider *dateProvider;
@@ -68,6 +69,8 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
         [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
 
         self.adVisibleTimer = timer;
+    } else {
+        [self setUpSimpleVisibilityCheckerInView:view];
     }
 }
 
@@ -105,9 +108,45 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
             [self.ad.delegate adWillLogImpression:self.ad];
         }
         self.ad.visibleImpressionTime = [self.dateProvider now];
+        [self.ad adVisibleInView:view];
         [timer invalidate];
+        [self setUpSimpleVisibilityCheckerInView:view];
     } else {
+        [self.ad adNotVisibleInView:view];
         [timer.userInfo removeObjectForKey:@"secondsVisible"];
+    }
+}
+
+- (void)setUpSimpleVisibilityCheckerInView:(UIView *)view {
+    TLog(@"");
+    if ([self.ad isKindOfClass:[STRAdInstantHostedVideo class]]) {
+        STRAdInstantHostedVideo *hostedAd = (STRAdInstantHostedVideo *)self.ad;
+        if (hostedAd.beforeEngagement) {
+            [self.adVisibleTimer invalidate];
+            NSTimer *timer = [NSTimer timerWithTimeInterval:0.5
+                                                     target:self
+                                                   selector:@selector(simpleCheckIfAdVisible:)
+                                                   userInfo:[@{@"view": view} mutableCopy]
+                                                    repeats:YES];
+            timer.tolerance = timer.timeInterval * 0.5;
+            [self.timerRunLoop addTimer:timer forMode:NSRunLoopCommonModes];
+
+            self.adVisibleTimer = timer;
+        }
+    }
+}
+
+- (void)simpleCheckIfAdVisible:(NSTimer *)timer {
+    UIView *view = timer.userInfo[@"view"];
+    CGFloat percentVisible = [view percentVisible];
+    if (percentVisible >= 0.5) {
+        if (![self.ad adVisibleInView:view]) {
+            [timer invalidate];
+        }
+    } else {
+        if (![self.ad adNotVisibleInView:view]) {
+            [timer invalidate];
+        }
     }
 }
 
@@ -127,19 +166,7 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     if ([self.ad.delegate respondsToSelector:@selector(adDidClick:)]) {
         [self.ad.delegate adDidClick:self.ad];
     }
-    STRInteractiveAdViewController *interactiveAdController = [[STRInteractiveAdViewController alloc] initWithAd:self.ad
-                                                                                                          device:[UIDevice currentDevice]
-                                                                                                     application:[UIApplication sharedApplication]
-                                                                                                   beaconService:self.beaconService
-                                                                                                        injector:self.injector];
-    interactiveAdController.delegate = self;
-    [self.presentingViewController presentViewController:interactiveAdController animated:YES completion:nil];
-}
-
-#pragma mark - <STRInteractiveAdViewControllerDelegate>
-
-- (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
-    TLog(@"pkey:%@ ckey:%@",self.ad.placementKey, self.ad.creativeKey);
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    UIViewController *engagementViewController = [self.ad viewControllerForPresentingOnTap];
+    [self.presentingViewController presentViewController:engagementViewController animated:YES completion:nil];
 }
 @end

@@ -9,6 +9,9 @@
 #import "STRAdvertisement.h"
 #import "STRImages.h"
 #import "STRViewTracker.h"
+#import "STRInteractiveAdViewController.h"
+#import "STRInjector.h"
+#import "STRBeaconService.h"
 
 NSString *STRYouTubeAd = @"video";
 NSString *STRVineAd = @"vine";
@@ -28,6 +31,15 @@ NSString *STRArticleAd = @"article";
     return self;
 }
 
+- (id)initWithInjector:(STRInjector *)injector {
+    if (self = [super init]) {
+        self.injector = injector;
+        self.adserverRequestId = @"";
+        self.auctionWinId = @"";
+    }
+    return self;
+}
+
 - (NSString *)sponsoredBy {
     if ([self.promotedByText length] > 0) {
         return [NSString stringWithFormat:@"%@ %@", self.promotedByText, self.advertiser];
@@ -39,6 +51,7 @@ NSString *STRArticleAd = @"article";
 - (UIImage *)displayableThumbnail {
     return  self.thumbnailImage;
 }
+
 //The name center image is out of date, but this is the platform logo now
 - (UIImage *)centerImage {
     return [STRImages playBtn];
@@ -54,6 +67,19 @@ NSString *STRArticleAd = @"article";
     return platformLogoView;
 }
 
+- (void)setThumbnailImageInView:(UIImageView *)imageView {
+    imageView.image = self.thumbnailImage;
+}
+
+- (UIViewController*) viewControllerForPresentingOnTap {
+    return [[STRInteractiveAdViewController alloc] initWithAd:self
+                                                       device:[UIDevice currentDevice]
+                                                  application:[UIApplication sharedApplication]
+                                                beaconService:[self.injector getInstance:[STRBeaconService class]]
+                                                     injector:self.injector];
+}
+
+
 #pragma mark - View Tracker
 
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController {
@@ -63,6 +89,16 @@ NSString *STRArticleAd = @"article";
 
 - (void)unregisterView:(UIView *)view {
     [STRViewTracker unregisterView:view];
+}
+
+//These two methods are a side effect of instant play and should not be called on any ad that is not instant play
+//Small compile time trade off instead of reflecting on the class and casting to that class all the time
+- (BOOL)adVisibleInView:(UIView *)view {
+    return NO;
+}
+
+- (BOOL)adNotVisibleInView:(UIView *)view {
+    return NO;
 }
 
 @end

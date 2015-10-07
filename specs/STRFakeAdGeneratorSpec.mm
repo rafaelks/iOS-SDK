@@ -67,13 +67,6 @@ describe(@"STRFakeAdGenerator", ^{
 
             it(@"presents the STRInteractiveAdViewController", ^{
                 interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
-                interactiveAdController.delegate should be_same_instance_as(generator);
-            });
-
-            it(@"dismisses the interactive ad controller when told", ^{
-                [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                presentingViewController.presentedViewController should be_nil;
             });
         });
 

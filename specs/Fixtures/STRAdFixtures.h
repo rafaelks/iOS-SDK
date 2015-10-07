@@ -8,14 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRAdVine, STRAdYouTube, STRAdvertisement, STRAdClickout, STRAdPinterest, STRAdInstagram, STRAdArticle;
+@class STRAdVine, STRAdYouTube, STRAdvertisement, STRAdClickout, STRAdPinterest, STRAdInstagram, STRAdArticle, STRAdHostedVideo, STRAdInstantHostedVideo, STRInjector;
 
 @interface STRAdFixtures : NSObject
 
 + (STRAdvertisement *)ad;
 + (STRAdYouTube *)youTubeAd;
 + (STRAdVine *)vineAd;
-+ (STRAdvertisement *)hostedVideoAd;
++ (STRAdHostedVideo *)hostedVideoAd;
++ (STRAdInstantHostedVideo *)instantPlayVideoAdWithInjector:(STRInjector *)inject;
 + (STRAdClickout *)clickoutAd;
 + (STRAdPinterest *)pinterestAd;
 + (STRAdClickout *)privacyInformationAd;

@@ -1,6 +1,5 @@
 #import "STRFullAdView.h"
 #import "STRAdService.h"
-#import "STRDeferred.h"
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 #include "UIGestureRecognizer+Spec.h"
@@ -13,7 +12,10 @@
 #import "STRNetworkClient.h"
 #import "STRAdRenderer.h"
 #import "STRDateProvider.h"
+#import "STRAdInstantHostedVideo.h"
 #import "STRViewTracker.h"
+
+#import <AVKit/AVKit.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -61,7 +63,6 @@ describe(@"STRViewTracker", ^{
 
     describe(@"tracking an ad in the view", ^{
         __block STRFullAdView *view;
-        __block STRDeferred *deferred;
         __block UIViewController *presentingViewController;
         __block UIWindow *window;
         __block id<STRAdViewDelegate> delegate;
@@ -70,8 +71,6 @@ describe(@"STRViewTracker", ^{
         beforeEach(^{
             view = [STRFullAdView new];
             view.frame = CGRectMake(0, 0, 100, 100);
-
-            deferred = [STRDeferred defer];
 
             presentingViewController = [UIViewController new];
             window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
@@ -147,7 +146,7 @@ describe(@"STRViewTracker", ^{
                         });
 
                         it(@"fires a third party beacon", ^{
-                            beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus::)).with(@[@"//google.com?fakeParam=[timestamp]"], @"live");
+                            beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//google.com?fakeParam=[timestamp]"], @"live");
                         });
 
                         it(@"invalidates its timer", ^{
@@ -233,13 +232,6 @@ describe(@"STRViewTracker", ^{
                 it(@"presents the STRInteractiveAdViewController", ^{
                     interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
                     interactiveAdController.ad should be_same_instance_as(ad);
-                    interactiveAdController.delegate should be_same_instance_as(viewTracker);
-                });
-
-                it(@"dismisses the interactive ad controller when told", ^{
-                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                    presentingViewController.presentedViewController should be_nil;
                 });
 
                 it(@"fires off a youtube play beacon", ^{
@@ -271,13 +263,6 @@ describe(@"STRViewTracker", ^{
                     it(@"presents the STRInteractiveAdViewController", ^{
                         interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
                         interactiveAdController.ad should be_same_instance_as(ad);
-                        interactiveAdController.delegate should be_same_instance_as(viewTracker);
-                    });
-
-                    it(@"dismisses the interactive ad controller when told", ^{
-                        [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                        presentingViewController.presentedViewController should be_nil;
                     });
 
                     it(@"fires off a clickout click beacon", ^{
@@ -295,7 +280,6 @@ describe(@"STRViewTracker", ^{
                     ad.action = STRPinterestAd;
 
                     view.frame = CGRectMake(0, 0, 100, 100);
-                    [deferred resolveWithValue:ad];
                 });
 
                 describe(@"the view is tapped on", ^{
@@ -315,7 +299,6 @@ describe(@"STRViewTracker", ^{
                     ad.action = STRInstagramAd;
 
                     view.frame = CGRectMake(0, 0, 100, 100);
-                    [deferred resolveWithValue:ad];
                 });
 
                 describe(@"the view is tapped on", ^{
@@ -335,7 +318,6 @@ describe(@"STRViewTracker", ^{
                     ad.action = STRHostedVideoAd;
 
                     view.frame = CGRectMake(0, 0, 100, 100);
-                    [deferred resolveWithValue:ad];
                 });
 
                 describe(@"the view is tapped on", ^{
@@ -347,6 +329,37 @@ describe(@"STRViewTracker", ^{
                     it(@"fires off a video play beacon", ^{
                         beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
                     });
+
+
+                });
+            });
+
+            context(@"when the ad is an instant hosted video", ^{
+                __block UIViewController *interactiveAdController;
+
+                beforeEach(^{
+                    ad = [STRAdInstantHostedVideo new];
+                    ad.action = STRHostedVideoAd;
+
+                    [viewTracker trackAd:ad inView:view withViewContorller:presentingViewController];
+
+                    view.frame = CGRectMake(0, 0, 100, 100);
+                });
+
+                describe(@"the view is tapped on", ^{
+                    beforeEach(^{
+                        [(id<CedarDouble>)beaconService reset_sent_messages];
+                        [[view.gestureRecognizers lastObject] recognize];
+                        interactiveAdController = presentingViewController.presentedViewController;
+                    });
+
+                    it(@"fires off a video play beacon", ^{
+                        beaconService should have_received(@selector(fireVideoPlayEvent:adSize:));
+                    });
+
+                    it(@"presents the STRInteractiveAdViewController", ^{
+                        interactiveAdController should be_instance_of([AVPlayerViewController class]);
+                    });
                 });
             });
 
@@ -355,7 +368,6 @@ describe(@"STRViewTracker", ^{
                     ad.action = STRYouTubeAd;
 
                     view.frame = CGRectMake(0, 0, 100, 100);
-                    [deferred resolveWithValue:ad];
                 });
                 
                 describe(@"the view is tapped on", ^{
@@ -375,7 +387,6 @@ describe(@"STRViewTracker", ^{
                     ad.action = STRVineAd;
                     
                     view.frame = CGRectMake(0, 0, 100, 100);
-                    [deferred resolveWithValue:ad];
                 });
                 
                 describe(@"the view is tapped on", ^{
