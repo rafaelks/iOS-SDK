@@ -15,7 +15,7 @@ static char const * const UIActivityViewControllerKey = "UIActivityViewControlle
 @implementation UIActivityViewController (Spec)
 
 - (id)initWithActivityItems:(NSArray *)activityItems applicationActivities:(NSArray *)applicationActivities {
-    self = [UIActivityViewController new];
+    self = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     if (self) {
         objc_setAssociatedObject(self, UIActivityViewControllerKey, activityItems, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }

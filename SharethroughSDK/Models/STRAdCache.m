@@ -107,7 +107,7 @@
     return nil;
 }
 
-- (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement {
+- (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement AndInitializeAd:(BOOL)initialize {
     TLog(@"pkey:%@",placement.placementKey);
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placement.placementKey];
     if (indexToCreativeMap == nil) {
@@ -122,7 +122,11 @@
         if ([creatives peek] == nil) {
             return NO;
         } else {
-            [indexToCreativeMap setObject:[creatives dequeue] forKey:[NSNumber numberWithLong:placement.adIndex]];
+            if (initialize) {
+                ad = [creatives dequeue];
+                TLog(@"Setting ad:%@ for index:%lu", ad, (long)placement.adIndex);
+                [indexToCreativeMap setObject:ad forKey:[NSNumber numberWithLong:placement.adIndex]];
+            }
             return YES;
         }
     }
@@ -134,7 +138,11 @@
         if ([creatives peek] == nil) {
             return YES; //reuse the old ad
         } else {
-            [indexToCreativeMap setObject:[creatives dequeue] forKey:[NSNumber numberWithLong:placement.adIndex]];
+            if (initialize) {
+                ad = [creatives dequeue];
+                TLog(@"Setting ad:%@ for index:%lu", ad, (long)placement.adIndex);
+                [indexToCreativeMap setObject:ad forKey:[NSNumber numberWithLong:placement.adIndex]];
+            }
             return YES;
         }
     }

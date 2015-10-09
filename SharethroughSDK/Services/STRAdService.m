@@ -62,7 +62,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 - (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
-    if ([self.adCache isAdAvailableForPlacement:placement]) {
+    if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:NO]) {
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
         [deferred resolveWithValue:cachedAd];
@@ -80,7 +80,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
-    if ([self.adCache isAdAvailableForPlacement:placement]) {
+    if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:YES]) {
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
         [deferred resolveWithValue:cachedAd];
@@ -123,7 +123,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
-    return [self.adCache isAdAvailableForPlacement:placement];
+    return [self.adCache isAdAvailableForPlacement:placement AndInitializeAd:NO];
 }
 
 #pragma mark - Private

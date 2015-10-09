@@ -48,7 +48,7 @@
         STRAdPlacement *placement = [STRAdPlacement new];
         placement.placementKey = self.placementKey;
         placement.adIndex = indexPath.row;
-        return [self.adCache isAdAvailableForPlacement:placement];
+        return [self.adCache isAdAvailableForPlacement:placement AndInitializeAd:YES];
     }
     return NO;
 }

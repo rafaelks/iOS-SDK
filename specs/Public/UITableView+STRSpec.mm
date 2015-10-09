@@ -106,7 +106,7 @@ describe(@"UITableView+STR", ^{
         beforeEach(^{
             fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
             fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
-            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
             [tableView reloadData];
         });
         

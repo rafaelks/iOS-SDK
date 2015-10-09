@@ -56,26 +56,26 @@ describe(@"STRAdCache", ^{
         describe(@"when initializing at the placement index", ^{
             it(@"has an ad ready for the placement index that cached it", ^{
                 [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:YES];
-                [cache isAdAvailableForPlacement:placement] should be_truthy;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
 
             it(@"does not have an ad for a different placement index", ^{
                 [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:YES];
                 placement.adIndex = 2;
-                [cache isAdAvailableForPlacement:placement] should be_falsy;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_falsy;
             });
         });
 
         describe(@"when not initializing at the placement index", ^{
             it(@"has an ad ready for the placement index that cached it", ^{
                 [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:NO];
-                [cache isAdAvailableForPlacement:placement] should be_truthy;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
 
             it(@"has an ad for a different placement index", ^{
                 [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:NO];
                 placement.adIndex = 2;
-                [cache isAdAvailableForPlacement:placement] should be_truthy;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
         });
     });
@@ -224,25 +224,25 @@ describe(@"STRAdCache", ^{
             it(@"returns NO if no ad has been fetched", ^{
                 STRAdPlacement *nonExistantPlacement = [[STRAdPlacement alloc] init];
                 nonExistantPlacement.placementKey = @"pkey-nonexistant";
-                [cache isAdAvailableForPlacement:nonExistantPlacement] should be_falsy;
+                [cache isAdAvailableForPlacement:nonExistantPlacement AndInitializeAd:YES] should be_falsy;
             });
 
             it(@"returns YES if the saved ad was fetched more than 2 minutes ago", ^{
-                [cache isAdAvailableForPlacement:expiredPlacement] should be_truthy;
+                [cache isAdAvailableForPlacement:expiredPlacement AndInitializeAd:YES] should be_truthy;
             });
 
             it(@"returns YES if the ad is currently on screen", ^{
-                [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
+                [cache isAdAvailableForPlacement:recentPlacement AndInitializeAd:YES] should be_truthy;
             });
 
             it(@"returns YES if the ad is not older than 120 seconds", ^{
                 recentPlacement.adView stub_method(@selector(percentVisible)).again().and_return(0.0);
-                [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
+                [cache isAdAvailableForPlacement:recentPlacement AndInitializeAd:YES] should be_truthy;
             });
 
             it(@"doesn't blow up if the adView is nil", ^{
                 recentPlacement.adView = nil;
-                [cache isAdAvailableForPlacement:recentPlacement] should be_truthy;
+                [cache isAdAvailableForPlacement:recentPlacement AndInitializeAd:YES] should be_truthy;
             });
         });
     });
@@ -314,7 +314,7 @@ describe(@"STRAdCache", ^{
         describe(@"when ads are assigned", ^{
             beforeEach(^{
                 placement.adIndex = 0;
-                [cache isAdAvailableForPlacement:placement] should be_truthy;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
 
             context(@"when no ads are expired", ^{
@@ -326,7 +326,7 @@ describe(@"STRAdCache", ^{
             context(@"when an ad is expired", ^{
                 beforeEach(^{
                     placement.adIndex = 1;
-                    [cache isAdAvailableForPlacement:placement] should be_truthy;
+                    [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
 
                     assignedAd1.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:100];
 

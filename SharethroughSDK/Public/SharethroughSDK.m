@@ -84,7 +84,7 @@
     placement.placementKey = placementKey;
     placement.adIndex = index;
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
-    return [adCache isAdAvailableForPlacement:placement];
+    return [adCache isAdAvailableForPlacement:placement AndInitializeAd:NO];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view

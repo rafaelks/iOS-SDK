@@ -39,7 +39,7 @@ describe(@"STRIndexPathDelegateProxy UICollectionViewDelegate", ^{
         beforeEach(^{
             fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
             fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
-            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
 
             adIndexPath = [NSIndexPath indexPathForItem:1 inSection:0];
             trueIndexPath = [NSIndexPath indexPathForItem:2 inSection:0];

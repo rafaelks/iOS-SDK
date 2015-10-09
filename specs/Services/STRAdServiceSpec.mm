@@ -81,7 +81,7 @@ describe(@"STRAdService", ^{
 
             beforeEach(^{
                 ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
                 adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(NO);
 
@@ -110,7 +110,7 @@ describe(@"STRAdService", ^{
             
             beforeEach(^{
                 ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
                 adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
                 
@@ -141,7 +141,7 @@ describe(@"STRAdService", ^{
                 ad = nice_fake_for([STRAdvertisement class]);
 
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
 
                 returnedPromise = [service fetchAdForPlacement:adPlacement];
             });
@@ -189,7 +189,7 @@ describe(@"STRAdService", ^{
         describe(@"when there is a pending ad request", ^{
             beforeEach(^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:));
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
                 adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).and_return(YES);
 
                 returnedPromise = [service fetchAdForPlacement:adPlacement];
@@ -205,7 +205,7 @@ describe(@"STRAdService", ^{
         describe(@"when no ad is cached for the given placement key", ^{
             beforeEach(^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:));
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
 
                 returnedPromise = [service fetchAdForPlacement:adPlacement];
             });
@@ -495,7 +495,7 @@ describe(@"STRAdService", ^{
 
             beforeEach(^{
                 ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
                 adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
 
@@ -527,7 +527,7 @@ describe(@"STRAdService", ^{
                 ad = nice_fake_for([STRAdvertisement class]);
 
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
 
                 returnedPromise = [service fetchAdForPlacement:adPlacement auctionParameterKey:@"creative_key" auctionParameterValue:@"creativeKey"];
             });
@@ -557,7 +557,7 @@ describe(@"STRAdService", ^{
         xdescribe(@"when there is a pending ad request", ^{
             beforeEach(^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:));
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
                 adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).and_return(YES);
 
                 returnedPromise = [service fetchAdForPlacement:adPlacement];
@@ -573,7 +573,7 @@ describe(@"STRAdService", ^{
         xdescribe(@"when no ad is cached for the given placement key", ^{
             beforeEach(^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:));
-                adCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(NO);
+                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
 
                 returnedPromise = [service fetchAdForPlacement:adPlacement];
             });

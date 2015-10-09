@@ -19,7 +19,7 @@ describe(@"STRAdPlacementAdjuster", ^{
     describe(@"When an ad is loaded", ^{
         beforeEach(^{
             fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)5);
-            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).and_return(YES);
+            fakeAdCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
 
             adjuster = [STRAdPlacementAdjuster adjusterInSection:0
                                            articlesBeforeFirstAd:5
@@ -75,7 +75,7 @@ describe(@"STRAdPlacementAdjuster", ^{
             });
 
             it(@"does not exceed the number of rows in the underlying content", ^{
-                fakeAdCache stub_method(@selector(isAdAvailableForPlacement:)).again().and_return(NO);
+                fakeAdCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).again().and_return(NO);
                 [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:11 inSection:0]] should equal([NSIndexPath indexPathForRow:9 inSection:0]);
             });
             
