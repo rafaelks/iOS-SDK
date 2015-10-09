@@ -227,7 +227,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     if ([action isEqualToString:@"hosted-video"]) {
         BOOL force_click_to_play = [creativeJSON[@"force_click_to_play"] boolValue];
         BOOL allowInstantPlay = [placementJSON[@"allowInstantPlay"] boolValue];
-        TLog(@"Force Click To Play: %@, Allow Instant Play: %@", force_click_to_play ? @"YES" : @"NO", allowInstantPlay ? @"YES" : @"NO")
+        TLog(@"Force Click To Play: %@, Allow Instant Play: %@", force_click_to_play ? @"YES" : @"NO", allowInstantPlay ? @"YES" : @"NO");
         if (!force_click_to_play && allowInstantPlay) {
             adClass = [STRAdInstantHostedVideo class];
         }

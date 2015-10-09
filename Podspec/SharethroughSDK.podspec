@@ -35,6 +35,6 @@ Pod::Spec.new do |s|
   s.vendored_frameworks = "SharethroughSDK.framework"
 
   s.requires_arc = true
-  s.frameworks = "MediaPlayer", "AdSupport", "CoreGraphics", "UIKit", "Foundation"
+  s.frameworks = "MediaPlayer", "AdSupport", "CoreGraphics", "UIKit", "Foundation", "AVKit", "AVFoundation", "CoreMedia"
   s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '"$(PODS_ROOT)/SharethroughSDK"' }
 end
