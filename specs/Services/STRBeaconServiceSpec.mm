@@ -623,6 +623,37 @@ describe(@"STRBeaconService", ^{
             restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
         });
     });
+
+    describe(@"-fireVideoViewDurationForAd:withDuration:isSilent:", ^{
+        __block NSDictionary *parameters;
+
+        subjectAction(^{
+            parameters = @{@"pkey": @"placementKey",
+                           @"ckey": @"creativeKey",
+                           @"vkey": @"variantKey",
+                           @"type": @"videoViewDuration",
+                           @"duration" : @"10323.330000",
+                           @"silent": @"true",
+                           @"bwidth": @"200",
+                           @"bheight": @"400",
+                           @"umtime": @"10",
+                           @"session": @"AAAA",
+                           @"uid": @"fakeUUID",
+                           @"ua": @"User Agent",
+                           @"ploc": @"specs",
+                           @"as": @"sig",
+                           @"at": @"type",
+                           @"ap": @"price",
+                           @"arid": @"fake-arid",
+                           @"awid": @"fake-awid",
+                           @"deal_id": @"fake-dealId"};
+            [service fireVideoViewDurationForAd:ad withDuration:10.32333 isSilent:YES];
+        });
+
+        it(@"sends a beacon to the tracking servers", ^{
+            restClient should have_received(@selector(sendBeaconWithParameters:)).with(parameters);
+        });
+    });
 });
 
 SPEC_END

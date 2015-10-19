@@ -28,5 +28,6 @@
 
 - (void)fireSilentAutoPlayDurationForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration;
 - (void)fireAutoPlayVideoEngagementForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration;
+- (void)fireVideoViewDurationForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration isSilent:(BOOL)silent;
 
 @end

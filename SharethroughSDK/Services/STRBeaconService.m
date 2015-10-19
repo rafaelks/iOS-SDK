@@ -211,6 +211,18 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
+- (void)fireVideoViewDurationForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration isSilent:(BOOL)silent {
+    TLog(@"");
+    NSDictionary *uniqueParameters = @{@"type": @"videoViewDuration",
+                                       @"duration": [NSString stringWithFormat:@"%f", duration * 1000],
+                                       @"silent": [NSString stringWithFormat:@"%@", silent ? @"true" : @"false"]
+                                       };
+
+    NSMutableDictionary *parameters = [self commonParametersWithAd:ad];
+    [parameters addEntriesFromDictionary:uniqueParameters];
+    [self.restClient sendBeaconWithParameters:parameters];
+}
+
 #pragma mark - Private
 
 - (NSMutableDictionary *)impressionParametersForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
