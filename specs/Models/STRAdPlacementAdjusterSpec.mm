@@ -73,11 +73,6 @@ describe(@"STRAdPlacementAdjuster", ^{
                 [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:6 inSection:0]] should equal([NSIndexPath indexPathForRow:5 inSection:0]);
                 [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:10 inSection:0]] should equal([NSIndexPath indexPathForRow:9 inSection:0]);
             });
-
-            it(@"does not exceed the number of rows in the underlying content", ^{
-                fakeAdCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).again().and_return(NO);
-                [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:11 inSection:0]] should equal([NSIndexPath indexPathForRow:9 inSection:0]);
-            });
             
             it(@"leaves indexPath unchanged for cells in different section", ^{
                 [adjuster indexPathWithoutAds:[NSIndexPath indexPathForRow:2 inSection:1]] should equal([NSIndexPath indexPathForRow:2 inSection:1]);
