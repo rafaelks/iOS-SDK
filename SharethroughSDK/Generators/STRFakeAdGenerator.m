@@ -16,6 +16,7 @@
 #import "STRAppModule.h"
 #import "STRDeferred.h"
 #import "STRAdPlacement.h"
+#import "STRViewTracker.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
@@ -124,6 +125,9 @@ presentingViewController:(UIViewController *)presentingViewController
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFakeAd:)];
     [view addGestureRecognizer:tapRecognizer];
     self.tapRecognizer = tapRecognizer;
+
+    STRViewTracker *viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
+    [viewTracker trackAd:self.advertisement inView:view withViewContorller:presentingViewController];
 
     if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
         [delegate adView:view didFetchAdForPlacementKey:placementKey atIndex:0];
