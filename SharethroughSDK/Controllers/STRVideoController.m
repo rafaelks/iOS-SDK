@@ -79,6 +79,8 @@
     [self.moviePlayerController stop];
 
     [self.timer invalidate];
+
+    [self.beaconService fireVideoViewDurationForAd:self.ad withDuration:self.moviePlayerController.currentPlaybackTime isSilent:NO];
 }
 
 #pragma mark - Private

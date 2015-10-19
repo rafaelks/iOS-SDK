@@ -53,6 +53,10 @@ describe(@"STRVideoController", ^{
         it(@"stops the movie", ^{
             moviePlayerController should have_received(@selector(stop));
         });
+
+        it(@"sends a beacn with the duration", ^{
+            beaconService should have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
+        });
     });
 
     context(@"when the video is a vine", ^{
