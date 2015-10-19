@@ -122,9 +122,6 @@ presentingViewController:(UIViewController *)presentingViewController
 
     self.presentingViewController = presentingViewController;
     [view setNeedsLayout];
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFakeAd:)];
-    [view addGestureRecognizer:tapRecognizer];
-    self.tapRecognizer = tapRecognizer;
 
     STRViewTracker *viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
     [viewTracker trackAd:self.advertisement inView:view withViewContorller:presentingViewController];
@@ -132,14 +129,6 @@ presentingViewController:(UIViewController *)presentingViewController
     if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
         [delegate adView:view didFetchAdForPlacementKey:placementKey atIndex:0];
     }
-}
-
-- (void)tappedFakeAd:(UITapGestureRecognizer *)tapRecognizer {
-    if ([self.placement.delegate respondsToSelector:@selector(adView:userDidEngageAdForPlacementKey:)]) {
-        [self.placement.delegate adView:self.placement.adView userDidEngageAdForPlacementKey:self.placement.placementKey];
-    }
-    UIViewController *engagementViewController = [self.advertisement viewControllerForPresentingOnTap];
-    [self.presentingViewController presentViewController:engagementViewController animated:YES completion:nil];
 }
 
 - (IBAction)tappedFakeDisclosureBtn
