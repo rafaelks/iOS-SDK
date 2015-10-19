@@ -75,9 +75,13 @@
         return indexPath;
     }
     NSIndexPath *indexPathWithOutAds = [self adjustedIndexPath:indexPath includingAds:NO];
-    if (indexPathWithOutAds.row >= self.numContentRows) {
-        indexPathWithOutAds = [NSIndexPath indexPathForRow:self.numContentRows - 1 inSection:indexPath.section];
-    }
+//    This broke Flixster's integration because the number of content rows was not getting updated.
+//    Tried making the value atomic, but did not resolve the issue
+//    if (indexPathWithOutAds.row >= self.numContentRows) {
+//        TLog(@"row %lu is greater than content rows %lu", (long)indexPathWithOutAds.row, (long)self.numberOfAdsInSection);
+//        indexPathWithOutAds = [NSIndexPath indexPathForRow:self.numContentRows - 1 inSection:indexPath.section];
+//    }
+    TLog(@"indexPathWithoutAds:%@", indexPathWithOutAds);
     return indexPathWithOutAds;
 }
 
