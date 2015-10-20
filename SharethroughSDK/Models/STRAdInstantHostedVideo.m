@@ -49,6 +49,7 @@
 - (id)initWithInjector:(STRInjector *)injector {
     if (self = [super initWithInjector:injector]) {
         self.avPlayer = [self.injector getInstance:[AVQueuePlayer class]];
+        [self.avPlayer addObserver:self forKeyPath:@"rate" options:NSKeyValueObservingOptionNew context:nil];
         self.beforeEngagement = YES;
     }
     return self;
@@ -57,6 +58,7 @@
 - (void)dealloc {
     [self.avPlayer removeTimeObserver:self.silentPlayTimer];
     [self.avPlayer removeTimeObserver:self.quartileTimer];
+    [self.avPlayer removeObserver:self forKeyPath:@"rate"];
 }
 
 - (void)setMediaURL:(NSURL *)mediaURL {
@@ -113,7 +115,9 @@
 
 - (BOOL)adVisibleInView:(UIView *)view {
     if (self.beforeEngagement) {
-        [self.avPlayer play];
+        if (self.avPlayer.rate == 0.0) {
+            [self.avPlayer play];
+        }
         return YES;
     }
     return NO;
@@ -175,6 +179,13 @@
 
             [blockBeconService fireVideoCompletionForAd:blockSelf completionPercent:completionPercent];
         }];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (self.avPlayer.rate == 0.0) {
+        STRBeaconService *beaconService = [self.injector getInstance:[STRBeaconService class]];
+        [beaconService fireVideoViewDurationForAd:self withDuration:CMTimeGetSeconds([self.avPlayer currentTime]) isSilent:self.avPlayer.muted];
     }
 }
 @end

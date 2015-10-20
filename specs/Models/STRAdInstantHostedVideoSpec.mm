@@ -36,6 +36,10 @@ describe(@"STRADInstantHostedVideo", ^{
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
     });
 
+    it(@"adds a kvo for rate", ^{
+        fakeQueuePlayer should have_received(@selector(addObserver:forKeyPath:options:context:));
+    });
+
     xdescribe(@"-dealloc", ^{
         it(@"removes time observers", ^{
             //ARC doesn't allow a direct call to dealloc
@@ -143,6 +147,20 @@ describe(@"STRADInstantHostedVideo", ^{
         it(@"pauses the player", ^{
             [ad adNotVisibleInView:nil];
             fakeQueuePlayer should have_received(@selector(pause));
+        });
+    });
+
+    describe(@"-observeValueForKeyPath:", ^{
+        it(@"fires a beacon if the video is paused", ^{
+            fakeQueuePlayer.rate = 0.0;
+            [ad observeValueForKeyPath:@"rate" ofObject:nil change:nil context:nil];
+            fakeBeaconService should have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
+        });
+
+        it(@"doesn't fire a beacon if the video is paused", ^{
+            fakeQueuePlayer.rate = 1.0;
+            [ad observeValueForKeyPath:@"rate" ofObject:nil change:nil context:nil];
+            fakeBeaconService should_not have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
         });
     });
 });

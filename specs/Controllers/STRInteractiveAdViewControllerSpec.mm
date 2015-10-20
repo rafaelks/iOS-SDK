@@ -248,7 +248,7 @@ describe(@"STRInteractiveAdViewController", ^{
         });
     });
 
-    describe(@"when the user taps the share button on an iPhone", ^{
+    xdescribe(@"when the user taps the share button on an iPhone", ^{
         __block UIActivityViewController *activityController;
         beforeEach(^{
             ad = [STRAdFixtures youTubeAd];
@@ -286,7 +286,7 @@ describe(@"STRInteractiveAdViewController", ^{
         });
     });
 
-    describe(@"when the user taps the share button on an iPad", ^{
+    xdescribe(@"when the user taps the share button on an iPad", ^{
         beforeEach(^{
             ad = [STRAdFixtures youTubeAd];
             setUpController();
