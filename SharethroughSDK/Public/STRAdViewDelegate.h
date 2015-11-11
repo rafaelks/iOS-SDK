@@ -24,7 +24,7 @@
  *  @param adView       View in which the ad was placed.
  *  @param placementKey Placement key used to fetch this ad.
  */
-- (void)adView:(id<STRAdView>)adView didFetchAdForPlacementKey:(NSString *)placementKey atIndex:(NSInteger)adIndex;
+- (void)adView:(id<STRAdView>)adView didFetchAd:(STRAdvertisement*)ad ForPlacementKey:(NSString *)placementKey atIndex:(NSInteger)adIndex;
 
 /**
  *  Delegate is notified of unsuccessful ad fetch and display.

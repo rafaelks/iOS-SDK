@@ -62,6 +62,6 @@ extern NSString *STRArticleAd;
 - (UIImageView *)platformLogoForWidth:(CGFloat)width;
 
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController;
-- (void)unregisterView:(UIView *)view;
++ (void)unregisterView:(UIView *)view;
 
 @end

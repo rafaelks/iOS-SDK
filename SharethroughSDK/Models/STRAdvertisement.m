@@ -61,7 +61,7 @@ NSString *STRArticleAd = @"article";
     [viewTracker trackAd:self inView:view withViewContorller:viewController];
 }
 
-- (void)unregisterView:(UIView *)view {
++ (void)unregisterView:(UIView *)view {
     [STRViewTracker unregisterView:view];
 }
 

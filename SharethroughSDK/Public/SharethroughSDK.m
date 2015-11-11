@@ -87,6 +87,19 @@
     return [adCache isAdAvailableForPlacement:placement];
 }
 
+- (STRAdvertisement *)AdForPlacement:(NSString *)placementKey atIndex:(NSInteger)index {
+    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
+    STRAdPlacement *placement = [[STRAdPlacement alloc] init];
+    placement.placementKey = placementKey;
+    placement.adIndex = index;
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    if ([adCache isAdAvailableForPlacement:placement]) {
+        return [adCache fetchCachedAdForPlacement:placement];
+    } else {
+        return nil;
+    }
+}
+
 - (void)placeAdInView:(UIView<STRAdView> *)view
          placementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController

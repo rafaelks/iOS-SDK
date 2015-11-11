@@ -93,8 +93,8 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     STRViewTracker *viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
     [viewTracker trackAd:ad inView:placement.adView withViewContorller:placement.presentingViewController];
 
-    if ([placement.delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
-        [placement.delegate adView:placement.adView didFetchAdForPlacementKey:placement.placementKey atIndex:placement.adIndex];
+    if ([placement.delegate respondsToSelector:@selector(adView:didFetchAd:ForPlacementKey:atIndex:)]) {
+        [placement.delegate adView:placement.adView didFetchAd:ad ForPlacementKey:placement.placementKey atIndex:placement.adIndex];
     }
 }
 

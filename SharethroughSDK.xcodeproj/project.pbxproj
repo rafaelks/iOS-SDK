@@ -361,6 +361,7 @@
 		B2B963691B0F9E8600404578 /* SharethroughSDK.h in Copy DFP Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		B2B9636B1B0F9E8600404578 /* SharethroughSDK-Info.plist in Copy DFP Resource Files */ = {isa = PBXBuildFile; fileRef = E8DF883519A279F200871FD9 /* SharethroughSDK-Info.plist */; };
 		B2BCDAF01B2749A900BF50D2 /* STRViewTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */; };
+		B2C25B0B1BF3A3C80031969A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2C25B0A1BF3A3C80031969A /* MediaPlayer.framework */; };
 		B2D5CDC31B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
 		B2D5CDC41B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
 		B2D5CDC51B41EDF40092C3D8 /* STRAdArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */; };
@@ -829,6 +830,7 @@
 		B2B963121B0F9AFD00404578 /* libSharethrough-SDK+DFP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK+DFP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B963531B0F9D0B00404578 /* libSharethrough-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSharethrough-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BCDAEF1B2749A900BF50D2 /* STRViewTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRViewTracker.mm; sourceTree = "<group>"; };
+		B2C25B0A1BF3A3C80031969A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		B2C770571B9745E100906A91 /* STRIneractiveChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRIneractiveChild.h; sourceTree = "<group>"; };
 		B2D5CDC11B41EDF40092C3D8 /* STRAdArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdArticle.h; sourceTree = "<group>"; };
 		B2D5CDC21B41EDF40092C3D8 /* STRAdArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdArticle.m; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2C25B0B1BF3A3C80031969A /* MediaPlayer.framework in Frameworks */,
 				AE131E081898622800891A93 /* AdSupport.framework in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
 				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
@@ -1265,6 +1268,7 @@
 		AE8ED3E51885ADF00004AB32 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2C25B0A1BF3A3C80031969A /* MediaPlayer.framework */,
 				AE46CE6E189849B00096BDE9 /* AdSupport.framework */,
 				AE8ED3E61885ADF00004AB32 /* Foundation.framework */,
 				AE8ED3F41885ADF00004AB32 /* XCTest.framework */,
@@ -1411,6 +1415,7 @@
 				AE22467F1886138F00626A29 /* Frameworks */,
 				AE2246801886138F00626A29 /* Resources */,
 				DFD063E97A87337647355DD4 /* Copy Pods Resources */,
+				F3CA8634732851B21CA458F8 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1891,6 +1896,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "STATIC_LIB_TARGET=\"Sharethrough-SDK+DFP\" &&\nDFP_PRODUCT_NAME=\"${PRODUCT_NAME}+DFP\" &&\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${STATIC_LIB_TARGET}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${STATIC_LIB_TARGET}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${DFP_PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${DFP_PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${DFP_PRODUCT_NAME}\" \"${FRAMEWORK}/${DFP_PRODUCT_NAME}\"";
+		};
+		F3CA8634732851B21CA458F8 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-specs/Pods-specs-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 

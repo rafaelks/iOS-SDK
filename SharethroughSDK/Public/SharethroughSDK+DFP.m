@@ -71,8 +71,8 @@
 
     [deferred.promise then:^id(id value) {
         TLog(@"Prefetch succeeded.");
-        if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
-            [delegate adView:nil didFetchAdForPlacementKey:placementKey atIndex:0];
+        if ([delegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
+            [delegate didPrefetchAdvertisement:(STRAdvertisement *)value];
         }
         return value;
     } error:^id(NSError *error) {
@@ -94,6 +94,19 @@
     placement.adIndex = index;
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
     return [adCache isAdAvailableForPlacement:placement];
+}
+
+- (STRAdvertisement *)AdForPlacement:(NSString *)placementKey atIndex:(NSInteger)index {
+    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
+    STRAdPlacement *placement = [[STRAdPlacement alloc] init];
+    placement.placementKey = placementKey;
+    placement.adIndex = index;
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    if ([adCache isAdAvailableForPlacement:placement]) {
+        return [adCache fetchCachedAdForPlacement:placement];
+    } else {
+        return nil;
+    }
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view
