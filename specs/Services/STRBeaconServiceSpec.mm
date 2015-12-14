@@ -376,7 +376,7 @@ describe(@"STRBeaconService", ^{
                 it(@"calls rest client with subsituted timestamp and full url", ^{
                     [service fireThirdPartyBeacons:@[@"//yahoo.com/beacon?=[timestamp]"] forPlacementWithStatus:@"live"];
 
-                    NSURL *targetURL = [NSURL URLWithString:@"https://yahoo.com/beacon?=10"];
+                    NSURL *targetURL = [NSURL URLWithString:@"http://yahoo.com/beacon?=10"];
                     restClient should have_received(@selector(sendBeaconWithURL:)).with(targetURL);
                 });
             });
@@ -385,8 +385,7 @@ describe(@"STRBeaconService", ^{
                 it(@"calls rest client with subsituted timestamp and full url", ^{
                     [service fireThirdPartyBeacons:@[@"//yahoo.com/beacon?=[timestamp]"] forPlacementWithStatus:@"pre-live"];
 
-                    NSURL *targetURL = [NSURL URLWithString:@"https://yahoo.com/beacon?=10"];
-                    restClient should_not have_received(@selector(sendBeaconWithURL:)).with(targetURL);
+                    restClient should_not have_received(@selector(sendBeaconWithURL:));
                 });
             });
         });
