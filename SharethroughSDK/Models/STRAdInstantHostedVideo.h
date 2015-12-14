@@ -12,4 +12,7 @@
 
 @property (nonatomic, readonly) BOOL beforeEngagement;
 
+#pragma mark - Private, exposed only for testing
+- (void)setupSilentPlayTimer;
+
 @end
