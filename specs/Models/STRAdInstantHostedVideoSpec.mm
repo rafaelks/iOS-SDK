@@ -157,7 +157,7 @@ describe(@"STRADInstantHostedVideo", ^{
             fakeBeaconService should have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
         });
 
-        it(@"doesn't fire a beacon if the video is paused", ^{
+        it(@"doesn't fire a beacon if the video is playing", ^{
             fakeQueuePlayer.rate = 1.0;
             [ad observeValueForKeyPath:@"rate" ofObject:nil change:nil context:nil];
             fakeBeaconService should_not have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
