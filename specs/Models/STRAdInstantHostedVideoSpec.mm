@@ -204,6 +204,38 @@ describe(@"STRADInstantHostedVideo", ^{
             });
         });
     });
+
+    describe(@"-setupQuartileTimer", ^{
+        __block AVPlayerItem *fakeAVItem;
+        __block AVAsset *fakeAsset;
+        beforeEach(^{
+            fakeAVItem = nice_fake_for([AVPlayerItem class]);
+            fakeAsset = nice_fake_for([AVAsset class]);
+            fakeQueuePlayer stub_method(@selector(currentItem)).and_return(fakeAVItem);
+            fakeAsset stub_method(@selector(duration)).and_return(CMTimeMake(40, 1));
+        });
+
+        it(@"sets up a boundary time observer", ^{
+            [ad setupQuartileTimer];
+            fakeQueuePlayer should have_received(@selector(addBoundaryTimeObserverForTimes:queue:usingBlock:));
+        });
+
+        describe(@"when the boundary time block is called", ^{
+            beforeEach(^{
+                fakeQueuePlayer stub_method(@selector(addBoundaryTimeObserverForTimes:queue:usingBlock:)).and_do(^(NSInvocation *invocation) {
+                    void (^boundaryTimeBlock)() = nil;
+                    [invocation getArgument:&boundaryTimeBlock atIndex:4];
+                    boundaryTimeBlock();
+                });
+            });
+
+            it(@"fires a silent auto play duration", ^{
+                fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(10, 1));
+                [ad setupQuartileTimer];
+                fakeBeaconService should have_received(@selector(fireVideoCompletionForAd:completionPercent:));
+            });
+        });
+    });
 });
 
 SPEC_END

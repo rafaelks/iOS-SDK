@@ -14,5 +14,6 @@
 
 #pragma mark - Private, exposed only for testing
 - (void)setupSilentPlayTimer;
+- (void)setupQuartileTimer;
 
 @end
