@@ -264,6 +264,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         ad.thirdPartyBeaconsForClick = creativeJSON[@"beacons"][@"click"];
         ad.thirdPartyBeaconsForPlay = creativeJSON[@"beacons"][@"play"];
         ad.thirdPartyBeaconsForSilentPlay = creativeJSON[@"beacons"][@"silent_play"];
+        ad.thirdPartyBeaconsForTenSecondSilentPlay = creativeJSON[@"beacons"][@"ten_second_silent_play"];
         ad.action = creativeJSON[@"action"];
         ad.signature = creativeWrapperJSON[@"signature"];
         ad.auctionPrice = creativeWrapperJSON[@"price"];

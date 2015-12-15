@@ -147,6 +147,8 @@
             [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:seconds * 1000];
             if (floorf(seconds) == 3) {
                 [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForSilentPlay forPlacementWithStatus:blockSelf.placementStatus];
+            } else if (floorf(seconds) == 10) {
+                [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForTenSecondSilentPlay forPlacementWithStatus:blockSelf.placementStatus];
             }
         }];
     }

@@ -34,6 +34,9 @@ describe(@"STRADInstantHostedVideo", ^{
 
         ad = [[STRAdInstantHostedVideo alloc] initWithInjector:injector];
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
+        ad.thirdPartyBeaconsForSilentPlay = @[@"//fake.co/3sec"];
+        ad.thirdPartyBeaconsForTenSecondSilentPlay = @[@"//fake.co/10sec"];
+        ad.placementStatus = @"live";
     });
 
     it(@"adds a kvo for rate", ^{
@@ -157,10 +160,80 @@ describe(@"STRADInstantHostedVideo", ^{
             fakeBeaconService should have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
         });
 
-        it(@"doesn't fire a beacon if the video is paused", ^{
+        it(@"doesn't fire a beacon if the video is playing", ^{
             fakeQueuePlayer.rate = 1.0;
             [ad observeValueForKeyPath:@"rate" ofObject:nil change:nil context:nil];
             fakeBeaconService should_not have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
+        });
+    });
+
+    describe(@"-setupSilentPlayTimer", ^{
+        it(@"sets up a boundary time observer", ^{
+            [ad setupSilentPlayTimer];
+            fakeQueuePlayer should have_received(@selector(addBoundaryTimeObserverForTimes:queue:usingBlock:));
+        });
+
+        describe(@"when the boundary time block is called", ^{
+            beforeEach(^{
+                fakeQueuePlayer stub_method(@selector(addBoundaryTimeObserverForTimes:queue:usingBlock:)).and_do(^(NSInvocation *invocation) {
+                    void (^boundaryTimeBlock)() = nil;
+                    [invocation getArgument:&boundaryTimeBlock atIndex:4];
+                    boundaryTimeBlock();
+                });
+            });
+
+            it(@"fires a silent auto play duration", ^{
+                fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(2, 1));
+                [ad setupSilentPlayTimer];
+                fakeBeaconService should have_received(@selector(fireSilentAutoPlayDurationForAd:withDuration:));
+                fakeBeaconService should_not have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:));
+            });
+
+            it(@"calls the beacon service if it's 3 seconds", ^{
+                fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(3, 1));
+                [ad setupSilentPlayTimer];
+                fakeBeaconService should have_received(@selector(fireSilentAutoPlayDurationForAd:withDuration:));
+                fakeBeaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//fake.co/3sec"], @"live");
+            });
+
+            it(@"calls the beacon service if it's 10 seconds", ^{
+                fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(10, 1));
+                [ad setupSilentPlayTimer];
+                fakeBeaconService should have_received(@selector(fireSilentAutoPlayDurationForAd:withDuration:));
+                fakeBeaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//fake.co/10sec"], @"live");
+            });
+        });
+    });
+
+    describe(@"-setupQuartileTimer", ^{
+        __block AVPlayerItem *fakeAVItem;
+        __block AVAsset *fakeAsset;
+        beforeEach(^{
+            fakeAVItem = nice_fake_for([AVPlayerItem class]);
+            fakeAsset = nice_fake_for([AVAsset class]);
+            fakeQueuePlayer stub_method(@selector(currentItem)).and_return(fakeAVItem);
+            fakeAsset stub_method(@selector(duration)).and_return(CMTimeMake(40, 1));
+        });
+
+        it(@"sets up a boundary time observer", ^{
+            [ad setupQuartileTimer];
+            fakeQueuePlayer should have_received(@selector(addBoundaryTimeObserverForTimes:queue:usingBlock:));
+        });
+
+        describe(@"when the boundary time block is called", ^{
+            beforeEach(^{
+                fakeQueuePlayer stub_method(@selector(addBoundaryTimeObserverForTimes:queue:usingBlock:)).and_do(^(NSInvocation *invocation) {
+                    void (^boundaryTimeBlock)() = nil;
+                    [invocation getArgument:&boundaryTimeBlock atIndex:4];
+                    boundaryTimeBlock();
+                });
+            });
+
+            it(@"fires a silent auto play duration", ^{
+                fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(10, 1));
+                [ad setupQuartileTimer];
+                fakeBeaconService should have_received(@selector(fireVideoCompletionForAd:completionPercent:));
+            });
         });
     });
 });
