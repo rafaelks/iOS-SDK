@@ -100,6 +100,24 @@
     }
 }
 
+- (NSInteger)totalNumberOfAdsAvailableForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placementKey];
+}
+
+- (NSInteger)unassignedNumberOfAdsAvailableForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache numberOfUnassignedAdsInQueueForPlacementKey:placementKey];
+}
+
+- (void)clearCachedAdsForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    [adCache clearAssignedAdsForPlacement:placementKey];
+}
+
 - (void)placeAdInView:(UIView<STRAdView> *)view
          placementKey:(NSString *)placementKey
 presentingViewController:(UIViewController *)presentingViewController

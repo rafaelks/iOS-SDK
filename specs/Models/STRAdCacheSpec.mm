@@ -351,6 +351,76 @@ describe(@"STRAdCache", ^{
         });
     });
 
+    describe(@"-numberOfUnassignedAdsInQueueForPlacementKey", ^{
+        __block STRAdPlacement *placement;
+        __block STRAdvertisement *cachedAd1, *cachedAd2, *assignedAd1, *assignedAd2;
+
+        beforeEach(^{
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"fakePlacementKey";
+            cachedAd1 = [[STRAdvertisement alloc] init];
+            cachedAd2 = [[STRAdvertisement alloc] init];
+            assignedAd1 = [[STRAdvertisement alloc] init];
+            assignedAd2 = [[STRAdvertisement alloc] init];
+
+            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andInitializeAtIndex:NO];
+        });
+
+        describe(@"when no ads are assigned", ^{
+            it(@"returns the number of ads cached", ^{
+                [cache numberOfUnassignedAdsInQueueForPlacementKey:placement.placementKey] should equal(4);
+            });
+        });
+
+        describe(@"when some ads are assigned", ^{
+            beforeEach(^{
+                placement.adIndex = 0;
+                [cache isAdAvailableForPlacement:placement];
+            });
+
+            it(@"returns the number of unassigned ads", ^{
+                [cache numberOfUnassignedAdsInQueueForPlacementKey:placement.placementKey] should equal(3);
+            });
+        });
+    });
+
+    describe(@"-clearCachedAdsForPlacement", ^{
+        __block STRAdPlacement *placement;
+        __block STRAdvertisement *cachedAd1, *cachedAd2, *assignedAd1, *assignedAd2;
+
+        beforeEach(^{
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"fakePlacementKey";
+            cachedAd1 = [[STRAdvertisement alloc] init];
+            cachedAd2 = [[STRAdvertisement alloc] init];
+            assignedAd1 = [[STRAdvertisement alloc] init];
+            assignedAd2 = [[STRAdvertisement alloc] init];
+
+            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andInitializeAtIndex:NO];
+        });
+
+        describe(@"when no ads are assigned", ^{
+            it(@"has no effect", ^{
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placement.placementKey] should equal(4);
+                [cache clearAssignedAdsForPlacement:placement.placementKey];
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placement.placementKey] should equal(4);
+            });
+        });
+
+        describe(@"when ads are assigned", ^{
+            beforeEach(^{
+                placement.adIndex = 0;
+                [cache isAdAvailableForPlacement:placement];
+            });
+
+            it(@"removes all the assigned ads", ^{
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placement.placementKey] should equal(4);
+                [cache clearAssignedAdsForPlacement:placement.placementKey];
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placement.placementKey] should equal(3);
+            });
+        });
+    });
+
     describe(@"-shouldBeginFetchForPlacement:", ^{
         __block STRAdPlacement *placement;
         beforeEach(^{

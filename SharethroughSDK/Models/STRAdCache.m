@@ -177,11 +177,23 @@
     return effectiveCount;
 }
 
+- (NSInteger)numberOfUnassignedAdsInQueueForPlacementKey:(NSString *)placementKey {
+    NSMutableArray *queuedCreatives = [self.cachedCreatives objectForKey:placementKey];
+    NSUInteger queuedCount = [queuedCreatives count];
+    TLog(@"pkey:%@, queuedCount:%tu", placementKey, queuedCount);
+    return queuedCount;
+}
+
 - (NSArray *)assignedAdIndixesForPlacementKey:(NSString *)placementKey {
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
     NSArray *assignedKeys = [indexToCreativeMap allKeys];
     TLog(@"pkey:%@ assignedKeys:%@",placementKey, assignedKeys);
     return assignedKeys;
+}
+
+- (void)clearAssignedAdsForPlacement:(NSString *)placementKey {
+    NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
+    [indexToCreativeMap removeAllObjects];
 }
 
 - (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey {
