@@ -140,6 +140,5 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
 
 - (void)closedInteractiveAdView:(STRInteractiveAdViewController *)adController {
     TLog(@"pkey:%@ ckey:%@",self.ad.placementKey, self.ad.creativeKey);
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 @end

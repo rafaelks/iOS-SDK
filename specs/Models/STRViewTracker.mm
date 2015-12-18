@@ -147,7 +147,7 @@ describe(@"STRViewTracker", ^{
                         });
 
                         it(@"fires a third party beacon", ^{
-                            beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus::)).with(@[@"//google.com?fakeParam=[timestamp]"], @"live");
+                            beaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//google.com?fakeParam=[timestamp]"], @"live");
                         });
 
                         it(@"invalidates its timer", ^{
@@ -236,12 +236,6 @@ describe(@"STRViewTracker", ^{
                     interactiveAdController.delegate should be_same_instance_as(viewTracker);
                 });
 
-                it(@"dismisses the interactive ad controller when told", ^{
-                    [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                    presentingViewController.presentedViewController should be_nil;
-                });
-
                 it(@"fires off a youtube play beacon", ^{
                     beaconService should have_received(@selector(fireVideoPlayEvent:adSize:)).with(ad, CGSizeMake(100, 100));
                 });
@@ -272,12 +266,6 @@ describe(@"STRViewTracker", ^{
                         interactiveAdController should be_instance_of([STRInteractiveAdViewController class]);
                         interactiveAdController.ad should be_same_instance_as(ad);
                         interactiveAdController.delegate should be_same_instance_as(viewTracker);
-                    });
-
-                    it(@"dismisses the interactive ad controller when told", ^{
-                        [interactiveAdController.delegate closedInteractiveAdView:interactiveAdController];
-
-                        presentingViewController.presentedViewController should be_nil;
                     });
 
                     it(@"fires off a clickout click beacon", ^{
