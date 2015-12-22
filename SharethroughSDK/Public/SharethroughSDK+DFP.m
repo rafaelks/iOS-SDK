@@ -64,21 +64,22 @@
     STRDeferred *deferred = [STRDeferred defer];
 
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] init];
-    adPlacement.presentingViewController = [UIViewController new];
     adPlacement.placementKey = placementKey;
     adPlacement.delegate = delegate;
     adPlacement.DFPDeferred = deferred;
 
+    __weak id<STRAdViewDelegate>weakDelegate = delegate;
+
     [deferred.promise then:^id(id value) {
         TLog(@"Prefetch succeeded.");
-        if ([delegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
-            [delegate didPrefetchAdvertisement:(STRAdvertisement *)value];
+        if ([weakDelegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
+            [weakDelegate didPrefetchAdvertisement:(STRAdvertisement *)value];
         }
         return value;
     } error:^id(NSError *error) {
         TLog(@"Prefetch failed.");
-        if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
-            [delegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
+        if ([weakDelegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+            [weakDelegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
         }
         return error;
     }];

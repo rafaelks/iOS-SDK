@@ -61,18 +61,20 @@
     adPlacement.placementKey = placementKey;
     adPlacement.delegate = delegate;
 
+    __weak id<STRAdViewDelegate>weakDelegate = delegate;
+
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     STRPromise *adPromise = [generator prefetchAdForPlacement:adPlacement];
     [adPromise then:^id(id value) {
         TLog(@"Prefetch succeeded.");
-        if ([delegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
-            [delegate didPrefetchAdvertisement:(STRAdvertisement *)value];
+        if ([weakDelegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
+            [weakDelegate didPrefetchAdvertisement:(STRAdvertisement *)value];
         }
         return nil;
     } error:^id(NSError *error) {
         TLog(@"Prefetch failed.");
-        if ([delegate respondsToSelector:@selector(didFailToPrefetchForPlacementKey:)]) {
-            [delegate didFailToPrefetchForPlacementKey:placementKey];
+        if ([weakDelegate respondsToSelector:@selector(didFailToPrefetchForPlacementKey:)]) {
+            [weakDelegate didFailToPrefetchForPlacementKey:placementKey];
         }
         return nil;
     }];

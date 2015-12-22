@@ -34,6 +34,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 @property (nonatomic, strong) NSMutableDictionary *DFPPathCache;
 @property (nonatomic, strong) GADBannerView *bannerView;
 @property (nonatomic, strong) GADCustomEventExtras *extras;
+@property (nonatomic, strong) UIViewController *bannerRootVC;
 
 @end
 
@@ -52,6 +53,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         self.bannerView = bannerView;
         self.extras = [[GADCustomEventExtras alloc] init];
         self.bannerView.delegate = self;
+        self.bannerRootVC = [UIViewController new];
     }
     return self;
 }
@@ -132,7 +134,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 - (void)initializeDFPRrequesForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
     self.bannerView.adUnitID = placement.DFPPath;
-    self.bannerView.rootViewController = placement.presentingViewController;
+    self.bannerView.rootViewController = self.bannerRootVC;
 
     [placement.adView addSubview:self.bannerView];
 
