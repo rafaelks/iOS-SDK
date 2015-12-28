@@ -61,12 +61,14 @@
     adPlacement.placementKey = placementKey;
     adPlacement.delegate = delegate;
 
+    __weak id<STRAdViewDelegate>weakDelegate = delegate;
+
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
     STRPromise *adPromise = [generator prefetchAdForPlacement:adPlacement];
     [adPromise then:^id(id value) {
         TLog(@"Prefetch succeeded.");
-        if ([delegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
-            [delegate didPrefetchAdvertisement:(STRAdvertisement *)value];
+        if ([weakDelegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
+            [weakDelegate didPrefetchAdvertisement:(STRAdvertisement *)value];
         }
         return nil;
     } error:^id(NSError *error) {
@@ -85,6 +87,25 @@
     placement.adIndex = index;
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
     return [adCache isAdAvailableForPlacement:placement AndInitializeAd:NO];
+}
+
+
+- (NSInteger)totalNumberOfAdsAvailableForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placementKey];
+}
+
+- (NSInteger)unassignedNumberOfAdsAvailableForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache numberOfUnassignedAdsInQueueForPlacementKey:placementKey];
+}
+
+- (void)clearCachedAdsForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    [adCache clearAssignedAdsForPlacement:placementKey];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view

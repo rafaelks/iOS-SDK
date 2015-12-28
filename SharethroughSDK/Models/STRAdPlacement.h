@@ -24,13 +24,13 @@
                    DFPDeferred:(STRDeferred *)deferred;
 
 @property (strong, nonatomic) UIView<STRAdView> *adView;
-@property (strong, nonatomic) NSString *placementKey;
-@property (strong, nonatomic) UIViewController *presentingViewController;
-@property (strong, nonatomic) id<STRAdViewDelegate> delegate;
+@property (copy, nonatomic) NSString *placementKey;
+@property (weak, nonatomic) UIViewController *presentingViewController;
+@property (weak, nonatomic) id<STRAdViewDelegate> delegate;
 @property (nonatomic, assign) NSInteger adIndex;
 
 //Optional DFP related properties
-@property (strong, nonatomic) NSString *DFPPath;
+@property (copy, nonatomic) NSString *DFPPath;
 @property (strong, nonatomic) STRDeferred *DFPDeferred;
 @property (nonatomic, assign) BOOL isDirectSold;
 
@@ -38,7 +38,7 @@
 
 @interface STRAdPlacementInfiniteScrollFields : NSObject
 
-@property (strong, nonatomic) NSString *placementKey;
+@property (copy, nonatomic) NSString *placementKey;
 @property (assign, nonatomic) NSUInteger articlesBeforeFirstAd;
 @property (assign, nonatomic) NSUInteger articlesBetweenAds;
 

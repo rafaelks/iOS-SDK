@@ -30,6 +30,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 @property (nonatomic, strong) STRAdService *adService;
 @property (nonatomic, weak) STRInjector *injector;
 @property (nonatomic, strong) STRRestClient *restClient;
+@property (nonatomic, strong) UIViewController *bannerRootVC;
 
 @property (nonatomic, strong) NSMutableDictionary *DFPPathCache;
 @property (nonatomic, strong) GADBannerView *bannerView;
@@ -47,6 +48,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
         self.adService = adService;
         self.injector = injector;
         self.restClient = restClient;
+        self.bannerRootVC = [UIViewController new];
 
         self.DFPPathCache = [NSMutableDictionary dictionary];
         self.bannerView = bannerView;
@@ -132,7 +134,7 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
 - (void)initializeDFPRrequesForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
     self.bannerView.adUnitID = placement.DFPPath;
-    self.bannerView.rootViewController = placement.presentingViewController;
+    self.bannerView.rootViewController = self.bannerRootVC;
 
     [placement.adView addSubview:self.bannerView];
 

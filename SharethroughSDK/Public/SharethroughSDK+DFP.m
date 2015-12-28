@@ -64,21 +64,22 @@
     STRDeferred *deferred = [STRDeferred defer];
 
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] init];
-    adPlacement.presentingViewController = [UIViewController new];
     adPlacement.placementKey = placementKey;
     adPlacement.delegate = delegate;
     adPlacement.DFPDeferred = deferred;
 
+    __weak id<STRAdViewDelegate>weakDelegate = delegate;
+
     [deferred.promise then:^id(id value) {
         TLog(@"Prefetch succeeded.");
-        if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
-            [delegate adView:nil didFetchAdForPlacementKey:placementKey atIndex:0];
+        if ([weakDelegate respondsToSelector:@selector(didPrefetchAdvertisement:)]) {
+            [weakDelegate didPrefetchAdvertisement:(STRAdvertisement *)value];
         }
         return value;
     } error:^id(NSError *error) {
         TLog(@"Prefetch failed.");
-        if ([delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
-            [delegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
+        if ([weakDelegate respondsToSelector:@selector(didFailToPrefetchForPlacementKey:)]) {
+            [weakDelegate didFailToPrefetchForPlacementKey:placementKey];
         }
         return error;
     }];
@@ -94,6 +95,24 @@
     placement.adIndex = index;
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
     return [adCache isAdAvailableForPlacement:placement AndInitializeAd:NO];
+}
+
+- (NSInteger)numberOfAdsAvailableForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placementKey];
+}
+
+- (NSInteger)unassignedNumberOfAdsAvailableForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    return [adCache numberOfUnassignedAdsInQueueForPlacementKey:placementKey];
+}
+
+- (void)clearCachedAdsForPlacement:(NSString *)placementKey {
+    TLog(@"placementKey: %@", placementKey);
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    [adCache clearAssignedAdsForPlacement:placementKey];
 }
 
 - (void)placeAdInView:(UIView<STRAdView> *)view
