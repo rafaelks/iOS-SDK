@@ -89,6 +89,18 @@
     return [adCache isAdAvailableForPlacement:placement AndInitializeAd:NO];
 }
 
+- (STRAdvertisement *)AdForPlacement:(NSString *)placementKey atIndex:(NSInteger)index {
+    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
+    STRAdPlacement *placement = [[STRAdPlacement alloc] init];
+    placement.placementKey = placementKey;
+    placement.adIndex = index;
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    if ([adCache isAdAvailableForPlacement:placement AndInitializeAd:YES]) {
+        return [adCache fetchCachedAdForPlacement:placement];
+    } else {
+        return nil;
+    }
+}
 
 - (NSInteger)totalNumberOfAdsAvailableForPlacement:(NSString *)placementKey {
     TLog(@"placementKey: %@", placementKey);

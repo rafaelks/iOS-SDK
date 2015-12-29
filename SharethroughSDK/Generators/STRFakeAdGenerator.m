@@ -126,8 +126,8 @@ presentingViewController:(UIViewController *)presentingViewController
     STRViewTracker *viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
     [viewTracker trackAd:self.advertisement inView:view withViewContorller:presentingViewController];
 
-    if ([delegate respondsToSelector:@selector(adView:didFetchAdForPlacementKey:atIndex:)]) {
-        [delegate adView:view didFetchAdForPlacementKey:placementKey atIndex:0];
+    if ([delegate respondsToSelector:@selector(adView:didFetchAd:ForPlacementKey:atIndex:)]) {
+        [delegate adView:view didFetchAd:self.advertisement ForPlacementKey:placementKey atIndex:0];
     }
 }
 

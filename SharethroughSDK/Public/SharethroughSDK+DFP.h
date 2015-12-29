@@ -31,6 +31,14 @@
 - (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate;
 
 /**
+ + This method will return the currently assigned ad if one is available.
+ + It will return nil if no ad is available at this time.
+ + @param placementKey The unique identifier for the ad slot
+ + @param index The index of the ad if there are multiple ads shown using a single placementKey, i.e. infinite scroll. If only ad is shown for the placementKey, pass 0 every time.
+ + */
+- (STRAdvertisement *)AdForPlacement:(NSString *)placementKey atIndex:(NSInteger)index;
+
+/**
  This method can be used to determine if an ad is available.
  @param placementKey The unique identifier for the ad slot
  @param index The index of the ad if there are multiple ads shown using a single placementKey, i.e. infinite scroll. If only ad is shown for the placementKey, pass 0 every time.
