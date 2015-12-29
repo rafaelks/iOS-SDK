@@ -375,7 +375,7 @@ describe(@"STRAdCache", ^{
         describe(@"when some ads are assigned", ^{
             beforeEach(^{
                 placement.adIndex = 0;
-                [cache isAdAvailableForPlacement:placement AndInitializeAd:NO];
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES];
             });
 
             it(@"returns the number of unassigned ads", ^{
@@ -410,7 +410,7 @@ describe(@"STRAdCache", ^{
         describe(@"when ads are assigned", ^{
             beforeEach(^{
                 placement.adIndex = 0;
-                [cache isAdAvailableForPlacement:placement AndInitializeAd:NO];
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES];
             });
 
             it(@"removes all the assigned ads", ^{
