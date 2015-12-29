@@ -27,7 +27,7 @@ describe(@"STRAdCache", ^{
                 [cache setAdCacheTimeoutInSeconds:NSUIntegerMax] should equal(NSUIntegerMax);
             });
         });
-        
+
         describe(@"when the value is < 20", ^{
             it(@"returns the set value", ^{
                 [cache setAdCacheTimeoutInSeconds:19] should equal(20);
@@ -92,7 +92,7 @@ describe(@"STRAdCache", ^{
             recentAd.creativeKey = @"ckey-recentAd";
             recentPlacement = [[STRAdPlacement alloc] init];
             recentPlacement.placementKey = @"pkey-recentAd";
-            
+
             expiredAd = [[STRAdvertisement alloc] init];
             expiredAd.placementKey = @"pkey-expiredAd";
             expiredAd.creativeKey = @"ckey-expiredAd";
@@ -111,7 +111,7 @@ describe(@"STRAdCache", ^{
 
                 [invocation setReturnValue:&date];
             });
-            
+
             [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:YES];
             [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:YES];
         });
@@ -136,20 +136,20 @@ describe(@"STRAdCache", ^{
         __block STRAdvertisement *expiredAd;
         __block STRAdPlacement *recentPlacement;
         __block STRAdPlacement *expiredPlacement;
-        
+
         beforeEach(^{
             recentAd = [[STRAdvertisement alloc] init];
             recentAd.placementKey = @"pkey-recentAd";
             recentAd.creativeKey = @"ckey-recentAd";
             recentPlacement = [[STRAdPlacement alloc] init];
             recentPlacement.placementKey = @"pkey-recentAd";
-            
+
             expiredAd = [[STRAdvertisement alloc] init];
             expiredAd.placementKey = @"pkey-expiredAd";
             expiredAd.creativeKey = @"ckey-expiredAd";
             expiredPlacement = [[STRAdPlacement alloc] init];
             expiredPlacement.placementKey = @"pkey-expiredAd";
-            
+
             dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
                 NSDate *date;
                 if (dateProvider.sent_messages.count == 1) {
@@ -159,22 +159,22 @@ describe(@"STRAdCache", ^{
                 } else {
                     date = [NSDate dateWithTimeIntervalSince1970:10019];
                 }
-                
+
                 [invocation setReturnValue:&date];
             });
-            
+
             [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:NO];
             [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:NO];
         });
-        
+
         it(@"returns nil if no ad exists", ^{
             [cache fetchCachedAdForPlacementKey:@"pkey-nonexistant" CreativeKey:@"ckey-nonexistant"] should be_nil;
         });
-        
+
         it(@"returns the saved ad if the ad was fetched more than 2 minutes ago", ^{
             [cache fetchCachedAdForPlacementKey:expiredPlacement.placementKey CreativeKey:@"ckey-expiredAd"] should equal(expiredAd);
         });
-        
+
         it(@"returns the ad when it exists", ^{
             [cache fetchCachedAdForPlacementKey:recentPlacement.placementKey CreativeKey:@"ckey-recentAd"] should equal(recentAd);
         });
@@ -185,7 +185,7 @@ describe(@"STRAdCache", ^{
         __block STRAdvertisement *expiredAd;
         __block STRAdPlacement *recentPlacement;
         __block STRAdPlacement *expiredPlacement;
-        
+
         describe(@"with the default timeout", ^{
             beforeEach(^{
                 recentAd = [[STRAdvertisement alloc] init];
@@ -216,7 +216,7 @@ describe(@"STRAdCache", ^{
 
                     [invocation setReturnValue:&date];
                 });
-                
+
                 [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:YES];
                 [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:YES];
             });
@@ -351,6 +351,76 @@ describe(@"STRAdCache", ^{
         });
     });
 
+    describe(@"-numberOfUnassignedAdsInQueueForPlacementKey", ^{
+        __block STRAdPlacement *placement;
+        __block STRAdvertisement *cachedAd1, *cachedAd2, *assignedAd1, *assignedAd2;
+
+        beforeEach(^{
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"fakePlacementKey";
+            cachedAd1 = [[STRAdvertisement alloc] init];
+            cachedAd2 = [[STRAdvertisement alloc] init];
+            assignedAd1 = [[STRAdvertisement alloc] init];
+            assignedAd2 = [[STRAdvertisement alloc] init];
+
+            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andInitializeAtIndex:NO];
+        });
+
+        describe(@"when no ads are assigned", ^{
+            it(@"returns the number of ads cached", ^{
+                [cache numberOfUnassignedAdsInQueueForPlacementKey:placement.placementKey] should equal(4);
+            });
+        });
+
+        describe(@"when some ads are assigned", ^{
+            beforeEach(^{
+                placement.adIndex = 0;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES];
+            });
+
+            it(@"returns the number of unassigned ads", ^{
+                [cache numberOfUnassignedAdsInQueueForPlacementKey:placement.placementKey] should equal(3);
+            });
+        });
+    });
+
+    describe(@"-clearCachedAdsForPlacement", ^{
+        __block STRAdPlacement *placement;
+        __block STRAdvertisement *cachedAd1, *cachedAd2, *assignedAd1, *assignedAd2;
+
+        beforeEach(^{
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"fakePlacementKey";
+            cachedAd1 = [[STRAdvertisement alloc] init];
+            cachedAd2 = [[STRAdvertisement alloc] init];
+            assignedAd1 = [[STRAdvertisement alloc] init];
+            assignedAd2 = [[STRAdvertisement alloc] init];
+
+            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andInitializeAtIndex:NO];
+        });
+
+        describe(@"when no ads are assigned", ^{
+            it(@"has no effect", ^{
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placement.placementKey] should equal(4);
+                [cache clearAssignedAdsForPlacement:placement.placementKey];
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placement.placementKey] should equal(4);
+            });
+        });
+
+        describe(@"when ads are assigned", ^{
+            beforeEach(^{
+                placement.adIndex = 0;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES];
+            });
+
+            it(@"removes all the assigned ads", ^{
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placement.placementKey] should equal(4);
+                [cache clearAssignedAdsForPlacement:placement.placementKey];
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placement.placementKey] should equal(3);
+            });
+        });
+    });
+
     describe(@"-shouldBeginFetchForPlacement:", ^{
         __block STRAdPlacement *placement;
         beforeEach(^{
@@ -370,7 +440,7 @@ describe(@"STRAdCache", ^{
 
         it(@"returns NO if there are more than 1 ad available", ^{
             [cache saveAds:[NSMutableArray arrayWithArray:@[[NSObject new], [NSObject new], [NSObject new]]] forPlacement:placement andInitializeAtIndex:NO];
- 
+
             [cache shouldBeginFetchForPlacement:placement.placementKey] should be_falsy;
         });
 
@@ -392,24 +462,24 @@ describe(@"STRAdCache", ^{
             [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
             [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_truthy;
         });
-
+        
         it(@"returns NO if the pending request was cleared", ^{
             [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
             [cache clearPendingAdRequestForPlacement:@"fakePlacementKey"];
             [cache pendingAdRequestInProgressForPlacement:@"fakePlacementKey"] should be_falsy;
         });
     });
-
+    
     /*
      MMM - Not much value in testing getters and setters
-    xdescribe(@"-clearPendingAdRequestForPlacement:", ^{
-    });
-
-    xdescribe(@"-getInfiniteScrollFieldsForPlacement:", ^{
-    });
-
-    xdescribe(@"-saveInfiniteScrollFields:", ^{
-    });
+     xdescribe(@"-clearPendingAdRequestForPlacement:", ^{
+     });
+     
+     xdescribe(@"-getInfiniteScrollFieldsForPlacement:", ^{
+     });
+     
+     xdescribe(@"-saveInfiniteScrollFields:", ^{
+     });
      */
 });
 

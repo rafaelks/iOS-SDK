@@ -24,7 +24,10 @@
 - (BOOL)isAdExpired:(STRAdvertisement *)ad;
 
 - (NSInteger)numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:(NSString *)placementKey;
+- (NSInteger)numberOfUnassignedAdsInQueueForPlacementKey:(NSString *)placementKey;
 - (NSArray *)assignedAdIndixesForPlacementKey:(NSString *)placementKey;
+
+- (void)clearAssignedAdsForPlacement:(NSString *)placementKey;
 
 - (BOOL)shouldBeginFetchForPlacement:(NSString *)placementKey;
 

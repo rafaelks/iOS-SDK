@@ -38,6 +38,25 @@
 - (BOOL)isAdAvailableForPlacement:(NSString *)placementKey atIndex:(NSInteger)index;
 
 /**
+ This method can be used to determine the total number of ads available for a placementKey.
+ This will include the assigned and unassigned but cached ads.
+ @param placementKey The unique identifier for the ad slot
+ */
+- (NSInteger)numberOfAdsAvailableForPlacement:(NSString *)placementKey;
+
+/**
+ This method can be used to determine the number unassigned ads available for a placementKey.
+ @param placementKey The unique identifier for the ad slot
+ */
+- (NSInteger)unassignedNumberOfAdsAvailableForPlacement:(NSString *)placementKey;
+
+/**
+ This method will clear the ads currently cached for the placement key
+ @param placementKey The unique identifier for the ad slot
+ */
+- (void)clearCachedAdsForPlacement:(NSString *)placementKey;
+
+/**
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
