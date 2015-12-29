@@ -215,11 +215,11 @@
 		B245C3BF1ACB0ED1005FA822 /* SharethroughSDK+DFP.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DC419B9031700D3FA50 /* SharethroughSDK+DFP.m */; };
 		B267F4081BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */; };
 		B26D22E81ACF3A210072ACDD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */; };
-		B27A7B971BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
-		B27A7B981BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
-		B27A7B991BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
-		B27A7B9A1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
-		B27A7B9B1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; settings = {ASSET_TAGS = (); }; };
+		B27A7B971BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; };
+		B27A7B981BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; };
+		B27A7B991BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; };
+		B27A7B9A1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; };
+		B27A7B9B1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; };
 		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B27F1D931A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
@@ -1449,6 +1449,7 @@
 				AE22467F1886138F00626A29 /* Frameworks */,
 				AE2246801886138F00626A29 /* Resources */,
 				DFD063E97A87337647355DD4 /* Copy Pods Resources */,
+				B3ED21E7DF8836E54DB3C86E /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1829,6 +1830,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "BUILT_FRAMEWORK_DIR=\"${PROJECT_DIR}/built-framework/\"\nPODSPEC=\"${PROJECT_DIR}/Podspec/SharethroughSDK.podspec\"\ncp \"${PODSPEC}\" \"${BUILT_FRAMEWORK_DIR}\"\n";
+		};
+		B3ED21E7DF8836E54DB3C86E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-specs/Pods-specs-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		B853E9BE0C0A99730977EA5C /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
