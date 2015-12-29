@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "SharethroughSDK"
-  s.version      = "2.3.5"
+  s.version      = "2.3.9"
   s.summary      = "SharethroughSDK for adding native ads to your app"
 
   s.description  = <<-DESC
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.author             = { "Sharethrough Engineering" => "engineers@sharethrough.com" }
   s.social_media_url   = "https://twitter.com/SharethroughEng"
   s.source = {
-    :http => "https://github.com/sharethrough/iOS-SDK/releases/download/v2.3.5/SharethroughSDK.framework.zip"
+    :http => "https://github.com/sharethrough/iOS-SDK/releases/download/v2.3.9/SharethroughSDK.framework.zip"
   }
   s.platform           = :ios, "7.0"
   s.preserve_paths     = "SharethroughSDK.framework"
