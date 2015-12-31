@@ -60,15 +60,15 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 - (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
-    if ([self.adCache isAdAvailableForPlacement:placement]) {
-        STRDeferred *deferred = [STRDeferred defer];
-        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
-        [deferred resolveWithValue:cachedAd];
-        if (!placement.isDirectSold && [self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
-            [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
-        }
-        return deferred.promise;
-    }
+//    if ([self.adCache isAdAvailableForPlacement:placement]) {
+//        STRDeferred *deferred = [STRDeferred defer];
+//        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
+//        [deferred resolveWithValue:cachedAd];
+//        if (!placement.isDirectSold && [self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
+//            [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
+//        }
+//        return deferred.promise;
+//    }
     if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
         return [self requestInProgressError];
     }

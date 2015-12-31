@@ -42,7 +42,7 @@
  This will include the assigned and unassigned but cached ads.
  @param placementKey The unique identifier for the ad slot
  */
-- (NSInteger)numberOfAdsAvailableForPlacement:(NSString *)placementKey;
+- (NSInteger)totalNumberOfAdsAvailableForPlacement:(NSString *)placementKey;
 
 /**
  This method can be used to determine the number unassigned ads available for a placementKey.

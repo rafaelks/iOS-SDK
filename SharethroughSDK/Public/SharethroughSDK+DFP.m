@@ -110,7 +110,7 @@
     }
 }
 
-- (NSInteger)numberOfAdsAvailableForPlacement:(NSString *)placementKey {
+- (NSInteger)totalNumberOfAdsAvailableForPlacement:(NSString *)placementKey {
     TLog(@"placementKey: %@", placementKey);
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
     return [adCache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:placementKey];
