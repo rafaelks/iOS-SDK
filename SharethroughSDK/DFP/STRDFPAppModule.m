@@ -19,7 +19,7 @@
 - (void)configureWithInjector:(STRInjector *)injector {
     [super configureWithInjector:injector];
 
-    [injector bind:[GADBannerView class] toInstance:[[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait]];
+    [injector bind:[GADBannerView class] toInstance:[[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(320, 50))]];
 
     [injector bind:[STRDFPAdGenerator class]
         toInstance:[[STRDFPAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
