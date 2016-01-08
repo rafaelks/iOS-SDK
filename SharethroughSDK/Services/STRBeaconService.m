@@ -65,7 +65,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
-- (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+- (BOOL)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
     TLog(@"");
     if (!ad.visibleImpressionBeaconFired) {
         ad.visibleImpressionBeaconFired = YES;
@@ -75,10 +75,12 @@ NSString *kPreLivePlacementStatus = @"pre-live";
         [parameters addEntriesFromDictionary:uniqueParameters];
 
         [self.restClient sendBeaconWithParameters:parameters];
+        return YES;
     }
+    return NO;
 }
 
-- (void)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
+- (BOOL)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize {
     TLog(@"");
     if (!ad.impressionBeaconFired) {
         ad.impressionBeaconFired = YES;
@@ -88,7 +90,9 @@ NSString *kPreLivePlacementStatus = @"pre-live";
         [parameters addEntriesFromDictionary:uniqueParameters];
 
         [self.restClient sendBeaconWithParameters:parameters];
+        return YES;
     }
+    return NO;
 }
 
 - (void)fireThirdPartyBeacons:(NSArray *)beaconPaths forPlacementWithStatus:(NSString *)placementStatus {

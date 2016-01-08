@@ -257,11 +257,13 @@ describe(@"STRBeaconService", ^{
     });
 
     describe(@"-fireVisibleImpressionForAd:adSize:", ^{
+        __block BOOL beaconFired;
         beforeEach(^{
-            [service fireVisibleImpressionForAd:ad adSize:CGSizeMake(200, 100)];
+            beaconFired = [service fireVisibleImpressionForAd:ad adSize:CGSizeMake(200, 100)];
         });
 
         it(@"sends a beacon to the tracking servers", ^{
+            beaconFired should be_truthy;
             restClient should have_received(@selector(sendBeaconWithParameters:)).with(@{@"pkey": @"placementKey",
                                                                                          @"ckey": @"creativeKey",
                                                                                          @"vkey": @"variantKey",
@@ -287,10 +289,11 @@ describe(@"STRBeaconService", ^{
         describe(@"firing the visible impression again on the same ad", ^{
             beforeEach(^{
                 [(id<CedarDouble>)restClient reset_sent_messages];
-                [service fireVisibleImpressionForAd:ad adSize:CGSizeMake(200, 100)];
+                beaconFired = [service fireVisibleImpressionForAd:ad adSize:CGSizeMake(200, 100)];
             });
 
             it(@"does not fire another visible impression beacon", ^{
+                beaconFired should be_falsy;
                 restClient should_not have_received(@selector(sendBeaconWithParameters:));
             });
         });
