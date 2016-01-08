@@ -15,9 +15,9 @@
 - (id) initWithRestClient:(STRRestClient *)restClient dateProvider:(STRDateProvider *)dateProvider asIdentifierManager:(ASIdentifierManager *)identifierManager;
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey;
 - (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
-- (void)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
+- (BOOL)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireThirdPartyBeacons:(NSArray *)beaconPaths forPlacementWithStatus:(NSString *)placementStatus;
-- (void)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
+- (BOOL)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireVideoPlayEvent:(STRAdvertisement *)ad adSize:(CGSize)size;
 - (void)fireVideoCompletionForAd:(STRAdvertisement *)ad completionPercent:(NSNumber *)completionPercent;
 - (void)fireShareForAd:(STRAdvertisement *)ad shareType:(NSString *)uiActivityType;

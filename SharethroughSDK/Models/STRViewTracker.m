@@ -98,9 +98,9 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     if (percentVisible >= 0.5 && secondsVisible < 1.0) {
         timer.userInfo[@"secondsVisible"] = @(secondsVisible + timer.timeInterval);
     } else if (percentVisible >= 0.5 && secondsVisible >= 1.0) {
-        [self.beaconService fireVisibleImpressionForAd:self.ad
-                                                adSize:view.frame.size];
-        [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility  forPlacementWithStatus:self.ad.placementStatus];
+        if ([self.beaconService fireVisibleImpressionForAd:self.ad adSize:view.frame.size]) {
+            [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForVisibility  forPlacementWithStatus:self.ad.placementStatus];
+        }
         if ([self.ad.delegate respondsToSelector:@selector(adWillLogImpression:)]) {
             [self.ad.delegate adWillLogImpression:self.ad];
         }

@@ -117,6 +117,7 @@ describe(@"STRAdRenderer", ^{
         
         describe(@"rendering full ad", ^{
             beforeEach(^{
+                beaconService stub_method("fireImpressionForAd:adSize:").and_return(YES);
                 [renderer renderAd:ad inPlacement:placement];
             });
             
@@ -168,39 +169,21 @@ describe(@"STRAdRenderer", ^{
                     delegate should_not have_received(@selector(adView:userDidEngageAdForPlacementKey:));
                 });
             });
+        });
 
-//            describe(@"when the view has already had an ad placed within it", ^{
-//                __block STRAdRenderer *secondRenderer;
-//                __block NSTimer *oldTimer;
-//                
-//                beforeEach(^{
-//                    [[fakeRunLoop.sent_messages firstObject] getArgument:&oldTimer atIndex:2];
-//                    
-//                    STRAdPlacement *placement = [[STRAdPlacement alloc] initWithAdView:view
-//                                                                         PlacementKey:@"placementKey"
-//                                                             presentingViewController:presentingViewController
-//                                                                             delegate:nil
-//                                                                              DFPPath:nil
-//                                                                          DFPDeferred:nil];
-//
-//                    secondRenderer = [[STRAdRenderer alloc] initWithBeaconService:beaconService runLoop:fakeRunLoop networkClient:fakeNetworkClient injector:injector];
-//                    
-//                    [secondRenderer renderAd:ad inPlacement:placement];
-//                });
-//                
-//                it(@"should have cleaned up old tap gesture recognizers", ^{
-//                    [view.gestureRecognizers count] should equal(1);
-//                });
-//                
-//                it(@"invalidates the old ad's timer", ^{
-//                    oldTimer.isValid should be_falsy;
-//                    
-//                    __autoreleasing NSTimer *newTimer;
-//                    [[fakeRunLoop.sent_messages lastObject] getArgument:&newTimer atIndex:2];
-//                    
-//                    newTimer should_not be_same_instance_as(oldTimer);
-//                });
-//            });
+        describe(@"when the impression beacon has already been fired", ^{
+            beforeEach(^{
+                beaconService stub_method("fireImpressionForAd:adSize:").and_return(NO);
+                [renderer renderAd:ad inPlacement:placement];
+            });
+
+            it(@"fires an impression kept beacon", ^{
+                beaconService should have_received(@selector(fireImpressionForAd:adSize:)).with(ad, CGSizeMake(100, 100));
+            });
+
+            it(@"fires third party impression beacons", ^{
+                beaconService should_not have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:));
+            });
         });
 
         describe(@"place an ad in a view without an ad description", ^{
