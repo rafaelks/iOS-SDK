@@ -139,9 +139,10 @@
         __block STRBeaconService *blockBeconService = [self.injector getInstance:[STRBeaconService class]];
         __block STRAdInstantHostedVideo *blockSelf = self;
 
-        NSValue *threeSecond = [NSValue valueWithCMTime:CMTimeMake(3, 1)], *tenSecond = [NSValue valueWithCMTime:CMTimeMake(10, 1)];
+        NSValue *threeSecond = [NSValue valueWithCMTime:CMTimeMake(3, 1)], *tenSecond = [NSValue valueWithCMTime:CMTimeMake(10, 1)],
+                *fifteenSecond = [NSValue valueWithCMTime:CMTimeMake(15, 1)], *thirtySecond = [NSValue valueWithCMTime:CMTimeMake(30, 1)];
 
-        self.silentPlayTimer = [self.avPlayer addBoundaryTimeObserverForTimes:@[threeSecond, tenSecond] queue:nil usingBlock:^{
+        self.silentPlayTimer = [self.avPlayer addBoundaryTimeObserverForTimes:@[threeSecond, tenSecond, fifteenSecond, thirtySecond] queue:nil usingBlock:^{
             CMTime time = [blockPlayer currentTime];
             Float64 seconds = CMTimeGetSeconds(time);
             [blockBeconService fireSilentAutoPlayDurationForAd:blockSelf withDuration:seconds * 1000];
@@ -149,6 +150,10 @@
                 [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForSilentPlay forPlacementWithStatus:blockSelf.placementStatus];
             } else if (floorf(seconds) == 10) {
                 [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForTenSecondSilentPlay forPlacementWithStatus:blockSelf.placementStatus];
+            } else if (floorf(seconds) == 15) {
+                [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForFifteenSecondSilentPlay forPlacementWithStatus:blockSelf.placementStatus];
+            } else if (floorf(seconds) == 30) {
+                [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForThirtySecondSilentPlay forPlacementWithStatus:blockSelf.placementStatus];
             }
         }];
     }
@@ -177,6 +182,7 @@
                 completionPercent = [NSNumber numberWithInt:75];
             } else {
                 completionPercent = [NSNumber numberWithInt:95];
+                [blockBeconService fireThirdPartyBeacons:blockSelf.thirdPartyBeaconsForCompletedSecondSilentPlay forPlacementWithStatus:blockSelf.placementStatus];
             }
 
             [blockBeconService fireVideoCompletionForAd:blockSelf completionPercent:completionPercent];

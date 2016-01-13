@@ -36,6 +36,9 @@ describe(@"STRADInstantHostedVideo", ^{
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
         ad.thirdPartyBeaconsForSilentPlay = @[@"//fake.co/3sec"];
         ad.thirdPartyBeaconsForTenSecondSilentPlay = @[@"//fake.co/10sec"];
+        ad.thirdPartyBeaconsForFifteenSecondSilentPlay = @[@"//fake.co/15sec"];
+        ad.thirdPartyBeaconsForThirtySecondSilentPlay = @[@"//fake.co/30sec"];
+        ad.thirdPartyBeaconsForCompletedSecondSilentPlay = @[@"//fake.co/done"];
         ad.placementStatus = @"live";
     });
 
@@ -202,6 +205,20 @@ describe(@"STRADInstantHostedVideo", ^{
                 fakeBeaconService should have_received(@selector(fireSilentAutoPlayDurationForAd:withDuration:));
                 fakeBeaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//fake.co/10sec"], @"live");
             });
+
+            it(@"calls the beacon service if it's 15 seconds", ^{
+                fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(15, 1));
+                [ad setupSilentPlayTimer];
+                fakeBeaconService should have_received(@selector(fireSilentAutoPlayDurationForAd:withDuration:));
+                fakeBeaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//fake.co/15sec"], @"live");
+            });
+
+            it(@"calls the beacon service if it's 30 seconds", ^{
+                fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(30, 1));
+                [ad setupSilentPlayTimer];
+                fakeBeaconService should have_received(@selector(fireSilentAutoPlayDurationForAd:withDuration:));
+                fakeBeaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//fake.co/30sec"], @"live");
+            });
         });
     });
 
@@ -212,6 +229,7 @@ describe(@"STRADInstantHostedVideo", ^{
             fakeAVItem = nice_fake_for([AVPlayerItem class]);
             fakeAsset = nice_fake_for([AVAsset class]);
             fakeQueuePlayer stub_method(@selector(currentItem)).and_return(fakeAVItem);
+            fakeAVItem stub_method(@selector(asset)).and_return(fakeAsset);
             fakeAsset stub_method(@selector(duration)).and_return(CMTimeMake(40, 1));
         });
 
@@ -232,7 +250,16 @@ describe(@"STRADInstantHostedVideo", ^{
             it(@"fires a silent auto play duration", ^{
                 fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(10, 1));
                 [ad setupQuartileTimer];
-                fakeBeaconService should have_received(@selector(fireVideoCompletionForAd:completionPercent:));
+                fakeBeaconService should have_received(@selector(fireVideoCompletionForAd:completionPercent:)).with(ad, [NSNumber numberWithInt:25]);
+            });
+
+            describe(@"when it's 95% complete", ^{
+                it(@"fires a silent auto play duration and a third party beacon", ^{
+                    fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(39, 1));
+                    [ad setupQuartileTimer];
+                    fakeBeaconService should have_received(@selector(fireVideoCompletionForAd:completionPercent:)).with(ad, [NSNumber numberWithInt:95]);
+                    fakeBeaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//fake.co/done"], @"live");
+                });
             });
         });
     });
