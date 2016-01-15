@@ -35,7 +35,7 @@ describe(@"SharethroughSDK+DFP", ^{
 
             fakeDelegate = fake_for(@protocol(STRAdViewDelegate));
             fakeDelegate stub_method(@selector(didPrefetchAdvertisement:));
-            fakeDelegate stub_method(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
+            fakeDelegate stub_method(@selector(didFailToPrefetchForPlacementKey:));
 
         });
 
@@ -56,7 +56,7 @@ describe(@"SharethroughSDK+DFP", ^{
             });
 
             [dfpSDK prefetchAdForPlacementKey:@"fakePlacementKey" delegate:fakeDelegate];
-            fakeDelegate should have_received(@selector(adView:didFailToFetchAdForPlacementKey:atIndex:));
+            fakeDelegate should have_received(@selector(didFailToPrefetchForPlacementKey:));
         });
     });
 });

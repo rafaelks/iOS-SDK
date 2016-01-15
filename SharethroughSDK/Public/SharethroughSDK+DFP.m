@@ -78,8 +78,8 @@
         return value;
     } error:^id(NSError *error) {
         TLog(@"Prefetch failed.");
-        if ([weakDelegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
-            [weakDelegate adView:nil didFailToFetchAdForPlacementKey:placementKey atIndex:0];
+        if ([weakDelegate respondsToSelector:@selector(didFailToPrefetchForPlacementKey:)]) {
+            [weakDelegate didFailToPrefetchForPlacementKey:placementKey];
         }
         return error;
     }];
