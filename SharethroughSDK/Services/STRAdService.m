@@ -116,7 +116,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey auctionParameterKey:apKey auctionParameterValue:apValue];
     return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{ apKey : apValue }]
                           forPlacement:placement
-                  andInitializeAtIndex:YES];
+                  andInitializeAtIndex:NO];
 }
 
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement {

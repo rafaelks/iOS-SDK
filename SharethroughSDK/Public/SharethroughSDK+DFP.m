@@ -85,7 +85,7 @@
     }];
 
     STRDFPAdGenerator *adGenerator = [self.injector getInstance:[STRDFPAdGenerator class]];
-    [adGenerator placeAdInPlacement:adPlacement];
+    [adGenerator prefetchAdForPlacement:adPlacement];
 }
 
 - (BOOL)isAdAvailableForPlacement:(NSString *)placementKey atIndex:(NSInteger)index {

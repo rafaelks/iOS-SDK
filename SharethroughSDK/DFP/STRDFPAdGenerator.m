@@ -108,12 +108,28 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
     }
 }
 
+- (void)prefetchAdForPlacement:(STRAdPlacement *)placement {
+    TLog(@"pkey:%@",placement.placementKey);
+    STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
+    [DFPPathPromise then:^id(NSString *value) {
+        if ([value length] > 0) {
+            TLog(@"DFPPath received:%@", value);
+            placement.DFPPath = value;
+            [self initializeDFPRrequesForPlacement:placement];
+        }
+        return value;
+    } error:^id(NSError *error) {
+        [placement.DFPDeferred rejectWithError:error];
+        return error;
+    }];
+}
+
 #pragma mark private
 
 - (STRPromise *)fetchDFPPathForPlacementKey:(NSString *)placementKey {
     TLog(@"pkey:%@", placementKey);
     STRDeferred *deferred = [STRDeferred defer];
-    
+
     NSString *DFPPath = self.DFPPathCache[placementKey];
     if (DFPPath) {
         [deferred resolveWithValue:DFPPath];

@@ -24,5 +24,6 @@ extern char const * const STRDFPAdGeneratorKey;
              bannerView:(GADBannerView *)bannerView;
 
 - (void)placeAdInPlacement:(STRAdPlacement *)placement;
+- (void)prefetchAdForPlacement:(STRAdPlacement *)placement;
 
 @end

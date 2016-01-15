@@ -40,7 +40,7 @@ describe(@"SharethroughSDK+DFP", ^{
         });
 
         it(@"informs the delegate when an ad is successfully fetched", ^{
-            fakeGenerator stub_method(@selector(placeAdInPlacement:)).and_do(^(NSInvocation *invocation) {
+            fakeGenerator stub_method(@selector(prefetchAdForPlacement:)).and_do(^(NSInvocation *invocation) {
                 STRAdPlacement *adPlacement = (STRAdPlacement *)invocation.arguments[0];
                 [adPlacement.DFPDeferred resolveWithValue:nil];
             });
@@ -50,7 +50,7 @@ describe(@"SharethroughSDK+DFP", ^{
         });
 
         it(@"informs the delegate when an ad is unsuccessfully fetched", ^{
-            fakeGenerator stub_method(@selector(placeAdInPlacement:)).and_do(^(NSInvocation *invocation) {
+            fakeGenerator stub_method(@selector(prefetchAdForPlacement:)).and_do(^(NSInvocation *invocation) {
                 STRAdPlacement *adPlacement = (STRAdPlacement *)invocation.arguments[0];
                 [adPlacement.DFPDeferred rejectWithError:nil];
             });
