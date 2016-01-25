@@ -193,8 +193,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 
 - (void)fireSilentAutoPlayDurationForAd:(STRAdvertisement *)ad withDuration:(NSTimeInterval)duration {
     TLog(@"");
-    NSDictionary *uniqueParameters = @{@"type": @"userEvent",
-                                       @"userEvent": @"silentAutoPlayDuration",
+    NSDictionary *uniqueParameters = @{@"type": @"silentAutoPlayDuration",
                                        @"duration": [NSString stringWithFormat:@"%d", (int)duration]
                                      };
 
