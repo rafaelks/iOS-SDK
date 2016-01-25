@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "SharethroughSDK"
-  s.version      = "2.3.9"
+  s.version      = "3.2.1"
   s.summary      = "SharethroughSDK for adding native ads to your app"
 
   s.description  = <<-DESC
@@ -26,15 +26,15 @@ Pod::Spec.new do |s|
   s.author             = { "Sharethrough Engineering" => "engineers@sharethrough.com" }
   s.social_media_url   = "https://twitter.com/SharethroughEng"
   s.source = {
-    :http => "https://github.com/sharethrough/iOS-SDK/releases/download/v2.3.9/SharethroughSDK.framework.zip"
+    :http => "https://github.com/sharethrough/iOS-SDK/releases/download/v3.2.1/SharethroughSDK.framework.zip"
   }
-  s.platform           = :ios, "7.0"
+  s.platform           = :ios, "8.0"
   s.preserve_paths     = "SharethroughSDK.framework"
 
   s.public_header_files = "SharethroughSDK.framework/Versions/A/Headers/*.h"
   s.vendored_frameworks = "SharethroughSDK.framework"
 
   s.requires_arc = true
-  s.frameworks = "MediaPlayer", "AdSupport", "CoreGraphics", "UIKit", "Foundation", "AVKit", "AVFoundation", "CoreMedia"
+  s.frameworks = "MediaPlayer", "AdSupport", "CoreGraphics", "UIKit", "Foundation", "AVKit", "AVFoundation", "CoreMedia", "AVKit", "AVFoundation", "CoreMedia"
   s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '"$(PODS_ROOT)/SharethroughSDK"' }
 end
