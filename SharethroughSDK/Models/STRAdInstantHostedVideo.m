@@ -67,6 +67,7 @@
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:mediaURL options:nil];
         [asset loadValuesAsynchronouslyForKeys:@[@"playable"] completionHandler:^() {
             [self.avPlayer insertItem:[AVPlayerItem playerItemWithAsset:asset] afterItem:nil];
+            self.avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndPause;
             [self setupSilentPlayTimer];
             [self setupQuartileTimer];
         }];
