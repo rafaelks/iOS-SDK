@@ -165,9 +165,11 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForPlay  forPlacementWithStatus:self.ad.placementStatus];
     [self.beaconService fireThirdPartyBeacons:self.ad.thirdPartyBeaconsForClick  forPlacementWithStatus:self.ad.placementStatus];
     if ([self.ad.delegate respondsToSelector:@selector(adDidClick:)]) {
+        TLog(@"Delegate responds to selector %@", NSStringFromSelector(@selector(adDidClick:)));
         [self.ad.delegate adDidClick:self.ad];
     }
     UIViewController *engagementViewController = [self.ad viewControllerForPresentingOnTap];
+    TLog(@"PresentingViewController: %p, ViewController to Present: %p", self.presentingViewController, engagementViewController);
     [self.presentingViewController presentViewController:engagementViewController animated:YES completion:nil];
 }
 @end
