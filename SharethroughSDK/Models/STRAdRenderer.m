@@ -62,7 +62,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 }
 
 - (void)renderAd:(STRAdvertisement *)ad inPlacement:(STRAdPlacement *)placement {
-    TLog(@"pkey:%@ ckey:%@",placement.placementKey, ad.creativeKey);
+    TLog(@"pkey:%@ ckey:%@ presentingViewController:%p",placement.placementKey, ad.creativeKey, placement.presentingViewController);
     self.ad = ad;
     self.ad.placementIndex = placement.adIndex;
     self.placement = placement;

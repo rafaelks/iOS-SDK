@@ -132,13 +132,14 @@
          placementKey:(NSString *)placementKey
               dfpPath:(NSString *)dfpPath
 presentingViewController:(UIViewController *)presentingViewController
+                index:(NSInteger)index
              delegate:(id<STRAdViewDelegate>)delegate {
-    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
+    TLog(@"placementKey:%@ index:%ld presentingViewController:%p", placementKey, (long)index, presentingViewController);
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:view
                                                             PlacementKey:placementKey
                                                 presentingViewController:presentingViewController
                                                                 delegate:delegate
-                                                                 adIndex:0
+                                                                 adIndex:index
                                                             isDirectSold:YES
                                                                  DFPPath:dfpPath
                                                              DFPDeferred:nil];

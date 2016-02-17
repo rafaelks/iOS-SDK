@@ -49,6 +49,7 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
 }
 
 - (void)trackAd:(STRAdvertisement *)ad inView:(UIView *)view withViewContorller:(UIViewController *)viewController {
+    TLog(@"Ad: %@ View: %@ ViewController: %p", ad, view, viewController);
 
     objc_setAssociatedObject(view, STRViewTrackerKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
