@@ -40,6 +40,8 @@
         return [AVQueuePlayer new];
     }];
 
+    [injector bind:[AVAudioSession class] toInstance:[AVAudioSession sharedInstance]];
+
     [injector bind:[STRAdCache class] toInstance:[[STRAdCache alloc] initWithDateProvider:[injector getInstance:[STRDateProvider class]]]];
 
     [injector bind:[STRBeaconService class] toBlock:^id(STRInjector *injector) {

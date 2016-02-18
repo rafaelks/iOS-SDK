@@ -16,6 +16,7 @@ describe(@"STRADInstantHostedVideo", ^{
     __block STRAdInstantHostedVideo *ad;
     __block STRInjector *injector;
     __block STRBeaconService *fakeBeaconService;
+    __block AVAudioSession *fakeAudioSession;
     __block AVQueuePlayer *fakeQueuePlayer;
     __block AVURLAsset *fakeAsset;
 
@@ -32,6 +33,9 @@ describe(@"STRADInstantHostedVideo", ^{
         fakeBeaconService = nice_fake_for([STRBeaconService class]);
         [injector bind:[STRBeaconService class] toInstance:fakeBeaconService];
 
+        fakeAudioSession = nice_fake_for([AVAudioSession class]);
+        [injector bind:[AVAudioSession class] toInstance:fakeAudioSession];
+
         ad = [[STRAdInstantHostedVideo alloc] initWithInjector:injector];
         ad.thumbnailImage = [UIImage imageNamed:@"fixture_image.png"];
         ad.thirdPartyBeaconsForSilentPlay = @[@"//fake.co/3sec"];
@@ -44,6 +48,11 @@ describe(@"STRADInstantHostedVideo", ^{
 
     it(@"adds a kvo for rate", ^{
         fakeQueuePlayer should have_received(@selector(addObserver:forKeyPath:options:context:));
+    });
+
+    it(@"turns off the audio session", ^{
+        fakeAudioSession should have_received(@selector(setCategory:error:)).with(AVAudioSessionCategoryAmbient, Arguments::anything);
+        fakeAudioSession should have_received(@selector(setActive:error:)).with(NO, Arguments::anything);
     });
 
     xdescribe(@"-dealloc", ^{
@@ -139,6 +148,11 @@ describe(@"STRADInstantHostedVideo", ^{
 
         it(@"unmutes the player", ^{
             fakeQueuePlayer.muted should be_falsy;
+        });
+
+        it(@"turns on the audio session", ^{
+            fakeAudioSession should have_received(@selector(setCategory:error:)).with(AVAudioSessionCategorySoloAmbient, Arguments::anything);
+            fakeAudioSession should have_received(@selector(setActive:error:)).with(YES, Arguments::anything);
         });
     });
 

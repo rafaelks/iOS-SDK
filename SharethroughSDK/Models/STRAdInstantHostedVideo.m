@@ -40,6 +40,9 @@
 @property (strong, nonatomic) id silentPlayTimer;
 @property (strong, nonatomic) id quartileTimer;
 
+@property (weak, nonatomic) AVAudioSession *audioSession;
+@property (weak, nonatomic) NSError *sessionError;
+
 @end
 
 @implementation STRAdInstantHostedVideo
@@ -51,6 +54,10 @@
         self.avPlayer = [self.injector getInstance:[AVQueuePlayer class]];
         [self.avPlayer addObserver:self forKeyPath:@"rate" options:NSKeyValueObservingOptionNew context:nil];
         self.beforeEngagement = YES;
+        self.audioSession = [self.injector getInstance:[AVAudioSession class]];
+        NSError *sessionError;
+        [self.audioSession setCategory:AVAudioSessionCategoryAmbient error:&sessionError];
+        [self.audioSession setActive:NO error:&sessionError];
     }
     return self;
 }
@@ -99,6 +106,9 @@
 
 - (UIViewController*) viewControllerForPresentingOnTap {
     if (self.beforeEngagement) {
+        NSError *sessionError = nil;
+        [self.audioSession setCategory:AVAudioSessionCategorySoloAmbient error:&sessionError];
+        [self.audioSession setActive:YES error:&sessionError];
         [self.avPlayer removeTimeObserver:self.silentPlayTimer];
 
         CMTime time = [self.avPlayer currentTime];
