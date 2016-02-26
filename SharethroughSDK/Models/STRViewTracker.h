@@ -14,6 +14,7 @@
 
 - (id)initWithInjector:(STRInjector *)injector;
 - (void)trackAd:(STRAdvertisement *)strAd inView:(UIView *)view withViewContorller:(UIViewController *)viewController;
+- (void)addDiclosureTapRecognizerToView:(UIView *)view;
 + (void)unregisterView:(UIView *)view;
 
 @end

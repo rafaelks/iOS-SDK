@@ -21,6 +21,12 @@ NSString *STRPinterestAd = @"pinterest";
 NSString *STRInstagramAd = @"instagram";
 NSString *STRArticleAd = @"article";
 
+@interface STRAdvertisement ()
+
+@property (strong, nonatomic) STRViewTracker *viewTracker;
+
+@end
+
 @implementation STRAdvertisement
 
 - (id)init {
@@ -83,12 +89,16 @@ NSString *STRArticleAd = @"article";
 #pragma mark - View Tracker
 
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController {
-    STRViewTracker *viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
-    [viewTracker trackAd:self inView:view withViewContorller:viewController];
+    self.viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
+    [self.viewTracker trackAd:self inView:view withViewContorller:viewController];
 }
 
-- (void)unregisterView:(UIView *)view {
++ (void)unregisterView:(UIView *)view {
     [STRViewTracker unregisterView:view];
+}
+
+- (void)addDiclosureTapRecognizerToView:(UIView *)view {
+    [self.viewTracker addDiclosureTapRecognizerToView:view];
 }
 
 //These two methods are a side effect of instant play and should not be called on any ad that is not instant play

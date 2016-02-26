@@ -282,6 +282,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
         return ad;
     } error:^id(NSError *error) {
+        [deferred rejectWithError:error];
         return error;
     }];
     return deferred.promise;

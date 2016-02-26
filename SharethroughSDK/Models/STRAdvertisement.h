@@ -73,7 +73,8 @@ extern NSString *STRArticleAd;
 - (UIViewController*) viewControllerForPresentingOnTap;
 
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController;
-- (void)unregisterView:(UIView *)view;
+- (void)addDiclosureTapRecognizerToView:(UIView *)view;
++ (void)unregisterView:(UIView *)view;
 
 - (BOOL)adVisibleInView:(UIView *)view;
 - (BOOL)adNotVisibleInView:(UIView *)view;

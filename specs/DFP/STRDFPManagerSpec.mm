@@ -346,8 +346,10 @@ describe(@"DFPManager", ^{
                 __block STRDeferred *generatorDeferred;
                 __block STRPromise *managerPromise;
                 __block STRDeferred *adDeferred;
+                __block NSObject *returnedObject;
 
                 beforeEach(^{
+                    returnedObject = [NSObject new];
                     adDeferred = nice_fake_for([STRDeferred class]);
                     adPlacement.DFPDeferred = adDeferred;
                     generatorDeferred = [STRDeferred defer];
@@ -362,11 +364,11 @@ describe(@"DFPManager", ^{
                 describe(@"when the promise resolves successfully", ^{
                     beforeEach(^{
                         spy_on(managerPromise);
-                        [generatorDeferred resolveWithValue:nil];
+                        [generatorDeferred resolveWithValue:returnedObject];
                     });
 
                     it(@"resolves the placements deferred", ^{
-                        adDeferred should have_received(@selector(resolveWithValue:));
+                        adDeferred should have_received(@selector(resolveWithValue:)).with(returnedObject);
                     });
 
                     it(@"resolves its promise", ^{

@@ -92,7 +92,7 @@ static NSString *const dfpCampaignKey = @"campaign_key";
         [promise then:^id(id value) {
             TLog(@"DFP Ad fetched from STX");
             if (adPlacement.DFPDeferred != nil) {
-                [adPlacement.DFPDeferred resolveWithValue:nil];
+                [adPlacement.DFPDeferred resolveWithValue:value];
             }
             [deferred resolveWithValue:adPlacement.adView];
             return value;

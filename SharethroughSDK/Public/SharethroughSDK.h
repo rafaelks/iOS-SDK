@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "STRAdvertisement.h"
+#import "STRAdvertisementDelegate.h"
 #import "STRAdView.h"
 #import "STRAdViewDelegate.h"
 #import "UITableView+STR.h"

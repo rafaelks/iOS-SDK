@@ -18,6 +18,8 @@
 #import "STRInteractiveAdViewController.h"
 #import "STRLogging.h"
 #import "UIView+Visible.h"
+#import "STRAdFixtures.h"
+#import "STRAdView.h"
 
 char const * const STRViewTrackerKey = "STRViewTrackerKey";
 
@@ -80,8 +82,20 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     if (oldTracker) {
         [oldTracker.adVisibleTimer invalidate];
         [view removeGestureRecognizer:oldTracker.tapRecognizer];
+
+        UIView <STRAdView>*adView = (UIView <STRAdView>*)view;
+        if ([adView respondsToSelector:@selector(disclosureButton)]) {
+            [adView.disclosureButton removeGestureRecognizer:oldTracker.disclosureTapRecognizer];
+        }
     }
     objc_removeAssociatedObjects(view);
+}
+
+- (void)addDiclosureTapRecognizerToView:(UIView *)view {
+    UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
+    view.userInteractionEnabled = YES;
+    [view addGestureRecognizer:disclosureRecognizer];
+    self.disclosureTapRecognizer = disclosureRecognizer;
 }
 
 #pragma mark - Private
@@ -172,5 +186,16 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
     UIViewController *engagementViewController = [self.ad viewControllerForPresentingOnTap];
     TLog(@"PresentingViewController: %p, ViewController to Present: %p", self.presentingViewController, engagementViewController);
     [self.presentingViewController presentViewController:engagementViewController animated:YES completion:nil];
+}
+
+- (IBAction)tappedDisclosureBtn:(id)sender
+{
+    TLog(@"pkey:%@ ckey:%@",self.ad.placementKey, self.ad.creativeKey);
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
+                                                                                               device:[UIDevice currentDevice]
+                                                                                          application:[UIApplication sharedApplication]
+                                                                                        beaconService:self.beaconService
+                                                                                             injector:self.injector];
+    [self.presentingViewController presentViewController:adController animated:YES completion:nil];
 }
 @end

@@ -38,7 +38,6 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 @property (nonatomic, strong) STRAdvertisement *ad;
 @property (nonatomic, strong) STRAdPlacement *placement;
 @property (nonatomic, weak) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, weak) UITapGestureRecognizer *disclosureTapRecognizer;
 
 @end
 
@@ -73,9 +72,7 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
     if (placement.adView.disclosureButton.buttonType != 2) {
         [NSException raise:@"STRDiscloseButtonType" format:@"The disclosure button provided by the STRAdView is not of type UIButtonTypeDetailDisclosure"];
     }
-    UITapGestureRecognizer *disclosureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDisclosureBtn:)];
-    [placement.adView.disclosureButton addGestureRecognizer:disclosureRecognizer];
-    self.disclosureTapRecognizer = disclosureRecognizer;
+
 
     self.presentingViewController = placement.presentingViewController;
     if ([self.beaconService fireImpressionForAd:ad adSize:placement.adView.frame.size]) {
@@ -93,22 +90,11 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 
     STRViewTracker *viewTracker = [[STRViewTracker alloc] initWithInjector:self.injector];
     [viewTracker trackAd:ad inView:placement.adView withViewContorller:placement.presentingViewController];
+    [viewTracker addDiclosureTapRecognizerToView:placement.adView.disclosureButton];
 
     if ([placement.delegate respondsToSelector:@selector(adView:didFetchAd:ForPlacementKey:atIndex:)]) {
         [placement.delegate adView:placement.adView didFetchAd:ad ForPlacementKey:placement.placementKey atIndex:placement.adIndex];
     }
-}
-
-- (IBAction)tappedDisclosureBtn:(id)sender
-{
-    TLog(@"pkey:%@ ckey:%@",self.ad.placementKey, self.ad.creativeKey);
-    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
-                                                                                               device:[UIDevice currentDevice]
-                                                                                          application:[UIApplication sharedApplication]
-                                                                                        beaconService:self.beaconService
-                                                                                             injector:self.injector];
-    adController.delegate = self;
-    [self.presentingViewController presentViewController:adController animated:YES completion:nil];
 }
 
 #pragma mark - <STRInteractiveAdViewControllerDelegate>
@@ -123,8 +109,6 @@ char const * const STRAdRendererKey = "STRAdRendererKey";
 #pragma mark - Private
 
 - (void)prepareForNewAd:(UIView<STRAdView> *)view {
-    STRAdRenderer *oldRenderer = objc_getAssociatedObject(view, STRAdRendererKey);
-    [view.disclosureButton removeGestureRecognizer:oldRenderer.disclosureTapRecognizer];
     [STRViewTracker unregisterView:view];
 
     [self clearTextFromView:view];
