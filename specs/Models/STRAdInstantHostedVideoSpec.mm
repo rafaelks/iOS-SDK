@@ -170,20 +170,6 @@ describe(@"STRADInstantHostedVideo", ^{
         });
     });
 
-    describe(@"-observeValueForKeyPath:", ^{
-        it(@"fires a beacon if the video is paused", ^{
-            fakeQueuePlayer.rate = 0.0;
-            [ad observeValueForKeyPath:@"rate" ofObject:nil change:nil context:nil];
-            fakeBeaconService should have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
-        });
-
-        it(@"doesn't fire a beacon if the video is playing", ^{
-            fakeQueuePlayer.rate = 1.0;
-            [ad observeValueForKeyPath:@"rate" ofObject:nil change:nil context:nil];
-            fakeBeaconService should_not have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
-        });
-    });
-
     describe(@"-setupSilentPlayTimer", ^{
         it(@"sets up a boundary time observer", ^{
             [ad setupSilentPlayTimer];
@@ -275,6 +261,31 @@ describe(@"STRADInstantHostedVideo", ^{
                     fakeBeaconService should have_received(@selector(fireThirdPartyBeacons:forPlacementWithStatus:)).with(@[@"//fake.co/done"], @"live");
                 });
             });
+        });
+    });
+
+    describe(@"observeValueForKeyPath:ofObject:change:context", ^{
+        __block AVPlayerItem *fakeAVItem;
+        __block AVAsset *fakeAsset;
+        beforeEach(^{
+            fakeAVItem = nice_fake_for([AVPlayerItem class]);
+            fakeAsset = nice_fake_for([AVAsset class]);
+            fakeQueuePlayer stub_method(@selector(currentItem)).and_return(fakeAVItem);
+            fakeAVItem stub_method(@selector(asset)).and_return(fakeAsset);
+            fakeAsset stub_method(@selector(duration)).and_return(CMTimeMake(40, 1));
+            fakeQueuePlayer stub_method(@selector(currentTime)).and_return(CMTimeMake(30, 1));
+        });
+
+        it(@"fires a beacon when the rate is 0", ^{
+            [ad observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+            fakeBeaconService should have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:)).with(ad, 30.0, NO);
+        });
+
+        it(@"doesn't fire a beacon if already stopped", ^{
+            [ad observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+            [(id<CedarDouble>)fakeBeaconService reset_sent_messages];
+            [ad observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+            fakeBeaconService should_not have_received(@selector(fireVideoViewDurationForAd:withDuration:isSilent:));
         });
     });
 });

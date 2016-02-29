@@ -43,6 +43,8 @@
 @property (weak, nonatomic) AVAudioSession *audioSession;
 @property (weak, nonatomic) NSError *sessionError;
 
+@property (atomic) BOOL currentlyStopped;
+
 @end
 
 @implementation STRAdInstantHostedVideo
@@ -52,8 +54,9 @@
 - (id)initWithInjector:(STRInjector *)injector {
     if (self = [super initWithInjector:injector]) {
         self.avPlayer = [self.injector getInstance:[AVQueuePlayer class]];
-        [self.avPlayer addObserver:self forKeyPath:@"rate" options:NSKeyValueObservingOptionNew context:nil];
+        [self.avPlayer addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
         self.beforeEngagement = YES;
+        self.currentlyStopped = NO;
         self.audioSession = [self.injector getInstance:[AVAudioSession class]];
         NSError *sessionError;
         [self.audioSession setCategory:AVAudioSessionCategoryAmbient error:&sessionError];
@@ -65,7 +68,7 @@
 - (void)dealloc {
     [self.avPlayer removeTimeObserver:self.silentPlayTimer];
     [self.avPlayer removeTimeObserver:self.quartileTimer];
-    [self.avPlayer removeObserver:self forKeyPath:@"rate"];
+    [self.avPlayer removeObserver:self forKeyPath:@"status"];
 }
 
 - (void)setMediaURL:(NSURL *)mediaURL {
@@ -202,9 +205,12 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (self.avPlayer.rate == 0.0) {
+    if (self.avPlayer.rate == 0.0 && !self.currentlyStopped) {
+        self.currentlyStopped = YES;
         STRBeaconService *beaconService = [self.injector getInstance:[STRBeaconService class]];
         [beaconService fireVideoViewDurationForAd:self withDuration:CMTimeGetSeconds([self.avPlayer currentTime]) isSilent:self.avPlayer.muted];
+    } else {
+        self.currentlyStopped = NO;
     }
 }
 @end
