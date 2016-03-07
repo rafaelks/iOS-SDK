@@ -62,7 +62,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 - (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
-    if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:NO]) {
+    if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:YES]) {
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
         [deferred resolveWithValue:cachedAd];
