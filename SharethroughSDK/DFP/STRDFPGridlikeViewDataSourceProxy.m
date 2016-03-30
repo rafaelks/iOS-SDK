@@ -63,4 +63,50 @@
     }
 }
 
+- (UITableViewCell *)adCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+    TLog(@"");
+    UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];
+    if (!adCell) {
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib before providing to SharethroughSDK.", self.adCellReuseIdentifier];
+    }
+
+    if (![adCell conformsToProtocol:@protocol(STRAdView)]) {
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib that conforms to the STRAdView protocol.", self.adCellReuseIdentifier];
+    }
+
+    STRDFPAdGenerator *adGenerator = [self.injector getInstance:[STRDFPAdGenerator class]];
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:adCell
+                                                            PlacementKey:self.placementKey
+                                                presentingViewController:self.presentingViewController
+                                                                delegate:nil
+                                                                 adIndex:indexPath.row
+                                                            isDirectSold:YES
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil];
+    [adGenerator placeAdInPlacement:adPlacement];
+
+    return adCell;
+}
+
+- (UICollectionViewCell *)adCellForCollectionView:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
+    TLog(@"");
+    UICollectionViewCell<STRAdView> *adCell = [collectionView dequeueReusableCellWithReuseIdentifier:self.adCellReuseIdentifier forIndexPath:indexPath];
+
+    if (![adCell conformsToProtocol:@protocol(STRAdView)]) {
+        [NSException raise:@"STRTableViewApiImproperSetup" format:@"Bad reuse identifier provided: \"%@\". Reuse identifier needs to be registered to a class or a nib that conforms to the STRAdView protocol.", self.adCellReuseIdentifier];
+    }
+
+    STRDFPAdGenerator *adGenerator = [self.injector getInstance:[STRDFPAdGenerator class]];
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:adCell
+                                                            PlacementKey:self.placementKey
+                                                presentingViewController:self.presentingViewController
+                                                                delegate:nil
+                                                                 adIndex:indexPath.row
+                                                            isDirectSold:YES
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil];
+
+    [adGenerator placeAdInPlacement:adPlacement];
+    return adCell;
+}
 @end

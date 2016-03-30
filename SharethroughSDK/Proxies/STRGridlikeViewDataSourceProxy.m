@@ -153,8 +153,6 @@
     return [super forwardingTargetForSelector:aSelector];
 }
 
-#pragma mark - Private
-
 - (UITableViewCell *)adCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     TLog(@"");
     UITableViewCell<STRAdView> *adCell = [tableView dequeueReusableCellWithIdentifier:self.adCellReuseIdentifier];
@@ -201,6 +199,8 @@
     [adGenerator placeAdInPlacement:adPlacement];
     return adCell;
 }
+
+#pragma mark - Private
 
 - (id)validateAndSetDataSource:(id)originalDataSource {
     TLog(@"originalDS: %@", originalDataSource);

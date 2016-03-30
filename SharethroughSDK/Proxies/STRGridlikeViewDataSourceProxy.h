@@ -31,5 +31,7 @@
 - (instancetype)copyWithNewDataSource:(id)newDataSource;
 
 - (void)prefetchAdForGridLikeView:(id)gridlikeView atIndex:(NSInteger)index;
+- (UITableViewCell *)adCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
+- (UICollectionViewCell *)adCellForCollectionView:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
 
 @end
