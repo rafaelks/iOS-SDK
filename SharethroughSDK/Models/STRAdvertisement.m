@@ -86,6 +86,14 @@ NSString *STRArticleAd = @"article";
 }
 
 
+- (void)adWasRenderedInView:(UIView *)view {
+    STRBeaconService *beaconService = [self.injector getInstance:[STRBeaconService class]];
+    if ([beaconService fireImpressionForAd:self adSize:view.frame.size]) {
+        [beaconService fireThirdPartyBeacons:self.thirdPartyBeaconsForImpression forPlacementWithStatus:self.placementStatus];
+    }
+}
+
+
 #pragma mark - View Tracker
 
 - (void)registerViewForInteraction:(UIView *)view withViewController:(UIViewController *)viewController {
