@@ -17,6 +17,7 @@
 #import "STRDeferred.h"
 #import "STRAdPlacement.h"
 #import "STRViewTracker.h"
+#import "STRAdCache.h"
 
 @interface STRFakeAdGenerator () <STRInteractiveAdViewControllerDelegate>
 @property (nonatomic, strong) STRAdvertisement *advertisement;
@@ -148,6 +149,9 @@ presentingViewController:(UIViewController *)presentingViewController
 
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement {
     STRDeferred *deferred = [STRDeferred defer];
+    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
+    NSMutableArray *creatives = [[NSMutableArray alloc] initWithArray:@[self.advertisement]];
+    [adCache saveAds:creatives forPlacement:placement andInitializeAtIndex:NO];
     [deferred resolveWithValue:nil];
     return deferred.promise;
 }
