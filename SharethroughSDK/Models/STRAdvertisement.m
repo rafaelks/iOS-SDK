@@ -73,6 +73,16 @@ NSString *STRArticleAd = @"article";
     return platformLogoView;
 }
 
+- (NSURL *)optOutUrl {
+    NSString *privacyUrlString = @"http://platform-cdn.sharethrough.com/privacy-policy.html";
+    if (self.optOutUrlString.length > 0) {
+        NSString *escapedOptOutUrl = [self.optOutUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+        NSString *escapedOptOutText = [self.optOutText stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+        privacyUrlString = [[NSString alloc] initWithFormat:@"http://platform-cdn.sharethrough.com/privacy-policy.html?opt_out_url=%@&opt_out_text=%@", escapedOptOutUrl, escapedOptOutText];
+    }
+    return [NSURL URLWithString:privacyUrlString];
+}
+
 - (void)setThumbnailImageInView:(UIImageView *)imageView {
     imageView.image = self.thumbnailImage;
 }

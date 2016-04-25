@@ -191,7 +191,7 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
 - (IBAction)tappedDisclosureBtn:(id)sender
 {
     TLog(@"pkey:%@ ckey:%@",self.ad.placementKey, self.ad.creativeKey);
-    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAdWithOptOutURL:self.ad.optOutUrl]
                                                                                                device:[UIDevice currentDevice]
                                                                                           application:[UIApplication sharedApplication]
                                                                                         beaconService:self.beaconService

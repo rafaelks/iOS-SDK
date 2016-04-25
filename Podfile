@@ -14,7 +14,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 #end
 
 target 'specs' do
-  pod 'Cedar', '~> 0.11.2'
+  pod 'Cedar', '~> 0.13'
   pod 'PivotalCoreKit', '~> 0.3'
   pod 'PivotalCoreKit/UIKit/SpecHelper'
   pod 'PivotalCoreKit/Foundation/SpecHelper/Fakes'

@@ -45,6 +45,8 @@ extern NSString *STRArticleAd;
 @property (nonatomic, strong) UIImage *brandLogoImage;
 @property (nonatomic) NSInteger placementIndex;
 @property (nonatomic, copy) NSString *dealId;
+@property (nonatomic, copy) NSString *optOutUrlString;
+@property (nonatomic, copy) NSString *optOutText;
 
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForImpression;
 @property (nonatomic, copy) NSArray *thirdPartyBeaconsForVisibility;
@@ -67,6 +69,7 @@ extern NSString *STRArticleAd;
 - (NSString *)sponsoredBy;
 - (UIImage *)displayableThumbnail;
 - (UIImageView *)platformLogoForWidth:(CGFloat)width;
+- (NSURL *)optOutUrl;
 
 - (void)setThumbnailImageInView:(UIImageView *)imageView;
 

@@ -229,7 +229,8 @@ describe(@"STRInteractiveAdViewController", ^{
         __block STRClickoutViewController *clickoutViewController;
 
         beforeEach(^{
-            ad = (id)[STRAdFixtures privacyInformationAd];
+            NSURL *privacyUrl = [NSURL URLWithString:@"http://platform-cdn.sharethrough.com/privacy-policy.html"];
+            ad = (id)[STRAdFixtures privacyInformationAdWithOptOutURL:privacyUrl];
             setUpController();
             clickoutViewController = [controller.childViewControllers firstObject];
         });

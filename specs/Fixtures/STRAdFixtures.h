@@ -19,7 +19,7 @@
 + (STRAdInstantHostedVideo *)instantPlayVideoAdWithInjector:(STRInjector *)inject;
 + (STRAdClickout *)clickoutAd;
 + (STRAdPinterest *)pinterestAd;
-+ (STRAdClickout *)privacyInformationAd;
++ (STRAdClickout *)privacyInformationAdWithOptOutURL:(NSURL *)optOutURL;
 + (STRAdInstagram *)instagramAd;
 + (STRAdArticle *)articleAd;
 

@@ -276,6 +276,8 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         ad.customEngagementLabel = creativeJSON[@"custom_engagement_label"];
         ad.customEngagementURL = [self URLFromSanitizedString:creativeJSON[@"custom_engagement_url"]];
         ad.dealId = creativeWrapperJSON[@"deal_id"];
+        ad.optOutUrlString = creativeJSON[@"opt_out_url"];
+        ad.optOutText = creativeJSON[@"opt_out_text"];
         ad.injector = self.injector;
 
         [deferred resolveWithValue:ad];

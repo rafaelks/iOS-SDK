@@ -192,6 +192,9 @@
 		AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */; };
 		B22162E61BAB35A2002F672E /* STRAdHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CAF24B1BA0B551005D544B /* STRAdHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B22162E71BAB35A9002F672E /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B2251C721CCEA22100C23540 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2251C701CCEA22100C23540 /* AVFoundation.framework */; };
+		B2251C731CCEA22100C23540 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2251C711CCEA22100C23540 /* AVKit.framework */; };
+		B2251C751CCEA26800C23540 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2251C741CCEA26800C23540 /* MediaPlayer.framework */; };
 		B229F0981A2E219A0094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B229F0991A2E219A0094A8B3 /* yt-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F0971A2E219A0094A8B3 /* yt-logo.c */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B229F09B1A2E47CA0094A8B3 /* instagram-logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -826,6 +829,9 @@
 		AEFBC49E18A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGridlikeViewDataSourceProxy.m; sourceTree = "<group>"; };
 		AEFBC4A518A553AF00E24BBB /* STRTableViewDataSourceProxySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRTableViewDataSourceProxySpec.mm; sourceTree = "<group>"; };
 		AEFBF15E188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRInteractiveAdViewControllerSpec.mm; sourceTree = "<group>"; };
+		B2251C701CCEA22100C23540 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B2251C711CCEA22100C23540 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		B2251C741CCEA26800C23540 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		B229F0971A2E219A0094A8B3 /* yt-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "yt-logo.c"; sourceTree = "<group>"; };
 		B229F09A1A2E47CA0094A8B3 /* instagram-logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "instagram-logo.c"; sourceTree = "<group>"; };
 		B229F09D1A2E486A0094A8B3 /* STRAdInstagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdInstagram.h; sourceTree = "<group>"; };
@@ -894,6 +900,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2251C751CCEA26800C23540 /* MediaPlayer.framework in Frameworks */,
+				B2251C721CCEA22100C23540 /* AVFoundation.framework in Frameworks */,
+				B2251C731CCEA22100C23540 /* AVKit.framework in Frameworks */,
 				AE131E081898622800891A93 /* AdSupport.framework in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
 				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
@@ -1280,6 +1289,9 @@
 		AE8ED3E51885ADF00004AB32 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2251C741CCEA26800C23540 /* MediaPlayer.framework */,
+				B2251C701CCEA22100C23540 /* AVFoundation.framework */,
+				B2251C711CCEA22100C23540 /* AVKit.framework */,
 				AE46CE6E189849B00096BDE9 /* AdSupport.framework */,
 				AE8ED3E61885ADF00004AB32 /* Foundation.framework */,
 				AE8ED3F41885ADF00004AB32 /* XCTest.framework */,
@@ -1540,7 +1552,7 @@
 		AE8ED3DB1885ADF00004AB32 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Sharethrough;
 			};
 			buildConfigurationList = AE8ED3DE1885ADF00004AB32 /* Build configuration list for PBXProject "SharethroughSDK" */;
@@ -2468,7 +2480,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_MODULES_AUTOLINK = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2493,7 +2505,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2504,7 +2516,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_MODULES_AUTOLINK = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;

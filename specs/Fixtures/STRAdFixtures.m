@@ -110,9 +110,9 @@
     return ad;
 }
 
-+ (STRAdClickout *)privacyInformationAd {
++ (STRAdClickout *)privacyInformationAdWithOptOutURL:(NSURL *)optOutURL {
     STRAdClickout *disclosureAd = [STRAdClickout new];
-    disclosureAd.mediaURL = [NSURL URLWithString:@"http://platform-cdn.sharethrough.com/privacy-policy.html"];
+    disclosureAd.mediaURL = optOutURL;
     disclosureAd.title = @"Privacy Information";
     disclosureAd.action = STRClickoutAd;
 

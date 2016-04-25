@@ -134,7 +134,7 @@ presentingViewController:(UIViewController *)presentingViewController
 
 - (IBAction)tappedFakeDisclosureBtn
 {
-    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAd]
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAdWithOptOutURL:self.advertisement.optOutUrl]
                                                                                                device:[UIDevice currentDevice]
                                                                                           application:[UIApplication sharedApplication]
                                                                                         beaconService:nil

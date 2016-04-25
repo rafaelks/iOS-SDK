@@ -52,6 +52,28 @@ describe(@"STRAdvertisement", ^{
             logoView.frame.size.width should equal(24);
         });
     });
+
+    describe(@"-optOutUrl", ^{
+        describe(@"when the DSP opt our url is not present", ^{
+            it(@"returns just the platform url", ^{
+                NSURL *expected = [NSURL URLWithString:@"http://platform-cdn.sharethrough.com/privacy-policy.html"];
+                [ad optOutUrl] should equal(expected);
+            });
+        });
+
+        describe(@"when the DSP opt our url is present", ^{
+            beforeEach(^{
+                ad.optOutText = @"This is some privacy info";
+                ad.optOutUrlString = @"https://example.co/privacy";
+            });
+
+            it(@"returns the url with the encoded params", ^{
+                NSURL *expected = [NSURL URLWithString:@"http://platform-cdn.sharethrough.com/privacy-policy.html?opt_out_url=https%3A%2F%2Fexample.co%2Fprivacy&opt_out_text=This%20is%20some%20privacy%20info"];
+                NSURL *actual = [ad optOutUrl];
+                actual should equal(expected);
+            });
+        });
+    });
 });
 
 SPEC_END
