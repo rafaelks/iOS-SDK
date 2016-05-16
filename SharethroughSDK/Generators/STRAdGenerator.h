@@ -9,15 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @protocol STRAdView, STRAdViewDelegate;
-@class STRAdPlacement, STRAdService, STRBeaconService, STRInjector, STRPromise;
+@class STRAdPlacement, STRAdService, STRBeaconService, STRInjector, STRPromise, STRAsapService;
 
 @interface STRAdGenerator : NSObject
 
-- (id)initWithAdService:(STRAdService *)adService injector:(STRInjector *)injector;
+- (id)initWithAsapService:(STRAsapService *)asapService injector:(STRInjector *)injector;
 
 - (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement;
-- (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
 
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement;
-- (STRPromise *)prefetchForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
 @end

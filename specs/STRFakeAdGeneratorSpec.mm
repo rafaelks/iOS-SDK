@@ -16,14 +16,6 @@ describe(@"STRFakeAdGenerator", ^{
     beforeEach(^{
         generator = [STRFakeAdGenerator new];
     });
-
-    it(@"raises exception on default initializer", ^{
-        __block id dummyGenerator;
-        expect(^{
-            dummyGenerator = [[STRFakeAdGenerator alloc] initWithAdService:nil
-                                                                  injector:nil];
-        }).to(raise_exception);
-    });
     
     describe(@"-placeAdInView:placementKey:presentingViewController:delegate:", ^{
         __block STRFullAdView *view;

@@ -85,7 +85,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
                 adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(NO);
 
-                returnedPromise = [service fetchAdForPlacement:adPlacement];
+                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
 
             it(@"does not make a request to the ad server", ^{
@@ -114,7 +114,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
                 adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
                 
-                returnedPromise = [service fetchAdForPlacement:adPlacement];
+                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
             
             it(@"does not make a request to the ad server", ^{
@@ -143,7 +143,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
                 adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
 
-                returnedPromise = [service fetchAdForPlacement:adPlacement];
+                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
 
             it(@"makes a request to the ad server", ^{
@@ -162,7 +162,7 @@ describe(@"STRAdService", ^{
 
                 it(@"makes a request to the ad server", ^{
                     [(id<CedarDouble>)restClient reset_sent_messages];
-                    returnedPromise = [service fetchAdForPlacement:adPlacement];
+                    returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
 
                     restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"", @"appId": @"", @"uid" : @"fakeUUID" });
                 });
@@ -192,7 +192,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
                 adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).and_return(YES);
 
-                returnedPromise = [service fetchAdForPlacement:adPlacement];
+                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
 
             it(@"returns a pendingRequestInProgress error", ^{
@@ -207,7 +207,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:));
                 adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
 
-                returnedPromise = [service fetchAdForPlacement:adPlacement];
+                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:NO];
             });
 
             it(@"makes a request to the ad server", ^{
@@ -242,7 +242,7 @@ describe(@"STRAdService", ^{
                         });
 
                         it(@"saves the ad in the cache", ^{
-                            adCache should have_received(@selector(saveAds:forPlacement:andInitializeAtIndex:));
+                            adCache should have_received(@selector(saveAds:forPlacement:andAssignAds:));
                         });
 
                         it(@"resolves the returned promise with an advertisement from the cache", ^{
@@ -500,7 +500,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
 
                 adPlacement.isDirectSold = YES;
-                returnedPromise = [service fetchAdForPlacement:adPlacement];
+                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
 
             it(@"does not make a request to the ad server", ^{
@@ -560,7 +560,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
                 adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).and_return(YES);
 
-                returnedPromise = [service fetchAdForPlacement:adPlacement];
+                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
 
             it(@"returns a pendingRequestInProgress error", ^{
@@ -575,7 +575,7 @@ describe(@"STRAdService", ^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:));
                 adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
 
-                returnedPromise = [service fetchAdForPlacement:adPlacement];
+                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
 
             it(@"makes a request to the ad server", ^{
@@ -610,7 +610,7 @@ describe(@"STRAdService", ^{
                         });
 
                         it(@"saves the ad in the cache", ^{
-                            adCache should have_received(@selector(saveAds:forPlacement:andInitializeAtIndex:));
+                            adCache should have_received(@selector(saveAds:forPlacement:andAssignAds:));
                         });
 
                         it(@"resolves the returned promise with an advertisement from the cache", ^{

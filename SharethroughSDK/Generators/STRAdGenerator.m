@@ -10,19 +10,20 @@
 
 #import <objc/runtime.h>
 
-#import "STRAdService.h"
-#import "STRAdvertisement.h"
 #import "STRAdPlacement.h"
 #import "STRAdRenderer.h"
+#import "STRAdService.h"
+#import "STRAdvertisement.h"
 #import "STRAdViewDelegate.h"
+#import "STRAsapService.h"
 #import "STRDeferred.h"
 #import "STRInjector.h"
-#import "STRPromise.h"
 #import "STRLogging.h"
+#import "STRPromise.h"
 
 @interface STRAdGenerator ()
 
-@property (nonatomic, strong) STRAdService *adService;
+@property (nonatomic, strong) STRAsapService *asapService;
 @property (nonatomic, weak) STRInjector *injector;
 
 @property (nonatomic, weak) UIView *spinner;
@@ -31,12 +32,12 @@
 
 @implementation STRAdGenerator
 
-- (id)initWithAdService:(STRAdService *)adService
-               injector:(STRInjector *)injector
+- (id)initWithAsapService:(STRAsapService *)asapService
+                 injector:(STRInjector *)injector
 {
     self = [super init];
     if (self) {
-        self.adService = adService;
+        self.asapService = asapService;
         self.injector = injector;
     }
     return self;
@@ -44,21 +45,13 @@
 
 - (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement {
     TLog(@"pkey:%@",placement.placementKey);
-    return [self placeAdInPlacement:placement auctionParameterKey:nil auctionParameterValue:nil];
-}
 
-- (STRPromise *)placeAdInPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue {
-    TLog(@"pkey:%@ apKey:%@, apValue%@",placement.placementKey, apKey, apValue);
     STRDeferred *deferred = [STRDeferred defer];
     [self addSpinnerToView:placement.adView];
     [self clearTextFromView:placement.adView];
 
     STRPromise *adPromise;
-    if (apKey && apValue && apKey.length > 0 && apValue.length > 0){
-        adPromise = [self.adService fetchAdForPlacement:placement auctionParameterKey:apKey auctionParameterValue:apValue];
-    } else {
-        adPromise = [self.adService fetchAdForPlacement:placement];
-    }
+    adPromise = [self.asapService fetchAdForPlacement:placement isPrefetch:NO];
 
     [adPromise then:^id(STRAdvertisement *ad) {
         TLog(@"Generator received ckey:%@", ad.creativeKey);
@@ -86,17 +79,7 @@
 
 - (STRPromise *)prefetchAdForPlacement:(STRAdPlacement *)placement {
     TLog(@"pkey:%@",placement.placementKey);
-    return [self.adService prefetchAdsForPlacement:placement];
-}
-
-- (STRPromise *)prefetchForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue {
-    TLog(@"pkey:%@ apKey:%@, apValue%@",placement.placementKey, apKey, apValue);
-    if (apKey && apValue && apKey.length > 0 && apValue.length > 0) {
-        return [self.adService fetchAdForPlacement:placement auctionParameterKey:apKey auctionParameterValue:apValue];
-    } else {
-        NSLog(@"Invalid parameter for STX, %@=%@ is not valid. Fetching a monetize creative.", apKey, apValue);
-        return [self.adService prefetchAdsForPlacement:placement];
-    }
+    return [self.asapService fetchAdForPlacement:placement isPrefetch:YES];
 }
 
 #pragma mark - Private

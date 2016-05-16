@@ -14,7 +14,7 @@
 - (instancetype)initWithDateProvider:(STRDateProvider *)dateProvider;
 - (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds;
 
-- (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeIndex;
+- (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andAssignAds:(BOOL)assignAds;
 
 - (STRAdvertisement *)fetchCachedAdForPlacement:(STRAdPlacement *)placement;
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey;

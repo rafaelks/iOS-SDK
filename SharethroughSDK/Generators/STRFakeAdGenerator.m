@@ -151,7 +151,7 @@ presentingViewController:(UIViewController *)presentingViewController
     STRDeferred *deferred = [STRDeferred defer];
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
     NSMutableArray *creatives = [[NSMutableArray alloc] initWithArray:@[self.advertisement]];
-    [adCache saveAds:creatives forPlacement:placement andInitializeAtIndex:NO];
+    [adCache saveAds:creatives forPlacement:placement andAssignAds:NO];
     [deferred resolveWithValue:nil];
     return deferred.promise;
 }

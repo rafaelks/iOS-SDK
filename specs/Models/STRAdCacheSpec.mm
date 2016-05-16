@@ -36,7 +36,7 @@ describe(@"STRAdCache", ^{
         });
     });
 
-    describe(@"-saveAds:forPlacement:andInitializeAtIndex:", ^{
+    describe(@"-saveAds:forPlacement:andAssignAds:", ^{
         __block NSMutableArray *creatives;
         __block STRAdvertisement *creative;
         __block STRAdPlacement *placement;
@@ -55,12 +55,12 @@ describe(@"STRAdCache", ^{
 
         describe(@"when initializing at the placement index", ^{
             it(@"has an ad ready for the placement index that cached it", ^{
-                [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:YES];
+                [cache saveAds:creatives forPlacement:placement andAssignAds:YES];
                 [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
 
             it(@"does not have an ad for a different placement index", ^{
-                [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:YES];
+                [cache saveAds:creatives forPlacement:placement andAssignAds:YES];
                 placement.adIndex = 2;
                 [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_falsy;
             });
@@ -68,12 +68,12 @@ describe(@"STRAdCache", ^{
 
         describe(@"when not initializing at the placement index", ^{
             it(@"has an ad ready for the placement index that cached it", ^{
-                [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:NO];
+                [cache saveAds:creatives forPlacement:placement andAssignAds:NO];
                 [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
 
             it(@"has an ad for a different placement index", ^{
-                [cache saveAds:creatives forPlacement:placement andInitializeAtIndex:NO];
+                [cache saveAds:creatives forPlacement:placement andAssignAds:NO];
                 placement.adIndex = 2;
                 [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
@@ -112,8 +112,8 @@ describe(@"STRAdCache", ^{
                 [invocation setReturnValue:&date];
             });
 
-            [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:YES];
-            [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:YES];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andAssignAds:YES];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andAssignAds:YES];
         });
 
         it(@"returns nil if no ad exists", ^{
@@ -163,8 +163,8 @@ describe(@"STRAdCache", ^{
                 [invocation setReturnValue:&date];
             });
 
-            [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:NO];
-            [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:NO];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andAssignAds:NO];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andAssignAds:NO];
         });
 
         it(@"returns nil if no ad exists", ^{
@@ -217,8 +217,8 @@ describe(@"STRAdCache", ^{
                     [invocation setReturnValue:&date];
                 });
 
-                [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andInitializeAtIndex:YES];
-                [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andInitializeAtIndex:YES];
+                [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andAssignAds:YES];
+                [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andAssignAds:YES];
             });
 
             it(@"returns NO if no ad has been fetched", ^{
@@ -302,7 +302,7 @@ describe(@"STRAdCache", ^{
             assignedAd1 = [[STRAdvertisement alloc] init];
             assignedAd2 = [[STRAdvertisement alloc] init];
 
-            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andInitializeAtIndex:NO];
+            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andAssignAds:NO];
         });
 
         describe(@"when no ads are assigned", ^{
@@ -363,7 +363,7 @@ describe(@"STRAdCache", ^{
             assignedAd1 = [[STRAdvertisement alloc] init];
             assignedAd2 = [[STRAdvertisement alloc] init];
 
-            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andInitializeAtIndex:NO];
+            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andAssignAds:NO];
         });
 
         describe(@"when no ads are assigned", ^{
@@ -396,7 +396,7 @@ describe(@"STRAdCache", ^{
             assignedAd1 = [[STRAdvertisement alloc] init];
             assignedAd2 = [[STRAdvertisement alloc] init];
 
-            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andInitializeAtIndex:NO];
+            [cache saveAds:[@[assignedAd1, assignedAd2, cachedAd1, cachedAd2] mutableCopy] forPlacement:placement andAssignAds:NO];
         });
 
         describe(@"when no ads are assigned", ^{
@@ -433,13 +433,13 @@ describe(@"STRAdCache", ^{
         });
 
         it(@"returns YES if there is only one ad cached", ^{
-            [cache saveAds:[NSMutableArray arrayWithArray:@[[NSObject new]]] forPlacement:placement andInitializeAtIndex:NO];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[[NSObject new]]] forPlacement:placement andAssignAds:NO];
 
             [cache shouldBeginFetchForPlacement:placement.placementKey] should be_truthy;
         });
 
         it(@"returns NO if there are more than 1 ad available", ^{
-            [cache saveAds:[NSMutableArray arrayWithArray:@[[NSObject new], [NSObject new], [NSObject new]]] forPlacement:placement andInitializeAtIndex:NO];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[[NSObject new], [NSObject new], [NSObject new]]] forPlacement:placement andAssignAds:NO];
 
             [cache shouldBeginFetchForPlacement:placement.placementKey] should be_falsy;
         });

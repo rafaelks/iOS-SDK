@@ -4,6 +4,7 @@
 #import "STRAdGenerator.h"
 #import "STRAdRenderer.h"
 #import "STRAdService.h"
+#import "STRAsapService.h"
 #import "STRBeaconService.h"
 #import "STRDateProvider.h"
 #import "STRGridlikeViewAdGenerator.h"
@@ -29,6 +30,8 @@
     }];
 
     [injector bind:[ASIdentifierManager class] toInstance:[ASIdentifierManager sharedManager]];
+    
+    [injector bind: [UIDevice class] toInstance:[UIDevice currentDevice]];
 
     [injector bind:[NSRunLoop class] toInstance:[NSRunLoop mainRunLoop]];
 
@@ -58,9 +61,18 @@
                                     asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]
                                                injector:injector];
     }];
+    
+    [injector bind:[STRAsapService class] toBlock:^id(STRInjector *injector) {
+       return [[STRAsapService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
+                                                 adCache:[injector getInstance:[STRAdCache class]]
+                                               adService:[injector getInstance:[STRAdService class]]
+                                     asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]
+                                                  device:[injector getInstance:[UIDevice class]]
+                                                injector:injector];
+    }];
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
-        return [[STRAdGenerator alloc] initWithAdService:[injector getInstance:[STRAdService class]]
+        return [[STRAdGenerator alloc] initWithAsapService:[injector getInstance:[STRAsapService class]]
                                                 injector:injector];
     }];
 

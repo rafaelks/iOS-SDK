@@ -14,6 +14,7 @@
 @interface STRRestClient : NSObject
 
 - (id)initWithNetworkClient:(STRNetworkClient *)networkClient;
+- (STRPromise *)getAsapInfoWithParameters:(NSDictionary *)parameters;
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters;
 - (STRPromise *)getDFPPathForPlacement:(NSString *)placementKey;
 - (void)sendBeaconWithParameters:(NSDictionary *)parameters;

@@ -1,18 +1,20 @@
 #import "STRAdGenerator.h"
-#import "STRFullAdView.h"
-#import "STRAdService.h"
-#import "STRDeferred.h"
-#import "STRAdvertisement.h"
-#import "STRInteractiveAdViewController.h"
-#include "UIGestureRecognizer+Spec.h"
-#import <objc/runtime.h>
-#import "STRInjector.h"
-#import "STRAppModule.h"
-#import "STRAdViewDelegate.h"
+
 #import "STRAdPlacement.h"
 #import "STRAdRenderer.h"
+#import "STRAdService.h"
+#import "STRAdvertisement.h"
+#import "STRAdViewDelegate.h"
+#import "STRAppModule.h"
+#import "STRAsapService.h"
 #import "STRDateProvider.h"
+#import "STRDeferred.h"
+#import "STRFullAdView.h"
+#import "STRInjector.h"
+#import "STRInteractiveAdViewController.h"
 #import "UIView+Visible.h"
+#import <objc/runtime.h>
+#include "UIGestureRecognizer+Spec.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -21,7 +23,7 @@ SPEC_BEGIN(STRAdGeneratorSpec)
 
 describe(@"STRAdGenerator", ^{
     __block STRAdGenerator *generator;
-    __block STRAdService *adService;
+    __block STRAsapService *asapService;
     __block STRAdvertisement *ad;
     __block STRInjector *injector;
     __block STRAdRenderer *renderer;
@@ -34,8 +36,8 @@ describe(@"STRAdGenerator", ^{
     beforeEach(^{
         injector = [STRInjector injectorForModule:[STRAppModule new]];
 
-        adService = nice_fake_for([STRAdService class]);
-        [injector bind:[STRAdService class] toInstance:adService];
+        asapService = nice_fake_for([STRAsapService class]);
+        [injector bind:[STRAsapService class] toInstance:asapService];
 
         renderer = nice_fake_for([STRAdRenderer class]);
         
@@ -79,7 +81,7 @@ describe(@"STRAdGenerator", ^{
         beforeEach(^{
             deferred = [STRDeferred defer];
 
-            adService stub_method(@selector(fetchAdForPlacement:)).and_return(deferred.promise);
+            asapService stub_method(@selector(fetchAdForPlacement:isPrefetch:)).and_return(deferred.promise);
 
             [generator placeAdInPlacement:placement];
 
@@ -97,26 +99,7 @@ describe(@"STRAdGenerator", ^{
         });
 
         it(@"makes a request to the ad service", ^{
-            adService should have_received(@selector(fetchAdForPlacement:)).with(placement);
-        });
-
-        describe(@"when there is an auction parameter and value", ^{
-            it(@"passes the parameter to the ad service", ^{
-                [generator placeAdInPlacement:placement auctionParameterKey:@"ckey" auctionParameterValue:@"abc123"];
-                adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:)).with(placement, @"ckey", @"abc123");
-            });
-
-            it(@"avoids passing empty strings", ^{
-                [(id<CedarDouble>)adService reset_sent_messages];
-                [generator placeAdInPlacement:placement auctionParameterKey:@"" auctionParameterValue:@""];
-                adService should have_received(@selector(fetchAdForPlacement:)).with(placement);
-            });
-
-            it(@"avoids passing nil values", ^{
-                [(id<CedarDouble>)adService reset_sent_messages];
-                [generator placeAdInPlacement:placement auctionParameterKey:nil auctionParameterValue:nil];
-                adService should have_received(@selector(fetchAdForPlacement:)).with(placement);
-            });
+            asapService should have_received(@selector(fetchAdForPlacement:isPrefetch:)).with(placement, NO);
         });
 
         describe(@"follows up with its delegate", ^{
@@ -176,31 +159,7 @@ describe(@"STRAdGenerator", ^{
         it(@"asks the ad service to prefetch", ^{
             [generator prefetchAdForPlacement:placement];
 
-            adService should have_received(@selector(prefetchAdsForPlacement:)).with(placement);
-        });
-    });
-
-    describe(@"-prefetchForPlacement:auctionParameterKey:auctionParameterValue", ^{
-        describe(@"when the auctionParams are nil", ^{
-            it(@"fetches a monetize creative", ^{
-                [generator prefetchForPlacement:placement auctionParameterKey:nil auctionParameterValue:nil];
-
-                adService should have_received(@selector(prefetchAdsForPlacement:)).with(placement);
-            });
-        });
-
-        describe(@"when the auctionParams are empty", ^{
-            it(@"fetches a monetize creative", ^{
-                [generator prefetchForPlacement:placement auctionParameterKey:@"" auctionParameterValue:@""];
-
-                adService should have_received(@selector(prefetchAdsForPlacement:)).with(placement);
-            });
-        });
-
-        it(@"calls into the ad service with the parameters", ^{
-            [generator prefetchForPlacement:placement auctionParameterKey:@"ckey" auctionParameterValue:@"abc123"];
-
-            adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:)).with(placement, @"ckey", @"abc123");
+            asapService should have_received(@selector(fetchAdForPlacement:isPrefetch:)).with(placement, YES);
         });
     });
 
@@ -212,7 +171,7 @@ describe(@"STRAdGenerator", ^{
             view = [STRPlainAdView new];
             deferred = [STRDeferred defer];
 
-            adService stub_method(@selector(fetchAdForPlacement:)).and_return(deferred.promise);
+            asapService stub_method(@selector(fetchAdForPlacement:isPrefetch:)).and_return(deferred.promise);
             
             STRAdPlacement *placement = [[STRAdPlacement alloc] init];
             placement.adView = view;

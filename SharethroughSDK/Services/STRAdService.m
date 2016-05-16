@@ -60,32 +60,14 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     return self;
 }
 
-- (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement {
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch{
     TLog(@"");
     if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:YES]) {
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
         [deferred resolveWithValue:cachedAd];
         if (!placement.isDirectSold && [self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
-            [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
-        }
-        return deferred.promise;
-    }
-    if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
-        return [self requestInProgressError];
-    }
-
-    return [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
-}
-
-- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement {
-    TLog(@"");
-    if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:YES]) {
-        STRDeferred *deferred = [STRDeferred defer];
-        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
-        [deferred resolveWithValue:cachedAd];
-        if (!placement.isDirectSold && [self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
-            [self beginFetchForPlacement:placement andInitializeAtIndex:NO];
+            [self beginFetchForPlacement:placement isPrefetch:YES];
         }
         return deferred.promise;
     }
@@ -94,7 +76,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         return [self requestInProgressError];
     }
 
-    return [self beginFetchForPlacement:placement andInitializeAtIndex:YES];
+    return [self beginFetchForPlacement:placement isPrefetch:prefetch];
 }
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement
@@ -118,7 +100,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey auctionParameterKey:apKey auctionParameterValue:apValue];
     return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{ apKey : apValue }]
                           forPlacement:placement
-                  andInitializeAtIndex:YES];
+                  isPrefetch:NO];
 }
 
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement {
@@ -128,13 +110,13 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 #pragma mark - Private
 
-- (STRPromise *)beginFetchForPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeAtIndex{
+- (STRPromise *)beginFetchForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch{
     TLog(@"");
     [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey];
-    return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{}] forPlacement:placement andInitializeAtIndex:initializeAtIndex];
+    return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{}] forPlacement:placement isPrefetch:prefetch];
 }
 
-- (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeAtIndex {
+- (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch {
     TLog(@"");
     STRDeferred *deferred = [STRDeferred defer];
 
@@ -160,9 +142,9 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacement:placement];
         STRPromise *creativeImagesPromise = [STRPromise when:creativesArray];
         [creativeImagesPromise then:^id(NSMutableArray *creatives) {
-            [self.adCache saveAds:creatives forPlacement:placement andInitializeAtIndex:initializeAtIndex];
+            [self.adCache saveAds:creatives forPlacement:placement andAssignAds:!prefetch];
 
-            if (initializeAtIndex) {
+            if (!prefetch) {
                 [deferred resolveWithValue:[self.adCache fetchCachedAdForPlacement:placement]];
             } else {
                 [deferred resolveWithValue:creatives[0]];

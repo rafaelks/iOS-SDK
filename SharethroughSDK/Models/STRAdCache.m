@@ -58,8 +58,8 @@
     return self.STRPlacementAdCacheTimeoutInSeconds;
 }
 
-- (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andInitializeAtIndex:(BOOL)initializeIndex {
-    TLog(@"placementKey:%@, initialize:%@", placement.placementKey, initializeIndex ? @"YES" : @"NO");
+- (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andAssignAds:(BOOL)assignAds {
+    TLog(@"placementKey:%@, assignAds:%@", placement.placementKey, assignAds ? @"YES" : @"NO");
     NSMutableArray *cachedCreativesQueue = [self.cachedCreatives objectForKey:placement.placementKey];
     if (cachedCreativesQueue == nil) {
         cachedCreativesQueue = creatives;
@@ -75,7 +75,7 @@
         indexToCreativeMap = [[NSMutableDictionary alloc] init];
         [self.cachedIndexToCreativeMaps setObject:indexToCreativeMap forKey:placement.placementKey];
     }
-    if (initializeIndex) {
+    if (assignAds) {
         STRAdvertisement *ad = [cachedCreativesQueue dequeue];
         [indexToCreativeMap setObject:ad forKey:[NSNumber numberWithLong:placement.adIndex]];
     }

@@ -22,8 +22,7 @@ extern const NSInteger kRequestInProgress;
      asIdentifierManager:(ASIdentifierManager *)identifierManager
                 injector:(STRInjector *)injector;
 
-- (STRPromise *)prefetchAdsForPlacement:(STRAdPlacement *)placement;
-- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement;
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)initialize;
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement;
 

@@ -6,10 +6,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 #target 'Sharethrough-SDK' do
 #end
 
-#target 'Sharethrough-SDK+DFP' do
-#  pod 'Google-Mobile-Ads-SDK', '~> 6.12'
-#end
-
 #target 'SharethroughSDK' do
 #end
 
@@ -18,6 +14,5 @@ target 'specs' do
   pod 'PivotalCoreKit', '~> 0.3'
   pod 'PivotalCoreKit/UIKit/SpecHelper'
   pod 'PivotalCoreKit/Foundation/SpecHelper/Fakes'
-  pod 'Google-Mobile-Ads-SDK', '~> 7.0'
 end
 

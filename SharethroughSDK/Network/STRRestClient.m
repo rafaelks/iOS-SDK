@@ -17,6 +17,7 @@
 @property (nonatomic, copy) NSString *adServerHostName;
 @property (nonatomic, copy) NSString *beaconServerHostName;
 @property (nonatomic, copy) NSString *dfpPathUrlFormat;
+@property (nonatomic, copy) NSString *asapServerHostName;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 
 @end
@@ -29,11 +30,35 @@
         self.adServerHostName = @"https://btlr.sharethrough.com/v3";
         self.beaconServerHostName = @"https://b.sharethrough.com/butler";
         self.dfpPathUrlFormat = @"https://platform-cdn.sharethrough.com/placements/%@/sdk.json";
+        self.asapServerHostName = @"https://asap-staging.sharethrough.com/v1";
         self.networkClient = networkClient;
     }
     return self;
 }
 
+- (STRPromise *)getAsapInfoWithParameters:(NSDictionary *)parameters {
+    TLog(@"params:%@", parameters);
+    STRDeferred *deferred = [STRDeferred defer];
+    
+    NSString *urlString = [self.asapServerHostName stringByAppendingString:[self encodedQueryParams:parameters]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    
+    [[self.networkClient get:request] then:^id(NSData *data) {
+        NSError *jsonParseError;
+        id parsedObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
+        if (jsonParseError) {
+            [deferred rejectWithError:jsonParseError];
+        } else {
+            [deferred resolveWithValue:parsedObj];
+        }
+        return data;
+    } error:^id(NSError *error) {
+        [deferred rejectWithError:error];
+        return error;
+    }];
+    
+    return deferred.promise;
+}
 
 - (STRPromise *)getWithParameters:(NSDictionary *)parameters {
     TLog(@"params:%@",parameters);
