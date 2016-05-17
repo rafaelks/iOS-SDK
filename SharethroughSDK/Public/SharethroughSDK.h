@@ -32,40 +32,6 @@
 - (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate;
 
 /**
- This method can be used to determine if an ad is available.
- @param placementKey The unique identifier for the ad slot
- @param index The index of the ad if there are multiple ads shown using a single placementKey, i.e. infinite scroll. If only ad is shown for the placementKey, pass 0 every time.
- */
-- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey atIndex:(NSInteger)index;
-
-/**
- + This method will return the currently assigned ad if one is available.
- + It will return nil if no ad is available at this time.
- + @param placementKey The unique identifier for the ad slot
- + @param index The index of the ad if there are multiple ads shown using a single placementKey, i.e. infinite scroll. If only ad is shown for the placementKey, pass 0 every time.
- + */
-- (STRAdvertisement *)AdForPlacement:(NSString *)placementKey atIndex:(NSInteger)index;
-
-/**
- This method can be used to determine the total number of ads available for a placementKey.
- This will include the assigned and unassigned but cached ads.
- @param placementKey The unique identifier for the ad slot
- */
-- (NSInteger)totalNumberOfAdsAvailableForPlacement:(NSString *)placementKey;
-
-/**
- This method can be used to determine the number unassigned ads available for a placementKey.
- @param placementKey The unique identifier for the ad slot
- */
-- (NSInteger)unassignedNumberOfAdsAvailableForPlacement:(NSString *)placementKey;
-
-/**
- This method will clear the ads currently cached for the placement key
- @param placementKey The unique identifier for the ad slot
- */
-- (void)clearCachedAdsForPlacement:(NSString *)placementKey;
-
-/**
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
  @param view The view to place ad data onto
  @param placementKey The unique identifier for the ad slot
@@ -113,6 +79,41 @@
  */
 
 - (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds;
+
+
+/**
+ This method can be used to determine if an ad is available.
+ @param placementKey The unique identifier for the ad slot
+ @param index The index of the ad if there are multiple ads shown using a single placementKey, i.e. infinite scroll. If only ad is shown for the placementKey, pass 0 every time.
+ */
+- (BOOL)isAdAvailableForPlacement:(NSString *)placementKey atIndex:(NSInteger)index;
+
+/**
+ + This method will return the currently assigned ad if one is available.
+ + It will return nil if no ad is available at this time.
+ + @param placementKey The unique identifier for the ad slot
+ + @param index The index of the ad if there are multiple ads shown using a single placementKey, i.e. infinite scroll. If only ad is shown for the placementKey, pass 0 every time.
+ + */
+- (STRAdvertisement *)AdForPlacement:(NSString *)placementKey atIndex:(NSInteger)index;
+
+/**
+ This method can be used to determine the total number of ads available for a placementKey.
+ This will include the assigned and unassigned but cached ads.
+ @param placementKey The unique identifier for the ad slot
+ */
+- (NSInteger)totalNumberOfAdsAvailableForPlacement:(NSString *)placementKey;
+
+/**
+ This method can be used to determine the number unassigned ads available for a placementKey.
+ @param placementKey The unique identifier for the ad slot
+ */
+- (NSInteger)unassignedNumberOfAdsAvailableForPlacement:(NSString *)placementKey;
+
+/**
+ This method will clear the ads currently cached for the placement key
+ @param placementKey The unique identifier for the ad slot
+ */
+- (void)clearCachedAdsForPlacement:(NSString *)placementKey;
 
 /**---------------------------------------------------------------------------------------
  * @name TestSafeInstance
