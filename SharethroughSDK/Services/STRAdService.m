@@ -124,6 +124,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     [adPromise then:^id(NSDictionary *fullJSON) {
         NSArray *creativesJSON = fullJSON[@"creatives"];
         NSDictionary *placementJSON = fullJSON[@"placement"];
+        NSString *adserverRequestId = fullJSON[@"adserverRequestId"];
 
         if ([creativesJSON count] == 0) {
             TLog(@"No creatives received");
@@ -136,7 +137,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         NSMutableArray *creativesArray = [NSMutableArray arrayWithCapacity:[creativesJSON count]];
 
         for (int i = 0; i < [creativesJSON count]; ++i) {
-            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacementKey:placement.placementKey withPlacementJSON:placementJSON]];
+            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacementKey:placement.placementKey withPlacementJSON:placementJSON withArid:adserverRequestId]];
         }
 
         [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacement:placement];
@@ -220,7 +221,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
     return [[adClass alloc] initWithInjector:self.injector];
 }
 
-- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacementKey:(NSString *)placementKey withPlacementJSON:(NSDictionary *)placementJSON {
+- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacementKey:(NSString *)placementKey withPlacementJSON:(NSDictionary *)placementJSON withArid:(NSString *)adserverRequestId {
     TLog(@"");
     STRDeferred *deferred = [STRDeferred defer];
 
@@ -248,10 +249,7 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         ad.thirdPartyBeaconsForSilentPlay = creativeJSON[@"beacons"][@"silent_play"];
         ad.thirdPartyBeaconsForTenSecondSilentPlay = creativeJSON[@"beacons"][@"ten_second_silent_play"];
         ad.action = creativeJSON[@"action"];
-        ad.signature = creativeWrapperJSON[@"signature"];
-        ad.auctionPrice = creativeWrapperJSON[@"price"];
-        ad.auctionType = creativeWrapperJSON[@"priceType"];
-        ad.adserverRequestId = creativeWrapperJSON[@"adserverRequestId"];
+        ad.adserverRequestId = adserverRequestId;
         ad.auctionWinId = creativeWrapperJSON[@"auctionWinId"];
         ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
         ad.thumbnailURL = [self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]];

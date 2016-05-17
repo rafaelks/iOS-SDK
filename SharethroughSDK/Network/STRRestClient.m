@@ -27,7 +27,7 @@
 - (id)initWithNetworkClient:(STRNetworkClient *)networkClient {
     self = [super init];
     if (self) {
-        self.adServerHostName = @"https://btlr.sharethrough.com/v3";
+        self.adServerHostName = @"https://btlr.sharethrough.com/v4";
         self.beaconServerHostName = @"https://b.sharethrough.com/butler";
         self.dfpPathUrlFormat = @"https://platform-cdn.sharethrough.com/placements/%@/sdk.json";
         self.asapServerHostName = @"https://asap-staging.sharethrough.com/v1";

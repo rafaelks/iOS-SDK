@@ -259,9 +259,6 @@ describe(@"STRAdService", ^{
 //                            ad.creativeKey should equal(@"imagination");
 //                            ad.variantKey should equal(@"variation");
 //                            ad.placementKey should equal(@"placementKey");
-//                            ad.signature should equal(@"fakeSignature");
-//                            ad.auctionType should equal(@"type");
-//                            ad.auctionPrice should equal(@"1.0");
 //                            ad.action should equal(expectedAction);
 //
 //                            ad.thirdPartyBeaconsForVisibility should equal(@[@"//reddit.com/ad?time=[timestamp]"]);
@@ -288,10 +285,7 @@ describe(@"STRAdService", ^{
                                      @"placement": [@{
                                              @"allow_instant_play": @false
                                      } mutableCopy],
-                                     @"creatives": @[[@{ @"signature": @"fakeSignature",
-                                                       @"price": @"1.0",
-                                                       @"priceType": @"type",
-                                                       @"creative": [@{
+                                     @"creatives": @[[@{@"creative": [@{
                                                                        @"description": @"Dogs this smart deserve a home.",
                                                                        @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
                                                                        @"title": @"Meet Porter. He's a Dog.",
@@ -627,9 +621,6 @@ describe(@"STRAdService", ^{
                             //                            ad.creativeKey should equal(@"imagination");
                             //                            ad.variantKey should equal(@"variation");
                             //                            ad.placementKey should equal(@"placementKey");
-                            //                            ad.signature should equal(@"fakeSignature");
-                            //                            ad.auctionType should equal(@"type");
-                            //                            ad.auctionPrice should equal(@"1.0");
                             //                            ad.action should equal(expectedAction);
                             //
                             //                            ad.thirdPartyBeaconsForVisibility should equal(@[@"//reddit.com/ad?time=[timestamp]"]);
@@ -653,10 +644,7 @@ describe(@"STRAdService", ^{
 
                 beforeEach(^{
                     responseData = @{
-                                     @"creatives": @[[@{ @"signature": @"fakeSignature",
-                                                         @"price": @"1.0",
-                                                         @"priceType": @"type",
-                                                         @"creative": [@{
+                                     @"creatives": @[[@{@"creative": [@{
                                                                          @"description": @"Dogs this smart deserve a home.",
                                                                          @"thumbnail_url": @"http://i1.ytimg.com/vi/BWAK0J8Uhzk/hqdefault.jpg",
                                                                          @"title": @"Meet Porter. He's a Dog.",
