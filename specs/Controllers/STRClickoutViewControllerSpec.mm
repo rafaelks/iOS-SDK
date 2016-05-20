@@ -45,10 +45,6 @@ describe(@"STRClickoutViewController", ^{
             controller.webview.request.URL should equal(advertisement.mediaURL);
         });
 
-        it(@"fires an article view beacon", ^{
-            beaconService should have_received(@selector(fireArticleViewForAd:)).with(advertisement);
-        });
-
         it(@"does not fire an articleViewDuration beacon yet", ^{
             beaconService should_not have_received(@selector(fireArticleDurationForAd:withDuration:));
         });

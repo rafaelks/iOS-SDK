@@ -46,7 +46,6 @@
     webView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
 
     if ([self.ad isKindOfClass:[STRAdArticle class]]) {
-        [self.beaconService fireArticleViewForAd:self.ad];
         [self initArticleTime];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initArticleTime) name:UIApplicationWillEnterForegroundNotification object:self];
     }

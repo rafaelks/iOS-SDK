@@ -174,6 +174,8 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
         [self.ad.action isEqualToString:STRVineAd])
     {
         [self.beaconService fireVideoPlayEvent:self.ad adSize:view.frame.size];
+    } else if ([self.ad.action isEqualToString:STRArticleAd]) {
+        [self.beaconService fireArticleViewForAd:self.ad];
     } else {
         [self.beaconService fireClickForAd:self.ad adSize:view.frame.size];
     }

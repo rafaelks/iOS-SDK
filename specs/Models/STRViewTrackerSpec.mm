@@ -275,6 +275,29 @@ describe(@"STRViewTracker", ^{
                 });
             });
 
+            context(@"when the ad is an article", ^{
+                beforeEach(^{
+                    ad.action = STRArticleAd;
+
+                    view.frame = CGRectMake(0, 0, 100, 100);
+                });
+
+                describe(@"the view is tapped on", ^{
+                    beforeEach(^{
+                        [(id<CedarDouble>)beaconService reset_sent_messages];
+                        [[view.gestureRecognizers lastObject] recognize];
+                    });
+
+                    it(@"does not fire off a clickout click beacon", ^{
+                        beaconService should_not have_received(@selector(fireClickForAd:adSize:));
+                    });
+
+                    it(@"fires an article view beacon", ^{
+                        beaconService should have_received(@selector(fireArticleViewForAd:)).with(ad);
+                    });
+                });
+            });
+
             context(@"when the ad is a pinterest", ^{
                 beforeEach(^{
                     ad.action = STRPinterestAd;
