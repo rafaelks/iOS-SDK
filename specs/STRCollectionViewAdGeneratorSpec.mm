@@ -44,8 +44,7 @@ describe(@"STRGridlikeViewAdGenerator UICollectionView", ^{
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"contentCell"];
         
         dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell"
-                                                                                   placementKey:@"placementKey"
-                                                                       presentingViewController:presentingViewController
+                                                                                      adPlacement:nil
                                                                                        injector:injector];
 
     });

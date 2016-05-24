@@ -1,10 +1,12 @@
 #import "STRGridlikeViewDataSourceProxy.h"
-#import "STRInjector.h"
-#import "STRAdGenerator.h"
-#import "STRAppModule.h"
-#import "STRAdPlacementAdjuster.h"
-#import "STRFakeAdGenerator.h"
+
 #import "STRAdCache.h"
+#import "STRAdGenerator.h"
+#import "STRAdPlacement.h"
+#import "STRAdPlacementAdjuster.h"
+#import "STRAppModule.h"
+#import "STRFakeAdGenerator.h"
+#import "STRInjector.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -43,8 +45,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
 
             expect(^{
                 proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil
-                                                                                 placementKey:@"placementKey"
-                                                                     presentingViewController:nil
+                                                                                    adPlacement:nil
                                                                                      injector:nil];
                 proxy.originalDataSource = dataSource;
             }).to_not(raise_exception);
@@ -57,8 +58,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
 
             expect(^{
                 proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil
-                                                                                 placementKey:@"placementKey"
-                                                                     presentingViewController:nil
+                                                                                    adPlacement:nil
                                                                                      injector:nil];
                 proxy.originalDataSource = dataSource;
             }).to_not(raise_exception);
@@ -74,8 +74,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
 
             expect(^{
                 proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil
-                                                                                 placementKey:@"placementKey"
-                                                                     presentingViewController:nil
+                                                                                    adPlacement:nil
                                                                                      injector:nil];
                 proxy.originalDataSource = dataSource;
             }).to_not(raise_exception);
@@ -91,8 +90,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
         it(@"allows a nil data source", ^{
             expect(^{
                 proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil
-                                                                                 placementKey:@"placementKey"
-                                                                     presentingViewController:nil
+                                                                                    adPlacement:nil
                                                                                      injector:nil];
             }).to_not(raise_exception);
 
@@ -104,8 +102,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
 
             expect(^{
                 proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil
-                                                                                 placementKey:@"placementKey"
-                                                                     presentingViewController:nil
+                                                                                    adPlacement:nil
                                                                                      injector:nil];
                 proxy.originalDataSource = dataSource;
             }).to(raise_exception);
@@ -113,31 +110,14 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
             proxy.originalDataSource should_not be_same_instance_as(dataSource);
 
         });
-
-        it(@"raises an exception when the placement key is nil", ^{
-            expect(^{
-                proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil
-                                                                                 placementKey:nil
-                                                                     presentingViewController:nil
-                                                                                     injector:nil];
-            }).to(raise_exception);
-        });
-
-        it(@"raises an exception when the placement key is too short", ^{
-            expect(^{
-                proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:nil
-                                                                                 placementKey:@"1234567"
-                                                                     presentingViewController:nil
-                                                                                     injector:nil];
-            }).to(raise_exception);
-        });
     });
 
     describe(@"-copyWithNewDataSource:", ^{
+        __block STRAdPlacement *fakePlacement;
         beforeEach(^{
+            fakePlacement = nice_fake_for([STRAdPlacement class]);
             proxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell"
-                                                                             placementKey:@"placementKey"
-                                                                 presentingViewController:presentingViewController
+                                                                                adPlacement:fakePlacement
                                                                                  injector:injector];
             proxy.originalDataSource = originalDataSource;
         });
@@ -149,8 +129,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
             newProxy should_not be_same_instance_as(proxy);
             newProxy.originalDataSource should be_same_instance_as(newDataSource);
             newProxy.adCellReuseIdentifier should equal(@"adCell");
-            newProxy.placementKey should equal(@"placementKey");
-            newProxy.presentingViewController should be_same_instance_as(presentingViewController);
+            newProxy.placement should be_same_instance_as(fakePlacement);
             newProxy.injector should be_same_instance_as(injector);
         });
     });

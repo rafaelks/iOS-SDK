@@ -6,6 +6,7 @@
 #import "STRFullTableViewDataSource.h"
 #import "STRTableViewCell.h"
 #import "STRAdCache.h"
+#import "STRAdPlacement.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -27,8 +28,14 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
         fakePlacementKey = @"fake-placement-key";
         fakeAdCache = nice_fake_for([STRAdCache class]);
         STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+        STRAdPlacement *placement = [[STRAdPlacement alloc] init];
+        placement.placementKey = fakePlacementKey;
 
-        STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
+        STRGridlikeViewDataSourceProxy *dataSourceProxy =
+            [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell"
+                                                                      adPlacement:placement
+                                                                         injector:injector];
+
         dataSourceProxy.originalDataSource = dataSource;
         dataSourceProxy.adjuster = adjuster;
         return dataSourceProxy;

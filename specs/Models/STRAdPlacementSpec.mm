@@ -16,7 +16,8 @@ describe(@"STRAdPlacement", ^{
                                                                            adIndex:0
                                                                       isDirectSold:NO
                                                                            DFPPath:nil
-                                                                       DFPDeferred:nil];
+                                                                       DFPDeferred:nil
+                                                                           customProperties:nil];
             }).to(raise_exception);
         });
 
@@ -29,7 +30,8 @@ describe(@"STRAdPlacement", ^{
                                                                            adIndex:0
                                                                       isDirectSold:NO
                                                                            DFPPath:nil
-                                                                       DFPDeferred:nil];
+                                                                       DFPDeferred:nil
+                                                                           customProperties:nil];
             }).to(raise_exception);
         });
     });

@@ -23,6 +23,7 @@ presentingViewController:(UIViewController *)presentingViewController
         isDirectSold:(BOOL)directSold
              DFPPath:(NSString *)DFPPath
          DFPDeferred:(STRDeferred *)deferred
+    customProperties:(NSDictionary *)customProperties
 {
     if (placementKey == nil || [placementKey length] < 8) {
         [NSException raise:@"Invalid placementKey" format:@"placementKey of %@ is invalid. Must not be nil or less than 8 characters.", placementKey];
@@ -36,6 +37,7 @@ presentingViewController:(UIViewController *)presentingViewController
     _isDirectSold = directSold;
     _DFPPath = DFPPath;
     _DFPDeferred = deferred;
+    _customProperties = customProperties;
     
     return self;
 }

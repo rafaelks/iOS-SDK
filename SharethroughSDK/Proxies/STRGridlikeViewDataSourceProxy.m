@@ -21,8 +21,6 @@
 @property (nonatomic, weak) id<UICollectionViewDataSource> originalCVDataSource;
 
 @property (copy, nonatomic) NSString *adCellReuseIdentifier;
-@property (copy, nonatomic) NSString *placementKey;
-@property (weak, nonatomic) UIViewController *presentingViewController;
 @property (weak, nonatomic) STRInjector *injector;
 
 @property (strong, nonatomic) STRAdPlacement *placement;
@@ -33,22 +31,14 @@
 @implementation STRGridlikeViewDataSourceProxy
 
 - (id)initWithAdCellReuseIdentifier:(NSString *)adCellReuseIdentifier
-                       placementKey:(NSString *)placementKey
-           presentingViewController:(UIViewController *)presentingViewController
+                        adPlacement:(STRAdPlacement *)placement
                            injector:(STRInjector *)injector {
     self = [super init];
     if (self) {
-        if (placementKey == nil || [placementKey length] < 8) {
-            [NSException raise:@"Invalid placementKey" format:@"placementKey of %@ is invalid. Must not be nil or less than 8 characters.", placementKey];
-        }
         self.numAdsInView = 0;
         self.adCellReuseIdentifier = adCellReuseIdentifier;
-        self.placementKey = placementKey;
-        self.presentingViewController = presentingViewController;
         self.injector = injector;
-        self.placement = [[STRAdPlacement alloc] init];
-        self.placement.placementKey = self.placementKey;
-        self.placement.delegate = self;
+        self.placement = placement;
     }
 
     return self;
@@ -57,8 +47,7 @@
 - (instancetype)copyWithNewDataSource:(id)newDataSource {
     TLog(@"");
     STRGridlikeViewDataSourceProxy *copy = [[[self class] alloc] initWithAdCellReuseIdentifier:self.adCellReuseIdentifier
-                                                                                     placementKey:self.placementKey
-                                                                         presentingViewController:self.presentingViewController
+                                                                                     adPlacement:self.placement
                                                                                          injector:self.injector];
     copy.originalDataSource = newDataSource;
     copy.adjuster = self.adjuster;
@@ -166,13 +155,14 @@
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:adCell
-                                                            PlacementKey:self.placementKey
-                                                presentingViewController:self.presentingViewController
+                                                            PlacementKey:self.placement.placementKey
+                                                presentingViewController:self.placement.presentingViewController
                                                                 delegate:nil
                                                                  adIndex:indexPath.row
                                                             isDirectSold:NO
                                                                  DFPPath:nil
-                                                             DFPDeferred:nil];
+                                                             DFPDeferred:nil
+                                                        customProperties:self.placement.customProperties];
     [adGenerator placeAdInPlacement:adPlacement];
 
     return adCell;
@@ -188,13 +178,14 @@
 
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:adCell
-                                                            PlacementKey:self.placementKey
-                                                presentingViewController:self.presentingViewController
+                                                            PlacementKey:self.placement.placementKey
+                                                presentingViewController:self.placement.presentingViewController
                                                                 delegate:nil
                                                                  adIndex:indexPath.row
                                                             isDirectSold:NO
                                                                  DFPPath:nil
-                                                             DFPDeferred:nil];
+                                                             DFPDeferred:nil
+                                                        customProperties:self.placement.customProperties];
 
     [adGenerator placeAdInPlacement:adPlacement];
     return adCell;

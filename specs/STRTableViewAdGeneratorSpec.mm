@@ -47,8 +47,7 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
         tableView.frame = CGRectMake(0, 0, 100, 400);
         
         dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell"
-                                                                                   placementKey:@"placementKey"
-                                                                       presentingViewController:presentingViewController
+                                                                                      adPlacement:nil
                                                                                        injector:injector];
     });
 

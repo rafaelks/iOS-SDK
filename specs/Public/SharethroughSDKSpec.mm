@@ -26,6 +26,7 @@ describe(@"SharethroughSDK", ^{
                                                                                           placementKey:@"fakePlacementKey"
                                                                               presentingViewController:nil
                                                                                                  index:0
+                                                                                      customProperties:nil
                                                                                               delegate:nil];
 
                 adView.adTitle.text should equal(@"Beats By Dre Presents: LeBron James");
@@ -41,6 +42,7 @@ describe(@"SharethroughSDK", ^{
                                                                                     placementKey:@"fakePlacementKey"
                                                                         presentingViewController:nil
                                                                                             index:0
+                                                                                   customProperties:nil
                                                                                         delegate:nil];
 
                 adView.adTitle.text should equal(@"Meet A 15-year-old Cancer Researcher");
@@ -56,6 +58,7 @@ describe(@"SharethroughSDK", ^{
                                                                                               placementKey:@"fakePlacementKey"
                                                                                   presentingViewController:nil
                                                                                                      index:0
+                                                                                          customProperties:nil
                                                                                                   delegate:nil];
 
                 adView.adTitle.text should equal(@"Avoid the morning MOO");
@@ -72,6 +75,7 @@ describe(@"SharethroughSDK", ^{
                                                                                            placementKey:@"fakePlacementKey"
                                                                                presentingViewController:nil
                                                                                                   index:0
+                                                                                       customProperties:nil
                                                                                                delegate:nil];
 
                 adView.adTitle.text should equal(@"22 Game Day Gifs That Will Pump You Up For Anything");
@@ -87,6 +91,7 @@ describe(@"SharethroughSDK", ^{
                                                                                             placementKey:@"fakePlacementKey"
                                                                                 presentingViewController:nil
                                                                                                    index:0
+                                                                                        customProperties:nil
                                                                                                 delegate:nil];
                 
                 adView.adTitle.text should equal(@"My Top Picks at Sephora.com");

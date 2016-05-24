@@ -55,9 +55,10 @@
     return testSafeSharedObject;
 }
 
-- (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate {
+- (void)prefetchAdForPlacementKey:(NSString *)placementKey customProperties:(NSDictionary *)customProperties delegate:(id<STRAdViewDelegate>)delegate {
     TLog(@"placementKey:%@",placementKey);
     STRAdPlacement *adPlacement = [[STRAdPlacement alloc] init];
+    adPlacement.customProperties = customProperties;
     adPlacement.placementKey = placementKey;
     adPlacement.delegate = delegate;
 
@@ -78,6 +79,93 @@
         }
         return nil;
     }];
+}
+
+- (void)placeAdInView:(UIView<STRAdView> *)view
+         placementKey:(NSString *)placementKey
+presentingViewController:(UIViewController *)presentingViewController
+                index:(NSInteger)index
+     customProperties:(NSDictionary *)customProperties
+             delegate:(id<STRAdViewDelegate>)delegate {
+    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:view
+                                                            PlacementKey:placementKey
+                                                presentingViewController:presentingViewController
+                                                                delegate:delegate
+                                                                 adIndex:index
+                                                            isDirectSold:NO
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil
+                                                        customProperties:customProperties];
+
+    STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
+    [generator placeAdInPlacement:adPlacement];
+}
+
+- (void)placeAdInTableView:(UITableView *)tableView
+     adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+              placementKey:(NSString *)placementKey
+  presentingViewController:(UIViewController *)presentingViewController
+                  adHeight:(CGFloat)adHeight
+                 adSection:(NSInteger)adSection
+          customProperties:(NSDictionary *)customProperties {
+    TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:nil
+                                                            PlacementKey:placementKey
+                                                presentingViewController:presentingViewController
+                                                                delegate:nil
+                                                                 adIndex:0
+                                                            isDirectSold:NO
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil
+                                                        customProperties:customProperties];
+
+    STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
+    STRGridlikeViewDataSourceProxy *dataSourceProxy =
+    [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier
+                                                                adPlacement:adPlacement
+                                                                 injector:self.injector];
+
+    [gridlikeViewAdGenerator placeAdInGridlikeView:tableView
+                                   dataSourceProxy:dataSourceProxy
+                             adCellReuseIdentifier:adCellReuseIdentifier
+                                      placementKey:placementKey
+                          presentingViewController:presentingViewController
+                                            adSize:CGSizeMake(0, adHeight)
+                                         adSection:adSection];
+}
+
+- (void)placeAdInCollectionView:(UICollectionView *)collectionView
+          adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
+                   placementKey:(NSString *)placementKey
+       presentingViewController:(UIViewController *)presentingViewController
+                         adSize:(CGSize)adSize
+                      adSection:(NSInteger)adSection
+               customProperties:(NSDictionary *)customProperties {
+    TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
+    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:nil
+                                                            PlacementKey:placementKey
+                                                presentingViewController:presentingViewController
+                                                                delegate:nil
+                                                                 adIndex:0
+                                                            isDirectSold:NO
+                                                                 DFPPath:nil
+                                                             DFPDeferred:nil
+                                                        customProperties:customProperties];
+    STRGridlikeViewAdGenerator *gridlikeViewAdGenerator =
+    [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
+    STRGridlikeViewDataSourceProxy *dataSourceProxy =
+    [[STRGridlikeViewDataSourceProxy alloc]initWithAdCellReuseIdentifier:adCellReuseIdentifier
+                                                               adPlacement:adPlacement
+                                                                injector:self.injector];
+
+    [gridlikeViewAdGenerator placeAdInGridlikeView:collectionView
+                                   dataSourceProxy:dataSourceProxy
+                             adCellReuseIdentifier:adCellReuseIdentifier
+                                      placementKey:placementKey
+                          presentingViewController:presentingViewController
+                                            adSize:adSize
+                                         adSection:adSection];
 }
 
 - (BOOL)isAdAvailableForPlacement:(NSString *)placementKey atIndex:(NSInteger)index {
@@ -118,72 +206,6 @@
     TLog(@"placementKey: %@", placementKey);
     STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
     [adCache clearAssignedAdsForPlacement:placementKey];
-}
-
-- (void)placeAdInView:(UIView<STRAdView> *)view
-         placementKey:(NSString *)placementKey
-presentingViewController:(UIViewController *)presentingViewController
-                index:(NSInteger)index
-             delegate:(id<STRAdViewDelegate>)delegate {
-    TLog(@"placementKey:%@ index:%ld", placementKey, (long)index);
-    STRAdPlacement *adPlacement = [[STRAdPlacement alloc] initWithAdView:view
-                                                            PlacementKey:placementKey
-                                                presentingViewController:presentingViewController
-                                                                delegate:delegate
-                                                                 adIndex:index
-                                                            isDirectSold:NO
-                                                                 DFPPath:nil
-                                                             DFPDeferred:nil];
-
-    STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
-    [generator placeAdInPlacement:adPlacement];
-}
-
-- (void)placeAdInTableView:(UITableView *)tableView
-     adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
-              placementKey:(NSString *)placementKey
-  presentingViewController:(UIViewController *)presentingViewController
-                  adHeight:(CGFloat)adHeight
-                 adSection:(NSInteger)adSection {
-    TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
-    STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
-    STRGridlikeViewDataSourceProxy *dataSourceProxy =
-        [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:adCellReuseIdentifier
-                                                                 placementKey:placementKey
-                                                     presentingViewController:presentingViewController
-                                                                     injector:self.injector];
-
-    [gridlikeViewAdGenerator placeAdInGridlikeView:tableView
-                                   dataSourceProxy:dataSourceProxy
-                             adCellReuseIdentifier:adCellReuseIdentifier
-                                      placementKey:placementKey
-                          presentingViewController:presentingViewController
-                                            adSize:CGSizeMake(0, adHeight)
-                                         adSection:adSection];
-}
-
-- (void)placeAdInCollectionView:(UICollectionView *)collectionView
-          adCellReuseIdentifier:(NSString *)adCellReuseIdentifier
-                   placementKey:(NSString *)placementKey
-       presentingViewController:(UIViewController *)presentingViewController
-                         adSize:(CGSize)adSize
-                      adSection:(NSInteger)adSection {
-    TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
-    STRGridlikeViewAdGenerator *gridlikeViewAdGenerator =
-        [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
-    STRGridlikeViewDataSourceProxy *dataSourceProxy =
-        [[STRGridlikeViewDataSourceProxy alloc]initWithAdCellReuseIdentifier:adCellReuseIdentifier
-                                                                placementKey:placementKey
-                                                    presentingViewController:presentingViewController
-                                                                    injector:self.injector];
-
-    [gridlikeViewAdGenerator placeAdInGridlikeView:collectionView
-                                   dataSourceProxy:dataSourceProxy
-                             adCellReuseIdentifier:adCellReuseIdentifier
-                                      placementKey:placementKey
-                          presentingViewController:presentingViewController
-                                            adSize:adSize
-                                         adSection:adSection];
 }
 
 - (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds {

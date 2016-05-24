@@ -10,7 +10,7 @@
 
 #import "STRAdViewDelegate.h"
 
-@class STRAdPlacementAdjuster, STRInjector;
+@class STRAdPlacementAdjuster, STRInjector, STRAdPlacement;
 
 @interface STRGridlikeViewDataSourceProxy : NSObject<UITableViewDataSource, UICollectionViewDataSource, STRAdViewDelegate>
 
@@ -18,14 +18,12 @@
 @property (strong, nonatomic) STRAdPlacementAdjuster *adjuster;
 
 @property (copy, nonatomic, readonly) NSString *adCellReuseIdentifier;
-@property (copy, nonatomic, readonly) NSString *placementKey;
+@property (strong, nonatomic, readonly) STRAdPlacement *placement;
 @property (assign, nonatomic) NSInteger numAdsInView;
-@property (weak, nonatomic, readonly) UIViewController *presentingViewController;
 @property (weak, nonatomic, readonly) STRInjector *injector;
 
 - (id)initWithAdCellReuseIdentifier:(NSString *)adCellReuseIdentifier
-                       placementKey:(NSString *)placementKey
-           presentingViewController:(UIViewController *)presentingViewController
+                        adPlacement:(STRAdPlacement *)placement
                            injector:(STRInjector *)injector;
 
 - (instancetype)copyWithNewDataSource:(id)newDataSource;

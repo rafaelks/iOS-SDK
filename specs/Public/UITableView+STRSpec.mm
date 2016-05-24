@@ -11,6 +11,7 @@
 #import "STRFakeAdGenerator.h"
 #import "STRGridlikeViewDataSourceProxy.h"
 #import "STRAdCache.h"
+#import "STRAdPlacement.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -81,10 +82,12 @@ describe(@"UITableView+STR", ^{
         
         spy_on([STRAdPlacementAdjuster class]);
         [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:placementKey:adCache:)).and_return(adPlacementAdjuster);
+
+        STRAdPlacement *fakePlacement = [[STRAdPlacement alloc] init];
+        fakePlacement.placementKey = @"fake-placement-key";
         
         dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCellReuseIdentifier"
-                                                                                   placementKey:@"placementKey"
-                                                                       presentingViewController:nil
+                                                                                      adPlacement:fakePlacement
                                                                                        injector:injector];
         dataSourceProxy.originalDataSource = dataSource;
         dataSourceProxy.adjuster = adPlacementAdjuster;

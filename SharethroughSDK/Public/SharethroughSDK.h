@@ -27,9 +27,10 @@
 /**
  This method allows prefetching of ads for a particular placement key
  @param placementKey The unique identifier for the ad slot
- @param delegate Delegate for handling completion. This can be nil if you do not wish to customize success or failure behavior.
+ @param customProperties (Optional) A dictionary of custom properties (such as targeting parameters) to be passed on to the ad server. This value can be nil.
+ @param delegate (Optional) Delegate for handling completion. This can be nil if you do not wish to customize success or failure behavior.
  */
-- (void)prefetchAdForPlacementKey:(NSString *)placementKey delegate:(id<STRAdViewDelegate>)delegate;
+- (void)prefetchAdForPlacementKey:(NSString *)placementKey customProperties:(NSDictionary *)customProperties delegate:(id<STRAdViewDelegate>)delegate;
 
 /**
  After creating a custom ad view that adheres to the STRAdView protocol and looks like the rest of your content, you can pass that view to placeAdInView to add the ad details.
@@ -37,10 +38,11 @@
  @param placementKey The unique identifier for the ad slot
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
  @param index The index of the ad if there are multiple ads shown using a single placementKey, i.e. infinite scroll. If only ad is shown for the placementKey, pass 0 every time.
- @param delegate Delegate for handling completion. This can be nil if you do not wish to customize success or failure behavior.
+ @param customProperties (Optional) A dictionary of custom properties (such as targeting parameters) to be passed on to the ad server. This value can be nil.
+ @param delegate (Optional) Delegate for handling completion. This can be nil if you do not wish to customize success or failure behavior.
  @warning If you are placing the ad in a view returned by UITableView/UICollectionView's dequeue method (or any similar reuse mechanism), it is important that you register separate reuse identifier than your normal content cells. Using the same reuse identifier will result in artifacts left behind on content cells (such as ad interactivity behavior).
   */
-- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController index:(NSInteger)index delegate:(id<STRAdViewDelegate>)delegate;
+- (void)placeAdInView:(UIView<STRAdView> *)view placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController index:(NSInteger)index customProperties:(NSDictionary *)customProperties delegate:(id<STRAdViewDelegate>)delegate;
 
 /**
  If your app is using a basic UITableView that you want to present ads within, you may alternately use the following method to insert an ad. It is required that the reuse identifier be registered with the UITableView to return a UITableViewCell (or subclass) that conforms to the STRAdView protocol. This reuse identifier should be separate from the reuse identifier used for your content cells, even if they are registered with the same class or xib. A good place to call this function would be -viewDidLoad. Calling this method on the same table view will remove previously existing ad(s) and place an ad at the place specified by adStartingIndexPath.
@@ -49,11 +51,12 @@
  @param placementKey The unique identifier for the ad to show
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
  @param adHeight The height of the adCell. This value will be unused if your delegate does not implement -tableView:heightForRowAtIndexPath: (the tableView will use rowHeight instead)
- @param adInitialIndexPath The inital index path to place the ad in. This index path should represent where the ad is, including the ad within the table view. This means that if you have 3 rows in a section, an index path of row 3 would in fact be valid. Index paths that are out of bounds will raise an exception. This should be the only index path computed with concern for there being an ad in the table view. Pass nil to let the SharethroughSDK choose a default location.
+ @param adSection The section in which the ad will appear
+ @param customProperties (Optional) A dictionary of custom properties (such as targeting parameters) to be passed on to the ad server. This value can be nil.
  
  @discussion The UITableView's dataSource methods of –tableView:commitEditingStyle:forRowAtIndexPath:, –tableView:canEditRowAtIndexPath:, –tableView:canMoveRowAtIndexPath:, –tableView:moveRowAtIndexPath:toIndexPath: are curerently not supported. Apps that wish to use these should instead use the more generic -placeAdInView:placementKey:presentingViewController:delegate:
  */
-- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adSection:(NSInteger)adSection;
+- (void)placeAdInTableView:(UITableView *)tableView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adHeight:(CGFloat)adHeight adSection:(NSInteger)adSection customProperties:(NSDictionary *)customProperties;
 
 /**
  If your app is using a basic UICollectionView that you want to present ads within, you may alternately use the following method to insert an ad. It is required that the reuse identifier be registered with the UIColectionView to return a UICollectionViewCell (or subclass) that conforms to the STRAdView protocol. This reuse identifier should be separate from the reuse identifier used for your content cells, even if they are registered with the same class or xib. A good place to call this function would be -viewDidLoad.
@@ -65,11 +68,12 @@
  @param placementKey             The unique identifier for the ad to show
  @param presentingViewController The view controller that will present the interactive ad controller if the user taps on the ad
  @param adSize                   The size of the adCell. This value will only be used if your collectionView delegate is a UICollectionViewDelegateFlowLayout and implements –collectionView:layout:sizeForItemAtIndexPath:
- @param adInitialIndexPath The inital index path to place the ad in. This index path should represent where the ad is, including the ad within the collection view. This means that if you have 3 items in a section, an index path with item 3 would in fact be valid. Index paths that are out of bounds will raise an exception. Pass nil to let the SharethroughSDK choose a default location.
+ @param adSection The section in which the ad will appear
+ @param customProperties (Optional) A dictionary of custom properties (such as targeting parameters) to be passed on to the ad server. This value can be nil.
  
     This is the only time the index path is computed taking into account the ad position. Future calls to the collection view should use STR's provided category methods (instead of UICollectionView's corresponding built-in methods). In using these category methods, index paths do not need to account for the extra ad cell.
  */
-- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adSize:(CGSize)adSize adSection:(NSInteger)adSection;
+- (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adSize:(CGSize)adSize adSection:(NSInteger)adSection customProperties:(NSDictionary *)customProperties;
 
 /*
  This allows the app to configure the amount of time an ad is cached before a request for a new ad is made to the server. This defaults to 120 seconds and can be set as low as 20 seconds.

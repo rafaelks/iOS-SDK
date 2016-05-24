@@ -76,8 +76,7 @@ describe(@"STRGridlikeViewAdGenerator", ^{
 
             STRGridlikeViewDataSourceProxy *dataSourceProxy =
             [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"fakeAdCell"
-                                                                     placementKey:@"fake-placement-key"
-                                                         presentingViewController:nil
+                                                                        adPlacement:nil
                                                                          injector:nil];
             expect(^{
                 [generator placeAdInGridlikeView:tableView
