@@ -103,18 +103,25 @@
     if ([self.identifierManager isAdvertisingTrackingEnabled]) {
         deviceId = [[self.identifierManager advertisingIdentifier] UUIDString];
     }
-    
-    return @{
-             @"pubAppName": pubAppName ?: @"",
-             @"pubAppVersion": pubAppVersion ?: @"",
-             @"doNotTrack": doNotTrack ?: @"",
-             @"language": language ?: @"",
-             @"make": make ?: @"",
-             @"model": model ?: @"",
-             @"os": os ?: @"",
-             @"deviceId": deviceId ?: @"",
-             @"pkey": placement.placementKey,
-            };
+
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary: @{
+                                                                                       @"pubAppName": pubAppName ?: @"",
+                                                                                       @"pubAppVersion": pubAppVersion ?: @"",
+                                                                                       @"doNotTrack": doNotTrack ?: @"",
+                                                                                       @"language": language ?: @"",
+                                                                                       @"make": make ?: @"",
+                                                                                       @"model": model ?: @"",
+                                                                                       @"os": os ?: @"",
+                                                                                       @"deviceId": deviceId ?: @"",
+                                                                                       @"pkey": placement.placementKey
+                                                                                       }];
+
+    for (id key in placement.customProperties) {
+        NSString *customParamKey = [NSString stringWithFormat:@"customKeys[%@]", key];
+        [parameters setObject:[placement.customProperties objectForKey:key] forKey:customParamKey];
+    }
+
+    return parameters;
 }
 
 

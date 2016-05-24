@@ -76,6 +76,13 @@ describe(@"STRAsapService", ^{
 
             adPlacement = [[STRAdPlacement alloc] init];
             adPlacement.placementKey = @"placementKey";
+
+            NSDictionary *customProperties = @{
+                @"key1": @"value1",
+                @"key2": @"value2"
+            };
+            
+            adPlacement.customProperties = customProperties;
         });
 
         describe(@"when an ad is retrieved from the cache", ^{
@@ -119,7 +126,9 @@ describe(@"STRAsapService", ^{
                     @"os": @"fakeOSVersion",
                     @"pkey": @"placementKey",
                     @"pubAppName": @"specs",
-                    @"pubAppVersion": @"1.0"
+                    @"pubAppVersion": @"1.0",
+                    @"customKeys[key1]": @"value1",
+                    @"customKeys[key2]": @"value2"
                 });
             });
 
