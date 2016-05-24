@@ -65,7 +65,7 @@
     return copy;
 }
 
-- (void)prefetchAdForGridLikeView:(id)gridlikeView atIndex:(NSInteger)index {
+- (void)prefetchAdForGridLikeView:(id)gridlikeView {
     TLog(@"");
     self.gridlikeView = gridlikeView;
     STRAdGenerator *adGenerator = [self.injector getInstance:[STRAdGenerator class]];

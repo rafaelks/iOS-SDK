@@ -24,7 +24,7 @@ describe(@"STRIndexPathDelegateProxy UITableViewDelegate", ^{
 
         fakePlacementKey = @"fake-placement-key";
         fakeAdCache = nice_fake_for([STRAdCache class]);
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
         adPlacementAdjuster.numContentRows = 10;
         
         proxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adPlacementAdjuster adSize:CGSizeMake(0, 51.0)];

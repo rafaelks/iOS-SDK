@@ -45,8 +45,6 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
                  placementKey:(NSString *)placementKey
      presentingViewController:(UIViewController *)presentingViewController
                        adSize:(CGSize)adSize
-        articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
-           articlesBetweenAds:(NSUInteger)articlesBetweenAds
                     adSection:(NSInteger)adSection {
     TLog(@"pkey:%@", placementKey);
     [self validateGridlikeView:gridlikeView];
@@ -63,12 +61,10 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
         if (oldGenerator.delegateProxy && oldGenerator.delegateProxy.originalDelegate) {
             originalDelegate = oldGenerator.delegateProxy.originalDelegate;
         }
-        TLog(@"pley:%@ oldGenerator:%@ dataSource:%@, delegate:%@", placementKey, oldGenerator, originalDataSource, originalDelegate);
+        TLog(@"pkey:%@ oldGenerator:%@ dataSource:%@, delegate:%@", placementKey, oldGenerator, originalDataSource, originalDelegate);
     }
 
     STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:adSection
-                                                           articlesBeforeFirstAd:articlesBeforeFirstAd
-                                                              articlesBetweenAds:articlesBetweenAds
                                                                     placementKey:placementKey
                                                                          adCache:[self.injector getInstance:[STRAdCache class]]];
     self.adjuster = adjuster;
@@ -77,7 +73,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
     self.dataSourceProxy.adjuster = adjuster;
     self.dataSourceProxy.originalDataSource = originalDataSource;
 
-    [self.dataSourceProxy prefetchAdForGridLikeView:gridlikeView atIndex:articlesBeforeFirstAd];
+    [self.dataSourceProxy prefetchAdForGridLikeView:gridlikeView];
 
     self.delegateProxy = [[STRIndexPathDelegateProxy alloc] initWithOriginalDelegate:originalDelegate adPlacementAdjuster:adjuster adSize:adSize];
 
@@ -104,7 +100,7 @@ const char *const STRGridlikeViewAdGeneratorKey = "STRGridlikeViewAdGeneratorKey
 - (id<UITableViewDataSource>)originalDataSource {
     return self.dataSourceProxy.originalDataSource;
 }
-    
+
 - (void)setOriginalDataSource:(id)newOriginalDataSource gridlikeView:(id)gridlikeView {
     self.dataSourceProxy = [self.dataSourceProxy copyWithNewDataSource:newOriginalDataSource];
     [gridlikeView setDataSource:self.dataSourceProxy];

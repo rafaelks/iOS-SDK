@@ -67,8 +67,6 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                  articlesBeforeFirstAd:2
-                                     articlesBetweenAds:1
                                               adSection:0];
 
             [tableView layoutIfNeeded];
@@ -115,8 +113,6 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                  articlesBeforeFirstAd:2
-                                     articlesBetweenAds:1
                                               adSection:0];
             [tableView layoutIfNeeded];
         });
@@ -158,8 +154,6 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                  articlesBeforeFirstAd:2
-                                     articlesBetweenAds:1
                                               adSection:0];
             [tableView layoutIfNeeded];
 
@@ -188,8 +182,6 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                  articlesBeforeFirstAd:2
-                                     articlesBetweenAds:1
                                               adSection:0];
 
             [tableView numberOfRowsInSection:0] should equal(3);
@@ -205,8 +197,6 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                            placementKey:@"placementKey"
                                presentingViewController:presentingViewController
                                                  adSize:CGSizeZero
-                                 articlesBeforeFirstAd:2
-                                    articlesBetweenAds:1
                                              adSection:0];
             [tableView numberOfRowsInSection:0] should equal(3);
             [tableView numberOfRowsInSection:1] should equal(2);
@@ -220,8 +210,6 @@ describe(@"STRGridlikeViewAdGenerator UITableView", ^{
                                           placementKey:@"placementKey"
                               presentingViewController:presentingViewController
                                                 adSize:CGSizeZero
-                                 articlesBeforeFirstAd:2
-                                    articlesBetweenAds:1
                                              adSection:0];
             [tableView.delegate tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
 

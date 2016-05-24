@@ -62,45 +62,19 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch{
     TLog(@"");
-    if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:YES]) {
-        STRDeferred *deferred = [STRDeferred defer];
-        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
-        [deferred resolveWithValue:cachedAd];
-        if (!placement.isDirectSold && [self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
-            [self beginFetchForPlacement:placement isPrefetch:YES];
-        }
-        return deferred.promise;
-    }
-
-    if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
-        return [self requestInProgressError];
-    }
-
     return [self beginFetchForPlacement:placement isPrefetch:prefetch];
 }
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement
                 auctionParameterKey:(NSString *)apKey
               auctionParameterValue:(NSString *)apValue
+                         isPrefetch:(BOOL)prefetch
 {
-    TLog(@"");
-    if ([apKey isEqualToString:kDFPCreativeKey]) {
-        STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacementKey:placement.placementKey CreativeKey:apValue];
-        if (cachedAd) {
-            STRDeferred *deferred = [STRDeferred defer];
-            [deferred resolveWithValue:cachedAd];
-            return deferred.promise;
-        }
-    }
-
-    if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
-        return [self requestInProgressError];
-    }
-
+    TLog(@"pkey: %@, apkey: %@, apval: %@, prefetch: %@", placement.placementKey, apKey, apValue, prefetch ? @"YES" : @"NO");
     [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey auctionParameterKey:apKey auctionParameterValue:apValue];
     return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{ apKey : apValue }]
                           forPlacement:placement
-                  isPrefetch:NO];
+                  isPrefetch:prefetch];
 }
 
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement {
@@ -128,7 +102,6 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
         if ([creativesJSON count] == 0) {
             TLog(@"No creatives received");
-            [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
             NSError *noCreativesError = [NSError errorWithDomain:@"No creatives returned" code:404 userInfo:nil];
             [deferred rejectWithError:noCreativesError];
             return noCreativesError;
@@ -153,8 +126,6 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
             return nil;
         } error:^id(NSError *error) {
-            [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
-
             STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
             if (cachedAd != nil) {
                 [deferred resolveWithValue:cachedAd];
@@ -166,8 +137,6 @@ static NSString *const kDFPCreativeKey = @"creative_key";
 
         return nil;
     } error:^id(NSError *error) {
-        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
-
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
         if (cachedAd != nil) {
             [deferred resolveWithValue:cachedAd];
@@ -177,13 +146,6 @@ static NSString *const kDFPCreativeKey = @"creative_key";
         return error;
     }];
 
-    return deferred.promise;
-}
-
-- (STRPromise *)requestInProgressError {
-    TLog(@"");
-    STRDeferred *deferred = [STRDeferred defer];
-    [deferred rejectWithError:[NSError errorWithDomain:@"STR Request in Progress" code:kRequestInProgress userInfo:nil]];
     return deferred.promise;
 }
 

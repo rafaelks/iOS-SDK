@@ -104,7 +104,7 @@ describe(@"STRAsapService", ^{
 
                 adServiceDeferred = [STRDeferred defer];
                 adService stub_method(@selector(fetchAdForPlacement:isPrefetch:)).and_return(adServiceDeferred.promise);
-                adService stub_method(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:)).and_return(adServiceDeferred.promise);
+                adService stub_method(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).and_return(adServiceDeferred.promise);
 
                 returnedPromise = [asapService fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
@@ -153,7 +153,7 @@ describe(@"STRAsapService", ^{
                                                           @"keyValue": @"fake_creative_key"};
                         [restClientDeferred resolveWithValue:asapReturnValue];
 
-                        adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:)).with(adPlacement, @"creative_key", @"fake_creative_key");
+                        adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).with(adPlacement, @"creative_key", @"fake_creative_key", YES);
                     });
                 });
 
@@ -164,7 +164,7 @@ describe(@"STRAsapService", ^{
                                                           @"keyValue": @"fake_campaign_key"};
                         [restClientDeferred resolveWithValue:asapReturnValue];
 
-                        adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:)).with(adPlacement, @"campaign_key", @"fake_campaign_key");
+                        adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).with(adPlacement, @"campaign_key", @"fake_campaign_key", YES);
                     });
                 });
 

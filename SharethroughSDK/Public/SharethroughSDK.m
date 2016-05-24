@@ -144,8 +144,6 @@ presentingViewController:(UIViewController *)presentingViewController
               placementKey:(NSString *)placementKey
   presentingViewController:(UIViewController *)presentingViewController
                   adHeight:(CGFloat)adHeight
-     articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
-        articlesBetweenAds:(NSUInteger)articlesBetweenAds
                  adSection:(NSInteger)adSection {
     TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
@@ -161,8 +159,6 @@ presentingViewController:(UIViewController *)presentingViewController
                                       placementKey:placementKey
                           presentingViewController:presentingViewController
                                             adSize:CGSizeMake(0, adHeight)
-                             articlesBeforeFirstAd:articlesBeforeFirstAd
-                                articlesBetweenAds:articlesBetweenAds
                                          adSection:adSection];
 }
 
@@ -171,8 +167,6 @@ presentingViewController:(UIViewController *)presentingViewController
                    placementKey:(NSString *)placementKey
        presentingViewController:(UIViewController *)presentingViewController
                          adSize:(CGSize)adSize
-          articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
-             articlesBetweenAds:(NSUInteger)articlesBetweenAds
                       adSection:(NSInteger)adSection {
     TLog(@"placementKey:%@ adCellIdentifier:%@", placementKey, adCellReuseIdentifier);
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator =
@@ -189,8 +183,6 @@ presentingViewController:(UIViewController *)presentingViewController
                                       placementKey:placementKey
                           presentingViewController:presentingViewController
                                             adSize:adSize
-                             articlesBeforeFirstAd:articlesBeforeFirstAd
-                                articlesBetweenAds:articlesBetweenAds
                                          adSection:adSection];
 }
 

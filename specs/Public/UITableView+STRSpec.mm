@@ -69,8 +69,10 @@ describe(@"UITableView+STR", ^{
 
         fakePlacementKey = @"fake-placement-key";
         fakeAdCache = nice_fake_for([STRAdCache class]);
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 placementKey:fakePlacementKey adCache:fakeAdCache];
         adPlacementAdjuster.numContentRows = 3;
+        adPlacementAdjuster.articlesBeforeFirstAd = 1;
+        adPlacementAdjuster.articlesBetweenAds = 100;
         spy_on(adPlacementAdjuster);
         
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
@@ -78,7 +80,7 @@ describe(@"UITableView+STR", ^{
         [injector bind:[STRAdGenerator class] toInstance:[STRFakeAdGenerator new]];
         
         spy_on([STRAdPlacementAdjuster class]);
-        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:placementKey:adCache:)).and_return(adPlacementAdjuster);
+        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:placementKey:adCache:)).and_return(adPlacementAdjuster);
         
         dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCellReuseIdentifier"
                                                                                    placementKey:@"placementKey"
@@ -95,8 +97,6 @@ describe(@"UITableView+STR", ^{
                             placementKey:@"placementKey"
                 presentingViewController:nil
                                   adSize:CGSizeZero
-                              articlesBeforeFirstAd:1
-                                 articlesBetweenAds:100
                                           adSection:1];
         
         [tableView reloadData];

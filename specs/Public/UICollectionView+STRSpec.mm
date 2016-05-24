@@ -69,12 +69,14 @@ describe(@"UICollectionView+STR", ^{
 
         fakePlacementKey = @"fake-placement-key";
         fakeAdCache = nice_fake_for([STRAdCache class]);
-        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
+        adPlacementAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 placementKey:fakePlacementKey adCache:fakeAdCache];
+        adPlacementAdjuster.articlesBetweenAds = 100;
+        adPlacementAdjuster.articlesBeforeFirstAd = 1;
         spy_on(adPlacementAdjuster);
         
         STRInjector *injector = [STRInjector injectorForModule:[STRAppModule new]];
         spy_on([STRAdPlacementAdjuster class]);
-        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:placementKey:adCache:)).and_return(adPlacementAdjuster);
+        [STRAdPlacementAdjuster class] stub_method(@selector(adjusterInSection:placementKey:adCache:)).and_return(adPlacementAdjuster);
 
         dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCellReuseIdentifier"
                                                                                    placementKey:@"placementKey"
@@ -90,8 +92,6 @@ describe(@"UICollectionView+STR", ^{
                             placementKey:@"placementKey"
                 presentingViewController:nil
                                   adSize:CGSizeZero
-                   articlesBeforeFirstAd:1
-                      articlesBetweenAds:100
                                adSection:0];
         
         [collectionView reloadData];

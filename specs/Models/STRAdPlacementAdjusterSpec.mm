@@ -1,5 +1,6 @@
 #import "STRAdPlacementAdjuster.h"
 #import "STRAdCache.h"
+#import "STRAdPlacement.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -15,6 +16,32 @@ describe(@"STRAdPlacementAdjuster", ^{
         fakeAdCache = nice_fake_for([STRAdCache class]);
         fakePlacementKey = @"fake-placement-key";
     });
+
+    describe(@"adjusterInSection:placementKey:adCache:", ^{
+        describe(@"When articles between ads and articles before ads are set", ^{
+            it(@"returns the values set by the placement", ^{
+                STRAdPlacementInfiniteScrollFields *fields = [STRAdPlacementInfiniteScrollFields new];
+                fields.articlesBeforeFirstAd = 2;
+                fields.articlesBetweenAds = 5;
+                fakeAdCache stub_method(@selector(getInfiniteScrollFieldsForPlacement:)).and_return(fields);
+                adjuster = [STRAdPlacementAdjuster adjusterInSection:0
+                                                       placementKey:fakePlacementKey
+                                                            adCache:fakeAdCache];
+                adjuster.articlesBeforeFirstAd should equal(2);
+                adjuster.articlesBetweenAds should equal(5);
+            });
+        });
+
+        describe(@"When using default values for articles between ads and articles before ads", ^{
+            it(@"returns 1 for each of the values", ^{
+                adjuster = [STRAdPlacementAdjuster adjusterInSection:0
+                                                        placementKey:fakePlacementKey
+                                                             adCache:fakeAdCache];
+                adjuster.articlesBeforeFirstAd should equal(1);
+                adjuster.articlesBetweenAds should equal(1);
+            });
+        });
+    });
     
     describe(@"When an ad is loaded", ^{
         beforeEach(^{
@@ -22,25 +49,11 @@ describe(@"STRAdPlacementAdjuster", ^{
             fakeAdCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
 
             adjuster = [STRAdPlacementAdjuster adjusterInSection:0
-                                           articlesBeforeFirstAd:5
-                                              articlesBetweenAds:5
                                                     placementKey:fakePlacementKey
                                                          adCache:fakeAdCache];
+            adjuster.articlesBeforeFirstAd = 5;
+            adjuster.articlesBetweenAds = 5;
             adjuster.numContentRows = 10;
-        });
-        
-        describe(@"+adjusterInSection:articlesBeforeFirstAd:articlesBetweenAds:", ^{
-            it(@"throws an exception if articles between ads is less than or equal to 0", ^{
-                expect(^{
-                    [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:0 placementKey:fakePlacementKey adCache:fakeAdCache];
-                }).to(raise_exception);
-            });
-
-            it(@"throws an exception if articles before first ad is less than 0", ^{
-                expect(^{
-                    [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:-1 articlesBetweenAds:0 placementKey:fakePlacementKey adCache:fakeAdCache];
-                }).to(raise_exception);
-            });
         });
 
         describe(@"-isAdAtIndexPath:", ^{
@@ -165,11 +178,15 @@ describe(@"STRAdPlacementAdjuster", ^{
             });
 
             it(@"handles edge cases", ^{
-                STRAdPlacementAdjuster *everyOtherAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:0 articlesBetweenAds:1 placementKey:fakePlacementKey adCache:fakeAdCache];
+                STRAdPlacementAdjuster *everyOtherAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+                everyOtherAdjuster.articlesBeforeFirstAd = 0;
+                everyOtherAdjuster.articlesBetweenAds = 1;
                 everyOtherAdjuster.numContentRows = 3;
                 [everyOtherAdjuster numberOfAdsInSection:0] should equal(4);
 
-                STRAdPlacementAdjuster *onlyOneAd = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:NSIntegerMax placementKey:fakePlacementKey adCache:fakeAdCache];
+                STRAdPlacementAdjuster *onlyOneAd = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+                onlyOneAd.articlesBetweenAds = NSIntegerMax;
+                onlyOneAd.articlesBeforeFirstAd = 5;
 
                 onlyOneAd.numContentRows = 10000;
                 [onlyOneAd numberOfAdsInSection:0] should equal(1);
@@ -187,7 +204,9 @@ describe(@"STRAdPlacementAdjuster", ^{
             
             beforeEach(^{
                 fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                multiSectionAdjuster.articlesBetweenAds = 5;
             });
             
             sharedExamplesFor(@"moving a row", ^(NSDictionary *sharedContext) {
@@ -284,7 +303,9 @@ describe(@"STRAdPlacementAdjuster", ^{
                         sharedContext[@"externalFinalIndex"] = [NSIndexPath indexPathForRow:0 inSection:0];
                         sharedContext[@"expectedChangeToFinalRow"] = @0;
                         
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+                        multiSectionAdjuster.articlesBeforeFirstAd = 5;
+                        multiSectionAdjuster.articlesBetweenAds = 5;
                     });
                     
                     itShouldBehaveLike(@"moving a row");
@@ -371,12 +392,16 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                multiSectionAdjuster.articlesBetweenAds = 5;
             });
             
             describe(@"when some of the sections around the ad section are being deleted", ^{
                 it(@"moves up the ad section by the appropriate amount", ^{
-                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 placementKey:fakePlacementKey adCache:fakeAdCache];
+                    multiSectionAdjuster.articlesBeforeFirstAd = 5;
+                    multiSectionAdjuster.articlesBetweenAds = 5;
                     NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
                     [indices addIndex:0];
                     [indices addIndex:1];
@@ -421,7 +446,9 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                multiSectionAdjuster.articlesBetweenAds = 5;
             });
             
             describe(@"when some of the sections around the ad section are being inserting", ^{
@@ -441,13 +468,17 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                multiSectionAdjuster.articlesBetweenAds = 5;
             });
             
             describe(@"moving a section that is before the ad section", ^{
                 describe(@"to still be before the ad section", ^{
                     beforeEach(^{
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 placementKey:fakePlacementKey adCache:fakeAdCache];
+                        multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                        multiSectionAdjuster.articlesBetweenAds = 5;
                     });
                     
                     it(@"does not adjust the ad placement", ^{
@@ -506,7 +537,9 @@ describe(@"STRAdPlacementAdjuster", ^{
     
     describe(@"When an ad is not loaded", ^{
         beforeEach(^{
-            adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+            adjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+            adjuster.articlesBeforeFirstAd = 5;
+            adjuster.articlesBetweenAds = 5;
             adjuster.numContentRows = 10;
         });
         
@@ -605,7 +638,9 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster.articlesBeforeFirstAd = 5;
+                multiSectionAdjuster.articlesBetweenAds = 5;
             });
             
             sharedExamplesFor(@"moving a row", ^(NSDictionary *sharedContext) {
@@ -703,7 +738,9 @@ describe(@"STRAdPlacementAdjuster", ^{
                         sharedContext[@"externalFinalIndex"] = [NSIndexPath indexPathForRow:0 inSection:0];
                         sharedContext[@"expectedChangeToFinalRow"] = @0;
                         
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:5 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+                        multiSectionAdjuster.articlesBeforeFirstAd = 5;
+                        multiSectionAdjuster.articlesBetweenAds = 5;
                     });
                     
                     itShouldBehaveLike(@"moving a row");
@@ -792,12 +829,16 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                multiSectionAdjuster.articlesBetweenAds = 5;
             });
             
             describe(@"when some of the sections around the ad section are being deleted", ^{
                 it(@"moves up the ad section by the appropriate amount", ^{
-                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                    multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 placementKey:fakePlacementKey adCache:fakeAdCache];
+                    multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                    multiSectionAdjuster.articlesBetweenAds = 5;
                     NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
                     [indices addIndex:0];
                     [indices addIndex:1];
@@ -842,7 +883,9 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                multiSectionAdjuster.articlesBetweenAds = 5;
             });
             
             describe(@"when some of the sections around the ad section are being inserting", ^{
@@ -862,13 +905,17 @@ describe(@"STRAdPlacementAdjuster", ^{
             __block STRAdPlacementAdjuster *multiSectionAdjuster;
             
             beforeEach(^{
-                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:1 placementKey:fakePlacementKey adCache:fakeAdCache];
+                multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                multiSectionAdjuster.articlesBetweenAds = 5;
             });
             
             describe(@"moving a section that is before the ad section", ^{
                 describe(@"to still be before the ad section", ^{
                     beforeEach(^{
-                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 articlesBeforeFirstAd:1 articlesBetweenAds:5 placementKey:fakePlacementKey adCache:fakeAdCache];
+                        multiSectionAdjuster = [STRAdPlacementAdjuster adjusterInSection:2 placementKey:fakePlacementKey adCache:fakeAdCache];
+                        multiSectionAdjuster.articlesBeforeFirstAd = 1;
+                        multiSectionAdjuster.articlesBetweenAds = 5;
                     });
                     
                     it(@"does not adjust the ad placement", ^{

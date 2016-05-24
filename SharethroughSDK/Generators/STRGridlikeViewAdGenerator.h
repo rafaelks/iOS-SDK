@@ -22,8 +22,6 @@
                  placementKey:(NSString *)placementKey
      presentingViewController:(UIViewController *)presentingViewController
                        adSize:(CGSize)adSize
-        articlesBeforeFirstAd:(NSUInteger)articlesBeforeFirstAd
-           articlesBetweenAds:(NSUInteger)articlesBetweenAds
                     adSection:(NSInteger)adSection;
 
 - (id)originalDelegate;

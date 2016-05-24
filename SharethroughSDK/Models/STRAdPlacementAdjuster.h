@@ -19,8 +19,6 @@
 @property (nonatomic, strong) NSString *placementKey;
 
 + (instancetype)adjusterInSection:(NSInteger)section
-            articlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd
-               articlesBetweenAds:(NSInteger)articlesBetweenAds
                      placementKey:(NSString *)placementKey
                           adCache:(STRAdCache *)adCache;
 

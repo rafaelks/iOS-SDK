@@ -30,7 +30,7 @@
 
 - (instancetype)copyWithNewDataSource:(id)newDataSource;
 
-- (void)prefetchAdForGridLikeView:(id)gridlikeView atIndex:(NSInteger)index;
+- (void)prefetchAdForGridLikeView:(id)gridlikeView;
 - (UITableViewCell *)adCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
 - (UICollectionViewCell *)adCellForCollectionView:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
 

@@ -76,64 +76,6 @@ describe(@"STRAdService", ^{
             adPlacement.placementKey = @"placementKey";
         });
 
-        describe(@"when an ad is retrieved from the cache", ^{
-            __block STRAdvertisement *ad;
-
-            beforeEach(^{
-                ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
-                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(NO);
-
-                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
-            });
-
-            it(@"does not make a request to the ad server", ^{
-                restClient should_not have_received(@selector(getWithParameters:));
-            });
-
-            it(@"does not fire an impression request", ^{
-                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
-            });
-
-            it(@"does not make a request to the image server", ^{
-                networkClient should_not have_received(@selector(get:));
-            });
-
-            it(@"returns a promise that is resolved with the cached ad", ^{
-                returnedPromise.value should equal(ad);
-            });
-        });
-        
-        xdescribe(@"when an ad is retrieved from the cache, but there are no more ads in the queue", ^{
-            __block STRAdvertisement *ad;
-            
-            beforeEach(^{
-                ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
-                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
-                
-                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
-            });
-            
-            it(@"does not make a request to the ad server", ^{
-                restClient should_not have_received(@selector(getWithParameters:));
-            });
-            
-            it(@"does not fire an impression request", ^{
-                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
-            });
-            
-            it(@"does not make a request to the image server", ^{
-                networkClient should_not have_received(@selector(get:));
-            });
-            
-            it(@"returns a promise that is resolved with the cached ad", ^{
-                returnedPromise.value should equal(ad);
-            });
-        });
-
         describe(@"when an ad is cached for longer than the timeout", ^{
             __block STRAdvertisement *ad;
 
@@ -183,22 +125,6 @@ describe(@"STRAdService", ^{
 
                     returnedPromise.value should equal(ad);
                 });
-            });
-        });
-
-        describe(@"when there is a pending ad request", ^{
-            beforeEach(^{
-                adCache stub_method(@selector(fetchCachedAdForPlacement:));
-                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
-                adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).and_return(YES);
-
-                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
-            });
-
-            it(@"returns a pendingRequestInProgress error", ^{
-                returnedPromise should_not be_nil;
-                returnedPromise.error should_not be_nil;
-                returnedPromise.error.code should equal(kRequestInProgress);
             });
         });
 
@@ -413,13 +339,6 @@ describe(@"STRAdService", ^{
 
                     returnedPromise.error should_not be_nil;
                 });
-
-                it(@"resets the pending ad request", ^{
-                    [restClientDeferred resolveWithValue:@{
-                                                           @"creatives": @[]
-                                                           }];
-                    adCache should have_received(@selector(clearPendingAdRequestForPlacement:)).with(adPlacement.placementKey);
-                });
             });
             
             describe(@"when the ad server unsuccessfully responds", ^{
@@ -448,120 +367,6 @@ describe(@"STRAdService", ^{
 
             adPlacement = [[STRAdPlacement alloc] init];
             adPlacement.placementKey = @"placementKey";
-        });
-
-        describe(@"when an ad is retrieved from the cache", ^{
-            __block STRAdvertisement *ad;
-
-            beforeEach(^{
-                ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(fetchCachedAdForPlacementKey:CreativeKey:)).and_return(ad);
-
-                returnedPromise = [service fetchAdForPlacement:adPlacement auctionParameterKey:@"creative_key" auctionParameterValue:@"creativeKey"];
-            });
-
-            it(@"does not make a request to the ad server", ^{
-                restClient should_not have_received(@selector(getWithParameters:));
-            });
-
-            it(@"does not fire an impression request", ^{
-                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
-            });
-
-            it(@"does not make a request to the image server", ^{
-                networkClient should_not have_received(@selector(get:));
-            });
-
-            it(@"returns a promise that is resolved with the cached ad", ^{
-                returnedPromise.value should equal(ad);
-            });
-        });
-
-        describe(@"when it's not a creative key", ^{
-            it(@"does not call to the ad cache", ^{
-                returnedPromise = [service fetchAdForPlacement:adPlacement auctionParameterKey:@"campaign_key" auctionParameterValue:@"campaignKey"];
-                adCache should_not have_received(@selector(fetchCachedAdForPlacementKey:CreativeKey:));
-            });
-        });
-
-        describe(@"when an ad is retrieved from the cache, but there are no more ads in the queue", ^{
-            __block STRAdvertisement *ad;
-
-            beforeEach(^{
-                ad = nice_fake_for([STRAdvertisement class]);
-                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
-                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-                adCache stub_method(@selector(shouldBeginFetchForPlacement:)).and_return(YES);
-
-                adPlacement.isDirectSold = YES;
-                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
-            });
-
-            it(@"does not make a request to the ad server", ^{
-                restClient should_not have_received(@selector(getWithParameters:));
-            });
-
-            it(@"does not fire an impression request", ^{
-                beaconService should_not have_received(@selector(fireImpressionRequestForPlacementKey:));
-            });
-
-            it(@"does not make a request to the image server", ^{
-                networkClient should_not have_received(@selector(get:));
-            });
-
-            it(@"returns a promise that is resolved with the cached ad", ^{
-                returnedPromise.value should equal(ad);
-            });
-        });
-
-        describe(@"when an ad is cached for longer than the timeout", ^{
-            __block STRAdvertisement *ad;
-
-            beforeEach(^{
-                ad = nice_fake_for([STRAdvertisement class]);
-
-                adCache stub_method(@selector(fetchCachedAdForPlacement:)).and_return(ad);
-                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
-
-                returnedPromise = [service fetchAdForPlacement:adPlacement auctionParameterKey:@"creative_key" auctionParameterValue:@"creativeKey"];
-            });
-
-            it(@"makes a request to the ad server", ^{
-                restClient should have_received(@selector(getWithParameters:)).with(@{@"placement_key": @"placementKey", @"appName": @"specs", @"appId": @"com.sharethrough.specs", @"creative_key": @"creativeKey", @"uid" : @"fakeUUID" });
-            });
-
-            it(@"fires an impression request beacon", ^{
-                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:auctionParameterKey:auctionParameterValue:)).with(@"placementKey", @"creative_key", @"creativeKey");
-            });
-
-            it(@"returns an unresolved promise", ^{
-                returnedPromise should_not be_nil;
-                returnedPromise.value should be_nil;
-            });
-
-            describe(@"when the ad server unsuccessfully responds", ^{
-                it(@"returns the cached ad", ^{
-                    [restClientDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
-
-                    returnedPromise.value should equal(ad);
-                });
-            });
-        });
-
-        xdescribe(@"when there is a pending ad request", ^{
-            beforeEach(^{
-                adCache stub_method(@selector(fetchCachedAdForPlacement:));
-                adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
-                adCache stub_method(@selector(pendingAdRequestInProgressForPlacement:)).and_return(YES);
-
-                returnedPromise = [service fetchAdForPlacement:adPlacement isPrefetch:YES];
-            });
-
-            it(@"returns a pendingRequestInProgress error", ^{
-                returnedPromise should_not be_nil;
-                returnedPromise.error should_not be_nil;
-                returnedPromise.error.code should equal(kRequestInProgress);
-            });
         });
 
         xdescribe(@"when no ad is cached for the given placement key", ^{

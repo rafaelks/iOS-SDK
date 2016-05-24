@@ -23,22 +23,21 @@
 @implementation STRAdPlacementAdjuster
 
 + (instancetype)adjusterInSection:(NSInteger)section
-            articlesBeforeFirstAd:(NSInteger)articlesBeforeFirstAd
-               articlesBetweenAds:(NSInteger)articlesBetweenAds
                      placementKey:(NSString *)placementKey
                           adCache:(STRAdCache *)adCache {
     STRAdPlacementAdjuster *adjuster = [self new];
     adjuster.adSection = section;
-    if (articlesBeforeFirstAd < 0) {
-        [NSException raise:@"Articles Before First Ad Must Be Greather or Equal to 0" format:@""];
-    }
-    adjuster.articlesBeforeFirstAd = articlesBeforeFirstAd;
-    if(articlesBetweenAds <= 0) {
-        [NSException raise:@"Articles Between Ads Must Be Greater than 0" format:@""];
-    }
-    adjuster.articlesBetweenAds = articlesBetweenAds;
-    adjuster.placementKey = placementKey;
     adjuster.adCache = adCache;
+
+    STRAdPlacementInfiniteScrollFields *fields = [adjuster.adCache getInfiniteScrollFieldsForPlacement:placementKey];
+    if (fields != nil) {
+        adjuster.articlesBeforeFirstAd = fields.articlesBeforeFirstAd;
+        adjuster.articlesBetweenAds = fields.articlesBetweenAds;
+    } else {
+        adjuster.articlesBetweenAds = 1;
+        adjuster.articlesBeforeFirstAd = 1;
+    }
+    adjuster.placementKey = placementKey;
     return adjuster;
 }
 

@@ -26,7 +26,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
 
         fakePlacementKey = @"fake-placement-key";
         fakeAdCache = nice_fake_for([STRAdCache class]);
-        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
+        STRAdPlacementAdjuster *adjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
 
         STRGridlikeViewDataSourceProxy *dataSourceProxy = [[STRGridlikeViewDataSourceProxy alloc] initWithAdCellReuseIdentifier:@"adCell" placementKey:@"placementKey" presentingViewController:presentingViewController injector:injector];
         dataSourceProxy.originalDataSource = dataSource;
@@ -78,7 +78,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
                 fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
                 fakeAdCache stub_method(@selector(assignedAdIndixesForPlacementKey:)).and_return(@[[NSNumber numberWithInt:1]]);
                 fakeAdCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(YES);
-                [proxy prefetchAdForGridLikeView:tableView atIndex:1];
+                [proxy prefetchAdForGridLikeView:tableView];
             });
             
             it(@"inserts an extra row in the first section", ^{
@@ -122,7 +122,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             beforeEach(^{
                 [tableView registerClass:[STRTableViewCell class] forCellReuseIdentifier:@"adCell"];
                 fakeAdCache stub_method(@selector(numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:)).and_return((long)1);
-                [proxy prefetchAdForGridLikeView:tableView atIndex:1];
+                [proxy prefetchAdForGridLikeView:tableView];
                 [tableView layoutIfNeeded];
             });
             
@@ -138,7 +138,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
         it(@"throws an exception if the sdk user does not register the identifier", ^{
             expect(^{
                 fakeAdCache stub_method(@selector(isAdAtIndexPath:)).and_return(YES);
-                [proxy prefetchAdForGridLikeView:tableView atIndex:1];
+                [proxy prefetchAdForGridLikeView:tableView];
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
         });
@@ -148,7 +148,7 @@ describe(@"STRGridlikeViewDataSourceProxy UITableViewDataSource", ^{
             
             expect(^{
                 fakeAdCache stub_method(@selector(isAdAtIndexPath:)).and_return(YES);
-                [proxy prefetchAdForGridLikeView:tableView atIndex:1];
+                [proxy prefetchAdForGridLikeView:tableView];
                 [tableView layoutIfNeeded];
             }).to(raise_exception());
         });

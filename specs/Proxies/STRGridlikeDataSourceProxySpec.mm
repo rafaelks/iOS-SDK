@@ -24,7 +24,7 @@ describe(@"STRGridlikeViewDataSourceProxy", ^{
     beforeEach(^{
         fakePlacementKey = @"fake-placement-key";
         fakeAdCache = nice_fake_for([STRAdCache class]);
-        adjuster = [STRAdPlacementAdjuster adjusterInSection:0 articlesBeforeFirstAd:1 articlesBetweenAds:100 placementKey:fakePlacementKey adCache:fakeAdCache];
+        adjuster = [STRAdPlacementAdjuster adjusterInSection:0 placementKey:fakePlacementKey adCache:fakeAdCache];
 
         injector = [STRInjector injectorForModule:[STRAppModule new]];
         adGenerator = [STRFakeAdGenerator new];

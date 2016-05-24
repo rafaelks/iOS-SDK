@@ -28,8 +28,6 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                                     placementKey:nil
                         presentingViewController:nil
                                           adSize:CGSizeZero
-                           articlesBeforeFirstAd:0
-                              articlesBetweenAds:1
                                        adSection:0];
             }).to_not(raise_exception);
 
@@ -46,8 +44,6 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                                     placementKey:nil
                         presentingViewController:nil
                                           adSize:CGSizeZero
-                           articlesBeforeFirstAd:0
-                              articlesBetweenAds:1
                                        adSection:0];
             }).to_not(raise_exception);
 
@@ -64,8 +60,6 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                                     placementKey:nil
                         presentingViewController:nil
                                           adSize:CGSizeZero
-                           articlesBeforeFirstAd:0
-                              articlesBetweenAds:1
                                        adSection:0];
             }).to(raise_exception);
 
@@ -92,8 +86,6 @@ describe(@"STRGridlikeViewAdGenerator", ^{
                                     placementKey:nil
                         presentingViewController:nil
                                           adSize:CGSizeZero
-                           articlesBeforeFirstAd:0
-                              articlesBetweenAds:1
                                        adSection:0];
             }).to_not(raise_exception);
 

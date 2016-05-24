@@ -53,19 +53,22 @@
 }
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch{
-
-    if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:YES]) {
+    TLog(@"pkey: %@, isPrefetch?: %@", placement.placementKey, prefetch ? @"YES" : @"NO");
+    if ([self.adCache isAdAvailableForPlacement:placement AndInitializeAd:!prefetch]) {
         STRDeferred *deferred = [STRDeferred defer];
         STRAdvertisement *cachedAd = [self.adCache fetchCachedAdForPlacement:placement];
         [deferred resolveWithValue:cachedAd];
-        //TODO: how to determine if direct sold?
-        if (/*!placement.isDirectSold &&*/ [self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
-            [self.adService fetchAdForPlacement:placement isPrefetch:YES];
+        if ([self.adCache shouldBeginFetchForPlacement:placement.placementKey]) {
+            [self requestAsapInfoForPlacement:placement isPrefetch:YES];
         }
 
         return deferred.promise;
     }
-    
+
+    if ([self.adCache pendingAdRequestInProgressForPlacement:placement.placementKey]) {
+        return [self requestInProgressError];
+    }
+
     return [self requestAsapInfoForPlacement:placement isPrefetch:prefetch];
 }
 
@@ -123,18 +126,22 @@
     STRPromise *stxPromise;
     
     BOOL directSold = [self isDirectSold:keyType];
-    TLog(@"pkey: %@, keyType:%@, keyValue:%@, directSold:%@", placement.placementKey, keyType, keyValue, directSold ? @"YES" : @"NO");
-    
+    TLog(@"pkey: %@, keyType:%@, keyValue:%@, directSold:%@, isPrefetch:%@",
+         placement.placementKey, keyType, keyValue, directSold ? @"YES" : @"NO",
+         prefetch ? @"YES" : @"NO");
+
     if (directSold) {
-        stxPromise = [self.adService fetchAdForPlacement:placement auctionParameterKey:keyType auctionParameterValue:keyValue];
+        stxPromise = [self.adService fetchAdForPlacement:placement auctionParameterKey:keyType auctionParameterValue:keyValue isPrefetch:prefetch];
     } else {
         stxPromise = [self.adService fetchAdForPlacement:placement isPrefetch:prefetch];
     }
     
     [stxPromise then:^id(id value) {
+        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
         [deferred resolveWithValue:value];
         return value;
     } error:^id(NSError *error) {
+        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
         [deferred rejectWithError:error];
         return error;
     }];
@@ -142,6 +149,14 @@
 
 - (BOOL)isDirectSold:(NSString *)keyType {
     return [keyType isEqualToString:@"creative_key"] || [keyType isEqualToString:@"campaign_key"];
+}
+
+
+- (STRPromise *)requestInProgressError {
+    TLog(@"");
+    STRDeferred *deferred = [STRDeferred defer];
+    [deferred rejectWithError:[NSError errorWithDomain:@"STR Request in Progress" code:kRequestInProgress userInfo:nil]];
+    return deferred.promise;
 }
 
 @end

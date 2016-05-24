@@ -23,7 +23,7 @@ extern const NSInteger kRequestInProgress;
                 injector:(STRInjector *)injector;
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)initialize;
-- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue isPrefetch:(BOOL)prefetch;
 - (BOOL)isAdCachedForPlacement:(STRAdPlacement *)placement;
 
 #pragma mark - Methods Exposed only for Testing
