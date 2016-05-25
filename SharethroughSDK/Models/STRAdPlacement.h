@@ -19,9 +19,6 @@
       presentingViewController:(UIViewController *)presentingViewController
                       delegate:(id<STRAdViewDelegate>)delegate
                        adIndex:(NSInteger)adIndex
-                  isDirectSold:(BOOL)directSold
-                       DFPPath:(NSString *)DFPPath
-                   DFPDeferred:(STRDeferred *)deferred
               customProperties:(NSDictionary *)customProperties;
 
 @property (strong, nonatomic) UIView<STRAdView> *adView;
@@ -29,12 +26,6 @@
 @property (weak, nonatomic) UIViewController *presentingViewController;
 @property (weak, nonatomic) id<STRAdViewDelegate> delegate;
 @property (nonatomic, assign) NSInteger adIndex;
-
-//Optional DFP related properties
-@property (copy, nonatomic) NSString *DFPPath;
-@property (strong, nonatomic) STRDeferred *DFPDeferred;
-@property (nonatomic, assign) BOOL isDirectSold;
-
 @property (strong, nonatomic) NSDictionary *customProperties;
 
 @end

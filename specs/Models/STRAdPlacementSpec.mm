@@ -6,7 +6,7 @@ using namespace Cedar::Doubles;
 SPEC_BEGIN(STRAdPlacementSpec)
 
 describe(@"STRAdPlacement", ^{
-    describe(@"- initWithAdView:PlacementKey:presentingViewController:delegate:DFPPath:DFPDeferred:", ^{
+    describe(@"- initWithAdView:PlacementKey:presentingViewController:delegate:", ^{
         it(@"throws an exception if placementKey is nil", ^{
             expect(^{
                 STRAdPlacement *placement __unused = [[STRAdPlacement alloc] initWithAdView:nil
@@ -14,9 +14,6 @@ describe(@"STRAdPlacement", ^{
                                                           presentingViewController:nil
                                                                           delegate:nil
                                                                            adIndex:0
-                                                                      isDirectSold:NO
-                                                                           DFPPath:nil
-                                                                       DFPDeferred:nil
                                                                            customProperties:nil];
             }).to(raise_exception);
         });
@@ -28,9 +25,6 @@ describe(@"STRAdPlacement", ^{
                                                           presentingViewController:nil
                                                                           delegate:nil
                                                                            adIndex:0
-                                                                      isDirectSold:NO
-                                                                           DFPPath:nil
-                                                                       DFPDeferred:nil
                                                                            customProperties:nil];
             }).to(raise_exception);
         });

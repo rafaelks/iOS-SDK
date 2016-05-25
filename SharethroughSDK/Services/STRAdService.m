@@ -25,7 +25,6 @@
 #import "STRLogging.h"
 
 const NSInteger kRequestInProgress = 202;
-static NSString *const kDFPCreativeKey = @"creative_key";
 
 @interface STRAdService ()
 

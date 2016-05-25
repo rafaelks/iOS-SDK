@@ -159,9 +159,6 @@
                                                 presentingViewController:self.placement.presentingViewController
                                                                 delegate:nil
                                                                  adIndex:indexPath.row
-                                                            isDirectSold:NO
-                                                                 DFPPath:nil
-                                                             DFPDeferred:nil
                                                         customProperties:self.placement.customProperties];
     [adGenerator placeAdInPlacement:adPlacement];
 
@@ -182,9 +179,6 @@
                                                 presentingViewController:self.placement.presentingViewController
                                                                 delegate:nil
                                                                  adIndex:indexPath.row
-                                                            isDirectSold:NO
-                                                                 DFPPath:nil
-                                                             DFPDeferred:nil
                                                         customProperties:self.placement.customProperties];
 
     [adGenerator placeAdInPlacement:adPlacement];

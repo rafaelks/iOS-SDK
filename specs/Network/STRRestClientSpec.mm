@@ -90,50 +90,6 @@ describe(@"STRRestClient", ^{
         });
     });
 
-    describe(@"-getDFPPathForPlacement:", ^{
-        __block STRDeferred *deferred;
-
-        beforeEach(^{
-            deferred = [STRDeferred defer];
-            networkClient stub_method(@selector(get:)).and_return(deferred.promise);
-        });
-
-        describe(@"when the network client resolves successfully", ^{
-            it(@"resolves the promise with the JSON parsed", ^{
-                STRPromise *promise = [client getDFPPathForPlacement:@"abc123"];
-                NSDictionary *expectedJSON = @{@"dfp_path": @"/123/test/path"};
-                [deferred resolveWithValue:[NSJSONSerialization dataWithJSONObject:expectedJSON options:0 error:nil]];
-
-                promise.value should equal(@"/123/test/path");
-            });
-
-            it(@"rejects the promise if JSON fails to parse", ^{
-                STRPromise *promise = [client getDFPPathForPlacement:@"abc123"];
-                [deferred resolveWithValue:[NSData data]];
-
-                promise.error should_not be_nil;
-            });
-
-            it(@"rejects the promise if the dfp_path is blank", ^{
-                STRPromise *promise = [client getDFPPathForPlacement:@"abc123"];
-                NSDictionary *expectedJSON = @{@"dfp_path": [NSNull null]};
-                [deferred resolveWithValue:[NSJSONSerialization dataWithJSONObject:expectedJSON options:0 error:nil]];
-
-                promise.error should_not be_nil;
-            });
-        });
-
-        describe(@"when the network client resolves unsuccessfully", ^{
-            it(@"rejects the promise", ^{
-                STRPromise *promise = [client getDFPPathForPlacement:@"abc123"];
-                NSError *error = [NSError errorWithDomain:@"Error domain" code:0 userInfo:nil];
-                [deferred rejectWithError:error];
-
-                promise.error should be_same_instance_as(error);
-            });
-        });
-    });
-
     describe(@"-sendBeaconWithParameters:", ^{
         beforeEach(^{
             networkClient stub_method(@selector(get:));

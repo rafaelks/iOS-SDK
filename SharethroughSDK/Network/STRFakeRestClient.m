@@ -17,12 +17,6 @@
     return deferred.promise;
 }
 
-- (STRPromise *)getDFPPathForPlacement:(NSString *)placementKey {
-    STRDeferred *deferred = [STRDeferred defer];
-    [deferred rejectWithError:nil];
-    return deferred.promise;
-}
-
 - (void)sendBeaconWithParameters:(NSDictionary *)parameters {
     //Do nothing
 }
