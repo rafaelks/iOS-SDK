@@ -20,7 +20,6 @@
 presentingViewController:(UIViewController *)presentingViewController
             delegate:(id<STRAdViewDelegate>)delegate
              adIndex:(NSInteger)adIndex
-        isDirectSold:(BOOL)directSold
     customProperties:(NSDictionary *)customProperties
 {
     if (placementKey == nil || [placementKey length] < 8) {
@@ -32,7 +31,6 @@ presentingViewController:(UIViewController *)presentingViewController
     _presentingViewController = presentingViewController;
     _adIndex = adIndex;
     _delegate = delegate;
-    _isDirectSold = directSold;
     _customProperties = customProperties;
     
     return self;

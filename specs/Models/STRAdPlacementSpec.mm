@@ -14,7 +14,6 @@ describe(@"STRAdPlacement", ^{
                                                           presentingViewController:nil
                                                                           delegate:nil
                                                                            adIndex:0
-                                                                      isDirectSold:NO
                                                                            customProperties:nil];
             }).to(raise_exception);
         });
@@ -26,7 +25,6 @@ describe(@"STRAdPlacement", ^{
                                                           presentingViewController:nil
                                                                           delegate:nil
                                                                            adIndex:0
-                                                                      isDirectSold:NO
                                                                            customProperties:nil];
             }).to(raise_exception);
         });

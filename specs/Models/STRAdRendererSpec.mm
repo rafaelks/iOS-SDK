@@ -87,7 +87,6 @@ describe(@"STRAdRenderer", ^{
                                       presentingViewController:presentingViewController
                                                       delegate:delegate
                                                        adIndex:0
-                                                  isDirectSold:NO
                                               customProperties:nil];
         });
         

@@ -30,7 +30,6 @@ describe(@"STRFakeAdGenerator", ^{
                                                       presentingViewController:presentingViewController
                                                                       delegate:nil
                                                                        adIndex:0
-                                                                  isDirectSold:NO
                                                               customProperties:nil];
 
             [generator placeAdInPlacement:placement];

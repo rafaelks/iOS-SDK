@@ -93,7 +93,6 @@ presentingViewController:(UIViewController *)presentingViewController
                                                 presentingViewController:presentingViewController
                                                                 delegate:delegate
                                                                  adIndex:index
-                                                            isDirectSold:NO
                                                         customProperties:customProperties];
 
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
@@ -113,7 +112,6 @@ presentingViewController:(UIViewController *)presentingViewController
                                                 presentingViewController:presentingViewController
                                                                 delegate:nil
                                                                  adIndex:0
-                                                            isDirectSold:NO
                                                         customProperties:customProperties];
 
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
@@ -144,7 +142,6 @@ presentingViewController:(UIViewController *)presentingViewController
                                                 presentingViewController:presentingViewController
                                                                 delegate:nil
                                                                  adIndex:0
-                                                            isDirectSold:NO
                                                         customProperties:customProperties];
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator =
     [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
