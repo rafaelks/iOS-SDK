@@ -27,10 +27,7 @@
 @property (weak, nonatomic) UIViewController *presentingViewController;
 @property (weak, nonatomic) id<STRAdViewDelegate> delegate;
 @property (nonatomic, assign) NSInteger adIndex;
-
-//Optional DFP related properties
 @property (nonatomic, assign) BOOL isDirectSold;
-
 @property (strong, nonatomic) NSDictionary *customProperties;
 
 @end

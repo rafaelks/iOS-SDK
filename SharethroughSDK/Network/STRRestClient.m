@@ -16,7 +16,6 @@
 
 @property (nonatomic, copy) NSString *adServerHostName;
 @property (nonatomic, copy) NSString *beaconServerHostName;
-@property (nonatomic, copy) NSString *dfpPathUrlFormat;
 @property (nonatomic, copy) NSString *asapServerHostName;
 @property (nonatomic, strong) STRNetworkClient *networkClient;
 
@@ -29,7 +28,6 @@
     if (self) {
         self.adServerHostName = @"https://btlr.sharethrough.com/v4";
         self.beaconServerHostName = @"https://b.sharethrough.com/butler";
-        self.dfpPathUrlFormat = @"https://platform-cdn.sharethrough.com/placements/%@/sdk.json";
         self.asapServerHostName = @"https://asap-staging.sharethrough.com/v1";
         self.networkClient = networkClient;
     }
