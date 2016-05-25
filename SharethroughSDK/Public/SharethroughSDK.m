@@ -94,8 +94,6 @@ presentingViewController:(UIViewController *)presentingViewController
                                                                 delegate:delegate
                                                                  adIndex:index
                                                             isDirectSold:NO
-                                                                 DFPPath:nil
-                                                             DFPDeferred:nil
                                                         customProperties:customProperties];
 
     STRAdGenerator *generator = [self.injector getInstance:[STRAdGenerator class]];
@@ -116,8 +114,6 @@ presentingViewController:(UIViewController *)presentingViewController
                                                                 delegate:nil
                                                                  adIndex:0
                                                             isDirectSold:NO
-                                                                 DFPPath:nil
-                                                             DFPDeferred:nil
                                                         customProperties:customProperties];
 
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator = [self.injector getInstance:[STRGridlikeViewAdGenerator class]];
@@ -149,8 +145,6 @@ presentingViewController:(UIViewController *)presentingViewController
                                                                 delegate:nil
                                                                  adIndex:0
                                                             isDirectSold:NO
-                                                                 DFPPath:nil
-                                                             DFPDeferred:nil
                                                         customProperties:customProperties];
     STRGridlikeViewAdGenerator *gridlikeViewAdGenerator =
     [self.injector getInstance:[STRGridlikeViewAdGenerator class]];

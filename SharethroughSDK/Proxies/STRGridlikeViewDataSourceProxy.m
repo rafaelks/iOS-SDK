@@ -160,8 +160,6 @@
                                                                 delegate:nil
                                                                  adIndex:indexPath.row
                                                             isDirectSold:NO
-                                                                 DFPPath:nil
-                                                             DFPDeferred:nil
                                                         customProperties:self.placement.customProperties];
     [adGenerator placeAdInPlacement:adPlacement];
 
@@ -183,8 +181,6 @@
                                                                 delegate:nil
                                                                  adIndex:indexPath.row
                                                             isDirectSold:NO
-                                                                 DFPPath:nil
-                                                             DFPDeferred:nil
                                                         customProperties:self.placement.customProperties];
 
     [adGenerator placeAdInPlacement:adPlacement];

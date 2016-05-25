@@ -88,8 +88,6 @@ describe(@"STRAdRenderer", ^{
                                                       delegate:delegate
                                                        adIndex:0
                                                   isDirectSold:NO
-                                                       DFPPath:nil
-                                                   DFPDeferred:nil
                                               customProperties:nil];
         });
         

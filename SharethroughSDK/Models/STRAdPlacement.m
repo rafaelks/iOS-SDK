@@ -21,8 +21,6 @@ presentingViewController:(UIViewController *)presentingViewController
             delegate:(id<STRAdViewDelegate>)delegate
              adIndex:(NSInteger)adIndex
         isDirectSold:(BOOL)directSold
-             DFPPath:(NSString *)DFPPath
-         DFPDeferred:(STRDeferred *)deferred
     customProperties:(NSDictionary *)customProperties
 {
     if (placementKey == nil || [placementKey length] < 8) {
@@ -35,8 +33,6 @@ presentingViewController:(UIViewController *)presentingViewController
     _adIndex = adIndex;
     _delegate = delegate;
     _isDirectSold = directSold;
-    _DFPPath = DFPPath;
-    _DFPDeferred = deferred;
     _customProperties = customProperties;
     
     return self;
