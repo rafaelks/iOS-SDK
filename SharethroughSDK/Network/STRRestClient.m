@@ -84,35 +84,6 @@
     return deferred.promise;
 }
 
-- (STRPromise *)getDFPPathForPlacement:(NSString *)placementKey {
-    TLog(@"placementKey:%@",placementKey);
-    STRDeferred *deferred = [STRDeferred defer];
-
-    NSString *urlString = [NSString stringWithFormat:self.dfpPathUrlFormat, placementKey];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-
-    [[self.networkClient get:request] then:^id(NSData *data) {
-        NSError *jsonParseError;
-        NSDictionary *parsedObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
-        if (jsonParseError) {
-            [deferred rejectWithError:jsonParseError];
-        } else {
-            NSString *dfpPath = [parsedObj valueForKey:@"dfp_path"];
-            if (dfpPath && ![dfpPath isEqual:[NSNull null]]) {
-                [deferred resolveWithValue:dfpPath];
-            } else {
-                [deferred rejectWithError:[NSError errorWithDomain:@"Emtpy DFP Path" code:1 userInfo:nil]];
-            }
-        }
-        return data;
-    } error:^id(NSError *error) {
-        [deferred rejectWithError:error];
-        return error;
-    }];
-    
-    return deferred.promise;
-}
-
 - (void)sendBeaconWithParameters:(NSDictionary *)parameters {
     TLog(@"params:%@",parameters);
     NSString *urlString = [self.beaconServerHostName stringByAppendingString:[self encodedQueryParams:parameters]];
