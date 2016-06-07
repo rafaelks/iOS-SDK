@@ -77,7 +77,7 @@ describe(@"STRViewTracker", ^{
             window.rootViewController = presentingViewController;
             [window makeKeyAndVisible];
 
-            beaconService stub_method(@selector(fireImpressionRequestForPlacementKey:));
+            beaconService stub_method(@selector(fireImpressionRequestForPlacement:));
             beaconService stub_method(@selector(fireThirdPartyBeacons:forPlacementWithStatus:));
 
             delegate = nice_fake_for(@protocol(STRAdViewDelegate));

@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRRestClient, STRNetworkClient, STRDateProvider, ASIdentifierManager, STRAdvertisement;
+@class STRRestClient, STRNetworkClient, STRDateProvider, ASIdentifierManager, STRAdvertisement, STRAdPlacement;
 
 @interface STRBeaconService : NSObject
 
 - (id) initWithRestClient:(STRRestClient *)restClient dateProvider:(STRDateProvider *)dateProvider asIdentifierManager:(ASIdentifierManager *)identifierManager;
-- (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey;
-- (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
+- (void)fireImpressionRequestForPlacement:(STRAdPlacement *)placement;
+- (void)fireImpressionRequestForPlacement:(STRAdPlacement *)placement auctionParameterKey:(NSString *)apKey auctionParameterValue:(NSString *)apValue;
 - (BOOL)fireImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;
 - (void)fireThirdPartyBeacons:(NSArray *)beaconPaths forPlacementWithStatus:(NSString *)placementStatus;
 - (BOOL)fireVisibleImpressionForAd:(STRAdvertisement *)ad adSize:(CGSize)adSize;

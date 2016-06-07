@@ -70,7 +70,7 @@ const NSInteger kRequestInProgress = 202;
                          isPrefetch:(BOOL)prefetch
 {
     TLog(@"pkey: %@, apkey: %@, apval: %@, prefetch: %@", placement.placementKey, apKey, apValue, prefetch ? @"YES" : @"NO");
-    [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey auctionParameterKey:apKey auctionParameterValue:apValue];
+    [self.beaconService fireImpressionRequestForPlacement:placement auctionParameterKey:apKey auctionParameterValue:apValue];
     return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{ apKey : apValue }]
                           forPlacement:placement
                   isPrefetch:prefetch];
@@ -85,7 +85,7 @@ const NSInteger kRequestInProgress = 202;
 
 - (STRPromise *)beginFetchForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch{
     TLog(@"");
-    [self.beaconService fireImpressionRequestForPlacementKey:placement.placementKey];
+    [self.beaconService fireImpressionRequestForPlacement:placement];
     return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{}] forPlacement:placement isPrefetch:prefetch];
 }
 

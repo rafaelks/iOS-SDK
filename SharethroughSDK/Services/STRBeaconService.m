@@ -13,6 +13,7 @@
 #import <AdSupport/AdSupport.h>
 #import "STRAdvertisement.h"
 #import "STRLogging.h"
+#import "STRAdPlacement.h"
 
 NSString *kLivePlacementStatus = @"live";
 NSString *kPreLivePlacementStatus = @"pre-live";
@@ -39,9 +40,9 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     return self;
 }
 
-- (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey {
+- (void)fireImpressionRequestForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
-    NSDictionary *uniqueParameters = @{@"pkey": valueOrEmpty(placementKey),
+    NSDictionary *uniqueParameters = @{@"pkey": valueOrEmpty(placement.placementKey),
                                        @"type": @"impressionRequest"};
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
@@ -49,12 +50,12 @@ NSString *kPreLivePlacementStatus = @"pre-live";
     [self.restClient sendBeaconWithParameters:parameters];
 }
 
-- (void)fireImpressionRequestForPlacementKey:(NSString *)placementKey
+- (void)fireImpressionRequestForPlacement:(STRAdPlacement *)placement
                          auctionParameterKey:(NSString *)apKey
                        auctionParameterValue:(NSString *)apValue
 {
     TLog(@"");
-    NSMutableDictionary *uniqueParameters =  [@{@"pkey": valueOrEmpty(placementKey),
+    NSMutableDictionary *uniqueParameters =  [@{@"pkey": valueOrEmpty(placement.placementKey),
                                                 @"type": @"impressionRequest"} mutableCopy];
     if (apKey && apKey.length > 0) {
         [uniqueParameters setObject:valueOrEmpty(apValue) forKey:apKey];

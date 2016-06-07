@@ -111,7 +111,7 @@ describe(@"STRAdService", ^{
             });
 
             it(@"fires an impression request beacon", ^{
-                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:)).with(@"placementKey");
+                beaconService should have_received(@selector(fireImpressionRequestForPlacement:)).with(adPlacement);
             });
 
             it(@"returns an unresolved promise", ^{
@@ -141,7 +141,7 @@ describe(@"STRAdService", ^{
             });
 
             it(@"fires an impression request beacon", ^{
-                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:)).with(@"placementKey");
+                beaconService should have_received(@selector(fireImpressionRequestForPlacement:)).with(adPlacement);
             });
 
             it(@"returns an unresolved promise", ^{
@@ -382,7 +382,7 @@ describe(@"STRAdService", ^{
             });
 
             it(@"fires an impression request beacon", ^{
-                beaconService should have_received(@selector(fireImpressionRequestForPlacementKey:)).with(@"placementKey");
+                beaconService should have_received(@selector(fireImpressionRequestForPlacement:)).with(adPlacement);
             });
 
             it(@"returns an unresolved promise", ^{
