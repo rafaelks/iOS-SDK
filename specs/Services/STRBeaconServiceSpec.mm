@@ -53,6 +53,7 @@ describe(@"STRBeaconService", ^{
 
         adPlacement = [[STRAdPlacement alloc] init];
         adPlacement.placementKey = @"placementKey";
+        adPlacement.mrid = @"mrid";
 
         ad = [[STRAdvertisement alloc] init];
         ad.creativeKey = @"creativeKey";
@@ -61,6 +62,7 @@ describe(@"STRBeaconService", ^{
         ad.adserverRequestId = @"fake-arid";
         ad.auctionWinId = @"fake-awid";
         ad.dealId = @"fake-dealId";
+        ad.mrid = adPlacement.mrid;
     });
 
     describe(@"-fireImpressionRequestForPlacement:", ^{
@@ -75,7 +77,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"session": @"AAAA",
                                                                                          @"uid": @"fakeUUID",
                                                                                          @"ua": @"User Agent",
-                                                                                         @"ploc": @"specs"});
+                                                                                         @"ploc": @"specs",
+                                                                                         @"mrid": @"mrid"});
         });
     });
 
@@ -92,7 +95,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"session": @"AAAA",
                                                                                          @"uid": @"fakeUUID",
                                                                                          @"ua": @"User Agent",
-                                                                                         @"ploc": @"specs"});
+                                                                                         @"ploc": @"specs",
+                                                                                         @"mrid": @"mrid"});
         });
 
         context(@"when auctionParameterKey is nil", ^{
@@ -107,7 +111,8 @@ describe(@"STRBeaconService", ^{
                                                                                              @"session": @"AAAA",
                                                                                              @"uid": @"fakeUUID",
                                                                                              @"ua": @"User Agent",
-                                                                                             @"ploc": @"specs"});
+                                                                                             @"ploc": @"specs",
+                                                                                             @"mrid": @"mrid"});
             });
         });
 
@@ -124,7 +129,8 @@ describe(@"STRBeaconService", ^{
                                                                                              @"session": @"AAAA",
                                                                                              @"uid": @"fakeUUID",
                                                                                              @"ua": @"User Agent",
-                                                                                             @"ploc": @"specs"});
+                                                                                             @"ploc": @"specs",
+                                                                                             @"mrid": @"mrid"});
             });
         });
     });
@@ -151,7 +157,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"placementIndex": @"0",
                                                                                          @"arid": @"fake-arid",
                                                                                          @"awid": @"fake-awid",
-                                                                                         @"deal_id": @"fake-dealId"});
+                                                                                         @"deal_id": @"fake-dealId",
+                                                                                         @"mrid": @"mrid"});
         });
 
         describe(@"firing the impression again on the same ad", ^{
@@ -194,7 +201,8 @@ describe(@"STRBeaconService", ^{
                                                                                              @"ploc": @"specs",
                                                                                              @"placementIndex": @"0",
                                                                                              @"arid": @"",
-                                                                                             @"awid": @""});
+                                                                                             @"awid": @"",
+                                                                                             @"mrid": @"mrid"});
             });
         });
     });
@@ -223,7 +231,8 @@ describe(@"STRBeaconService", ^{
                                                                                          @"placementIndex": @"0",
                                                                                          @"arid": @"fake-arid",
                                                                                          @"awid": @"fake-awid",
-                                                                                         @"deal_id": @"fake-dealId"});
+                                                                                         @"deal_id": @"fake-dealId",
+                                                                                         @"mrid": @"mrid"});
         });
 
         describe(@"firing the visible impression again on the same ad", ^{
@@ -262,7 +271,8 @@ describe(@"STRBeaconService", ^{
                            @"placementIndex": @"0",
                            @"arid": @"fake-arid",
                            @"awid": @"fake-awid",
-                           @"deal_id": @"fake-dealId"};
+                           @"deal_id": @"fake-dealId",
+                           @"mrid": @"mrid"};
             [service fireVideoPlayEvent:ad adSize:CGSizeMake(200, 100)];
 
 
@@ -352,7 +362,8 @@ describe(@"STRBeaconService", ^{
                              @"ploc": @"specs",
                              @"arid": @"fake-arid",
                              @"awid": @"fake-awid",
-                             @"deal_id": @"fake-dealId"};
+                             @"deal_id": @"fake-dealId",
+                             @"mrid": @"mrid"};
         });
 
         describe(@"when the share type is email", ^{
@@ -422,7 +433,8 @@ describe(@"STRBeaconService", ^{
                            @"placementIndex": @"0",
                            @"arid": @"fake-arid",
                            @"awid": @"fake-awid",
-                           @"deal_id": @"fake-dealId"};
+                           @"deal_id": @"fake-dealId",
+                           @"mrid": @"mrid"};
             [service fireClickForAd:ad adSize:CGSizeMake(200, 100)];
         });
 
@@ -450,7 +462,8 @@ describe(@"STRBeaconService", ^{
                            @"ploc": @"specs",
                            @"arid": @"fake-arid",
                            @"awid": @"fake-awid",
-                           @"deal_id": @"fake-dealId"};
+                           @"deal_id": @"fake-dealId",
+                           @"mrid": @"mrid"};
             [service fireArticleViewForAd:ad];
         });
 
@@ -479,7 +492,8 @@ describe(@"STRBeaconService", ^{
                            @"ploc": @"specs",
                            @"arid": @"fake-arid",
                            @"awid": @"fake-awid",
-                           @"deal_id": @"fake-dealId"};
+                           @"deal_id": @"fake-dealId",
+                           @"mrid": @"mrid"};
             [service fireArticleDurationForAd:ad withDuration:10.9980];
         });
 
@@ -506,7 +520,8 @@ describe(@"STRBeaconService", ^{
                            @"ploc": @"specs",
                            @"arid": @"fake-arid",
                            @"awid": @"fake-awid",
-                           @"deal_id": @"fake-dealId"};
+                           @"deal_id": @"fake-dealId",
+                           @"mrid": @"mrid"};
             [service fireSilentAutoPlayDurationForAd:ad withDuration:3000.0];
         });
 
@@ -535,7 +550,8 @@ describe(@"STRBeaconService", ^{
                            @"ploc": @"specs",
                            @"arid": @"fake-arid",
                            @"awid": @"fake-awid",
-                           @"deal_id": @"fake-dealId"};
+                           @"deal_id": @"fake-dealId",
+                           @"mrid": @"mrid"};
             [service fireAutoPlayVideoEngagementForAd:ad withDuration:10323.33];
         });
 
@@ -563,7 +579,8 @@ describe(@"STRBeaconService", ^{
                            @"ploc": @"specs",
                            @"arid": @"fake-arid",
                            @"awid": @"fake-awid",
-                           @"deal_id": @"fake-dealId"};
+                           @"deal_id": @"fake-dealId",
+                           @"mrid": @"mrid"};
             [service fireVideoViewDurationForAd:ad withDuration:10.32333 isSilent:YES];
         });
 

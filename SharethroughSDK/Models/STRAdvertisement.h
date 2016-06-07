@@ -31,6 +31,7 @@ extern NSString *STRArticleAd;
 @property (nonatomic, copy) NSString *variantKey;
 @property (nonatomic, copy) NSString *adserverRequestId;
 @property (nonatomic, copy) NSString *auctionWinId;
+@property (nonatomic, copy) NSString *mrid;
 @property (nonatomic, copy) NSString *customEngagementLabel;
 @property (nonatomic, copy) NSString *promotedByText;
 @property (nonatomic, copy) NSURL *customEngagementURL;

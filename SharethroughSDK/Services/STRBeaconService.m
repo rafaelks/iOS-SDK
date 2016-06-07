@@ -43,6 +43,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 - (void)fireImpressionRequestForPlacement:(STRAdPlacement *)placement {
     TLog(@"");
     NSDictionary *uniqueParameters = @{@"pkey": valueOrEmpty(placement.placementKey),
+                                       @"mrid": valueOrEmpty(placement.mrid),
                                        @"type": @"impressionRequest"};
     NSMutableDictionary *parameters = [self commonParameters];
     [parameters addEntriesFromDictionary:uniqueParameters];
@@ -56,6 +57,7 @@ NSString *kPreLivePlacementStatus = @"pre-live";
 {
     TLog(@"");
     NSMutableDictionary *uniqueParameters =  [@{@"pkey": valueOrEmpty(placement.placementKey),
+                                                @"mrid": valueOrEmpty(placement.mrid),
                                                 @"type": @"impressionRequest"} mutableCopy];
     if (apKey && apKey.length > 0) {
         [uniqueParameters setObject:valueOrEmpty(apValue) forKey:apKey];
@@ -250,7 +252,8 @@ static id valueOrEmpty(id object)
                                @"vkey": valueOrEmpty(ad.variantKey),
                                @"ckey": valueOrEmpty(ad.creativeKey),
                                @"arid": valueOrEmpty(ad.adserverRequestId),
-                               @"awid": valueOrEmpty(ad.auctionWinId) };
+                               @"awid": valueOrEmpty(ad.auctionWinId),
+                               @"mrid": valueOrEmpty(ad.mrid) };
     NSMutableDictionary *commonParams = [self commonParameters];
     [commonParams addEntriesFromDictionary:adParams];
     if (ad.dealId && ad.dealId.length > 0) {

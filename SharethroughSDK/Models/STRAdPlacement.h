@@ -27,6 +27,7 @@
 @property (weak, nonatomic) id<STRAdViewDelegate> delegate;
 @property (nonatomic, assign) NSInteger adIndex;
 @property (strong, nonatomic) NSDictionary *customProperties;
+@property (copy, nonatomic) NSString *mrid;
 
 @end
 

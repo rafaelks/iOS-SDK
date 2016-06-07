@@ -130,11 +130,12 @@
              isPrefetch:(BOOL)prefetch{
     NSString *keyType = value[@"keyType"];
     NSString *keyValue = value[@"keyValue"];
+    placement.mrid = value[@"mrid"];
     STRPromise *stxPromise;
     
     BOOL directSold = [self isDirectSold:keyType];
-    TLog(@"pkey: %@, keyType:%@, keyValue:%@, directSold:%@, isPrefetch:%@",
-         placement.placementKey, keyType, keyValue, directSold ? @"YES" : @"NO",
+    TLog(@"mrid: %@, pkey: %@, keyType:%@, keyValue:%@, directSold:%@, isPrefetch:%@",
+         placement.mrid, placement.placementKey, keyType, keyValue, directSold ? @"YES" : @"NO",
          prefetch ? @"YES" : @"NO");
 
     if (directSold) {

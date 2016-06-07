@@ -61,7 +61,10 @@ const NSInteger kRequestInProgress = 202;
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch{
     TLog(@"");
-    return [self beginFetchForPlacement:placement isPrefetch:prefetch];
+    [self.beaconService fireImpressionRequestForPlacement:placement];
+    return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{}]
+                          forPlacement:placement
+                            isPrefetch:prefetch];
 }
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement
@@ -83,12 +86,6 @@ const NSInteger kRequestInProgress = 202;
 
 #pragma mark - Private
 
-- (STRPromise *)beginFetchForPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch{
-    TLog(@"");
-    [self.beaconService fireImpressionRequestForPlacement:placement];
-    return [self fetchAdWithParameters:[self createAdRequestParamsForPlacement:placement withOtherParams:@{}] forPlacement:placement isPrefetch:prefetch];
-}
-
 - (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacement:(STRAdPlacement *)placement isPrefetch:(BOOL)prefetch {
     TLog(@"");
     STRDeferred *deferred = [STRDeferred defer];
@@ -109,7 +106,7 @@ const NSInteger kRequestInProgress = 202;
         NSMutableArray *creativesArray = [NSMutableArray arrayWithCapacity:[creativesJSON count]];
 
         for (int i = 0; i < [creativesJSON count]; ++i) {
-            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacementKey:placement.placementKey withPlacementJSON:placementJSON withArid:adserverRequestId]];
+            [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placement withPlacementJSON:placementJSON withArid:adserverRequestId]];
         }
 
         [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacement:placement];
@@ -182,7 +179,7 @@ const NSInteger kRequestInProgress = 202;
     return [[adClass alloc] initWithInjector:self.injector];
 }
 
-- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacementKey:(NSString *)placementKey withPlacementJSON:(NSDictionary *)placementJSON withArid:(NSString *)adserverRequestId {
+- (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(STRAdPlacement *)placement withPlacementJSON:(NSDictionary *)placementJSON withArid:(NSString *)adserverRequestId {
     TLog(@"");
     STRDeferred *deferred = [STRDeferred defer];
 
@@ -200,7 +197,7 @@ const NSInteger kRequestInProgress = 202;
         ad.mediaURL = [self URLFromSanitizedString:creativeJSON[@"media_url"]];
         ad.shareURL = [self URLFromSanitizedString:creativeJSON[@"share_url"]];
         ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
-        ad.placementKey = placementKey;
+        ad.placementKey = placement.placementKey;
         ad.placementStatus = placementJSON[@"status"];
         ad.promotedByText = placementJSON[@"promoted_by_text"];
         ad.thirdPartyBeaconsForImpression = creativeJSON[@"beacons"][@"impression"];
@@ -212,6 +209,7 @@ const NSInteger kRequestInProgress = 202;
         ad.action = creativeJSON[@"action"];
         ad.adserverRequestId = adserverRequestId;
         ad.auctionWinId = creativeWrapperJSON[@"auctionWinId"];
+        ad.mrid = placement.mrid;
         ad.brandLogoURL = [self URLFromSanitizedString:creativeJSON[@"brand_logo_url"]];
         ad.thumbnailURL = [self URLFromSanitizedString:creativeJSON[@"thumbnail_url"]];
         ad.customEngagementLabel = creativeJSON[@"custom_engagement_label"];
