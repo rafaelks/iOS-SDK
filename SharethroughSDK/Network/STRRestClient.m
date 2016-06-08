@@ -28,7 +28,7 @@
     if (self) {
         self.adServerHostName = @"https://btlr.sharethrough.com/v4";
         self.beaconServerHostName = @"https://b.sharethrough.com/butler";
-        self.asapServerHostName = @"https://asap-staging.sharethrough.com/v1";
+        self.asapServerHostName = @"https://asap.sharethrough.com/v1";
         self.networkClient = networkClient;
     }
     return self;
