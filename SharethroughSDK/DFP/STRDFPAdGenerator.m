@@ -108,6 +108,27 @@ char const * const STRDFPAdGeneratorKey = "STRDFPAdGeneratorKey";
     }
 }
 
+- (void)prefetchAdForPlacement:(STRAdPlacement *)placement {
+    STRPromise *DFPPathPromise = [self fetchDFPPathForPlacementKey:placement.placementKey];
+    [DFPPathPromise then:^id(NSString *value) {
+        if ([value length] > 0) {
+            TLog(@"DFPPath received:%@", value);
+            placement.DFPPath = value;
+            [self initializeDFPRrequesForPlacement:placement];
+        } else {
+            if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+                [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey atIndex:placement.adIndex];
+            }
+        }
+        return value;
+    } error:^id(NSError *error) {
+        if ([placement.delegate respondsToSelector:@selector(adView:didFailToFetchAdForPlacementKey:atIndex:)]) {
+            [placement.delegate adView:placement.adView didFailToFetchAdForPlacementKey:placement.placementKey atIndex:placement.adIndex];
+        }
+        return error;
+    }];
+}
+
 #pragma mark private
 
 - (STRPromise *)fetchDFPPathForPlacementKey:(NSString *)placementKey {

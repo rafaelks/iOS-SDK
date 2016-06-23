@@ -198,6 +198,37 @@ describe(@"DFPAdGenerator", ^{
         });
     });
 
+    context(@"prefetching", ^{
+
+        describe(@"successfully fetching the DFP Path from Bakery", ^{
+            beforeEach(^{
+                [generator prefetchAdForPlacement:adPlacement];
+                [deferred resolveWithValue:@"DFP-Path"];
+            });
+
+            it(@"makes a request to bakery if not cached", ^{
+                restClient should have_received(@selector(getDFPPathForPlacement:)).with(adPlacement.placementKey);
+            });
+
+            it(@"adds the DFP banner view", ^{
+                view should have_received(@selector(addSubview:));
+            });
+        });
+
+        describe(@"when the DFP Path is cached", ^{
+            beforeEach(^{
+                [generator prefetchAdForPlacement:adPlacement];
+                [deferred resolveWithValue:@"DFP-Path"];
+                [(id<CedarDouble>)restClient reset_sent_messages];
+                [generator prefetchAdForPlacement:adPlacement];
+            });
+
+            it(@"does not call the rest client", ^{
+                restClient should_not have_received(@selector(getDFPPathForPlacement:)).with(adPlacement.placementKey);
+            });
+        });
+    });
+
     context(@"GAdBannerViewDelegate", ^{
         __block GADBannerView *gBannerView;
         __block STRDFPManager *dfpManager;
