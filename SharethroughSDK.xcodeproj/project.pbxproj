@@ -205,6 +205,17 @@
 		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B28137151B264DE800EF3FD0 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
 		B2867A371AEA9F0700BAF148 /* UIView+Visible.m in Sources */ = {isa = PBXBuildFile; fileRef = B2867A361AEA9F0700BAF148 /* UIView+Visible.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B298798A1D47B41A00F956B8 /* STRMediationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = B29879891D47B41A00F956B8 /* STRMediationAdapter.m */; };
+		B298798B1D47B41A00F956B8 /* STRMediationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = B29879891D47B41A00F956B8 /* STRMediationAdapter.m */; };
+		B298798C1D47B41A00F956B8 /* STRMediationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = B29879891D47B41A00F956B8 /* STRMediationAdapter.m */; };
+		B29879901D47BE8400F956B8 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B298798F1D47BE8400F956B8 /* FBAudienceNetwork.framework */; };
+		B29879911D47BE8400F956B8 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B298798F1D47BE8400F956B8 /* FBAudienceNetwork.framework */; };
+		B29879921D47BE8400F956B8 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B298798F1D47BE8400F956B8 /* FBAudienceNetwork.framework */; };
+		B29879951D47C27700F956B8 /* FANMediationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = B29879941D47C27700F956B8 /* FANMediationAdapter.m */; };
+		B29879981D496AE400F956B8 /* FANMediationAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B29879971D496AE400F956B8 /* FANMediationAd.m */; };
+		B298799B1D4A901700F956B8 /* STRMediationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B298799A1D4A901700F956B8 /* STRMediationService.m */; };
+		B298799C1D4A901700F956B8 /* STRMediationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B298799A1D4A901700F956B8 /* STRMediationService.m */; };
+		B298799D1D4A901700F956B8 /* STRMediationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B298799A1D4A901700F956B8 /* STRMediationService.m */; };
 		B29A4FA91BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B29A4FAB1BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2A6CC811B2244440088928F /* STRAdvertisementDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
@@ -594,7 +605,6 @@
 		B238F6451B20E62400847C50 /* STRViewTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRViewTracker.m; sourceTree = "<group>"; };
 		B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdvertisementDelegate.h; sourceTree = "<group>"; };
 		B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdInstantHostedVideoSpec.mm; sourceTree = "<group>"; };
-		B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ThirdParty/GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
 		B27964F61CEA1C66000A0B33 /* STRAsapServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAsapServiceSpec.mm; sourceTree = "<group>"; };
 		B27A7B951BB9A4A70012D943 /* STRFakeRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRFakeRestClient.h; sourceTree = "<group>"; };
 		B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRFakeRestClient.m; sourceTree = "<group>"; };
@@ -602,6 +612,16 @@
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2867A351AEA9F0700BAF148 /* UIView+Visible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Visible.h"; sourceTree = "<group>"; };
 		B2867A361AEA9F0700BAF148 /* UIView+Visible.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Visible.m"; sourceTree = "<group>"; };
+		B29879871D47B06300F956B8 /* STRMediationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRMediationDelegate.h; sourceTree = "<group>"; };
+		B29879881D47B41A00F956B8 /* STRMediationAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRMediationAdapter.h; sourceTree = "<group>"; };
+		B29879891D47B41A00F956B8 /* STRMediationAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRMediationAdapter.m; sourceTree = "<group>"; };
+		B298798F1D47BE8400F956B8 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		B29879931D47C27700F956B8 /* FANMediationAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FANMediationAdapter.h; sourceTree = "<group>"; };
+		B29879941D47C27700F956B8 /* FANMediationAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FANMediationAdapter.m; sourceTree = "<group>"; };
+		B29879961D496AE400F956B8 /* FANMediationAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FANMediationAd.h; path = MediationSupport/FANMediationAd.h; sourceTree = "<group>"; };
+		B29879971D496AE400F956B8 /* FANMediationAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FANMediationAd.m; path = MediationSupport/FANMediationAd.m; sourceTree = "<group>"; };
+		B29879991D4A901700F956B8 /* STRMediationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRMediationService.h; sourceTree = "<group>"; };
+		B298799A1D4A901700F956B8 /* STRMediationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRMediationService.m; sourceTree = "<group>"; };
 		B29A4FA71BA9F70B00065FE3 /* STRAdInstantHostedVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdInstantHostedVideo.h; sourceTree = "<group>"; };
 		B29A4FA81BA9F70B00065FE3 /* STRAdInstantHostedVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdInstantHostedVideo.m; sourceTree = "<group>"; };
 		B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intel_sample_logo.c; sourceTree = "<group>"; };
@@ -645,6 +665,7 @@
 				B2251C731CCEA22100C23540 /* AVKit.framework in Frameworks */,
 				AE131E081898622800891A93 /* AdSupport.framework in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
+				B29879921D47BE8400F956B8 /* FBAudienceNetwork.framework in Frameworks */,
 				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
 				7317D4E7A496DA18EB442FB5 /* libPods-specs.a in Frameworks */,
 			);
@@ -654,6 +675,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29879901D47BE8400F956B8 /* FBAudienceNetwork.framework in Frameworks */,
 				AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */,
 				AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */,
 			);
@@ -663,6 +685,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29879911D47BE8400F956B8 /* FBAudienceNetwork.framework in Frameworks */,
 				B2B9634D1B0F9D0B00404578 /* AdSupport.framework in Frameworks */,
 				B2B9634E1B0F9D0B00404578 /* Foundation.framework in Frameworks */,
 			);
@@ -704,6 +727,8 @@
 				AEBAEDC11898227200F02C5A /* STRBeaconService.m */,
 				E832354E1CE2657C00CE5B15 /* STRAsapService.h */,
 				E832354F1CE2657C00CE5B15 /* STRAsapService.m */,
+				B29879991D4A901700F956B8 /* STRMediationService.h */,
+				B298799A1D4A901700F956B8 /* STRMediationService.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -742,6 +767,9 @@
 				AE58227818A2F04F00672653 /* UICollectionView+STR.m */,
 				AEEE6CB318A0129800AA7EC9 /* UITableView+STR.h */,
 				AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */,
+				B29879871D47B06300F956B8 /* STRMediationDelegate.h */,
+				B29879881D47B41A00F956B8 /* STRMediationAdapter.h */,
+				B29879891D47B41A00F956B8 /* STRMediationAdapter.m */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -1029,6 +1057,7 @@
 				AE3120DA1889E6EF00297F01 /* External Libs */,
 				AE52FD6418A41A4E009F69BD /* Generators */,
 				AE6C807618998604008FD848 /* Injection */,
+				B298798E1D47BE1600F956B8 /* MediationSupport */,
 				AE022DE9188E008800D02568 /* Models */,
 				AE022DDB188DFFE700D02568 /* Network */,
 				AE8AF502189B0B0D00A65B27 /* Proxies */,
@@ -1108,6 +1137,17 @@
 			path = "Static Resources";
 			sourceTree = "<group>";
 		};
+		B298798E1D47BE1600F956B8 /* MediationSupport */ = {
+			isa = PBXGroup;
+			children = (
+				B29879931D47C27700F956B8 /* FANMediationAdapter.h */,
+				B29879941D47C27700F956B8 /* FANMediationAdapter.m */,
+				B29879961D496AE400F956B8 /* FANMediationAd.h */,
+				B29879971D496AE400F956B8 /* FANMediationAd.m */,
+			);
+			name = MediationSupport;
+			sourceTree = "<group>";
+		};
 		B2CAF2491BA0B50A005D544B /* Advertisements */ = {
 			isa = PBXGroup;
 			children = (
@@ -1134,7 +1174,7 @@
 		E8703CEF19ACFF9C00D3FA50 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
-				B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */,
+				B298798F1D47BE8400F956B8 /* FBAudienceNetwork.framework */,
 			);
 			name = "Third Party";
 			sourceTree = "<group>";
@@ -1473,6 +1513,7 @@
 			files = (
 				B22162E71BAB35A9002F672E /* STRAdInstantHostedVideo.m in Sources */,
 				B22162E61BAB35A2002F672E /* STRAdHostedVideo.m in Sources */,
+				B29879951D47C27700F956B8 /* FANMediationAdapter.m in Sources */,
 				B28137151B264DE800EF3FD0 /* STRViewTracker.m in Sources */,
 				B229F0A51A2E5B420094A8B3 /* instagram-logo.c in Sources */,
 				B229F0A61A2E5B420094A8B3 /* yt-logo.c in Sources */,
@@ -1523,6 +1564,7 @@
 				AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */,
 				AE46CE6D189844AB0096BDE9 /* STRSession.m in Sources */,
 				E8B9759218EA052C0054F35F /* pinterest-logo.c in Sources */,
+				B298799D1D4A901700F956B8 /* STRMediationService.m in Sources */,
 				AE6C80711898925C008FD848 /* STRFullTableViewDataSource.m in Sources */,
 				AE9C4612189B184B001B407A /* STRAdCacheSpec.mm in Sources */,
 				AEFBF15F188F470700ADD742 /* STRInteractiveAdViewControllerSpec.mm in Sources */,
@@ -1547,9 +1589,11 @@
 				AE3FF40A18AAA242006061C2 /* play-btn-300x.c in Sources */,
 				AE6C80801899861E008FD848 /* STRBlockWrapper.m in Sources */,
 				AE9C4635189C72B9001B407A /* STRVideoController.m in Sources */,
+				B298798C1D47B41A00F956B8 /* STRMediationAdapter.m in Sources */,
 				E8EE49B2191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */,
 				AED6D19D18A400D7005DFDF4 /* STRCollectionViewDelegate.m in Sources */,
 				AE39F8C818AD56DC00969C30 /* STRClickoutViewController.m in Sources */,
+				B29879981D496AE400F956B8 /* FANMediationAd.m in Sources */,
 				AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */,
 				AEEE6CB618A0129800AA7EC9 /* UITableView+STR.m in Sources */,
 				E83235541CE2657C00CE5B15 /* STRAsapService.m in Sources */,
@@ -1621,6 +1665,7 @@
 				AE39F8D218AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */,
 				AE3FF3FD18AA9F5A006061C2 /* vine-logo.c in Sources */,
 				B229F09B1A2E47CA0094A8B3 /* instagram-logo.c in Sources */,
+				B298798A1D47B41A00F956B8 /* STRMediationAdapter.m in Sources */,
 				AE8AF505189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
 				AE6C808B1899873B008FD848 /* STRAppModule.m in Sources */,
 				B2D5CDC31B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
@@ -1643,6 +1688,7 @@
 				AE8AF50C189B0CF100A65B27 /* STRAdPlacementAdjuster.m in Sources */,
 				B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */,
 				AEBAEDCD189839DE00F02C5A /* STRDateProvider.m in Sources */,
+				B298799B1D4A901700F956B8 /* STRMediationService.m in Sources */,
 				AE6C80811899861E008FD848 /* STRInjector.m in Sources */,
 				E8EE49B3191C202500D0B9B6 /* pinterest_sample_thumbnail.c in Sources */,
 				E8B9759118EA052C0054F35F /* pinterest-logo.c in Sources */,
@@ -1689,6 +1735,7 @@
 				B2B963331B0F9D0B00404578 /* clickout_sample_thumbnail.c in Sources */,
 				B2B963341B0F9D0B00404578 /* vine-logo.c in Sources */,
 				B2B963351B0F9D0B00404578 /* instagram-logo.c in Sources */,
+				B298798B1D47B41A00F956B8 /* STRMediationAdapter.m in Sources */,
 				B2B963361B0F9D0B00404578 /* STRIndexPathDelegateProxy.m in Sources */,
 				B2B963371B0F9D0B00404578 /* STRAppModule.m in Sources */,
 				B2D5CDC51B41EDF40092C3D8 /* STRAdArticle.m in Sources */,
@@ -1711,6 +1758,7 @@
 				B2B963461B0F9D0B00404578 /* STRAdPlacementAdjuster.m in Sources */,
 				B2B963471B0F9D0B00404578 /* NSMutableArray+Queue.m in Sources */,
 				B2B963481B0F9D0B00404578 /* STRDateProvider.m in Sources */,
+				B298799C1D4A901700F956B8 /* STRMediationService.m in Sources */,
 				B2B963491B0F9D0B00404578 /* STRInjector.m in Sources */,
 				B2B9634A1B0F9D0B00404578 /* pinterest_sample_thumbnail.c in Sources */,
 				B2B9634B1B0F9D0B00404578 /* pinterest-logo.c in Sources */,
@@ -1775,6 +1823,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(SRCROOT)/specs/Frameworks",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "specs/specs-Prefix.pch";
@@ -1807,6 +1856,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(SRCROOT)/specs/Frameworks",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "specs/specs-Prefix.pch";
@@ -1908,6 +1958,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
@@ -1928,6 +1979,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
@@ -1948,6 +2000,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
@@ -1972,6 +2025,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
