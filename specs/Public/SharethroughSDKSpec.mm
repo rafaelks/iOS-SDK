@@ -1,4 +1,4 @@
-#import "SharethroughSDK.h"
+#import "SharethroughSDK+TestSafe.h"
 #import "STRInjector.h"
 #import "STRFullAdView.h"
 

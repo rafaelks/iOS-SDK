@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "STRAdGenerator.h"
-#import "SharethroughSDK.h"
+#import "SharethroughSDK+TestSafe.h"
 
 @class STRInjector;
 

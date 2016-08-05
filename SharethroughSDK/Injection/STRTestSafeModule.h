@@ -7,7 +7,7 @@
 //
 
 #import "STRAppModule.h"
-#import "SharethroughSDK.h"
+#import "SharethroughSDK+TestSafe.h"
 
 @interface STRTestSafeModule : STRAppModule
 

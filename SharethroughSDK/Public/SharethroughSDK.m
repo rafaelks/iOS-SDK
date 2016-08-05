@@ -17,7 +17,6 @@
 #import "STRBeaconService.h"
 #import "STRAdService.h"
 #import "STRAdCache.h"
-#import "STRTestSafeModule.h"
 #import "STRAdViewDelegate.h"
 #import "STRLogging.h"
 
@@ -40,19 +39,6 @@
     });
 
     return sharedObject;
-}
-
-+ (instancetype)sharedTestSafeInstanceWithAdType:(STRFakeAdType)adType {
-    __strong static SharethroughSDK *testSafeSharedObject = nil;
-
-    static dispatch_once_t p = 0;
-    dispatch_once(&p, ^{
-        testSafeSharedObject = [[self alloc] init];
-    });
-
-    testSafeSharedObject.injector = [STRInjector injectorForModule:[[STRTestSafeModule alloc] initWithAdType:adType]];
-
-    return testSafeSharedObject;
 }
 
 - (void)prefetchAdForPlacementKey:(NSString *)placementKey customProperties:(NSDictionary *)customProperties delegate:(id<STRAdViewDelegate>)delegate {

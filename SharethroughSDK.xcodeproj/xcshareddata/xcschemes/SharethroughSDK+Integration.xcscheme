@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E8703DF519B9092600D3FA50"
-               BuildableName = "libSharethrough-SDK+DFP.a"
-               BlueprintName = "Sharethrough-SDK+DFP"
+               BlueprintIdentifier = "B2B963541B0F9E8600404578"
+               BuildableName = "SharethroughSDK+Integration"
+               BlueprintName = "SharethroughSDK+Integration"
                ReferencedContainer = "container:SharethroughSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E8703DF519B9092600D3FA50"
-            BuildableName = "libSharethrough-SDK+DFP.a"
-            BlueprintName = "Sharethrough-SDK+DFP"
+            BlueprintIdentifier = "B2B963541B0F9E8600404578"
+            BuildableName = "SharethroughSDK+Integration"
+            BlueprintName = "SharethroughSDK+Integration"
             ReferencedContainer = "container:SharethroughSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -60,6 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B2B963541B0F9E8600404578"
+            BuildableName = "SharethroughSDK+Integration"
+            BlueprintName = "SharethroughSDK+Integration"
+            ReferencedContainer = "container:SharethroughSDK.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
