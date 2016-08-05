@@ -75,16 +75,6 @@
  */
 - (void)placeAdInCollectionView:(UICollectionView *)collectionView adCellReuseIdentifier:(NSString *)adCellReuseIdentifier placementKey:(NSString *)placementKey presentingViewController:(UIViewController *)presentingViewController adSize:(CGSize)adSize adSection:(NSInteger)adSection customProperties:(NSDictionary *)customProperties;
 
-/*
- This allows the app to configure the amount of time an ad is cached before a request for a new ad is made to the server. This defaults to 120 seconds and can be set as low as 20 seconds.
- 
- @param seconds                 The number of seconds to set the timeout to. If less than 20 seconds, the timeout will be set to 20 seconds.
- @return the number of seconds the timeout is set to
- */
-
-- (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds;
-
-
 /**
  This method can be used to determine if an ad is available.
  @param placementKey The unique identifier for the ad slot

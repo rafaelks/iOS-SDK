@@ -18,7 +18,6 @@
 @interface STRAdCache ()
 
 @property (nonatomic, strong) STRDateProvider     *dateProvider;
-@property (nonatomic, assign) NSUInteger          STRPlacementAdCacheTimeoutInSeconds;
 @property (nonatomic, strong) NSMutableDictionary *cachedCreatives;
 @property (nonatomic, strong) NSMutableDictionary *cachedIndexToCreativeMaps;
 @property (nonatomic, strong) NSMutableSet        *pendingRequestPlacementKeys;
@@ -37,7 +36,6 @@
     self = [super init];
     if (self) {
         self.dateProvider = dateProvider;
-        self.STRPlacementAdCacheTimeoutInSeconds = 20;
 
         self.cachedCreatives = [[NSMutableDictionary alloc] init];
 
@@ -47,15 +45,6 @@
         self.cachedPlacementInfiniteScrollFields = [NSMutableDictionary dictionary];
     }
     return self;
-}
-
-- (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds {
-    TLog(@"seconds:%tu", seconds);
-    if (seconds < 20) {
-        seconds = 20;
-    }
-    self.STRPlacementAdCacheTimeoutInSeconds = seconds;
-    return self.STRPlacementAdCacheTimeoutInSeconds;
 }
 
 - (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andAssignAds:(BOOL)assignAds {
@@ -131,9 +120,6 @@
         }
     }
 
-    if (![self isAdExpired:ad]) {
-        return YES;
-    }
     if ([placement.adView percentVisible] < 0.1f) {
         if ([creatives peek] == nil) {
             return YES; //reuse the old ad
@@ -149,39 +135,15 @@
     return YES;
 }
 
-- (BOOL)isAdExpired:(STRAdvertisement *)ad {
-    if (!ad.visibleImpressionTime) { //haven't started the timer yet
-        return NO;
-    }
-    NSDate *now = [self.dateProvider now];
-    NSTimeInterval timeInterval = [now timeIntervalSinceDate:ad.visibleImpressionTime];
-    if (timeInterval == NAN || timeInterval > self.STRPlacementAdCacheTimeoutInSeconds) {
-        return YES;
-    }
-    return NO;
-}
-
 - (NSInteger)numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:(NSString *)placementKey {
     NSMutableArray *queuedCreatives = [self.cachedCreatives objectForKey:placementKey];
     NSMutableDictionary *indexToCreativeMap = [self.cachedIndexToCreativeMaps objectForKey:placementKey];
 
-    __block NSUInteger expiredAdsCount = 0;
-    [indexToCreativeMap enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        STRAdvertisement *ad = (STRAdvertisement *)obj;
-        if ([self isAdExpired:ad]) {
-            ++expiredAdsCount;
-        }
-    }];
-
     NSUInteger queuedCount = [queuedCreatives count];
     NSUInteger assignedAdsCount = [indexToCreativeMap count];
     NSUInteger effectiveCount;
-    if (expiredAdsCount >= queuedCount) {
-        effectiveCount = assignedAdsCount;
-    } else {
-        effectiveCount = assignedAdsCount + queuedCount - expiredAdsCount;
-    }
-    TLog(@"pkey:%@ assignedCount:%tu, expiredCount:%tu, queuedCount:%tu, effectiveCount:%tu", placementKey, assignedAdsCount, expiredAdsCount, queuedCount, effectiveCount);
+    effectiveCount = assignedAdsCount + queuedCount;
+    TLog(@"pkey:%@ assignedCount:%tu, queuedCount:%tu, effectiveCount:%tu", placementKey, assignedAdsCount, queuedCount, effectiveCount);
     return effectiveCount;
 }
 

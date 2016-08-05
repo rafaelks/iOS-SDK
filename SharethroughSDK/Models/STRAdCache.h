@@ -12,7 +12,6 @@
 @interface STRAdCache : NSObject
 
 - (instancetype)initWithDateProvider:(STRDateProvider *)dateProvider;
-- (NSUInteger)setAdCacheTimeoutInSeconds:(NSUInteger)seconds;
 
 - (void)saveAds:(NSMutableArray *)creatives forPlacement:(STRAdPlacement *)placement andAssignAds:(BOOL)assignAds;
 
@@ -20,8 +19,6 @@
 - (STRAdvertisement *)fetchCachedAdForPlacementKey:(NSString *)placementKey CreativeKey:(NSString *)creativeKey;
 
 - (BOOL)isAdAvailableForPlacement:(STRAdPlacement *)placement AndInitializeAd:(BOOL)initialize;
-
-- (BOOL)isAdExpired:(STRAdvertisement *)ad;
 
 - (NSInteger)numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:(NSString *)placementKey;
 - (NSInteger)numberOfUnassignedAdsInQueueForPlacementKey:(NSString *)placementKey;

@@ -20,22 +20,6 @@ describe(@"STRAdCache", ^{
         cache = [[STRAdCache alloc] initWithDateProvider:dateProvider];
     });
 
-    describe(@"-setAdCacheTimeoutInSeconds", ^{
-        describe(@"when the value is >= 20", ^{
-            it(@"returns the set value", ^{
-                [cache setAdCacheTimeoutInSeconds:20] should equal(20);
-                [cache setAdCacheTimeoutInSeconds:NSUIntegerMax] should equal(NSUIntegerMax);
-            });
-        });
-
-        describe(@"when the value is < 20", ^{
-            it(@"returns the set value", ^{
-                [cache setAdCacheTimeoutInSeconds:19] should equal(20);
-                [cache setAdCacheTimeoutInSeconds:0] should equal(20);
-            });
-        });
-    });
-
     describe(@"-saveAds:forPlacement:andAssignAds:", ^{
         __block NSMutableArray *creatives;
         __block STRAdvertisement *creative;
@@ -81,39 +65,17 @@ describe(@"STRAdCache", ^{
     });
 
     describe(@"-fetchCachedAdForPlacement:", ^{
-        __block STRAdvertisement *recentAd;
-        __block STRAdvertisement *expiredAd;
-        __block STRAdPlacement *recentPlacement;
-        __block STRAdPlacement *expiredPlacement;
+        __block STRAdvertisement *ad;
+        __block STRAdPlacement *placement;
 
         beforeEach(^{
-            recentAd = [[STRAdvertisement alloc] init];
-            recentAd.placementKey = @"pkey-recentAd";
-            recentAd.creativeKey = @"ckey-recentAd";
-            recentPlacement = [[STRAdPlacement alloc] init];
-            recentPlacement.placementKey = @"pkey-recentAd";
+            ad = [[STRAdvertisement alloc] init];
+            ad.placementKey = @"pkey-recentAd";
+            ad.creativeKey = @"ckey-recentAd";
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"pkey-recentAd";
 
-            expiredAd = [[STRAdvertisement alloc] init];
-            expiredAd.placementKey = @"pkey-expiredAd";
-            expiredAd.creativeKey = @"ckey-expiredAd";
-            expiredPlacement = [[STRAdPlacement alloc] init];
-            expiredPlacement.placementKey = @"pkey-expiredAd";
-
-            dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
-                NSDate *date;
-                if (dateProvider.sent_messages.count == 1) {
-                    date = [NSDate dateWithTimeIntervalSince1970:1000];
-                } else if (dateProvider.sent_messages.count == 2) {
-                    date = [NSDate dateWithTimeIntervalSince1970:10000];
-                } else {
-                    date = [NSDate dateWithTimeIntervalSince1970:10019];
-                }
-
-                [invocation setReturnValue:&date];
-            });
-
-            [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andAssignAds:YES];
-            [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andAssignAds:YES];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[ad]] forPlacement:placement andAssignAds:YES];
         });
 
         it(@"returns nil if no ad exists", ^{
@@ -122,103 +84,50 @@ describe(@"STRAdCache", ^{
             [cache fetchCachedAdForPlacement:nonExistantPlacement] should be_nil;
         });
 
-        it(@"returns the saved ad if the ad was fetched more than 2 minutes ago", ^{
-            [cache fetchCachedAdForPlacement:expiredPlacement] should equal(expiredAd);
-        });
-
         it(@"returns the ad when it exists", ^{
-            [cache fetchCachedAdForPlacement:recentPlacement] should equal(recentAd);
+            [cache fetchCachedAdForPlacement:placement] should equal(ad);
         });
     });
 
     describe(@"-fetchCachedAdForPlacementKey:CreativeKey:", ^{
-        __block STRAdvertisement *recentAd;
-        __block STRAdvertisement *expiredAd;
-        __block STRAdPlacement *recentPlacement;
-        __block STRAdPlacement *expiredPlacement;
+        __block STRAdvertisement *ad;
+        __block STRAdPlacement *placement;
 
         beforeEach(^{
-            recentAd = [[STRAdvertisement alloc] init];
-            recentAd.placementKey = @"pkey-recentAd";
-            recentAd.creativeKey = @"ckey-recentAd";
-            recentPlacement = [[STRAdPlacement alloc] init];
-            recentPlacement.placementKey = @"pkey-recentAd";
+            ad = [[STRAdvertisement alloc] init];
+            ad.placementKey = @"pkey-recentAd";
+            ad.creativeKey = @"ckey-recentAd";
+            placement = [[STRAdPlacement alloc] init];
+            placement.placementKey = @"pkey-recentAd";
 
-            expiredAd = [[STRAdvertisement alloc] init];
-            expiredAd.placementKey = @"pkey-expiredAd";
-            expiredAd.creativeKey = @"ckey-expiredAd";
-            expiredPlacement = [[STRAdPlacement alloc] init];
-            expiredPlacement.placementKey = @"pkey-expiredAd";
-
-            dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
-                NSDate *date;
-                if (dateProvider.sent_messages.count == 1) {
-                    date = [NSDate dateWithTimeIntervalSince1970:1000];
-                } else if (dateProvider.sent_messages.count == 2) {
-                    date = [NSDate dateWithTimeIntervalSince1970:10000];
-                } else {
-                    date = [NSDate dateWithTimeIntervalSince1970:10019];
-                }
-
-                [invocation setReturnValue:&date];
-            });
-
-            [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andAssignAds:NO];
-            [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andAssignAds:NO];
+            [cache saveAds:[NSMutableArray arrayWithArray:@[ad]] forPlacement:placement andAssignAds:NO];
         });
 
         it(@"returns nil if no ad exists", ^{
             [cache fetchCachedAdForPlacementKey:@"pkey-nonexistant" CreativeKey:@"ckey-nonexistant"] should be_nil;
         });
 
-        it(@"returns the saved ad if the ad was fetched more than 2 minutes ago", ^{
-            [cache fetchCachedAdForPlacementKey:expiredPlacement.placementKey CreativeKey:@"ckey-expiredAd"] should equal(expiredAd);
-        });
-
         it(@"returns the ad when it exists", ^{
-            [cache fetchCachedAdForPlacementKey:recentPlacement.placementKey CreativeKey:@"ckey-recentAd"] should equal(recentAd);
+            [cache fetchCachedAdForPlacementKey:placement.placementKey CreativeKey:@"ckey-recentAd"] should equal(ad);
         });
     });
 
     describe(@"-isAdAvailableForPlacement:", ^{
-        __block STRAdvertisement *recentAd;
-        __block STRAdvertisement *expiredAd;
-        __block STRAdPlacement *recentPlacement;
-        __block STRAdPlacement *expiredPlacement;
+        __block STRAdvertisement *ad;
+        __block STRAdPlacement *placement;
 
         describe(@"with the default timeout", ^{
             beforeEach(^{
-                recentAd = [[STRAdvertisement alloc] init];
-                recentAd.placementKey = @"pkey-recentAd";
-                recentAd.creativeKey = @"ckey-recentAd";
-                recentAd.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:999];
-                recentPlacement = [[STRAdPlacement alloc] init];
-                recentPlacement.placementKey = @"pkey-recentAd";
-                recentPlacement.adView = nice_fake_for([STRFullAdView class]);
-                recentPlacement.adView stub_method(@selector(percentVisible)).and_return(0.50);
+                ad = [[STRAdvertisement alloc] init];
+                ad.placementKey = @"pkey-recentAd";
+                ad.creativeKey = @"ckey-recentAd";
+                ad.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:999];
+                placement = [[STRAdPlacement alloc] init];
+                placement.placementKey = @"pkey-recentAd";
+                placement.adView = nice_fake_for([STRFullAdView class]);
+                placement.adView stub_method(@selector(percentVisible)).and_return(0.50);
 
-                expiredAd = [[STRAdvertisement alloc] init];
-                expiredAd.placementKey = @"pkey-expiredAd";
-                expiredAd.creativeKey = @"ckey-expiredAd";
-                expiredAd.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:100];
-                expiredPlacement = [[STRAdPlacement alloc] init];
-                expiredPlacement.placementKey = @"pkey-expiredAd";
-
-                dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
-                    NSDate *date;
-                    if (dateProvider.sent_messages.count == 1) {
-                        date = [NSDate dateWithTimeIntervalSince1970:1000];
-                    } else if (dateProvider.sent_messages.count == 2) {
-                        date = [NSDate dateWithTimeIntervalSince1970:10000];
-                    } else {
-                        date = [NSDate dateWithTimeIntervalSince1970:10019];
-                    }
-
-                    [invocation setReturnValue:&date];
-                });
-
-                [cache saveAds:[NSMutableArray arrayWithArray:@[recentAd]] forPlacement:recentPlacement andAssignAds:YES];
-                [cache saveAds:[NSMutableArray arrayWithArray:@[expiredAd]] forPlacement:expiredPlacement andAssignAds:YES];
+                [cache saveAds:[NSMutableArray arrayWithArray:@[ad]] forPlacement:placement andAssignAds:YES];
             });
 
             it(@"returns NO if no ad has been fetched", ^{
@@ -227,66 +136,14 @@ describe(@"STRAdCache", ^{
                 [cache isAdAvailableForPlacement:nonExistantPlacement AndInitializeAd:YES] should be_falsy;
             });
 
-            it(@"returns YES if the saved ad was fetched more than 2 minutes ago", ^{
-                [cache isAdAvailableForPlacement:expiredPlacement AndInitializeAd:YES] should be_truthy;
-            });
-
             it(@"returns YES if the ad is currently on screen", ^{
-                [cache isAdAvailableForPlacement:recentPlacement AndInitializeAd:YES] should be_truthy;
-            });
-
-            it(@"returns YES if the ad is not older than 120 seconds", ^{
-                recentPlacement.adView stub_method(@selector(percentVisible)).again().and_return(0.0);
-                [cache isAdAvailableForPlacement:recentPlacement AndInitializeAd:YES] should be_truthy;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
 
             it(@"doesn't blow up if the adView is nil", ^{
-                recentPlacement.adView = nil;
-                [cache isAdAvailableForPlacement:recentPlacement AndInitializeAd:YES] should be_truthy;
+                placement.adView = nil;
+                [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
-        });
-    });
-
-    describe(@"-isAdExpired", ^{
-        __block STRAdvertisement *recentAd;
-        __block STRAdvertisement *expiredAd;
-
-        beforeEach(^{
-            recentAd = [[STRAdvertisement alloc] init];
-            recentAd.placementKey = @"pkey-recentAd";
-            recentAd.creativeKey = @"ckey-recentAd";
-            recentAd.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:999];
-
-            expiredAd = [[STRAdvertisement alloc] init];
-            expiredAd.placementKey = @"pkey-expiredAd";
-            expiredAd.creativeKey = @"ckey-expiredAd";
-            expiredAd.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:100];
-
-            dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
-                NSDate *date;
-                if (dateProvider.sent_messages.count == 1) {
-                    date = [NSDate dateWithTimeIntervalSince1970:1000];
-                } else if (dateProvider.sent_messages.count == 2) {
-                    date = [NSDate dateWithTimeIntervalSince1970:10000];
-                } else {
-                    date = [NSDate dateWithTimeIntervalSince1970:10019];
-                }
-
-                [invocation setReturnValue:&date];
-            });
-        });
-
-        it(@"returns NO if the saved as was not yet visible", ^{
-            STRAdvertisement *unseenAd = [[STRAdvertisement alloc] init];
-            [cache isAdExpired:unseenAd] should be_falsy;
-        });
-
-        it(@"returns YES if the saved ad was visible more than the timeout ago", ^{
-            [cache isAdExpired:expiredAd] should be_truthy;
-        });
-
-        it(@"returns NO if the saved as was visible less than the timeout ago", ^{
-            [cache isAdExpired:recentAd] should be_falsy;
         });
     });
 
@@ -317,36 +174,8 @@ describe(@"STRAdCache", ^{
                 [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
             });
 
-            context(@"when no ads are expired", ^{
-                it(@"returns the sum of assigned and queued", ^{
-                    [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:@"fakePlacementKey"] should equal(4);
-                });
-            });
-
-            context(@"when an ad is expired", ^{
-                beforeEach(^{
-                    placement.adIndex = 1;
-                    [cache isAdAvailableForPlacement:placement AndInitializeAd:YES] should be_truthy;
-
-                    assignedAd1.visibleImpressionTime = [NSDate dateWithTimeIntervalSince1970:100];
-
-                    dateProvider stub_method(@selector(now)).and_do(^(NSInvocation * invocation) {
-                        NSDate *date;
-                        if (dateProvider.sent_messages.count == 1) {
-                            date = [NSDate dateWithTimeIntervalSince1970:1000];
-                        } else if (dateProvider.sent_messages.count == 2) {
-                            date = [NSDate dateWithTimeIntervalSince1970:10000];
-                        } else {
-                            date = [NSDate dateWithTimeIntervalSince1970:10019];
-                        }
-
-                        [invocation setReturnValue:&date];
-                    });
-                });
-
-                it(@"subtracts the number of expired ads from the queued ads", ^{
-                    [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:@"fakePlacementKey"] should equal(3);
-                });
+            it(@"returns the sum of assigned and queued", ^{
+                [cache numberOfAdsAssignedAndNumberOfAdsReadyInQueueForPlacementKey:@"fakePlacementKey"] should equal(4);
             });
         });
     });

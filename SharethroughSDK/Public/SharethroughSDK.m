@@ -199,9 +199,4 @@ presentingViewController:(UIViewController *)presentingViewController
     [adCache clearAssignedAdsForPlacement:placementKey];
 }
 
-- (NSUInteger)setAdCacheTimeInSeconds:(NSUInteger)seconds {
-    TLog(@"");
-    STRAdCache *adCache = [self.injector getInstance:[STRAdCache class]];
-    return [adCache setAdCacheTimeoutInSeconds:seconds];
-}
 @end
