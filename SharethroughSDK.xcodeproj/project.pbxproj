@@ -263,6 +263,9 @@
 		B2F29E681A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2F29E6A1A9807C000313C61 /* close-btn.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E671A9807C000313C61 /* close-btn.c */; };
 		B2F29E6E1A98086600313C61 /* link_thumbnail.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F29E6B1A98086600313C61 /* link_thumbnail.c */; };
+		E81EDD041D5D0DD000301DD7 /* STRMediationService.m in Sources */ = {isa = PBXBuildFile; fileRef = E81EDD031D5D0DD000301DD7 /* STRMediationService.m */; };
+		E81EDD051D5D0DD000301DD7 /* STRMediationService.m in Sources */ = {isa = PBXBuildFile; fileRef = E81EDD031D5D0DD000301DD7 /* STRMediationService.m */; };
+		E81EDD061D5D0DD000301DD7 /* STRMediationService.m in Sources */ = {isa = PBXBuildFile; fileRef = E81EDD031D5D0DD000301DD7 /* STRMediationService.m */; };
 		E81FA0481A1E7B4400BCB289 /* STRAdPlacementSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */; };
 		E831290119BE4A7E007C2FAB /* STRAdPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */; };
 		E831290219BE4A7E007C2FAB /* STRAdRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8703DB019B12CB000D3FA50 /* STRAdRenderer.m */; };
@@ -594,6 +597,8 @@
 		B2F29E671A9807C000313C61 /* close-btn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "close-btn.c"; sourceTree = "<group>"; };
 		B2F29E6B1A98086600313C61 /* link_thumbnail.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = link_thumbnail.c; sourceTree = "<group>"; };
 		E16C2D780BBC06B0EADC4C83 /* Pods-specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-specs/Pods-specs.release.xcconfig"; sourceTree = "<group>"; };
+		E81EDD021D5D0DD000301DD7 /* STRMediationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRMediationService.h; sourceTree = "<group>"; };
+		E81EDD031D5D0DD000301DD7 /* STRMediationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRMediationService.m; sourceTree = "<group>"; };
 		E81FA0471A1E7B4400BCB289 /* STRAdPlacementSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdPlacementSpec.mm; sourceTree = "<group>"; };
 		E832354E1CE2657C00CE5B15 /* STRAsapService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAsapService.h; sourceTree = "<group>"; };
 		E832354F1CE2657C00CE5B15 /* STRAsapService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAsapService.m; sourceTree = "<group>"; };
@@ -679,6 +684,8 @@
 				AEBAEDC11898227200F02C5A /* STRBeaconService.m */,
 				E832354E1CE2657C00CE5B15 /* STRAsapService.h */,
 				E832354F1CE2657C00CE5B15 /* STRAsapService.m */,
+				E81EDD021D5D0DD000301DD7 /* STRMediationService.h */,
+				E81EDD031D5D0DD000301DD7 /* STRMediationService.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1484,6 +1491,7 @@
 				AE6C80881899863C008FD848 /* STRSpecModule.m in Sources */,
 				AE6C806E1898914F008FD848 /* STRTableViewAdGeneratorSpec.mm in Sources */,
 				AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */,
+				E81EDD061D5D0DD000301DD7 /* STRMediationService.m in Sources */,
 				AE2246FA188874ED00626A29 /* STRAdGeneratorSpec.mm in Sources */,
 				AE39F8D318AD8DB600969C30 /* clickout_sample_thumbnail.c in Sources */,
 				AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */,
@@ -1594,6 +1602,7 @@
 				B238F6461B20E62400847C50 /* STRViewTracker.m in Sources */,
 				B29A4FA91BA9F70B00065FE3 /* STRAdInstantHostedVideo.m in Sources */,
 				AE52B84A188EFC9B00C4DEF8 /* STRInteractiveAdViewController.m in Sources */,
+				E81EDD041D5D0DD000301DD7 /* STRMediationService.m in Sources */,
 				B2CAF24C1BA0B551005D544B /* STRAdHostedVideo.m in Sources */,
 				E8703DAB19AE951D00D3FA50 /* STRAdPlacement.m in Sources */,
 				AE9C460A189B181B001B407A /* STRAdCache.m in Sources */,
@@ -1668,6 +1677,7 @@
 				B2B9633E1B0F9D0B00404578 /* close-btn.c in Sources */,
 				B2B9633F1B0F9D0B00404578 /* STRSession.m in Sources */,
 				B2B963401B0F9D0B00404578 /* STRFakeAdGenerator.m in Sources */,
+				E81EDD051D5D0DD000301DD7 /* STRMediationService.m in Sources */,
 				B2B963411B0F9D0B00404578 /* STRAdFixtures.m in Sources */,
 				B2B963421B0F9D0B00404578 /* STRYouTubeViewController.m in Sources */,
 				E83235521CE2657C00CE5B15 /* STRAsapService.m in Sources */,
