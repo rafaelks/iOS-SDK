@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class STRInjector;
+
 @interface STRMediationService : NSObject
 
 
-- (id) init:(NSArray *)mediationNetworks;
+- (id) initWithInjector:(STRInjector *)injector;
+
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement withParameters:(NSDictionary *)asapResponse;
 
 @end

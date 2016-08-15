@@ -8,33 +8,32 @@
 
 #import "STRMediationService.h"
 
+#import "STRAdPlacement.h"
 #import "STRDeferred.h"
+#import "STRInjector.h"
 #import "STRLogging.h"
 #import "STRPromise.h"
-
 
 @interface STRMediationService()
 
 @property (nonatomic, strong) NSArray *mediationNetworks;
 @property (nonatomic) int currentNetworkIndex;
+@property (nonatomic, weak) STRInjector *injector;
 
 @end
 
 
 @implementation STRMediationService
 
-- (id)init:(NSArray *)mediationNetworks {
-    // store mediation network order
-    // store current state
+- (id)initWithInjector:(STRInjector *)injector {
     self = [super init];
     if (self) {
-        self.mediationNetworks = mediationNetworks;
-        self.currentNetworkIndex = 0;
+        self.injector = injector;
     }
     return self;
 }
 
-- (STRPromise *)fetchAd {
+- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement withParameters:(NSDictionary *)asapResponse {
     NSDictionary *currentNetwork = self.mediationNetworks[self.currentNetworkIndex];
     NSString *mediationClassName = currentNetwork[@"iosClassName"];
     id networkAdapter = [[NSClassFromString(mediationClassName) alloc] init];

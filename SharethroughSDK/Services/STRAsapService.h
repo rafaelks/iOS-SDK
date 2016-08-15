@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRRestClient, STRAdCache, STRInjector, STRAdPlacement, STRPromise, STRAdService, ASIdentifierManager;
+extern const NSInteger kRequestInProgress;
+
+@class STRRestClient, STRAdCache, STRInjector, STRAdPlacement, STRPromise, STRMediationService, ASIdentifierManager;
 
 @interface STRAsapService : NSObject
 
 - (id)initWithRestClient:(STRRestClient *)restClient
                  adCache:(STRAdCache *)adCache
-               adService:(STRAdService *)adService
+               mediationService:(STRMediationService *)mediationService
      asIdentifierManager:(ASIdentifierManager *)identifierManager
                   device:(UIDevice *)device
                 injector:(STRInjector *)injector;

@@ -10,4 +10,8 @@
 
 @implementation STRNetworkAdapter
 
+- (void)loadAdWithParameters:(NSDictionary *)parameters {
+    
+}
+
 @end

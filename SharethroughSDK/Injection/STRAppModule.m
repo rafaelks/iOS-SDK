@@ -8,6 +8,7 @@
 #import "STRBeaconService.h"
 #import "STRDateProvider.h"
 #import "STRGridlikeViewAdGenerator.h"
+#import "STRMediationService.h"
 #import "STRNetworkClient.h"
 #import "STRRestClient.h"
 
@@ -30,7 +31,7 @@
     }];
 
     [injector bind:[ASIdentifierManager class] toInstance:[ASIdentifierManager sharedManager]];
-    
+
     [injector bind: [UIDevice class] toInstance:[UIDevice currentDevice]];
 
     [injector bind:[NSRunLoop class] toInstance:[NSRunLoop mainRunLoop]];
@@ -61,19 +62,23 @@
                                     asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]
                                                injector:injector];
     }];
-    
+
+    [injector bind:[STRMediationService class] toBlock:^id(STRInjector *injector) {
+        return [[STRMediationService alloc] initWithInjector: injector];
+    }];
+
     [injector bind:[STRAsapService class] toBlock:^id(STRInjector *injector) {
-       return [[STRAsapService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
-                                                 adCache:[injector getInstance:[STRAdCache class]]
-                                               adService:[injector getInstance:[STRAdService class]]
-                                     asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]
-                                                  device:[injector getInstance:[UIDevice class]]
-                                                injector:injector];
+        return [[STRAsapService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
+                                                  adCache:[injector getInstance:[STRAdCache class]]
+                                         mediationService:[injector getInstance:[STRMediationService class]]
+                                      asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]
+                                                   device:[injector getInstance:[UIDevice class]]
+                                                 injector:injector];
     }];
 
     [injector bind:[STRAdGenerator class] toBlock:^id(STRInjector *injector) {
         return [[STRAdGenerator alloc] initWithAsapService:[injector getInstance:[STRAsapService class]]
-                                                injector:injector];
+                                                  injector:injector];
     }];
 
     [injector bind:[STRGridlikeViewAdGenerator class] toBlock:^id(STRInjector *injector) {

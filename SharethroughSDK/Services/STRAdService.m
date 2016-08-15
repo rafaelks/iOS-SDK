@@ -24,7 +24,6 @@
 #import <AdSupport/AdSupport.h>
 #import "STRLogging.h"
 
-const NSInteger kRequestInProgress = 202;
 
 @interface STRAdService ()
 

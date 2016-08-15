@@ -12,15 +12,17 @@
 
 #import "STRAdCache.h"
 #import "STRAdPlacement.h"
-#import "STRAdService.h"
+#import "STRMediationService.h"
 #import "STRDeferred.h"
 #import "STRLogging.h"
 #import "STRPromise.h"
 #import "STRRestClient.h"
 
+const NSInteger kRequestInProgress = 202;
+
 @interface STRAsapService ()
 
-@property (nonatomic, strong) STRAdService *adService;
+@property (nonatomic, strong) STRMediationService *mediationService;
 @property (nonatomic, strong) STRRestClient *restClient;
 @property (nonatomic, strong) STRAdCache *adCache;
 @property (nonatomic, weak) ASIdentifierManager *identifierManager;
@@ -34,7 +36,7 @@
 
 - (id)initWithRestClient:(STRRestClient *)restClient
                  adCache:(STRAdCache *)adCache
-               adService:(STRAdService *)adService
+               mediationService:(STRMediationService *)mediationService
      asIdentifierManager:(ASIdentifierManager *)identifierManager
                   device:(UIDevice *)device
                 injector:(STRInjector *)injector
@@ -43,7 +45,7 @@
     if (self) {
         self.restClient = restClient;
         self.adCache = adCache;
-        self.adService = adService;
+        self.mediationService = mediationService;
         self.identifierManager = identifierManager;
         self.device = device;
         self.injector = injector;
@@ -82,7 +84,8 @@
             [deferred rejectWithError:[NSError errorWithDomain:status code:500 userInfo:nil]];
             return nil;
         }
-        [self callAdServiceWithParameters:value forPlacement:placement withDeferred:deferred isPrefetch:prefetch];
+        [self.mediationService fetchAdForPlacement:placement withParameters:value];
+
         return nil;
     } error:^id(NSError *error) {
         [deferred rejectWithError:error];
@@ -124,36 +127,36 @@
     return parameters;
 }
 
-
-- (void)callAdServiceWithParameters:(NSDictionary *)value forPlacement:(STRAdPlacement *)placement
-                       withDeferred:(STRDeferred *)deferred
-             isPrefetch:(BOOL)prefetch{
-    NSString *keyType = value[@"keyType"];
-    NSString *keyValue = value[@"keyValue"];
-    placement.mrid = value[@"mrid"];
-    STRPromise *stxPromise;
-    
-    BOOL directSold = [self isDirectSold:keyType];
-    TLog(@"mrid: %@, pkey: %@, keyType:%@, keyValue:%@, directSold:%@, isPrefetch:%@",
-         placement.mrid, placement.placementKey, keyType, keyValue, directSold ? @"YES" : @"NO",
-         prefetch ? @"YES" : @"NO");
-
-    if (directSold) {
-        stxPromise = [self.adService fetchAdForPlacement:placement auctionParameterKey:keyType auctionParameterValue:keyValue isPrefetch:prefetch];
-    } else {
-        stxPromise = [self.adService fetchAdForPlacement:placement isPrefetch:prefetch];
-    }
-    
-    [stxPromise then:^id(id value) {
-        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
-        [deferred resolveWithValue:value];
-        return value;
-    } error:^id(NSError *error) {
-        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
-        [deferred rejectWithError:error];
-        return error;
-    }];
-}
+// TODO: Move/repurpose in AdService AKA STXAdapter
+//- (void)callAdServiceWithParameters:(NSDictionary *)value forPlacement:(STRAdPlacement *)placement
+//                       withDeferred:(STRDeferred *)deferred
+//             isPrefetch:(BOOL)prefetch{
+//    NSString *keyType = value[@"keyType"];
+//    NSString *keyValue = value[@"keyValue"];
+//    placement.mrid = value[@"mrid"];
+//    STRPromise *stxPromise;
+//    
+//    BOOL directSold = [self isDirectSold:keyType];
+//    TLog(@"mrid: %@, pkey: %@, keyType:%@, keyValue:%@, directSold:%@, isPrefetch:%@",
+//         placement.mrid, placement.placementKey, keyType, keyValue, directSold ? @"YES" : @"NO",
+//         prefetch ? @"YES" : @"NO");
+//
+//    if (directSold) {
+//        stxPromise = [self.adService fetchAdForPlacement:placement auctionParameterKey:keyType auctionParameterValue:keyValue isPrefetch:prefetch];
+//    } else {
+//        stxPromise = [self.adService fetchAdForPlacement:placement isPrefetch:prefetch];
+//    }
+//    
+//    [stxPromise then:^id(id value) {
+//        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
+//        [deferred resolveWithValue:value];
+//        return value;
+//    } error:^id(NSError *error) {
+//        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
+//        [deferred rejectWithError:error];
+//        return error;
+//    }];
+//}
 
 - (BOOL)isDirectSold:(NSString *)keyType {
     return [keyType isEqualToString:@"creative_key"] || [keyType isEqualToString:@"campaign_key"];
