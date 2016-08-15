@@ -13,6 +13,7 @@
 #import "STRInjector.h"
 #import "STRLogging.h"
 #import "STRNetworkAdapter.h"
+#import "STRNetworkAdapterDelegate.h"
 #import "STRPromise.h"
 
 @interface PlacementMediationState : NSObject
@@ -37,7 +38,7 @@
 
 @end
 
-@interface STRMediationService()
+@interface STRMediationService() <STRNetworkAdapterDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *placementMediationNetworks;
 @property (nonatomic, weak) STRInjector *injector;
@@ -61,6 +62,7 @@
     NSDictionary *currentNetwork = placementMediationState.mediationNetworks[placementMediationState.mediationIndex];
     NSString *mediationClassName = currentNetwork[@"iosClassName"];
     STRNetworkAdapter *networkAdapter = (STRNetworkAdapter *)[[NSClassFromString(mediationClassName) alloc] init];
+    networkAdapter.delegate = self;
 
     // TODO: validate networkAdapter conforms to interface
     [networkAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
@@ -78,5 +80,12 @@
     }
 }
 
+-(void)adDidLoad:(STRAdvertisement *)strAd {
+    //ad loaded, fulfill promise
+}
+
+-(void)adDidFailToLoad:(NSError *)error {
+    //ad failed to load, try next network
+}
 
 @end
