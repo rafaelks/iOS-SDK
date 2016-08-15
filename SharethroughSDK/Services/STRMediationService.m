@@ -12,12 +12,34 @@
 #import "STRDeferred.h"
 #import "STRInjector.h"
 #import "STRLogging.h"
+#import "STRNetworkAdapter.h"
 #import "STRPromise.h"
+
+@interface PlacementMediationState : NSObject
+
+@property (nonatomic, strong) NSArray *mediationNetworks;
+@property (nonatomic) int mediationIndex;
+
+- (id)initWithParameters:(NSArray *)mediationNetworks;
+
+@end
+
+@implementation PlacementMediationState
+
+- (id)initWithParameters:(NSArray *)mediationNetworks {
+    self = [super init];
+    if (self) {
+        self.mediationNetworks = mediationNetworks;
+        self.mediationIndex = 0;
+    }
+    return self;
+}
+
+@end
 
 @interface STRMediationService()
 
-@property (nonatomic, strong) NSArray *mediationNetworks;
-@property (nonatomic) int currentNetworkIndex;
+@property (nonatomic, strong) NSMutableDictionary *placementMediationNetworks;
 @property (nonatomic, weak) STRInjector *injector;
 
 @end
@@ -34,12 +56,27 @@
 }
 
 - (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement withParameters:(NSDictionary *)asapResponse {
-    NSDictionary *currentNetwork = self.mediationNetworks[self.currentNetworkIndex];
+    PlacementMediationState *placementMediationState =  [self getMediationStateForPlacement:placement withParameters:asapResponse];
+
+    NSDictionary *currentNetwork = placementMediationState.mediationNetworks[placementMediationState.mediationIndex];
     NSString *mediationClassName = currentNetwork[@"iosClassName"];
-    id networkAdapter = [[NSClassFromString(mediationClassName) alloc] init];
-    //validate networkAdapter conforms to interface
-//    [networkAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
+    STRNetworkAdapter *networkAdapter = (STRNetworkAdapter *)[[NSClassFromString(mediationClassName) alloc] init];
+
+    // TODO: validate networkAdapter conforms to interface
+    [networkAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
+
     return [[STRPromise alloc] init];
 }
+
+- (PlacementMediationState *)getMediationStateForPlacement:(STRAdPlacement *)placement withParameters:(NSDictionary *)asapResponse {
+    if ([self.placementMediationNetworks objectForKey:placement.placementKey]) {
+        return [self.placementMediationNetworks objectForKey:placement.placementKey];
+    } else {
+        PlacementMediationState *newState = [[PlacementMediationState alloc] initWithParameters:asapResponse[@"mediationNetworks"]];
+        self.placementMediationNetworks[placement.placementKey] = newState;
+        return newState;
+    }
+}
+
 
 @end

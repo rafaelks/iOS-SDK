@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRInjector;
+@class STRInjector, STRPromise, STRAdPlacement;
 
 @interface STRMediationService : NSObject
 
