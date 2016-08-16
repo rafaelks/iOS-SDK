@@ -11,7 +11,7 @@
 @implementation STRNetworkAdapter
 
 - (void)loadAdWithParameters:(NSDictionary *)parameters {
-    
+        // Override in subclass
 }
 
 @end

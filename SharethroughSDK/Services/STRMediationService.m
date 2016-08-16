@@ -84,12 +84,14 @@
     }
 }
 
--(void)adDidLoad:(STRAdvertisement *)strAd {
+-(void)strNetworkAdapter:(STRNetworkAdapter *)adapter didLoadAd:(STRAdvertisement *)strAd {
+    NSLog(@"Did ad load? Ad did load!");
     //ad loaded, fulfill promise
 }
 
--(void)adDidFailToLoad:(NSError *)error {
+-(void)strNetworkAdapter:(STRNetworkAdapter *)adapter didFailToLoadAdWithError:(NSError *)error {
     //ad failed to load, try next network
+    NSLog(@"didFailToLoadAdWithError %@", error);
 }
 
 @end

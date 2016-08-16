@@ -127,42 +127,6 @@ const NSInteger kRequestInProgress = 202;
     return parameters;
 }
 
-// TODO: Move/repurpose in AdService AKA STXAdapter
-//- (void)callAdServiceWithParameters:(NSDictionary *)value forPlacement:(STRAdPlacement *)placement
-//                       withDeferred:(STRDeferred *)deferred
-//             isPrefetch:(BOOL)prefetch{
-//    NSString *keyType = value[@"keyType"];
-//    NSString *keyValue = value[@"keyValue"];
-//    placement.mrid = value[@"mrid"];
-//    STRPromise *stxPromise;
-//    
-//    BOOL directSold = [self isDirectSold:keyType];
-//    TLog(@"mrid: %@, pkey: %@, keyType:%@, keyValue:%@, directSold:%@, isPrefetch:%@",
-//         placement.mrid, placement.placementKey, keyType, keyValue, directSold ? @"YES" : @"NO",
-//         prefetch ? @"YES" : @"NO");
-//
-//    if (directSold) {
-//        stxPromise = [self.adService fetchAdForPlacement:placement auctionParameterKey:keyType auctionParameterValue:keyValue isPrefetch:prefetch];
-//    } else {
-//        stxPromise = [self.adService fetchAdForPlacement:placement isPrefetch:prefetch];
-//    }
-//    
-//    [stxPromise then:^id(id value) {
-//        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
-//        [deferred resolveWithValue:value];
-//        return value;
-//    } error:^id(NSError *error) {
-//        [self.adCache clearPendingAdRequestForPlacement:placement.placementKey];
-//        [deferred rejectWithError:error];
-//        return error;
-//    }];
-//}
-
-- (BOOL)isDirectSold:(NSString *)keyType {
-    return [keyType isEqualToString:@"creative_key"] || [keyType isEqualToString:@"campaign_key"];
-}
-
-
 - (STRPromise *)requestInProgressError {
     TLog(@"");
     STRDeferred *deferred = [STRDeferred defer];

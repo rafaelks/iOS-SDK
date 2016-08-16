@@ -214,7 +214,7 @@ describe(@"UICollectionView+STR", ^{
                 
                 beforeEach(^{
                     originalItemCount = collectionView.visibleCells.count;
-                    dataSource.itemsForEachSection = @[@3, @6]; //TODO: Why did 2/5 cause cedar to fail?
+                    dataSource.itemsForEachSection = @[@3, @6];
                     [collectionView str_insertItemsAtIndexPaths:externalIndexPaths];
                 });
                 
@@ -677,7 +677,7 @@ describe(@"UICollectionView+STR", ^{
                 
                 beforeEach(^{
                     originalItemCount = collectionView.visibleCells.count;
-                    dataSource.itemsForEachSection = @[@3, @6]; //TODO: Why did 2/5 cause cedar to fail?
+                    dataSource.itemsForEachSection = @[@3, @6];
                     [collectionView str_insertItemsAtIndexPaths:externalIndexPaths];
                 });
                 
