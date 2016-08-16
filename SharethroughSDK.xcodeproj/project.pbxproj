@@ -51,8 +51,6 @@
 		AE022DE1188E004900D02568 /* STRNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDD188E004900D02568 /* STRNetworkClient.m */; };
 		AE022DE2188E004900D02568 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDF188E004900D02568 /* STRRestClient.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		AE022DE3188E004900D02568 /* STRRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DDF188E004900D02568 /* STRRestClient.m */; };
-		AE022DE7188E008000D02568 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		AE022DE8188E008000D02568 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; };
 		AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DEB188E00C100D02568 /* STRAdvertisement.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		AE022DED188E00C100D02568 /* STRAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DEB188E00C100D02568 /* STRAdvertisement.m */; };
 		AE022DF2188E011100D02568 /* SharethroughSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF0188E011100D02568 /* SharethroughSDK.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -61,7 +59,7 @@
 		AE022DF9188E01D200D02568 /* SharethroughSDKSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DF8188E01D200D02568 /* SharethroughSDKSpec.mm */; };
 		AE022DFD188E021C00D02568 /* STRNetworkClientSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DFB188E021C00D02568 /* STRNetworkClientSpec.mm */; };
 		AE022DFE188E021C00D02568 /* STRRestClientSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022DFC188E021C00D02568 /* STRRestClientSpec.mm */; };
-		AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022E00188E024700D02568 /* STRAdServiceSpec.mm */; };
+		AE022E01188E024700D02568 /* STXNetworkAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE022E00188E024700D02568 /* STXNetworkAdapterSpec.mm */; };
 		AE022E02188E030500D02568 /* SharethroughSDK.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEF188E011100D02568 /* SharethroughSDK.h */; };
 		AE022E03188E030500D02568 /* STRAdView.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DF1188E011100D02568 /* STRAdView.h */; };
 		AE1258C218971B2B0017F970 /* STRPlainAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1258C118971B2B0017F970 /* STRPlainAdView.m */; };
@@ -202,7 +200,6 @@
 		B2A6CC831B2244640088928F /* STRAdvertisement.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = AE022DEA188E00C100D02568 /* STRAdvertisement.h */; };
 		B2A6CC841B2244640088928F /* STRAdvertisementDelegate.h in Copy Header Files */ = {isa = PBXBuildFile; fileRef = B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */; };
 		B2B466421A24F84300ED4E94 /* intel_sample_logo.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B4663F1A24F84300ED4E94 /* intel_sample_logo.c */; };
-		B2B963151B0F9D0B00404578 /* STRAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DE6188E008000D02568 /* STRAdService.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2B963161B0F9D0B00404578 /* STRAdInstagram.m in Sources */ = {isa = PBXBuildFile; fileRef = B229F09E1A2E486A0094A8B3 /* STRAdInstagram.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2B963171B0F9D0B00404578 /* UITableView+STR.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEE6CB418A0129800AA7EC9 /* UITableView+STR.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B2B963181B0F9D0B00404578 /* STRAdvertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = AE022DEB188E00C100D02568 /* STRAdvertisement.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -424,8 +421,6 @@
 		AE022DDD188E004900D02568 /* STRNetworkClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRNetworkClient.m; sourceTree = "<group>"; };
 		AE022DDE188E004900D02568 /* STRRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRRestClient.h; sourceTree = "<group>"; };
 		AE022DDF188E004900D02568 /* STRRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRRestClient.m; sourceTree = "<group>"; };
-		AE022DE5188E008000D02568 /* STRAdService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdService.h; sourceTree = "<group>"; };
-		AE022DE6188E008000D02568 /* STRAdService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRAdService.m; sourceTree = "<group>"; };
 		AE022DEA188E00C100D02568 /* STRAdvertisement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRAdvertisement.h; path = ../Models/STRAdvertisement.h; sourceTree = "<group>"; };
 		AE022DEB188E00C100D02568 /* STRAdvertisement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRAdvertisement.m; path = ../Models/STRAdvertisement.m; sourceTree = "<group>"; };
 		AE022DEF188E011100D02568 /* SharethroughSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharethroughSDK.h; sourceTree = "<group>"; };
@@ -435,7 +430,7 @@
 		AE022DF8188E01D200D02568 /* SharethroughSDKSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharethroughSDKSpec.mm; sourceTree = "<group>"; };
 		AE022DFB188E021C00D02568 /* STRNetworkClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRNetworkClientSpec.mm; sourceTree = "<group>"; };
 		AE022DFC188E021C00D02568 /* STRRestClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRRestClientSpec.mm; sourceTree = "<group>"; };
-		AE022E00188E024700D02568 /* STRAdServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdServiceSpec.mm; sourceTree = "<group>"; };
+		AE022E00188E024700D02568 /* STXNetworkAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = STXNetworkAdapterSpec.mm; path = Services/STXNetworkAdapterSpec.mm; sourceTree = "<group>"; };
 		AE1258C018971B2B0017F970 /* STRPlainAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRPlainAdView.h; sourceTree = "<group>"; };
 		AE1258C118971B2B0017F970 /* STRPlainAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRPlainAdView.m; sourceTree = "<group>"; };
 		AE1F671B1899AD9E00E184D6 /* STRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRTableViewCell.h; sourceTree = "<group>"; };
@@ -689,8 +684,6 @@
 		AE022DE4188E005300D02568 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				AE022DE5188E008000D02568 /* STRAdService.h */,
-				AE022DE6188E008000D02568 /* STRAdService.m */,
 				AEBAEDC01898227200F02C5A /* STRBeaconService.h */,
 				AEBAEDC11898227200F02C5A /* STRBeaconService.m */,
 				E832354E1CE2657C00CE5B15 /* STRAsapService.h */,
@@ -781,7 +774,6 @@
 		AE022DFF188E022000D02568 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				AE022E00188E024700D02568 /* STRAdServiceSpec.mm */,
 				AEBAEDC81898229300F02C5A /* STRBeaconServiceSpec.mm */,
 				B27964F61CEA1C66000A0B33 /* STRAsapServiceSpec.mm */,
 			);
@@ -791,6 +783,7 @@
 		AE2246871886138F00626A29 /* specs */ = {
 			isa = PBXGroup;
 			children = (
+				E81EDD151D63B2D300301DD7 /* Adapters */,
 				B2A2CA551D54CF4E0001FCC3 /* Fakes */,
 				AEFBF15D188F46D900ADD742 /* Controllers */,
 				AE2246FB188877E900626A29 /* Fixtures */,
@@ -1146,6 +1139,14 @@
 			children = (
 				E81EDD101D638C6100301DD7 /* STXNetworkAdapter.h */,
 				E81EDD111D638C6100301DD7 /* STXNetworkAdapter.m */,
+			);
+			name = Adapters;
+			sourceTree = "<group>";
+		};
+		E81EDD151D63B2D300301DD7 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				AE022E00188E024700D02568 /* STXNetworkAdapterSpec.mm */,
 			);
 			name = Adapters;
 			sourceTree = "<group>";
@@ -1521,7 +1522,7 @@
 				AE8AF50F189B226800A65B27 /* STRAdPlacementAdjusterSpec.mm in Sources */,
 				B2F29E6E1A98086600313C61 /* link_thumbnail.c in Sources */,
 				AE8AF506189B0B5900A65B27 /* STRIndexPathDelegateProxy.m in Sources */,
-				AE022E01188E024700D02568 /* STRAdServiceSpec.mm in Sources */,
+				AE022E01188E024700D02568 /* STXNetworkAdapterSpec.mm in Sources */,
 				AED6D19A18A30AC7005DFDF4 /* STRFakeAdGeneratorSpec.mm in Sources */,
 				AE3120DE1889E71900297F01 /* STRDeferred.m in Sources */,
 				AEA0EC7A18AC589E00B4286A /* vine_sample_thumbnail.c in Sources */,
@@ -1537,7 +1538,6 @@
 				AEA0EC7718AC50D700B4286A /* youtube_sample_thumbnail.c in Sources */,
 				AE9C460B189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C44A618A2CDF000298166 /* STRCollectionViewCell.m in Sources */,
-				AE022DE8188E008000D02568 /* STRAdService.m in Sources */,
 				AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */,
 				AE9C463D189C7776001B407A /* STRVideoControllerSpec.mm in Sources */,
 				AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */,
@@ -1608,7 +1608,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE022DE7188E008000D02568 /* STRAdService.m in Sources */,
 				B229F09F1A2E486A0094A8B3 /* STRAdInstagram.m in Sources */,
 				AEEE6CBF18A04E8E00AA7EC9 /* UITableView+STR.m in Sources */,
 				AE022DEC188E00C100D02568 /* STRAdvertisement.m in Sources */,
@@ -1665,7 +1664,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2B963151B0F9D0B00404578 /* STRAdService.m in Sources */,
 				B2B963161B0F9D0B00404578 /* STRAdInstagram.m in Sources */,
 				B2B963171B0F9D0B00404578 /* UITableView+STR.m in Sources */,
 				B2B963181B0F9D0B00404578 /* STRAdvertisement.m in Sources */,

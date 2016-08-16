@@ -1,5 +1,4 @@
 #import "STRFullAdView.h"
-#import "STRAdService.h"
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"
 #include "UIGestureRecognizer+Spec.h"

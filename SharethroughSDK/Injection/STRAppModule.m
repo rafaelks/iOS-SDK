@@ -3,7 +3,6 @@
 #import "STRAdCache.h"
 #import "STRAdGenerator.h"
 #import "STRAdRenderer.h"
-#import "STRAdService.h"
 #import "STRAsapService.h"
 #import "STRBeaconService.h"
 #import "STRDateProvider.h"
@@ -52,15 +51,6 @@
         return [[STRBeaconService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
                                                dateProvider:[injector getInstance:[STRDateProvider class]]
                                         asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]];
-    }];
-
-    [injector bind:[STRAdService class] toBlock:^id(STRInjector *injector) {
-        return [[STRAdService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
-                                          networkClient:[injector getInstance:[STRNetworkClient class]]
-                                                adCache:[injector getInstance:[STRAdCache class]]
-                                          beaconService:[injector getInstance:[STRBeaconService class]]
-                                    asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]
-                                               injector:injector];
     }];
 
     [injector bind:[STRMediationService class] toBlock:^id(STRInjector *injector) {

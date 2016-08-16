@@ -30,13 +30,6 @@
 
 @implementation STRFakeAdGenerator
 
-- (id)initWithAdService:(STRAdService *)adService injector:(STRInjector *)injector {
-
-    [NSException raise:@"STRFakeAdGeneratorError"
-                format:@"Fake ad generator does not respond to %@, because it does not use any of these things.", NSStringFromSelector(_cmd)];
-    return nil;
-}
-
 - (id)init {
     self = [super init];
     if (self) {

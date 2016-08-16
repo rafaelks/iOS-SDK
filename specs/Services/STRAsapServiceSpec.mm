@@ -12,7 +12,6 @@
 
 #import "STRAdCache.h"
 #import "STRAdPlacement.h"
-#import "STRAdService.h"
 #import "STRAdvertisement.h"
 #import "STRDeferred.h"
 #import "STRLogging.h"
@@ -27,7 +26,6 @@ SPEC_BEGIN(STRAsapServiceSpec)
 
 describe(@"STRAsapService", ^{
     __block STRAsapService *asapService;
-    __block STRAdService *adService;
     __block STRRestClient *restClient;
     __block STRAdCache *adCache;
     __block STRInjector *injector;
@@ -43,9 +41,6 @@ describe(@"STRAsapService", ^{
 
         adCache = nice_fake_for([STRAdCache class]);
         [injector bind:[STRAdCache class] toInstance:adCache];
-
-        adService = nice_fake_for([STRAdService class]);
-        [injector bind:[STRAdService class] toInstance:adService];
 
         ASIdentifierManager *fakeManager = nice_fake_for([ASIdentifierManager class]);
         spy_on([ASIdentifierManager class]);

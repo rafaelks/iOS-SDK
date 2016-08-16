@@ -1,5 +1,4 @@
 #import "STRFullAdView.h"
-#import "STRAdService.h"
 #import "STRDeferred.h"
 #import "STRAdvertisement.h"
 #import "STRInteractiveAdViewController.h"

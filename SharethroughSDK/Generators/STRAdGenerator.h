@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol STRAdView, STRAdViewDelegate;
-@class STRAdPlacement, STRAdService, STRBeaconService, STRInjector, STRPromise, STRAsapService;
+@class STRAdPlacement, STRBeaconService, STRInjector, STRPromise, STRAsapService;
 
 @interface STRAdGenerator : NSObject
 

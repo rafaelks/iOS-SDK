@@ -1,4 +1,4 @@
-#import "STRAdService.h"
+#import "STRNetworkAdapter.h"
 #import "STRRestClient.h"
 #import "STRNetworkClient.h"
 #import "STRDeferred.h"
@@ -22,10 +22,10 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-SPEC_BEGIN(STRAdServiceSpec)
+SPEC_BEGIN(STRNetworkAdapterSpec)
 
-describe(@"STRAdService", ^{
-    __block STRAdService *service;
+describe(@"STRNetworkAdapterervice", ^{
+    __block STRNetworkAdapter *service;
     __block STRRestClient *restClient;
     __block STRNetworkClient *networkClient;
     __block STRInjector *injector;
@@ -56,7 +56,7 @@ describe(@"STRAdService", ^{
         fakeId stub_method(@selector(UUIDString)).and_return(@"fakeUUID");
         fakeManager stub_method(@selector(advertisingIdentifier)).and_return(fakeId);
 
-        service = [injector getInstance:[STRAdService class]];
+        service = [injector getInstance:[STRNetworkAdapter class]];
     });
 
     describe(@"fetching an ad", ^{

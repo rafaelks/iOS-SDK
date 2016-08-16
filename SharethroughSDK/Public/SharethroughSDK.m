@@ -15,7 +15,6 @@
 #import "STRGridlikeViewDataSourceProxy.h"
 #import "STRFakeAdGenerator.h"
 #import "STRBeaconService.h"
-#import "STRAdService.h"
 #import "STRAdCache.h"
 #import "STRAdViewDelegate.h"
 #import "STRLogging.h"

@@ -9,7 +9,6 @@
 #import "STRTestSafeModule.h"
 #import "STRFakeAdGenerator.h"
 #import "STRBeaconService.h"
-#import "STRAdService.h"
 #import "STRFakeRestClient.h"
 #import "STRNetworkClient.h"
 
@@ -40,7 +39,6 @@
     [injector bind:[STRRestClient class] toBlockAsSingleton:^id(STRInjector *injector) {
         return [[STRFakeRestClient alloc] initWithNetworkClient:[injector getInstance:[STRNetworkClient class]]];
     }];
-    [injector bind:[STRAdService class] toInstance:[NSNull null]];
 }
 
 @end

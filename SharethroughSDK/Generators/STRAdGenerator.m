@@ -12,7 +12,6 @@
 
 #import "STRAdPlacement.h"
 #import "STRAdRenderer.h"
-#import "STRAdService.h"
 #import "STRAdvertisement.h"
 #import "STRAdViewDelegate.h"
 #import "STRAsapService.h"
