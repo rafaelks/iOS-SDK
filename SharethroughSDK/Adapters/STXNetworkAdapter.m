@@ -43,14 +43,13 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.beaconService = [self.injector getInstance:[STRBeaconService class]];
-        self.restClient = [self.injector getInstance:[STRRestClient class]];
-        self.identifierManager = [self.injector getInstance:[ASIdentifierManager class]];
+
     }
     return self;
 }
 
 -(void)loadAdWithParameters:(NSDictionary *)parameters {
+    [self postInit];
     NSString *keyType = parameters[@"keyType"];
     NSString *keyValue = parameters[@"keyValue"];
 
@@ -58,11 +57,17 @@
     NSDictionary *adRequestParamsForPlacement = [self createAdRequestParamsForPlacement:self.placement
                                                                                 withKey:keyType andValue:keyValue];
     [self fetchAdWithParameters:adRequestParamsForPlacement forPlacement:self.placement];
-
 }
 
-
 #pragma mark - Private
+
+- (void)postInit {
+    // TODO: validate injector
+    self.beaconService = [self.injector getInstance:[STRBeaconService class]];
+    self.restClient = [self.injector getInstance:[STRRestClient class]];
+    self.identifierManager = [self.injector getInstance:[ASIdentifierManager class]];
+    self.networkClient = [self.injector getInstance:[STRNetworkClient class]];
+}
 
 - (BOOL)isDirectSold:(NSString *)keyType {
     return [keyType isEqualToString:@"creative_key"] || [keyType isEqualToString:@"campaign_key"];

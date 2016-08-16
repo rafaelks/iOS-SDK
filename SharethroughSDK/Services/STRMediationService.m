@@ -62,12 +62,14 @@
     NSDictionary *currentNetwork = placementMediationState.mediationNetworks[placementMediationState.mediationIndex];
     NSString *mediationClassName = currentNetwork[@"iosClassName"];
     STRNetworkAdapter *networkAdapter = (STRNetworkAdapter *)[[NSClassFromString(mediationClassName) alloc] init];
-    networkAdapter.delegate = self;
 
     if (![networkAdapter isKindOfClass:[STRNetworkAdapter class]]) {
         NSLog(@"**** MediationClassName: %@ does not extend STRNetworkAdapter ****", mediationClassName);
         return nil;
     }
+    networkAdapter.delegate = self;
+    networkAdapter.placement = placement;
+    networkAdapter.injector = self.injector;
 
     [networkAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
 
