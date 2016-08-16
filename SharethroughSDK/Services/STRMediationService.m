@@ -64,7 +64,11 @@
     STRNetworkAdapter *networkAdapter = (STRNetworkAdapter *)[[NSClassFromString(mediationClassName) alloc] init];
     networkAdapter.delegate = self;
 
-    // TODO: validate networkAdapter conforms to interface
+    if (![networkAdapter isKindOfClass:[STRNetworkAdapter class]]) {
+        NSLog(@"**** MediationClassName: %@ does not extend STRNetworkAdapter ****", mediationClassName);
+        return nil;
+    }
+
     [networkAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
 
     return [[STRPromise alloc] init];
