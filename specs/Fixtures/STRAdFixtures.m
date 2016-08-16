@@ -110,14 +110,6 @@
     return ad;
 }
 
-+ (STRAdClickout *)privacyInformationAdWithOptOutURL:(NSURL *)optOutURL {
-    STRAdClickout *disclosureAd = [STRAdClickout new];
-    disclosureAd.mediaURL = optOutURL;
-    disclosureAd.title = @"Privacy Information";
-    disclosureAd.action = STRClickoutAd;
-
-    return disclosureAd;
-}
 + (STRAdInstagram *)instagramAd {
     STRAdInstagram *ad = [STRAdInstagram new];
     ad.mediaURL = [NSURL URLWithString:@"http://instagram.com/p/vqzQAJwQPg/?modal=true"];

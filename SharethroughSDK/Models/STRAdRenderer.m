@@ -18,7 +18,6 @@
 #import "STRNetworkClient.h"
 #import "STRAdViewDelegate.h"
 #import "STRPromise.h"
-#import "STRAdFixtures.h"
 #import "STRDateProvider.h"
 #import "UIView+Visible.h"
 #import "STRLogging.h"

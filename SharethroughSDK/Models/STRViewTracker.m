@@ -18,8 +18,8 @@
 #import "STRInteractiveAdViewController.h"
 #import "STRLogging.h"
 #import "UIView+Visible.h"
-#import "STRAdFixtures.h"
 #import "STRAdView.h"
+#import "STRAdClickout.h"
 
 char const * const STRViewTrackerKey = "STRViewTrackerKey";
 
@@ -193,11 +193,20 @@ char const * const STRViewTrackerKey = "STRViewTrackerKey";
 - (IBAction)tappedDisclosureBtn:(id)sender
 {
     TLog(@"pkey:%@ ckey:%@",self.ad.placementKey, self.ad.creativeKey);
-    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[STRAdFixtures privacyInformationAdWithOptOutURL:self.ad.optOutUrl]
+    STRInteractiveAdViewController *adController = [[STRInteractiveAdViewController alloc] initWithAd:(STRAdvertisement *)[self privacyInformationAdWithOptOutURL:self.ad.optOutUrl]
                                                                                                device:[UIDevice currentDevice]
                                                                                           application:[UIApplication sharedApplication]
                                                                                         beaconService:self.beaconService
                                                                                              injector:self.injector];
     [self.presentingViewController presentViewController:adController animated:YES completion:nil];
+}
+
+- (STRAdClickout *)privacyInformationAdWithOptOutURL:(NSURL *)optOutURL {
+    STRAdClickout *disclosureAd = [STRAdClickout new];
+    disclosureAd.mediaURL = optOutURL;
+    disclosureAd.title = @"Privacy Information";
+    disclosureAd.action = STRClickoutAd;
+
+    return disclosureAd;
 }
 @end

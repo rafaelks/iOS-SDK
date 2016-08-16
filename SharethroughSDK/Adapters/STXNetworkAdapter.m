@@ -117,7 +117,8 @@
         if ([creativesJSON count] == 0) {
             TLog(@"No creatives received");
             NSError *noCreativesError = [NSError errorWithDomain:@"No creatives returned" code:404 userInfo:nil];
-            [deferred rejectWithError:noCreativesError];
+            [self.delegate strNetworkAdapter:self didFailToLoadAdWithError:noCreativesError];
+//            [deferred rejectWithError:noCreativesError];
             return noCreativesError;
         }
 
@@ -132,7 +133,8 @@
 
         STRPromise *creativeImagesPromise = [STRPromise when:creativesArray];
         [creativeImagesPromise then:^id(NSMutableArray *creatives) {
-            [deferred resolveWithValue:creatives[0]];
+//            [deferred resolveWithValue:creatives[0]];
+            [self.delegate strNetworkAdapter:self didLoadAd:creatives[0]];
             return nil;
         } error:^id(NSError *error) {
             [deferred rejectWithError:error];
