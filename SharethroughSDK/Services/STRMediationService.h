@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class STRInjector, STRPromise, STRAdPlacement;
+@class STRInjector, STRPromise, STRAdPlacement, STRDeferred;
 
 @interface STRMediationService : NSObject
 
 
 - (id) initWithInjector:(STRInjector *)injector;
 
-- (STRPromise *)fetchAdForPlacement:(STRAdPlacement *)placement withParameters:(NSDictionary *)asapResponse;
+- (void)fetchAdForPlacement:(STRAdPlacement *)placement withParameters:(NSDictionary *)asapResponse forDeferred:(STRDeferred *)deferred;
 
 @end

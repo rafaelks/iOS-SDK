@@ -109,9 +109,8 @@
     return returnValue;
 }
 
-- (STRPromise *)fetchAdWithParameters:(NSDictionary *)parameters forPlacement:(STRAdPlacement *)placement {
+- (void)fetchAdWithParameters:(NSDictionary *)parameters forPlacement:(STRAdPlacement *)placement {
     TLog(@"");
-    STRDeferred *deferred = [STRDeferred defer];
 
     STRPromise *adPromise = [self.restClient getWithParameters: parameters];
     [adPromise then:^id(NSDictionary *fullJSON) {
@@ -123,7 +122,6 @@
             TLog(@"No creatives received");
             NSError *noCreativesError = [NSError errorWithDomain:@"No creatives returned" code:404 userInfo:nil];
             [self.delegate strNetworkAdapter:self didFailToLoadAdWithError:noCreativesError];
-//            [deferred rejectWithError:noCreativesError];
             return noCreativesError;
         }
 
@@ -138,21 +136,18 @@
 
         STRPromise *creativeImagesPromise = [STRPromise when:creativesArray];
         [creativeImagesPromise then:^id(NSMutableArray *creatives) {
-//            [deferred resolveWithValue:creatives[0]];
             [self.delegate strNetworkAdapter:self didLoadAd:creatives[0]];
             return nil;
         } error:^id(NSError *error) {
-            [deferred rejectWithError:error];
+            [self.delegate strNetworkAdapter:self didFailToLoadAdWithError:[NSError errorWithDomain:@"Failed to load ads" code:404 userInfo:nil]];
             return error;
         }];
 
         return nil;
     } error:^id(NSError *error) {
-        [deferred rejectWithError:error];
+        [self.delegate strNetworkAdapter:self didFailToLoadAdWithError:[NSError errorWithDomain:@"Failed to load ads" code:404 userInfo:nil]];
         return error;
     }];
-    
-    return deferred.promise;
 }
 
 - (STRPromise *)createAdvertisementFromJSON:(NSDictionary *)creativeWrapperJSON forPlacement:(STRAdPlacement *)placement withPlacementJSON:(NSDictionary *)placementJSON withArid:(NSString *)adserverRequestId {

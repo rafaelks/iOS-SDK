@@ -84,7 +84,7 @@ const NSInteger kRequestInProgress = 202;
             [deferred rejectWithError:[NSError errorWithDomain:status code:500 userInfo:nil]];
             return nil;
         }
-        [self.mediationService fetchAdForPlacement:placement withParameters:value];
+        [self.mediationService fetchAdForPlacement:placement withParameters:value forDeferred:deferred];
 
         return nil;
     } error:^id(NSError *error) {
