@@ -8,6 +8,7 @@
 
 #import "STRMediationService.h"
 
+#import "STRAdCache.h"
 #import "STRAdPlacement.h"
 #import "STRDeferred.h"
 #import "STRInjector.h"
@@ -43,6 +44,7 @@
 
 @property (nonatomic, strong) NSMutableDictionary *placementMediationNetworks;
 @property (nonatomic, weak) STRInjector *injector;
+@property (nonatomic, strong) STRAdCache *adCache;
 
 @end
 
@@ -54,6 +56,7 @@
     if (self) {
         self.injector = injector;
         self.placementMediationNetworks = [[NSMutableDictionary alloc] init];
+        self.adCache = [self.injector getInstance:[STRAdCache class]];
     }
     return self;
 }
@@ -90,13 +93,15 @@
 -(void)strNetworkAdapter:(STRNetworkAdapter *)adapter didLoadAd:(STRAdvertisement *)strAd {
     NSLog(@"Did ad load? Ad did load!");
     PlacementMediationState *mediationState = [self.placementMediationNetworks objectForKey:adapter.placement.placementKey];
+    [self.adCache clearPendingAdRequestForPlacement:adapter.placement.placementKey];
     [mediationState.deferred resolveWithValue:strAd];
 }
 
 -(void)strNetworkAdapter:(STRNetworkAdapter *)adapter didFailToLoadAdWithError:(NSError *)error {
-    //ad failed to load, try next network
+    //TODO: ad failed to load, try next network
     NSLog(@"didFailToLoadAdWithError %@", error);
     PlacementMediationState *mediationState = [self.placementMediationNetworks objectForKey:adapter.placement.placementKey];
+    [self.adCache clearPendingAdRequestForPlacement:adapter.placement.placementKey];
     [mediationState.deferred rejectWithError:error];
 }
 
