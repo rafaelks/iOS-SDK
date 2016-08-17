@@ -90,10 +90,13 @@
     }
 }
 
+#pragma mark - STRNetworkAdapterDelegate
+
 -(void)strNetworkAdapter:(STRNetworkAdapter *)adapter didLoadAd:(STRAdvertisement *)strAd {
     NSLog(@"Did ad load? Ad did load!");
     PlacementMediationState *mediationState = [self.placementMediationNetworks objectForKey:adapter.placement.placementKey];
     [self.adCache clearPendingAdRequestForPlacement:adapter.placement.placementKey];
+    [self.adCache saveAds:[[NSMutableArray alloc] initWithArray:@[strAd]] forPlacement:adapter.placement andAssignAds:NO];
     [mediationState.deferred resolveWithValue:strAd];
 }
 
