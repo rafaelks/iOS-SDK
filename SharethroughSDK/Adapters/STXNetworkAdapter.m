@@ -131,9 +131,6 @@
             [creativesArray addObject: [self createAdvertisementFromJSON:creativesJSON[i] forPlacement:placement withPlacementJSON:placementJSON withArid:adserverRequestId]];
         }
 
-        // TODO: Pull out "articlesBeforeFirstAd" and "articlesBetweenAds" in ASAP service
-//        [self createPlacementInfiniteScrollExtrasFromJSON:fullJSON[@"placement"] forPlacement:placement];
-
         STRPromise *creativeImagesPromise = [STRPromise when:creativesArray];
         [creativeImagesPromise then:^id(NSMutableArray *creatives) {
             [self.delegate strNetworkAdapter:self didLoadMultipleAds:creatives];
@@ -199,25 +196,6 @@
     }];
     return deferred.promise;
 }
-
-// TODO: Move to ASAP service
-//- (void)createPlacementInfiniteScrollExtrasFromJSON:(NSDictionary *)placementJSON
-//                                       forPlacement:(STRAdPlacement *)placement {
-//    TLog(@"");
-//    if ([placementJSON[@"layout"] isEqualToString:@"multiple"] &&
-//        [self.adCache getInfiniteScrollFieldsForPlacement:placement.placementKey] == nil) {
-//
-//        STRAdPlacementInfiniteScrollFields *extras = [STRAdPlacementInfiniteScrollFields new];
-//        extras.placementKey = placement.placementKey;
-//        extras.articlesBeforeFirstAd = [placementJSON[@"articlesBeforeFirstAd"] unsignedIntegerValue];
-//        extras.articlesBetweenAds = [placementJSON[@"articlesBetweenAds"] unsignedIntegerValue];
-//        [self.adCache saveInfiniteScrollFields:extras];
-//
-//        if ([placement.delegate respondsToSelector:@selector(adView:didFetchArticlesBeforeFirstAd:andArticlesBetweenAds:forPlacementKey:)]) {
-//            [placement.delegate adView:placement.adView didFetchArticlesBeforeFirstAd:extras.articlesBeforeFirstAd andArticlesBetweenAds:extras.articlesBetweenAds forPlacementKey:placement.placementKey];
-//        }
-//    }
-//}
 
 - (NSURL *)URLFromSanitizedString:(NSString*)urlString {
     NSURL *sanitizedURL = [NSURL URLWithString:urlString];

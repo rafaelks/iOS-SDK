@@ -194,14 +194,4 @@
     [self.pendingRequestPlacementKeys removeObject:placementKey];
 }
 
-- (STRAdPlacementInfiniteScrollFields *)getInfiniteScrollFieldsForPlacement:(NSString *)placementKey {
-    TLog(@"pkey:%@",placementKey);
-    return self.cachedPlacementInfiniteScrollFields[placementKey];
-}
-
-- (void)saveInfiniteScrollFields:(STRAdPlacementInfiniteScrollFields *)fields {
-    TLog(@"");
-    self.cachedPlacementInfiniteScrollFields[fields.placementKey] = fields;
-}
-
 @end

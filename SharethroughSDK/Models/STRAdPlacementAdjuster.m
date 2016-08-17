@@ -29,14 +29,10 @@
     adjuster.adSection = section;
     adjuster.adCache = adCache;
 
-    STRAdPlacementInfiniteScrollFields *fields = [adjuster.adCache getInfiniteScrollFieldsForPlacement:placementKey];
-    if (fields != nil) {
-        adjuster.articlesBeforeFirstAd = fields.articlesBeforeFirstAd;
-        adjuster.articlesBetweenAds = fields.articlesBetweenAds;
-    } else {
-        adjuster.articlesBetweenAds = 1;
-        adjuster.articlesBeforeFirstAd = 1;
-    }
+    // TODO: These values should be passed in and/or specified the delegate.
+    adjuster.articlesBetweenAds = 1;
+    adjuster.articlesBeforeFirstAd = 1;
+
     adjuster.placementKey = placementKey;
     return adjuster;
 }

@@ -84,6 +84,7 @@ const NSInteger kRequestInProgress = 202;
             [deferred rejectWithError:[NSError errorWithDomain:status code:500 userInfo:nil]];
             return nil;
         }
+        [self createPlacementInfiniteScrollSettings:value forPlacement:placement];
         [self.mediationService fetchAdForPlacement:placement withParameters:value forDeferred:deferred];
 
         return nil;
@@ -92,6 +93,19 @@ const NSInteger kRequestInProgress = 202;
         return error;
     }];
     return deferred.promise;
+}
+
+- (void)createPlacementInfiniteScrollSettings:(NSDictionary *)asapResponseJSON forPlacement:(STRAdPlacement *)placement {
+    TLog(@"");
+    if (asapResponseJSON[@"articlesBeforeFirstAd"] &&
+        asapResponseJSON[@"articlesBetweenAds"] &&
+        [placement.delegate respondsToSelector:@selector(adView:didFetchArticlesBeforeFirstAd:andArticlesBetweenAds:forPlacementKey:)])
+    {
+        NSUInteger articlesBeforeFirstAd = [asapResponseJSON[@"articlesBeforeFirstAd"] unsignedIntegerValue];
+        NSUInteger articlesBetweenAds = [asapResponseJSON[@"articlesBetweenAds"] unsignedIntegerValue];
+
+        [placement.delegate adView:placement.adView didFetchArticlesBeforeFirstAd:articlesBeforeFirstAd andArticlesBetweenAds:articlesBetweenAds forPlacementKey:placement.placementKey];
+    }
 }
 
 - (NSDictionary *)getParameters:(STRAdPlacement *)placement {
@@ -133,5 +147,6 @@ const NSInteger kRequestInProgress = 202;
     [deferred rejectWithError:[NSError errorWithDomain:@"STR Request in Progress" code:kRequestInProgress userInfo:nil]];
     return deferred.promise;
 }
+
 
 @end

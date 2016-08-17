@@ -30,11 +30,3 @@
 @property (copy, nonatomic) NSString *mrid;
 
 @end
-
-@interface STRAdPlacementInfiniteScrollFields : NSObject
-
-@property (copy, nonatomic) NSString *placementKey;
-@property (assign, nonatomic) NSUInteger articlesBeforeFirstAd;
-@property (assign, nonatomic) NSUInteger articlesBetweenAds;
-
-@end

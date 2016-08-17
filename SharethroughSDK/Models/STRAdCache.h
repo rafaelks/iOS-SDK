@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class STRAdvertisement, STRDateProvider, STRAdPlacement, STRAdPlacementInfiniteScrollFields;
+@class STRAdvertisement, STRDateProvider, STRAdPlacement;
 
 @interface STRAdCache : NSObject
 
@@ -31,6 +31,4 @@
 - (BOOL)pendingAdRequestInProgressForPlacement:(NSString *)placementKey;
 - (void)clearPendingAdRequestForPlacement:(NSString *)placementKey;
 
-- (STRAdPlacementInfiniteScrollFields *)getInfiniteScrollFieldsForPlacement:(NSString *)placementKey;
-- (void)saveInfiniteScrollFields:(STRAdPlacementInfiniteScrollFields *)fields;
 @end
