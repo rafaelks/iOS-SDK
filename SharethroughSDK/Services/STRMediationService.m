@@ -33,7 +33,7 @@
     self = [super init];
     if (self) {
         self.mediationNetworks = mediationNetworks;
-        self.mediationIndex = -1;
+        self.mediationIndex = 0;
     }
     return self;
 }
@@ -65,7 +65,7 @@
     PlacementMediationState *placementMediationState =  [self getMediationStateForPlacement:placement withParameters:asapResponse];
     placementMediationState.deferred = deferred;
 
-    [self mediateNextNetworkForMediationState:placementMediationState withPlacement:placement];
+    [self loadAdForPlacementMediationState:placementMediationState withPlacement:placement];
 }
 
 #pragma mark - STRNetworkAdapterDelegate
@@ -79,7 +79,6 @@
     NSLog(@"Did ad load? Many ads did load!");
     [self storeCreativesForAdapter:adapter andStoreCreatives:strAds];
 }
-
 
 -(void)strNetworkAdapter:(STRNetworkAdapter *)adapter didFailToLoadAdWithError:(NSError *)error {
     //TODO: ad failed to load, try next network
@@ -112,20 +111,24 @@
     if (mediationState.mediationIndex >= [mediationState.mediationNetworks count]) {
         [mediationState.deferred rejectWithError:[NSError errorWithDomain:@"No networks returned any ads" code:404 userInfo:nil]];
     } else {
-        NSDictionary *currentNetwork = mediationState.mediationNetworks[mediationState.mediationIndex];
-        NSString *mediationClassName = currentNetwork[@"iosClassName"];
-        STRNetworkAdapter *networkAdapter = (STRNetworkAdapter *)[[NSClassFromString(mediationClassName) alloc] init];
-
-        if (![networkAdapter isKindOfClass:[STRNetworkAdapter class]]) {
-            NSLog(@"**** MediationClassName: %@ does not extend STRNetworkAdapter ****", mediationClassName);
-            return;
-        }
-        networkAdapter.delegate = self;
-        networkAdapter.placement = placement;
-        networkAdapter.injector = self.injector;
-
-        [networkAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
+        [self loadAdForPlacementMediationState:mediationState withPlacement:placement];
     }
+}
+
+- (void)loadAdForPlacementMediationState:(PlacementMediationState *)mediationState withPlacement:(STRAdPlacement *)placement {
+    NSDictionary *currentNetwork = mediationState.mediationNetworks[mediationState.mediationIndex];
+    NSString *mediationClassName = currentNetwork[@"iosClassName"];
+    STRNetworkAdapter *networkAdapter = (STRNetworkAdapter *)[[NSClassFromString(mediationClassName) alloc] init];
+
+    if (![networkAdapter isKindOfClass:[STRNetworkAdapter class]]) {
+        NSLog(@"**** MediationClassName: %@ does not extend STRNetworkAdapter ****", mediationClassName);
+        return;
+    }
+    networkAdapter.delegate = self;
+    networkAdapter.placement = placement;
+    networkAdapter.injector = self.injector;
+
+    [networkAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
 }
 
 @end
