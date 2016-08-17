@@ -53,9 +53,7 @@
                                         asIdentifierManager:[injector getInstance:[ASIdentifierManager class]]];
     }];
 
-    [injector bind:[STRMediationService class] toBlock:^id(STRInjector *injector) {
-        return [[STRMediationService alloc] initWithInjector: injector];
-    }];
+    [injector bind:[STRMediationService class] toInstance:[[STRMediationService alloc] initWithInjector:injector]];
 
     [injector bind:[STRAsapService class] toBlock:^id(STRInjector *injector) {
         return [[STRAsapService alloc] initWithRestClient:[injector getInstance:[STRRestClient class]]
