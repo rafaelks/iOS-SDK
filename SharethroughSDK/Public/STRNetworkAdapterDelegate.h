@@ -12,6 +12,8 @@
 
 - (void)strNetworkAdapter:(STRNetworkAdapter *)adapter didLoadAd:(STRAdvertisement *)strAd;
 
+- (void)strNetworkAdapter:(STRNetworkAdapter *)adapter didLoadMultipleAds:(NSArray *)strAds;
+
 - (void)strNetworkAdapter:(STRNetworkAdapter *)adapter didFailToLoadAdWithError:(NSError *)error;
 
 @end

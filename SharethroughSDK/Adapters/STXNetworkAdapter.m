@@ -136,7 +136,7 @@
 
         STRPromise *creativeImagesPromise = [STRPromise when:creativesArray];
         [creativeImagesPromise then:^id(NSMutableArray *creatives) {
-            [self.delegate strNetworkAdapter:self didLoadAd:creatives[0]];
+            [self.delegate strNetworkAdapter:self didLoadMultipleAds:creatives];
             return nil;
         } error:^id(NSError *error) {
             [self.delegate strNetworkAdapter:self didFailToLoadAdWithError:[NSError errorWithDomain:@"Failed to load ads" code:404 userInfo:nil]];
