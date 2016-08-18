@@ -39,6 +39,7 @@
         self.adCellReuseIdentifier = adCellReuseIdentifier;
         self.injector = injector;
         self.placement = placement;
+        self.placement.delegate = self;
     }
 
     return self;
