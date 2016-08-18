@@ -13,7 +13,6 @@
 #import "STRLogging.h"
 
 #import "NSMutableArray+Queue.h"
-#import "UIView+Visible.h"
 
 @interface STRAdCache ()
 
@@ -110,19 +109,6 @@
     if (ad == nil) {
         if ([creatives peek] == nil) {
             return NO;
-        } else {
-            if (initialize) {
-                ad = [creatives dequeue];
-                TLog(@"Setting ad:%@ for index:%lu", ad, (long)placement.adIndex);
-                [indexToCreativeMap setObject:ad forKey:[NSNumber numberWithLong:placement.adIndex]];
-            }
-            return YES;
-        }
-    }
-
-    if ([placement.adView percentVisible] < 0.1f) {
-        if ([creatives peek] == nil) {
-            return YES; //reuse the old ad
         } else {
             if (initialize) {
                 ad = [creatives dequeue];
