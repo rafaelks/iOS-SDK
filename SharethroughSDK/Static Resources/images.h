@@ -13,15 +13,9 @@ typedef struct {
 
 extern STRImage kSTRPlayBtn;
 extern STRImage kSTRVineLogo;
-extern STRImage kSTRYoutubeThumbnail;
 extern STRImage kSTRYouTubeLogo;
-extern STRImage kSTRVineThumbnail;
-extern STRImage kSTRHostedVideoThumbnail;
-extern STRImage kSTRClickoutThumbnail;
 extern STRImage kSTRPinterestLogo;
-extern STRImage kSTRPinterestThumbnail;
 extern STRImage kSTRIntelLogo;
 extern STRImage kSTRInstagramLogo;
-extern STRImage kSTRInstagramThumbnail;
 extern STRImage kSTRCloseBtn;
 extern STRImage kSTRLinkThumbnail;
