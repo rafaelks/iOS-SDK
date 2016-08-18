@@ -13,7 +13,7 @@
 @implementation STRVersion
 
 + (NSString *)current {
-    return @"4.0.0-26-4748cc1";
+    return @"4.0.0-26-c70a387";
 }
 
 @end

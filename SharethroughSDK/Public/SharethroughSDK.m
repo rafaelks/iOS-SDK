@@ -29,7 +29,6 @@
 
 + (instancetype)sharedInstance {
     __strong static SharethroughSDK *sharedObject = nil;
-
     static dispatch_once_t p = 0;
     dispatch_once(&p, ^{
         sharedObject = [[self alloc] init];
