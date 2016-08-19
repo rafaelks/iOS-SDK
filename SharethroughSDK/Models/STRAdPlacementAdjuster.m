@@ -28,7 +28,6 @@
     STRAdPlacementAdjuster *adjuster = [self new];
     adjuster.adSection = section;
     adjuster.adCache = adCache;
-
     adjuster.articlesBetweenAds = 1;
     adjuster.articlesBeforeFirstAd = 1;
 

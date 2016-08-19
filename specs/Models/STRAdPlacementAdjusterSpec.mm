@@ -18,20 +18,6 @@ describe(@"STRAdPlacementAdjuster", ^{
     });
 
     describe(@"adjusterInSection:placementKey:adCache:", ^{
-        describe(@"When articles between ads and articles before ads are set", ^{
-            it(@"returns the values set by the placement", ^{
-                STRAdPlacementInfiniteScrollFields *fields = [STRAdPlacementInfiniteScrollFields new];
-                fields.articlesBeforeFirstAd = 2;
-                fields.articlesBetweenAds = 5;
-                fakeAdCache stub_method(@selector(getInfiniteScrollFieldsForPlacement:)).and_return(fields);
-                adjuster = [STRAdPlacementAdjuster adjusterInSection:0
-                                                       placementKey:fakePlacementKey
-                                                            adCache:fakeAdCache];
-                adjuster.articlesBeforeFirstAd should equal(2);
-                adjuster.articlesBetweenAds should equal(5);
-            });
-        });
-
         describe(@"When using default values for articles between ads and articles before ads", ^{
             it(@"returns 1 for each of the values", ^{
                 adjuster = [STRAdPlacementAdjuster adjusterInSection:0

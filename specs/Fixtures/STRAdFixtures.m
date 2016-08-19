@@ -10,7 +10,7 @@
 #import "STRAdYouTube.h"
 #import "STRAdVine.h"
 #import "STRAdvertisement.h"
-#import "images.h"
+#import "../Static Resources/images.h"
 #import "STRAdClickout.h"
 #import "STRAdPinterest.h"
 #import "STRAdInstagram.h"

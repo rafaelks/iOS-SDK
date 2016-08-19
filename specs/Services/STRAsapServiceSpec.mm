@@ -15,6 +15,7 @@
 #import "STRAdvertisement.h"
 #import "STRDeferred.h"
 #import "STRLogging.h"
+#import "STRMediationService.h"
 #import "STRPromise.h"
 #import "STRRestClient.h"
 #import "STRAppModule.h"
@@ -30,6 +31,7 @@ describe(@"STRAsapService", ^{
     __block STRAdCache *adCache;
     __block STRInjector *injector;
     __block STRAdvertisement *ad;
+    __block STRMediationService *strMediationService;
 
     beforeEach(^{
         ad = nice_fake_for([STRAdvertisement class]);
@@ -61,7 +63,7 @@ describe(@"STRAsapService", ^{
 
     describe(@"fetching an ad", ^{
         __block STRDeferred *restClientDeferred;
-        __block STRDeferred *adServiceDeferred;
+        __block STRDeferred *strMediationServiceDeferred;
         __block STRPromise *returnedPromise;
         __block STRAdPlacement *adPlacement;
 
@@ -104,9 +106,9 @@ describe(@"STRAsapService", ^{
                 adCache stub_method(@selector(fetchCachedAdForPlacement:));
                 adCache stub_method(@selector(isAdAvailableForPlacement:AndInitializeAd:)).and_return(NO);
 
-                adServiceDeferred = [STRDeferred defer];
-                adService stub_method(@selector(fetchAdForPlacement:isPrefetch:)).and_return(adServiceDeferred.promise);
-                adService stub_method(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).and_return(adServiceDeferred.promise);
+                strMediationServiceDeferred = [STRDeferred defer];
+                strMediationService stub_method(@selector(fetchAdForPlacement:isPrefetch:)).and_return(strMediationServiceDeferred.promise);
+                strMediationService stub_method(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).and_return(strMediationServiceDeferred.promise);
 
                 returnedPromise = [asapService fetchAdForPlacement:adPlacement isPrefetch:YES];
             });
@@ -157,7 +159,7 @@ describe(@"STRAsapService", ^{
                                                           @"keyValue": @"fake_creative_key"};
                         [restClientDeferred resolveWithValue:asapReturnValue];
 
-                        adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).with(adPlacement, @"creative_key", @"fake_creative_key", YES);
+                        strMediationService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).with(adPlacement, @"creative_key", @"fake_creative_key", YES);
                     });
                 });
 
@@ -168,7 +170,7 @@ describe(@"STRAsapService", ^{
                                                           @"keyValue": @"fake_campaign_key"};
                         [restClientDeferred resolveWithValue:asapReturnValue];
 
-                        adService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).with(adPlacement, @"campaign_key", @"fake_campaign_key", YES);
+                        strMediationService should have_received(@selector(fetchAdForPlacement:auctionParameterKey:auctionParameterValue:isPrefetch:)).with(adPlacement, @"campaign_key", @"fake_campaign_key", YES);
                     });
                 });
 
@@ -179,7 +181,7 @@ describe(@"STRAsapService", ^{
                                                           @"keyValue": @"something_not_used"};
                         [restClientDeferred resolveWithValue:asapReturnValue];
 
-                        adService should have_received(@selector(fetchAdForPlacement:isPrefetch:)).with(adPlacement, YES);
+                        strMediationService should have_received(@selector(fetchAdForPlacement:isPrefetch:)).with(adPlacement, YES);
                     });
                 });
 
@@ -189,7 +191,7 @@ describe(@"STRAsapService", ^{
                                                           @"keyType": @"some_other_key",
                                                           @"keyValue": @"something_not_used"};
                         [restClientDeferred resolveWithValue:asapReturnValue];
-                        [adServiceDeferred resolveWithValue:ad];
+                        [strMediationServiceDeferred resolveWithValue:ad];
 
                         returnedPromise.value should equal(ad);
                     });
@@ -201,7 +203,7 @@ describe(@"STRAsapService", ^{
                                                           @"keyType": @"some_other_key",
                                                           @"keyValue": @"something_not_used"};
                         [restClientDeferred resolveWithValue:asapReturnValue];
-                        [adServiceDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
+                        [strMediationServiceDeferred rejectWithError:[NSError errorWithDomain:@"Error eek!" code:109 userInfo:nil]];
 
                         returnedPromise.error should_not be_nil;
                     });
