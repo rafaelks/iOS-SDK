@@ -28,8 +28,6 @@
     STRAdPlacementAdjuster *adjuster = [self new];
     adjuster.adSection = section;
     adjuster.adCache = adCache;
-
-    // TODO: These values should be passed in and/or specified the delegate.
     adjuster.articlesBetweenAds = 1;
     adjuster.articlesBeforeFirstAd = 1;
 

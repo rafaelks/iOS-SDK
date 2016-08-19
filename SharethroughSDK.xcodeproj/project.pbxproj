@@ -700,6 +700,7 @@
 				B2CAF2491BA0B50A005D544B /* Advertisements */,
 				AE9C4608189B181B001B407A /* STRAdCache.h */,
 				AE9C4609189B181B001B407A /* STRAdCache.m */,
+				E81EDD151D63B2D300301DD7 /* Adapters */,
 				E8703DA919AE951D00D3FA50 /* STRAdPlacement.h */,
 				E8703DAA19AE951D00D3FA50 /* STRAdPlacement.m */,
 				AE8AF50A189B0CF100A65B27 /* STRAdPlacementAdjuster.h */,
@@ -784,7 +785,6 @@
 			isa = PBXGroup;
 			children = (
 				E81EDD251D63BE7500301DD7 /* Static Resources */,
-				E81EDD151D63B2D300301DD7 /* Adapters */,
 				B2A2CA551D54CF4E0001FCC3 /* Fakes */,
 				AEFBF15D188F46D900ADD742 /* Controllers */,
 				AE2246FB188877E900626A29 /* Fixtures */,
@@ -1135,6 +1135,7 @@
 				AE022E00188E024700D02568 /* STXNetworkAdapterSpec.mm */,
 			);
 			name = Adapters;
+			path = ../../specs;
 			sourceTree = "<group>";
 		};
 		E81EDD251D63BE7500301DD7 /* Static Resources */ = {
