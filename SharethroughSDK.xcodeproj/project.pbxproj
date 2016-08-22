@@ -175,6 +175,13 @@
 		B27964F71CEA1C66000A0B33 /* STRAsapServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = B27964F61CEA1C66000A0B33 /* STRAsapServiceSpec.mm */; };
 		B27A7B991BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; };
 		B27A7B9B1BB9A4A70012D943 /* STRFakeRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */; };
+		B27D0B811D67604F00B22EAB /* FANNetworkAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = B27D0B7F1D67604F00B22EAB /* FANNetworkAdapter.m */; };
+		B27D0B821D67604F00B22EAB /* FANNetworkAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = B27D0B7F1D67604F00B22EAB /* FANNetworkAdapter.m */; };
+		B27D0B841D6764EE00B22EAB /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27D0B831D6764EE00B22EAB /* FBAudienceNetwork.framework */; };
+		B27D0B851D6764EE00B22EAB /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27D0B831D6764EE00B22EAB /* FBAudienceNetwork.framework */; };
+		B27D0B861D6764EE00B22EAB /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27D0B831D6764EE00B22EAB /* FBAudienceNetwork.framework */; };
+		B27D0B8A1D6765EE00B22EAB /* FANNetworkAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B27D0B881D6765EE00B22EAB /* FANNetworkAd.m */; };
+		B27D0B8B1D6765EE00B22EAB /* FANNetworkAd.m in Sources */ = {isa = PBXBuildFile; fileRef = B27D0B881D6765EE00B22EAB /* FANNetworkAd.m */; };
 		B27F1D921A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B27F1D941A4A029900403524 /* NSMutableArray+Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */; };
 		B28137151B264DE800EF3FD0 /* STRViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B238F6451B20E62400847C50 /* STRViewTracker.m */; };
@@ -566,10 +573,14 @@
 		B238F6451B20E62400847C50 /* STRViewTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRViewTracker.m; sourceTree = "<group>"; };
 		B238F64A1B22211800847C50 /* STRAdvertisementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRAdvertisementDelegate.h; sourceTree = "<group>"; };
 		B267F4071BAC6FB7004A8850 /* STRAdInstantHostedVideoSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAdInstantHostedVideoSpec.mm; sourceTree = "<group>"; };
-		B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = ThirdParty/GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
 		B27964F61CEA1C66000A0B33 /* STRAsapServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STRAsapServiceSpec.mm; sourceTree = "<group>"; };
 		B27A7B951BB9A4A70012D943 /* STRFakeRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STRFakeRestClient.h; path = ../SharethroughSDK/Network/STRFakeRestClient.h; sourceTree = "<group>"; };
 		B27A7B961BB9A4A70012D943 /* STRFakeRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STRFakeRestClient.m; path = ../SharethroughSDK/Network/STRFakeRestClient.m; sourceTree = "<group>"; };
+		B27D0B7E1D67604F00B22EAB /* FANNetworkAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FANNetworkAdapter.h; path = Adapters/FANNetworkAdapter.h; sourceTree = "<group>"; };
+		B27D0B7F1D67604F00B22EAB /* FANNetworkAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FANNetworkAdapter.m; path = Adapters/FANNetworkAdapter.m; sourceTree = "<group>"; };
+		B27D0B831D6764EE00B22EAB /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		B27D0B871D6765EE00B22EAB /* FANNetworkAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FANNetworkAd.h; path = Adapters/FANNetworkAd.h; sourceTree = "<group>"; };
+		B27D0B881D6765EE00B22EAB /* FANNetworkAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FANNetworkAd.m; path = Adapters/FANNetworkAd.m; sourceTree = "<group>"; };
 		B27F1D901A4A029900403524 /* NSMutableArray+Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Queue.h"; sourceTree = "<group>"; };
 		B27F1D911A4A029900403524 /* NSMutableArray+Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Queue.m"; sourceTree = "<group>"; };
 		B2867A351AEA9F0700BAF148 /* UIView+Visible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Visible.h"; sourceTree = "<group>"; };
@@ -647,6 +658,7 @@
 				B2251C731CCEA22100C23540 /* AVKit.framework in Frameworks */,
 				AE131E081898622800891A93 /* AdSupport.framework in Frameworks */,
 				AE2246861886138F00626A29 /* CoreGraphics.framework in Frameworks */,
+				B27D0B861D6764EE00B22EAB /* FBAudienceNetwork.framework in Frameworks */,
 				AE2246841886138F00626A29 /* Foundation.framework in Frameworks */,
 				7317D4E7A496DA18EB442FB5 /* libPods-specs.a in Frameworks */,
 			);
@@ -656,6 +668,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B27D0B841D6764EE00B22EAB /* FBAudienceNetwork.framework in Frameworks */,
 				AE131E0D1898622D00891A93 /* AdSupport.framework in Frameworks */,
 				AE8ED3E71885ADF00004AB32 /* Foundation.framework in Frameworks */,
 			);
@@ -665,6 +678,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B27D0B851D6764EE00B22EAB /* FBAudienceNetwork.framework in Frameworks */,
 				B2B9634D1B0F9D0B00404578 /* AdSupport.framework in Frameworks */,
 				B2B9634E1B0F9D0B00404578 /* Foundation.framework in Frameworks */,
 			);
@@ -1131,6 +1145,10 @@
 			children = (
 				E81EDD101D638C6100301DD7 /* STXNetworkAdapter.h */,
 				E81EDD111D638C6100301DD7 /* STXNetworkAdapter.m */,
+				B27D0B7E1D67604F00B22EAB /* FANNetworkAdapter.h */,
+				B27D0B7F1D67604F00B22EAB /* FANNetworkAdapter.m */,
+				B27D0B871D6765EE00B22EAB /* FANNetworkAd.h */,
+				B27D0B881D6765EE00B22EAB /* FANNetworkAd.m */,
 			);
 			name = Adapters;
 			sourceTree = "<group>";
@@ -1184,7 +1202,7 @@
 		E8703CEF19ACFF9C00D3FA50 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
-				B26D22E71ACF3A210072ACDD /* GoogleMobileAds.framework */,
+				B27D0B831D6764EE00B22EAB /* FBAudienceNetwork.framework */,
 			);
 			name = "Third Party";
 			sourceTree = "<group>";
@@ -1566,6 +1584,7 @@
 				AE9C460B189B181B001B407A /* STRAdCache.m in Sources */,
 				AE6C44A618A2CDF000298166 /* STRCollectionViewCell.m in Sources */,
 				AED32FB01891F12600693EFF /* UIActivityViewController+Spec.m in Sources */,
+				B27D0B8B1D6765EE00B22EAB /* FANNetworkAd.m in Sources */,
 				AE9C463D189C7776001B407A /* STRVideoControllerSpec.mm in Sources */,
 				AE2246FE1888782A00626A29 /* STRFullAdView.m in Sources */,
 				AEFBC4A018A5539500E24BBB /* STRGridlikeViewDataSourceProxy.m in Sources */,
@@ -1579,6 +1598,7 @@
 				AE58228218A2F19100672653 /* UICollectionView+STRSpec.mm in Sources */,
 				AE9C461D189C2538001B407A /* STRAdYouTube.m in Sources */,
 				AE9C4627189C29B0001B407A /* STRAdVine.m in Sources */,
+				B27D0B821D67604F00B22EAB /* FANNetworkAdapter.m in Sources */,
 				E81EDD381D63BE7500301DD7 /* instagram-logo.c in Sources */,
 				AE6C44A318A2CC7F00298166 /* STRCollectionViewDataSource.m in Sources */,
 				AED6D1A518A406EC005DFDF4 /* STRCollectionViewDelegateProxySpec.mm in Sources */,
@@ -1703,8 +1723,10 @@
 				B2B963181B0F9D0B00404578 /* STRAdvertisement.m in Sources */,
 				B2B9631B1B0F9D0B00404578 /* STRYouTubeEmbedPage.m in Sources */,
 				B2B9631C1B0F9D0B00404578 /* STRAdRenderer.m in Sources */,
+				B27D0B8A1D6765EE00B22EAB /* FANNetworkAd.m in Sources */,
 				B2B9631D1B0F9D0B00404578 /* STRAdVine.m in Sources */,
 				B2B9631F1B0F9D0B00404578 /* UICollectionView+STR.m in Sources */,
+				B27D0B811D67604F00B22EAB /* FANNetworkAdapter.m in Sources */,
 				B2B963201B0F9D0B00404578 /* SharethroughSDK.m in Sources */,
 				B2B963211B0F9D0B00404578 /* STRAdPinterest.m in Sources */,
 				B2B963221B0F9D0B00404578 /* STRVersion.m in Sources */,
@@ -1807,6 +1829,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(SRCROOT)/specs/Frameworks",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "specs/specs-Prefix.pch";
@@ -1839,6 +1862,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(SRCROOT)/specs/Frameworks",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "specs/specs-Prefix.pch";
@@ -1940,6 +1964,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
@@ -1960,6 +1985,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
@@ -1980,6 +2006,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";
@@ -2004,6 +2031,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/SharethroughSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "SharethroughSDK/SharethroughSDK-Prefix.pch";

@@ -20,6 +20,7 @@
 @interface PlacementMediationState : NSObject
 
 @property (nonatomic, strong) NSArray *mediationNetworks;
+@property (nonatomic, strong) STRNetworkAdapter *currentAdapter;
 @property (nonatomic, strong) STRDeferred *deferred;
 @property (nonatomic) int mediationIndex;
 
@@ -118,17 +119,17 @@
 - (void)loadAdForPlacementMediationState:(PlacementMediationState *)mediationState withPlacement:(STRAdPlacement *)placement {
     NSDictionary *currentNetwork = mediationState.mediationNetworks[mediationState.mediationIndex];
     NSString *mediationClassName = currentNetwork[@"iosClassName"];
-    STRNetworkAdapter *networkAdapter = (STRNetworkAdapter *)[[NSClassFromString(mediationClassName) alloc] init];
+    mediationState.currentAdapter = (STRNetworkAdapter *)[[NSClassFromString(mediationClassName) alloc] init];
 
-    if (![networkAdapter isKindOfClass:[STRNetworkAdapter class]]) {
+    if (![mediationState.currentAdapter isKindOfClass:[STRNetworkAdapter class]]) {
         NSLog(@"**** MediationClassName: %@ does not extend STRNetworkAdapter ****", mediationClassName);
         return;
     }
-    networkAdapter.delegate = self;
-    networkAdapter.placement = placement;
-    networkAdapter.injector = self.injector;
+    mediationState.currentAdapter.delegate = self;
+    mediationState.currentAdapter.placement = placement;
+    mediationState.currentAdapter.injector = self.injector;
 
-    [networkAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
+    [mediationState.currentAdapter loadAdWithParameters:currentNetwork[@"parameters"]];
 }
 
 @end
