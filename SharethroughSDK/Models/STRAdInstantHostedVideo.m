@@ -17,7 +17,7 @@
 
 @interface InstantPlayWrapperView : UIImageView
 
-@property (strong, nonatomic) AVPlayerLayer *avlayer;
+@property (nonatomic, weak) AVPlayerLayer *avLayer;
 
 @end
 
@@ -25,7 +25,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.avlayer.frame = self.bounds;
+    self.avLayer.frame = self.bounds;
 }
 
 @end
@@ -98,8 +98,9 @@
         AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:self.avPlayer];
         layer.videoGravity = AVLayerVideoGravityResize;
         layer.frame = wrapperView.bounds;
-        [wrapperView.layer addSublayer: layer];
-        wrapperView.image = self.thumbnailImage;
+        [wrapperView.layer addSublayer:layer];
+        [wrapperView setAvLayer:layer];
+        [wrapperView setImage:self.thumbnailImage];
         [wrapperView setNeedsLayout];
 
         self.avPlayer.muted = YES;
